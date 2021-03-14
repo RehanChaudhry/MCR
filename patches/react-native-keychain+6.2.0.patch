@@ -1,0 +1,31 @@
+diff --git a/node_modules/react-native-keychain/android/build.gradle b/node_modules/react-native-keychain/android/build.gradle
+index 8a14c2c..eb81c79 100755
+--- a/node_modules/react-native-keychain/android/build.gradle
++++ b/node_modules/react-native-keychain/android/build.gradle
+@@ -38,6 +38,9 @@ android {
+   }
+ 
+   testOptions {
++    unitTests.all {
++      enabled false
++    }
+     unitTests {
+       includeAndroidResources = true
+     }
+diff --git a/node_modules/react-native-keychain/index.js b/node_modules/react-native-keychain/index.js
+index e81235e..d412ebe 100644
+--- a/node_modules/react-native-keychain/index.js
++++ b/node_modules/react-native-keychain/index.js
+@@ -4,9 +4,9 @@ import { NativeModules, Platform } from 'react-native';
+ const { RNKeychainManager } = NativeModules;
+ 
+ export const SECURITY_LEVEL = Object.freeze({
+-  ANY: RNKeychainManager.SECURITY_LEVEL_ANY,
+-  SECURE_SOFTWARE: RNKeychainManager.SECURITY_LEVEL_SECURE_SOFTWARE,
+-  SECURE_HARDWARE: RNKeychainManager.SECURITY_LEVEL_SECURE_HARDWARE,
++  ANY: RNKeychainManager && RNKeychainManager.SECURITY_LEVEL_ANY,
++  SECURE_SOFTWARE: RNKeychainManager && RNKeychainManager.SECURITY_LEVEL_SECURE_SOFTWARE,
++  SECURE_HARDWARE: RNKeychainManager && RNKeychainManager.SECURITY_LEVEL_SECURE_HARDWARE,
+ });
+ 
+ export const ACCESSIBLE = Object.freeze({

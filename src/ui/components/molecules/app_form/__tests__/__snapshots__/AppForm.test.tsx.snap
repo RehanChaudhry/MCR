@@ -1,0 +1,300 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rendering... renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "padding": 16,
+    }
+  }
+>
+  <Text
+    numberOfLines={1}
+    style={
+      Array [
+        Array [
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+          Object {
+            "color": "#000000",
+          },
+          Array [
+            Object {
+              "paddingBottom": 8,
+            },
+            Object {
+              "color": "#000000",
+            },
+          ],
+        ],
+        Object {
+          "fontFamily": "Inter-Regular",
+        },
+      ]
+    }
+  >
+    EMAIL
+  </Text>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "#CACACA",
+          "borderRadius": 5,
+          "borderStyle": "solid",
+          "borderWidth": 0.5,
+          "color": "#666666",
+          "elevation": 2,
+          "flexDirection": "row",
+          "fontFamily": "Inter-Regular",
+          "fontSize": 21.163106796116505,
+          "height": 40,
+          "justifyContent": "center",
+          "paddingBottom": 10,
+          "paddingLeft": 15,
+          "paddingRight": 15,
+          "paddingTop": 6,
+          "shadowColor": "#000000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      editable={true}
+      keyboardType="email-address"
+      multiline={false}
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      placeholder="Enter your email address"
+      placeholderTextColor="#979797"
+      rejectResponderTermination={true}
+      style={
+        Array [
+          Object {
+            "color": "#666666",
+            "flex": 1,
+            "fontFamily": "Inter-Regular",
+            "padding": 0,
+          },
+          undefined,
+        ]
+      }
+      testID="emailField"
+      textAlignVertical="center"
+      textContentType="emailAddress"
+      underlineColorAndroid="transparent"
+      value=""
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 8,
+      }
+    }
+  />
+  <Text
+    numberOfLines={1}
+    style={
+      Array [
+        Array [
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+          Object {
+            "color": "#000000",
+          },
+          Array [
+            Object {
+              "paddingBottom": 8,
+            },
+            Object {
+              "color": "#000000",
+            },
+          ],
+        ],
+        Object {
+          "fontFamily": "Inter-Regular",
+        },
+      ]
+    }
+  >
+    PASSWORD
+  </Text>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "#CACACA",
+          "borderRadius": 5,
+          "borderStyle": "solid",
+          "borderWidth": 0.5,
+          "color": "#666666",
+          "elevation": 2,
+          "flexDirection": "row",
+          "fontFamily": "Inter-Regular",
+          "fontSize": 21.163106796116505,
+          "height": 40,
+          "justifyContent": "center",
+          "paddingBottom": 10,
+          "paddingLeft": 15,
+          "paddingRight": 15,
+          "paddingTop": 6,
+          "shadowColor": "#000000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      editable={true}
+      multiline={false}
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      placeholder="Enter your password"
+      placeholderTextColor="#979797"
+      rejectResponderTermination={true}
+      secureTextEntry={true}
+      style={
+        Array [
+          Object {
+            "color": "#666666",
+            "flex": 1,
+            "fontFamily": "Inter-Regular",
+            "padding": 0,
+          },
+          undefined,
+        ]
+      }
+      testID="passwordField"
+      textAlignVertical="center"
+      textContentType="password"
+      underlineColorAndroid="transparent"
+      value=""
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 8,
+      }
+    }
+  />
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "alignSelf": "center",
+        "backgroundColor": "#FFFFFF",
+        "borderRadius": 10,
+        "elevation": 1,
+        "flexDirection": "row",
+        "height": 40,
+        "justifyContent": "space-between",
+        "opacity": 1,
+        "shadowColor": "#FFFFFF",
+        "shadowOffset": Object {
+          "height": 3,
+          "width": 0,
+        },
+        "shadowOpacity": 0.15,
+        "shadowRadius": 3,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+      testID="button-container"
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "flex-start",
+            "flex": 0.3,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Array [
+                Object {
+                  "fontFamily": "Inter-Regular",
+                },
+                Object {
+                  "color": "#000000",
+                },
+                Array [
+                  Object {
+                    "fontSize": 21.163106796116505,
+                  },
+                  Object {
+                    "color": "#000000",
+                  },
+                ],
+              ],
+              Object {
+                "fontFamily": "Inter-Regular",
+              },
+            ]
+          }
+        >
+          Submit
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "flex": 0.3,
+            "justifyContent": "flex-end",
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;

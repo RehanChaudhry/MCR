@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot testing 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "alignSelf": "center",
+      "backgroundColor": "#FFFFFF",
+      "borderRadius": 10,
+      "elevation": 1,
+      "flexDirection": "row",
+      "height": 40,
+      "justifyContent": "space-between",
+      "opacity": 1,
+      "shadowColor": "#FFFFFF",
+      "shadowOffset": Object {
+        "height": 3,
+        "width": 0,
+      },
+      "shadowOpacity": 0.15,
+      "shadowRadius": 3,
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+      }
+    }
+    testID="button-container"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "flex-start",
+          "flex": 0.3,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Array [
+              Object {
+                "fontFamily": "Inter-Regular",
+              },
+              Object {
+                "color": "#000000",
+              },
+              Array [
+                Object {
+                  "fontSize": 21.163106796116505,
+                },
+                Object {
+                  "color": "#000000",
+                },
+              ],
+            ],
+            Object {
+              "fontFamily": "Inter-Regular",
+            },
+          ]
+        }
+      >
+        Submit
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "flex": 0.3,
+          "justifyContent": "flex-end",
+        }
+      }
+    />
+  </View>
+</View>
+`;

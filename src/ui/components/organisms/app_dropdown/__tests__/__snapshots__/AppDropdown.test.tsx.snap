@@ -1,0 +1,385 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders snapshot as expected 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "borderColor": "#ebebeb",
+        "borderRadius": 5,
+        "borderWidth": 1,
+      },
+      Object {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#000000",
+      },
+      undefined,
+    ]
+  }
+>
+  <Modal
+    animationType="none"
+    hardwareAccelerated={false}
+    testID="dropdown-modal"
+    transparent={true}
+    visible={false}
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "rgba(90,94,94,0.7)",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flex": 0,
+            "height": "auto",
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "borderRadius": 10,
+                "justifyContent": "center",
+                "marginHorizontal": 25,
+                "marginVertical": 50,
+              },
+              Object {
+                "backgroundColor": "#EFEFF4",
+              },
+            ]
+          }
+        >
+          <View
+            style={Object {}}
+          >
+            <RCTScrollView
+              data={
+                Array [
+                  Object {
+                    "id": "1",
+                    "title": "Male",
+                  },
+                  Object {
+                    "id": "2",
+                    "title": "Female",
+                  },
+                  Object {
+                    "id": "3",
+                    "title": "Other",
+                  },
+                ]
+              }
+              disableVirtualization={false}
+              getItem={[Function]}
+              getItemCount={[Function]}
+              horizontal={false}
+              initialNumToRender={3}
+              keyExtractor={[Function]}
+              maxToRenderPerBatch={10}
+              onContentSizeChange={[Function]}
+              onEndReachedThreshold={1}
+              onLayout={[Function]}
+              onMomentumScrollEnd={[Function]}
+              onScroll={[Function]}
+              onScrollBeginDrag={[Function]}
+              onScrollEndDrag={[Function]}
+              refreshing={false}
+              removeClippedSubviews={true}
+              renderItem={[Function]}
+              scrollEventThrottle={50}
+              showsVerticalScrollIndicator={false}
+              stickyHeaderIndices={Array []}
+              updateCellsBatchingPeriod={50}
+              viewabilityConfigCallbackPairs={Array []}
+              windowSize={21}
+            >
+              <View>
+                <View
+                  onLayout={[Function]}
+                  style={null}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onBlur={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    testID="dropdown-item-click"
+                  >
+                    <Text
+                      numberOfLines={1}
+                      style={
+                        Array [
+                          Array [
+                            Object {
+                              "fontFamily": "Inter-Regular",
+                            },
+                            Object {
+                              "color": "#000000",
+                            },
+                            Array [
+                              Object {
+                                "alignSelf": "center",
+                                "paddingVertical": 8,
+                              },
+                              Object {
+                                "color": "#000000",
+                              },
+                            ],
+                          ],
+                          Object {
+                            "fontFamily": "Inter-Regular",
+                          },
+                        ]
+                      }
+                    >
+                      Male
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  onLayout={[Function]}
+                  style={null}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onBlur={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    testID="dropdown-item-click"
+                  >
+                    <Text
+                      numberOfLines={1}
+                      style={
+                        Array [
+                          Array [
+                            Object {
+                              "fontFamily": "Inter-Regular",
+                            },
+                            Object {
+                              "color": "#000000",
+                            },
+                            Array [
+                              Object {
+                                "alignSelf": "center",
+                                "paddingVertical": 8,
+                              },
+                              Object {
+                                "color": "#000000",
+                              },
+                            ],
+                          ],
+                          Object {
+                            "fontFamily": "Inter-Regular",
+                          },
+                        ]
+                      }
+                    >
+                      Female
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  onLayout={[Function]}
+                  style={null}
+                >
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onBlur={[Function]}
+                    onClick={[Function]}
+                    onFocus={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    testID="dropdown-item-click"
+                  >
+                    <Text
+                      numberOfLines={1}
+                      style={
+                        Array [
+                          Array [
+                            Object {
+                              "fontFamily": "Inter-Regular",
+                            },
+                            Object {
+                              "color": "#000000",
+                            },
+                            Array [
+                              Object {
+                                "alignSelf": "center",
+                                "paddingVertical": 8,
+                              },
+                              Object {
+                                "color": "#000000",
+                              },
+                            ],
+                          ],
+                          Object {
+                            "fontFamily": "Inter-Regular",
+                          },
+                        ]
+                      }
+                    >
+                      Other
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </RCTScrollView>
+          </View>
+        </View>
+        <View
+          accessible={true}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "center",
+              "left": 25,
+              "padding": 10,
+              "position": "absolute",
+              "top": 50,
+            }
+          }
+          testID="close-modal"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "borderColor": "rgba(0,0,0,0.5)",
+                "borderRadius": 50,
+                "borderWidth": 1.5,
+                "height": 25,
+                "justifyContent": "center",
+                "width": 25,
+              }
+            }
+          >
+            <Image
+              source={
+                Object {
+                  "testUri": "../../../assets/images/ic_close.png",
+                }
+              }
+              style={
+                Array [
+                  Object {
+                    "height": 10,
+                    "resizeMode": "contain",
+                    "width": 10,
+                  },
+                  Object {
+                    "tintColor": "#000000",
+                  },
+                  undefined,
+                ]
+              }
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+  </Modal>
+  <View
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="dropdown-click"
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "paddingHorizontal": 10,
+            "paddingVertical": 10,
+          },
+        ]
+      }
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Array [
+              Object {
+                "fontFamily": "Inter-Regular",
+              },
+              Object {
+                "color": "#000000",
+              },
+              undefined,
+            ],
+            Object {
+              "fontFamily": "Inter-Regular",
+            },
+          ]
+        }
+      >
+        Select Gender
+      </Text>
+      <Image
+        source={
+          Object {
+            "testUri": "../../../assets/images/chevron-down.png",
+          }
+        }
+        style={
+          Array [
+            Object {
+              "aspectRatio": 1,
+              "resizeMode": "contain",
+              "width": 12,
+            },
+            undefined,
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
+`;

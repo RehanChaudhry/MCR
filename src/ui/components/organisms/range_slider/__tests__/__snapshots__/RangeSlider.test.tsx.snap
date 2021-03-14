@@ -1,0 +1,340 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders snapshot as expected 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    Array [
+      Object {
+        "borderBottomWidth": 1,
+        "borderTopWidth": 1,
+        "paddingHorizontal": 18.139805825242718,
+        "paddingVertical": 18.139805825242718,
+      },
+      Object {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#FFFFFF",
+      },
+      Object {
+        "marginHorizontal": 15,
+      },
+    ]
+  }
+>
+  <Text
+    numberOfLines={1}
+    style={
+      Array [
+        Array [
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+          Object {
+            "color": "#000000",
+          },
+          Array [
+            Object {
+              "fontSize": 18.139805825242718,
+            },
+            Object {
+              "fontWeight": "700",
+              "marginBottom": 9.069902912621359,
+            },
+          ],
+        ],
+        Object {
+          "fontFamily": "Inter-Regular",
+        },
+      ]
+    }
+  >
+    When do you normally go to bed.?
+  </Text>
+  <Text
+    numberOfLines={1}
+    style={
+      Array [
+        Array [
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+          Object {
+            "color": "#000000",
+          },
+          Object {
+            "fontSize": 18.139805825242718,
+          },
+        ],
+        Object {
+          "fontFamily": "Inter-Regular",
+        },
+      ]
+    }
+  >
+    Lights out at 10!
+  </Text>
+  <
+    allowOverlap={false}
+    containerStyle={
+      Object {
+        "height": 30,
+      }
+    }
+    customMarkerLeft={[Function]}
+    customMarkerRight={[Function]}
+    enabledOne={true}
+    enabledTwo={true}
+    isMarkersSeparated={true}
+    max={100}
+    min={0}
+    minMarkerOverlapDistance={25}
+    onValuesChangeFinish={[Function]}
+    selectedStyle={Object {}}
+    sliderLength={0}
+    step={1}
+    trackStyle={
+      Object {
+        "borderRadius": 8,
+        "height": 8,
+      }
+    }
+    unselectedStyle={Object {}}
+    values={
+      Array [
+        0,
+      ]
+    }
+  />
+  <Text
+    numberOfLines={1}
+    style={
+      Array [
+        Array [
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+          Object {
+            "color": "#000000",
+          },
+          Array [
+            Object {
+              "fontSize": 18.139805825242718,
+            },
+            Object {
+              "alignSelf": "flex-end",
+            },
+          ],
+        ],
+        Object {
+          "fontFamily": "Inter-Regular",
+        },
+      ]
+    }
+  >
+    Usually late, after 1 AM
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "marginVertical": 27.20970873786408,
+      }
+    }
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        Array [
+          Array [
+            Object {
+              "fontFamily": "Inter-Regular",
+            },
+            Object {
+              "color": "#000000",
+            },
+            Array [
+              Object {
+                "fontSize": 18.139805825242718,
+              },
+              Object {
+                "fontWeight": "700",
+                "marginBottom": 9.069902912621359,
+              },
+            ],
+          ],
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+        ]
+      }
+    >
+      Comfort Zone
+    </Text>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Array [
+              Object {
+                "fontFamily": "Inter-Regular",
+              },
+              Object {
+                "color": "#000000",
+              },
+              Array [
+                Object {
+                  "fontSize": 18.139805825242718,
+                },
+                Object {
+                  "fontWeight": "700",
+                  "marginBottom": 9.069902912621359,
+                },
+                Object {
+                  "marginEnd": 9.069902912621359,
+                },
+              ],
+            ],
+            Object {
+              "fontFamily": "Inter-Regular",
+            },
+          ]
+        }
+      >
+        I have no preference
+      </Text>
+      <
+        icon={
+          <Image
+            source={
+              Object {
+                "testUri": "../../../assets/images/switch-inactive.png",
+              }
+            }
+            style={
+              Object {
+                "height": 20,
+                "width": 20,
+              }
+            }
+          />
+        }
+        isOn={false}
+        offColor="#c4bbbb"
+        onColor="#224be0"
+        onToggle={[Function]}
+        style={
+          Array [
+            undefined,
+            Object {},
+          ]
+        }
+        testID="app-switch"
+        thumbOffStyle={Object {}}
+      />
+    </View>
+  </View>
+  <Text
+    numberOfLines={1}
+    style={
+      Array [
+        Array [
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+          Object {
+            "color": "#000000",
+          },
+          Object {
+            "fontSize": 18.139805825242718,
+          },
+        ],
+        Object {
+          "fontFamily": "Inter-Regular",
+        },
+      ]
+    }
+  >
+    Lights out at 10!
+  </Text>
+  <
+    allowOverlap={false}
+    containerStyle={
+      Object {
+        "height": 30,
+      }
+    }
+    customMarkerLeft={[Function]}
+    customMarkerRight={[Function]}
+    enabledOne={true}
+    enabledTwo={true}
+    isMarkersSeparated={true}
+    max={100}
+    min={0}
+    minMarkerOverlapDistance={25}
+    onValuesChangeFinish={[Function]}
+    selectedStyle={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
+    sliderLength={0}
+    step={1}
+    trackStyle={
+      Object {
+        "borderRadius": 8,
+        "height": 8,
+      }
+    }
+    unselectedStyle={
+      Object {
+        "backgroundColor": "#3C3C434D",
+      }
+    }
+    values={
+      Array [
+        0,
+        54,
+      ]
+    }
+  />
+  <Text
+    numberOfLines={1}
+    style={
+      Array [
+        Array [
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+          Object {
+            "color": "#000000",
+          },
+          Array [
+            Object {
+              "fontSize": 18.139805825242718,
+            },
+            Object {
+              "alignSelf": "flex-end",
+            },
+          ],
+        ],
+        Object {
+          "fontFamily": "Inter-Regular",
+        },
+      ]
+    }
+  >
+    Usually late, after 1 AM
+  </Text>
+</View>
+`;

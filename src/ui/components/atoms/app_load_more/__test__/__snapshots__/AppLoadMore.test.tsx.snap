@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot testing 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+>
+  <ActivityIndicator
+    animating={true}
+    color="#000000"
+    hidesWhenStopped={true}
+    size={25}
+  />
+  <Text
+    numberOfLines={3}
+    style={
+      Array [
+        Array [
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+          Object {
+            "color": "#000000",
+          },
+          Array [
+            Object {
+              "paddingLeft": 5,
+            },
+            undefined,
+          ],
+        ],
+        Object {
+          "fontFamily": "Inter-Regular",
+        },
+      ]
+    }
+  >
+    Loading, please wait
+  </Text>
+</View>
+`;

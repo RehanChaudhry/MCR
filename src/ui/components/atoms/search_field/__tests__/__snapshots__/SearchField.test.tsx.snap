@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot testing 1`] = `
+<View
+  style={
+    Array [
+      undefined,
+      Object {
+        "alignItems": "center",
+        "borderRadius": 10,
+        "elevation": 2,
+        "flexDirection": "row",
+        "height": 40,
+        "justifyContent": "center",
+        "padding": 8,
+        "paddingBottom": 2.5,
+        "paddingTop": 2.5,
+        "shadowColor": "#000000",
+        "shadowOffset": Object {
+          "height": 1,
+          "width": 0,
+        },
+        "shadowOpacity": 0.2,
+        "shadowRadius": 1.41,
+      },
+      Object {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#000000",
+      },
+      undefined,
+    ]
+  }
+>
+  <TextInput
+    allowFontScaling={true}
+    numberOfLines={1}
+    onChangeText={[Function]}
+    placeholder="Enter text"
+    placeholderTextColor="#979797"
+    rejectResponderTermination={true}
+    style={
+      Array [
+        Object {
+          "color": "#666666",
+          "flex": 1,
+          "fontFamily": "Inter-Regular",
+          "fontSize": 21.163106796116505,
+          "padding": 0,
+        },
+        Object {
+          "color": "#000000",
+        },
+      ]
+    }
+    testID="SEARCH"
+    underlineColorAndroid="transparent"
+    value=""
+  />
+</View>
+`;

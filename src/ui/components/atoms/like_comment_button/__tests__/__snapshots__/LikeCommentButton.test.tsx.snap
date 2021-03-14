@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot testing 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "alignSelf": "flex-start",
+      "backgroundColor": "#3C3C434D",
+      "borderRadius": 5,
+      "flex": 0,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 10,
+      "width": "auto",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+      }
+    }
+    testID="button-container"
+  >
+    <Image
+      style={
+        Array [
+          Object {
+            "height": 10,
+            "resizeMode": "contain",
+            "width": 10,
+          },
+          Object {
+            "tintColor": "#000000",
+          },
+        ]
+      }
+      testID="left-icon"
+    />
+    <Text
+      numberOfLines={1}
+      style={
+        Array [
+          Array [
+            Object {
+              "fontFamily": "Inter-Regular",
+            },
+            Object {
+              "color": "#000000",
+            },
+            Array [
+              Object {
+                "fontFamily": "Inter-SemiBold",
+                "fontSize": 18.139805825242718,
+                "marginStart": 5,
+              },
+              Object {
+                "color": "#000000",
+              },
+            ],
+          ],
+          Object {
+            "fontFamily": "Inter-SemiBold",
+          },
+        ]
+      }
+    >
+      Like
+    </Text>
+  </View>
+</View>
+`;

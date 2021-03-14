@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshot testing 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="accordion-header"
+  >
+    <View
+      accessible={true}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID="header-click"
+    >
+      <Text
+        numberOfLines={1}
+        style={
+          Array [
+            Array [
+              Object {
+                "fontFamily": "Inter-Regular",
+              },
+              Object {
+                "color": "#000000",
+              },
+              undefined,
+            ],
+            Object {
+              "fontFamily": "Inter-Regular",
+            },
+          ]
+        }
+      >
+        Sub Title
+      </Text>
+    </View>
+  </View>
+  <View
+    testID="accordion-body"
+  />
+</View>
+`;
