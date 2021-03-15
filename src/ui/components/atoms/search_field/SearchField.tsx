@@ -3,8 +3,9 @@ import { moderateScale } from "config/Dimens";
 import useEffectWithSkipFirstTime from "hooks/useEffectWithSkipFirstTime";
 import React, { useState } from "react";
 import { usePreferredTheme } from "hooks";
+import Search from "assets/images/search_icon.svg";
+import Cross from "assets/images/cross.svg";
 import {
-  Image,
   StyleProp,
   StyleSheet,
   TextInput,
@@ -74,14 +75,12 @@ export const SearchField = React.memo<Props>(
           style
         ]}>
         {leftIcon && (
-          <Image
-            style={[
-              styles.leftIcon,
-              { tintColor: theme.themedColors.primaryLabelColor }
-            ]}
-            resizeMethod="scale"
-            testID="left-icon"
-            source={require("assets/images/search_icon.png")}
+          <Search
+            width={14}
+            height={14}
+            style={styles.leftIcon}
+            testID={"left-icon"}
+            fill={theme.themedColors.primaryIconColor}
           />
         )}
         <TextInput
@@ -99,14 +98,12 @@ export const SearchField = React.memo<Props>(
 
         {rightIcon && (
           <TouchableOpacity onPress={() => setCurrentSearchText("")}>
-            <Image
-              style={[
-                styles.rightIcon,
-                { tintColor: theme.themedColors.primaryLabelColor }
-              ]}
-              resizeMethod="scale"
-              testID="right-icon"
-              source={require("assets/images/cross.png")}
+            <Cross
+              width={14}
+              height={14}
+              testID={"right-icon"}
+              style={styles.rightIcon}
+              fill={theme.themedColors.primaryIconColor}
             />
           </TouchableOpacity>
         )}
@@ -142,8 +139,6 @@ const styles = StyleSheet.create({
     marginRight: 8
   },
   rightIcon: {
-    width: moderateScale(12),
-    height: moderateScale(12),
     aspectRatio: 1,
     marginLeft: 8
   },

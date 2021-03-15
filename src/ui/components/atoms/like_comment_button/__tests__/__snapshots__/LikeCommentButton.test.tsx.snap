@@ -3,7 +3,7 @@
 exports[`snapshot testing 1`] = `
 <View
   accessible={true}
-  focusable={false}
+  focusable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -36,21 +36,6 @@ exports[`snapshot testing 1`] = `
     }
     testID="button-container"
   >
-    <Image
-      style={
-        Array [
-          Object {
-            "height": 10,
-            "resizeMode": "contain",
-            "width": 10,
-          },
-          Object {
-            "tintColor": "#000000",
-          },
-        ]
-      }
-      testID="left-icon"
-    />
     <Text
       numberOfLines={1}
       style={

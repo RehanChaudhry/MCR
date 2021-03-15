@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import {
-  Image,
-  ImageSourcePropType,
-  ImageStyle,
   StyleProp,
   StyleSheet,
   TextInput,
@@ -20,10 +17,10 @@ export interface AppInputFieldProps extends TextInputProps {
   // default false
   shouldDisable?: boolean;
 
-  rightIcon?: ImageSourcePropType;
-  leftIcon?: ImageSourcePropType;
+  rightIcon?: () => React.ReactElement | null;
+  leftIcon?: () => React.ReactElement | null;
   viewStyle?: StyleProp<ViewStyle>;
-  iconStyle?: StyleProp<ImageStyle>;
+  //iconStyle?: StyleProp<ImageStyle>;
   multiline?: boolean;
   textAlignVertical?: any;
 }
@@ -39,7 +36,7 @@ export const AppInputField = React.memo<Props>(
     rightIcon,
     leftIcon,
     viewStyle,
-    iconStyle,
+    //iconStyle,
     multiline = false,
     textAlignVertical,
     ...rest
@@ -47,12 +44,7 @@ export const AppInputField = React.memo<Props>(
     const [value, setTextInputValue] = useState(valueToShowAtStart);
     return (
       <View style={[styles.input, viewStyle]}>
-        {leftIcon && (
-          <Image
-            source={leftIcon}
-            style={[styles.leftIconStyle, iconStyle]}
-          />
-        )}
+        {leftIcon ? leftIcon() : null}
         <TextInput
           textAlignVertical={
             textAlignVertical ? textAlignVertical : "center"
@@ -69,12 +61,7 @@ export const AppInputField = React.memo<Props>(
           multiline={multiline}
           {...rest}
         />
-        {rightIcon && (
-          <Image
-            source={rightIcon}
-            style={[styles.rightIconStyle, iconStyle]}
-          />
-        )}
+        {rightIcon ? rightIcon() : null}
       </View>
     );
   }
@@ -114,19 +101,19 @@ const styles = StyleSheet.create({
     //backgroundColor: Colors.red
     //height: "100%"
     // width: "100%"
-  },
-  leftIconStyle: {
-    height: 16,
-    width: 16,
-    marginTop: 6,
-    marginRight: 8,
-    alignSelf: "flex-start"
-  },
-  rightIconStyle: {
-    height: 16,
-    width: 16,
-    marginTop: 6,
-    marginLeft: 8,
-    alignSelf: "flex-end"
   }
+  // leftIconStyle: {
+  //   height: 16,
+  //   width: 16,
+  //   marginTop: 6,
+  //   marginRight: 8,
+  //   alignSelf: "flex-start"
+  // },
+  // rightIconStyle: {
+  //   height: 16,
+  //   width: 16,
+  //   marginTop: 6,
+  //   marginLeft: 8,
+  //   alignSelf: "flex-end"
+  // }
 });

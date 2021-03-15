@@ -1,50 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { LikeCommentButton } from "ui/components/atoms/like_comment_button/LikeCommentButton";
 import { AppLog } from "utils/Util";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { ThemeSwitcher } from "ui/components/templates/ThemeSwitcher";
+import Like from "assets/images/like.svg";
+import { Color } from "react-native-svg";
 
 export const LikeCommentButtonScreen = React.memo(() => {
   AppLog.log("Rendering App...");
   const theme = usePreferredTheme();
-  const [isSelected, setIsSelected] = useState(false);
-  const onPress = () => {
-    AppLog.log("isSelected: " + isSelected);
+
+  const onValueChanged = (isSelected: boolean) => {
     if (isSelected) {
-      setIsSelected(false);
     } else {
-      setIsSelected(true);
     }
   };
 
-  const getText = () => {
-    if (isSelected) {
-      return "Liked";
-    } else {
-      return "Like";
-    }
+  const like = (isSelected: boolean, color: Color) => {
+    return (
+      <Like
+        width={16}
+        height={16}
+        fill={isSelected ? theme.themedColors.switchActive : color}
+      />
+    );
   };
 
+  const comment = () => {
+    return (
+      <Like
+        width={16}
+        height={16}
+        fill={theme.themedColors.primaryIconColor}
+      />
+    );
+  };
   return (
     <ThemeSwitcher>
       <View style={styles.container}>
         <LikeCommentButton
-          text={getText()}
-          leftIcon={require("assets/images/like_fill.png")}
-          isSelected={isSelected}
+          selectedText={"Liked"}
+          unSelectedText={"Like"}
           textStyle={{ color: theme.themedColors.switchActive }}
-          iconStyle={{ tintColor: theme.themedColors.switchActive }}
           buttonStyle={styles.likeAndComment}
-          onPress={onPress}
+          icon={like}
+          onValueChanged={onValueChanged}
         />
         <LikeCommentButton
-          text={"Comment"}
-          leftIcon={require("assets/images/like_fill.png")}
-          isSelected={isSelected}
+          unSelectedText={"Comment"}
           textStyle={{ color: theme.themedColors.primaryLabelColor }}
-          iconStyle={{ tintColor: theme.themedColors.primaryLabelColor }}
           buttonStyle={styles.likeAndComment}
+          icon={comment}
+          onValueChanged={onValueChanged}
         />
       </View>
     </ThemeSwitcher>
@@ -59,5 +67,10 @@ const styles = StyleSheet.create({
     marginTop: 40,
     alignSelf: "center",
     marginBottom: 20
+  },
+  leftIcon: {
+    width: 10,
+    height: 10,
+    resizeMode: "contain"
   }
 });

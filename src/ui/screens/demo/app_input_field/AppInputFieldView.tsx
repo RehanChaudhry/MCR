@@ -6,6 +6,8 @@ import { StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
 import { ThemeSwitcher } from "ui/components/templates/ThemeSwitcher";
+import ChevronDown from "assets/images/plus.svg";
+
 // import { AppLog } from "utils/Util";
 // import * as Yup from "yup";
 
@@ -35,6 +37,14 @@ export const AppInputFieldView = React.memo<Props>(() => {
   //   },
   //   validationSchema: validationSchema
   // });
+  const RightIcon = () => (
+    <ChevronDown width={16} height={16} style={styles.rightIconStyle} />
+  );
+
+  const LeftIcon = () => (
+    <ChevronDown width={16} height={16} style={styles.leftIconStyle} />
+  );
+
   return (
     <ThemeSwitcher>
       <View
@@ -100,12 +110,12 @@ export const AppInputFieldView = React.memo<Props>(() => {
           keyboardType="email-address"
           autoFocus
           textContentType="emailAddress"
-          leftIcon={require("assets/images/mail.png")}
+          leftIcon={LeftIcon}
           viewStyle={{
             backgroundColor: theme.themedColors.secondaryBackground,
             borderColor: theme.themedColors.primaryBackground
           }}
-          iconStyle={{ tintColor: theme.themedColors.primaryLabelColor }}
+          //iconStyle={{ tintColor: theme.themedColors.primaryLabelColor }}
         />
         <AppLabel
           text="EMAIL WITH RIGHT ICON"
@@ -123,12 +133,12 @@ export const AppInputFieldView = React.memo<Props>(() => {
           keyboardType="email-address"
           autoFocus
           textContentType="emailAddress"
-          rightIcon={require("assets/images/mail.png")}
+          rightIcon={RightIcon}
           viewStyle={{
             backgroundColor: theme.themedColors.secondaryBackground,
             borderColor: theme.themedColors.primaryBackground
           }}
-          iconStyle={{ tintColor: theme.themedColors.primaryLabelColor }}
+          //iconStyle={{ tintColor: theme.themedColors.primaryLabelColor }}
         />
         <AppLabel
           text="CENTERED TWO INPUT FIELDS"
@@ -148,14 +158,14 @@ export const AppInputFieldView = React.memo<Props>(() => {
               keyboardType="email-address"
               autoFocus
               textContentType="emailAddress"
-              rightIcon={require("assets/images/mail.png")}
+              rightIcon={RightIcon}
               viewStyle={{
                 backgroundColor: theme.themedColors.secondaryBackground,
                 borderColor: theme.themedColors.primaryBackground
               }}
-              iconStyle={{
-                tintColor: theme.themedColors.primaryLabelColor
-              }}
+              // iconStyle={{
+              //   tintColor: theme.themedColors.primaryLabelColor
+              // }}
             />
           </View>
           <View style={styles.firstSubContainer}>
@@ -168,14 +178,14 @@ export const AppInputFieldView = React.memo<Props>(() => {
               keyboardType="email-address"
               autoFocus
               textContentType="emailAddress"
-              rightIcon={require("assets/images/mail.png")}
+              rightIcon={RightIcon}
               viewStyle={{
                 backgroundColor: theme.themedColors.secondaryBackground,
                 borderColor: theme.themedColors.primaryBackground
               }}
-              iconStyle={{
-                tintColor: theme.themedColors.primaryLabelColor
-              }}
+              // iconStyle={{
+              //   tintColor: theme.themedColors.primaryLabelColor
+              // }}
             />
           </View>
         </View>
@@ -199,9 +209,9 @@ export const AppInputFieldView = React.memo<Props>(() => {
               borderColor: theme.themedColors.primaryBackground
             }
           ]}
-          iconStyle={{
-            tintColor: theme.themedColors.primaryLabelColor
-          }}
+          // iconStyle={{
+          //   tintColor: theme.themedColors.primaryLabelColor
+          // }}
           multiline={true}
           textAlignVertical={"top"}
         />
@@ -229,9 +239,9 @@ export const AppInputFieldView = React.memo<Props>(() => {
               borderColor: theme.themedColors.tertiaryLabelColor
             }
           ]}
-          iconStyle={{
-            tintColor: theme.themedColors.primaryLabelColor
-          }}
+          // iconStyle={{
+          //   tintColor: theme.themedColors.primaryLabelColor
+          // }}
           multiline={true}
           textAlignVertical={"top"}
         />
@@ -275,5 +285,19 @@ const styles = StyleSheet.create({
   descriptionViewWithBorder: {
     height: 100,
     borderWidth: 1
+  },
+  rightIconStyle: {
+    height: 16,
+    width: 16,
+    marginTop: 6,
+    marginLeft: 8,
+    alignSelf: "flex-end"
+  },
+  leftIconStyle: {
+    height: 16,
+    width: 16,
+    marginTop: 6,
+    marginRight: 8,
+    alignSelf: "flex-start"
   }
 });

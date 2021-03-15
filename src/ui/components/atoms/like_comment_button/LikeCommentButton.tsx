@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  Image,
-  ImageSourcePropType,
   ImageStyle,
   StyleProp,
   StyleSheet,
@@ -14,32 +12,38 @@ import {
 import { usePreferredTheme } from "hooks";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, FONTS } from "config";
+import { Color } from "react-native-svg";
 
 export interface LikeButtonProps extends TouchableOpacityProps {
-  onPress?: () => void;
-  text: string;
+  onValueChanged?: (isSelected: boolean) => void;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
-  leftIcon?: ImageSourcePropType;
-  isSelected?: boolean;
+  selectedText?: string;
+  unSelectedText: string;
   iconStyle?: StyleProp<ImageStyle>;
+  icon?:
+    | ((isSelected: boolean, color: Color) => React.ReactElement)
+    | null;
 }
 
 export const LikeCommentButton = React.memo<LikeButtonProps>(
   ({
-    onPress,
-    text,
+    onValueChanged,
     buttonStyle,
-    leftIcon,
-    isSelected = false,
-    iconStyle,
-    textStyle
+    textStyle,
+    icon,
+    selectedText,
+    unSelectedText
   }) => {
     const theme = usePreferredTheme();
+    const [isSelected, setIsSelected] = useState(false);
 
     return (
       <TouchableOpacity
-        onPress={onPress}
+        onPress={() => {
+          setIsSelected(!isSelected);
+          onValueChanged?.(!isSelected);
+        }}
         style={[
           style.button,
           {
@@ -48,17 +52,7 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
           buttonStyle
         ]}>
         <View testID="button-container" style={style.viewContainer}>
-          <Image
-            testID="left-icon"
-            style={[
-              style.leftIcon,
-              isSelected
-                ? iconStyle
-                : { tintColor: theme.themedColors.primaryIconColor }
-            ]}
-            source={leftIcon!}
-          />
-
+          {icon?.(isSelected, theme.themedColors.primaryIconColor)}
           <AppLabel
             style={[
               style.text,
@@ -67,7 +61,10 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
                 ? textStyle
                 : { color: theme.themedColors.primaryLabelColor }
             ]}
-            text={text}
+            text={
+              (isSelected ? selectedText : unSelectedText) ??
+              unSelectedText
+            }
             weight={"semi-bold"}
           />
         </View>
