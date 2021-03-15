@@ -1,11 +1,15 @@
 import React from "react";
-import HomeController from "ui/screens/home/HomeController";
-import { HomeStack } from "./HomeStack";
+import CommunityController from "ui/screens/home/community/CommunityController";
+import { HomeDrawer } from "routes/HomeDrawer";
 
 export const HomeRoutes = () => {
   return (
-    <HomeStack.Navigator initialRouteName="Home">
-      <HomeStack.Screen name="Home" component={HomeController} />
-    </HomeStack.Navigator>
+    <HomeDrawer.Navigator initialRouteName="Matches">
+      <HomeDrawer.Screen name="Matches" component={CommunityController} />
+      <HomeDrawer.Screen
+        name="Community"
+        component={CommunityController}
+      />
+    </HomeDrawer.Navigator>
   );
 };
