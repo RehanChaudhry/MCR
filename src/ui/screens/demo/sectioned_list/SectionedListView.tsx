@@ -5,7 +5,7 @@ import SectionedList, {
 } from "ui/components/organisms/sectioned_list/SectionedList";
 import DataGenerator from "ui/screens/demo/sectioned_list/DataGenerator";
 import QuestionHeader from "ui/components/molecules/question_header/QuestionHeader";
-import QuestionGroup from "models/QuestionGroup";
+import QuestionSection from "models/QuestionSection";
 import { SPACE } from "config";
 import Question from "models/Question";
 import QuestionRow from "ui/components/molecules/question_row/QuestionRow";
@@ -14,18 +14,18 @@ import { ThemeSwitcher } from "ui/components/templates/ThemeSwitcher";
 type Props = {};
 
 const sections: Section<
-  QuestionGroup,
+  QuestionSection,
   Question
 >[] = DataGenerator.getSections();
 
 export const SectionedListView = React.memo<Props>(() => {
   return (
     <ThemeSwitcher>
-      <SectionedList<QuestionGroup, Question>
+      <SectionedList<QuestionSection, Question>
         style={styles.sectionedList}
         list={sections}
         headerView={(
-          header: QuestionGroup,
+          header: QuestionSection,
           isSelected: boolean,
           _: number
         ) => (

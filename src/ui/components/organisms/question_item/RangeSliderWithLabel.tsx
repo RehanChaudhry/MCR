@@ -51,7 +51,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = ({
     );
   };
 
-  if (initialValues == undefined) {
+  if (initialValues === undefined) {
     initialValues = enableTwoThumbs ? [0, 0] : [0];
   }
 
@@ -67,12 +67,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = ({
   return (
     <>
       <AppLabel style={styles.label} text={labelLeft} />
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "row",
-          justifyContent: "center"
-        }}>
+      <View style={styles.sliderContainer}>
         <MultiSlider
           values={initialValues}
           {...(enableTwoThumbs
@@ -112,11 +107,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = ({
           min={minValue}
           max={maxValue}
           step={1}
-          containerStyle={{
-            height: 45,
-            paddingVertical: 15,
-            paddingHorizontal: 10
-          }}
+          containerStyle={styles.sliderInnerContainer}
           enabledOne={enableThumbOne}
           enabledTwo={enableThumbTwo}
           allowSliderClick={allowSliderClick}
@@ -157,5 +148,15 @@ const styles = StyleSheet.create({
   },
   labelXsm: {
     fontSize: FONT_SIZE.xsm
+  },
+  sliderContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center"
+  },
+  sliderInnerContainer: {
+    height: 45,
+    paddingVertical: 15,
+    paddingHorizontal: 10
   }
 });

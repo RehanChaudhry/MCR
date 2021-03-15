@@ -48,7 +48,7 @@ exports[`Renders snapshot as expected 1`] = `
       ]
     }
   >
-    When do you normally go to bed.?
+    When do you normally go to bed?
   </Text>
   <Text
     numberOfLines={1}
@@ -97,7 +97,7 @@ exports[`Renders snapshot as expected 1`] = `
       enabledOne={true}
       enabledTwo={true}
       isMarkersSeparated={true}
-      max={100}
+      max={10}
       min={0}
       onValuesChangeFinish={[Function]}
       selectedStyle={Object {}}
@@ -290,7 +290,7 @@ exports[`Renders snapshot as expected 1`] = `
       enabledOne={true}
       enabledTwo={true}
       isMarkersSeparated={true}
-      max={100}
+      max={10}
       min={0}
       minMarkerOverlapDistance={15}
       onValuesChangeFinish={[Function]}
