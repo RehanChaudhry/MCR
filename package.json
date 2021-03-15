@@ -22,7 +22,7 @@
     "env:prod": "node node_modules/react-native-version-env-manager --env=prod --envFileExt=ts"
   },
   "dependencies": {
-    "@ptomasroos/react-native-multi-slider": "^2.2.2",
+    "@ptomasroos/react-native-multi-slider": "https://github.com/AsadAli1/react-native-multi-slider",
     "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.6.1",

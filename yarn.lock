@@ -1054,10 +1054,9 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@ptomasroos/react-native-multi-slider@^2.2.2":
+"@ptomasroos/react-native-multi-slider@https://github.com/AsadAli1/react-native-multi-slider":
   version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@ptomasroos/react-native-multi-slider/-/react-native-multi-slider-2.2.2.tgz#35a97fb8c355627c6a2ded010b360ac5728b44ad"
-  integrity sha512-HWyCnRD3Z3SbHK2FLWYmBBqd1B4iXipeKv1+AK0FoY/CElEDTEixHE8hN60TsqxalPrznn798LE2Q4tHuCiyaA==
+  resolved "https://github.com/AsadAli1/react-native-multi-slider#d5e57ba795a5f47a655e0ec80c0d2eeec4f2f932"
 
 "@react-native-community/art@^1.1.2":
   version "1.2.0"
