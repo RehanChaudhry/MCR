@@ -73,38 +73,46 @@ exports[`Renders snapshot as expected 1`] = `
   >
     Lights out at 10!
   </Text>
-  <
-    allowOverlap={false}
-    containerStyle={
+  <View
+    style={
       Object {
-        "height": 30,
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
       }
     }
-    customMarkerLeft={[Function]}
-    customMarkerRight={[Function]}
-    enabledOne={true}
-    enabledTwo={true}
-    isMarkersSeparated={true}
-    max={100}
-    min={0}
-    minMarkerOverlapDistance={25}
-    onValuesChangeFinish={[Function]}
-    selectedStyle={Object {}}
-    sliderLength={0}
-    step={1}
-    trackStyle={
-      Object {
-        "borderRadius": 8,
-        "height": 8,
+  >
+    <
+      allowOverlap={true}
+      allowSliderClick={true}
+      containerStyle={
+        Object {
+          "height": 45,
+          "paddingHorizontal": 10,
+          "paddingVertical": 15,
+        }
       }
-    }
-    unselectedStyle={Object {}}
-    values={
-      Array [
-        0,
-      ]
-    }
-  />
+      customMarkerLeft={[Function]}
+      customMarkerRight={[Function]}
+      enabledOne={true}
+      enabledTwo={true}
+      isMarkersSeparated={true}
+      max={100}
+      min={0}
+      onValuesChangeFinish={[Function]}
+      selectedStyle={Object {}}
+      sliderLength={0}
+      step={1}
+      trackStyle={
+        Object {
+          "borderRadius": 8,
+          "height": 8,
+        }
+      }
+      unselectedStyle={Object {}}
+      values={Array []}
+    />
+  </View>
   <Text
     numberOfLines={1}
     style={
@@ -267,47 +275,60 @@ exports[`Renders snapshot as expected 1`] = `
   >
     Lights out at 10!
   </Text>
-  <
-    allowOverlap={false}
-    containerStyle={
+  <View
+    style={
       Object {
-        "height": 30,
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "center",
       }
     }
-    customMarkerLeft={[Function]}
-    customMarkerRight={[Function]}
-    enabledOne={true}
-    enabledTwo={true}
-    isMarkersSeparated={true}
-    max={100}
-    min={0}
-    minMarkerOverlapDistance={25}
-    onValuesChangeFinish={[Function]}
-    selectedStyle={
-      Object {
-        "backgroundColor": "#000000",
+  >
+    <
+      allowOverlap={false}
+      allowSliderClick={false}
+      containerStyle={
+        Object {
+          "height": 45,
+          "paddingHorizontal": 10,
+          "paddingVertical": 15,
+        }
       }
-    }
-    sliderLength={0}
-    step={1}
-    trackStyle={
-      Object {
-        "borderRadius": 8,
-        "height": 8,
+      customMarkerLeft={[Function]}
+      customMarkerRight={[Function]}
+      enabledOne={true}
+      enabledTwo={true}
+      isMarkersSeparated={true}
+      max={100}
+      min={0}
+      minMarkerOverlapDistance={15}
+      onValuesChangeFinish={[Function]}
+      selectedStyle={
+        Object {
+          "backgroundColor": "#000000",
+        }
       }
-    }
-    unselectedStyle={
-      Object {
-        "backgroundColor": "#3C3C434D",
+      sliderLength={0}
+      step={1}
+      trackStyle={
+        Object {
+          "borderRadius": 8,
+          "height": 8,
+        }
       }
-    }
-    values={
-      Array [
-        0,
-        54,
-      ]
-    }
-  />
+      unselectedStyle={
+        Object {
+          "backgroundColor": "#3C3C434D",
+        }
+      }
+      values={
+        Array [
+          0,
+          54,
+        ]
+      }
+    />
+  </View>
   <Text
     numberOfLines={1}
     style={
