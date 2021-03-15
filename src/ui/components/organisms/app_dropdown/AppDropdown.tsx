@@ -1,5 +1,4 @@
 import {
-  Image,
   ImageStyle,
   Pressable,
   StyleProp,
@@ -13,6 +12,7 @@ import { AppLog } from "utils/Util";
 import { DropdownModal } from "ui/components/organisms/app_dropdown/DropdownModal";
 import { usePreferredTheme } from "hooks";
 import { DropDownItem } from "models/DropDownItem";
+import ChevronDown from "assets/images/chevron-down.svg";
 
 export interface AppDropdownProps {
   title: string;
@@ -89,8 +89,9 @@ export const AppDropdown = React.memo<AppDropdownProps>(
           }}>
           <View style={[styles.wrapper]}>
             <AppLabel text={selectedItemText} />
-            <Image
-              source={require("assets/images/chevron-down.png")}
+
+            <ChevronDown
+              fill="#6B7280"
               style={[styles.dropdownIcon, dropDownIconStyle]}
             />
           </View>

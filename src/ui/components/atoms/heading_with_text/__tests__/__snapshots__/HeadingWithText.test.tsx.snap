@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot testing 1`] = `
+<View
+  testID="HEADING_WITH_TEXT"
+>
+  <Text
+    numberOfLines={1}
+    style={
+      Array [
+        Array [
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+          Object {
+            "color": "#000000",
+          },
+          Array [
+            undefined,
+            Object {
+              "fontSize": 24.186407766990293,
+            },
+          ],
+        ],
+        Object {
+          "fontFamily": "Inter-Regular",
+          "fontWeight": "bold",
+        },
+      ]
+    }
+  >
+    Lorem Ipsum
+  </Text>
+  <Text
+    numberOfLines={0}
+    style={
+      Array [
+        Array [
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+          Object {
+            "color": "#000000",
+          },
+          Array [
+            undefined,
+            Object {
+              "fontSize": 21.163106796116505,
+            },
+          ],
+        ],
+        Object {
+          "fontFamily": "Inter-Regular",
+        },
+      ]
+    }
+  >
+    Lipsum as it is sometimes known, is dummy text used in laying out print.
+  </Text>
+</View>
+`;

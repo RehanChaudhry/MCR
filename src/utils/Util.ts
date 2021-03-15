@@ -1,6 +1,8 @@
 // A utility class
 
 import { Constants } from "config";
+import { Color, NumberProp } from "react-native-svg";
+import React from "react";
 
 export const AppLog = (function () {
   return {
@@ -70,3 +72,9 @@ export function delay<T, U, V>(t: T, v?: V) {
     setTimeout(resolve.bind(null), t);
   });
 }
+
+export type SvgProp = (
+  color?: Color,
+  width?: NumberProp,
+  height?: NumberProp
+) => React.ReactElement;

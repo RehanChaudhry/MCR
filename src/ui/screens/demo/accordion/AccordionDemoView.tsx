@@ -1,16 +1,42 @@
+import ChevronDownIcon from "assets/images/chevron-down.svg";
+import ChevronUpIcon from "assets/images/chevron-up.svg";
+import Profile from "assets/images/profile.svg";
 import { FONT_SIZE } from "config";
 import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
 import React, { FC } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Color, NumberProp } from "react-native-svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Accordion from "ui/components/molecules/accordion/Accordion";
 import { ThemeSwitcher } from "ui/components/templates/ThemeSwitcher";
+import { SvgProp } from "utils/Util";
 
 type Props = {};
 
 export const AccordionDemoView: FC<Props> = () => {
   const theme = usePreferredTheme();
+  const chevronUpIcon: SvgProp = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    return <ChevronUpIcon width={width} height={height} fill={color} />;
+  };
+  const chevronDownIcon: SvgProp = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    return <ChevronDownIcon width={width} height={height} fill={color} />;
+  };
+  const profileIcon: SvgProp = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    return <Profile width={width} height={height} fill={color} />;
+  };
 
   const firstHeaderItem = (isExpanded: boolean) => {
     return (
@@ -39,26 +65,9 @@ export const AccordionDemoView: FC<Props> = () => {
           />
         </View>
         <View style={style.toggleIconContainer}>
-          {isExpanded && (
-            <Image
-              testID="right-icon"
-              style={[
-                style.toggleIcon,
-                { tintColor: theme.themedColors.primaryIconColor }
-              ]}
-              source={require("assets/images/arrow-up.png")}
-            />
-          )}
-          {!isExpanded && (
-            <Image
-              testID="right-icon"
-              style={[
-                style.toggleIcon,
-                { tintColor: theme.themedColors.primaryIconColor }
-              ]}
-              source={require("assets/images/arrow-down.png")}
-            />
-          )}
+          {isExpanded
+            ? chevronUpIcon(theme.themedColors.primaryIconColor, 20, 20)
+            : chevronDownIcon(theme.themedColors.primaryIconColor, 20, 20)}
         </View>
       </View>
     );
@@ -94,26 +103,9 @@ export const AccordionDemoView: FC<Props> = () => {
           ]}
         />
         <View style={style.toggleIconContainer}>
-          {isExpanded && (
-            <Image
-              testID="right-icon"
-              style={[
-                style.toggleIcon,
-                { tintColor: theme.themedColors.primaryIconColor }
-              ]}
-              source={require("assets/images/arrow-up.png")}
-            />
-          )}
-          {!isExpanded && (
-            <Image
-              testID="right-icon"
-              style={[
-                style.toggleIcon,
-                { tintColor: theme.themedColors.primaryIconColor }
-              ]}
-              source={require("assets/images/arrow-down.png")}
-            />
-          )}
+          {isExpanded
+            ? chevronUpIcon(theme.themedColors.primaryIconColor, 20, 20)
+            : chevronDownIcon(theme.themedColors.primaryIconColor, 20, 20)}
         </View>
       </View>
     );
@@ -123,10 +115,7 @@ export const AccordionDemoView: FC<Props> = () => {
     return (
       <View style={style.marginBottom}>
         <View style={{ flexDirection: "row" }}>
-          <Image
-            style={style.profileImage}
-            source={require("assets/images/other.png")}
-          />
+          {profileIcon(theme.themedColors.primaryIconColor, 50, 50)}
           <View style={style.profileContainer}>
             <AppLabel
               text={"Jaweria Siddiqui"}

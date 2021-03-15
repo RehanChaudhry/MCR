@@ -3,8 +3,6 @@ import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
   ActivityIndicator,
-  Image,
-  ImageSourcePropType,
   ImageStyle,
   StyleProp,
   StyleSheet,
@@ -15,6 +13,7 @@ import {
   ViewStyle
 } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { SvgProp } from "utils/Util";
 
 export interface AppButtonProps extends TouchableOpacityProps {
   onPress?: () => void;
@@ -24,13 +23,14 @@ export interface AppButtonProps extends TouchableOpacityProps {
   shouldShowProgressBar?: boolean;
   loaderSize?: number;
   loaderColor?: string;
-  leftIcon?: ImageSourcePropType;
-  rightIcon?: ImageSourcePropType;
+  leftIcon?: SvgProp;
+  rightIcon?: SvgProp;
   buttonType?: BUTTON_TYPES;
   isDisable?: boolean;
   isSelected?: boolean;
   iconStyle?: StyleProp<ImageStyle>;
   shouldShowError?: boolean;
+  shouldAlignTitleWithLeftIcon?: boolean;
 }
 
 export enum BUTTON_TYPES {
@@ -53,8 +53,8 @@ export const AppButton = React.memo<AppButtonProps>(
     buttonType = BUTTON_TYPES.NORMAL,
     isDisable = false,
     isSelected = false,
-    iconStyle,
-    shouldShowError = false
+    shouldShowError = false,
+    shouldAlignTitleWithLeftIcon = false
   }) => {
     const theme = usePreferredTheme();
     const getButtonStyle = () => {
@@ -99,21 +99,18 @@ export const AppButton = React.memo<AppButtonProps>(
           buttonStyle
         ]}>
         <View testID="button-container" style={style.viewContainer}>
-          <View style={style.leftIconContainer}>
-            {leftIcon !== undefined && !shouldShowProgressBar && (
-              <Image
-                testID="left-icon"
-                style={[
-                  style.leftIcon,
-                  isSelected === true
-                    ? iconStyle
-                    : { tintColor: theme.themedColors.primaryIconColor }
-                ]}
-                source={leftIcon}
-              />
-            )}
+          <View
+            style={
+              shouldAlignTitleWithLeftIcon ? null : style.leftIconContainer
+            }>
+            {leftIcon && !shouldShowProgressBar
+              ? leftIcon?.(theme.themedColors.primaryIconColor, 20, 20)
+              : null}
           </View>
-          <View style={style.textWithLoader}>
+          <View
+            style={
+              shouldAlignTitleWithLeftIcon ? null : style.textWithLoader
+            }>
             {!shouldShowProgressBar && (
               <AppLabel
                 style={[
@@ -135,16 +132,9 @@ export const AppButton = React.memo<AppButtonProps>(
             )}
           </View>
           <View style={style.rightIconContainer}>
-            {rightIcon !== undefined && !shouldShowProgressBar && (
-              <Image
-                testID="right-icon"
-                style={[
-                  style.rightIcon,
-                  { tintColor: theme.themedColors.primaryIconColor }
-                ]}
-                source={rightIcon}
-              />
-            )}
+            {rightIcon && !shouldShowProgressBar
+              ? rightIcon?.(theme.themedColors.primaryIconColor, 20, 20)
+              : null}
           </View>
         </View>
       </TouchableOpacity>

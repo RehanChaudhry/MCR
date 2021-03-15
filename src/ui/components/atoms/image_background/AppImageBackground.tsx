@@ -2,9 +2,6 @@ import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
-  Image,
-  ImageSourcePropType,
-  ImageStyle,
   StyleProp,
   StyleSheet,
   TouchableOpacityProps,
@@ -12,12 +9,12 @@ import {
   View,
   ViewStyle
 } from "react-native";
+import { SvgProp } from "utils/Util";
 
 export interface AppImageBackgroundProps extends TouchableOpacityProps {
   containerStyle?: StyleProp<ViewStyle>;
-  icon: ImageSourcePropType;
+  icon?: SvgProp;
   containerShape: CONTAINER_TYPES;
-  iconStyle?: StyleProp<ImageStyle>;
   onPress?: () => void;
 }
 
@@ -27,7 +24,7 @@ export enum CONTAINER_TYPES {
 }
 
 export const AppImageBackground = React.memo<AppImageBackgroundProps>(
-  ({ containerStyle, icon, containerShape, iconStyle, onPress }) => {
+  ({ containerStyle, icon, containerShape, onPress }) => {
     const theme = usePreferredTheme();
     const imageWithBgJsx = (
       <View
@@ -42,15 +39,7 @@ export const AppImageBackground = React.memo<AppImageBackgroundProps>(
             : style.squareShape,
           containerStyle
         ]}>
-        <Image
-          testID="icon"
-          source={icon}
-          style={[
-            style.icon,
-            { tintColor: theme.themedColors.primaryIconColor },
-            iconStyle
-          ]}
-        />
+        {icon?.(theme.themedColors.primaryIconColor, 20, 20)}
       </View>
     );
 

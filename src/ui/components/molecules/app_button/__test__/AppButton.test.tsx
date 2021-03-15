@@ -3,6 +3,8 @@ import React from "react";
 import "react-native";
 import { ReactTestInstance } from "react-test-renderer";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
+import LeftIcon from "assets/images/left.svg";
+import RightIcon from "assets/images/right.svg";
 
 test("snapshot testing", () => {
   const rendered = render(<AppButton text="Submit" />).toJSON();
@@ -34,19 +36,22 @@ it("renders activity indicator correctly", () => {
 });
 
 it("renders left icon", () => {
+  const leftSvgIcon = () => {
+    return <LeftIcon testID="left-icon" width={20} height={20} />;
+  };
   const { queryByTestId } = render(
-    <AppButton
-      text="Submit"
-      leftIcon={require("assets/images/check.png")}
-    />
+    <AppButton text="Submit" leftIcon={leftSvgIcon} />
   );
-  const leftIcon = queryByTestId("left-icon");
-  const rightIcon = queryByTestId("right-icon");
-  expect(rightIcon).toBeNull();
-  expect(leftIcon).not.toBeNull();
+  const leftIconId = queryByTestId("left-icon");
+  const rightIconId = queryByTestId("right-icon");
+  expect(rightIconId).toBeNull();
+  expect(leftIconId).not.toBeNull();
 });
 
 it("works fine even when all hell broke loose", async () => {
+  const rightSvgIcon = () => {
+    return <RightIcon testID="right-icon" width={20} height={20} />;
+  };
   // given
   let rightIcon: ReactTestInstance | null = null,
     leftIcon: ReactTestInstance | null = null,
@@ -67,7 +72,7 @@ it("works fine even when all hell broke loose", async () => {
         text="Submit"
         onPress={_onPress}
         shouldShowProgressBar={showPb}
-        rightIcon={require("assets/images/check.png")}
+        rightIcon={rightSvgIcon}
       />
     );
   }
@@ -85,7 +90,7 @@ it("works fine even when all hell broke loose", async () => {
         onPress(onPress, update);
       }}
       shouldShowProgressBar={showPb}
-      rightIcon={require("assets/images/check.png")}
+      rightIcon={rightSvgIcon}
     />
   );
 

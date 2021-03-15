@@ -1,9 +1,11 @@
+import ChevronDown from "assets/images/chevron-down.svg";
 import { FONT_SIZE, SPACE } from "config";
 import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import QuestionGroup from "models/QuestionGroup";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { Color, NumberProp } from "react-native-svg";
 import {
   AppLabel,
   TEXT_TYPE
@@ -12,6 +14,7 @@ import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
+import { SvgProp } from "utils/Util";
 
 interface Props {
   questionGroup: QuestionGroup;
@@ -20,6 +23,13 @@ interface Props {
 
 const QuestionHeader = ({ isExpanded = false, questionGroup }: Props) => {
   const theme = usePreferredTheme();
+  const chevronDownIcon: SvgProp = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    return <ChevronDown width={width} height={height} fill={color} />;
+  };
   if (isExpanded) {
     return (
       <View
@@ -56,7 +66,7 @@ const QuestionHeader = ({ isExpanded = false, questionGroup }: Props) => {
         />
 
         <AppImageBackground
-          icon={require("assets/images/arrow-down.png")}
+          icon={chevronDownIcon}
           containerShape={CONTAINER_TYPES.CIRCLE}
           containerStyle={[
             styles.arrowContainer,
@@ -64,9 +74,6 @@ const QuestionHeader = ({ isExpanded = false, questionGroup }: Props) => {
               backgroundColor: theme.themedColors.secondaryBackground
             }
           ]}
-          iconStyle={{
-            tintColor: theme.themedColors.secondaryLabelColor
-          }}
         />
       </View>
     );

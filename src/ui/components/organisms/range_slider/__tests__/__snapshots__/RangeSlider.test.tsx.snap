@@ -223,18 +223,9 @@ exports[`Renders snapshot as expected 1`] = `
       </Text>
       <
         icon={
-          <Image
-            source={
-              Object {
-                "testUri": "../../../assets/images/switch-inactive.png",
-              }
-            }
-            style={
-              Object {
-                "height": 20,
-                "width": 20,
-              }
-            }
+          <SvgMock
+            height={20}
+            width={20}
           />
         }
         isOn={false}

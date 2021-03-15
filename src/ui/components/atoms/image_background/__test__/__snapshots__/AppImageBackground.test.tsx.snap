@@ -27,27 +27,5 @@ exports[`snapshot testing 1`] = `
       undefined,
     ]
   }
->
-  <Image
-    source={
-      Object {
-        "testUri": "../../../assets/images/check.png",
-      }
-    }
-    style={
-      Array [
-        Object {
-          "aspectRatio": 1,
-          "height": undefined,
-          "width": "50%",
-        },
-        Object {
-          "tintColor": "#000000",
-        },
-        undefined,
-      ]
-    }
-    testID="icon"
-  />
-</View>
+/>
 `;

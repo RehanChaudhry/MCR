@@ -362,12 +362,8 @@ exports[`Renders snapshot as expected 1`] = `
       >
         Select Gender
       </Text>
-      <Image
-        source={
-          Object {
-            "testUri": "../../../assets/images/chevron-down.png",
-          }
-        }
+      <SvgMock
+        fill="#6B7280"
         style={
           Array [
             Object {

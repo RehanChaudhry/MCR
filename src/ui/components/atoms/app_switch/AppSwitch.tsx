@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Image,
   StyleProp,
   StyleSheet,
   SwitchProps,
@@ -9,6 +8,8 @@ import {
 import { AppLog } from "utils/Util";
 import ToggleSwitch from "toggle-switch-react-native";
 import { usePreferredTheme } from "hooks";
+import SwitchActive from "assets/images/switch_active.svg";
+import SwitchInActive from "assets/images/switch_inactive.svg";
 
 export interface AppButtonProps extends SwitchProps {
   defaultValue: boolean;
@@ -16,16 +17,18 @@ export interface AppButtonProps extends SwitchProps {
   style?: StyleProp<ViewStyle>;
   showCustomThumb?: boolean;
 }
-
-let thumbPath = require("assets/images/switch-active.png");
-
-const setIcon = (isEnabled: boolean) => {
+/*const setIcon = (isEnabled: boolean) => {
   if (!isEnabled) {
     thumbPath = require("assets/images/switch-inactive.png");
   } else {
     thumbPath = require("assets/images/switch-active.png");
   }
-};
+};*/
+
+/*const setIcon = (isEnabled: boolean) => {
+  if (!isEnabled) return <SwitchInActive width={20} height={20} />;
+  else return <SwitchActive width={20} height={20} />;
+};*/
 
 export const AppSwitch = React.memo<AppButtonProps>(
   ({
@@ -39,8 +42,6 @@ export const AppSwitch = React.memo<AppButtonProps>(
 
     const { themedColors } = usePreferredTheme();
 
-    setIcon(isEnabled);
-
     // notify parent component about default state upon creation
     useEffect(() => {
       onValueChange(defaultValue);
@@ -49,7 +50,6 @@ export const AppSwitch = React.memo<AppButtonProps>(
 
     const toggleSwitch = () => {
       AppLog.log("AppSwitch() => toggle working");
-      setIcon(!isEnabled);
       setIsEnabled((previousState) => !previousState);
       onValueChange(!isEnabled);
     };
@@ -64,7 +64,11 @@ export const AppSwitch = React.memo<AppButtonProps>(
         thumbOffStyle={styles.thumb}
         icon={
           showCustomThumb ? (
-            <Image source={thumbPath} style={styles.tinyLogo} />
+            isEnabled ? (
+              <SwitchActive width={20} height={20} />
+            ) : (
+              <SwitchInActive width={20} height={20} />
+            )
           ) : null
         }
         style={[style, styles.switch]}

@@ -1,12 +1,15 @@
 import { usePreferredTheme } from "hooks";
 import React, { FC, useState } from "react";
 import { StyleSheet } from "react-native";
+import { Color, NumberProp } from "react-native-svg";
 import {
   AppButton,
   BUTTON_TYPES
 } from "ui/components/molecules/app_button/AppButton";
 import { ThemeSwitcher } from "ui/components/templates/ThemeSwitcher";
-import { AppLog } from "utils/Util";
+import { AppLog, SvgProp } from "utils/Util";
+import LeftIcon from "assets/images/left.svg";
+import RightIcon from "assets/images/right.svg";
 
 type Props = {};
 
@@ -22,6 +25,36 @@ export const AppButtonView: FC<Props> = (props) => {
       setIsSelected(true);
     }
   };
+  const leftIcon: SvgProp = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    return (
+      <LeftIcon
+        testID="left-icon"
+        width={width}
+        height={height}
+        fill={isSelected ? theme.themedColors.secondaryIconColor : color}
+        style={style.leftIcon}
+      />
+    );
+  };
+  const rightIcon: SvgProp = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    return (
+      <RightIcon
+        testID="right-icon"
+        style={style.rightIcon}
+        width={width}
+        height={height}
+        fill={color}
+      />
+    );
+  };
   return (
     <ThemeSwitcher>
       <AppButton text="Submit" buttonStyle={style.buttonStyle} />
@@ -32,18 +65,18 @@ export const AppButtonView: FC<Props> = (props) => {
       />
       <AppButton
         text="Submit"
-        rightIcon={require("assets/images/check.png")}
+        rightIcon={rightIcon}
         buttonStyle={style.buttonStyle}
       />
       <AppButton
         text="Submit"
-        leftIcon={require("assets/images/check.png")}
+        leftIcon={leftIcon}
         buttonStyle={style.buttonStyle}
       />
       <AppButton
         text="Submit"
-        rightIcon={require("assets/images/check.png")}
-        leftIcon={require("assets/images/check.png")}
+        rightIcon={rightIcon}
+        leftIcon={leftIcon}
         buttonStyle={style.buttonStyle}
       />
       <AppButton
@@ -79,13 +112,20 @@ export const AppButtonView: FC<Props> = (props) => {
         }}
         onPress={onPress}
         iconStyle={{ tintColor: theme.themedColors.secondaryLabelColor }}
-        leftIcon={require("assets/images/check.png")}
+        leftIcon={leftIcon}
       />
       <AppButton
         text="Submit"
         buttonStyle={[style.buttonStyle]}
         buttonType={BUTTON_TYPES.BORDER}
         shouldShowError={true}
+      />
+      <AppButton
+        text="Submit"
+        buttonStyle={[style.buttonStyle, { backgroundColor: undefined }]}
+        buttonType={BUTTON_TYPES.LINK}
+        shouldAlignTitleWithLeftIcon={true}
+        leftIcon={leftIcon}
       />
     </ThemeSwitcher>
   );
@@ -94,5 +134,15 @@ export const AppButtonView: FC<Props> = (props) => {
 const style = StyleSheet.create({
   buttonStyle: {
     marginBottom: 12
+  },
+  rightIcon: {
+    marginRight: 10,
+    width: 20,
+    height: 20
+  },
+  leftIcon: {
+    marginLeft: 10,
+    width: 20,
+    height: 20
   }
 });
