@@ -1,11 +1,8 @@
-import { NavigationContainer } from "@react-navigation/native";
-import {
-  AppThemeProvider,
-  AppColorScheme
-} from "hooks/theme/usePreferredTheme";
-import React from "react";
+// prettier-ignore
 import "react-native-gesture-handler";
-import { DemoRoutes } from "routes";
+import { AppColorScheme, AppThemeProvider } from "hooks/theme";
+import React from "react";
+import { SplashView } from "ui/screens/auth/splash/SplashView";
 import { AppLog } from "utils/Util";
 
 type Props = {};
@@ -13,12 +10,9 @@ type Props = {};
 const App: React.FC<Props> = () => {
   AppLog.log("Rendering App...");
 
-  // return <SplashView /
   return (
     <AppThemeProvider colorScheme={AppColorScheme.SYSTEM}>
-      <NavigationContainer>
-        <DemoRoutes />
-      </NavigationContainer>
+      <SplashView />
     </AppThemeProvider>
   );
 };
