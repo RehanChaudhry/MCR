@@ -37,7 +37,7 @@ export const RangeSliderView = React.memo<Props>(({}) => {
           initialValuesBottomSlider={[0, 50]}
           initialValuesTopSlider={[50]}
           style={{
-            marginBottom: SPACE.two
+            marginBottom: SPACE.md
           }}
           callback={myCallback}
           preferenceInitialValue={false}
