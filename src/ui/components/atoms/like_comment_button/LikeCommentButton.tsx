@@ -14,7 +14,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, FONTS } from "config";
 import { Color } from "react-native-svg";
 import Like from "assets/images/like.svg";
-import Colors from "config/Colors";
+import Chat from "assets/images/chat.svg";
 
 export interface LikeButtonProps extends TouchableOpacityProps {
   onValueChanged?: (isSelected: boolean) => void;
@@ -36,9 +36,8 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
     selectedText,
     unSelectedText
   }) => {
-    const theme = usePreferredTheme();
     const [isSelected, setIsSelected] = useState(false);
-
+    const theme = usePreferredTheme();
     return (
       <TouchableOpacity
         onPress={() => {
@@ -60,13 +59,17 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
               fill={
                 isSelected
                   ? theme.themedColors.switchActive
-                  : theme.themedColors.switchInActive
+                  : theme.themedColors.primaryLabelColor
               }
             />
           )}
 
           {unSelectedText === "Comment" && (
-            <Like width={16} height={16} fill={Colors.red} />
+            <Chat
+              width={16}
+              height={16}
+              fill={theme.themedColors.primaryLabelColor}
+            />
           )}
 
           <AppLabel
