@@ -1,13 +1,12 @@
 import React, { FC } from "react";
-import BottomBreadCrumbs from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
+import BottomBreadCrumbs, {
+  BreadCrumbsItem
+} from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
 import { Alert } from "react-native";
 
 type Props = {};
-export type dataType = {
-  title: string;
-  onPress: () => void;
-};
-const data: dataType[] = [
+
+const data: BreadCrumbsItem[] = [
   {
     title: "Matches (18)",
     onPress: () => Alert.alert("Matches")
