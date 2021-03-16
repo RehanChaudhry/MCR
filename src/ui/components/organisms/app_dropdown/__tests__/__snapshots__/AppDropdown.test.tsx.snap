@@ -11,7 +11,7 @@ exports[`Renders snapshot as expected 1`] = `
       },
       Object {
         "backgroundColor": "#FFFFFF",
-        "borderColor": "#000000",
+        "borderColor": "#9CA3AF",
       },
       undefined,
     ]
@@ -51,7 +51,7 @@ exports[`Renders snapshot as expected 1`] = `
                 "marginVertical": 50,
               },
               Object {
-                "backgroundColor": "#EFEFF4",
+                "backgroundColor": "#FFFFFF",
               },
             ]
           }
@@ -128,7 +128,7 @@ exports[`Renders snapshot as expected 1`] = `
                               "fontFamily": "Inter-Regular",
                             },
                             Object {
-                              "color": "#000000",
+                              "color": "#111827",
                             },
                             Array [
                               Object {
@@ -136,7 +136,7 @@ exports[`Renders snapshot as expected 1`] = `
                                 "paddingVertical": 8,
                               },
                               Object {
-                                "color": "#000000",
+                                "color": "#111827",
                               },
                             ],
                           ],
@@ -177,7 +177,7 @@ exports[`Renders snapshot as expected 1`] = `
                               "fontFamily": "Inter-Regular",
                             },
                             Object {
-                              "color": "#000000",
+                              "color": "#111827",
                             },
                             Array [
                               Object {
@@ -185,7 +185,7 @@ exports[`Renders snapshot as expected 1`] = `
                                 "paddingVertical": 8,
                               },
                               Object {
-                                "color": "#000000",
+                                "color": "#111827",
                               },
                             ],
                           ],
@@ -226,7 +226,7 @@ exports[`Renders snapshot as expected 1`] = `
                               "fontFamily": "Inter-Regular",
                             },
                             Object {
-                              "color": "#000000",
+                              "color": "#111827",
                             },
                             Array [
                               Object {
@@ -234,7 +234,7 @@ exports[`Renders snapshot as expected 1`] = `
                                 "paddingVertical": 8,
                               },
                               Object {
-                                "color": "#000000",
+                                "color": "#111827",
                               },
                             ],
                           ],
@@ -303,7 +303,7 @@ exports[`Renders snapshot as expected 1`] = `
                     "width": 10,
                   },
                   Object {
-                    "tintColor": "#000000",
+                    "tintColor": "#111827",
                   },
                   undefined,
                 ]
@@ -350,7 +350,7 @@ exports[`Renders snapshot as expected 1`] = `
                 "fontFamily": "Inter-Regular",
               },
               Object {
-                "color": "#000000",
+                "color": "#111827",
               },
               undefined,
             ],

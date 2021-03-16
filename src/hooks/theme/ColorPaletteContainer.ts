@@ -112,6 +112,8 @@ export type ColorPalette = {
   separator: string;
 
   placeholder: string;
+
+  transparent: string;
 };
 
 type ColorPaletteContainer = {
@@ -149,7 +151,9 @@ const branding: ColorPalette = {
 
   separator: grayShades.coolGray[300],
 
-  placeholder: grayShades.coolGray[600]
+  placeholder: grayShades.coolGray[600],
+
+  transparent: "#FF000000"
 };
 
 export const colorPaletteContainer: ColorPaletteContainer = {

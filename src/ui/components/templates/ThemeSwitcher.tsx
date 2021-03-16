@@ -18,10 +18,7 @@ export const ThemeSwitcher = React.memo<props>(({ children }) => {
 
   return (
     <ScrollView
-      style={[
-        styles.root,
-        { backgroundColor: themedColors.secondaryBackground }
-      ]}>
+      style={[styles.root, { backgroundColor: themedColors.background }]}>
       <>
         {children}
 
@@ -30,13 +27,10 @@ export const ThemeSwitcher = React.memo<props>(({ children }) => {
           style={[
             styles.themeSwitcherRoot,
             {
-              borderTopColor: themedColors.primaryLabelColor
+              borderTopColor: themedColors.border
             }
           ]}>
-          <AppLabel
-            text={text}
-            style={{ color: themedColors.primaryLabelColor }}
-          />
+          <AppLabel text={text} style={{ color: themedColors.label }} />
 
           <AppSwitch
             defaultValue={isDark}

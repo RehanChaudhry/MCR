@@ -47,19 +47,17 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
         style={[
           style.button,
           {
-            backgroundColor: theme.themedColors.tertiaryIconColor
+            backgroundColor: theme.themedColors.interface[200]
           },
           buttonStyle
         ]}>
         <View testID="button-container" style={style.viewContainer}>
-          {icon?.(isSelected, theme.themedColors.primaryIconColor)}
+          {icon?.(isSelected, theme.themedColors.label)}
           <AppLabel
             style={[
               style.text,
 
-              isSelected
-                ? textStyle
-                : { color: theme.themedColors.primaryLabelColor }
+              isSelected ? textStyle : { color: theme.themedColors.label }
             ]}
             text={
               (isSelected ? selectedText : unSelectedText) ??

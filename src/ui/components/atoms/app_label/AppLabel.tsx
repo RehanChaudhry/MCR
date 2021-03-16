@@ -67,7 +67,7 @@ export const AppLabel = React.memo<Props>(
       <Text
         style={setFontWeightStyle(weight, [
           getTextStyle(),
-          { color: theme.themedColors.primaryLabelColor },
+          { color: theme.themedColors.label },
           style
         ])}
         numberOfLines={1}

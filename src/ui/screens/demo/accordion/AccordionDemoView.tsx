@@ -44,8 +44,8 @@ export const AccordionDemoView: FC<Props> = () => {
         style={[
           style.container,
           {
-            backgroundColor: theme.themedColors.tertiaryBackground,
-            borderColor: theme.themedColors.primaryLabelColor
+            backgroundColor: theme.themedColors.interface[300],
+            borderColor: theme.themedColors.label
           }
         ]}>
         <View style={style.titleContainer}>
@@ -53,21 +53,21 @@ export const AccordionDemoView: FC<Props> = () => {
             text={"Social Preference"}
             style={[
               style.title,
-              { color: theme.themedColors.primaryLabelColor }
+              { color: theme.themedColors.labelSecondary }
             ]}
           />
           <AppLabel
             text={"Personality Preference"}
             style={[
               style.subTitle,
-              { color: theme.themedColors.primaryLabelColor }
+              { color: theme.themedColors.labelSecondary }
             ]}
           />
         </View>
         <View style={style.toggleIconContainer}>
           {isExpanded
-            ? chevronUpIcon(theme.themedColors.primaryIconColor, 20, 20)
-            : chevronDownIcon(theme.themedColors.primaryIconColor, 20, 20)}
+            ? chevronUpIcon(theme.themedColors.label, 20, 20)
+            : chevronDownIcon(theme.themedColors.label, 20, 20)}
         </View>
       </View>
     );
@@ -91,21 +91,18 @@ export const AccordionDemoView: FC<Props> = () => {
         style={[
           style.container,
           {
-            backgroundColor: theme.themedColors.tertiaryBackground,
-            borderColor: theme.themedColors.primaryLabelColor
+            backgroundColor: theme.themedColors.interface[300],
+            borderColor: theme.themedColors.label
           }
         ]}>
         <AppLabel
           text={"Open User Profile"}
-          style={[
-            style.title,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[style.title, { color: theme.themedColors.label }]}
         />
         <View style={style.toggleIconContainer}>
           {isExpanded
-            ? chevronUpIcon(theme.themedColors.primaryIconColor, 20, 20)
-            : chevronDownIcon(theme.themedColors.primaryIconColor, 20, 20)}
+            ? chevronUpIcon(theme.themedColors.label, 20, 20)
+            : chevronDownIcon(theme.themedColors.label, 20, 20)}
         </View>
       </View>
     );
@@ -115,21 +112,15 @@ export const AccordionDemoView: FC<Props> = () => {
     return (
       <View style={style.marginBottom}>
         <View style={{ flexDirection: "row" }}>
-          {profileIcon(theme.themedColors.primaryIconColor, 50, 50)}
+          {profileIcon(theme.themedColors.label, 50, 50)}
           <View style={style.profileContainer}>
             <AppLabel
               text={"Jaweria Siddiqui"}
-              style={[
-                style.title,
-                { color: theme.themedColors.primaryLabelColor }
-              ]}
+              style={[style.title, { color: theme.themedColors.label }]}
             />
             <AppLabel
               text={"jaweria.siddiqui@startrum.com"}
-              style={[
-                style.subTitle,
-                { color: theme.themedColors.primaryLabelColor }
-              ]}
+              style={[style.subTitle, { color: theme.themedColors.label }]}
             />
           </View>
         </View>

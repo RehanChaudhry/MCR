@@ -31,15 +31,15 @@ export const AppImageBackground = React.memo<AppImageBackgroundProps>(
         style={[
           style.container,
           {
-            backgroundColor: theme.themedColors.primaryBackground,
-            shadowColor: theme.themedColors.primaryBackground
+            backgroundColor: theme.themedColors.interface[200],
+            shadowColor: theme.themedColors.interface[200]
           },
           containerShape === CONTAINER_TYPES.CIRCLE
             ? style.circleShape
             : style.squareShape,
           containerStyle
         ]}>
-        {icon?.(theme.themedColors.primaryIconColor, 20, 20)}
+        {icon?.(theme.themedColors.interface[700], 20, 20)}
       </View>
     );
 
