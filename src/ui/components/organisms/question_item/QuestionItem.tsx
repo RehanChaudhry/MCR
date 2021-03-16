@@ -110,7 +110,7 @@ export const QuestionItem = React.memo<RangeSliderProps>(
           styles.container,
           {
             backgroundColor: themedColors.primaryBackground,
-            borderColor: themedColors.tertiaryBackground
+            borderColor: themedColors.tertiaryLabelColor
           },
           style
         ]}
@@ -160,10 +160,8 @@ export const QuestionItem = React.memo<RangeSliderProps>(
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: SPACE.md,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    paddingHorizontal: SPACE.md
+    padding: SPACE.md,
+    borderTopWidth: StyleSheet.hairlineWidth
   },
   label: {
     fontSize: FONT_SIZE.sm
