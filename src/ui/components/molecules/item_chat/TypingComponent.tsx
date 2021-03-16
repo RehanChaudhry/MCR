@@ -59,8 +59,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "#FFFFFF",
     borderTopWidth: 0.5,
-    borderTopColor: "#d1d5db",
-    elevation: 1
+    borderTopColor: "#d1d5db"
   },
   imgPaper: {
     marginStart: SPACE.md,
