@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { SectionList, StyleSheet, View } from "react-native";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { SPACE } from "config";
 
 type Props = {};
 
@@ -44,8 +45,8 @@ export const NotificationView = React.memo<Props>(() => {
 
 const styles = StyleSheet.create({
   sectionHeader: {
-    marginLeft: 20,
-    marginBottom: 20,
+    marginLeft: SPACE.lg,
+    marginBottom: SPACE.lg,
     fontWeight: "bold"
   }
 });

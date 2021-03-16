@@ -5,6 +5,7 @@ import { MultilineSpannableText } from "ui/components/atoms/multiline_spannable_
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import Colors from "config/Colors";
+import { SPACE } from "config";
 
 type Props = {};
 
@@ -45,8 +46,8 @@ export const CircleImageWithText = React.memo<Props>(() => {
 const styles = StyleSheet.create({
   mainContainer: {
     flexDirection: "row",
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: SPACE.lg,
+    marginRight: SPACE.lg,
     width: 290
   },
   circleWithText: {
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: 8
+    marginTop: SPACE.sm
   },
   buttonStyle: {
     width: 160,
@@ -69,8 +70,8 @@ const styles = StyleSheet.create({
     height: 1,
     width: "100%",
     alignSelf: "flex-end",
-    marginTop: 20,
-    marginBottom: 30
+    marginTop: SPACE.lg,
+    marginBottom: SPACE.xl
   },
   name: { fontWeight: "bold" },
   message: { fontWeight: "normal" }
