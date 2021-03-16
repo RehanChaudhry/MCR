@@ -17,10 +17,8 @@ exports[`snapshot testing 1`] = `
         "fontSize": 21.163106796116505,
         "height": 40,
         "justifyContent": "center",
-        "paddingBottom": 10,
-        "paddingLeft": 15,
-        "paddingRight": 15,
-        "paddingTop": 6,
+        "paddingLeft": 12,
+        "paddingRight": 12,
         "shadowColor": "#000000",
         "shadowOffset": Object {
           "height": 1,
