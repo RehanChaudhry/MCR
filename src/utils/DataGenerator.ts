@@ -1,24 +1,22 @@
-import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
-import QuestionSection from "models/QuestionSection";
-import Question from "models/Question";
+import { BaseQuestion } from "models/Question";
+import { SectionResponse } from "models/api_responses/QuestionsResponseModel";
 
 const getQuestionSections = () => {
-  const sections: Section<QuestionSection, Question>[] = [];
+  const sections: SectionResponse[] = [];
   for (let i = 0; i < 5; i++) {
-    const section: Section<QuestionSection, Question> = {
-      header: {
+    const section: SectionResponse = {
+      section: {
         id: `${i}`,
         title: `Lifestyle Preference ${i}`,
         description:
           "Your answers to these questions will guide us to recommending the best roommate match for you. " +
-          i,
-        key: () => `Header${i}`
+          i
       },
-      data: []
+      questions: []
     };
 
     for (let j = 0; j < 5; j++) {
-      section.data.push(getQuestion(j, i));
+      section.questions.push(getQuestion(j, i));
     }
     sections.push(section);
   }
@@ -26,7 +24,10 @@ const getQuestionSections = () => {
   return sections;
 };
 
-const getQuestion = (questionId: number, sectionId: number): Question => {
+const getQuestion = (
+  questionId: number,
+  sectionId: number
+): BaseQuestion => {
   return {
     id: questionId,
     sectionId: sectionId,
@@ -34,8 +35,7 @@ const getQuestion = (questionId: number, sectionId: number): Question => {
     minOption: "Lights out at 10!",
     maxOption: "Usually late, after 1 AM",
     createdAt: "2021-03-15T07:18:24.000Z",
-    updatedAt: "2021-03-15T07:18:24.000Z",
-    key: () => `Header${sectionId}|Body${questionId}`
+    updatedAt: "2021-03-15T07:18:24.000Z"
   };
 };
 

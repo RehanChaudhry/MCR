@@ -1,11 +1,4 @@
-import React, {
-  FC,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState
-} from "react";
-import { SectionedListView } from "./SectionedListView";
+import React, { FC, useLayoutEffect, useRef, useState } from "react";
 import { AppLog } from "utils/Util";
 import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
 import QuestionSection from "models/QuestionSection";
@@ -19,12 +12,16 @@ import { AnswerApiRequestModel } from "models/api_requests/AnswerApiRequestModel
 import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseModel";
 import ProfileApis from "repo/auth/ProfileApis";
 import { usePreventDoubleTap } from "hooks";
-import { Alert } from "react-native";
+import { Alert, View } from "react-native";
 import {
   QuestionsResponseModel,
   toAnswersRequest,
   toSections
 } from "models/api_responses/QuestionsResponseModel";
+import { QuestionsView } from "ui/screens/questions/QuestionsView";
+import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import DataGenerator from "utils/DataGenerator";
 
 type QuestionsNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -32,6 +29,8 @@ type QuestionsNavigationProp = StackNavigationProp<
 >;
 
 type Props = {};
+
+const questionSections = DataGenerator.getQuestionSections();
 
 const QuestionsController: FC<Props> = () => {
   AppLog.log("Opening QuestionsController");
@@ -41,7 +40,7 @@ const QuestionsController: FC<Props> = () => {
 
   const [questions, setQuestions] = useState<
     Section<QuestionSection, Question>[]
-  >([]);
+  >(toSections(questionSections));
 
   // Add no toolbar
   useLayoutEffect(() => {
@@ -56,20 +55,22 @@ const QuestionsController: FC<Props> = () => {
     ProfileApis.answers
   );
 
-  useEffect(() => {
-    handleGetQuestionsApi();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   handleGetQuestionsApi();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleGetQuestionsApi = async (onComplete?: () => void) => {
     const { hasError, dataBody, errorBody } = await questionApi.request(
       []
     );
     if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to find questions " + errorBody);
+      // Alert.alert("Unable to find questions " + errorBody);
+      AppLog.log("Unable to find questions " + errorBody);
       return;
     } else {
-      setQuestions(toSections(dataBody));
+      setQuestions(toSections(dataBody.data));
       onComplete?.();
     }
   };
@@ -83,7 +84,7 @@ const QuestionsController: FC<Props> = () => {
       requestModel.current
     ]);
     if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to Sign In", errorBody);
+      Alert.alert("Unable to Submit answers.", errorBody);
       return;
     } else {
       // answers submitted. Proceed to next screen
@@ -91,14 +92,28 @@ const QuestionsController: FC<Props> = () => {
   });
 
   return (
-    <SectionedListView
-      submitAnswers={() => {
-        requestModel.current = {
-          data: toAnswersRequest(questions)
-        };
-        handleSubmitAnswers();
+    <ProgressErrorView
+      isLoading={questionApi.loading}
+      error={questionApi.error}
+      errorView={(message) => {
+        return (
+          <View>
+            <AppLabel text={message} />
+          </View>
+        );
       }}
-    />
+      data={questions}>
+      <QuestionsView
+        submitAnswers={() => {
+          requestModel.current = {
+            data: toAnswersRequest(questions)
+          };
+          handleSubmitAnswers();
+        }}
+        questions={questions}
+        submitAnswersLoading={answerApi.loading}
+      />
+    </ProgressErrorView>
   );
 };
 

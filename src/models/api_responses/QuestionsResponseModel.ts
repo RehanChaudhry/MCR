@@ -1,5 +1,7 @@
-import QuestionSection from "models/QuestionSection";
-import Question from "models/Question";
+import QuestionSection, {
+  BaseQuestionSection
+} from "models/QuestionSection";
+import Question, { BaseQuestion } from "models/Question";
 import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
 import { Answer } from "models/Answer";
 
@@ -9,13 +11,13 @@ export type QuestionsResponseModel = {
 };
 
 export type SectionResponse = {
-  section: QuestionSection;
-  questions: Question[];
+  section: BaseQuestionSection;
+  questions: BaseQuestion[];
 };
 
-export const toSections = (response: QuestionsResponseModel) => {
+export const toSections = (response: SectionResponse[]) => {
   const sections: Section<QuestionSection, Question>[] = [];
-  response.data.forEach((value) => {
+  response.forEach((value) => {
     const section: Section<QuestionSection, Question> = {
       header: {
         ...value.section,
@@ -36,12 +38,12 @@ export const toSections = (response: QuestionsResponseModel) => {
 };
 
 export const toAnswersRequest = (
-  sections: Section<QuestionSection, Question>[]
+  sections: Section<QuestionSection, Question>[] | undefined
 ) => {
   const answers: Answer[] = [];
-  sections.forEach((value) => {
+  sections?.forEach((value) => {
     value.data.forEach((value1) => {
-      answers.push(value1.answer);
+      answers.push(value1.answer!);
     });
   });
   return answers;

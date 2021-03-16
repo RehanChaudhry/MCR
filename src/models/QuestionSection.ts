@@ -1,9 +1,11 @@
 import { BaseItem } from "ui/components/organisms/sectioned_list/SectionedList";
 
-type QuestionSection = {
+export type BaseQuestionSection = {
   id: string;
   title: string;
   description: string;
-} & BaseItem;
+};
+
+type QuestionSection = BaseQuestionSection & BaseItem;
 
 export default QuestionSection;

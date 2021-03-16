@@ -1,7 +1,7 @@
 import { BaseItem } from "ui/components/organisms/sectioned_list/SectionedList";
 import { Answer } from "models/Answer";
 
-type Question = {
+export type BaseQuestion = {
   id: number;
   sectionId: number;
   title: string;
@@ -9,7 +9,9 @@ type Question = {
   maxOption: string;
   createdAt: string;
   updatedAt: string;
-  answer: Answer;
-} & BaseItem;
+  answer?: Answer;
+};
+
+type Question = BaseQuestion & BaseItem;
 
 export default Question;
