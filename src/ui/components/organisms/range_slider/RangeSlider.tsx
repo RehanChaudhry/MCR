@@ -114,8 +114,8 @@ export const RangeSlider = React.memo<RangeSliderProps>(
         style={[
           styles.container,
           {
-            backgroundColor: themedColors.primaryBackground,
-            borderColor: themedColors.tertiaryBackground
+            backgroundColor: themedColors.background,
+            borderColor: themedColors.border
           },
           style
         ]}

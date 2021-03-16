@@ -69,14 +69,14 @@ exports[`snapshot testing 1`] = `
                 "fontFamily": "Inter-Regular",
               },
               Object {
-                "color": "#000000",
+                "color": "#111827",
               },
               Array [
                 Object {
                   "fontSize": 21.163106796116505,
                 },
                 Object {
-                  "color": "#000000",
+                  "color": "#111827",
                 },
               ],
             ],

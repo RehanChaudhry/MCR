@@ -13,7 +13,7 @@ exports[`Snapshot testing 1`] = `
             "fontFamily": "Inter-Regular",
           },
           Object {
-            "color": "#000000",
+            "color": "#111827",
           },
           Array [
             undefined,
@@ -40,7 +40,7 @@ exports[`Snapshot testing 1`] = `
             "fontFamily": "Inter-Regular",
           },
           Object {
-            "color": "#000000",
+            "color": "#111827",
           },
           Array [
             undefined,

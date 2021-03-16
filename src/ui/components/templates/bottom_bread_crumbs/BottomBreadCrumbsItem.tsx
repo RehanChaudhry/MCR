@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import {
   StyleProp,
   StyleSheet,
+  TextStyle,
   TouchableOpacity,
   View,
   ViewStyle
@@ -13,12 +14,22 @@ type Props = {
   title: string;
   onPress: () => void;
   style: StyleProp<ViewStyle>;
+  textStyle: StyleProp<TextStyle>;
 };
-const BottomBreadCrumbsItem: FC<Props> = ({ title, onPress, style }) => {
+const BottomBreadCrumbsItem: FC<Props> = ({
+  title,
+  onPress,
+  style,
+  textStyle
+}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.mainContainer, style]}>
-        <AppLabel text={title} style={styles.text} weight={"semi-bold"} />
+        <AppLabel
+          text={title}
+          style={[styles.text, textStyle]}
+          weight={"semi-bold"}
+        />
       </View>
     </TouchableOpacity>
   );

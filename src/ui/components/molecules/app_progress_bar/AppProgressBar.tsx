@@ -51,13 +51,11 @@ export const AppProgressBar = React.memo<AppProgressBarProps>(
           borderRadius={borderRadius}
           height={20}
           unfilledColor={
-            unFilledColor ? unFilledColor : themedColors.tertiaryLabelColor
+            unFilledColor ? unFilledColor : themedColors.interface[200]
           }
           useNativeDriver={true}
           animationType="timing"
-          color={
-            filledColor ? filledColor : themedColors.primaryLabelColor
-          }
+          color={filledColor ? filledColor : themedColors.label}
         />
         {shouldShowBottomText && (
           <View testID="bottom-view" style={styles.textWrapper}>

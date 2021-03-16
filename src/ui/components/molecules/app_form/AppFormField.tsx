@@ -48,10 +48,7 @@ const AppFormField = React.memo<Props>(
       <>
         {labelProps && (
           <AppLabel
-            style={[
-              styles.label,
-              { color: theme.themedColors.primaryLabelColor }
-            ]}
+            style={[styles.label, { color: theme.themedColors.label }]}
             {...labelProps}
           />
         )}
