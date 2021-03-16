@@ -109,8 +109,8 @@ export const QuestionItem = React.memo<RangeSliderProps>(
         style={[
           styles.container,
           {
-            backgroundColor: themedColors.primaryBackground,
-            borderColor: themedColors.tertiaryLabelColor
+            backgroundColor: themedColors.background,
+            borderColor: themedColors.border
           },
           style
         ]}

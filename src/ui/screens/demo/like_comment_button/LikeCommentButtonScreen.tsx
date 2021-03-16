@@ -22,19 +22,13 @@ export const LikeCommentButtonScreen = React.memo(() => {
       <Like
         width={16}
         height={16}
-        fill={isSelected ? theme.themedColors.switchActive : color}
+        fill={isSelected ? theme.themedColors.primary : color}
       />
     );
   };
 
   const comment = () => {
-    return (
-      <Like
-        width={16}
-        height={16}
-        fill={theme.themedColors.primaryIconColor}
-      />
-    );
+    return <Like width={16} height={16} fill={theme.themedColors.label} />;
   };
   return (
     <ThemeSwitcher>
@@ -42,14 +36,14 @@ export const LikeCommentButtonScreen = React.memo(() => {
         <LikeCommentButton
           selectedText={"Liked"}
           unSelectedText={"Like"}
-          textStyle={{ color: theme.themedColors.switchActive }}
+          textStyle={{ color: theme.themedColors.label }}
           buttonStyle={styles.likeAndComment}
           icon={like}
           onValueChanged={onValueChanged}
         />
         <LikeCommentButton
           unSelectedText={"Comment"}
-          textStyle={{ color: theme.themedColors.primaryLabelColor }}
+          textStyle={{ color: theme.themedColors.label }}
           buttonStyle={styles.likeAndComment}
           icon={comment}
           onValueChanged={onValueChanged}

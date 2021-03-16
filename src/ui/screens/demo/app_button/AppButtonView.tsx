@@ -35,7 +35,7 @@ export const AppButtonView: FC<Props> = (props) => {
         testID="left-icon"
         width={width}
         height={height}
-        fill={isSelected ? theme.themedColors.secondaryIconColor : color}
+        fill={isSelected ? theme.themedColors.labelSecondary : color}
         style={style.leftIcon}
       />
     );
@@ -108,10 +108,10 @@ export const AppButtonView: FC<Props> = (props) => {
         buttonStyle={style.buttonStyle}
         isSelected={isSelected}
         textStyle={{
-          color: theme.themedColors.secondaryLabelColor
+          color: theme.themedColors.labelSecondary
         }}
         onPress={onPress}
-        iconStyle={{ tintColor: theme.themedColors.secondaryLabelColor }}
+        iconStyle={{ tintColor: theme.themedColors.labelSecondary }}
         leftIcon={leftIcon}
       />
       <AppButton

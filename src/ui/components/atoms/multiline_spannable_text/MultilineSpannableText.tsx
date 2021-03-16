@@ -28,6 +28,7 @@ export const MultilineSpannableText = React.memo<Props>(
           <Text>
             {text.map((item, index) => (
               <TouchableWithoutFeedback
+                key={index}
                 onPress={() => onPress?.(text[index], index)}>
                 <Text style={textStyle[index]}>{item.text}</Text>
               </TouchableWithoutFeedback>

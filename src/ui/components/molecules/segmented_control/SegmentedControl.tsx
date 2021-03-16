@@ -58,8 +58,8 @@ export const SegmentedControl = React.memo<Props>(
 
     function getStyleAsPerSelectionStatus(position: number) {
       return selectedPosition === position
-        ? [{ color: theme.themedColors.primaryBackground }]
-        : [{ color: theme.themedColors.primaryLabelColor }];
+        ? [{ color: theme.themedColors.background }]
+        : [{ color: theme.themedColors.label }];
     }
 
     function buttonPressed(position: number) {
@@ -76,7 +76,7 @@ export const SegmentedControl = React.memo<Props>(
       <View
         style={[
           styles.container,
-          { backgroundColor: theme.themedColors.primaryBackground },
+          { backgroundColor: theme.themedColors.background },
           containerStyle
         ]}
         onLayout={({
@@ -103,7 +103,7 @@ export const SegmentedControl = React.memo<Props>(
               bottom: selectPadding,
               start: selectPadding,
               end: selectPadding,
-              backgroundColor: theme.themedColors.primaryLabelColor
+              backgroundColor: theme.themedColors.label
             }
           ]}
         />
