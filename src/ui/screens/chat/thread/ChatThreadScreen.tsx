@@ -23,7 +23,6 @@ export const ChatThreadScreen = React.memo<Props>(() => {
         data={items}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
-        /*    initialNumToRender={items.length}*/
         removeClippedSubviews={true}
         style={styles.list}
       />

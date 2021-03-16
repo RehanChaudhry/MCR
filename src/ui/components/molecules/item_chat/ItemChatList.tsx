@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     paddingVertical: SPACE.md,
-    marginHorizontal: SPACE.md,
+    marginStart: SPACE.md,
     flexDirection: "column",
     borderBottomColor: "#d1d5db",
     borderBottomWidth: 0.5,
@@ -94,19 +94,19 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   nameText: {
-    fontSize: FONT_SIZE.lg,
+    fontSize: FONT_SIZE.md,
     color: "#005f46",
     lineHeight: 25
-  },
-  messageText: {
-    fontSize: FONT_SIZE.sm,
-    color: "#111827",
-    lineHeight: 16
   },
   timeText: {
     fontSize: FONT_SIZE.sm,
     color: "#4b5563",
     lineHeight: 20,
     marginEnd: SPACE.md
+  },
+  messageText: {
+    fontSize: FONT_SIZE.sm,
+    color: "#111827",
+    lineHeight: 16
   }
 });
