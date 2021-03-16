@@ -7,7 +7,7 @@ declare module "react-native" {
         | ViewStyle
         | TextStyle
         | ImageStyle
-        | ((...args: any[]) => ViewStyle);
+        | ((...args: any[]) => ViewStyle | TextStyle | ImageStyle);
     };
     export function create<
       T extends CustomNamedStyles<T> | CustomNamedStyles<any>

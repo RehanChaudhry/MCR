@@ -33,21 +33,21 @@ export const ItemChatList = React.memo<ItemChatListProps>(({}) => {
         style={styles.indicator}
       />
 
-      <View style={styles.textWrapper}>
+      <View style={styles.textWrapper(themedColors)}>
         <View style={styles.nameContainer}>
           <AppLabel
-            style={styles.nameText}
+            style={styles.nameText(themedColors)}
             text="Phoenix walker & 2 more"
             weight="semi-bold"
           />
           <AppLabel
-            style={styles.timeText}
+            style={styles.timeText(themedColors)}
             text="10m ago"
             weight="normal"
           />
         </View>
         <AppLabel
-          style={styles.messageText}
+          style={styles.messageText(themedColors)}
           text="OK, I'll let him know.. sorry just saw your message"
           numberOfLines={2}
           ellipsizeMode="tail"
@@ -63,9 +63,7 @@ const styles = StyleSheet.create({
     return {
       paddingHorizontal: SPACE.md,
       flexDirection: "row",
-      borderStartColor: themedColors
-        ? themedColors.primaryBackground
-        : "#005f46",
+      borderStartColor: themedColors.primary,
       borderStartWidth: shouldSHowBorder ? 5 : 0
     };
   },
@@ -80,33 +78,41 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     marginTop: SPACE.md
   },
-  textWrapper: {
-    paddingVertical: SPACE.md,
-    marginStart: SPACE.md,
-    flexDirection: "column",
-    borderBottomColor: "#d1d5db",
-    borderBottomWidth: 0.5,
-    flex: 1
+  textWrapper: (theme: ColorPalette) => {
+    return {
+      paddingVertical: SPACE.md,
+      marginStart: SPACE.md,
+      flexDirection: "column",
+      borderBottomColor: theme.interface["300"],
+      borderBottomWidth: 0.5,
+      flex: 1
+    };
   },
   nameContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
   },
-  nameText: {
-    fontSize: FONT_SIZE.md,
-    color: "#005f46",
-    lineHeight: 25
+  nameText: (theme: ColorPalette) => {
+    return {
+      fontSize: FONT_SIZE.md,
+      color: theme.primary,
+      lineHeight: 25
+    };
   },
-  timeText: {
-    fontSize: FONT_SIZE.sm,
-    color: "#4b5563",
-    lineHeight: 20,
-    marginEnd: SPACE.md
+  timeText: (theme: ColorPalette) => {
+    return {
+      fontSize: FONT_SIZE.sm,
+      color: theme.interface["700"],
+      lineHeight: 20,
+      marginEnd: SPACE.md
+    };
   },
-  messageText: {
-    fontSize: FONT_SIZE.sm,
-    color: "#111827",
-    lineHeight: 16
+  messageText: (theme: ColorPalette) => {
+    return {
+      fontSize: FONT_SIZE.sm,
+      color: theme.label,
+      lineHeight: 16
+    };
   }
 });

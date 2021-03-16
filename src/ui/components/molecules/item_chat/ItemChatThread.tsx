@@ -8,6 +8,8 @@ import {
 import React from "react";
 import { FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
+import { usePreferredTheme } from "hooks";
 
 export interface ItemChatThreadProps extends ViewStyle {
   style?: StyleProp<ViewStyle>;
@@ -15,28 +17,29 @@ export interface ItemChatThreadProps extends ViewStyle {
 
 export const ItemChatThread = React.memo<ItemChatThreadProps>(
   ({ style }) => {
+    const { themedColors } = usePreferredTheme();
     return (
-      <View style={[styles.container1, style]}>
+      <View style={[styles.container, style]}>
         <Image
           style={styles.imgStyle}
           source={require("assets/images/d_user_pic.png")}
         />
 
-        <View style={styles.textWrapper}>
+        <View style={styles.textWrapper(themedColors)}>
           <View style={styles.nameContainer}>
             <AppLabel
-              style={styles.nameText}
+              style={styles.nameText(themedColors)}
               text="Phoenix walker"
               weight="normal"
             />
             <AppLabel
-              style={styles.timeText}
+              style={styles.timeText(themedColors)}
               text="10m ago"
               weight="normal"
             />
           </View>
           <AppLabel
-            style={styles.messageText}
+            style={styles.messageText(themedColors)}
             text="OK, I'll let him know.. sorry just saw your message"
             numberOfLines={2}
             ellipsizeMode="tail"
@@ -49,7 +52,7 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
 );
 
 const styles = StyleSheet.create({
-  container1: {
+  container: {
     paddingVertical: SPACE.md,
     paddingHorizontal: SPACE.md,
     flexDirection: "row"
@@ -64,14 +67,16 @@ const styles = StyleSheet.create({
     height: 45,
     resizeMode: "cover"
   },
-  textWrapper: {
-    paddingVertical: SPACE.md,
-    marginStart: SPACE.md,
-    paddingHorizontal: SPACE.md,
-    flexDirection: "column",
-    borderRadius: 10,
-    flex: 1,
-    backgroundColor: "#E6F0ED"
+  textWrapper: (theme: ColorPalette) => {
+    return {
+      paddingVertical: SPACE.md,
+      marginStart: SPACE.md,
+      paddingHorizontal: SPACE.md,
+      flexDirection: "column",
+      borderRadius: 10,
+      flex: 1,
+      backgroundColor: theme.primaryShade
+    };
   },
   nameContainer: {
     flexDirection: "row",
@@ -79,19 +84,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingBottom: SPACE.sm
   },
-  nameText: {
-    fontSize: FONT_SIZE.lg,
-    color: "#111827"
+  nameText: (theme: ColorPalette) => {
+    return {
+      fontSize: FONT_SIZE.lg,
+      color: theme.primary
+    };
   },
-  messageText: {
-    fontSize: FONT_SIZE.sm,
-    color: "#111827",
-    lineHeight: 16
+  messageText: (theme: ColorPalette) => {
+    return {
+      fontSize: FONT_SIZE.sm,
+      color: theme.label,
+      lineHeight: 16
+    };
   },
-  timeText: {
-    fontSize: FONT_SIZE.sm,
-    color: "#4b5563",
-    lineHeight: 20,
-    marginEnd: SPACE.md
+  timeText: (theme: ColorPalette) => {
+    return {
+      fontSize: FONT_SIZE.sm,
+      color: theme.interface["700"],
+      lineHeight: 20,
+      marginEnd: SPACE.md
+    };
   }
 });
