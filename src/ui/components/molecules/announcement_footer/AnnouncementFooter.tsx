@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { LikeCommentButton } from "ui/components/atoms/like_comment_button/LikeCommentButton";
 
-export interface AppButtonProps extends TouchableOpacityProps {
+export interface AnnouncementFooterProps extends TouchableOpacityProps {
   commentCount: number;
   likeCount: number;
   bottomLineStyle?: StyleProp<ViewStyle>;
@@ -30,7 +30,7 @@ export interface AppButtonProps extends TouchableOpacityProps {
   leftContainerRightButtonStyle?: StyleProp<ViewStyle>;
 }
 
-export const AnnouncementFooter = React.memo<AppButtonProps>(
+export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
   ({
     likeCount = 3,
     commentCount = 5,

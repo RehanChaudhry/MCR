@@ -18,7 +18,7 @@ import {
 import { SvgProp } from "utils/Util";
 import PaperAirplane from "assets/images/paper_airplane.svg";
 
-export interface AppButtonProps extends TouchableOpacityProps {
+export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   leftImage?: SvgProp;
   title: string;
   subTitle: string;
@@ -42,7 +42,7 @@ const rightImage: SvgProp = (
   );
 };
 
-export const AnnouncementHeader = React.memo<AppButtonProps>(
+export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
   ({
     leftImage,
     title,
