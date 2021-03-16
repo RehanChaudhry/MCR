@@ -13,6 +13,7 @@ import {
   ViewStyle
 } from "react-native";
 import { AppLog } from "utils/Util";
+import { SPACE } from "config";
 
 export type BaseItem = {
   key: () => string;
@@ -25,6 +26,7 @@ export type Section<T extends BaseItem, U extends BaseItem> = {
 
 interface Props<ItemT extends BaseItem, ItemU extends BaseItem> {
   style?: StyleProp<ViewStyle>;
+  listHeaderComponent?: React.ReactElement;
   list: Section<ItemT, ItemU>[];
   selectedIndexProp?: number;
   headerView: (
@@ -37,19 +39,23 @@ interface Props<ItemT extends BaseItem, ItemU extends BaseItem> {
     parentIndex: number,
     index: number
   ) => React.ReactElement;
+  listFooterComponent?: React.ReactElement;
 }
 
 const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
   style,
+  listHeaderComponent,
   list,
-  selectedIndexProp = 0,
+  selectedIndexProp,
   headerView,
-  bodyView
+  bodyView,
+  listFooterComponent
 }: Props<ItemT, ItemU>) => {
   AppLog.log("rendering SectionedList");
   const [selectedIndex, setSelectedIndex] = useState<number>(
-    selectedIndexProp
+    selectedIndexProp ?? (list.length > 0 ? 0 : -1)
   );
+
   const sectionList = useRef<SectionList<any, any> | null>(null);
 
   useLayoutEffect(() => {
@@ -105,6 +111,7 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
 
   return (
     <SectionList
+      ListHeaderComponent={listHeaderComponent}
       ref={sectionList}
       sections={list}
       renderItem={bodyItemView}
@@ -114,11 +121,13 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
       onScrollToIndexFailed={(info) => {
         AppLog.log("Failed to scroll to " + info.index);
       }}
+      ListFooterComponent={listFooterComponent}
     />
   );
 };
 
 const styles = StyleSheet.create({
+  sectionedList: { padding: SPACE.sm },
   bodyItem: {
     flexDirection: "column"
   }

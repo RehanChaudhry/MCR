@@ -2,9 +2,9 @@ import React from "react";
 import { ThemeSwitcher } from "ui/components/templates/ThemeSwitcher";
 import { StyleSheet, View } from "react-native";
 import {
-  RangeSlider,
+  QuestionItem,
   SliderCallback
-} from "ui/components/organisms/range_slider/RangeSlider";
+} from "ui/components/organisms/question_item/QuestionItem";
 import { SPACE } from "config";
 import { AppLog } from "utils/Util";
 
@@ -30,7 +30,7 @@ export const RangeSliderView = React.memo<Props>(({}) => {
   return (
     <ThemeSwitcher>
       <View style={styles.container}>
-        <RangeSlider
+        <QuestionItem
           question="When do you normally go to bed.?"
           minValue={0}
           maxValue={100}

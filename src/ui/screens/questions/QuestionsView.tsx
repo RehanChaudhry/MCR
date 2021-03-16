@@ -1,29 +1,26 @@
 import React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import SectionedList, {
   Section
 } from "ui/components/organisms/sectioned_list/SectionedList";
-import DataGenerator from "ui/screens/demo/sectioned_list/DataGenerator";
 import QuestionHeader from "ui/components/molecules/question_header/QuestionHeader";
 import QuestionSection from "models/QuestionSection";
 import { SPACE } from "config";
 import Question from "models/Question";
-import QuestionRow from "ui/components/molecules/question_row/QuestionRow";
-import { ThemeSwitcher } from "ui/components/templates/ThemeSwitcher";
+import { QuestionItem } from "ui/components/organisms/question_item/QuestionItem";
 
-type Props = {};
+type Props = {
+  submitAnswersLoading: boolean;
+  submitAnswers: () => void;
+  questions: Section<QuestionSection, Question>[];
+};
 
-const sections: Section<
-  QuestionSection,
-  Question
->[] = DataGenerator.getSections();
-
-export const SectionedListView = React.memo<Props>(() => {
+export const QuestionsView = ({ questions }: Props) => {
   return (
-    <ThemeSwitcher>
+    <View>
       <SectionedList<QuestionSection, Question>
         style={styles.sectionedList}
-        list={sections}
+        list={questions}
         headerView={(
           header: QuestionSection,
           isSelected: boolean,
@@ -37,20 +34,27 @@ export const SectionedListView = React.memo<Props>(() => {
           index: number
         ) => {
           const style: StyleProp<ViewStyle> =
-            sections[parentIndex].data.length - 1 === index
+            questions[parentIndex].data.length - 1 === index
               ? styles.lastBody
               : null;
-          return <QuestionRow style={style} question={bodyItem} />;
+          return (
+            <QuestionItem
+              question={bodyItem}
+              initialValuesTopSlider={[5]}
+              initialValuesBottomSlider={[3, 7]}
+              style={style}
+              callback={() => {}}
+              preferenceInitialValue={false}
+            />
+          );
         }}
       />
-    </ThemeSwitcher>
+    </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
-  sectionedList: { padding: SPACE.sm },
-  bodyImage: { width: 100, height: 100, margin: 10 },
-  headerImage: { width: 150, height: 150, margin: 10 },
+  sectionedList: { padding: SPACE.md },
   lastBody: {
     borderBottomStartRadius: 5,
     borderBottomEndRadius: 5,
