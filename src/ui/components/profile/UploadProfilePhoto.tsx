@@ -8,11 +8,13 @@ import {
 import {
   AppButton,
   BUTTON_TYPES
-} from "../molecules/app_button/AppButton";
-import { AppLabel } from "../atoms/app_label/AppLabel";
-import { FONT_SIZE, SPACE } from "../../../config";
+} from "ui/components/molecules/app_button/AppButton";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { FONT_SIZE, SPACE } from "config";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
 
 export const UploadProfilePhoto = React.memo(() => {
+  const theme = usePreferredTheme();
   const profileIcon = () => {
     return (
       <ProfileAvatar
@@ -35,9 +37,16 @@ export const UploadProfilePhoto = React.memo(() => {
         />
         <AppButton
           text="Upload Profile Photo"
-          buttonStyle={[styles.uploadButton]}
+          buttonStyle={[
+            styles.uploadButton,
+            { borderColor: theme.themedColors.interface["700"] }
+          ]}
           buttonType={BUTTON_TYPES.BORDER}
-          textStyle={{ fontWeight: "bold" }}
+          textStyle={{
+            fontWeight: "bold",
+            borderColor: theme.themedColors.interface["700"]
+          }}
+          shouldShowError={false}
         />
       </View>
       <AppLabel

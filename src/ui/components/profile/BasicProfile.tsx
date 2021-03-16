@@ -66,9 +66,9 @@ export const BasicProfile = React.memo(
               }
               headingStyle={[
                 styles.headingStyle,
-                { color: theme.themedColors.primaryLabelColor }
+                { color: theme.themedColors.label }
               ]}
-              textStyle={[{ color: theme.themedColors.primaryLabelColor }]}
+              textStyle={[{ color: theme.themedColors.labelSecondary }]}
             />
             <View style={styles.horizontalLine} />
             <UploadProfilePhoto />
@@ -87,7 +87,13 @@ export const BasicProfile = React.memo(
                   returnKeyType: "next",
                   placeholder: "Zain",
                   autoCapitalize: "none",
-                  viewStyle: styles.textFieldStyle
+                  viewStyle: [
+                    styles.textFieldStyle,
+                    {
+                      backgroundColor: theme.themedColors.background,
+                      borderColor: theme.themedColors.border
+                    }
+                  ]
                 }}
               />
               <View style={styles.spacer} />
@@ -102,7 +108,13 @@ export const BasicProfile = React.memo(
                   returnKeyType: "next",
                   placeholder: "Chaudhry",
                   autoCapitalize: "none",
-                  viewStyle: styles.textFieldStyle
+                  viewStyle: [
+                    styles.textFieldStyle,
+                    {
+                      backgroundColor: theme.themedColors.background,
+                      borderColor: theme.themedColors.border
+                    }
+                  ]
                 }}
               />
               <View style={styles.spacer} />
@@ -123,15 +135,14 @@ export const BasicProfile = React.memo(
                   viewStyle: [
                     styles.aboutMe,
                     {
-                      backgroundColor:
-                        theme.themedColors.primaryBackground,
-                      borderColor: theme.themedColors.tertiaryLabelColor
+                      backgroundColor: theme.themedColors.background,
+                      borderColor: theme.themedColors.border
                     }
                   ],
                   style: [
                     styles.inputFieldRow,
                     {
-                      color: theme.themedColors.primaryLabelColor
+                      color: theme.themedColors.label
                     }
                   ],
                   multiline: true,
@@ -153,6 +164,13 @@ export const BasicProfile = React.memo(
                   returnKeyType: "next",
                   placeholder: "facebook.com/",
                   autoCapitalize: "none",
+                  viewStyle: [
+                    styles.textFieldStyle,
+                    {
+                      backgroundColor: theme.themedColors.background,
+                      borderColor: theme.themedColors.border
+                    }
+                  ],
                   leftIcon: facebookIcon
                 }}
               />
@@ -171,6 +189,13 @@ export const BasicProfile = React.memo(
                   returnKeyType: "next",
                   placeholder: "twitter.com/",
                   autoCapitalize: "none",
+                  viewStyle: [
+                    styles.textFieldStyle,
+                    {
+                      backgroundColor: theme.themedColors.background,
+                      borderColor: theme.themedColors.border
+                    }
+                  ],
                   leftIcon: twitterIcon
                 }}
               />
@@ -189,6 +214,13 @@ export const BasicProfile = React.memo(
                   returnKeyType: "next",
                   placeholder: "linkedin.com/",
                   autoCapitalize: "none",
+                  viewStyle: [
+                    styles.textFieldStyle,
+                    {
+                      backgroundColor: theme.themedColors.background,
+                      borderColor: theme.themedColors.border
+                    }
+                  ],
                   leftIcon: linkedInIcon
                 }}
               />
@@ -207,6 +239,13 @@ export const BasicProfile = React.memo(
                   returnKeyType: "next",
                   placeholder: "instagram.com/",
                   autoCapitalize: "none",
+                  viewStyle: [
+                    styles.textFieldStyle,
+                    {
+                      backgroundColor: theme.themedColors.background,
+                      borderColor: theme.themedColors.border
+                    }
+                  ],
                   leftIcon: instagramIcon
                 }}
               />
@@ -225,6 +264,13 @@ export const BasicProfile = React.memo(
                   returnKeyType: "next",
                   placeholder: "snapchat.com/",
                   autoCapitalize: "none",
+                  viewStyle: [
+                    styles.textFieldStyle,
+                    {
+                      backgroundColor: theme.themedColors.background,
+                      borderColor: theme.themedColors.border
+                    }
+                  ],
                   leftIcon: snapChatIcon
                 }}
               />
@@ -243,6 +289,13 @@ export const BasicProfile = React.memo(
                   returnKeyType: "next",
                   placeholder: "tiktok.com/",
                   autoCapitalize: "none",
+                  viewStyle: [
+                    styles.textFieldStyle,
+                    {
+                      backgroundColor: theme.themedColors.background,
+                      borderColor: theme.themedColors.border
+                    }
+                  ],
                   leftIcon: tikTokIcon
                 }}
               />
