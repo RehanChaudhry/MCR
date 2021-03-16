@@ -9,29 +9,44 @@ import {
   View,
   ViewStyle
 } from "react-native";
+import { Color, NumberProp } from "react-native-svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import { SvgProp } from "utils/Util";
+import PaperAirplane from "assets/images/paper_airplane.svg";
 
 export interface AppButtonProps extends TouchableOpacityProps {
   leftImage?: SvgProp;
   title: string;
   subTitle: string;
-  rightImage?: SvgProp;
   titleStyle?: StyleProp<TextStyle>;
   subTitleStyle?: StyleProp<TextStyle>;
   bottomLineStyle?: StyleProp<ViewStyle>;
 }
+
+const rightImage: SvgProp = (
+  color?: Color,
+  width?: NumberProp,
+  height?: NumberProp
+) => {
+  return (
+    <PaperAirplane
+      testID="right-icon"
+      width={width}
+      height={height}
+      fill={color}
+    />
+  );
+};
 
 export const AnnouncementHeader = React.memo<AppButtonProps>(
   ({
     leftImage,
     title,
     subTitle,
-    rightImage,
     titleStyle,
     subTitleStyle,
     bottomLineStyle
@@ -80,7 +95,7 @@ export const AnnouncementHeader = React.memo<AppButtonProps>(
 
 const style = StyleSheet.create({
   container: {
-    marginTop: SPACE.one,
+    marginTop: SPACE.sm,
     flexDirection: "row",
     justifyContent: "space-between"
   },
@@ -94,12 +109,12 @@ const style = StyleSheet.create({
     fontSize: FONT_SIZE.sm
   },
   titleSubtitle: {
-    marginLeft: SPACE.two,
+    marginLeft: SPACE.md,
     justifyContent: "center"
   },
   bottomLine: {
     width: "100%",
     height: 1,
-    marginTop: SPACE.two
+    marginTop: SPACE.md
   }
 });

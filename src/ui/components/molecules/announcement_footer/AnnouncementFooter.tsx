@@ -153,14 +153,14 @@ const style = StyleSheet.create({
     flexDirection: "row"
   },
   leftContainerRightSide: {
-    marginLeft: SPACE.one
+    marginLeft: SPACE.sm
   },
   rightContainerRightSide: {
-    marginLeft: SPACE.one
+    marginLeft: SPACE.sm
   },
   bottomLine: {
     width: "100%",
-    height: 1,
-    marginVertical: SPACE.two
+    height: 0.5,
+    marginVertical: SPACE.md
   }
 });
