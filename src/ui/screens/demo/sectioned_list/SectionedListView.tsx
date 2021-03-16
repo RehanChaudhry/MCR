@@ -48,12 +48,12 @@ export const SectionedListView = React.memo<Props>(() => {
 });
 
 const styles = StyleSheet.create({
-  sectionedList: { padding: SPACE.one },
+  sectionedList: { padding: SPACE.sm },
   bodyImage: { width: 100, height: 100, margin: 10 },
   headerImage: { width: 150, height: 150, margin: 10 },
   lastBody: {
     borderBottomStartRadius: 5,
     borderBottomEndRadius: 5,
-    marginBottom: SPACE.one
+    marginBottom: SPACE.sm
   }
 });
