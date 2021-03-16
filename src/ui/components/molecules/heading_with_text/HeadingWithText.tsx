@@ -1,13 +1,13 @@
 import React from "react";
-import { StyleProp, View, ViewStyle } from "react-native";
+import { StyleProp, TextStyle, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE } from "config";
 
 interface OwnProps {
   headingText: string;
   text: string;
-  headingStyle?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<ViewStyle>;
+  headingStyle?: StyleProp<TextStyle>;
+  textStyle?: StyleProp<TextStyle>;
 }
 
 type Props = OwnProps;

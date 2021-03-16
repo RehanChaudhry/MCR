@@ -16,7 +16,7 @@ exports[`snapshot testing 1`] = `
       "alignItems": "center",
       "alignSelf": "center",
       "backgroundColor": "#FFFFFF",
-      "borderRadius": 10,
+      "borderRadius": 6,
       "elevation": 1,
       "flexDirection": "row",
       "height": 40,
