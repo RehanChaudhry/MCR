@@ -4,8 +4,6 @@ import { LikeCommentButton } from "ui/components/atoms/like_comment_button/LikeC
 import { AppLog } from "utils/Util";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { ThemeSwitcher } from "ui/components/templates/ThemeSwitcher";
-import Like from "assets/images/like.svg";
-import { Color } from "react-native-svg";
 
 export const LikeCommentButtonScreen = React.memo(() => {
   AppLog.log("Rendering App...");
@@ -17,25 +15,6 @@ export const LikeCommentButtonScreen = React.memo(() => {
     }
   };
 
-  const like = (isSelected: boolean, color: Color) => {
-    return (
-      <Like
-        width={16}
-        height={16}
-        fill={isSelected ? theme.themedColors.switchActive : color}
-      />
-    );
-  };
-
-  const comment = () => {
-    return (
-      <Like
-        width={16}
-        height={16}
-        fill={theme.themedColors.primaryIconColor}
-      />
-    );
-  };
   return (
     <ThemeSwitcher>
       <View style={styles.container}>
@@ -44,14 +23,12 @@ export const LikeCommentButtonScreen = React.memo(() => {
           unSelectedText={"Like"}
           textStyle={{ color: theme.themedColors.switchActive }}
           buttonStyle={styles.likeAndComment}
-          icon={like}
           onValueChanged={onValueChanged}
         />
         <LikeCommentButton
           unSelectedText={"Comment"}
           textStyle={{ color: theme.themedColors.primaryLabelColor }}
           buttonStyle={styles.likeAndComment}
-          icon={comment}
           onValueChanged={onValueChanged}
         />
       </View>

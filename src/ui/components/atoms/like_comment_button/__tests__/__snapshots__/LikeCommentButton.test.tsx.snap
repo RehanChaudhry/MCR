@@ -36,6 +36,11 @@ exports[`snapshot testing 1`] = `
     }
     testID="button-container"
   >
+    <SvgMock
+      fill="#c4bbbb"
+      height={16}
+      width={16}
+    />
     <Text
       numberOfLines={1}
       style={
