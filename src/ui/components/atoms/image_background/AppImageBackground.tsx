@@ -62,11 +62,11 @@ const style = StyleSheet.create({
     width: moderateScale(40),
     height: moderateScale(40),
     alignItems: "center",
-    justifyContent: "center",
-    elevation: 3,
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 3,
-    shadowOpacity: 0.15
+    justifyContent: "center"
+    // elevation: 3,
+    // shadowOffset: { width: 0, height: 3 },
+    // shadowRadius: 3,
+    // shadowOpacity: 0.15
   },
   squareShape: {
     borderRadius: 5

@@ -82,8 +82,12 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = ({
                 allowOverlap: false
               }
             : {
-                selectedStyle: {},
-                unselectedStyle: {},
+                selectedStyle: {
+                  backgroundColor: themedColors.interface[200]
+                },
+                unselectedStyle: {
+                  backgroundColor: themedColors.interface[200]
+                },
                 allowOverlap: true
                 /* minMarkerOverlapDistance: 15*/
               })}
