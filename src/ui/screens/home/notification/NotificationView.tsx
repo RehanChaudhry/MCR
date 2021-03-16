@@ -3,8 +3,11 @@ import { SectionList, StyleSheet, View } from "react-native";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { SPACE } from "config";
+import { NotificationData } from "models/api_responses/NotificationsResponseModel";
 
-type Props = {};
+type Props = {
+  notifications: NotificationData[];
+};
 
 const listings = [
   {

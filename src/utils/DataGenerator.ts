@@ -1,5 +1,9 @@
 import { BaseQuestion } from "models/Question";
 import { SectionResponse } from "models/api_responses/QuestionsResponseModel";
+import {
+  NotificationData,
+  NotificationsResponseModel
+} from "models/api_responses/NotificationsResponseModel";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -23,6 +27,25 @@ const getQuestionSections = () => {
 
   return sections;
 };
+const getNotifications = () => {
+  const notifications: NotificationData[] = [];
+  for (let i = 0; i < 5; i++) {
+    const notification: NotificationsResponseModel = {
+      message: "Success",
+      data: {
+        id: `${i}`,
+        type: `Lifestyle Preference ${i}`,
+        date: Date.now().toString(),
+        message:
+          "Your answers to these questions will guide us to recommending the best roommate match for you. " +
+          i
+      }
+    };
+    notifications.push(notification.data);
+  }
+
+  return notifications;
+};
 
 const getQuestion = (
   questionId: number,
@@ -39,4 +62,4 @@ const getQuestion = (
   };
 };
 
-export default { getQuestionSections, getQuestion };
+export default { getQuestionSections, getQuestion, getNotifications };
