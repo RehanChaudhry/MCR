@@ -27,7 +27,7 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
             <AppLabel
               style={styles.nameText}
               text="Phoenix walker"
-              weight="semi-bold"
+              weight="normal"
             />
             <AppLabel
               style={styles.timeText}
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     borderRadius: 10,
     flex: 1,
-    backgroundColor: "#cde3f6"
+    backgroundColor: "#E6F0ED"
   },
   nameContainer: {
     flexDirection: "row",
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   nameText: {
     fontSize: FONT_SIZE.lg,
-    color: "#005f46"
+    color: "#111827"
   },
   messageText: {
     fontSize: FONT_SIZE.sm,
