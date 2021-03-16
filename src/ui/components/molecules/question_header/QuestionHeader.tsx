@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     borderRadius: 5,
-    marginVertical: SPACE.one,
-    padding: SPACE.one,
+    marginVertical: SPACE.sm,
+    padding: SPACE.sm,
 
     // shadow
     shadowColor: "#000000",
@@ -98,11 +98,11 @@ const styles = StyleSheet.create({
   },
   expandedContainer: {
     flexDirection: "column",
-    padding: SPACE.one,
+    padding: SPACE.sm,
     overflow: "hidden",
     borderTopStartRadius: 5,
     borderTopEndRadius: 5,
-    marginTop: SPACE.one
+    marginTop: SPACE.sm
 
     // shadow
     // shadowColor: "#000000",
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
     // shadowRadius: 2,
     // elevation: 5
   },
-  title: { fontSize: FONT_SIZE.md, padding: SPACE.one },
-  description: { fontSize: FONT_SIZE.sm, padding: SPACE.one },
+  title: { fontSize: FONT_SIZE.md, padding: SPACE.sm },
+  description: { fontSize: FONT_SIZE.sm, padding: SPACE.sm },
   arrowContainer: {
     width: moderateScale(30),
     height: moderateScale(30),

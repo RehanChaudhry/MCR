@@ -86,7 +86,7 @@ export const QuestionItem = React.memo<RangeSliderProps>(
               style={[
                 styles.label,
                 styles.questionLabel,
-                { marginEnd: SPACE.one }
+                { marginEnd: SPACE.sm }
               ]}
               text="I have no preference"
             />
@@ -116,7 +116,7 @@ export const QuestionItem = React.memo<RangeSliderProps>(
         ]}
         onLayout={(event) => {
           let { width } = event.nativeEvent.layout;
-          setSliderWidth(width - (SPACE.two + SPACE.two + 10));
+          setSliderWidth(width - (SPACE.md + SPACE.md + 10));
         }}>
         <AppLabel
           style={[styles.label, styles.questionLabel]}
@@ -160,17 +160,17 @@ export const QuestionItem = React.memo<RangeSliderProps>(
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: SPACE.two,
+    paddingVertical: SPACE.md,
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    paddingHorizontal: SPACE.two
+    paddingHorizontal: SPACE.md
   },
   label: {
     fontSize: FONT_SIZE.sm
   },
   questionLabel: {
     fontWeight: "700",
-    marginBottom: SPACE.one
+    marginBottom: SPACE.sm
   },
   labelRight: {
     alignSelf: "flex-end"
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   preferenceWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: SPACE.three,
+    marginVertical: SPACE.lg,
     alignItems: "center"
   },
   switchWrapper: {
