@@ -17,18 +17,6 @@ export interface AppButtonProps extends SwitchProps {
   style?: StyleProp<ViewStyle>;
   showCustomThumb?: boolean;
 }
-/*const setIcon = (isEnabled: boolean) => {
-  if (!isEnabled) {
-    thumbPath = require("assets/images/switch-inactive.png");
-  } else {
-    thumbPath = require("assets/images/switch-active.png");
-  }
-};*/
-
-/*const setIcon = (isEnabled: boolean) => {
-  if (!isEnabled) return <SwitchInActive width={20} height={20} />;
-  else return <SwitchActive width={20} height={20} />;
-};*/
 
 export const AppSwitch = React.memo<AppButtonProps>(
   ({
