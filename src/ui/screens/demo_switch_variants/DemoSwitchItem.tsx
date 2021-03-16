@@ -11,10 +11,7 @@ export const DemoSwitchItem = React.memo<props>(({ item }) => {
   const { themedColors } = usePreferredTheme();
   return (
     <View style={[styles.themeSwitcherRoot]}>
-      <AppLabel
-        text={item.text}
-        style={{ color: themedColors.primaryLabelColor }}
-      />
+      <AppLabel text={item.text} style={{ color: themedColors.label }} />
       <AppSwitch defaultValue={item.isEnabled} onValueChange={() => {}} />
     </View>
   );

@@ -45,8 +45,8 @@ export const RadioGroup = React.memo<Props>(
 
     function getStyleAsPerSelectionStatus(position: number) {
       return selectedPosition === position
-        ? [{ backgroundColor: theme.themedColors.primaryLabelColor }]
-        : [{ backgroundColor: theme.themedColors.primaryBackground }];
+        ? [{ backgroundColor: theme.themedColors.label }]
+        : [{ backgroundColor: theme.themedColors.background }];
     }
 
     const getDirection = () => {
@@ -75,8 +75,8 @@ export const RadioGroup = React.memo<Props>(
               style={[
                 styles.radioButton,
                 {
-                  borderColor: theme.themedColors.primaryLabelColor,
-                  backgroundColor: theme.themedColors.primaryBackground
+                  borderColor: theme.themedColors.label,
+                  backgroundColor: theme.themedColors.background
                 }
               ]}
               onPress={() => buttonPressed(index)}>

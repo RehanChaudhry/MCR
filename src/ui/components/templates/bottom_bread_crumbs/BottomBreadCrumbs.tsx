@@ -16,8 +16,12 @@ const BottomBreadCrumbs: FC<Props> = ({ children, data }) => {
   const renderItem = ({ item }: { item: dataType }) => {
     const backgroundColor =
       item.title === selectedId
-        ? theme.themedColors.breadCrumbsActive
-        : theme.themedColors.breadCrumbsInActive;
+        ? theme.themedColors.primaryShade
+        : theme.themedColors.interface[100];
+    const textColor =
+      item.title === selectedId
+        ? theme.themedColors.primary
+        : theme.themedColors.label;
     return (
       <BottomBreadCrumbsItem
         title={item.title}
@@ -26,6 +30,7 @@ const BottomBreadCrumbs: FC<Props> = ({ children, data }) => {
           item.onPress();
         }}
         style={{ backgroundColor }}
+        textStyle={{ color: textColor }}
       />
     );
   };
@@ -34,13 +39,13 @@ const BottomBreadCrumbs: FC<Props> = ({ children, data }) => {
     <View
       style={[
         styles.root,
-        { backgroundColor: theme.themedColors.primaryBackground }
+        { backgroundColor: theme.themedColors.background }
       ]}>
       {children}
       <View
         style={[
           styles.horizontalLine,
-          { backgroundColor: theme.themedColors.tertiaryLabelColor }
+          { backgroundColor: theme.themedColors.separator }
         ]}
       />
       <FlatListWithPb

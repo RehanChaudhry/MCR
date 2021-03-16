@@ -24,8 +24,8 @@ exports[`Snapshot testing 1`] = `
         "shadowRadius": 1.41,
       },
       Object {
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#000000",
+        "backgroundColor": "#00694e",
+        "borderColor": "#111827",
       },
       undefined,
     ]
@@ -48,7 +48,7 @@ exports[`Snapshot testing 1`] = `
           "padding": 0,
         },
         Object {
-          "color": "#000000",
+          "color": "#111827",
         },
       ]
     }

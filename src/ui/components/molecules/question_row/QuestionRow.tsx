@@ -18,8 +18,8 @@ const QuestionRow = ({ question, style }: Props) => {
       style={[
         styles.expandedContainer,
         {
-          backgroundColor: theme.themedColors.primaryBackground,
-          borderColor: theme.themedColors.tertiaryLabelColor
+          backgroundColor: theme.themedColors.background,
+          borderColor: theme.themedColors.border
         },
         style
       ]}>
@@ -31,7 +31,7 @@ const QuestionRow = ({ question, style }: Props) => {
       <AppLabel
         style={[
           styles.rangeSliderLabel,
-          { color: theme.themedColors.secondaryLabelColor }
+          { color: theme.themedColors.labelSecondary }
         ]}
         text="<Range slider here>"
       />
@@ -57,7 +57,7 @@ const QuestionRow = ({ question, style }: Props) => {
       <AppLabel
         style={[
           styles.rangeSliderLabel,
-          { color: theme.themedColors.secondaryLabelColor }
+          { color: theme.themedColors.labelSecondary }
         ]}
         text="<Range slider here>"
       />

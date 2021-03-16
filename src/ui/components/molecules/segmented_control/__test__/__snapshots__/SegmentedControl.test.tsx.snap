@@ -23,7 +23,7 @@ exports[`Segmented control tests snapshot 1`] = `
   <View
     style={
       Object {
-        "backgroundColor": "#000000",
+        "backgroundColor": "#111827",
         "borderRadius": 5,
         "bottom": 3,
         "end": 3,
@@ -79,7 +79,7 @@ exports[`Segmented control tests snapshot 1`] = `
                 "fontFamily": "Inter-Regular",
               },
               Object {
-                "color": "#000000",
+                "color": "#111827",
               },
               Array [
                 Object {
@@ -87,7 +87,7 @@ exports[`Segmented control tests snapshot 1`] = `
                 },
                 Array [
                   Object {
-                    "color": "#000000",
+                    "color": "#111827",
                   },
                 ],
               ],
@@ -129,7 +129,7 @@ exports[`Segmented control tests snapshot 1`] = `
                 "fontFamily": "Inter-Regular",
               },
               Object {
-                "color": "#000000",
+                "color": "#111827",
               },
               Array [
                 Object {
@@ -179,7 +179,7 @@ exports[`Segmented control tests snapshot 1`] = `
                 "fontFamily": "Inter-Regular",
               },
               Object {
-                "color": "#000000",
+                "color": "#111827",
               },
               Array [
                 Object {
@@ -187,7 +187,7 @@ exports[`Segmented control tests snapshot 1`] = `
                 },
                 Array [
                   Object {
-                    "color": "#000000",
+                    "color": "#111827",
                   },
                 ],
               ],

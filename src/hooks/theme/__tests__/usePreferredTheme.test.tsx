@@ -38,7 +38,15 @@ describe("color validation", () => {
   it("is valid hex", () => {
     for (const [, palette] of Object.entries(colorPaletteContainer)) {
       for (const [, colorValue] of Object.entries(palette)) {
-        expect(isValidHex(colorValue)).toBeTruthy();
+        if (typeof colorValue === "string") {
+          expect(isValidHex(colorValue)).toBeTruthy();
+        } else if (typeof colorValue === "object") {
+          for (const [, color] of Object.entries(colorValue)) {
+            expect(isValidHex(color)).toBeTruthy();
+          }
+        } else {
+          expect(false).toBeTruthy();
+        }
       }
     }
   });

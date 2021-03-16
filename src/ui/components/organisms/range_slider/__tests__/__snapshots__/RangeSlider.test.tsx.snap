@@ -13,7 +13,7 @@ exports[`Renders snapshot as expected 1`] = `
       },
       Object {
         "backgroundColor": "#FFFFFF",
-        "borderColor": "#FFFFFF",
+        "borderColor": "#9CA3AF",
       },
       Object {
         "marginHorizontal": 15,
@@ -30,7 +30,7 @@ exports[`Renders snapshot as expected 1`] = `
             "fontFamily": "Inter-Regular",
           },
           Object {
-            "color": "#000000",
+            "color": "#111827",
           },
           Array [
             Object {
@@ -59,7 +59,7 @@ exports[`Renders snapshot as expected 1`] = `
             "fontFamily": "Inter-Regular",
           },
           Object {
-            "color": "#000000",
+            "color": "#111827",
           },
           Object {
             "fontSize": 18.139805825242718,
@@ -122,7 +122,7 @@ exports[`Renders snapshot as expected 1`] = `
             "fontFamily": "Inter-Regular",
           },
           Object {
-            "color": "#000000",
+            "color": "#111827",
           },
           Array [
             Object {
@@ -160,7 +160,7 @@ exports[`Renders snapshot as expected 1`] = `
               "fontFamily": "Inter-Regular",
             },
             Object {
-              "color": "#000000",
+              "color": "#111827",
             },
             Array [
               Object {
@@ -198,7 +198,7 @@ exports[`Renders snapshot as expected 1`] = `
                 "fontFamily": "Inter-Regular",
               },
               Object {
-                "color": "#000000",
+                "color": "#111827",
               },
               Array [
                 Object {
@@ -229,8 +229,6 @@ exports[`Renders snapshot as expected 1`] = `
           />
         }
         isOn={false}
-        offColor="#c4bbbb"
-        onColor="#224be0"
         onToggle={[Function]}
         style={
           Array [
@@ -252,7 +250,7 @@ exports[`Renders snapshot as expected 1`] = `
             "fontFamily": "Inter-Regular",
           },
           Object {
-            "color": "#000000",
+            "color": "#111827",
           },
           Object {
             "fontSize": 18.139805825242718,
@@ -296,7 +294,7 @@ exports[`Renders snapshot as expected 1`] = `
       onValuesChangeFinish={[Function]}
       selectedStyle={
         Object {
-          "backgroundColor": "#000000",
+          "backgroundColor": "#918b84",
         }
       }
       sliderLength={0}
@@ -309,7 +307,7 @@ exports[`Renders snapshot as expected 1`] = `
       }
       unselectedStyle={
         Object {
-          "backgroundColor": "#3C3C434D",
+          "backgroundColor": "#E5E7EB",
         }
       }
       values={
@@ -329,7 +327,7 @@ exports[`Renders snapshot as expected 1`] = `
             "fontFamily": "Inter-Regular",
           },
           Object {
-            "color": "#000000",
+            "color": "#111827",
           },
           Array [
             Object {

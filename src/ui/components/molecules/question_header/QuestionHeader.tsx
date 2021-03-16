@@ -35,7 +35,7 @@ const QuestionHeader = ({ isExpanded = false, questionGroup }: Props) => {
       <View
         style={[
           styles.expandedContainer,
-          { backgroundColor: theme.themedColors.primaryBackground }
+          { backgroundColor: theme.themedColors.background }
         ]}>
         <AppLabel
           style={styles.title}
@@ -45,7 +45,7 @@ const QuestionHeader = ({ isExpanded = false, questionGroup }: Props) => {
         <AppLabel
           style={[
             styles.description,
-            { color: theme.themedColors.secondaryLabelColor }
+            { color: theme.themedColors.labelSecondary }
           ]}
           text={questionGroup.description}
           numberOfLines={5}
@@ -57,7 +57,7 @@ const QuestionHeader = ({ isExpanded = false, questionGroup }: Props) => {
       <View
         style={[
           styles.collapseContainer,
-          { backgroundColor: theme.themedColors.primaryBackground }
+          { backgroundColor: theme.themedColors.background }
         ]}>
         <AppLabel
           style={styles.title}
@@ -71,7 +71,7 @@ const QuestionHeader = ({ isExpanded = false, questionGroup }: Props) => {
           containerStyle={[
             styles.arrowContainer,
             {
-              backgroundColor: theme.themedColors.secondaryBackground
+              backgroundColor: theme.themedColors.interface[300]
             }
           ]}
         />

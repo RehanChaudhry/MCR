@@ -50,34 +50,25 @@ export const AppInputFieldView = React.memo<Props>(() => {
       <View
         style={[
           styles.mainContainer,
-          { backgroundColor: theme.themedColors.primaryBackground }
+          { backgroundColor: theme.themedColors.background }
         ]}>
         <AppLabel
           text="FULL NAME"
-          style={[
-            styles.text,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[styles.text, { color: theme.themedColors.label }]}
         />
         <AppInputField
           placeholder="Full Name"
           autoFocus
           textContentType="name"
           viewStyle={{
-            backgroundColor: theme.themedColors.secondaryBackground,
-            borderColor: theme.themedColors.primaryBackground
+            backgroundColor: theme.themedColors.background,
+            borderColor: theme.themedColors.border
           }}
-          style={[
-            styles.inputField,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[styles.inputField, { color: theme.themedColors.label }]}
         />
         <AppLabel
           text="SCHOOL NAME WITH STARTED VALUE"
-          style={[
-            styles.text,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[styles.text, { color: theme.themedColors.label }]}
         />
         <AppInputField
           placeholder={STRINGS.login.enter_your_email}
@@ -86,73 +77,55 @@ export const AppInputFieldView = React.memo<Props>(() => {
           autoFocus
           textContentType="emailAddress"
           viewStyle={{
-            backgroundColor: theme.themedColors.secondaryBackground,
-            borderColor: theme.themedColors.primaryBackground
+            backgroundColor: theme.themedColors.background,
+            borderColor: theme.themedColors.border
           }}
-          style={[
-            styles.inputField,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[styles.inputField, { color: theme.themedColors.label }]}
         />
         <AppLabel
           text="EMAIL WITH LEFT ICON"
-          style={[
-            styles.text,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[styles.text, { color: theme.themedColors.label }]}
         />
         <AppInputField
-          style={[
-            styles.inputField,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[styles.inputField, { color: theme.themedColors.label }]}
           placeholder="Email"
           keyboardType="email-address"
           autoFocus
           textContentType="emailAddress"
           leftIcon={LeftIcon}
           viewStyle={{
-            backgroundColor: theme.themedColors.secondaryBackground,
-            borderColor: theme.themedColors.primaryBackground
+            backgroundColor: theme.themedColors.background,
+            borderColor: theme.themedColors.border
           }}
           //iconStyle={{ tintColor: theme.themedColors.primaryLabelColor }}
         />
         <AppLabel
           text="EMAIL WITH RIGHT ICON"
-          style={[
-            styles.text,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[styles.text, { color: theme.themedColors.label }]}
         />
         <AppInputField
-          style={[
-            styles.inputField,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[styles.inputField, { color: theme.themedColors.label }]}
           placeholder="Email"
           keyboardType="email-address"
           autoFocus
           textContentType="emailAddress"
           rightIcon={RightIcon}
           viewStyle={{
-            backgroundColor: theme.themedColors.secondaryBackground,
-            borderColor: theme.themedColors.primaryBackground
+            backgroundColor: theme.themedColors.background,
+            borderColor: theme.themedColors.border
           }}
           //iconStyle={{ tintColor: theme.themedColors.primaryLabelColor }}
         />
         <AppLabel
           text="CENTERED TWO INPUT FIELDS"
-          style={[
-            styles.text,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[styles.text, { color: theme.themedColors.label }]}
         />
         <View style={styles.dualInputTextContainer}>
           <View style={styles.firstSubContainer}>
             <AppInputField
               style={[
                 styles.inputFieldRow,
-                { color: theme.themedColors.primaryLabelColor }
+                { color: theme.themedColors.label }
               ]}
               placeholder="Email"
               keyboardType="email-address"
@@ -160,8 +133,8 @@ export const AppInputFieldView = React.memo<Props>(() => {
               textContentType="emailAddress"
               rightIcon={RightIcon}
               viewStyle={{
-                backgroundColor: theme.themedColors.secondaryBackground,
-                borderColor: theme.themedColors.primaryBackground
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
               }}
               // iconStyle={{
               //   tintColor: theme.themedColors.primaryLabelColor
@@ -172,7 +145,7 @@ export const AppInputFieldView = React.memo<Props>(() => {
             <AppInputField
               style={[
                 styles.inputFieldRow,
-                { color: theme.themedColors.primaryLabelColor }
+                { color: theme.themedColors.label }
               ]}
               placeholder="Email"
               keyboardType="email-address"
@@ -180,8 +153,8 @@ export const AppInputFieldView = React.memo<Props>(() => {
               textContentType="emailAddress"
               rightIcon={RightIcon}
               viewStyle={{
-                backgroundColor: theme.themedColors.secondaryBackground,
-                borderColor: theme.themedColors.primaryBackground
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
               }}
               // iconStyle={{
               //   tintColor: theme.themedColors.primaryLabelColor
@@ -191,22 +164,19 @@ export const AppInputFieldView = React.memo<Props>(() => {
         </View>
         <AppLabel
           text="DESCRIPTION"
-          style={[
-            styles.text,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[styles.text, { color: theme.themedColors.label }]}
         />
         <AppInputField
           style={[
             styles.inputFieldRow,
-            { color: theme.themedColors.primaryLabelColor }
+            { color: theme.themedColors.label }
           ]}
           placeholder="Write something about you"
           viewStyle={[
             styles.descriptionView,
             {
-              backgroundColor: theme.themedColors.secondaryBackground,
-              borderColor: theme.themedColors.primaryBackground
+              backgroundColor: theme.themedColors.background,
+              borderColor: theme.themedColors.border
             }
           ]}
           // iconStyle={{
@@ -218,25 +188,22 @@ export const AppInputFieldView = React.memo<Props>(() => {
 
         <AppLabel
           text="INPUT FIELD WITH BORDER"
-          style={[
-            styles.text,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[styles.text, { color: theme.themedColors.label }]}
         />
 
         <AppInputField
           style={[
             styles.inputFieldRow,
             {
-              color: theme.themedColors.primaryLabelColor
+              color: theme.themedColors.label
             }
           ]}
           placeholder="Write something about you"
           viewStyle={[
             styles.descriptionViewWithBorder,
             {
-              backgroundColor: theme.themedColors.secondaryBackground,
-              borderColor: theme.themedColors.tertiaryLabelColor
+              backgroundColor: theme.themedColors.background,
+              borderColor: theme.themedColors.border
             }
           ]}
           // iconStyle={{
