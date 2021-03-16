@@ -38,7 +38,7 @@ exports[`Renders snapshot as expected 1`] = `
             },
             Object {
               "fontWeight": "700",
-              "marginBottom": 9.069902912621359,
+              "marginBottom": 12.093203883495146,
             },
           ],
         ],
@@ -147,7 +147,7 @@ exports[`Renders snapshot as expected 1`] = `
         "alignItems": "center",
         "flexDirection": "row",
         "justifyContent": "space-between",
-        "marginVertical": 27.20970873786408,
+        "marginVertical": 24.186407766990293,
       }
     }
   >
@@ -168,7 +168,7 @@ exports[`Renders snapshot as expected 1`] = `
               },
               Object {
                 "fontWeight": "700",
-                "marginBottom": 9.069902912621359,
+                "marginBottom": 12.093203883495146,
               },
             ],
           ],
@@ -206,10 +206,10 @@ exports[`Renders snapshot as expected 1`] = `
                 },
                 Object {
                   "fontWeight": "700",
-                  "marginBottom": 9.069902912621359,
+                  "marginBottom": 12.093203883495146,
                 },
                 Object {
-                  "marginEnd": 9.069902912621359,
+                  "marginEnd": 12.093203883495146,
                 },
               ],
             ],

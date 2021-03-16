@@ -10,7 +10,7 @@ import {
   BUTTON_TYPES
 } from "../molecules/app_button/AppButton";
 import { AppLabel } from "../atoms/app_label/AppLabel";
-import { FONT_SIZE } from "../../../config";
+import { FONT_SIZE, SPACE } from "../../../config";
 
 export const UploadProfilePhoto = React.memo(() => {
   const profileIcon = () => {
@@ -53,19 +53,18 @@ export const UploadProfilePhoto = React.memo(() => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
-    paddingHorizontal: 8,
-    paddingBottom: 8
+    flexDirection: "column"
   },
   subContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+    flex: 1
   },
   uploadButton: {
-    height: 40,
-    width: "80%",
-    marginHorizontal: 12
+    height: 44,
+    width: "82%",
+    marginHorizontal: SPACE.md
   },
   text: {
-    paddingVertical: 16
+    paddingVertical: SPACE.xl
   }
 });

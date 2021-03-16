@@ -16,10 +16,10 @@ exports[`snapshot testing 1`] = `
         "flexDirection": "row",
         "fontFamily": "Inter-Regular",
         "fontSize": 21.163106796116505,
-        "height": 40,
+        "height": 42,
         "justifyContent": "center",
-        "paddingLeft": 12,
-        "paddingRight": 12,
+        "paddingLeft": 18.139805825242718,
+        "paddingRight": 18.139805825242718,
         "shadowColor": "#000000",
         "shadowOffset": Object {
           "height": 1,

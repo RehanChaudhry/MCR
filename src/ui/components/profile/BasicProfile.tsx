@@ -5,11 +5,17 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { CardView } from "../atoms/CardView";
 import Screen from "../atoms/Screen";
 import { UploadProfilePhoto } from "./UploadProfilePhoto";
-import { COLORS } from "config";
+import { COLORS, SPACE } from "config";
 import * as Yup from "yup";
 import { FormikValues } from "formik";
-import AppForm from "../molecules/app_form/AppForm";
+import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormField from "../molecules/app_form/AppFormField";
+import FacebookIcon from "assets/images/facebook_icon.svg";
+import TwitterIcon from "assets/images/twitter_icon.svg";
+import LinkedInIcon from "assets/images/linkedin_icon.svg";
+import InstagramIcon from "assets/images/instagram_icon.svg";
+import SnapChatIcon from "assets/images/snapchat_icon.svg";
+import TikTokIcon from "assets/images/tiktok_icon.svg";
 
 //forms validation
 const validationSchema = Yup.object().shape({
@@ -26,6 +32,7 @@ const validationSchema = Yup.object().shape({
 
 export const BasicProfile = React.memo(
   ({
+    // @ts-ignore
     initialValues = {
       firstName: "",
       lastName: "",
@@ -37,9 +44,17 @@ export const BasicProfile = React.memo(
       snapChatProfile: "",
       tikTokProfile: ""
     },
+    // @ts-ignore
+
     onSubmit = (_values: FormikValues) => {}
   }) => {
     const theme = usePreferredTheme();
+    const facebookIcon = () => <FacebookIcon width={20} height={20} />;
+    const twitterIcon = () => <TwitterIcon width={20} height={20} />;
+    const linkedInIcon = () => <LinkedInIcon width={20} height={20} />;
+    const instagramIcon = () => <InstagramIcon width={20} height={20} />;
+    const snapChatIcon = () => <SnapChatIcon width={20} height={20} />;
+    const tikTokIcon = () => <TikTokIcon width={20} height={20} />;
     return (
       <Screen>
         <ScrollView>
@@ -53,10 +68,7 @@ export const BasicProfile = React.memo(
                 styles.headingStyle,
                 { color: theme.themedColors.primaryLabelColor }
               ]}
-              textStyle={[
-                styles.textStyle,
-                { color: theme.themedColors.primaryLabelColor }
-              ]}
+              textStyle={[{ color: theme.themedColors.primaryLabelColor }]}
             />
             <View style={styles.horizontalLine} />
             <UploadProfilePhoto />
@@ -68,34 +80,40 @@ export const BasicProfile = React.memo(
                 fieldTestID="firstName"
                 validationLabelTestID={"firstNameValidationLabel"}
                 name="firstName"
-                labelProps={{ text: "First Name" }}
+                labelProps={{ text: "First Name", weight: "semi-bold" }}
                 fieldInputProps={{
                   textContentType: "name",
                   keyboardType: "default",
                   returnKeyType: "next",
                   placeholder: "Zain",
-                  //value: "Zain",
-                  autoCapitalize: "none"
+                  autoCapitalize: "none",
+                  viewStyle: styles.textFieldStyle
                 }}
               />
+              <View style={styles.spacer} />
               <AppFormField
                 fieldTestID="lastName"
                 validationLabelTestID={"lastNameValidationLabel"}
                 name="lastName"
-                labelProps={{ text: "Last Name" }}
+                labelProps={{ text: "Last Name", weight: "semi-bold" }}
                 fieldInputProps={{
                   textContentType: "name",
                   keyboardType: "default",
                   returnKeyType: "next",
                   placeholder: "Chaudhry",
-                  autoCapitalize: "none"
+                  autoCapitalize: "none",
+                  viewStyle: styles.textFieldStyle
                 }}
               />
+              <View style={styles.spacer} />
               <AppFormField
                 fieldTestID="aboutMe"
                 validationLabelTestID={"aboutMeValidationLabel"}
                 name="aboutMe"
-                labelProps={{ text: "About Me" }}
+                labelProps={{
+                  text: "About Me",
+                  weight: "semi-bold"
+                }}
                 fieldInputProps={{
                   textContentType: "name",
                   keyboardType: "default",
@@ -120,17 +138,112 @@ export const BasicProfile = React.memo(
                   textAlignVertical: "top"
                 }}
               />
+              <View style={styles.spacer} />
               <AppFormField
-                fieldTestID="lastName"
-                validationLabelTestID={"lastNameValidationLabel"}
-                name="lastName"
-                labelProps={{ text: "Last Name" }}
+                fieldTestID="faceBookProfile"
+                validationLabelTestID={"faceBookProfileValidationLabel"}
+                name="faceBookProfile"
+                labelProps={{
+                  text: "Facebook Profile",
+                  weight: "semi-bold"
+                }}
                 fieldInputProps={{
                   textContentType: "name",
                   keyboardType: "default",
                   returnKeyType: "next",
-                  placeholder: "Chaudhry",
-                  autoCapitalize: "none"
+                  placeholder: "facebook.com/",
+                  autoCapitalize: "none",
+                  leftIcon: facebookIcon
+                }}
+              />
+              <View style={styles.spacer} />
+              <AppFormField
+                fieldTestID="twitterProfile"
+                validationLabelTestID={"twitterProfileValidationLabel"}
+                name="twitterProfile"
+                labelProps={{
+                  text: "Twitter Profile",
+                  weight: "semi-bold"
+                }}
+                fieldInputProps={{
+                  textContentType: "name",
+                  keyboardType: "default",
+                  returnKeyType: "next",
+                  placeholder: "twitter.com/",
+                  autoCapitalize: "none",
+                  leftIcon: twitterIcon
+                }}
+              />
+              <View style={styles.spacer} />
+              <AppFormField
+                fieldTestID="linkedInProfile"
+                validationLabelTestID={"linkedInProfileValidationLabel"}
+                name="linkedInProfile"
+                labelProps={{
+                  text: "Linkedin Profile",
+                  weight: "semi-bold"
+                }}
+                fieldInputProps={{
+                  textContentType: "name",
+                  keyboardType: "default",
+                  returnKeyType: "next",
+                  placeholder: "linkedin.com/",
+                  autoCapitalize: "none",
+                  leftIcon: linkedInIcon
+                }}
+              />
+              <View style={styles.spacer} />
+              <AppFormField
+                fieldTestID="instagramProfile"
+                validationLabelTestID={"instagramProfileValidationLabel"}
+                name="instagramProfile"
+                labelProps={{
+                  text: "Instagram Profile",
+                  weight: "semi-bold"
+                }}
+                fieldInputProps={{
+                  textContentType: "name",
+                  keyboardType: "default",
+                  returnKeyType: "next",
+                  placeholder: "instagram.com/",
+                  autoCapitalize: "none",
+                  leftIcon: instagramIcon
+                }}
+              />
+              <View style={styles.spacer} />
+              <AppFormField
+                fieldTestID="snapChatProfile"
+                validationLabelTestID={"snapChatProfileValidationLabel"}
+                name="snapChatProfile"
+                labelProps={{
+                  text: "SnapChat Profile",
+                  weight: "semi-bold"
+                }}
+                fieldInputProps={{
+                  textContentType: "name",
+                  keyboardType: "default",
+                  returnKeyType: "next",
+                  placeholder: "snapchat.com/",
+                  autoCapitalize: "none",
+                  leftIcon: snapChatIcon
+                }}
+              />
+              <View style={styles.spacer} />
+              <AppFormField
+                fieldTestID="tikTokProfile"
+                validationLabelTestID={"tikTokProfileValidationLabel"}
+                name="tikTokProfile"
+                labelProps={{
+                  text: "TikTok Profile",
+                  weight: "semi-bold"
+                }}
+                fieldInputProps={{
+                  textContentType: "name",
+                  keyboardType: "default",
+                  returnKeyType: "next",
+                  placeholder: "tiktok.com/",
+                  autoCapitalize: "none",
+                  leftIcon: tikTokIcon
                 }}
               />
             </AppForm>
@@ -143,26 +256,29 @@ export const BasicProfile = React.memo(
 
 const styles = StyleSheet.create({
   headingStyle: {
-    paddingHorizontal: 8,
-    paddingVertical: 12
-  },
-  textStyle: {
-    paddingHorizontal: 8
+    // paddingHorizontal: SPACE.sm,
+    paddingVertical: SPACE.sm
   },
   horizontalLine: {
     backgroundColor: COLORS.grey,
     height: 0.3,
-    marginVertical: 16
+    marginVertical: SPACE.lg
   },
   cardStyles: {
-    margin: 12,
-    padding: 8
+    margin: SPACE.lg,
+    padding: SPACE.lg
   },
   aboutMe: {
-    height: 100,
+    height: 80,
+    borderWidth: 1
+  },
+  textFieldStyle: {
     borderWidth: 1
   },
   inputFieldRow: {
     flex: 1
+  },
+  spacer: {
+    paddingBottom: SPACE.lg
   }
 });
