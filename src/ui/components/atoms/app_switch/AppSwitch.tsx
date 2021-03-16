@@ -58,8 +58,8 @@ export const AppSwitch = React.memo<AppButtonProps>(
       <ToggleSwitch
         testID="app-switch"
         isOn={isEnabled}
-        onColor={themedColors.switchActive}
-        offColor={themedColors.switchInActive}
+        onColor={themedColors.primary}
+        offColor={themedColors.interface["300"]}
         onToggle={toggleSwitch}
         thumbOffStyle={styles.thumb}
         icon={

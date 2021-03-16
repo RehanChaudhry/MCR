@@ -65,8 +65,8 @@ export const AppDropdown = React.memo<AppDropdownProps>(
         style={[
           styles.root,
           {
-            borderColor: themedColors.primaryLabelColor,
-            backgroundColor: themedColors.primaryBackground
+            borderColor: themedColors.border,
+            backgroundColor: themedColors.background
           },
           style
         ]}>
