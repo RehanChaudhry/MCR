@@ -50,8 +50,8 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
 
 const styles = StyleSheet.create({
   container1: {
-    paddingVertical: SPACE.two,
-    paddingHorizontal: SPACE.two,
+    paddingVertical: SPACE.md,
+    paddingHorizontal: SPACE.md,
     flexDirection: "row"
   },
   indicator: {
@@ -65,9 +65,9 @@ const styles = StyleSheet.create({
     resizeMode: "cover"
   },
   textWrapper: {
-    paddingVertical: SPACE.two,
-    marginStart: SPACE.two,
-    paddingHorizontal: SPACE.two,
+    paddingVertical: SPACE.md,
+    marginStart: SPACE.md,
+    paddingHorizontal: SPACE.md,
     flexDirection: "column",
     borderRadius: 10,
     flex: 1,
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingBottom: SPACE.one
+    paddingBottom: SPACE.sm
   },
   nameText: {
     fontSize: FONT_SIZE.lg,
@@ -92,6 +92,6 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm,
     color: "#4b5563",
     lineHeight: 20,
-    marginEnd: SPACE.two
+    marginEnd: SPACE.md
   }
 });

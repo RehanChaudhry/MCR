@@ -61,7 +61,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(({}) => {
 const styles = StyleSheet.create({
   container: (shouldSHowBorder: boolean, themedColors: ColorPalette) => {
     return {
-      paddingHorizontal: SPACE.two,
+      paddingHorizontal: SPACE.md,
       flexDirection: "row",
       borderStartColor: themedColors
         ? themedColors.primaryBackground
@@ -78,11 +78,11 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     resizeMode: "cover",
-    marginTop: SPACE.two
+    marginTop: SPACE.md
   },
   textWrapper: {
-    paddingVertical: SPACE.two,
-    marginHorizontal: SPACE.two,
+    paddingVertical: SPACE.md,
+    marginHorizontal: SPACE.md,
     flexDirection: "column",
     borderBottomColor: "#d1d5db",
     borderBottomWidth: 0.5,
@@ -107,6 +107,6 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm,
     color: "#4b5563",
     lineHeight: 20,
-    marginEnd: SPACE.two
+    marginEnd: SPACE.md
   }
 });
