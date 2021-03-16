@@ -3,22 +3,20 @@ import { StyleSheet, View } from "react-native";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import BottomBreadCrumbsItem from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbsItem";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
-import { SPACE } from "config";
 
-export type BreadCrumbsItem = {
+export type Item = {
   title: string;
   onPress: () => void;
 };
 
 type Props = {
-  children?: React.ReactNode;
-  data: BreadCrumbsItem[];
+  data: Item[];
 };
 
-const BottomBreadCrumbs: FC<Props> = ({ children, data }) => {
+const BottomBreadCrumbs: FC<Props> = ({ data }) => {
   const theme = usePreferredTheme();
   const [selectedId, setSelectedId] = useState(data[0].title);
-  const renderItem = ({ item }: { item: BreadCrumbsItem }) => {
+  const renderItem = ({ item }: { item: Item }) => {
     const backgroundColor =
       item.title === selectedId
         ? theme.themedColors.primaryShade
@@ -46,7 +44,6 @@ const BottomBreadCrumbs: FC<Props> = ({ children, data }) => {
         styles.root,
         { backgroundColor: theme.themedColors.background }
       ]}>
-      {children}
       <View
         style={[
           styles.horizontalLine,
@@ -77,7 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF"
   },
   horizontalLine: {
-    height: 0.5
+    height: 1
   }
 });
 

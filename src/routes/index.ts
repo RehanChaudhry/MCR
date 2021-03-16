@@ -3,4 +3,3 @@ export { AuthRoutes } from "./AuthRoutes";
 
 export type { HomeDrawerParamList } from "routes/HomeDrawer";
 export { HomeRoutes } from "./HomeRoutes";
-export { DemoRoutes } from "./DemoRoutes";

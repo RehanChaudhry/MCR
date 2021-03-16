@@ -1,26 +1,60 @@
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import React, { FC, useLayoutEffect } from "react";
-import { HomeDrawerParamList } from "routes";
+import { COLORS } from "config";
+import React, { FC, useRef } from "react";
+import { StyleSheet, View } from "react-native";
 import { ProfileRoutes } from "routes/ProfileRoutes";
-import NoHeader from "ui/components/headers/NoHeader";
+import { ProfileStackParamList } from "routes/ProfileBottomBar";
+import BottomBreadCrumbs, {
+  Item
+} from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
 
-type HomeNavigationProp = StackNavigationProp<
-  HomeDrawerParamList,
-  "Profile"
->;
+type ProfileNavigationProp = BottomTabNavigationProp<ProfileStackParamList>;
 
 type Props = {};
 
 const ProfileController: FC<Props> = () => {
-  const navigation = useNavigation<HomeNavigationProp>();
+  const navigation = useNavigation<ProfileNavigationProp>();
 
-  // Add no toolbar
-  useLayoutEffect(() => {
-    navigation.setOptions(NoHeader.create());
-  }, [navigation]);
+  const _items: Item[] = [
+    {
+      title: "View Profile",
+      onPress: () => {
+        navigation.navigate("ViewProfile");
+      }
+    },
+    {
+      title: "Update Profile",
+      onPress: () => {
+        navigation.navigate("UpdateProfile");
+      }
+    },
+    {
+      title: "Update Questionnaire",
+      onPress: () => {
+        navigation.navigate("UpdateQuestionnaire");
+      }
+    }
+  ];
 
-  return <ProfileRoutes />;
+  const itemsRef = useRef(_items);
+
+  return (
+    <View style={styles.container}>
+      <ProfileRoutes />
+      <BottomBreadCrumbs data={itemsRef.current} />
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "stretch",
+    flexDirection: "column",
+    justifyContent: "center",
+    backgroundColor: COLORS.backgroundColor,
+    flex: 1
+  }
+});
 
 export default ProfileController;

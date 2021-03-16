@@ -1,24 +1,24 @@
-import React, { FC } from "react";
-import { ProfileStack } from "routes/ProfileStack";
+import React from "react";
+import { ProfileBottomBar } from "routes/ProfileBottomBar";
 import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
 import UpdateQuestionnaireController from "ui/screens/home/profile/update_questionnaire/UpdateQuestionnaireController";
 import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
 
-export const ProfileRoutes: FC = () => {
+export const ProfileRoutes = () => {
   return (
-    <ProfileStack.Navigator>
-      <ProfileStack.Screen
+    <ProfileBottomBar.Navigator tabBar={() => null}>
+      <ProfileBottomBar.Screen
         name="ViewProfile"
         component={ViewProfileController}
       />
-      <ProfileStack.Screen
+      <ProfileBottomBar.Screen
         name="UpdateProfile"
         component={UpdateProfileController}
       />
-      <ProfileStack.Screen
+      <ProfileBottomBar.Screen
         name="UpdateQuestionnaire"
         component={UpdateQuestionnaireController}
       />
-    </ProfileStack.Navigator>
+    </ProfileBottomBar.Navigator>
   );
 };
