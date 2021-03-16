@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import BottomBreadCrumbsItem from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbsItem";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { SPACE } from "config";
 
 export type Item = {
   title: string;
