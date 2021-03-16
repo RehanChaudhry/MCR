@@ -1,6 +1,6 @@
 import React from "react";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { CardView } from "../atoms/CardView";
 import Screen from "../atoms/Screen";
@@ -10,6 +10,7 @@ import * as Yup from "yup";
 import { FormikValues } from "formik";
 import AppForm from "../molecules/app_form/AppForm";
 import AppFormField from "../molecules/app_form/AppFormField";
+
 //forms validation
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("Enter your first name"),
@@ -41,97 +42,100 @@ export const BasicProfile = React.memo(
     const theme = usePreferredTheme();
     return (
       <Screen>
-        <CardView style={styles.cardStyles}>
-          <HeadingWithText
-            headingText={"Basic Profile"}
-            text={
-              "This information will be displayed publicly so be careful what you share."
-            }
-            headingStyle={[
-              styles.headingStyle,
-              { color: theme.themedColors.primaryLabelColor }
-            ]}
-            textStyle={[
-              styles.textStyle,
-              { color: theme.themedColors.primaryLabelColor }
-            ]}
-          />
-          <View style={styles.horizontalLine} />
-          <UploadProfilePhoto />
-          <AppForm
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            validationSchema={validationSchema}>
-            <AppFormField
-              fieldTestID="firstName"
-              validationLabelTestID={"firstNameValidationLabel"}
-              name="firstName"
-              labelProps={{ text: "First Name" }}
-              fieldInputProps={{
-                textContentType: "name",
-                keyboardType: "default",
-                returnKeyType: "next",
-                placeholder: "Zain",
-                //value: "Zain",
-                autoCapitalize: "none"
-              }}
+        <ScrollView>
+          <CardView style={styles.cardStyles}>
+            <HeadingWithText
+              headingText={"Basic Profile"}
+              text={
+                "This information will be displayed publicly so be careful what you share."
+              }
+              headingStyle={[
+                styles.headingStyle,
+                { color: theme.themedColors.primaryLabelColor }
+              ]}
+              textStyle={[
+                styles.textStyle,
+                { color: theme.themedColors.primaryLabelColor }
+              ]}
             />
-            <AppFormField
-              fieldTestID="lastName"
-              validationLabelTestID={"lastNameValidationLabel"}
-              name="lastName"
-              labelProps={{ text: "Last Name" }}
-              fieldInputProps={{
-                textContentType: "name",
-                keyboardType: "default",
-                returnKeyType: "next",
-                placeholder: "Chaudhry",
-                autoCapitalize: "none"
-              }}
-            />
-            <AppFormField
-              fieldTestID="aboutMe"
-              validationLabelTestID={"aboutMeValidationLabel"}
-              name="aboutMe"
-              labelProps={{ text: "About Me" }}
-              fieldInputProps={{
-                textContentType: "name",
-                keyboardType: "default",
-                returnKeyType: "next",
-                placeholder: "Brief Description Of Your Profile",
-                autoCapitalize: "none",
-                viewStyle: [
-                  styles.aboutMe,
-                  {
-                    backgroundColor: theme.themedColors.primaryBackground,
-                    borderColor: theme.themedColors.tertiaryLabelColor
-                  }
-                ],
-                style: [
-                  styles.inputFieldRow,
-                  {
-                    color: theme.themedColors.primaryLabelColor
-                  }
-                ],
-                multiline: true,
-                textAlignVertical: "top"
-              }}
-            />
-            <AppFormField
-              fieldTestID="lastName"
-              validationLabelTestID={"lastNameValidationLabel"}
-              name="lastName"
-              labelProps={{ text: "Last Name" }}
-              fieldInputProps={{
-                textContentType: "name",
-                keyboardType: "default",
-                returnKeyType: "next",
-                placeholder: "Chaudhry",
-                autoCapitalize: "none"
-              }}
-            />
-          </AppForm>
-        </CardView>
+            <View style={styles.horizontalLine} />
+            <UploadProfilePhoto />
+            <AppForm
+              initialValues={initialValues}
+              onSubmit={onSubmit}
+              validationSchema={validationSchema}>
+              <AppFormField
+                fieldTestID="firstName"
+                validationLabelTestID={"firstNameValidationLabel"}
+                name="firstName"
+                labelProps={{ text: "First Name" }}
+                fieldInputProps={{
+                  textContentType: "name",
+                  keyboardType: "default",
+                  returnKeyType: "next",
+                  placeholder: "Zain",
+                  //value: "Zain",
+                  autoCapitalize: "none"
+                }}
+              />
+              <AppFormField
+                fieldTestID="lastName"
+                validationLabelTestID={"lastNameValidationLabel"}
+                name="lastName"
+                labelProps={{ text: "Last Name" }}
+                fieldInputProps={{
+                  textContentType: "name",
+                  keyboardType: "default",
+                  returnKeyType: "next",
+                  placeholder: "Chaudhry",
+                  autoCapitalize: "none"
+                }}
+              />
+              <AppFormField
+                fieldTestID="aboutMe"
+                validationLabelTestID={"aboutMeValidationLabel"}
+                name="aboutMe"
+                labelProps={{ text: "About Me" }}
+                fieldInputProps={{
+                  textContentType: "name",
+                  keyboardType: "default",
+                  returnKeyType: "next",
+                  placeholder: "Brief Description Of Your Profile",
+                  autoCapitalize: "none",
+                  viewStyle: [
+                    styles.aboutMe,
+                    {
+                      backgroundColor:
+                        theme.themedColors.primaryBackground,
+                      borderColor: theme.themedColors.tertiaryLabelColor
+                    }
+                  ],
+                  style: [
+                    styles.inputFieldRow,
+                    {
+                      color: theme.themedColors.primaryLabelColor
+                    }
+                  ],
+                  multiline: true,
+                  textAlignVertical: "top"
+                }}
+              />
+              <AppFormField
+                fieldTestID="lastName"
+                validationLabelTestID={"lastNameValidationLabel"}
+                name="lastName"
+                labelProps={{ text: "Last Name" }}
+                fieldInputProps={{
+                  textContentType: "name",
+                  keyboardType: "default",
+                  returnKeyType: "next",
+                  placeholder: "Chaudhry",
+                  autoCapitalize: "none"
+                }}
+              />
+            </AppForm>
+          </CardView>
+        </ScrollView>
       </Screen>
     );
   }
