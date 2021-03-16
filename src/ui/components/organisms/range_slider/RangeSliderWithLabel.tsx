@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   questionLabel: {
     fontWeight: "700",
-    marginBottom: SPACE.one
+    marginBottom: SPACE.sm
   },
   labelRight: {
     alignSelf: "flex-end"

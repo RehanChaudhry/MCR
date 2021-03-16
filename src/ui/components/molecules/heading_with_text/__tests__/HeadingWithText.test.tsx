@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react-native";
 import React from "react";
-import { HeadingWithText } from "ui/components/atoms/heading_with_text/HeadingWithText";
+import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 
 test("check render properly", () => {
   const { getByTestId } = render(
