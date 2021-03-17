@@ -98,41 +98,6 @@ export const SplashView = React.memo<Props>(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // function handleLink(link: FirebaseDynamicLinksTypes.DynamicLink | null) {
-  //   AppLog.log('Link: ' + link);
-  //   const parsedLink = DynamicLinking.parseLink(link);
-  //   if (parsedLink !== undefined) {
-  //     const { token, action, name } = parsedLink;
-  //     AppLog.log('Token: ' + token);
-  //     AppLog.log('action: ' + action);
-  //     AppLog.log('name: ' + name);
-  //     // update refs
-  //     initialRouteNameRef.current = 'CreatePassword';
-  //     isForAccountActivationRef.current = action === 'activate';
-  //     nameRef.current = name;
-  //     dynamicLinkTokenRef.current = token;
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   AppLog.log('In Link useEffect: ');
-  //   dynamicLinks().getInitialLink().then(handleLink);
-  //   const unsubscribeLinkListening = dynamicLinks().onLink(
-  //     (link: FirebaseDynamicLinksTypes.DynamicLink | null) => {
-  //       // because react-navigation is not re-rendering the screen
-  //       // if we don't alter the react DOM
-  //       // i.e. upon receiving a link while the app is opened,
-  //       // showing a splash screen first, and then re-rendering the
-  //       // navigation container again
-  //       setIsReady(false);
-  //       handleLink(link);
-  //     }
-  //   );
-  //
-  //   // When component is unmounted, remove the listener
-  //   return () => unsubscribeLinkListening();
-  // }, []);
-
   if (!isReady) {
     return (
       <View style={styles.container}>
