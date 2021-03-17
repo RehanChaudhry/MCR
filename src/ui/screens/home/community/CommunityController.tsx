@@ -24,7 +24,7 @@ const data: CommunityData[] = [
     time: "3 hours ago",
     text:
       "First day at college, Ohio university. Thank you so much for watching",
-    videoUrl: "https://www.youtube.com/watch?v=zWh3CShX_do",
+    link: "https://www.youtube.com/watch?v=zWh3CShX_do",
     likeCount: 20,
     commentCount: 5
   },
@@ -68,17 +68,20 @@ const data: CommunityData[] = [
     likeCount: 20,
     commentCount: 5,
     metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
+  },
+  {
+    id: "6",
+    profileImageUrl:
+      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    name: "Zane Mayes",
+    time: "3 hours ago",
+    text:
+      "First day at college, Ohio university. Thank you so much for watching",
+    embeddedUrl:
+      '<iframe width="100%" height="50%" src="https://www.youtube.com/embed/cqyziA30whE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
+    likeCount: 20,
+    commentCount: 5
   }
-  // {
-  //   id: "3",
-  //   profileImageUrl:
-  //     "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  //   name: "Zane Mayes",
-  //   time: "3 hours ago",
-  //   videoUrl: "https://www.youtube.com/watch?v=zWh3CShX_do",
-  //   likeCount: 20,
-  //   commentCount: 5
-  // }
 ];
 
 const CommunityController: FC<Props> = () => {

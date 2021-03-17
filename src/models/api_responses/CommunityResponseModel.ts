@@ -10,7 +10,8 @@ export type CommunityData = {
   time: string;
   text?: string | null;
   images?: string[] | null;
-  videoUrl?: string | null;
+  link?: string | null;
+  embeddedUrl?: string | null;
   likeCount: number;
   commentCount: number;
   metaDataUrl?: string;
