@@ -17,5 +17,8 @@ export default {
 
   // Profile
   GET_QUESTIONS: "questions/",
-  POST_ANSWERS: "answer/"
+  POST_ANSWERS: "answer/",
+
+  //chat
+  GET_CHATS: "chats"
 };
