@@ -2,15 +2,20 @@ import ArrowLeft from "assets/images/left.svg";
 import ArrowRight from "assets/images/right.svg";
 import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import React, { useRef, useState } from "react";
-import { StyleSheet, TouchableOpacityProps, View } from "react-native";
+import React, { useRef } from "react";
+import {
+  Dimensions,
+  StyleSheet,
+  TouchableOpacityProps,
+  View
+} from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import { Color, NumberProp } from "react-native-svg";
 import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
-import { AppLog, SvgProp } from "utils/Util";
+import { SvgProp } from "utils/Util";
 
 export interface ImageSlideShowProps extends TouchableOpacityProps {
   images: string[];
@@ -18,7 +23,6 @@ export interface ImageSlideShowProps extends TouchableOpacityProps {
 
 export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
   ({ images }) => {
-    const [selectedIndex, setSelectedIndex] = useState<number>(0);
     const arrowButton = useRef<SliderBox | null>(null);
     const leftIcon: SvgProp = (
       color?: Color,
@@ -49,14 +53,10 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
       );
     };
     const onLeftImagePress = () => {
-      AppLog.logForcefully(selectedIndex);
-      if (selectedIndex > 0) {
-        arrowButton.current.onSnap(selectedIndex - 1);
-      }
+      arrowButton.current.snapToPrev();
     };
     const onRightImagePress = () => {
-      AppLog.logForcefully(selectedIndex);
-      arrowButton.current.onSnap(selectedIndex);
+      arrowButton.current.snapToNext();
     };
 
     const leftImage = () => {
@@ -87,8 +87,7 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
       <View style={styles.MainContainer}>
         <View style={styles.sliderBoxContainer}>
           <SliderBox
-            resizeMethod={"resize"}
-            resizeMode={"contain"}
+            parentWidth={Dimensions.get("window").width - 60}
             ref={arrowButton}
             images={images}
             dotColor={theme.themedColors.primary}
@@ -100,26 +99,22 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
             paginationBoxVerticalPadding={3}
             dotStyle={styles.dotStyle}
             ImageComponentStyle={styles.image}
-            sliderBoxHeight={250}
-            onCurrentImagePressed={(index: number) =>
-              setSelectedIndex(index)
-            }
-            currentImageEmitter={(index: number) =>
-              setSelectedIndex(index)
-            }
+            sliderBoxHeight={300}
           />
         </View>
-        <View
-          style={{
-            position: "absolute",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "90%",
-            top: "45%"
-          }}>
-          {leftImage()}
-          {rightImage()}
-        </View>
+        {images.length > 1 && (
+          <View
+            style={{
+              position: "absolute",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "90%",
+              top: "45%"
+            }}>
+            {leftImage()}
+            {rightImage()}
+          </View>
+        )}
       </View>
     );
   }
@@ -135,7 +130,7 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   image: {
-    borderRadius: 20,
+    borderRadius: 10,
     justifyContent: "center"
   },
   sliderBoxContainer: {

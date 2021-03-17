@@ -44,6 +44,18 @@ const data: CommunityData[] = [
     ],
     likeCount: 20,
     commentCount: 5
+  },
+  {
+    id: "4",
+    profileImageUrl:
+      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    name: "Jasmine Lambert",
+    time: "3 hours ago",
+    text:
+      "OHIO’s beloved Rufus has undergone many makeovers since 1804, and did you know that he used to be accompanied by the Bobkitten?! Check out this iconic transformation from 1977 to now 😸 ",
+    images: ["https://source.unsplash.com/1024x768/?nature"],
+    likeCount: 20,
+    commentCount: 5
   }
   // {
   //   id: "3",
