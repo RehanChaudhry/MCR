@@ -12,5 +12,8 @@ export default {
   LOGIN_URL: "auth/login",
   FORGOT_PASS_URL: "password/request/",
   RESET_PASS_URL: "password/set/",
-  UPDATE_PROFILE_URL: "profile"
+  UPDATE_PROFILE_URL: "profile",
+
+  //chat
+  GET_CHATS: "chats"
 };
