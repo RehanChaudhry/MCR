@@ -6,6 +6,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import Colors from "config/Colors";
 import { FONT_SIZE, SPACE } from "config";
+import { usePreferredTheme } from "hooks";
 
 type Props = {
   username: string;
@@ -15,6 +16,7 @@ type Props = {
 
 export const CircleImageWithText = React.memo<Props>(
   ({ username, onPress, message }) => {
+    const theme = usePreferredTheme();
     return (
       <View style={styles.mainContainer}>
         <CircleImageBorder />
@@ -29,7 +31,10 @@ export const CircleImageWithText = React.memo<Props>(
                     text: message
                   }
                 ]}
-                textStyle={[styles.name, styles.message]}
+                textStyle={[
+                  [styles.name, { color: theme.themedColors.primary }],
+                  styles.message
+                ]}
               />
             </View>
           </View>
@@ -38,12 +43,21 @@ export const CircleImageWithText = React.memo<Props>(
 
             <AppButton
               text="View Request"
-              buttonStyle={styles.buttonStyle}
+              buttonStyle={[
+                styles.buttonStyle,
+                { backgroundColor: theme.themedColors.primaryShade }
+              ]}
               textStyle={styles.buttonText}
+              fontWeight={"bold"}
               onPress={onPress}
             />
           </View>
-          <View style={styles.view} />
+          <View
+            style={[
+              styles.view,
+              { backgroundColor: theme.themedColors.interface["300"] }
+            ]}
+          />
         </View>
       </View>
     );
@@ -68,13 +82,13 @@ const styles = StyleSheet.create({
     marginTop: SPACE.sm
   },
   buttonStyle: {
-    width: 160,
+    width: "40%",
     height: 30,
     borderRadius: 8
   },
   view: {
     backgroundColor: Colors.grey2,
-    height: 1,
+    height: 0.5,
     width: "100%",
     alignSelf: "flex-end",
     marginTop: SPACE.lg,
@@ -86,7 +100,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm
   },
   buttonText: {
-    fontSize: 6
+    fontSize: FONT_SIZE.sm
   },
   viewRequest: {
     flex: 1
