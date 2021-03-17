@@ -9,6 +9,9 @@ import { AppLog } from "utils/Util";
 import ChatItem from "models/ChatItem";
 import DataGenerator from "utils/DataGenerator";
 import { ChatParamsLIst } from "routes/ChatParams";
+import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
+import { View } from "react-native";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatParamsLIst,
@@ -59,7 +62,7 @@ export const ChatListController: FC<Props> = () => {
   };
 
   return (
-    /* <ProgressErrorView
+    <ProgressErrorView
       data={chats}
       isLoading={loadChatsApi.loading}
       error={loadChatsApi.error}
@@ -70,8 +73,8 @@ export const ChatListController: FC<Props> = () => {
           </View>
         );
       }}>
-      <ChatListScreen />
-    </ProgressErrorView>*/
-    <ChatListScreen data={chats} onItemClick={openChatThread} />
+      <ChatListScreen data={chats} onItemClick={openChatThread} />
+    </ProgressErrorView>
+    /* <ChatListScreen data={chats} onItemClick={openChatThread} />*/
   );
 };
