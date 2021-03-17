@@ -4,8 +4,8 @@ import React from "react";
 import {
   StyleProp,
   StyleSheet,
+  TouchableOpacity,
   TouchableOpacityProps,
-  TouchableWithoutFeedback,
   View,
   ViewStyle
 } from "react-native";
@@ -45,11 +45,9 @@ export const AppImageBackground = React.memo<AppImageBackgroundProps>(
 
     if (onPress) {
       return (
-        <TouchableWithoutFeedback
-          testID="image-container"
-          onPress={onPress}>
+        <TouchableOpacity testID="image-container" onPress={onPress}>
           {imageWithBgJsx}
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       );
     } else {
       return imageWithBgJsx;
