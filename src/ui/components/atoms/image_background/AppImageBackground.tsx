@@ -4,8 +4,8 @@ import React from "react";
 import {
   StyleProp,
   StyleSheet,
+  TouchableOpacity,
   TouchableOpacityProps,
-  TouchableWithoutFeedback,
   View,
   ViewStyle
 } from "react-native";
@@ -31,25 +31,23 @@ export const AppImageBackground = React.memo<AppImageBackgroundProps>(
         style={[
           style.container,
           {
-            backgroundColor: theme.themedColors.primaryBackground,
-            shadowColor: theme.themedColors.primaryBackground
+            backgroundColor: theme.themedColors.interface[200],
+            shadowColor: theme.themedColors.interface[200]
           },
           containerShape === CONTAINER_TYPES.CIRCLE
             ? style.circleShape
             : style.squareShape,
           containerStyle
         ]}>
-        {icon?.(theme.themedColors.primaryIconColor, 20, 20)}
+        {icon?.(theme.themedColors.interface[700], 20, 20)}
       </View>
     );
 
     if (onPress) {
       return (
-        <TouchableWithoutFeedback
-          testID="image-container"
-          onPress={onPress}>
+        <TouchableOpacity testID="image-container" onPress={onPress}>
           {imageWithBgJsx}
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       );
     } else {
       return imageWithBgJsx;
@@ -62,11 +60,11 @@ const style = StyleSheet.create({
     width: moderateScale(40),
     height: moderateScale(40),
     alignItems: "center",
-    justifyContent: "center",
-    elevation: 3,
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 3,
-    shadowOpacity: 0.15
+    justifyContent: "center"
+    // elevation: 3,
+    // shadowOffset: { width: 0, height: 3 },
+    // shadowRadius: 3,
+    // shadowOpacity: 0.15
   },
   squareShape: {
     borderRadius: 5

@@ -73,44 +73,13 @@ export const QuestionItem = React.memo<RangeSliderProps>(
       });
     };
 
-    const preferenceView = () => {
-      return (
-        <View style={styles.preferenceWrapper}>
-          <AppLabel
-            style={[styles.label, styles.questionLabel]}
-            text="Comfort Zone"
-          />
-
-          <View style={styles.switchWrapper}>
-            <AppLabel
-              style={[
-                styles.label,
-                styles.questionLabel,
-                { marginEnd: SPACE.sm }
-              ]}
-              text="I have no preference"
-            />
-
-            <AppSwitch
-              defaultValue={preferenceSwitchValue}
-              showCustomThumb={true}
-              onValueChange={(isEnabled: boolean) => {
-                setPreferenceSwitchValue(isEnabled);
-                preferenceResult.current = isEnabled;
-              }}
-            />
-          </View>
-        </View>
-      );
-    };
-
     return (
       <View
         style={[
           styles.container,
           {
-            backgroundColor: themedColors.primaryBackground,
-            borderColor: themedColors.tertiaryBackground
+            backgroundColor: themedColors.background,
+            borderColor: themedColors.border
           },
           style
         ]}
@@ -135,7 +104,32 @@ export const QuestionItem = React.memo<RangeSliderProps>(
           allowSliderClick={true}
         />
 
-        {preferenceView()}
+        <View style={styles.preferenceWrapper}>
+          <AppLabel
+            style={[styles.label, styles.questionLabel]}
+            text="Comfort Zone"
+          />
+
+          <View style={styles.switchWrapper}>
+            <AppLabel
+              style={[
+                styles.label,
+                styles.questionLabel,
+                { marginEnd: SPACE.xsm }
+              ]}
+              text="I have no preference"
+            />
+
+            <AppSwitch
+              defaultValue={preferenceSwitchValue}
+              showCustomThumb={true}
+              onValueChange={(isEnabled: boolean) => {
+                setPreferenceSwitchValue(isEnabled);
+                preferenceResult.current = isEnabled;
+              }}
+            />
+          </View>
+        </View>
 
         <RangeSliderWithLabel
           initialValues={
@@ -160,17 +154,15 @@ export const QuestionItem = React.memo<RangeSliderProps>(
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: SPACE.md,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    paddingHorizontal: SPACE.md
+    padding: SPACE.md,
+    borderTopWidth: StyleSheet.hairlineWidth
   },
   label: {
     fontSize: FONT_SIZE.sm
   },
   questionLabel: {
     fontWeight: "700",
-    marginBottom: SPACE.sm
+    marginBottom: SPACE.xsm
   },
   labelRight: {
     alignSelf: "flex-end"

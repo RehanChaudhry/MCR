@@ -6,20 +6,13 @@ exports[`snapshot testing 1`] = `
     Array [
       Object {
         "alignItems": "center",
-        "elevation": 3,
         "height": 60.466019417475735,
         "justifyContent": "center",
-        "shadowOffset": Object {
-          "height": 3,
-          "width": 0,
-        },
-        "shadowOpacity": 0.15,
-        "shadowRadius": 3,
         "width": 60.466019417475735,
       },
       Object {
-        "backgroundColor": "#FFFFFF",
-        "shadowColor": "#FFFFFF",
+        "backgroundColor": "#E5E7EB",
+        "shadowColor": "#E5E7EB",
       },
       Object {
         "borderRadius": 50,

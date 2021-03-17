@@ -17,14 +17,14 @@ exports[`rendering... renders correctly 1`] = `
             "fontFamily": "Inter-Regular",
           },
           Object {
-            "color": "#000000",
+            "color": "#111827",
           },
           Array [
             Object {
-              "paddingBottom": 8,
+              "paddingBottom": 9.069902912621359,
             },
             Object {
-              "color": "#000000",
+              "color": "#111827",
             },
           ],
         ],
@@ -40,28 +40,19 @@ exports[`rendering... renders correctly 1`] = `
     style={
       Array [
         Object {
-          "backgroundColor": "white",
           "borderColor": "#CACACA",
           "borderRadius": 5,
           "borderStyle": "solid",
           "borderWidth": 0.5,
           "color": "#666666",
-          "elevation": 2,
+          "flex": 1,
           "flexDirection": "row",
           "fontFamily": "Inter-Regular",
           "fontSize": 21.163106796116505,
-          "height": 40,
+          "height": 42,
           "justifyContent": "center",
-          "paddingBottom": 10,
-          "paddingLeft": 15,
-          "paddingRight": 15,
-          "paddingTop": 6,
-          "shadowColor": "#000000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
-          },
-          "shadowOpacity": 0.1,
+          "paddingLeft": 18.139805825242718,
+          "paddingRight": 18.139805825242718,
         },
         undefined,
       ]
@@ -112,14 +103,14 @@ exports[`rendering... renders correctly 1`] = `
             "fontFamily": "Inter-Regular",
           },
           Object {
-            "color": "#000000",
+            "color": "#111827",
           },
           Array [
             Object {
-              "paddingBottom": 8,
+              "paddingBottom": 9.069902912621359,
             },
             Object {
-              "color": "#000000",
+              "color": "#111827",
             },
           ],
         ],
@@ -135,28 +126,19 @@ exports[`rendering... renders correctly 1`] = `
     style={
       Array [
         Object {
-          "backgroundColor": "white",
           "borderColor": "#CACACA",
           "borderRadius": 5,
           "borderStyle": "solid",
           "borderWidth": 0.5,
           "color": "#666666",
-          "elevation": 2,
+          "flex": 1,
           "flexDirection": "row",
           "fontFamily": "Inter-Regular",
           "fontSize": 21.163106796116505,
-          "height": 40,
+          "height": 42,
           "justifyContent": "center",
-          "paddingBottom": 10,
-          "paddingLeft": 15,
-          "paddingRight": 15,
-          "paddingTop": 6,
-          "shadowColor": "#000000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
-          },
-          "shadowOpacity": 0.1,
+          "paddingLeft": 18.139805825242718,
+          "paddingRight": 18.139805825242718,
         },
         undefined,
       ]
@@ -212,7 +194,7 @@ exports[`rendering... renders correctly 1`] = `
         "alignItems": "center",
         "alignSelf": "center",
         "backgroundColor": "#FFFFFF",
-        "borderRadius": 10,
+        "borderRadius": 6,
         "elevation": 1,
         "flexDirection": "row",
         "height": 40,
@@ -265,14 +247,14 @@ exports[`rendering... renders correctly 1`] = `
                   "fontFamily": "Inter-Regular",
                 },
                 Object {
-                  "color": "#000000",
+                  "color": "#111827",
                 },
                 Array [
                   Object {
                     "fontSize": 21.163106796116505,
                   },
                   Object {
-                    "color": "#000000",
+                    "color": "#111827",
                   },
                 ],
               ],

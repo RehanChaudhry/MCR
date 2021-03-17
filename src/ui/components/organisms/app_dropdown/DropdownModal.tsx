@@ -37,9 +37,9 @@ export const DropdownModal = React.memo<DropDownModalProps>(
 
     const getItemColor = (id: string): string => {
       if (selectedItemId == id) {
-        return themedColors.tertiaryLabelColor;
+        return themedColors.primary;
       } else {
-        return themedColors.primaryLabelColor;
+        return themedColors.label;
       }
     };
 
@@ -70,7 +70,7 @@ export const DropdownModal = React.memo<DropDownModalProps>(
                 {
                   backgroundColor: dropDownBgColor
                     ? dropDownBgColor
-                    : themedColors.secondaryBackground
+                    : themedColors.background
                 }
               ]}>
               <FlatListWithPb
@@ -92,7 +92,7 @@ export const DropdownModal = React.memo<DropDownModalProps>(
                   source={require("assets/images/ic_close.png")}
                   style={[
                     styles.closeIcon,
-                    { tintColor: themedColors.primaryLabelColor },
+                    { tintColor: themedColors.label },
                     dialogCloseIconStyle
                   ]}
                 />

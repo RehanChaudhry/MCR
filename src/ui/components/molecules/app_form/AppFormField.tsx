@@ -11,6 +11,7 @@ import {
   AppInputFieldProps
 } from "../appinputfield/AppInputField";
 import { AppFormValidationLabel } from "./AppFormValidationLabel";
+import { SPACE } from "../../../../config";
 
 export interface AppFormFieldProps {
   fieldTestID?: string;
@@ -47,10 +48,7 @@ const AppFormField = React.memo<Props>(
       <>
         {labelProps && (
           <AppLabel
-            style={[
-              styles.label,
-              { color: theme.themedColors.primaryLabelColor }
-            ]}
+            style={[styles.label, { color: theme.themedColors.label }]}
             {...labelProps}
           />
         )}
@@ -77,7 +75,7 @@ const AppFormField = React.memo<Props>(
 
 const styles = StyleSheet.create({
   label: {
-    paddingBottom: 8.0
+    paddingBottom: SPACE.xsm
   }
 });
 

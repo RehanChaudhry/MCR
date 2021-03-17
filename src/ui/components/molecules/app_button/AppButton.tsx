@@ -61,15 +61,15 @@ export const AppButton = React.memo<AppButtonProps>(
       if (buttonType === BUTTON_TYPES.DASH) {
         return [
           style.buttonWithDash,
-          { borderColor: theme.themedColors.primaryLabelColor }
+          { borderColor: theme.themedColors.label }
         ];
       } else if (buttonType === BUTTON_TYPES.BORDER) {
         return [
           style.buttonWithBorder,
           {
             borderColor: shouldShowError
-              ? theme.themedColors.error
-              : theme.themedColors.primaryLabelColor
+              ? theme.themedColors.danger
+              : theme.themedColors.border
           }
         ];
       }
@@ -78,7 +78,7 @@ export const AppButton = React.memo<AppButtonProps>(
       if (!isDisable && buttonType !== BUTTON_TYPES.LINK) {
         return [
           style.buttonWithShadow,
-          { shadowColor: theme.themedColors.primaryBackground }
+          { shadowColor: theme.themedColors.background }
         ];
       }
     };
@@ -93,8 +93,8 @@ export const AppButton = React.memo<AppButtonProps>(
           {
             backgroundColor:
               isDisable === true
-                ? theme.themedColors.tertiaryLabelColor
-                : theme.themedColors.primaryBackground
+                ? theme.themedColors.interface[100]
+                : theme.themedColors.background
           },
           buttonStyle
         ]}>
@@ -104,7 +104,7 @@ export const AppButton = React.memo<AppButtonProps>(
               shouldAlignTitleWithLeftIcon ? null : style.leftIconContainer
             }>
             {leftIcon && !shouldShowProgressBar
-              ? leftIcon?.(theme.themedColors.primaryIconColor, 20, 20)
+              ? leftIcon?.(theme.themedColors.label, 20, 20)
               : null}
           </View>
           <View
@@ -117,7 +117,7 @@ export const AppButton = React.memo<AppButtonProps>(
                   style.text,
                   isSelected === true
                     ? textStyle
-                    : { color: theme.themedColors.primaryLabelColor }
+                    : { color: theme.themedColors.label }
                 ]}
                 text={text}
               />
@@ -127,13 +127,13 @@ export const AppButton = React.memo<AppButtonProps>(
                 testID="loader"
                 style={[style.loader]}
                 size={loaderSize}
-                color={theme.themedColors.primaryLoaderColor}
+                color={theme.themedColors.label}
               />
             )}
           </View>
           <View style={style.rightIconContainer}>
             {rightIcon && !shouldShowProgressBar
-              ? rightIcon?.(theme.themedColors.primaryIconColor, 20, 20)
+              ? rightIcon?.(theme.themedColors.label, 20, 20)
               : null}
           </View>
         </View>
@@ -195,7 +195,7 @@ const style = StyleSheet.create({
     height: 40,
     justifyContent: "space-between",
     alignItems: "center",
-    borderRadius: 10
+    borderRadius: 6
   },
   viewContainer: {
     flexDirection: "row",

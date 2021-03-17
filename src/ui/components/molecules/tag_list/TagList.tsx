@@ -18,7 +18,7 @@ const TagList: FC<Props> = ({ data, labelTitle }) => {
     <View
       style={[
         styles.root,
-        { backgroundColor: theme.themedColors.primaryBackground }
+        { backgroundColor: theme.themedColors.primary }
       ]}>
       <AppLabel
         text={labelTitle}

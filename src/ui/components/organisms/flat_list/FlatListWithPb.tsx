@@ -103,10 +103,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
         <View style={styles.noRecordParent}>
           <AppLabel
             text={noRecordFoundText}
-            style={[
-              styles.noRecord,
-              { color: theme.themedColors.primaryLabelColor }
-            ]}
+            style={[styles.noRecord, { color: theme.themedColors.label }]}
           />
         </View>
       );
@@ -118,7 +115,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
           testID="loader"
           style={[
             styles.loadMorePb,
-            { backgroundColor: theme.themedColors.primaryBackground }
+            { backgroundColor: theme.themedColors.background }
           ]}
         />
       );

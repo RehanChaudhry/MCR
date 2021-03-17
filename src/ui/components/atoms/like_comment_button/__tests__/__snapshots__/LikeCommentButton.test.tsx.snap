@@ -15,7 +15,7 @@ exports[`snapshot testing 1`] = `
     Object {
       "alignItems": "center",
       "alignSelf": "flex-start",
-      "backgroundColor": "#3C3C434D",
+      "backgroundColor": "#E5E7EB",
       "borderRadius": 5,
       "flex": 0,
       "flexDirection": "row",
@@ -37,7 +37,7 @@ exports[`snapshot testing 1`] = `
     testID="button-container"
   >
     <SvgMock
-      fill="#000000"
+      fill="#FFFFFF"
       height={16}
       width={16}
     />
@@ -50,7 +50,7 @@ exports[`snapshot testing 1`] = `
               "fontFamily": "Inter-Regular",
             },
             Object {
-              "color": "#000000",
+              "color": "#111827",
             },
             Array [
               Object {
@@ -59,7 +59,7 @@ exports[`snapshot testing 1`] = `
                 "marginStart": 5,
               },
               Object {
-                "color": "#000000",
+                "color": "#111827",
               },
             ],
           ],

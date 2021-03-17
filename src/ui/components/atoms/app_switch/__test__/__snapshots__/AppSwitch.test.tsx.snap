@@ -4,8 +4,8 @@ exports[`Renders snapshot as expected 1`] = `
 <
   icon={null}
   isOn={true}
-  offColor="#c4bbbb"
-  onColor="#224be0"
+  offColor="#D1D5DB"
+  onColor="#00694e"
   onToggle={[Function]}
   style={
     Array [

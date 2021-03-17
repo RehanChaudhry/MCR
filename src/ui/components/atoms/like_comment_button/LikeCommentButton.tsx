@@ -47,7 +47,7 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
         style={[
           style.button,
           {
-            backgroundColor: theme.themedColors.tertiaryIconColor
+            backgroundColor: theme.themedColors.interface[200]
           },
           buttonStyle
         ]}>
@@ -58,8 +58,8 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
               height={16}
               fill={
                 isSelected
-                  ? theme.themedColors.switchActive
-                  : theme.themedColors.primaryLabelColor
+                  ? theme.themedColors.background
+                  : theme.themedColors.background
               }
             />
           )}
@@ -68,7 +68,7 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
             <Chat
               width={16}
               height={16}
-              fill={theme.themedColors.primaryLabelColor}
+              fill={theme.themedColors.background}
             />
           )}
 
@@ -76,9 +76,7 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
             style={[
               style.text,
 
-              isSelected
-                ? textStyle
-                : { color: theme.themedColors.primaryLabelColor }
+              isSelected ? textStyle : { color: theme.themedColors.label }
             ]}
             text={
               (isSelected ? selectedText : unSelectedText) ??

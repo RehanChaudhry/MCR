@@ -73,17 +73,21 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = ({
           {...(enableTwoThumbs
             ? {
                 selectedStyle: {
-                  backgroundColor: themedColors.primaryLabelColor
+                  backgroundColor: themedColors.secondaryShade
                 },
                 unselectedStyle: {
-                  backgroundColor: themedColors.tertiaryLabelColor
+                  backgroundColor: themedColors.interface[200]
                 },
                 minMarkerOverlapDistance: 15,
                 allowOverlap: false
               }
             : {
-                selectedStyle: {},
-                unselectedStyle: {},
+                selectedStyle: {
+                  backgroundColor: themedColors.interface[200]
+                },
+                unselectedStyle: {
+                  backgroundColor: themedColors.interface[200]
+                },
                 allowOverlap: true
                 /* minMarkerOverlapDistance: 15*/
               })}

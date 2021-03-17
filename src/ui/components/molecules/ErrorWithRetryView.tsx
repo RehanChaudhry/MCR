@@ -26,10 +26,7 @@ const ErrorWithRetryView = React.memo<Props>(
       <View testID="error" style={[style, styles.container]}>
         <AppLabel
           text={text}
-          style={[
-            styles.text,
-            { color: theme.themedColors.primaryLabelColor }
-          ]}
+          style={[styles.text, { color: theme.themedColors.label }]}
           {...rest}
         />
         <AppButton

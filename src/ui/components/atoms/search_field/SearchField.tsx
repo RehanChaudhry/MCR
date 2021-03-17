@@ -69,8 +69,8 @@ export const SearchField = React.memo<Props>(
           getBorderStyle(),
           styles.container,
           {
-            backgroundColor: theme.themedColors.primaryBackground,
-            borderColor: theme.themedColors.primaryLabelColor
+            backgroundColor: theme.themedColors.primary,
+            borderColor: theme.themedColors.label
           },
           style
         ]}>
@@ -80,7 +80,7 @@ export const SearchField = React.memo<Props>(
             height={14}
             style={styles.leftIcon}
             testID={"left-icon"}
-            fill={theme.themedColors.primaryIconColor}
+            fill={theme.themedColors.interface[600]}
           />
         )}
         <TextInput
@@ -91,7 +91,7 @@ export const SearchField = React.memo<Props>(
           testID="SEARCH"
           style={[
             leftIcon ? styles.textInput : styles.textInput,
-            { color: theme.themedColors.primaryLabelColor }
+            { color: theme.themedColors.label }
           ]}
           onChangeText={setCurrentSearchText}
         />
@@ -103,7 +103,7 @@ export const SearchField = React.memo<Props>(
               height={14}
               testID={"right-icon"}
               style={styles.rightIcon}
-              fill={theme.themedColors.primaryIconColor}
+              fill={theme.themedColors.interface[600]}
             />
           </TouchableOpacity>
         )}

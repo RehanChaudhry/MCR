@@ -30,7 +30,7 @@ export const LoadMore = React.memo<AppLoadMoreProps>(
         <>
           <ActivityIndicator
             size={loaderSize}
-            color={theme.themedColors.primaryIconColor}
+            color={theme.themedColors.label}
           />
           <AppLabel
             text={text}
