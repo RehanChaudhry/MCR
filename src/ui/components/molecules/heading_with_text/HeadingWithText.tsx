@@ -1,13 +1,13 @@
 import React from "react";
-import { StyleProp, View, ViewStyle } from "react-native";
+import { StyleProp, TextStyle, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE } from "config";
 
 interface OwnProps {
   headingText: string;
   text: string;
-  headingStyle?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<ViewStyle>;
+  headingStyle?: StyleProp<TextStyle>;
+  textStyle?: StyleProp<TextStyle>;
 }
 
 type Props = OwnProps;
@@ -19,12 +19,12 @@ export const HeadingWithText = React.memo<Props>(
         <AppLabel
           text={headingText}
           weight={"bold"}
-          style={[headingStyle, { fontSize: FONT_SIZE.lg }]}
+          style={[{ fontSize: FONT_SIZE.lg }, headingStyle]}
         />
         <AppLabel
           text={text}
           numberOfLines={0}
-          style={[textStyle, { fontSize: FONT_SIZE.md }]}
+          style={[{ fontSize: FONT_SIZE.md }, textStyle]}
         />
       </View>
     );

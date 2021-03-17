@@ -4,6 +4,7 @@ import {
   Keyboard,
   SafeAreaView,
   StatusBar,
+  StyleSheet,
   TouchableWithoutFeedback,
   View,
   ViewProps
@@ -33,7 +34,7 @@ const Screen: React.FC<Props> = ({
   );
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <StatusBar
         backgroundColor={COLORS.backgroundColor}
         barStyle="dark-content"
@@ -44,3 +45,9 @@ const Screen: React.FC<Props> = ({
 };
 
 export default Screen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});

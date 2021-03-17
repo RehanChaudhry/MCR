@@ -4,8 +4,8 @@ import React from "react";
 import {
   StyleProp,
   StyleSheet,
+  TouchableOpacity,
   TouchableOpacityProps,
-  TouchableWithoutFeedback,
   View,
   ViewStyle
 } from "react-native";
@@ -45,11 +45,9 @@ export const AppImageBackground = React.memo<AppImageBackgroundProps>(
 
     if (onPress) {
       return (
-        <TouchableWithoutFeedback
-          testID="image-container"
-          onPress={onPress}>
+        <TouchableOpacity testID="image-container" onPress={onPress}>
           {imageWithBgJsx}
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       );
     } else {
       return imageWithBgJsx;
@@ -62,11 +60,11 @@ const style = StyleSheet.create({
     width: moderateScale(40),
     height: moderateScale(40),
     alignItems: "center",
-    justifyContent: "center",
-    elevation: 3,
-    shadowOffset: { width: 0, height: 3 },
-    shadowRadius: 3,
-    shadowOpacity: 0.15
+    justifyContent: "center"
+    // elevation: 3,
+    // shadowOffset: { width: 0, height: 3 },
+    // shadowRadius: 3,
+    // shadowOpacity: 0.15
   },
   squareShape: {
     borderRadius: 5
