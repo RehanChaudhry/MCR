@@ -4,6 +4,7 @@ import { HeadingWithText } from "ui/components/molecules/heading_with_text/Headi
 import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE } from "config";
+import { AppFormDropDown } from "../../molecules/app_form_dropdown/AppFormDropDown";
 
 export const DemoGraphics = React.memo(() => {
   const theme = usePreferredTheme();
@@ -23,6 +24,10 @@ export const DemoGraphics = React.memo(() => {
           styles.horizontalLine,
           { backgroundColor: theme.themedColors.interface["700"] }
         ]}
+      />
+
+      <AppFormDropDown
+        labelProps={{ text: "Gender", weight: "semi-bold" }}
       />
     </CardView>
   );
