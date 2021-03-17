@@ -14,8 +14,8 @@ import {
   BUTTON_TYPES
 } from "ui/components/molecules/app_button/AppButton";
 import { Color, NumberProp } from "react-native-svg";
-import RightArrow from "assets/images/arrow-right.svg";
-import RightArrowCircle from "assets/images/right-arrow-circle.svg";
+import RightArrow from "assets/images/arrow_right.svg";
+import RightArrowCircle from "assets/images/right_arrow_circle.svg";
 import QuestionHeader from "ui/components/molecules/question_header/QuestionHeader";
 import { QuestionItem } from "ui/components/organisms/question_item/QuestionItem";
 import { shadowStyleProps } from "utils/Util";
@@ -62,7 +62,13 @@ export const QuestionsView = ({
             color?: Color,
             width?: NumberProp,
             height?: NumberProp
-          ) => <RightArrow width={width} height={height} color={color} />}
+          ) => (
+            <RightArrow
+              width={width}
+              height={height}
+              fill={themedColors.primary}
+            />
+          )}
         />
       </View>
     </View>
@@ -74,7 +80,12 @@ export const QuestionsView = ({
         shouldShowProgressBar={submitAnswersLoading}
         onPress={submitAnswers}
         text={STRINGS.questionnaire.action_save}
-        buttonStyle={{ backgroundColor: themedColors.primary }}
+        buttonStyle={[
+          styles.saveButtonContainer,
+          {
+            backgroundColor: themedColors.primary
+          }
+        ]}
         textStyle={[styles.saveButton, { color: themedColors.background }]}
         rightIcon={(
           color?: Color,
@@ -84,7 +95,7 @@ export const QuestionsView = ({
           <RightArrowCircle
             width={width}
             height={height}
-            color={themedColors.background}
+            fill={themedColors.background}
           />
         )}
       />
@@ -173,5 +184,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left"
   },
-  saveButton: { fontSize: FONT_SIZE.xsm, fontWeight: "bold" }
+  saveButton: { fontSize: FONT_SIZE.xsm, fontWeight: "bold" },
+  saveButtonContainer: { paddingHorizontal: SPACE.sm }
 });
