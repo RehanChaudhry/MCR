@@ -2,7 +2,7 @@ import ChevronDown from "assets/images/chevron-down.svg";
 import { FONT_SIZE, SPACE } from "config";
 import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
-import QuestionGroup from "models/QuestionGroup";
+import QuestionSection from "models/QuestionSection";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Color, NumberProp } from "react-native-svg";
@@ -17,7 +17,7 @@ import {
 import { SvgProp } from "utils/Util";
 
 interface Props {
-  questionGroup: QuestionGroup;
+  questionGroup: QuestionSection;
   isExpanded?: boolean;
 }
 
@@ -92,9 +92,9 @@ const styles = StyleSheet.create({
     // shadow
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
+    shadowOpacity: 0.3,
     shadowRadius: 2,
-    elevation: 5
+    elevation: 2
   },
   expandedContainer: {
     flexDirection: "column",

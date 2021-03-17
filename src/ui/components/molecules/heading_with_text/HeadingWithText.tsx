@@ -19,12 +19,12 @@ export const HeadingWithText = React.memo<Props>(
         <AppLabel
           text={headingText}
           weight={"bold"}
-          style={[headingStyle, { fontSize: FONT_SIZE.lg }]}
+          style={[{ fontSize: FONT_SIZE.lg }, headingStyle]}
         />
         <AppLabel
           text={text}
           numberOfLines={0}
-          style={[textStyle, { fontSize: FONT_SIZE.md }]}
+          style={[{ fontSize: FONT_SIZE.md }, textStyle]}
         />
       </View>
     );
