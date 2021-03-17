@@ -7,6 +7,7 @@ import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { HomeDrawerParamList } from "routes";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { CommunityItem } from "ui/components/molecules/community_item/CommunityItem";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 
 type ProfileNavigationProp = DrawerNavigationProp<
@@ -15,7 +16,7 @@ type ProfileNavigationProp = DrawerNavigationProp<
 >;
 
 type Props = {
-  data: CommunityData[] | undefined;
+  data: CommunityData[];
   shouldShowProgressBar: boolean;
 };
 
@@ -23,13 +24,14 @@ export const CommunityView = React.memo<Props>(
   ({ data, shouldShowProgressBar }) => {
     const navigation = useNavigation<ProfileNavigationProp>();
     const keyExtractor = useCallback(
-      (item: any) => item.id.toString(),
+      (item: CommunityData) => item.id.toString(),
       []
     );
 
     const listItem = useCallback(
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      ({ item, index }) => <View />,
+      ({ item }: { item: CommunityData }) => (
+        <CommunityItem communityItem={item} />
+      ),
       []
     );
     return (

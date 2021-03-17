@@ -1,3 +1,4 @@
+import { SPACE } from "config";
 import React from "react";
 import { StyleSheet, TouchableOpacityProps } from "react-native";
 import { WebView } from "react-native-webview";
@@ -13,6 +14,7 @@ export const WebViewComponent = React.memo<WebViewProps>(({ url }) => {
 const style = StyleSheet.create({
   container: {
     width: "100%",
-    height: 200
+    height: 300,
+    marginTop: SPACE.md
   }
 });

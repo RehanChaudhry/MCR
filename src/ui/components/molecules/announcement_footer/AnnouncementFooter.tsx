@@ -52,7 +52,7 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
         <View
           style={[
             style.bottomLine,
-            { backgroundColor: theme.themedColors.primaryBackground },
+            { backgroundColor: theme.themedColors.interface["300"] },
             bottomLineStyle
           ]}
         />
@@ -64,16 +64,16 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
                 selectedText="Liked"
                 buttonStyle={[
                   {
-                    backgroundColor: theme.themedColors.primaryBackground
+                    backgroundColor: theme.themedColors.interface["200"]
                   },
                   leftContainerLeftButtonStyle
                 ]}
                 textStyle={[
-                  { color: theme.themedColors.primaryLabelColor },
+                  { color: theme.themedColors.interface["700"] },
                   leftContainerLeftTextStyle
                 ]}
                 iconStyle={[
-                  { tintColor: theme.themedColors.primaryIconColor },
+                  { tintColor: theme.themedColors.interface["700"] },
                   leftContainerLeftIconStyle
                 ]}
               />
@@ -83,16 +83,16 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
                 unSelectedText="Comment"
                 buttonStyle={[
                   {
-                    backgroundColor: theme.themedColors.primaryBackground
+                    backgroundColor: theme.themedColors.interface["200"]
                   },
                   leftContainerRightButtonStyle
                 ]}
                 textStyle={[
-                  { color: theme.themedColors.primaryLabelColor },
+                  { color: theme.themedColors.interface["700"] },
                   leftContainerRightTextStyle
                 ]}
                 iconStyle={[
-                  { tintColor: theme.themedColors.primaryIconColor },
+                  { tintColor: theme.themedColors.interface["700"] },
                   leftContainerRightIconStyle
                 ]}
               />
@@ -103,16 +103,16 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
               <LikeCommentButton
                 unSelectedText={likeCount.toString()}
                 textStyle={[
-                  { color: theme.themedColors.primaryLabelColor },
+                  { color: theme.themedColors.interface["700"] },
                   rightContainerLeftTextStyle
                 ]}
                 iconStyle={[
-                  { tintColor: theme.themedColors.primaryIconColor },
+                  { tintColor: theme.themedColors.interface["700"] },
                   rightContainerLeftIconStyle
                 ]}
                 buttonStyle={[
                   {
-                    backgroundColor: theme.themedColors.primaryBackground
+                    backgroundColor: theme.themedColors.interface["200"]
                   },
                   leftContainerLeftButtonStyle
                 ]}
@@ -122,16 +122,16 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
               <LikeCommentButton
                 unSelectedText={commentCount.toString()}
                 textStyle={[
-                  { color: theme.themedColors.primaryLabelColor },
+                  { color: theme.themedColors.interface["700"] },
                   rightContainerRightTextStyle
                 ]}
                 iconStyle={[
-                  { tintColor: theme.themedColors.primaryIconColor },
+                  { tintColor: theme.themedColors.interface["700"] },
                   rightContainerRightIconStyle
                 ]}
                 buttonStyle={[
                   {
-                    backgroundColor: theme.themedColors.primaryBackground
+                    backgroundColor: theme.themedColors.interface["200"]
                   },
                   leftContainerRightButtonStyle
                 ]}

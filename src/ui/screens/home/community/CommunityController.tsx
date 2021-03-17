@@ -6,14 +6,30 @@ type Props = {};
 
 const data: CommunityData[] = [
   {
+    id: "1",
     profileImageUrl:
       "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     name: "Phoenix Walker",
     time: "2 hours ago",
     text:
-      "In the spirit of Ohio University's Mental Health Day break, I've decided to abstain from playing Super Smash Bros Ultimate today. Take care of yourself everyone! Sparkling heartSparkling heartSparkling heart ❤❤❤"
+      "In the spirit of Ohio University's Mental Health Day break, I've decided to abstain from playing Super Smash Bros Ultimate today. Take care of yourself everyone! Sparkling heartSparkling heartSparkling heart ❤❤❤",
+    likeCount: 20,
+    commentCount: 5
   },
   {
+    id: "2",
+    profileImageUrl:
+      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    name: "Zane Mayes",
+    time: "3 hours ago",
+    text:
+      "First day at college, Ohio university. Thank you so much for watching",
+    videoUrl: "https://www.youtube.com/watch?v=zWh3CShX_do",
+    likeCount: 20,
+    commentCount: 5
+  },
+  {
+    id: "3",
     profileImageUrl:
       "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
     name: "Jasmine Lambert",
@@ -25,19 +41,24 @@ const data: CommunityData[] = [
       "https://source.unsplash.com/1024x768/?water",
       "https://source.unsplash.com/1024x768/?nature",
       "https://source.unsplash.com/1024x768/?tree"
-    ]
-  },
-  {
-    profileImageUrl:
-      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    name: "Zane Mayes",
-    time: "3 hours ago",
-    videoUrl: "https://www.youtube.com/watch?v=zWh3CShX_do"
+    ],
+    likeCount: 20,
+    commentCount: 5
   }
+  // {
+  //   id: "3",
+  //   profileImageUrl:
+  //     "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  //   name: "Zane Mayes",
+  //   time: "3 hours ago",
+  //   videoUrl: "https://www.youtube.com/watch?v=zWh3CShX_do",
+  //   likeCount: 20,
+  //   commentCount: 5
+  // }
 ];
 
 const CommunityController: FC<Props> = () => {
-  return <CommunityView data={data} shouldShowProgressBar />;
+  return <CommunityView data={data} shouldShowProgressBar={false} />;
 };
 
 export default CommunityController;

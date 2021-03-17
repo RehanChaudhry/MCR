@@ -1,7 +1,9 @@
+import Shield from "assets/images/shield.svg";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
+  Image,
   StyleProp,
   StyleSheet,
   TextStyle,
@@ -9,60 +11,59 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { Color, NumberProp } from "react-native-svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import { SvgProp } from "utils/Util";
-import PaperAirplane from "assets/images/paper_airplane.svg";
 
 export interface AnnouncementHeaderProps extends TouchableOpacityProps {
-  leftImage?: SvgProp;
+  leftImageUrl?: string;
   title: string;
   subTitle: string;
   titleStyle?: StyleProp<TextStyle>;
   subTitleStyle?: StyleProp<TextStyle>;
   bottomLineStyle?: StyleProp<ViewStyle>;
+  shouldShowRightImage?: boolean;
 }
-
-const rightImage: SvgProp = (
-  color?: Color,
-  width?: NumberProp,
-  height?: NumberProp
-) => {
-  return (
-    <PaperAirplane
-      testID="right-icon"
-      width={width}
-      height={height}
-      fill={color}
-    />
-  );
-};
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
   ({
-    leftImage,
+    leftImageUrl,
     title,
     subTitle,
     titleStyle,
     subTitleStyle,
-    bottomLineStyle
+    bottomLineStyle,
+    shouldShowRightImage = false
   }) => {
     const theme = usePreferredTheme();
+    const rightImage: SvgProp = () => {
+      return (
+        <Shield
+          testID="right-icon"
+          width={25}
+          height={25}
+          fill={theme.themedColors.interface["700"]}
+        />
+      );
+    };
+
     return (
-      <View>
+      <View style={style.mainContainer}>
         <View style={style.container}>
           <View style={style.leftContainer}>
-            {leftImage?.(theme.themedColors.primaryIconColor, 20, 20)}
+            <Image
+              style={{ width: 50, height: 50, borderRadius: 50 }}
+              source={{ uri: leftImageUrl }}
+            />
             <View style={style.titleSubtitle}>
               <AppLabel
                 text={title}
                 style={[
                   style.title,
-                  { color: theme.themedColors.primaryLabelColor },
+                  { color: theme.themedColors.label },
                   titleStyle
                 ]}
               />
@@ -70,21 +71,26 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
                 text={subTitle}
                 style={[
                   style.subTitle,
-                  { color: theme.themedColors.secondaryLabelColor },
+                  { color: theme.themedColors.labelSecondary },
                   subTitleStyle
                 ]}
               />
             </View>
           </View>
-          <AppImageBackground
-            icon={rightImage}
-            containerShape={CONTAINER_TYPES.SQUARE}
-          />
+          {shouldShowRightImage && (
+            <AppImageBackground
+              icon={rightImage}
+              containerShape={CONTAINER_TYPES.SQUARE}
+              containerStyle={{
+                backgroundColor: theme.themedColors.interface["200"]
+              }}
+            />
+          )}
         </View>
         <View
           style={[
             style.bottomLine,
-            { backgroundColor: theme.themedColors.primaryBackground },
+            { backgroundColor: theme.themedColors.interface["300"] },
             bottomLineStyle
           ]}
         />
@@ -94,6 +100,9 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
 );
 
 const style = StyleSheet.create({
+  mainContainer: {
+    marginBottom: SPACE.md
+  },
   container: {
     marginTop: SPACE.sm,
     flexDirection: "row",
@@ -103,14 +112,15 @@ const style = StyleSheet.create({
     flexDirection: "row"
   },
   title: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.lg
   },
   subTitle: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE.sm,
+    paddingTop: SPACE.sm
   },
   titleSubtitle: {
-    marginLeft: SPACE.md,
-    justifyContent: "center"
+    marginLeft: SPACE.md
+    // justifyContent: "center"
   },
   bottomLine: {
     width: "100%",
