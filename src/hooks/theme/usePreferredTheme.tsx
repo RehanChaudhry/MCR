@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ColorPalette,
   colorPaletteContainer
@@ -14,12 +14,14 @@ export enum AppColorScheme {
 type ThemeContext = {
   isDark: boolean;
   themedColors: ColorPalette;
+  setCustomPalette: (palette: Partial<ColorPalette>) => void;
   setScheme: (scheme: AppColorScheme) => void;
 };
 
 const ThemeContext = React.createContext<ThemeContext>({
   isDark: false,
-  themedColors: colorPaletteContainer.light,
+  themedColors: colorPaletteContainer.light({}),
+  setCustomPalette: () => {},
   setScheme: () => {}
 });
 
@@ -31,8 +33,11 @@ interface ThemeProviderProps {
 type Props = ThemeProviderProps;
 
 export const AppThemeProvider = React.memo<Props>((props) => {
-  const systemColorScheme = useColorScheme();
+  const [customPalette, setCustomPalette] = useState<
+    Partial<ColorPalette>
+  >({});
 
+  const systemColorScheme = useColorScheme();
   const colorScheme =
     props.colorScheme === AppColorScheme.SYSTEM
       ? systemColorScheme
@@ -47,11 +52,14 @@ export const AppThemeProvider = React.memo<Props>((props) => {
     setIsDark(colorScheme === AppColorScheme.DARK);
   }, [colorScheme]);
 
-  const theme = {
+  const theme: ThemeContext = {
     isDark,
     themedColors: isDark
-      ? colorPaletteContainer.dark
-      : colorPaletteContainer.light,
+      ? colorPaletteContainer.dark(customPalette)
+      : colorPaletteContainer.light(customPalette),
+    setCustomPalette: (palette: Partial<ColorPalette>) => {
+      setCustomPalette(palette);
+    },
     setScheme: (scheme: AppColorScheme) =>
       setIsDark(scheme === AppColorScheme.DARK)
   };

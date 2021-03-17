@@ -42,7 +42,7 @@ describe("color validation", () => {
           expect(isValidHex(colorValue)).toBeTruthy();
         } else if (typeof colorValue === "object") {
           for (const [, color] of Object.entries(colorValue)) {
-            expect(isValidHex(color)).toBeTruthy();
+            expect(isValidHex(color as string)).toBeTruthy();
           }
         } else {
           expect(false).toBeTruthy();
@@ -58,7 +58,10 @@ describe("check theme value is properly set", () => {
     return (
       <>
         <View>
-          <Text testID={"text"}>{theme.isDark.toString()}</Text>
+          <Text testID={"isDark"}>{theme.isDark.toString()}</Text>
+          <Text testID={"backgroundColor"}>
+            {theme.themedColors.background}
+          </Text>
           <Button
             testID={"toggleTheme"}
             title="Change theme"
@@ -68,26 +71,46 @@ describe("check theme value is properly set", () => {
               )
             }
           />
+          <Button
+            testID={"changeThemeBgColor"}
+            title="Change theme Bg Color"
+            onPress={() => {
+              theme.setCustomPalette({
+                background: "#00694e"
+              });
+            }}
+          />
         </View>
       </>
     );
   };
 
   it("theme toggle", () => {
+    // given
     const wrapper = render(
       <AppThemeProvider colorScheme={AppColorScheme.LIGHT}>
         <TestComponent />
       </AppThemeProvider>
     );
-
-    expect(wrapper.getByTestId("text").props.children).toEqual(
+    expect(wrapper.getByTestId("isDark").props.children).toEqual(
       false.toString()
     );
+    expect(wrapper.getByTestId("backgroundColor").props.children).toEqual(
+      "#FFFFFF"
+    );
 
+    // when
     fireEvent.press(wrapper.getByTestId("toggleTheme"));
-
-    expect(wrapper.getByTestId("text").props.children).toEqual(
+    // then
+    expect(wrapper.getByTestId("isDark").props.children).toEqual(
       true.toString()
+    );
+
+    // when
+    fireEvent.press(wrapper.getByTestId("changeThemeBgColor"));
+    // then
+    expect(wrapper.getByTestId("backgroundColor").props.children).toEqual(
+      "#00694e"
     );
   });
 });
