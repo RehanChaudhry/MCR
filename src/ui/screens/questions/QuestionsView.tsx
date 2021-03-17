@@ -1,23 +1,21 @@
+import RightArrow from "assets/images/arrow_right.svg";
+import RightArrowCircle from "assets/images/right_arrow_circle.svg";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
+import { usePreferredTheme } from "hooks";
+import Question from "models/Question";
+import QuestionSection from "models/QuestionSection";
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { Color, NumberProp } from "react-native-svg";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { AppButton } from "ui/components/molecules/app_button/AppButton";
+import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
+import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
+import QuestionHeader from "ui/components/molecules/question_header/QuestionHeader";
+import { QuestionItem } from "ui/components/organisms/question_item/QuestionItem";
 import SectionedList, {
   Section
 } from "ui/components/organisms/sectioned_list/SectionedList";
-import QuestionSection from "models/QuestionSection";
-import { FONT_SIZE, SPACE, STRINGS } from "config";
-import Question from "models/Question";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
-import { usePreferredTheme } from "hooks";
-import {
-  AppButton,
-  BUTTON_TYPES
-} from "ui/components/molecules/app_button/AppButton";
-import { Color, NumberProp } from "react-native-svg";
-import RightArrow from "assets/images/arrow_right.svg";
-import RightArrowCircle from "assets/images/right_arrow_circle.svg";
-import QuestionHeader from "ui/components/molecules/question_header/QuestionHeader";
-import { QuestionItem } from "ui/components/organisms/question_item/QuestionItem";
 import { shadowStyleProps } from "utils/Util";
 
 type Props = {
@@ -54,10 +52,9 @@ export const QuestionsView = ({
           text={STRINGS.questionnaire.how_it_works_detail}
           textStyle={styles.infoCardText}
         />
-        <AppButton
+        <LinkButton
+          viewStyle={styles.buttonView}
           text={STRINGS.questionnaire.learn_more}
-          textStyle={styles.learnMore}
-          buttonType={BUTTON_TYPES.LINK}
           rightIcon={(
             color?: Color,
             width?: NumberProp,
@@ -184,6 +181,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left"
   },
-  saveButton: { fontSize: FONT_SIZE.xsm, fontWeight: "bold" },
-  saveButtonContainer: { paddingHorizontal: SPACE.sm }
+  saveButton: { fontWeight: "bold" },
+  saveButtonContainer: { paddingHorizontal: SPACE.sm },
+  buttonView: {
+    marginTop: SPACE.md
+  }
 });
