@@ -42,6 +42,7 @@ const NotificationController: FC<Props> = () => {
   };
 
   AppLog.log(handleGetNotificationApi);
+  AppLog.log(notifications);
 
   return (
     <ProgressErrorView

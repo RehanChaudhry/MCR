@@ -5,50 +5,57 @@ import { MultilineSpannableText } from "ui/components/atoms/multiline_spannable_
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import Colors from "config/Colors";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 
-type Props = {};
+type Props = {
+  username: string;
+  message: string;
+  onPress: () => void;
+};
 
-export const CircleImageWithText = React.memo<Props>(() => {
-  return (
-    <View style={styles.mainContainer}>
-      <CircleImageBorder />
-      <View>
-        <View style={styles.circleWithText}>
-          <View>
-            <MultilineSpannableText
-              text={[
-                { id: 1, text: "Phoenix Walker " },
-                {
-                  id: 2,
-                  text:
-                    "has sent you a friend ,has sent you a friend request"
-                }
-              ]}
-              textStyle={[styles.name, styles.message]}
+export const CircleImageWithText = React.memo<Props>(
+  ({ username, onPress, message }) => {
+    return (
+      <View style={styles.mainContainer}>
+        <CircleImageBorder />
+        <View style={styles.viewRequest}>
+          <View style={styles.circleWithText}>
+            <View>
+              <MultilineSpannableText
+                text={[
+                  { id: 1, text: username },
+                  {
+                    id: 2,
+                    text: message
+                  }
+                ]}
+                textStyle={[styles.name, styles.message]}
+              />
+            </View>
+          </View>
+          <View style={styles.requestButtonWithText}>
+            <AppLabel text={"1h ago"} style={styles.time} />
+
+            <AppButton
+              text="View Request"
+              buttonStyle={styles.buttonStyle}
+              textStyle={styles.buttonText}
+              onPress={onPress}
             />
           </View>
+          <View style={styles.view} />
         </View>
-        <View style={styles.requestButtonWithText}>
-          <AppLabel text={"1h ago"} />
-
-          <AppButton
-            text="View Request"
-            buttonStyle={styles.buttonStyle}
-          />
-        </View>
-        <View style={styles.view} />
       </View>
-    </View>
-  );
-});
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   mainContainer: {
     flexDirection: "row",
     marginLeft: SPACE.lg,
     marginRight: SPACE.lg,
-    width: 290
+    flexBasis: 0.1
   },
   circleWithText: {
     flexDirection: "row"
@@ -73,6 +80,15 @@ const styles = StyleSheet.create({
     marginTop: SPACE.lg,
     marginBottom: SPACE.xl
   },
-  name: { fontWeight: "bold" },
-  message: { fontWeight: "normal" }
+  name: { fontWeight: "bold", fontSize: FONT_SIZE.md },
+  message: { fontWeight: "normal", fontSize: FONT_SIZE.md },
+  time: {
+    fontSize: FONT_SIZE.sm
+  },
+  buttonText: {
+    fontSize: 6
+  },
+  viewRequest: {
+    flex: 1
+  }
 });

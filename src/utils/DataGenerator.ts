@@ -4,6 +4,8 @@ import {
   NotificationData,
   NotificationsResponseModel
 } from "models/api_responses/NotificationsResponseModel";
+import { AppLog } from "utils/Util";
+import moment from "moment";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -29,16 +31,18 @@ const getQuestionSections = () => {
 };
 const getNotifications = () => {
   const notifications: NotificationData[] = [];
-  for (let i = 0; i < 5; i++) {
+  const date = new Date();
+
+  AppLog.log("Data Generaor" + moment(date).subtract(1, "day").toDate());
+
+  for (let i = 0; i < 15; i++) {
     const notification: NotificationsResponseModel = {
       message: "Success",
       data: {
         id: `${i}`,
         type: `Lifestyle Preference ${i}`,
-        date: Date.now().toString(),
-        message:
-          "Your answers to these questions will guide us to recommending the best roommate match for you. " +
-          i
+        date: moment(date).subtract(i, "day").toDate().toString(),
+        message: "has sent you a friend request "
       }
     };
     notifications.push(notification.data);
