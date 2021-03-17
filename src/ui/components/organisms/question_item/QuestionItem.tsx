@@ -6,6 +6,7 @@ import { FONT_SIZE, SPACE } from "config";
 import { AppSwitch } from "ui/components/atoms/app_switch/AppSwitch";
 import { RangeSliderWithLabel } from "./RangeSliderWithLabel";
 import { AppLog } from "utils/Util";
+import Question from "models/Question";
 
 export interface SliderCallback {
   topRangeSliderResult: number[];
@@ -14,41 +15,35 @@ export interface SliderCallback {
 }
 
 export interface RangeSliderProps {
-  question: string;
+  question: Question;
   initialValuesTopSlider?: number[];
   initialValuesBottomSlider?: number[];
-  minValue: number; //slider minimum
-  maxValue: number; //slider maximum
-  labelLeft: string;
-  labelRight: string;
-  preferenceInitialValue: boolean;
+  minValue?: number; //slider minimum
+  maxValue?: number; //slider maximum
+  preferenceInitialValue?: boolean;
   callback: (result: SliderCallback) => void;
   style?: StyleProp<ViewStyle>; //avoid passing padding use margin instead, it will handle range slide width
 }
 
-export const RangeSlider = React.memo<RangeSliderProps>(
+export const QuestionItem = React.memo<RangeSliderProps>(
   ({
     question,
-    initialValuesTopSlider = undefined,
-    initialValuesBottomSlider = undefined,
-    minValue,
-    maxValue,
-    labelLeft,
-    labelRight,
-    preferenceInitialValue,
+    initialValuesTopSlider = null,
+    initialValuesBottomSlider = null,
+    minValue = 0,
+    maxValue = 10,
+    preferenceInitialValue = false,
     callback,
     style
   }) => {
     const { themedColors } = usePreferredTheme();
     let [sliderWidth, setSliderWidth] = useState<number>(0);
 
-    let topRangeSliderValues: React.MutableRefObject<number[]> = useRef(
-        initialValuesTopSlider == undefined ? [] : initialValuesTopSlider
+    const topRangeSliderValues: React.MutableRefObject<number[]> = useRef(
+        initialValuesTopSlider ?? []
       ),
       bottomRangeSliderValues: React.MutableRefObject<number[]> = useRef(
-        initialValuesBottomSlider == undefined
-          ? []
-          : initialValuesBottomSlider
+        initialValuesBottomSlider ?? []
       ),
       preferenceResult: React.MutableRefObject<boolean> = useRef(
         preferenceInitialValue
@@ -125,15 +120,15 @@ export const RangeSlider = React.memo<RangeSliderProps>(
         }}>
         <AppLabel
           style={[styles.label, styles.questionLabel]}
-          text={question}
+          text={question.title}
         />
 
         <RangeSliderWithLabel
           initialValues={topRangeSliderValues.current}
           enableTwoThumbs={false}
           result={topSliderCallback}
-          labelLeft={labelLeft}
-          labelRight={labelRight}
+          labelLeft={question.minOption}
+          labelRight={question.maxOption}
           minValue={minValue}
           maxValue={maxValue}
           sliderWidth={sliderWidth}
@@ -145,13 +140,13 @@ export const RangeSlider = React.memo<RangeSliderProps>(
         <RangeSliderWithLabel
           initialValues={
             preferenceSwitchValue
-              ? [minValue, maxValue]
-              : initialValuesBottomSlider
+              ? [minValue!, maxValue!]
+              : initialValuesBottomSlider!
           }
           enableTwoThumbs={true}
           result={bottomSliderCallback}
-          labelLeft={labelLeft}
-          labelRight={labelRight}
+          labelLeft={question.minOption}
+          labelRight={question.maxOption}
           minValue={minValue}
           maxValue={maxValue}
           sliderWidth={sliderWidth}
@@ -165,10 +160,8 @@ export const RangeSlider = React.memo<RangeSliderProps>(
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: SPACE.md,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    paddingHorizontal: SPACE.md
+    padding: SPACE.md,
+    borderTopWidth: StyleSheet.hairlineWidth
   },
   label: {
     fontSize: FONT_SIZE.sm

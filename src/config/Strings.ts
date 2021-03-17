@@ -23,6 +23,15 @@ export default {
     try_again: "Try again"
   },
 
+  questionnaire: {
+    info:
+      "Roommate compatability questionnaire will be help us to find better roomate match for you.",
+    how_it_works: "How it works?",
+    how_it_works_detail:
+      "Each Question has 2 sliders, one to identify approximately where you fall within the range and second to determine the comfort zone. It will help us to find the compatibility with your roommates.",
+    learn_more: "Learn more about questionnaire"
+  },
+
   dummyText:
     "This accordion will automatically close after 5 seconds " +
     "when the associated task will complete its execution."

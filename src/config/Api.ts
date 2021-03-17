@@ -14,6 +14,10 @@ export default {
   RESET_PASS_URL: "password/set/",
   UPDATE_PROFILE_URL: "profile",
 
+  // Profile
+  GET_QUESTIONS: "questions/",
+  POST_ANSWERS: "answer/",
+
   //chat
   GET_CHATS: "chats"
 };
