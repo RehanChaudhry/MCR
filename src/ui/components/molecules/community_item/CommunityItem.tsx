@@ -8,6 +8,7 @@ import { WebViewComponent } from "ui/components/atoms/webview/WebViewComponent";
 import { AnnouncementFooter } from "ui/components/molecules/announcement_footer/AnnouncementFooter";
 import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
 import { ImagesSlideShow } from "ui/components/molecules/image_slide_show/ImagesSlideShow";
+import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
 
 export interface CommunityItemProps extends TouchableOpacityProps {
   communityItem: CommunityData;
@@ -43,6 +44,9 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           communityItem.images.length > 0 && (
             <ImagesSlideShow images={communityItem.images} />
           )}
+        {communityItem.metaDataUrl != null && true && (
+          <UrlMetaData url={communityItem.metaDataUrl} />
+        )}
         <AnnouncementFooter
           commentCount={communityItem.commentCount}
           likeCount={communityItem.likeCount}

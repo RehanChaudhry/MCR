@@ -13,4 +13,5 @@ export type CommunityData = {
   videoUrl?: string | null;
   likeCount: number;
   commentCount: number;
+  metaDataUrl?: string;
 };
