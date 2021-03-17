@@ -5,31 +5,17 @@ import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb
 import { AppLog } from "utils/Util";
 import { ItemChatList } from "ui/components/molecules/item_chat/ItemChatList";
 import BottomBreadCrumbs, {
-  BreadCrumbsItem
+  Item
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
-
-type Props = {};
-
-const items: string[] = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "11"
-];
+import ChatItem from "models/ChatItem";
 
 type ConversationType = "Active" | "Archived";
+
 const showConversation = (conversationType: ConversationType) => {
   AppLog.log(conversationType);
 };
 
-const breadCrumbsItems: BreadCrumbsItem[] = [
+const breadCrumbsItems: Item[] = [
   {
     title: "Active Conversations",
     onPress: () => {
@@ -44,26 +30,41 @@ const breadCrumbsItems: BreadCrumbsItem[] = [
   }
 ];
 
-export const ChatListScreen = React.memo<Props>(() => {
-  const renderItem = ({ item }: { item: string }) => {
-    AppLog.log("rendering list item : " + JSON.stringify(item));
-    return <ItemChatList />;
-  };
+interface ChatListProps {
+  onItemClick: () => void;
+  data: ChatItem[];
+}
 
-  return (
-    <Screen style={styles.container}>
-      <FlatListWithPb
-        shouldShowProgressBar={false}
-        data={items}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-        removeClippedSubviews={true}
-        style={styles.list}
-      />
-      <BottomBreadCrumbs data={breadCrumbsItems} />
-    </Screen>
-  );
-});
+export const ChatListScreen = React.memo<ChatListProps>(
+  ({ data, onItemClick }) => {
+    AppLog.logForcefully("Rendering screen chat");
+    const renderItem = ({ item }: { item: ChatItem }) => {
+      AppLog.log("rendering list item : " + JSON.stringify(item));
+      return (
+        <ItemChatList
+          item={item}
+          onPress={() => {
+            onItemClick();
+          }}
+        />
+      );
+    };
+
+    return (
+      <Screen style={styles.container}>
+        <FlatListWithPb
+          shouldShowProgressBar={false}
+          data={data}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+          removeClippedSubviews={true}
+          style={styles.list}
+        />
+        <BottomBreadCrumbs data={breadCrumbsItems} />
+      </Screen>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: {

@@ -8,7 +8,7 @@ export type ChatItem = {
   updatedAt: string;
 };
 
-enum SenderType {
+export enum SenderType {
   STAFF = "STAFF",
   NEW_MESSAGES = "NEW_MESSAGES",
   STUDENTS = "STUDENTS"

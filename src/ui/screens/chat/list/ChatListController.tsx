@@ -1,34 +1,35 @@
-import React, { FC, useState } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import { ChatListScreen } from "ui/screens/chat/list/ChatListScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { HomeDrawerParamList } from "routes";
 import { useNavigation } from "@react-navigation/native";
 import { ChatsResponseModel } from "models/api_responses/ChatsResponseModel";
 import { useApi } from "repo/Client";
 import ChatApis from "repo/chat/ChatAPis";
 import { AppLog } from "utils/Util";
 import ChatItem from "models/ChatItem";
+import DataGenerator from "utils/DataGenerator";
+import { ChatParamsLIst } from "routes/ChatParams";
 
 type ChatListNavigationProp = StackNavigationProp<
-  HomeDrawerParamList,
-  "ChatList"
+  ChatParamsLIst,
+  "ChatThread"
 >;
 
 type Props = {};
 
+const dummyChats = DataGenerator.getChats();
+
 export const ChatListController: FC<Props> = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigation = useNavigation<ChatListNavigationProp>();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [chats, setChats] = useState<ChatItem[]>([]);
+  const [chats, setChats] = useState<ChatItem[]>(dummyChats);
 
-  /*  useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerTitleAlign: "center",
-      title: "Switch Variations"
+      title: "Chat"
     });
-  }, [navigation]);*/
+  }, [navigation]);
 
   const loadChatsApi = useApi<any, ChatsResponseModel>(ChatApis.getChats);
 
@@ -38,14 +39,39 @@ export const ChatListController: FC<Props> = () => {
       []
     );
     if (hasError || dataBody === undefined) {
-      // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.log("Unable to find questions " + errorBody);
+      AppLog.logForcefully("Unable to find chats " + errorBody);
       return;
     } else {
+      AppLog.logForcefully("Find chats" + errorBody);
       setChats(dataBody.data);
       onComplete?.();
     }
   };
 
-  return <ChatListScreen />;
+  /* useEffect(() => {
+    AppLog.logForcefully("inside useEffect()");
+    handleLoadChatsApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);*/
+
+  const openChatThread = () => {
+    navigation.navigate("ChatThread");
+  };
+
+  return (
+    /* <ProgressErrorView
+      data={chats}
+      isLoading={loadChatsApi.loading}
+      error={loadChatsApi.error}
+      errorView={(message) => {
+        return (
+          <View>
+            <AppLabel text={message} />
+          </View>
+        );
+      }}>
+      <ChatListScreen />
+    </ProgressErrorView>*/
+    <ChatListScreen data={chats} onItemClick={openChatThread} />
+  );
 };
