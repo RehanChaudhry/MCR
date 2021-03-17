@@ -86,7 +86,7 @@ export const QuestionItem = React.memo<RangeSliderProps>(
               style={[
                 styles.label,
                 styles.questionLabel,
-                { marginEnd: SPACE.sm }
+                { marginEnd: SPACE.xsm }
               ]}
               text="I have no preference"
             />
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   },
   questionLabel: {
     fontWeight: "700",
-    marginBottom: SPACE.sm
+    marginBottom: SPACE.xsm
   },
   labelRight: {
     alignSelf: "flex-end"
