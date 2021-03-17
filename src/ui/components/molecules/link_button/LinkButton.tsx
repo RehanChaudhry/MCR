@@ -1,4 +1,4 @@
-import { FONT_SIZE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
@@ -11,7 +11,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { AppLabel, Weight } from "ui/components/atoms/app_label/AppLabel";
 import { SvgProp } from "utils/Util";
 
 export interface LinkButtonProps extends TouchableOpacityProps {
@@ -22,16 +22,36 @@ export interface LinkButtonProps extends TouchableOpacityProps {
   rightIcon?: SvgProp;
   iconStyle?: StyleProp<ImageStyle>;
   viewStyle?: StyleProp<ViewStyle>;
+  fontWeight?: Weight;
 }
 
 export const LinkButton = React.memo<LinkButtonProps>(
-  ({ text, onPress, textStyle, leftIcon, rightIcon, viewStyle }) => {
+  ({
+    text,
+    onPress,
+    textStyle,
+    leftIcon,
+    rightIcon,
+    viewStyle,
+    fontWeight = "normal"
+  }) => {
     const theme = usePreferredTheme();
     return (
       <TouchableOpacity onPress={onPress}>
         <View style={[style.container, viewStyle]}>
           {leftIcon ? leftIcon?.(theme.themedColors.label, 20, 20) : null}
-          <AppLabel style={[style.text, textStyle]} text={text} />
+          <AppLabel
+            weight={fontWeight}
+            style={[
+              style.text,
+              { color: theme.themedColors.primary },
+              textStyle,
+              leftIcon
+                ? { paddingLeft: SPACE.sm }
+                : { paddingRight: SPACE.sm }
+            ]}
+            text={text}
+          />
           {rightIcon
             ? rightIcon?.(theme.themedColors.label, 20, 20)
             : null}
