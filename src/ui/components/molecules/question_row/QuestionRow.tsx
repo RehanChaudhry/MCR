@@ -79,17 +79,17 @@ const styles = StyleSheet.create({
     // shadowRadius: 2,
     // elevation: 5
   },
-  title: { fontSize: FONT_SIZE.sm, padding: SPACE.sm },
-  rangeSliderLabel: { fontSize: FONT_SIZE.sm, padding: SPACE.sm },
+  title: { fontSize: FONT_SIZE.sm, padding: SPACE.xsm },
+  rangeSliderLabel: { fontSize: FONT_SIZE.sm, padding: SPACE.xsm },
   comfortZoneLabel: { fontSize: FONT_SIZE.xsm },
   comfortZoneContainer: {
-    paddingHorizontal: SPACE.sm,
+    paddingHorizontal: SPACE.xsm,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
   },
   noPreferenceContainer: { flexDirection: "row", alignItems: "center" },
-  appSwitch: { marginStart: SPACE.sm }
+  appSwitch: { marginStart: SPACE.xsm }
 });
 
 export default QuestionRow;

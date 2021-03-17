@@ -73,37 +73,6 @@ export const QuestionItem = React.memo<RangeSliderProps>(
       });
     };
 
-    const preferenceView = () => {
-      return (
-        <View style={styles.preferenceWrapper}>
-          <AppLabel
-            style={[styles.label, styles.questionLabel]}
-            text="Comfort Zone"
-          />
-
-          <View style={styles.switchWrapper}>
-            <AppLabel
-              style={[
-                styles.label,
-                styles.questionLabel,
-                { marginEnd: SPACE.sm }
-              ]}
-              text="I have no preference"
-            />
-
-            <AppSwitch
-              defaultValue={preferenceSwitchValue}
-              showCustomThumb={true}
-              onValueChange={(isEnabled: boolean) => {
-                setPreferenceSwitchValue(isEnabled);
-                preferenceResult.current = isEnabled;
-              }}
-            />
-          </View>
-        </View>
-      );
-    };
-
     return (
       <View
         style={[
@@ -135,7 +104,32 @@ export const QuestionItem = React.memo<RangeSliderProps>(
           allowSliderClick={true}
         />
 
-        {preferenceView()}
+        <View style={styles.preferenceWrapper}>
+          <AppLabel
+            style={[styles.label, styles.questionLabel]}
+            text="Comfort Zone"
+          />
+
+          <View style={styles.switchWrapper}>
+            <AppLabel
+              style={[
+                styles.label,
+                styles.questionLabel,
+                { marginEnd: SPACE.xsm }
+              ]}
+              text="I have no preference"
+            />
+
+            <AppSwitch
+              defaultValue={preferenceSwitchValue}
+              showCustomThumb={true}
+              onValueChange={(isEnabled: boolean) => {
+                setPreferenceSwitchValue(isEnabled);
+                preferenceResult.current = isEnabled;
+              }}
+            />
+          </View>
+        </View>
 
         <RangeSliderWithLabel
           initialValues={
@@ -168,7 +162,7 @@ const styles = StyleSheet.create({
   },
   questionLabel: {
     fontWeight: "700",
-    marginBottom: SPACE.sm
+    marginBottom: SPACE.xsm
   },
   labelRight: {
     alignSelf: "flex-end"

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  ImageStyle,
   StyleProp,
   StyleSheet,
   TextInput,
@@ -8,7 +9,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { COLORS, FONTS, FONT_SIZE } from "config";
+import { COLORS, FONTS, FONT_SIZE, SPACE } from "config";
 
 export interface AppInputFieldProps extends TextInputProps {
   style?: StyleProp<TextStyle>;
@@ -20,7 +21,7 @@ export interface AppInputFieldProps extends TextInputProps {
   rightIcon?: () => React.ReactElement | null;
   leftIcon?: () => React.ReactElement | null;
   viewStyle?: StyleProp<ViewStyle>;
-  //iconStyle?: StyleProp<ImageStyle>;
+  iconStyle?: StyleProp<ImageStyle>;
   multiline?: boolean;
   textAlignVertical?: any;
 }
@@ -39,12 +40,17 @@ export const AppInputField = React.memo<Props>(
     //iconStyle,
     multiline = false,
     textAlignVertical,
+    //iconStyle,
     ...rest
   }) => {
     const [value, setTextInputValue] = useState(valueToShowAtStart);
     return (
       <View style={[styles.input, viewStyle]}>
-        {leftIcon ? leftIcon() : null}
+        {leftIcon && (
+          <View style={styles.leftIconView}>
+            {leftIcon ? leftIcon() : null}
+          </View>
+        )}
         <TextInput
           textAlignVertical={
             textAlignVertical ? textAlignVertical : "center"
@@ -61,7 +67,11 @@ export const AppInputField = React.memo<Props>(
           multiline={multiline}
           {...rest}
         />
-        {rightIcon ? rightIcon() : null}
+        {rightIcon && (
+          <View style={styles.rightIconView}>
+            {rightIcon ? rightIcon() : null}
+          </View>
+        )}
       </View>
     );
   }
@@ -73,48 +83,45 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     color: COLORS.textColor1,
     borderStyle: "solid",
-    height: 40,
+    height: 42,
     borderRadius: 5,
     borderColor: COLORS.grey3,
-    paddingTop: 6,
-    paddingBottom: 10,
-    paddingRight: 15,
-    paddingLeft: 15,
+    paddingRight: SPACE.md,
+    paddingLeft: SPACE.md,
     fontSize: FONT_SIZE.md,
     fontFamily: FONTS.regular,
     borderWidth: StyleSheet.hairlineWidth,
-    flex: 1,
+    flex: 1
 
-    //Its for IOS
-    shadowColor: COLORS.black,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-
-    // its for android
-    elevation: 2,
-    backgroundColor: "white"
+    // //Its for IOS
+    // shadowColor: COLORS.black,
+    // shadowOffset: { width: 0, height: 1 },
+    // shadowOpacity: 0.1,
+    //
+    // // its for android
+    // elevation: 2,
+    // backgroundColor: "white"
   },
   textInput: {
     fontFamily: FONTS.regular,
     flex: 1,
     padding: 0,
     color: COLORS.textColor1
-    //backgroundColor: Colors.red
-    //height: "100%"
-    // width: "100%"
+  },
+  leftIconView: {
+    flexDirection: "row",
+    alignSelf: "flex-start",
+    alignItems: "center",
+    alignContent: "center",
+    height: 42,
+    paddingRight: SPACE.md
+  },
+  rightIconView: {
+    flexDirection: "row",
+    alignSelf: "flex-end",
+    alignItems: "center",
+    alignContent: "center",
+    height: 42,
+    paddingLeft: SPACE.md
   }
-  // leftIconStyle: {
-  //   height: 16,
-  //   width: 16,
-  //   marginTop: 6,
-  //   marginRight: 8,
-  //   alignSelf: "flex-start"
-  // },
-  // rightIconStyle: {
-  //   height: 16,
-  //   width: 16,
-  //   marginTop: 6,
-  //   marginLeft: 8,
-  //   alignSelf: "flex-end"
-  // }
 });
