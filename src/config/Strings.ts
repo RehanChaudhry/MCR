@@ -29,7 +29,8 @@ export default {
     how_it_works: "How it works?",
     how_it_works_detail:
       "Each Question has 2 sliders, one to identify approximately where you fall within the range and second to determine the comfort zone. It will help us to find the compatibility with your roommates.",
-    learn_more: "Learn more about questionnaire"
+    learn_more: "Learn more about questionnaire",
+    action_save: "Save & Continue"
   },
 
   dummyText:

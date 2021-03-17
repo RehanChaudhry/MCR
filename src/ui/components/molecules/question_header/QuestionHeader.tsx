@@ -14,7 +14,7 @@ import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
-import { SvgProp } from "utils/Util";
+import { shadowStyleProps, SvgProp } from "utils/Util";
 
 interface Props {
   questionGroup: QuestionSection;
@@ -89,12 +89,7 @@ const styles = StyleSheet.create({
     marginVertical: SPACE.sm,
     padding: SPACE.sm,
 
-    // shadow
-    shadowColor: "#000000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 2
+    ...shadowStyleProps
   },
   expandedContainer: {
     flexDirection: "column",
@@ -105,11 +100,7 @@ const styles = StyleSheet.create({
     marginTop: SPACE.sm
 
     // shadow
-    // shadowColor: "#000000",
-    // shadowOffset: { width: 0, height: 1 },
-    // shadowOpacity: 0.8,
-    // shadowRadius: 2,
-    // elevation: 5
+    // ...shadowStyleProps
   },
   title: { fontSize: FONT_SIZE.md, padding: SPACE.sm },
   description: { fontSize: FONT_SIZE.sm, padding: SPACE.sm },
