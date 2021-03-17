@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState
-} from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   Pressable,
   SectionList,
@@ -58,14 +53,6 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
 
   const sectionList = useRef<SectionList<any, any> | null>(null);
 
-  useLayoutEffect(() => {
-    AppLog.log(`scrolling to section ${selectedIndex} and item 0`);
-    sectionList.current?.scrollToLocation({
-      sectionIndex: selectedIndex,
-      itemIndex: 0
-    });
-  });
-
   const bodyItemView = useCallback(
     ({
       index,
@@ -96,6 +83,11 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
       const onPress = () => {
         AppLog.log(`HeaderView ${section.header.key()} pressed`);
         setSelectedIndex(index);
+        AppLog.log(`scrolling to section ${selectedIndex} and item 0`);
+        sectionList.current?.scrollToLocation({
+          sectionIndex: selectedIndex,
+          itemIndex: 0
+        });
       };
 
       return (

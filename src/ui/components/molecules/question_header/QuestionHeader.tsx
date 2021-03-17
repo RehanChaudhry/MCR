@@ -14,7 +14,7 @@ import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
-import { SvgProp } from "utils/Util";
+import { shadowStyleProps, SvgProp } from "utils/Util";
 
 interface Props {
   questionGroup: QuestionSection;
@@ -86,33 +86,24 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     borderRadius: 5,
-    marginVertical: SPACE.sm,
-    padding: SPACE.sm,
+    marginVertical: SPACE.xsm,
+    padding: SPACE.xsm,
 
-    // shadow
-    shadowColor: "#000000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 2
+    ...shadowStyleProps
   },
   expandedContainer: {
     flexDirection: "column",
-    padding: SPACE.sm,
+    padding: SPACE.xsm,
     overflow: "hidden",
     borderTopStartRadius: 5,
     borderTopEndRadius: 5,
-    marginTop: SPACE.sm
+    marginTop: SPACE.xsm
 
     // shadow
-    // shadowColor: "#000000",
-    // shadowOffset: { width: 0, height: 1 },
-    // shadowOpacity: 0.8,
-    // shadowRadius: 2,
-    // elevation: 5
+    // ...shadowStyleProps
   },
-  title: { fontSize: FONT_SIZE.md, padding: SPACE.sm },
-  description: { fontSize: FONT_SIZE.sm, padding: SPACE.sm },
+  title: { fontSize: FONT_SIZE.md, padding: SPACE.xsm },
+  description: { fontSize: FONT_SIZE.sm, padding: SPACE.xsm },
   arrowContainer: {
     width: moderateScale(30),
     height: moderateScale(30),
