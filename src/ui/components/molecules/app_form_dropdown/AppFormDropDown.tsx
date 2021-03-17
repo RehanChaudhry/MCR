@@ -1,10 +1,12 @@
 import React from "react";
-import { BasicProfile } from "ui/components/profile/basic_profile/BasicProfile";
-import Screen from "ui/components/atoms/Screen";
 import { ScrollView } from "react-native";
+import Screen from "ui/components/atoms/Screen";
+import { BasicProfile } from "ui/components/profile/basic_profile/BasicProfile";
 import { DemoGraphics } from "ui/components/profile/demographics/DemoGraphics";
 
-export const UpdateProfileView = React.memo(() => {
+type Props = {};
+
+export const UpdateProfileView: React.FC<Props> = () => {
   return (
     <Screen>
       <ScrollView>
@@ -13,4 +15,4 @@ export const UpdateProfileView = React.memo(() => {
       </ScrollView>
     </Screen>
   );
-});
+};

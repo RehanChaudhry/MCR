@@ -91,16 +91,16 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.md,
     fontFamily: FONTS.regular,
     borderWidth: StyleSheet.hairlineWidth,
-    flex: 1,
+    flex: 1
 
-    //Its for IOS
-    shadowColor: COLORS.black,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-
-    // its for android
-    elevation: 2,
-    backgroundColor: "white"
+    // //Its for IOS
+    // shadowColor: COLORS.black,
+    // shadowOffset: { width: 0, height: 1 },
+    // shadowOpacity: 0.1,
+    //
+    // // its for android
+    // elevation: 2,
+    // backgroundColor: "white"
   },
   textInput: {
     fontFamily: FONTS.regular,

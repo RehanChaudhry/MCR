@@ -3,7 +3,7 @@ import { CardView } from "ui/components/atoms/CardView";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
-import { COLORS, SPACE } from "config";
+import { SPACE } from "config";
 
 export const DemoGraphics = React.memo(() => {
   const theme = usePreferredTheme();
@@ -18,7 +18,12 @@ export const DemoGraphics = React.memo(() => {
         ]}
         textStyle={[{ color: theme.themedColors.labelSecondary }]}
       />
-      <View style={styles.horizontalLine} />
+      <View
+        style={[
+          styles.horizontalLine,
+          { backgroundColor: theme.themedColors.interface["700"] }
+        ]}
+      />
     </CardView>
   );
 });
@@ -33,8 +38,7 @@ const styles = StyleSheet.create({
     paddingVertical: SPACE.sm
   },
   horizontalLine: {
-    backgroundColor: COLORS.grey,
-    height: 0.3,
+    height: 0.5,
     marginVertical: SPACE.lg
   }
 });

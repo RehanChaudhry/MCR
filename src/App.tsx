@@ -4,7 +4,7 @@ import { AppColorScheme, AppThemeProvider } from "hooks/theme";
 import React from "react";
 //import { SplashView } from "ui/screens/auth/splash/SplashView";
 import { AppLog } from "utils/Util";
-import { UpdateProfileController } from "./ui/screens/profile/update_profile/UpdateProfileController";
+import UpdateProfileController from "./ui/screens/home/profile/update_profile/UpdateProfileController";
 
 type Props = {};
 

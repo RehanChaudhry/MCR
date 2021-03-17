@@ -40,13 +40,11 @@ exports[`rendering... renders correctly 1`] = `
     style={
       Array [
         Object {
-          "backgroundColor": "white",
           "borderColor": "#CACACA",
           "borderRadius": 5,
           "borderStyle": "solid",
           "borderWidth": 0.5,
           "color": "#666666",
-          "elevation": 2,
           "flex": 1,
           "flexDirection": "row",
           "fontFamily": "Inter-Regular",
@@ -55,12 +53,6 @@ exports[`rendering... renders correctly 1`] = `
           "justifyContent": "center",
           "paddingLeft": 18.139805825242718,
           "paddingRight": 18.139805825242718,
-          "shadowColor": "#000000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
-          },
-          "shadowOpacity": 0.1,
         },
         undefined,
       ]
@@ -134,13 +126,11 @@ exports[`rendering... renders correctly 1`] = `
     style={
       Array [
         Object {
-          "backgroundColor": "white",
           "borderColor": "#CACACA",
           "borderRadius": 5,
           "borderStyle": "solid",
           "borderWidth": 0.5,
           "color": "#666666",
-          "elevation": 2,
           "flex": 1,
           "flexDirection": "row",
           "fontFamily": "Inter-Regular",
@@ -149,12 +139,6 @@ exports[`rendering... renders correctly 1`] = `
           "justifyContent": "center",
           "paddingLeft": 18.139805825242718,
           "paddingRight": 18.139805825242718,
-          "shadowColor": "#000000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
-          },
-          "shadowOpacity": 0.1,
         },
         undefined,
       ]
