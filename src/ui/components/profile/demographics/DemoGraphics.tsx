@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CardView } from "ui/components/atoms/CardView";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import { StyleSheet, View } from "react-native";
@@ -29,6 +29,7 @@ export const DemoGraphics = React.memo(
     onSubmit = (_values: FormikValues) => {}
   }) => {
     const theme = usePreferredTheme();
+    const [title, setTitle] = useState("Select your gender");
     return (
       <CardView style={styles.cardStyles}>
         <HeadingWithText
@@ -49,10 +50,17 @@ export const DemoGraphics = React.memo(
 
         <AppFormDropDown
           labelProps={{ text: "Gender", weight: "semi-bold" }}
-          viewStyle={[
-            styles.viewFieldStyle,
-            { borderColor: theme.themedColors.border }
-          ]}
+          appDropDownProps={{
+            title: title,
+            items: [
+              { id: "0", title: "Male" },
+              { id: "1", title: "Female" },
+              { id: "2", title: "Other" }
+            ],
+            selectedItemCallback: (item) => {
+              setTitle(item.title);
+            }
+          }}
         />
         <View style={styles.spacer} />
 

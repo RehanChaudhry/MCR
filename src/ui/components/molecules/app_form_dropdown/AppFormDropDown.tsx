@@ -1,17 +1,21 @@
 import React from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { StyleSheet } from "react-native";
 import { AppLabel, AppLabelProps } from "../../atoms/app_label/AppLabel";
 import { COLORS, FONT_SIZE, FONTS, SPACE } from "../../../../config";
 import usePreferredTheme from "../../../../hooks/theme/usePreferredTheme";
+import {
+  AppDropdown,
+  AppDropdownProps
+} from "../../organisms/app_dropdown/AppDropdown";
 
 type Props = {
   labelProps?: AppLabelProps;
-  viewStyle?: StyleProp<ViewStyle>;
+  appDropDownProps: AppDropdownProps;
 };
 
 export const AppFormDropDown: React.FC<Props> = ({
   labelProps,
-  viewStyle
+  appDropDownProps
 }) => {
   const theme = usePreferredTheme();
   return (
@@ -22,7 +26,7 @@ export const AppFormDropDown: React.FC<Props> = ({
           {...labelProps}
         />
       )}
-      <View style={[styles.input, viewStyle]} />
+      <AppDropdown {...appDropDownProps} />
     </>
   );
 };
