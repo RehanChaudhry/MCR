@@ -195,7 +195,7 @@ const style = StyleSheet.create({
     height: 40,
     justifyContent: "space-between",
     alignItems: "center",
-    borderRadius: 10
+    borderRadius: 6
   },
   viewContainer: {
     flexDirection: "row",
