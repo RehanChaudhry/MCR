@@ -45,14 +45,6 @@ exports[`snapshot testing 1`] = `
     <View
       style={
         Object {
-          "alignItems": "flex-start",
-          "flex": 0.3,
-        }
-      }
-    />
-    <View
-      style={
-        Object {
           "alignItems": "center",
           "flex": 1,
           "flexDirection": "row",
@@ -73,11 +65,13 @@ exports[`snapshot testing 1`] = `
               },
               Array [
                 Object {
-                  "fontSize": 21.163106796116505,
+                  "fontSize": 24.186407766990293,
+                  "overflow": "hidden",
                 },
                 Object {
-                  "color": "#111827",
+                  "color": "#00694e",
                 },
+                undefined,
               ],
             ],
             Object {
@@ -89,15 +83,6 @@ exports[`snapshot testing 1`] = `
         Submit
       </Text>
     </View>
-    <View
-      style={
-        Object {
-          "alignItems": "flex-end",
-          "flex": 0.3,
-          "justifyContent": "flex-end",
-        }
-      }
-    />
   </View>
 </View>
 `;
