@@ -8154,10 +8154,9 @@ react-native-gesture-handler@1.9.0:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-image-slider-box@^1.0.12:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/react-native-image-slider-box/-/react-native-image-slider-box-1.0.12.tgz#4abb7b6d26f12859ac059d4fe7555c72a201e23a"
-  integrity sha512-Yq7xLmrAxNWjSAZJ78ZQkg13/30UJc17yvBwRFAidGrMaVo2Go9glRdRJ2U212APsQVHskAhSgW6YHinuTLoIA==
+"react-native-image-slider-box@https://github.com/js1233/react-native-image-slider-box":
+  version "1.0.13"
+  resolved "https://github.com/js1233/react-native-image-slider-box#dcdde202c76b60f30517f36ef948c031ef7bfece"
   dependencies:
     react-native-snap-carousel "*"
 
