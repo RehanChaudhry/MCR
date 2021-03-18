@@ -10,7 +10,6 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import { AppLog } from "utils/Util";
 
 interface RangeSliderWithLabelProps {
   initialValues: number[] | undefined;
@@ -92,19 +91,19 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = ({
                 /* minMarkerOverlapDistance: 15*/
               })}
           isMarkersSeparated={true}
-          customMarkerLeft={(e) => {
-            AppLog.log(
+          customMarkerLeft={(_) => {
+            /*AppLog.log(
               "RangeSlider() => customMarkerLeft: " + e.currentValue
-            );
+            );*/
             return customSliderMarker(styles.markerLeft);
           }}
-          customMarkerRight={(e) => {
-            AppLog.log("RangeSlider() => customMarkerRight: " + e);
+          customMarkerRight={(_) => {
+            // AppLog.log("RangeSlider() => customMarkerRight: " + e);
             return customSliderMarker(styles.markerRight);
           }}
           onValuesChangeFinish={(values: number[]) => {
             result(values);
-            AppLog.log("RangeSlider() => onValuesChangeFinish: " + values);
+            // AppLog.log("RangeSlider() => onValuesChangeFinish: " + values);
           }}
           trackStyle={styles.track}
           sliderLength={sliderWidth}

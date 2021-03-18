@@ -6,17 +6,21 @@ import Question from "models/Question";
 import QuestionSection from "models/QuestionSection";
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { Color, NumberProp } from "react-native-svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
 import QuestionHeader from "ui/components/molecules/question_header/QuestionHeader";
-import { QuestionItem } from "ui/components/organisms/question_item/QuestionItem";
+import {
+  QuestionItem,
+  SliderCallback
+} from "ui/components/organisms/question_item/QuestionItem";
+import { shadowStyleProps } from "utils/Util";
+import Screen from "ui/components/atoms/Screen";
 import SectionedList, {
   Section
 } from "ui/components/organisms/sectioned_list/SectionedList";
-import { shadowStyleProps } from "utils/Util";
+import { moderateScale } from "config/Dimens";
 
 type Props = {
   submitAnswersLoading: boolean;
@@ -54,15 +58,12 @@ export const QuestionsView = ({
         />
         <LinkButton
           viewStyle={styles.buttonView}
+          textStyle={styles.learnMore}
           text={STRINGS.questionnaire.learn_more}
-          rightIcon={(
-            color?: Color,
-            width?: NumberProp,
-            height?: NumberProp
-          ) => (
+          rightIcon={() => (
             <RightArrow
-              width={width}
-              height={height}
+              width={moderateScale(20)}
+              height={moderateScale(20)}
               fill={themedColors.primary}
             />
           )}
@@ -84,14 +85,10 @@ export const QuestionsView = ({
           }
         ]}
         textStyle={[styles.saveButton, { color: themedColors.background }]}
-        rightIcon={(
-          color?: Color,
-          width?: NumberProp,
-          height?: NumberProp
-        ) => (
+        rightIcon={() => (
           <RightArrowCircle
-            width={width}
-            height={height}
+            width={moderateScale(20)}
+            height={moderateScale(20)}
             fill={themedColors.background}
           />
         )}
@@ -100,7 +97,7 @@ export const QuestionsView = ({
   );
 
   return (
-    <View style={styles.container}>
+    <Screen>
       <SectionedList<QuestionSection, Question>
         listHeaderComponent={listHeader()}
         style={styles.sectionedList}
@@ -121,20 +118,42 @@ export const QuestionsView = ({
             questions[parentIndex].data.length - 1 === index
               ? styles.lastBody
               : null;
+          /*AppLog.log(
+            `Rendering p${parentIndex}c${index}, answer: ${JSON.stringify(
+              bodyItem?.answer
+            )}`
+          );*/
           return (
             <QuestionItem
               question={bodyItem}
-              initialValuesTopSlider={[5]}
-              initialValuesBottomSlider={[3, 7]}
+              initialValuesTopSlider={[bodyItem.answer?.answer ?? 5]}
+              initialValuesBottomSlider={[
+                bodyItem.answer?.minPreference ?? 3,
+                bodyItem.answer?.maxPreference ?? 7
+              ]}
               style={style}
-              callback={() => {}}
-              preferenceInitialValue={false}
+              callback={(result: SliderCallback) => {
+                bodyItem.answer = {
+                  answer: result.topRangeSliderResult[0],
+                  maxPreference: result.bottomRangeSliderResult[1],
+                  minPreference: result.bottomRangeSliderResult[0],
+                  noPreference: !result.isPreferenceActive
+                };
+                /*AppLog.log(
+                  `Callback() p${parentIndex}c${index}, answer: ${JSON.stringify(
+                    result
+                  )}`
+                );*/
+              }}
+              preferenceInitialValue={
+                bodyItem.answer?.noPreference === false
+              }
             />
           );
         }}
         listFooterComponent={listFooter()}
       />
-    </View>
+    </Screen>
   );
 };
 
@@ -144,9 +163,6 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 5,
     borderBottomEndRadius: 5,
     marginBottom: SPACE.sm
-  },
-  container: {
-    flexDirection: "column"
   },
   infoText: {
     fontSize: FONT_SIZE.sm,
@@ -177,11 +193,11 @@ const styles = StyleSheet.create({
     marginTop: SPACE.sm
   },
   learnMore: {
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.sm,
     fontWeight: "bold",
     textAlign: "left"
   },
-  saveButton: { fontWeight: "bold" },
+  saveButton: { fontWeight: "bold", fontSize: FONT_SIZE.md },
   saveButtonContainer: { paddingHorizontal: SPACE.sm },
   buttonView: {
     marginTop: SPACE.md
