@@ -21,8 +21,8 @@ exports[`snapshot testing 1`] = `
       "flexDirection": "row",
       "justifyContent": "center",
       "opacity": 1,
-      "paddingHorizontal": 16,
-      "paddingVertical": 10,
+      "paddingHorizontal": 10,
+      "paddingVertical": 6,
       "width": "auto",
     }
   }

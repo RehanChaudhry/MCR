@@ -1,21 +1,17 @@
 import ArrowLeft from "assets/images/left.svg";
 import ArrowRight from "assets/images/right.svg";
 import { SPACE } from "config";
+import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
-import React, { useRef } from "react";
-import {
-  Dimensions,
-  StyleSheet,
-  TouchableOpacityProps,
-  View
-} from "react-native";
+import React, { useRef, useState } from "react";
+import { StyleSheet, TouchableOpacityProps, View } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import { Color, NumberProp } from "react-native-svg";
 import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
-import { SvgProp } from "utils/Util";
+import { AppLog, SvgProp } from "utils/Util";
 
 export interface ImageSlideShowProps extends TouchableOpacityProps {
   images: string[];
@@ -24,6 +20,7 @@ export interface ImageSlideShowProps extends TouchableOpacityProps {
 export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
   ({ images }) => {
     const arrowButton = useRef<SliderBox | null>(null);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
     const leftIcon: SvgProp = (
       color?: Color,
       width?: NumberProp,
@@ -34,7 +31,11 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
           testID="arrow-left"
           width={width}
           height={height}
-          fill={theme.themedColors.interface["700"]}
+          fill={
+            selectedImageIndex === 0
+              ? theme.themedColors.interface["700"]
+              : theme.themedColors.background
+          }
         />
       );
     };
@@ -48,7 +49,12 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
           testID="arrow-right"
           width={width}
           height={height}
-          fill={theme.themedColors.background}
+          fill={
+            selectedImageIndex === 0 ||
+            selectedImageIndex < images.length - 1
+              ? theme.themedColors.background
+              : theme.themedColors.interface["700"]
+          }
         />
       );
     };
@@ -56,6 +62,10 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
       arrowButton.current.snapToPrev();
     };
     const onRightImagePress = () => {
+      AppLog.logForcefully(
+        "arrowButton.current.snapToNext();" +
+          arrowButton.current.snapToNext()
+      );
       arrowButton.current.snapToNext();
     };
 
@@ -65,9 +75,15 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
           containerShape={CONTAINER_TYPES.CIRCLE}
           icon={leftIcon}
           onPress={onLeftImagePress}
-          containerStyle={{
-            backgroundColor: theme.themedColors.interface["200"]
-          }}
+          containerStyle={[
+            {
+              backgroundColor:
+                selectedImageIndex === 0
+                  ? theme.themedColors.background
+                  : theme.themedColors.primary
+            },
+            styles.imageArrowContainer
+          ]}
         />
       );
     };
@@ -78,7 +94,16 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
           containerShape={CONTAINER_TYPES.CIRCLE}
           icon={rightIcon}
           onPress={onRightImagePress}
-          containerStyle={{ backgroundColor: theme.themedColors.primary }}
+          containerStyle={[
+            {
+              backgroundColor:
+                selectedImageIndex === 0 ||
+                selectedImageIndex < images.length - 1
+                  ? theme.themedColors.primary
+                  : theme.themedColors.interface["200"]
+            },
+            styles.imageArrowContainer
+          ]}
         />
       );
     };
@@ -87,19 +112,23 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
       <View style={styles.MainContainer}>
         <View style={styles.sliderBoxContainer}>
           <SliderBox
-            parentWidth={Dimensions.get("window").width - 60}
             ref={arrowButton}
             images={images}
+            imageLoadingColor={theme.themedColors.primary}
             dotColor={theme.themedColors.primary}
             inactiveDotColor={theme.themedColors.interface["700"]}
             paginationBoxStyle={[
               styles.paginationColor,
               { backgroundColor: theme.themedColors.interface["200"] }
             ]}
-            paginationBoxVerticalPadding={3}
+            paginationBoxVerticalPadding={2}
             dotStyle={styles.dotStyle}
             ImageComponentStyle={styles.image}
             sliderBoxHeight={300}
+            currentImageEmitter={(index: number) => {
+              AppLog.logForcefully("image pressed: " + index);
+              setSelectedImageIndex(index);
+            }}
           />
         </View>
         {images.length > 1 && (
@@ -120,11 +149,14 @@ const styles = StyleSheet.create({
   },
   paginationColor: {
     borderRadius: 30,
-    marginBottom: 10
+    marginBottom: 10,
+    width: "23%",
+    height: 15
   },
   image: {
-    borderRadius: 10,
-    justifyContent: "center"
+    borderRadius: 15,
+    width: "86%",
+    marginTop: 5
   },
   sliderBoxContainer: {
     overflow: "visible",
@@ -143,5 +175,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "90%",
     top: "45%"
+  },
+  imageArrowContainer: {
+    width: moderateScale(30),
+    height: moderateScale(30)
   }
 });

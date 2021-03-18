@@ -1,5 +1,6 @@
 import Shield from "assets/images/shield.svg";
 import { FONT_SIZE, SPACE } from "config";
+import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
@@ -43,8 +44,8 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
       return (
         <Shield
           testID="right-icon"
-          width={25}
-          height={25}
+          width={23}
+          height={23}
           fill={theme.themedColors.interface["700"]}
         />
       );
@@ -81,9 +82,12 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
             <AppImageBackground
               icon={rightImage}
               containerShape={CONTAINER_TYPES.SQUARE}
-              containerStyle={{
-                backgroundColor: theme.themedColors.interface["200"]
-              }}
+              containerStyle={[
+                {
+                  backgroundColor: theme.themedColors.interface["200"]
+                },
+                style.rightImage
+              ]}
             />
           )}
         </View>
@@ -104,7 +108,6 @@ const style = StyleSheet.create({
     marginBottom: SPACE.md
   },
   container: {
-    marginTop: SPACE.sm,
     flexDirection: "row",
     justifyContent: "space-between"
   },
@@ -115,12 +118,11 @@ const style = StyleSheet.create({
     fontSize: FONT_SIZE.lg
   },
   subTitle: {
-    fontSize: FONT_SIZE.sm,
-    paddingTop: SPACE.sm
+    fontSize: FONT_SIZE.sm
   },
   titleSubtitle: {
-    marginLeft: SPACE.md
-    // justifyContent: "center"
+    marginLeft: SPACE.md,
+    justifyContent: "space-around"
   },
   bottomLine: {
     width: "100%",
@@ -131,5 +133,9 @@ const style = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 50
+  },
+  rightImage: {
+    width: moderateScale(35),
+    height: moderateScale(35)
   }
 });
