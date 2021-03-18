@@ -95,6 +95,7 @@ describe("Sectioned List tests", () => {
   beforeEach(() => {
     ({ queryByText, toJSON } = render(
       <SectionedList
+        isCollapsable={true}
         list={data}
         selectedIndexProp={1}
         bodyView={(bodyItem: BodyModel) => <Text>{bodyItem.name}</Text>}

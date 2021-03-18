@@ -102,6 +102,7 @@ export const QuestionsView = ({
         listHeaderComponent={listHeader()}
         style={styles.sectionedList}
         list={questions}
+        isCollapsable={true}
         headerView={(
           header: QuestionSection,
           isSelected: boolean,
