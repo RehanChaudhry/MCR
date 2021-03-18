@@ -1,9 +1,9 @@
-export type CommunityResponseModel = {
+export type CommunityAnnouncementResponseModel = {
   message: string;
-  data: CommunityData[];
+  data: CommunityAnnouncement[];
 };
 
-export type CommunityData = {
+export type CommunityAnnouncement = {
   id: number;
   profileImageUrl: string;
   name: string;

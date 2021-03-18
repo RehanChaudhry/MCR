@@ -7,12 +7,12 @@ import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { HomeDrawerParamList } from "routes";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { CommunityItem } from "ui/components/molecules/community_item/CommunityItem";
+import { AnnouncementItem } from "ui/components/molecules/AnnouncementItem";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 
 type ProfileNavigationProp = DrawerNavigationProp<
   HomeDrawerParamList,
-  "Community"
+  "Announcement"
 >;
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
   pullToRefreshCallback: (onComplete: () => void) => void;
 };
 
-export const CommunityView = React.memo<Props>(
+export const AnnouncementView = React.memo<Props>(
   ({
     data,
     shouldShowProgressBar,
@@ -39,13 +39,13 @@ export const CommunityView = React.memo<Props>(
 
     const listItem = useCallback(
       ({ item }: { item: CommunityAnnouncement }) => (
-        <CommunityItem communityItem={item} />
+        <AnnouncementItem announcementItem={item} />
       ),
       []
     );
     return (
       <View style={styles.container}>
-        <AppLabel style={[{ alignSelf: "center" }]} text="Communities" />
+        <AppLabel style={[{ alignSelf: "center" }]} text="Announcement" />
         <AppLabel
           style={[
             {

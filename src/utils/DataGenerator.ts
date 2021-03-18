@@ -1,13 +1,13 @@
-import { CommunityData } from "models/api_responses/CommunityResponseModel";
-import { BaseQuestion } from "models/Question";
-import { SectionResponse } from "models/api_responses/QuestionsResponseModel";
-import ChatItem, { SenderType } from "models/ChatItem";
+import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import {
   NotificationData,
   NotificationsResponseModel
 } from "models/api_responses/NotificationsResponseModel";
-import { AppLog } from "utils/Util";
+import { SectionResponse } from "models/api_responses/QuestionsResponseModel";
+import ChatItem, { SenderType } from "models/ChatItem";
+import { BaseQuestion } from "models/Question";
 import moment from "moment";
+import { AppLog } from "utils/Util";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -69,8 +69,8 @@ const getQuestion = (
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getCommunityList = (pageToLoad: number) => {
-  const communities: CommunityData[] = [
+const getCommunityAnnouncementList = (pageToLoad: number) => {
+  const communitiesAnnouncements: CommunityAnnouncement[] = [
     {
       id: Math.floor(Math.random() * 100) + 1,
       profileImageUrl:
@@ -149,7 +149,7 @@ const getCommunityList = (pageToLoad: number) => {
       commentCount: 5
     }
   ];
-  return communities;
+  return communitiesAnnouncements;
 };
 
 const getChats = (): ChatItem[] => {
@@ -179,5 +179,5 @@ export default {
   getQuestion,
   getChats,
   getNotifications,
-  getCommunityList
+  getCommunityAnnouncementList
 };

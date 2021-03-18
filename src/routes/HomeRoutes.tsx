@@ -1,10 +1,11 @@
 import React from "react";
-import CommunityController from "ui/screens/home/community/CommunityController";
-import { HomeDrawer } from "routes/HomeDrawer";
-import MatchesController from "ui/screens/home/matches/MatchesController";
-import ProfileController from "ui/screens/home/profile/ProfileController";
 import { ChatRoutes } from "routes/ChatRoutes";
+import { HomeDrawer } from "routes/HomeDrawer";
+import AnnouncementController from "ui/screens/home/announcement/AnnouncementController";
+import CommunityController from "ui/screens/home/community/CommunityController";
+import MatchesController from "ui/screens/home/matches/MatchesController";
 import NotificationController from "ui/screens/home/notification/NotificationController";
+import ProfileController from "ui/screens/home/profile/ProfileController";
 
 export const HomeRoutes = () => {
   return (
@@ -13,6 +14,10 @@ export const HomeRoutes = () => {
       <HomeDrawer.Screen
         name="Community"
         component={CommunityController}
+      />
+      <HomeDrawer.Screen
+        name="Announcement"
+        component={AnnouncementController}
       />
       <HomeDrawer.Screen name="Profile" component={ProfileController} />
       <HomeDrawer.Screen name="ChatList" component={ChatRoutes} />
