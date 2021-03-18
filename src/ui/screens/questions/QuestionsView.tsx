@@ -6,7 +6,6 @@ import Question from "models/Question";
 import QuestionSection from "models/QuestionSection";
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { Color, NumberProp } from "react-native-svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
@@ -21,6 +20,7 @@ import Screen from "ui/components/atoms/Screen";
 import SectionedList, {
   Section
 } from "ui/components/organisms/sectioned_list/SectionedList";
+import { moderateScale } from "config/Dimens";
 
 type Props = {
   submitAnswersLoading: boolean;
@@ -58,15 +58,12 @@ export const QuestionsView = ({
         />
         <LinkButton
           viewStyle={styles.buttonView}
+          textStyle={styles.learnMore}
           text={STRINGS.questionnaire.learn_more}
-          rightIcon={(
-            color?: Color,
-            width?: NumberProp,
-            height?: NumberProp
-          ) => (
+          rightIcon={() => (
             <RightArrow
-              width={width}
-              height={height}
+              width={moderateScale(20)}
+              height={moderateScale(20)}
               fill={themedColors.primary}
             />
           )}
@@ -88,14 +85,10 @@ export const QuestionsView = ({
           }
         ]}
         textStyle={[styles.saveButton, { color: themedColors.background }]}
-        rightIcon={(
-          color?: Color,
-          width?: NumberProp,
-          height?: NumberProp
-        ) => (
+        rightIcon={() => (
           <RightArrowCircle
-            width={width}
-            height={height}
+            width={moderateScale(20)}
+            height={moderateScale(20)}
             fill={themedColors.background}
           />
         )}
@@ -200,11 +193,11 @@ const styles = StyleSheet.create({
     marginTop: SPACE.sm
   },
   learnMore: {
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.sm,
     fontWeight: "bold",
     textAlign: "left"
   },
-  saveButton: { fontWeight: "bold" },
+  saveButton: { fontWeight: "bold", fontSize: FONT_SIZE.md },
   saveButtonContainer: { paddingHorizontal: SPACE.sm },
   buttonView: {
     marginTop: SPACE.md
