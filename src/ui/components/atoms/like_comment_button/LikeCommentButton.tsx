@@ -54,29 +54,30 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
         <View testID="button-container" style={style.viewContainer}>
           {unSelectedText !== "Comment" && (
             <Like
-              width={16}
-              height={16}
+              width={12}
+              height={12}
               fill={
                 isSelected
-                  ? theme.themedColors.background
-                  : theme.themedColors.background
+                  ? theme.themedColors.primary
+                  : theme.themedColors.label
               }
             />
           )}
 
           {unSelectedText === "Comment" && (
-            <Chat
-              width={16}
-              height={16}
-              fill={theme.themedColors.background}
-            />
+            <Chat width={12} height={12} fill={theme.themedColors.label} />
           )}
 
           <AppLabel
             style={[
               style.text,
 
-              isSelected ? textStyle : { color: theme.themedColors.label }
+              isSelected
+                ? unSelectedText === "Comment"
+                  ? { color: theme.themedColors.label }
+                  : { color: theme.themedColors.primary }
+                : { color: theme.themedColors.label },
+              textStyle
             ]}
             text={
               (isSelected ? selectedText : unSelectedText) ??
@@ -105,11 +106,6 @@ const style = StyleSheet.create({
   viewContainer: {
     flexDirection: "row",
     alignItems: "center"
-  },
-  leftIcon: {
-    width: 10,
-    height: 10,
-    resizeMode: "contain"
   },
   text: {
     fontSize: FONT_SIZE.sm,
