@@ -43,12 +43,36 @@ const getQuestion = (
 const getChats = (): ChatItem[] => {
   const chats: ChatItem[] = [];
 
-  chats.push(createChat(0, ["Phoenix Walker", "Angela", "Grey"], false));
+  chats.push(
+    createChat(
+      0,
+      ["Phoenix Walker", "Angela", "Grey"],
+      false,
+      SenderType.STUDENTS
+    )
+  );
   for (let i = 1; i < 15; i++) {
     if (i === 1) {
-      chats.push(createChat(i, ["John Hopkins"], false));
+      chats.push(
+        createChat(i, ["Nikki Engelin"], false, SenderType.STAFF)
+      );
+    } else if (i === 2) {
+      chats.push(createChat(i, ["Jacoby Roman"], true, SenderType.STAFF));
     } else {
-      chats.push(createChat(i, ["John Hopkins"], true));
+      if (i === 3) {
+        chats.push(
+          createChat(
+            i,
+            ["Luukas Haapala", "Abriella Bond"],
+            true,
+            SenderType.STUDENTS
+          )
+        );
+      } else {
+        chats.push(
+          createChat(i, ["John Hopkins"], true, SenderType.STUDENTS)
+        );
+      }
     }
   }
 
@@ -58,14 +82,15 @@ const getChats = (): ChatItem[] => {
 function createChat(
   id: number,
   args: string[],
-  isMessageRead: boolean = true
+  isMessageRead: boolean = true,
+  type: SenderType
 ): ChatItem {
   return {
     id: id,
     name: args,
     image: require("assets/images/d_user_pic.png"),
     message: "OK, I'll let him know.. sorry just saw your message",
-    type: SenderType.STAFF,
+    type: type,
     isMessageRead: isMessageRead,
     createdAt: "2021-03-15T07:18:24.000Z",
     updatedAt: "2021-03-15T07:18:24.000Z"

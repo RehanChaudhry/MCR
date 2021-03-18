@@ -41,8 +41,21 @@ export const ItemChatList = React.memo<ItemChatListProps>(
           <View style={styles.textWrapper(themedColors)}>
             <View style={styles.nameContainer}>
               <AppLabel
-                style={styles.nameText(themedColors)}
-                text={item.name[0]}
+                style={styles.nameText(
+                  themedColors,
+                  item.name.length,
+                  item.isMessageRead
+                )}
+                text={
+                  item.name.length === 1
+                    ? item.name[0]
+                    : item.name.length === 2
+                    ? item.name[0] + " & " + item.name[1]
+                    : item.name[0] +
+                      " & " +
+                      (item.name.length - 1) +
+                      " more"
+                }
                 weight={item.isMessageRead ? "normal" : "semi-bold"}
               />
               <AppLabel
@@ -102,10 +115,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center"
   },
-  nameText: (theme: ColorPalette) => {
+  nameText: (
+    theme: ColorPalette,
+    recipientLength: number,
+    isMessageRead: boolean
+  ) => {
     return {
       fontSize: FONT_SIZE.md,
-      color: theme.primary,
+      color:
+        recipientLength > 1 && !isMessageRead
+          ? theme.primary
+          : theme.interface["600"],
       lineHeight: 25
     };
   },
