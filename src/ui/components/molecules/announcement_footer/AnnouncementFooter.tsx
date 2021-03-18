@@ -1,3 +1,5 @@
+import Chat from "assets/images/chat.svg";
+import Like from "assets/images/like.svg";
 import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
@@ -10,6 +12,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { LikeCommentButton } from "ui/components/atoms/like_comment_button/LikeCommentButton";
 
 export interface AnnouncementFooterProps extends TouchableOpacityProps {
@@ -18,13 +21,9 @@ export interface AnnouncementFooterProps extends TouchableOpacityProps {
   bottomLineStyle?: StyleProp<ViewStyle>;
   leftContainerLeftTextStyle?: StyleProp<TextStyle>;
   leftContainerRightTextStyle?: StyleProp<TextStyle>;
-  rightContainerLeftTextStyle?: StyleProp<TextStyle>;
-  rightContainerRightTextStyle?: StyleProp<TextStyle>;
 
   leftContainerLeftIconStyle?: StyleProp<ImageStyle>;
   leftContainerRightIconStyle?: StyleProp<ImageStyle>;
-  rightContainerLeftIconStyle?: StyleProp<ImageStyle>;
-  rightContainerRightIconStyle?: StyleProp<ImageStyle>;
 
   leftContainerLeftButtonStyle?: StyleProp<ViewStyle>;
   leftContainerRightButtonStyle?: StyleProp<ViewStyle>;
@@ -36,12 +35,8 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
     commentCount = 5,
     leftContainerLeftTextStyle,
     leftContainerRightTextStyle,
-    rightContainerLeftTextStyle,
-    rightContainerRightTextStyle,
     leftContainerLeftIconStyle,
     leftContainerRightIconStyle,
-    rightContainerLeftIconStyle,
-    rightContainerRightIconStyle,
     leftContainerLeftButtonStyle,
     leftContainerRightButtonStyle,
     bottomLineStyle
@@ -99,43 +94,33 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
             </View>
           </View>
           <View style={style.leftRightContainer}>
-            <View>
-              <LikeCommentButton
-                unSelectedText={likeCount.toString()}
-                textStyle={[
-                  { color: theme.themedColors.interface["700"] },
-                  rightContainerLeftTextStyle
-                ]}
-                iconStyle={[
-                  { tintColor: theme.themedColors.interface["700"] },
-                  rightContainerLeftIconStyle
-                ]}
-                buttonStyle={[
-                  {
-                    backgroundColor: theme.themedColors.interface["200"]
-                  },
-                  leftContainerLeftButtonStyle
-                ]}
-              />
+            <View style={style.rightContainerLeftSide}>
+              <View style={style.row}>
+                <Like
+                  width={12}
+                  height={12}
+                  fill={theme.themedColors.primary}
+                  style={style.icon}
+                />
+                <AppLabel
+                  text={likeCount.toString()}
+                  style={{ color: theme.themedColors.interface["700"] }}
+                />
+              </View>
             </View>
-            <View style={style.rightContainerRightSide}>
-              <LikeCommentButton
-                unSelectedText={commentCount.toString()}
-                textStyle={[
-                  { color: theme.themedColors.interface["700"] },
-                  rightContainerRightTextStyle
-                ]}
-                iconStyle={[
-                  { tintColor: theme.themedColors.interface["700"] },
-                  rightContainerRightIconStyle
-                ]}
-                buttonStyle={[
-                  {
-                    backgroundColor: theme.themedColors.interface["200"]
-                  },
-                  leftContainerRightButtonStyle
-                ]}
-              />
+            <View>
+              <View style={style.row}>
+                <Chat
+                  width={14}
+                  height={14}
+                  fill={theme.themedColors.primary}
+                  style={style.icon}
+                />
+                <AppLabel
+                  text={commentCount.toString()}
+                  style={{ color: theme.themedColors.interface["700"] }}
+                />
+              </View>
             </View>
           </View>
         </View>
@@ -150,7 +135,9 @@ const style = StyleSheet.create({
     justifyContent: "space-between"
   },
   leftRightContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+    justifyContent: "center",
+    alignSelf: "center"
   },
   leftContainerRightSide: {
     marginLeft: SPACE.sm
@@ -162,5 +149,16 @@ const style = StyleSheet.create({
     width: "100%",
     height: 0.5,
     marginVertical: SPACE.md
+  },
+  rightContainerLeftSide: {
+    marginRight: SPACE.sm
+  },
+  row: {
+    flexDirection: "row",
+    marginRight: SPACE.sm
+  },
+  icon: {
+    marginTop: SPACE.xxsm,
+    marginRight: SPACE.xsm
   }
 });

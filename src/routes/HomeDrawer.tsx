@@ -5,6 +5,7 @@ export type HomeDrawerParamList = {
   Community: undefined;
   Profile: undefined;
   ChatList: undefined;
+  Notification: undefined;
 };
 
 export const HomeDrawer = createDrawerNavigator<HomeDrawerParamList>();
