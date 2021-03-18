@@ -88,6 +88,6 @@ const styles = StyleSheet.create({
   header: {
     fontSize: FONT_SIZE.sm,
     marginBottom: SPACE.lg,
-    marginLeft: SPACE.md
+    marginLeft: SPACE.lg
   }
 });

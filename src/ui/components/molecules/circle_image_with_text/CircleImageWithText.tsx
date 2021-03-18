@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
   buttonStyle: {
     width: "40%",
     height: 30,
-    borderRadius: 8
+    borderRadius: 8,
+    elevation: 0
   },
   view: {
     backgroundColor: Colors.grey2,

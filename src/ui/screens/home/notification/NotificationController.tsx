@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import { NotificationView } from "ui/screens/home/notification/NotificationView";
 import DataGenerator from "utils/DataGenerator";
 import { useApi } from "repo/Client";
@@ -11,11 +11,25 @@ import { AppLog } from "utils/Util";
 import { View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
-
+import { useNavigation } from "@react-navigation/native";
+import { HomeDrawerParamList } from "routes";
+import { StackNavigationProp } from "@react-navigation/stack";
+type NotificationNavigationProp = StackNavigationProp<
+  HomeDrawerParamList,
+  "Notification"
+>;
 type Props = {};
 
 const NotificationController: FC<Props> = () => {
+  const navigation = useNavigation<NotificationNavigationProp>();
   const notify = DataGenerator.getNotifications();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitleAlign: "center",
+      title: "Notification"
+    });
+  }, [navigation]);
 
   const [notifications, setNotifications] = useState<
     Array<NotificationData>
