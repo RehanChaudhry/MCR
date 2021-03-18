@@ -114,6 +114,7 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
           <SliderBox
             ref={arrowButton}
             images={images}
+            imageLoadingColor={theme.themedColors.primary}
             dotColor={theme.themedColors.primary}
             inactiveDotColor={theme.themedColors.interface["700"]}
             paginationBoxStyle={[
@@ -149,9 +150,8 @@ const styles = StyleSheet.create({
   paginationColor: {
     borderRadius: 30,
     marginBottom: 10,
-    width: undefined,
-    height: 15,
-    position: "absolute"
+    width: "23%",
+    height: 15
   },
   image: {
     borderRadius: 15,

@@ -14,7 +14,6 @@ import NotifyIndicInActive from "assets/images/notification-indicator-inactive.s
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem from "models/ChatItem";
-
 export interface ItemChatListProps extends ViewStyle {
   onPress: () => void;
   item: ChatItem;
@@ -26,11 +25,8 @@ export const ItemChatList = React.memo<ItemChatListProps>(
     const { themedColors } = usePreferredTheme();
     return (
       <TouchableOpacity onPress={onPress}>
-        <View style={styles.container(false, themedColors)}>
-          <Image
-            style={styles.imgStyle}
-            source={require("assets/images/d_user_pic.png")}
-          />
+        <View style={styles.container(item.name.length > 1, themedColors)}>
+          <Image style={styles.imgStyle} source={item.image} />
 
           <NotifyIndic width={12} height={12} style={styles.indicator} />
           <NotifyIndicInActive
@@ -42,9 +38,22 @@ export const ItemChatList = React.memo<ItemChatListProps>(
           <View style={styles.textWrapper(themedColors)}>
             <View style={styles.nameContainer}>
               <AppLabel
-                style={styles.nameText(themedColors)}
-                text={item.name[0]}
-                weight="semi-bold"
+                style={styles.nameText(
+                  themedColors,
+                  item.name.length,
+                  item.isMessageRead
+                )}
+                text={
+                  item.name.length === 1
+                    ? item.name[0]
+                    : item.name.length === 2
+                    ? item.name[0] + " & " + item.name[1]
+                    : item.name[0] +
+                      " & " +
+                      (item.name.length - 1) +
+                      " more"
+                }
+                weight={item.isMessageRead ? "normal" : "semi-bold"}
               />
               <AppLabel
                 style={styles.timeText(themedColors)}
@@ -67,12 +76,14 @@ export const ItemChatList = React.memo<ItemChatListProps>(
 );
 
 const styles = StyleSheet.create({
-  container: (shouldSHowBorder: boolean, themedColors: ColorPalette) => {
+  container: (shouldShowBorder: boolean, themedColors: ColorPalette) => {
     return {
       paddingHorizontal: SPACE.md,
       flexDirection: "row",
-      borderStartColor: themedColors.primary,
-      borderStartWidth: shouldSHowBorder ? 5 : 0
+      borderStartColor: shouldShowBorder
+        ? themedColors.primary
+        : themedColors.background,
+      borderStartWidth: 5
     };
   },
   indicator: {
@@ -101,10 +112,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center"
   },
-  nameText: (theme: ColorPalette) => {
+  nameText: (
+    theme: ColorPalette,
+    recipientLength: number,
+    isMessageRead: boolean
+  ) => {
     return {
       fontSize: FONT_SIZE.md,
-      color: theme.primary,
+      color:
+        recipientLength > 1 && !isMessageRead
+          ? theme.primary
+          : theme.interface["600"],
       lineHeight: 25
     };
   },

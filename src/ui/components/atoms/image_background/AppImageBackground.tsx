@@ -39,7 +39,7 @@ export const AppImageBackground = React.memo<AppImageBackgroundProps>(
             : style.squareShape,
           containerStyle
         ]}>
-        {icon?.(theme.themedColors.interface[700], 20, 20)}
+        {icon ? icon : (theme.themedColors.interface[700], 20, 20)}
       </View>
     );
 

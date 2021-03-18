@@ -75,6 +75,5 @@ export const ChatListController: FC<Props> = () => {
       }}>
       <ChatListScreen data={chats} onItemClick={openChatThread} />
     </ProgressErrorView>
-    /* <ChatListScreen data={chats} onItemClick={openChatThread} />*/
   );
 };
