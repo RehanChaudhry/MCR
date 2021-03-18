@@ -20,10 +20,17 @@ type Props = {
   shouldShowProgressBar: boolean;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
+  pullToRefreshCallback: (onComplete: () => void) => void;
 };
 
 export const CommunityView = React.memo<Props>(
-  ({ data, shouldShowProgressBar, onEndReached, isAllDataLoaded }) => {
+  ({
+    data,
+    shouldShowProgressBar,
+    onEndReached,
+    isAllDataLoaded,
+    pullToRefreshCallback
+  }) => {
     const navigation = useNavigation<ProfileNavigationProp>();
     const keyExtractor = useCallback(
       (item: CommunityData) => item.id.toString(),
@@ -63,6 +70,7 @@ export const CommunityView = React.memo<Props>(
           keyExtractor={keyExtractor}
           onEndReached={onEndReached}
           isAllDataLoaded={isAllDataLoaded}
+          pullToRefreshCallback={pullToRefreshCallback}
         />
       </View>
     );

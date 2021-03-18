@@ -13,16 +13,14 @@ type Props = {};
 
 const CommunityController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
-  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
-    false
-  );
+  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
   const [communities, setCommunities] = useState<
     CommunityData[] | undefined
   >([]);
   const pageToReload = useRef<number>(1);
   const isFetchingInProgress = useRef(false);
 
-  const fetchData = useCallback(async () => {
+  const fetchCommunities = useCallback(async () => {
     if (isFetchingInProgress.current) {
       return;
     }
@@ -60,12 +58,25 @@ const CommunityController: FC<Props> = () => {
   }, []);
 
   const onEndReached = useCallback(() => {
-    fetchData();
-  }, [fetchData]);
+    fetchCommunities();
+  }, [fetchCommunities]);
+
+  const refreshCallback = useCallback(
+    async (onComplete: () => void) => {
+      pageToReload.current = 1;
+      fetchCommunities().then(() => {
+        onComplete();
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pageToReload]
+  );
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    setTimeout(() => {
+      fetchCommunities();
+    }, 1000);
+  }, [fetchCommunities]);
 
   return (
     <CommunityView
@@ -73,6 +84,7 @@ const CommunityController: FC<Props> = () => {
       shouldShowProgressBar={shouldShowProgressBar}
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
+      pullToRefreshCallback={refreshCallback}
     />
   );
 };

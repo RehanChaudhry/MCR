@@ -16,10 +16,11 @@ export enum URL_TYPES {
 export const WebViewComponent = React.memo<WebViewProps>(
   ({ url, urlType }) => {
     return (
-      <View style={{ height: 200 }}>
+      <View style={style.container}>
         <WebView
-          automaticallyAdjustContentInsets={false}
-          style={[style.container]}
+          cacheMode="LOAD_NO_CACHE"
+          startInLoadingState={true}
+          allowsInlineMediaPlayback={true}
           source={
             urlType === URL_TYPES.LINK ? { uri: url } : { html: url }
           }
@@ -33,6 +34,6 @@ const style = StyleSheet.create({
   container: {
     width: "100%",
     marginTop: SPACE.md,
-    height: undefined
+    height: 250
   }
 });
