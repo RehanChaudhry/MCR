@@ -59,7 +59,7 @@ export const AppDropdown = React.memo<AppDropdownProps>(
       selectedItemCallback(item);
       setSelectedItemId(item.id);
     };
-
+    AppLog.logForcefully("condition check" + selectedItemText !== title);
     return (
       <View
         style={[
@@ -88,7 +88,17 @@ export const AppDropdown = React.memo<AppDropdownProps>(
             openModal();
           }}>
           <View style={[styles.wrapper]}>
-            <AppLabel text={selectedItemText} />
+            {selectedItemText === title ? (
+              <AppLabel
+                text={selectedItemText}
+                style={{ color: themedColors.labelSecondary }}
+              />
+            ) : (
+              <AppLabel
+                text={selectedItemText}
+                style={{ color: themedColors.primary }}
+              />
+            )}
 
             <ChevronDown
               fill="#6B7280"

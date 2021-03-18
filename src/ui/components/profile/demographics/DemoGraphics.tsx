@@ -127,7 +127,8 @@ export const DemoGraphics = React.memo(
 
 const styles = StyleSheet.create({
   cardStyles: {
-    margin: SPACE.lg,
+    marginTop: SPACE.lg,
+    marginHorizontal: SPACE.lg,
     padding: SPACE.lg
   },
   headingStyle: {
