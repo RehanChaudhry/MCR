@@ -4,7 +4,7 @@ import { HomeDrawer } from "routes/HomeDrawer";
 import MatchesController from "ui/screens/home/matches/MatchesController";
 import ProfileController from "ui/screens/home/profile/ProfileController";
 import { ChatRoutes } from "routes/ChatRoutes";
-import NotificationController from "ui/screens/home/notification/NotificationController";
+import { NotificationRoutes } from "routes/NotificationRoutes";
 
 export const HomeRoutes = () => {
   return (
@@ -18,7 +18,7 @@ export const HomeRoutes = () => {
       <HomeDrawer.Screen name="ChatList" component={ChatRoutes} />
       <HomeDrawer.Screen
         name="Notification"
-        component={NotificationController}
+        component={NotificationRoutes}
       />
     </HomeDrawer.Navigator>
   );
