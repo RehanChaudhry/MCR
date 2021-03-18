@@ -103,14 +103,7 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
           />
         </View>
         {images.length > 1 && (
-          <View
-            style={{
-              position: "absolute",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              width: "90%",
-              top: "45%"
-            }}>
+          <View style={styles.arrowButtons}>
             {leftImage()}
             {rightImage()}
           </View>
@@ -143,5 +136,12 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5
+  },
+  arrowButtons: {
+    position: "absolute",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "90%",
+    top: "45%"
   }
 });

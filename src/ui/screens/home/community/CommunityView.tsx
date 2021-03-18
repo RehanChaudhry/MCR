@@ -16,12 +16,14 @@ type ProfileNavigationProp = DrawerNavigationProp<
 >;
 
 type Props = {
-  data: CommunityData[];
+  data: CommunityData[] | undefined;
   shouldShowProgressBar: boolean;
+  onEndReached: () => void;
+  isAllDataLoaded: boolean;
 };
 
 export const CommunityView = React.memo<Props>(
-  ({ data, shouldShowProgressBar }) => {
+  ({ data, shouldShowProgressBar, onEndReached, isAllDataLoaded }) => {
     const navigation = useNavigation<ProfileNavigationProp>();
     const keyExtractor = useCallback(
       (item: CommunityData) => item.id.toString(),
@@ -59,6 +61,8 @@ export const CommunityView = React.memo<Props>(
           style={styles.list}
           renderItem={listItem}
           keyExtractor={keyExtractor}
+          onEndReached={onEndReached}
+          isAllDataLoaded={isAllDataLoaded}
         />
       </View>
     );

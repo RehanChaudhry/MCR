@@ -55,7 +55,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
         <View style={style.container}>
           <View style={style.leftContainer}>
             <Image
-              style={{ width: 50, height: 50, borderRadius: 50 }}
+              style={style.profileImage}
               source={{ uri: leftImageUrl }}
             />
             <View style={style.titleSubtitle}>
@@ -126,5 +126,10 @@ const style = StyleSheet.create({
     width: "100%",
     height: 1,
     marginTop: SPACE.md
+  },
+  profileImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 50
   }
 });

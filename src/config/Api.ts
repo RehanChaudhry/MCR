@@ -16,5 +16,8 @@ export default {
 
   // Profile
   GET_QUESTIONS: "questions/",
-  POST_ANSWERS: "answer/"
+  POST_ANSWERS: "answer/",
+
+  //community
+  GET_COMMUNITY: "community/"
 };

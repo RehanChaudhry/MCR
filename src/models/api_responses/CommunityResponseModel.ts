@@ -4,7 +4,7 @@ export type CommunityResponseModel = {
 };
 
 export type CommunityData = {
-  id: string;
+  id: number;
   profileImageUrl: string;
   name: string;
   time: string;
