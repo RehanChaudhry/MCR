@@ -5,6 +5,7 @@ import { NotificationData } from "models/api_responses/NotificationsResponseMode
 import { AppLog } from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config/Dimens";
+import Colors from "config/Colors";
 
 type Props = {
   notifications: NotificationData[];
@@ -29,8 +30,7 @@ export const NotificationView = React.memo<Props>(({ notifications }) => {
 
   const getSortedItems = (hours: number) => {
     let label = "NEW NOTIFICATIONS";
-
-    let tag = "1";
+    let tag = "3";
     if (hours > 48) {
       tag = "3";
     } else if (hours >= 0 && hours <= 24) {
@@ -75,6 +75,7 @@ export const NotificationView = React.memo<Props>(({ notifications }) => {
 
   return (
     <View>
+      <View style={{ backgroundColor: Colors.white, height: 40 }} />
       <FlatList
         data={notifications}
         keyExtractor={(item) => item.id}
@@ -89,5 +90,8 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm,
     marginBottom: SPACE.lg,
     marginLeft: SPACE.lg
+  },
+  mainContanier: {
+    marginTop: SPACE.lg
   }
 });
