@@ -72,7 +72,7 @@ const style = StyleSheet.create({
   container: {
     margin: SPACE.md,
     borderRadius: 10,
-    padding: SPACE.md
+    padding: SPACE.lg
   },
   text: {
     lineHeight: 20
