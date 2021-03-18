@@ -94,13 +94,13 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
 const style = StyleSheet.create({
   button: {
     flexDirection: "row",
-    paddingVertical: 10,
+    paddingVertical: 6,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
     flex: 0,
     width: "auto",
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
     alignSelf: "flex-start"
   },
   viewContainer: {

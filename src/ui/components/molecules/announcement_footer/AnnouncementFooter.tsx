@@ -111,8 +111,8 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
             <View>
               <View style={style.row}>
                 <Chat
-                  width={14}
-                  height={14}
+                  width={12}
+                  height={12}
                   fill={theme.themedColors.primary}
                   style={style.icon}
                 />

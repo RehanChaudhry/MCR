@@ -13,10 +13,12 @@ type Props = {};
 
 const CommunityController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
-  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
+  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
+    false
+  );
   const [communities, setCommunities] = useState<
     CommunityAnnouncement[] | undefined
-  >([]);
+  >();
   const pageToReload = useRef<number>(1);
   const isFetchingInProgress = useRef(false);
 
@@ -35,7 +37,6 @@ const CommunityController: FC<Props> = () => {
     const communitiesData = DataGenerator.getCommunityAnnouncementList(
       pageToReload.current
     );
-    setShouldShowProgressBar(false);
     if (pageToReload.current < 5) {
       pageToReload.current = pageToReload.current + 1;
     } else {
@@ -73,9 +74,7 @@ const CommunityController: FC<Props> = () => {
   );
 
   useEffect(() => {
-    setTimeout(() => {
-      fetchCommunities();
-    }, 1000);
+    fetchCommunities();
   }, [fetchCommunities]);
 
   return (
