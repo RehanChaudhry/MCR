@@ -13,12 +13,12 @@ import { AnnouncementHeader } from "ui/components/molecules/announcement_header/
 import { ImagesSlideShow } from "ui/components/molecules/image_slide_show/ImagesSlideShow";
 import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
 
-export interface CommunityItemProps extends TouchableOpacityProps {
-  communityItem: CommunityAnnouncement;
+export interface AnnouncementItemProps extends TouchableOpacityProps {
+  announcementItem: CommunityAnnouncement;
 }
 
-export const CommunityItem = React.memo<CommunityItemProps>(
-  ({ communityItem }) => {
+export const AnnouncementItem = React.memo<AnnouncementItemProps>(
+  ({ announcementItem }) => {
     const theme = usePreferredTheme();
     return (
       <View
@@ -27,41 +27,41 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           { backgroundColor: theme.themedColors.background }
         ]}>
         <AnnouncementHeader
-          title={communityItem.name}
-          subTitle={communityItem.time}
-          leftImageUrl={communityItem.profileImageUrl}
-          shouldShowRightImage={true}
+          title={announcementItem.name}
+          subTitle={announcementItem.time}
+          leftImageUrl={announcementItem.profileImageUrl}
+          shouldShowRightImage={false}
         />
-        {communityItem.text != null && true && (
+        {announcementItem.text != null && true && (
           <AppLabel
-            text={communityItem.text}
+            text={announcementItem.text}
             style={[{ color: theme.themedColors.label }, style.text]}
             numberOfLines={0}
           />
         )}
-        {communityItem.link != null && true && (
+        {announcementItem.link != null && true && (
           <WebViewComponent
-            url={communityItem.link}
+            url={announcementItem.link}
             urlType={URL_TYPES.LINK}
           />
         )}
-        {communityItem.embeddedUrl != null && true && (
+        {announcementItem.embeddedUrl != null && true && (
           <WebViewComponent
-            url={communityItem.embeddedUrl}
+            url={announcementItem.embeddedUrl}
             urlType={URL_TYPES.EMBEDDED}
           />
         )}
-        {communityItem.images != null &&
+        {announcementItem.images != null &&
           true &&
-          communityItem.images.length > 0 && (
-            <ImagesSlideShow images={communityItem.images} />
+          announcementItem.images.length > 0 && (
+            <ImagesSlideShow images={announcementItem.images} />
           )}
-        {communityItem.metaDataUrl != null && true && (
-          <UrlMetaData url={communityItem.metaDataUrl} />
+        {announcementItem.metaDataUrl != null && true && (
+          <UrlMetaData url={announcementItem.metaDataUrl} />
         )}
         <AnnouncementFooter
-          commentCount={communityItem.commentCount}
-          likeCount={communityItem.likeCount}
+          commentCount={announcementItem.commentCount}
+          likeCount={announcementItem.likeCount}
         />
       </View>
     );
