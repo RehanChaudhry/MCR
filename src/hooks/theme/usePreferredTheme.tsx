@@ -4,6 +4,8 @@ import {
   colorPaletteContainer
 } from "hooks/theme/ColorPaletteContainer";
 import { useColorScheme } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AppLog } from "utils/Util";
 
 export enum AppColorScheme {
   SYSTEM = "system",
@@ -14,14 +16,32 @@ export enum AppColorScheme {
 type ThemeContext = {
   isDark: boolean;
   themedColors: ColorPalette;
-  setCustomPalette: (palette: Partial<ColorPalette>) => void;
+  saveCustomPalette: (palette: Partial<ColorPalette>) => void;
   setScheme: (scheme: AppColorScheme) => void;
+};
+
+const key = "COLOR_PALETTE";
+const storePalette = async (palette: Partial<ColorPalette>) => {
+  try {
+    await AsyncStorage.setItem(key, JSON.stringify(palette));
+  } catch (error) {
+    AppLog.log("Error storing palette", error);
+  }
+};
+
+const getPalette = async () => {
+  try {
+    const paletteAsString = await AsyncStorage.getItem(key);
+    return JSON.parse(paletteAsString ?? "") as Partial<ColorPalette>;
+  } catch (error) {
+    AppLog.warn("Error getting the palette", error);
+  }
 };
 
 const ThemeContext = React.createContext<ThemeContext>({
   isDark: false,
   themedColors: colorPaletteContainer.light({}),
-  setCustomPalette: () => {},
+  saveCustomPalette: () => {},
   setScheme: () => {}
 });
 
@@ -52,12 +72,22 @@ export const AppThemeProvider = React.memo<Props>((props) => {
     setIsDark(colorScheme === AppColorScheme.DARK);
   }, [colorScheme]);
 
+  // Load saved custom palette upon start
+  React.useEffect(() => {
+    getPalette().then((palette) => {
+      if (palette) {
+        setCustomPalette(palette);
+      }
+    });
+  }, []);
+
   const theme: ThemeContext = {
     isDark,
     themedColors: isDark
       ? colorPaletteContainer.dark(customPalette)
       : colorPaletteContainer.light(customPalette),
-    setCustomPalette: (palette: Partial<ColorPalette>) => {
+    saveCustomPalette: (palette: Partial<ColorPalette>) => {
+      storePalette(palette);
       setCustomPalette(palette);
     },
     setScheme: (scheme: AppColorScheme) =>
