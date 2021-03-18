@@ -13,14 +13,14 @@ type Props = {};
 
 const CommunityController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
-  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
-    false
-  );
-  const [communities, setCommunities] = useState<
-    CommunityAnnouncement[] | undefined
-  >();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
   const pageToReload = useRef<number>(1);
   const isFetchingInProgress = useRef(false);
+  const [communities, setCommunities] = useState<CommunityAnnouncement[]>(
+    DataGenerator.getCommunityAnnouncementList(pageToReload.current)
+  );
+  const totalPages = 5;
 
   const fetchCommunities = useCallback(async () => {
     if (isFetchingInProgress.current) {
@@ -33,11 +33,10 @@ const CommunityController: FC<Props> = () => {
       setIsAllDataLoaded(true);
       return;
     }
-    setShouldShowProgressBar(true);
     const communitiesData = DataGenerator.getCommunityAnnouncementList(
       pageToReload.current
     );
-    if (pageToReload.current < 5) {
+    if (pageToReload.current < totalPages) {
       pageToReload.current = pageToReload.current + 1;
     } else {
       pageToReload.current = 0;

@@ -13,12 +13,14 @@ type Props = {};
 
 const AnnouncementController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
-  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
-  const [announcement, setAnnouncements] = useState<
-    CommunityAnnouncement[] | undefined
-  >([]);
+  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
+    false
+  );
   const pageToReload = useRef<number>(1);
   const isFetchingInProgress = useRef(false);
+  const [announcement, setAnnouncements] = useState<
+    CommunityAnnouncement[] | undefined
+  >(DataGenerator.getCommunityAnnouncementList(pageToReload.current));
 
   const fetchAnnouncements = useCallback(async () => {
     if (isFetchingInProgress.current) {
