@@ -4,6 +4,7 @@ export type ChatItem = {
   image: string;
   message: string;
   type: SenderType;
+  isMessageRead: boolean;
   createdAt: string;
   updatedAt: string;
 };

@@ -14,7 +14,6 @@ import NotifyIndicInActive from "assets/images/notification-indicator-inactive.s
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem from "models/ChatItem";
-
 export interface ItemChatListProps extends ViewStyle {
   onPress: () => void;
   item: ChatItem;
@@ -26,7 +25,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
     const { themedColors } = usePreferredTheme();
     return (
       <TouchableOpacity onPress={onPress}>
-        <View style={styles.container(false, themedColors)}>
+        <View style={styles.container(item.name.length > 1, themedColors)}>
           <Image
             style={styles.imgStyle}
             source={require("assets/images/d_user_pic.png")}
@@ -44,7 +43,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
               <AppLabel
                 style={styles.nameText(themedColors)}
                 text={item.name[0]}
-                weight="semi-bold"
+                weight={item.isMessageRead ? "normal" : "semi-bold"}
               />
               <AppLabel
                 style={styles.timeText(themedColors)}
@@ -67,12 +66,14 @@ export const ItemChatList = React.memo<ItemChatListProps>(
 );
 
 const styles = StyleSheet.create({
-  container: (shouldSHowBorder: boolean, themedColors: ColorPalette) => {
+  container: (shouldShowBorder: boolean, themedColors: ColorPalette) => {
     return {
       paddingHorizontal: SPACE.md,
       flexDirection: "row",
-      borderStartColor: themedColors.primary,
-      borderStartWidth: shouldSHowBorder ? 5 : 0
+      borderStartColor: shouldShowBorder
+        ? themedColors.primary
+        : themedColors.background,
+      borderStartWidth: 5
     };
   },
   indicator: {

@@ -30,7 +30,7 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
             <AppLabel
               style={styles.nameText(themedColors)}
               text="Phoenix walker"
-              weight="normal"
+              weight="semi-bold"
             />
             <AppLabel
               style={styles.timeText(themedColors)}
@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
   },
   nameText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE.lg,
-      color: theme.primary
+      fontSize: FONT_SIZE.md,
+      color: theme.interface["800"]
     };
   },
   messageText: (theme: ColorPalette) => {
@@ -101,8 +101,7 @@ const styles = StyleSheet.create({
     return {
       fontSize: FONT_SIZE.sm,
       color: theme.interface["700"],
-      lineHeight: 20,
-      marginEnd: SPACE.md
+      lineHeight: 20
     };
   }
 });

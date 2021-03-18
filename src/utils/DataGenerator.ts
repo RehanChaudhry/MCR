@@ -43,20 +43,30 @@ const getQuestion = (
 const getChats = (): ChatItem[] => {
   const chats: ChatItem[] = [];
 
-  for (let i = 0; i < 15; i++) {
-    chats.push(createChat(i));
+  chats.push(createChat(0, ["Phoenix Walker", "Angela", "Grey"], false));
+  for (let i = 1; i < 15; i++) {
+    if (i === 1) {
+      chats.push(createChat(i, ["John Hopkins"], false));
+    } else {
+      chats.push(createChat(i, ["John Hopkins"], true));
+    }
   }
 
   return chats;
 };
 
-function createChat(id: number): ChatItem {
+function createChat(
+  id: number,
+  args: string[],
+  isMessageRead: boolean = true
+): ChatItem {
   return {
-    id: id + 1,
-    name: ["John Hopkins"],
+    id: id,
+    name: args,
     image: require("assets/images/d_user_pic.png"),
-    message: "First test message for your..Say hi...",
+    message: "OK, I'll let him know.. sorry just saw your message",
     type: SenderType.STAFF,
+    isMessageRead: isMessageRead,
     createdAt: "2021-03-15T07:18:24.000Z",
     updatedAt: "2021-03-15T07:18:24.000Z"
   };
