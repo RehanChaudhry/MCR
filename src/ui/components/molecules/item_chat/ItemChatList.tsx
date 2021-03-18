@@ -26,10 +26,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
     return (
       <TouchableOpacity onPress={onPress}>
         <View style={styles.container(item.name.length > 1, themedColors)}>
-          <Image
-            style={styles.imgStyle}
-            source={require("assets/images/d_user_pic.png")}
-          />
+          <Image style={styles.imgStyle} source={item.image} />
 
           <NotifyIndic width={12} height={12} style={styles.indicator} />
           <NotifyIndicInActive

@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
       paddingStart: SPACE.md + 5,
       paddingVertical: SPACE.sm,
       fontSize: FONT_SIZE.sm,
-      color: themedColors.interface["700"]
+      color: themedColors.interface["600"]
     };
   }
 });

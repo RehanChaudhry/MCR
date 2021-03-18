@@ -10,26 +10,25 @@ import { FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { usePreferredTheme } from "hooks";
+import ChatItem from "models/ChatItem";
 
 export interface ItemChatThreadProps extends ViewStyle {
+  item: ChatItem;
   style?: StyleProp<ViewStyle>;
 }
 
 export const ItemChatThread = React.memo<ItemChatThreadProps>(
-  ({ style }) => {
+  ({ style, item }) => {
     const { themedColors } = usePreferredTheme();
     return (
       <View style={[styles.container, style]}>
-        <Image
-          style={styles.imgStyle}
-          source={require("assets/images/d_user_pic.png")}
-        />
+        <Image style={styles.imgStyle} source={item.image} />
 
-        <View style={styles.textWrapper(themedColors)}>
+        <View style={styles.textWrapper(themedColors, item.userId === 1)}>
           <View style={styles.nameContainer}>
             <AppLabel
               style={styles.nameText(themedColors)}
-              text="Phoenix walker"
+              text={item.name[0]}
               weight="semi-bold"
             />
             <AppLabel
@@ -40,7 +39,7 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
           </View>
           <AppLabel
             style={styles.messageText(themedColors)}
-            text="OK, I'll let him know.. sorry just saw your message"
+            text={item.message}
             numberOfLines={2}
             ellipsizeMode="tail"
             weight="normal"
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
     height: 45,
     resizeMode: "cover"
   },
-  textWrapper: (theme: ColorPalette) => {
+  textWrapper: (theme: ColorPalette, isCurrentUser: boolean) => {
     return {
       paddingVertical: SPACE.md,
       marginStart: SPACE.md,
@@ -75,7 +74,9 @@ const styles = StyleSheet.create({
       flexDirection: "column",
       borderRadius: 10,
       flex: 1,
-      backgroundColor: theme.primaryShade
+      backgroundColor: isCurrentUser
+        ? theme.background
+        : theme.primaryShade
     };
   },
   nameContainer: {

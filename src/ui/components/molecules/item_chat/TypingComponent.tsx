@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
 import { SPACE } from "config";
@@ -7,52 +7,67 @@ import {
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import PaperAirplane from "assets/images/paper_airplane.svg";
-import { AppLog, SvgProp } from "utils/Util";
+import { SvgProp } from "utils/Util";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
+import DataGenerator from "utils/DataGenerator";
+import ChatItem, { SenderType } from "models/ChatItem";
 
-export interface TypingComponentProps {}
+export interface TypingComponentProps {
+  updateMessagesList: (message: ChatItem) => void;
+}
 
-export const TypingComponent = React.memo<TypingComponentProps>(({}) => {
-  let message = "";
+export const TypingComponent = React.memo<TypingComponentProps>(
+  ({ updateMessagesList }) => {
+    const [initialText, setInitialText] = useState<string | undefined>("");
+    const { themedColors } = usePreferredTheme();
 
-  const { themedColors } = usePreferredTheme();
+    const sentMessage = () => {
+      let chatMessage = DataGenerator.createChat(
+        1009,
+        ["Nikki Engelin"],
+        false,
+        SenderType.STUDENTS,
+        1,
+        require("assets/images/d_user_pic.png"),
+        initialText
+      );
+      updateMessagesList(chatMessage);
+      setInitialText("");
+    };
 
-  const sentMessage = () => {
-    //sent message from this method
-    AppLog.logForcefully("current message is : " + message);
-  };
+    return (
+      <View style={[styles.container(themedColors)]}>
+        <AppInputField
+          multiline={true}
+          placeholderTextColor="#4b5563"
+          placeholder="Start typing your message"
+          viewStyle={styles.inputField(themedColors)}
+          onChangeText={(text: string) => {
+            setInitialText(text);
+          }}
+          valueToShowAtStart={initialText}
+        />
 
-  return (
-    <View style={[styles.container(themedColors)]}>
-      <AppInputField
-        multiline={true}
-        placeholderTextColor="#4b5563"
-        placeholder="Start typing your message"
-        viewStyle={styles.inputField(themedColors)}
-        onChangeText={(text: string) => {
-          message = text;
-        }}
-      />
-
-      <AppImageBackground
-        icon={
-          ((
-            <PaperAirplane
-              testID="icon"
-              width={25}
-              height={25}
-              fill={themedColors.primary}
-            />
-          ) as unknown) as SvgProp
-        }
-        containerShape={CONTAINER_TYPES.SQUARE}
-        onPress={sentMessage}
-        containerStyle={styles.imgPaper(themedColors)}
-      />
-    </View>
-  );
-});
+        <AppImageBackground
+          icon={
+            ((
+              <PaperAirplane
+                testID="icon"
+                width={25}
+                height={25}
+                fill={themedColors.primary}
+              />
+            ) as unknown) as SvgProp
+          }
+          containerShape={CONTAINER_TYPES.SQUARE}
+          onPress={sentMessage}
+          containerStyle={styles.imgPaper(themedColors)}
+        />
+      </View>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: (themedColors: ColorPalette) => {
