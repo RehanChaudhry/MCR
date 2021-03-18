@@ -1,6 +1,12 @@
 import { BaseQuestion } from "models/Question";
 import { SectionResponse } from "models/api_responses/QuestionsResponseModel";
 import ChatItem, { SenderType } from "models/ChatItem";
+import {
+  NotificationData,
+  NotificationsResponseModel
+} from "models/api_responses/NotificationsResponseModel";
+import { AppLog } from "utils/Util";
+import moment from "moment";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -23,6 +29,27 @@ const getQuestionSections = () => {
   }
 
   return sections;
+};
+const getNotifications = () => {
+  const notifications: NotificationData[] = [];
+  const date = new Date();
+
+  AppLog.log("Data Generaor" + moment(date).subtract(1, "day").toDate());
+
+  for (let i = 0; i < 15; i++) {
+    const notification: NotificationsResponseModel = {
+      message: "Success",
+      data: {
+        id: `${i}`,
+        type: `Lifestyle Preference ${i}`,
+        date: moment(date).subtract(i, "day").toDate().toString(),
+        message: "has sent you a friend request "
+      }
+    };
+    notifications.push(notification.data);
+  }
+
+  return notifications;
 };
 
 const getQuestion = (
@@ -62,4 +89,9 @@ function createChat(id: number): ChatItem {
   };
 }
 
-export default { getQuestionSections, getQuestion, getChats };
+export default {
+  getQuestionSections,
+  getQuestion,
+  getChats,
+  getNotifications
+};
