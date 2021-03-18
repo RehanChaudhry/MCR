@@ -35,6 +35,7 @@ interface Props<ItemT extends BaseItem, ItemU extends BaseItem> {
     index: number
   ) => React.ReactElement;
   listFooterComponent?: React.ReactElement;
+  isCollapsable?: boolean;
 }
 
 const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
@@ -44,7 +45,8 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
   selectedIndexProp,
   headerView,
   bodyView,
-  listFooterComponent
+  listFooterComponent,
+  isCollapsable = false
 }: Props<ItemT, ItemU>) => {
   // AppLog.log("rendering SectionedList");
   const [selectedIndex, setSelectedIndex] = useState<number>(
@@ -65,14 +67,14 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
     }) => {
       const parentPosition: number = list.indexOf(section);
 
-      if (parentPosition === selectedIndex) {
+      if (isCollapsable && parentPosition !== selectedIndex) {
+        return null;
+      } else {
         // AppLog.log(`rendering BodyView ${item.key()}`);
         return bodyView(item, parentPosition, index);
-      } else {
-        return null;
       }
     },
-    [list, selectedIndex, bodyView]
+    [isCollapsable, list, selectedIndex, bodyView]
   );
 
   const sectionView = useCallback(
@@ -82,23 +84,30 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
 
       const onPress = () => {
         // AppLog.log(`HeaderView ${section.header.key()} pressed`);
-        setSelectedIndex(index);
-        // AppLog.log(`scrolling to section ${selectedIndex} and item 0`);
-        sectionList.current?.scrollToLocation({
-          sectionIndex: selectedIndex,
-          itemIndex: 0
-        });
+        if (isCollapsable) {
+          setSelectedIndex(selectedIndex !== index ? index : -1);
+
+          // AppLog.log(`scrolling to section ${selectedIndex} and item 0`);
+          sectionList.current?.scrollToLocation({
+            sectionIndex: selectedIndex,
+            itemIndex: 0
+          });
+        }
       };
 
       return (
         <View style={styles.bodyItem}>
           <Pressable onPress={onPress}>
-            {headerView(section.header, selectedIndex === index, index)}
+            {headerView(
+              section.header,
+              !isCollapsable || selectedIndex === index,
+              index
+            )}
           </Pressable>
         </View>
       );
     },
-    [list, selectedIndex, headerView]
+    [isCollapsable, list, selectedIndex, headerView]
   );
 
   return (
