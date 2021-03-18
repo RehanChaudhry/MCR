@@ -23,12 +23,14 @@ import SectionedList, {
 import { moderateScale } from "config/Dimens";
 
 type Props = {
+  isUpdating: boolean;
   submitAnswersLoading: boolean;
   submitAnswers: () => void;
   questions: Section<QuestionSection, Question>[];
 };
 
 export const QuestionsView = ({
+  isUpdating,
   questions,
   submitAnswersLoading,
   submitAnswers
@@ -37,11 +39,13 @@ export const QuestionsView = ({
 
   const listHeader = () => (
     <View style={styles.headerContainer}>
-      <AppLabel
-        style={styles.infoText}
-        text={STRINGS.questionnaire.info}
-        numberOfLines={0}
-      />
+      {!isUpdating && (
+        <AppLabel
+          style={styles.infoText}
+          text={STRINGS.questionnaire.info}
+          numberOfLines={0}
+        />
+      )}
       <View
         style={[
           styles.headerCard,
