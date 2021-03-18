@@ -104,7 +104,6 @@ const style = StyleSheet.create({
     marginBottom: SPACE.md
   },
   container: {
-    marginTop: SPACE.sm,
     flexDirection: "row",
     justifyContent: "space-between"
   },
@@ -116,11 +115,10 @@ const style = StyleSheet.create({
   },
   subTitle: {
     fontSize: FONT_SIZE.sm,
-    paddingTop: SPACE.sm
+    paddingTop: SPACE.xxsm
   },
   titleSubtitle: {
     marginLeft: SPACE.md
-    // justifyContent: "center"
   },
   bottomLine: {
     width: "100%",
