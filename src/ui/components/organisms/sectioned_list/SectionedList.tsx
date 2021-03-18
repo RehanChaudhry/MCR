@@ -35,6 +35,7 @@ interface Props<ItemT extends BaseItem, ItemU extends BaseItem> {
     index: number
   ) => React.ReactElement;
   listFooterComponent?: React.ReactElement;
+  isCollapsable?: boolean;
 }
 
 const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
@@ -44,9 +45,10 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
   selectedIndexProp,
   headerView,
   bodyView,
-  listFooterComponent
+  listFooterComponent,
+  isCollapsable = false
 }: Props<ItemT, ItemU>) => {
-  AppLog.log("rendering SectionedList");
+  // AppLog.log("rendering SectionedList");
   const [selectedIndex, setSelectedIndex] = useState<number>(
     selectedIndexProp ?? (list.length > 0 ? 0 : -1)
   );
@@ -65,40 +67,47 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
     }) => {
       const parentPosition: number = list.indexOf(section);
 
-      if (parentPosition === selectedIndex) {
-        AppLog.log(`rendering BodyView ${item.key()}`);
-        return bodyView(item, parentPosition, index);
-      } else {
+      if (isCollapsable && parentPosition !== selectedIndex) {
         return null;
+      } else {
+        // AppLog.log(`rendering BodyView ${item.key()}`);
+        return bodyView(item, parentPosition, index);
       }
     },
-    [list, selectedIndex, bodyView]
+    [isCollapsable, list, selectedIndex, bodyView]
   );
 
   const sectionView = useCallback(
     ({ section }: { section: Section<ItemT, ItemU> }) => {
       const index = list.indexOf(section);
-      AppLog.log(`rendering HeaderView ${section.header.key()}`);
+      // AppLog.log(`rendering HeaderView ${section.header.key()}`);
 
       const onPress = () => {
-        AppLog.log(`HeaderView ${section.header.key()} pressed`);
-        setSelectedIndex(index);
-        AppLog.log(`scrolling to section ${selectedIndex} and item 0`);
-        sectionList.current?.scrollToLocation({
-          sectionIndex: selectedIndex,
-          itemIndex: 0
-        });
+        // AppLog.log(`HeaderView ${section.header.key()} pressed`);
+        if (isCollapsable) {
+          setSelectedIndex(selectedIndex !== index ? index : -1);
+
+          // AppLog.log(`scrolling to section ${selectedIndex} and item 0`);
+          sectionList.current?.scrollToLocation({
+            sectionIndex: selectedIndex,
+            itemIndex: 0
+          });
+        }
       };
 
       return (
         <View style={styles.bodyItem}>
           <Pressable onPress={onPress}>
-            {headerView(section.header, selectedIndex === index, index)}
+            {headerView(
+              section.header,
+              !isCollapsable || selectedIndex === index,
+              index
+            )}
           </Pressable>
         </View>
       );
     },
-    [list, selectedIndex, headerView]
+    [isCollapsable, list, selectedIndex, headerView]
   );
 
   return (

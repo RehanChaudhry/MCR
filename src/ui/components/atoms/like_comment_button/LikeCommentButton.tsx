@@ -13,6 +13,8 @@ import { usePreferredTheme } from "hooks";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, FONTS } from "config";
 import { Color } from "react-native-svg";
+import Like from "assets/images/like.svg";
+import Chat from "assets/images/chat.svg";
 
 export interface LikeButtonProps extends TouchableOpacityProps {
   onValueChanged?: (isSelected: boolean) => void;
@@ -31,13 +33,11 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
     onValueChanged,
     buttonStyle,
     textStyle,
-    icon,
     selectedText,
     unSelectedText
   }) => {
-    const theme = usePreferredTheme();
     const [isSelected, setIsSelected] = useState(false);
-
+    const theme = usePreferredTheme();
     return (
       <TouchableOpacity
         onPress={() => {
@@ -52,12 +52,32 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
           buttonStyle
         ]}>
         <View testID="button-container" style={style.viewContainer}>
-          {icon?.(isSelected, theme.themedColors.label)}
+          {unSelectedText !== "Comment" && (
+            <Like
+              width={12}
+              height={12}
+              fill={
+                isSelected
+                  ? theme.themedColors.primary
+                  : theme.themedColors.label
+              }
+            />
+          )}
+
+          {unSelectedText === "Comment" && (
+            <Chat width={12} height={12} fill={theme.themedColors.label} />
+          )}
+
           <AppLabel
             style={[
               style.text,
 
-              isSelected ? textStyle : { color: theme.themedColors.label }
+              isSelected
+                ? unSelectedText === "Comment"
+                  ? { color: theme.themedColors.label }
+                  : { color: theme.themedColors.primary }
+                : { color: theme.themedColors.label },
+              textStyle
             ]}
             text={
               (isSelected ? selectedText : unSelectedText) ??
@@ -74,23 +94,18 @@ export const LikeCommentButton = React.memo<LikeButtonProps>(
 const style = StyleSheet.create({
   button: {
     flexDirection: "row",
-    paddingVertical: 10,
+    paddingVertical: 6,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
     flex: 0,
     width: "auto",
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
     alignSelf: "flex-start"
   },
   viewContainer: {
     flexDirection: "row",
     alignItems: "center"
-  },
-  leftIcon: {
-    width: 10,
-    height: 10,
-    resizeMode: "contain"
   },
   text: {
     fontSize: FONT_SIZE.sm,

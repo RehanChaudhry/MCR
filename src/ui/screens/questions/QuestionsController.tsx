@@ -3,10 +3,13 @@ import { AppLog } from "utils/Util";
 import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
 import QuestionSection from "models/QuestionSection";
 import Question from "models/Question";
-import { HomeStackParamList } from "routes";
 import { StackNavigationProp } from "@react-navigation/stack";
 import NoHeader from "ui/components/headers/NoHeader";
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { useApi } from "repo/Client";
 import { AnswerApiRequestModel } from "models/api_requests/AnswerApiRequestModel";
 import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseModel";
@@ -22,10 +25,16 @@ import { QuestionsView } from "ui/screens/questions/QuestionsView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import DataGenerator from "utils/DataGenerator";
+import { ProfileStackParamList } from "routes/ProfileBottomBar";
 
 type QuestionsNavigationProp = StackNavigationProp<
-  HomeStackParamList,
-  "Questions"
+  ProfileStackParamList,
+  "UpdateQuestionnaire"
+>;
+
+type QuestionsRouteProp = RouteProp<
+  ProfileStackParamList,
+  "UpdateQuestionnaire"
 >;
 
 type Props = {};
@@ -37,6 +46,7 @@ const QuestionsController: FC<Props> = () => {
   const requestModel = useRef<AnswerApiRequestModel>();
 
   const navigation = useNavigation<QuestionsNavigationProp>();
+  const route = useRoute<QuestionsRouteProp>();
 
   const [questions, setQuestions] = useState<
     Section<QuestionSection, Question>[]
@@ -104,6 +114,7 @@ const QuestionsController: FC<Props> = () => {
       }}
       data={questions}>
       <QuestionsView
+        isUpdating={route.params.isUpdating}
         submitAnswers={() => {
           requestModel.current = {
             data: toAnswersRequest(questions)

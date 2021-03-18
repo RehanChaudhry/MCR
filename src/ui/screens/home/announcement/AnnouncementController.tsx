@@ -6,23 +6,23 @@ import React, {
   useRef,
   useState
 } from "react";
-import { CommunityView } from "ui/screens/home/community/CommunityView";
+import { AnnouncementView } from "ui/screens/home/announcement/AnnouncementView";
 import DataGenerator from "utils/DataGenerator";
 
 type Props = {};
 
-const CommunityController: FC<Props> = () => {
+const AnnouncementController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
+  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
+    false
+  );
   const pageToReload = useRef<number>(1);
   const isFetchingInProgress = useRef(false);
-  const [communities, setCommunities] = useState<CommunityAnnouncement[]>(
-    DataGenerator.getCommunityAnnouncementList(pageToReload.current)
-  );
-  const totalPages = 5;
+  const [announcement, setAnnouncements] = useState<
+    CommunityAnnouncement[] | undefined
+  >(DataGenerator.getCommunityAnnouncementList(pageToReload.current));
 
-  const fetchCommunities = useCallback(async () => {
+  const fetchAnnouncements = useCallback(async () => {
     if (isFetchingInProgress.current) {
       return;
     }
@@ -33,10 +33,12 @@ const CommunityController: FC<Props> = () => {
       setIsAllDataLoaded(true);
       return;
     }
-    const communitiesData = DataGenerator.getCommunityAnnouncementList(
+    setShouldShowProgressBar(true);
+    const announcementsData = DataGenerator.getCommunityAnnouncementList(
       pageToReload.current
     );
-    if (pageToReload.current < totalPages) {
+    setShouldShowProgressBar(false);
+    if (pageToReload.current < 5) {
       pageToReload.current = pageToReload.current + 1;
     } else {
       pageToReload.current = 0;
@@ -44,27 +46,27 @@ const CommunityController: FC<Props> = () => {
 
     // Make list empty first
     if (currentPageToReload === 1) {
-      setCommunities([]);
+      setAnnouncements([]);
     }
-    setCommunities((prevState) => {
+    setAnnouncements((prevState) => {
       return [
         ...(prevState === undefined || currentPageToReload === 1
           ? []
           : prevState),
-        ...communitiesData
+        ...announcementsData
       ];
     });
     isFetchingInProgress.current = false;
   }, []);
 
   const onEndReached = useCallback(() => {
-    fetchCommunities();
-  }, [fetchCommunities]);
+    fetchAnnouncements();
+  }, [fetchAnnouncements]);
 
   const refreshCallback = useCallback(
     async (onComplete: () => void) => {
       pageToReload.current = 1;
-      fetchCommunities().then(() => {
+      fetchAnnouncements().then(() => {
         onComplete();
       });
     },
@@ -73,12 +75,14 @@ const CommunityController: FC<Props> = () => {
   );
 
   useEffect(() => {
-    fetchCommunities();
-  }, [fetchCommunities]);
+    setTimeout(() => {
+      fetchAnnouncements();
+    }, 1000);
+  }, [fetchAnnouncements]);
 
   return (
-    <CommunityView
-      data={communities}
+    <AnnouncementView
+      data={announcement}
       shouldShowProgressBar={shouldShowProgressBar}
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
@@ -87,4 +91,4 @@ const CommunityController: FC<Props> = () => {
   );
 };
 
-export default CommunityController;
+export default AnnouncementController;
