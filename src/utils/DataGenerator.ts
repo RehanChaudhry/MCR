@@ -1,5 +1,12 @@
 import { BaseQuestion } from "models/Question";
 import { SectionResponse } from "models/api_responses/QuestionsResponseModel";
+import ChatItem, { SenderType } from "models/ChatItem";
+import {
+  NotificationData,
+  NotificationsResponseModel
+} from "models/api_responses/NotificationsResponseModel";
+import { AppLog } from "utils/Util";
+import moment from "moment";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -23,6 +30,27 @@ const getQuestionSections = () => {
 
   return sections;
 };
+const getNotifications = () => {
+  const notifications: NotificationData[] = [];
+  const date = new Date();
+
+  AppLog.log("Data Generaor" + moment(date).subtract(1, "day").toDate());
+
+  for (let i = 0; i < 15; i++) {
+    const notification: NotificationsResponseModel = {
+      message: "Success",
+      data: {
+        id: `${i}`,
+        type: `Lifestyle Preference ${i}`,
+        date: moment(date).subtract(i, "day").toDate().toString(),
+        message: "has sent you a friend request "
+      }
+    };
+    notifications.push(notification.data);
+  }
+
+  return notifications;
+};
 
 const getQuestion = (
   questionId: number,
@@ -39,4 +67,31 @@ const getQuestion = (
   };
 };
 
-export default { getQuestionSections, getQuestion };
+const getChats = (): ChatItem[] => {
+  const chats: ChatItem[] = [];
+
+  for (let i = 0; i < 15; i++) {
+    chats.push(createChat(i));
+  }
+
+  return chats;
+};
+
+function createChat(id: number): ChatItem {
+  return {
+    id: id + 1,
+    name: ["John Hopkins"],
+    image: require("assets/images/d_user_pic.png"),
+    message: "First test message for your..Say hi...",
+    type: SenderType.STAFF,
+    createdAt: "2021-03-15T07:18:24.000Z",
+    updatedAt: "2021-03-15T07:18:24.000Z"
+  };
+}
+
+export default {
+  getQuestionSections,
+  getQuestion,
+  getChats,
+  getNotifications
+};

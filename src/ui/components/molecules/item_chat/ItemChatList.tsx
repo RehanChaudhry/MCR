@@ -2,6 +2,7 @@ import {
   Image,
   StyleProp,
   StyleSheet,
+  TouchableOpacity,
   View,
   ViewStyle
 } from "react-native";
@@ -12,51 +13,58 @@ import NotifyIndic from "assets/images/notification-indicator.svg";
 import NotifyIndicInActive from "assets/images/notification-indicator-inactive.svg";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
+import ChatItem from "models/ChatItem";
 
 export interface ItemChatListProps extends ViewStyle {
+  onPress: () => void;
+  item: ChatItem;
   style?: StyleProp<ViewStyle>;
 }
 
-export const ItemChatList = React.memo<ItemChatListProps>(({}) => {
-  const { themedColors } = usePreferredTheme();
-  return (
-    <View style={styles.container(false, themedColors)}>
-      <Image
-        style={styles.imgStyle}
-        source={require("assets/images/d_user_pic.png")}
-      />
-
-      <NotifyIndic width={12} height={12} style={styles.indicator} />
-      <NotifyIndicInActive
-        width={12}
-        height={12}
-        style={styles.indicator}
-      />
-
-      <View style={styles.textWrapper(themedColors)}>
-        <View style={styles.nameContainer}>
-          <AppLabel
-            style={styles.nameText(themedColors)}
-            text="Phoenix walker & 2 more"
-            weight="semi-bold"
+export const ItemChatList = React.memo<ItemChatListProps>(
+  ({ item, onPress }) => {
+    const { themedColors } = usePreferredTheme();
+    return (
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.container(false, themedColors)}>
+          <Image
+            style={styles.imgStyle}
+            source={require("assets/images/d_user_pic.png")}
           />
-          <AppLabel
-            style={styles.timeText(themedColors)}
-            text="10m ago"
-            weight="normal"
+
+          <NotifyIndic width={12} height={12} style={styles.indicator} />
+          <NotifyIndicInActive
+            width={12}
+            height={12}
+            style={styles.indicator}
           />
+
+          <View style={styles.textWrapper(themedColors)}>
+            <View style={styles.nameContainer}>
+              <AppLabel
+                style={styles.nameText(themedColors)}
+                text={item.name[0]}
+                weight="semi-bold"
+              />
+              <AppLabel
+                style={styles.timeText(themedColors)}
+                text="10m ago"
+                weight="normal"
+              />
+            </View>
+            <AppLabel
+              style={styles.messageText(themedColors)}
+              text={item.message}
+              numberOfLines={2}
+              ellipsizeMode="tail"
+              weight="normal"
+            />
+          </View>
         </View>
-        <AppLabel
-          style={styles.messageText(themedColors)}
-          text="OK, I'll let him know.. sorry just saw your message"
-          numberOfLines={2}
-          ellipsizeMode="tail"
-          weight="normal"
-        />
-      </View>
-    </View>
-  );
-});
+      </TouchableOpacity>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: (shouldSHowBorder: boolean, themedColors: ColorPalette) => {

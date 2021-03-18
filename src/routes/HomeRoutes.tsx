@@ -3,7 +3,8 @@ import CommunityController from "ui/screens/home/community/CommunityController";
 import { HomeDrawer } from "routes/HomeDrawer";
 import MatchesController from "ui/screens/home/matches/MatchesController";
 import ProfileController from "ui/screens/home/profile/ProfileController";
-import { ChatListController } from "ui/screens/chat/list/ChatLIstController";
+import { ChatRoutes } from "routes/ChatRoutes";
+import NotificationController from "ui/screens/home/notification/NotificationController";
 
 export const HomeRoutes = () => {
   return (
@@ -14,7 +15,11 @@ export const HomeRoutes = () => {
         component={CommunityController}
       />
       <HomeDrawer.Screen name="Profile" component={ProfileController} />
-      <HomeDrawer.Screen name="ChatList" component={ChatListController} />
+      <HomeDrawer.Screen name="ChatList" component={ChatRoutes} />
+      <HomeDrawer.Screen
+        name="Notification"
+        component={NotificationController}
+      />
     </HomeDrawer.Navigator>
   );
 };

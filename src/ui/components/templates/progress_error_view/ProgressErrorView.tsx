@@ -30,9 +30,11 @@ const ProgressErrorView = ({
   const progressView = () => {
     return (
       <ActivityIndicator
+        size="large"
+        color={themedColors.primary}
         style={[
           styles.initialPb,
-          { backgroundColor: themedColors.primaryBackground }
+          { backgroundColor: themedColors.background }
         ]}
       />
     );
@@ -48,7 +50,9 @@ const ProgressErrorView = ({
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1
+  },
   initialPb: {
     width: "100%",
     height: "100%",

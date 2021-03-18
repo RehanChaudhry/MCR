@@ -55,25 +55,6 @@ test("check radio button label on Press", () => {
   expect(onPress).toBeCalledTimes(1);
 });
 
-test("check radio button label on Press", () => {
-  const onPress = jest.fn();
-  const { getByText } = render(
-    <RadioGroup
-      values={[
-        { id: 1, label: "Male" },
-        { id: 2, label: "Female" },
-        { id: 3, label: "Others" }
-      ]}
-      direction={DIRECTION_TYPE.HORIZONTAL}
-      byDefaultSelected={3}
-      onChange={onPress}
-    />
-  );
-  const radioButton = getByText("Others");
-  fireEvent.press(radioButton);
-  expect(onPress).toBeCalledTimes(1);
-});
-
 it("Snapshot testing", () => {
   const rendered = render(
     <RadioGroup

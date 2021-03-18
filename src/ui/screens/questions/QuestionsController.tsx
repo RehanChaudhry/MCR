@@ -3,7 +3,6 @@ import { AppLog } from "utils/Util";
 import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
 import QuestionSection from "models/QuestionSection";
 import Question from "models/Question";
-import { HomeStackParamList } from "routes";
 import { StackNavigationProp } from "@react-navigation/stack";
 import NoHeader from "ui/components/headers/NoHeader";
 import { useNavigation } from "@react-navigation/native";
@@ -22,10 +21,11 @@ import { QuestionsView } from "ui/screens/questions/QuestionsView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import DataGenerator from "utils/DataGenerator";
+import { ProfileStackParamList } from "routes/ProfileBottomBar";
 
 type QuestionsNavigationProp = StackNavigationProp<
-  HomeStackParamList,
-  "Questions"
+  ProfileStackParamList,
+  "UpdateQuestionnaire"
 >;
 
 type Props = {};

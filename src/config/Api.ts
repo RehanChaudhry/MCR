@@ -13,8 +13,12 @@ export default {
   FORGOT_PASS_URL: "password/request/",
   RESET_PASS_URL: "password/set/",
   UPDATE_PROFILE_URL: "profile",
+  NOTIFICATION_URL: "notifications",
 
   // Profile
   GET_QUESTIONS: "questions/",
-  POST_ANSWERS: "answer/"
+  POST_ANSWERS: "answer/",
+
+  //chat
+  GET_CHATS: "chats"
 };
