@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { AppLabel, AppLabelProps } from "../../atoms/app_label/AppLabel";
 import { COLORS, FONT_SIZE, FONTS, SPACE } from "../../../../config";
 import usePreferredTheme from "../../../../hooks/theme/usePreferredTheme";
@@ -7,15 +7,22 @@ import {
   AppDropdown,
   AppDropdownProps
 } from "../../organisms/app_dropdown/AppDropdown";
+import { SvgProp } from "utils/Util";
 
 type Props = {
   labelProps?: AppLabelProps;
   appDropDownProps: AppDropdownProps;
+  style?: StyleProp<ViewStyle>;
+  dropDownIcon?: SvgProp;
+  shouldShowCustomIcon?: boolean;
 };
 
 export const AppFormDropDown: React.FC<Props> = ({
   labelProps,
-  appDropDownProps
+  appDropDownProps,
+  style,
+  dropDownIcon,
+  shouldShowCustomIcon = false
 }) => {
   const theme = usePreferredTheme();
   return (
@@ -26,7 +33,12 @@ export const AppFormDropDown: React.FC<Props> = ({
           {...labelProps}
         />
       )}
-      <AppDropdown {...appDropDownProps} />
+      <AppDropdown
+        {...appDropDownProps}
+        style={style}
+        shouldShowCustomIcon={shouldShowCustomIcon}
+        dropDownIcon={dropDownIcon}
+      />
     </>
   );
 };

@@ -1,11 +1,15 @@
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
 import { NotificationData } from "models/api_responses/NotificationsResponseModel";
 import { AppLog } from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config/Dimens";
 import Colors from "config/Colors";
+import { AppFormDropDown } from "ui/components/molecules/app_form_dropdown/AppFormDropDown";
+import Selector from "assets/images/selector.svg";
+import { usePreferredTheme } from "hooks";
+import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 
 type Props = {
   notifications: NotificationData[];
@@ -13,6 +17,7 @@ type Props = {
 
 export const NotificationView = React.memo<Props>(({ notifications }) => {
   let previousItemHours = "";
+  const theme = usePreferredTheme();
 
   const getHours = (prevDate: string) => {
     const currDate1 = new Date();
@@ -48,7 +53,7 @@ export const NotificationView = React.memo<Props>(({ notifications }) => {
       return getHeader(label);
     } else if (previousItemHours !== tag && tag === "2") {
       previousItemHours = tag;
-      label = "YESTURDAY";
+      label = "YESTERDAY";
       return getHeader(label);
     }
   };
@@ -75,8 +80,30 @@ export const NotificationView = React.memo<Props>(({ notifications }) => {
 
   return (
     <View>
-      <View style={{ backgroundColor: Colors.white, height: 40 }} />
-      <FlatList
+      <View style={styles.dropDownBar}>
+        <AppFormDropDown
+          appDropDownProps={{
+            title: "Filter by notification type",
+            items: [
+              { id: "0", title: "View Request" },
+              { id: "1", title: "View Comment" },
+              { id: "2", title: "View Details" }
+            ],
+            selectedItemCallback: () => {
+              //setTitle(item.title);
+            }
+          }}
+          dropDownIcon={() => <Selector width={16} height={16} />}
+          style={[
+            styles.dropDown,
+            { backgroundColor: theme.themedColors.interface["100"] }
+          ]}
+          shouldShowCustomIcon={true}
+        />
+      </View>
+      <FlatListWithPb
+        shouldShowProgressBar={false}
+        style={styles.mainContanier}
         data={notifications}
         keyExtractor={(item) => item.id}
         renderItem={listItem}
@@ -92,6 +119,17 @@ const styles = StyleSheet.create({
     marginLeft: SPACE.lg
   },
   mainContanier: {
-    marginTop: SPACE.lg
+    marginTop: SPACE.md
+  },
+  dropDown: {
+    marginLeft: SPACE.md,
+    marginRight: SPACE.md,
+    borderRadius: 50,
+    borderColor: undefined,
+    borderWidth: undefined
+  },
+  dropDownBar: {
+    backgroundColor: Colors.white,
+    height: 50
   }
 });
