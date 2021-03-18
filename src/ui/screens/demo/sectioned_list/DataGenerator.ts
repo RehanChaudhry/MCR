@@ -1,11 +1,11 @@
 import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
-import QuestionGroup from "models/QuestionGroup";
+import QuestionSection from "models/QuestionSection";
 import Question from "models/Question";
 
 const getSections = () => {
-  const sections: Section<QuestionGroup, Question>[] = [];
+  const sections: Section<QuestionSection, Question>[] = [];
   for (let i = 0; i < 5; i++) {
-    const section: Section<QuestionGroup, Question> = {
+    const section: Section<QuestionSection, Question> = {
       header: {
         id: `${i}`,
         title: `Lifestyle Preference ${i}`,
@@ -19,7 +19,10 @@ const getSections = () => {
 
     for (let j = 0; j < 5; j++) {
       section.data.push({
-        id: `${i}`,
+        createdAt: "",
+        sectionId: i,
+        updatedAt: "",
+        id: j,
         title: `When do you normally go to bed? ${j}`,
         minOption: "Lights out at 10!",
         maxOption: "Usually late, after 1 AM",

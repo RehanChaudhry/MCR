@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState
-} from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   Pressable,
   SectionList,
@@ -13,6 +8,7 @@ import {
   ViewStyle
 } from "react-native";
 import { AppLog } from "utils/Util";
+import { SPACE } from "config";
 
 export type BaseItem = {
   key: () => string;
@@ -25,6 +21,7 @@ export type Section<T extends BaseItem, U extends BaseItem> = {
 
 interface Props<ItemT extends BaseItem, ItemU extends BaseItem> {
   style?: StyleProp<ViewStyle>;
+  listHeaderComponent?: React.ReactElement;
   list: Section<ItemT, ItemU>[];
   selectedIndexProp?: number;
   headerView: (
@@ -37,28 +34,24 @@ interface Props<ItemT extends BaseItem, ItemU extends BaseItem> {
     parentIndex: number,
     index: number
   ) => React.ReactElement;
+  listFooterComponent?: React.ReactElement;
 }
 
 const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
   style,
+  listHeaderComponent,
   list,
-  selectedIndexProp = 0,
+  selectedIndexProp,
   headerView,
-  bodyView
+  bodyView,
+  listFooterComponent
 }: Props<ItemT, ItemU>) => {
-  AppLog.log("rendering SectionedList");
+  // AppLog.log("rendering SectionedList");
   const [selectedIndex, setSelectedIndex] = useState<number>(
-    selectedIndexProp
+    selectedIndexProp ?? (list.length > 0 ? 0 : -1)
   );
-  const sectionList = useRef<SectionList<any, any> | null>(null);
 
-  useLayoutEffect(() => {
-    AppLog.log(`scrolling to section ${selectedIndex} and item 0`);
-    sectionList.current?.scrollToLocation({
-      sectionIndex: selectedIndex,
-      itemIndex: 0
-    });
-  });
+  const sectionList = useRef<SectionList<any, any> | null>(null);
 
   const bodyItemView = useCallback(
     ({
@@ -73,7 +66,7 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
       const parentPosition: number = list.indexOf(section);
 
       if (parentPosition === selectedIndex) {
-        AppLog.log(`rendering BodyView ${item.key()}`);
+        // AppLog.log(`rendering BodyView ${item.key()}`);
         return bodyView(item, parentPosition, index);
       } else {
         return null;
@@ -85,11 +78,16 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
   const sectionView = useCallback(
     ({ section }: { section: Section<ItemT, ItemU> }) => {
       const index = list.indexOf(section);
-      AppLog.log(`rendering HeaderView ${section.header.key()}`);
+      // AppLog.log(`rendering HeaderView ${section.header.key()}`);
 
       const onPress = () => {
-        AppLog.log(`HeaderView ${section.header.key()} pressed`);
+        // AppLog.log(`HeaderView ${section.header.key()} pressed`);
         setSelectedIndex(index);
+        // AppLog.log(`scrolling to section ${selectedIndex} and item 0`);
+        sectionList.current?.scrollToLocation({
+          sectionIndex: selectedIndex,
+          itemIndex: 0
+        });
       };
 
       return (
@@ -105,6 +103,7 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
 
   return (
     <SectionList
+      ListHeaderComponent={listHeaderComponent}
       ref={sectionList}
       sections={list}
       renderItem={bodyItemView}
@@ -114,11 +113,13 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
       onScrollToIndexFailed={(info) => {
         AppLog.log("Failed to scroll to " + info.index);
       }}
+      ListFooterComponent={listFooterComponent}
     />
   );
 };
 
 const styles = StyleSheet.create({
+  sectionedList: { padding: SPACE.sm },
   bodyItem: {
     flexDirection: "column"
   }

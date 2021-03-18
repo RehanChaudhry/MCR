@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
+  Image,
   StyleProp,
   StyleSheet,
   SwitchProps,
   ViewStyle
 } from "react-native";
-import { AppLog } from "utils/Util";
 import ToggleSwitch from "toggle-switch-react-native";
 import { usePreferredTheme } from "hooks";
-import SwitchActive from "assets/images/switch_active.svg";
-import SwitchInActive from "assets/images/switch_inactive.svg";
 
 export interface AppButtonProps extends SwitchProps {
   defaultValue: boolean;
@@ -17,18 +15,6 @@ export interface AppButtonProps extends SwitchProps {
   style?: StyleProp<ViewStyle>;
   showCustomThumb?: boolean;
 }
-/*const setIcon = (isEnabled: boolean) => {
-  if (!isEnabled) {
-    thumbPath = require("assets/images/switch-inactive.png");
-  } else {
-    thumbPath = require("assets/images/switch-active.png");
-  }
-};*/
-
-/*const setIcon = (isEnabled: boolean) => {
-  if (!isEnabled) return <SwitchInActive width={20} height={20} />;
-  else return <SwitchActive width={20} height={20} />;
-};*/
 
 export const AppSwitch = React.memo<AppButtonProps>(
   ({
@@ -49,7 +35,7 @@ export const AppSwitch = React.memo<AppButtonProps>(
     }, []);
 
     const toggleSwitch = () => {
-      AppLog.log("AppSwitch() => toggle working");
+      // AppLog.log("AppSwitch() => toggle working");
       setIsEnabled((previousState) => !previousState);
       onValueChange(!isEnabled);
     };
@@ -58,17 +44,20 @@ export const AppSwitch = React.memo<AppButtonProps>(
       <ToggleSwitch
         testID="app-switch"
         isOn={isEnabled}
-        onColor={themedColors.switchActive}
-        offColor={themedColors.switchInActive}
+        onColor={themedColors.primary}
+        offColor={themedColors.interface["300"]}
         onToggle={toggleSwitch}
         thumbOffStyle={styles.thumb}
         icon={
           showCustomThumb ? (
-            isEnabled ? (
-              <SwitchActive width={20} height={20} />
-            ) : (
-              <SwitchInActive width={20} height={20} />
-            )
+            <Image
+              source={
+                isEnabled
+                  ? require("assets/images/switch-active.png")
+                  : require("assets/images/switch-inactive.png")
+              }
+              style={styles.tinyLogo}
+            />
           ) : null
         }
         style={[style, styles.switch]}

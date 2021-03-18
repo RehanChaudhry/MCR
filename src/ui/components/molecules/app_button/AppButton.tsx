@@ -1,4 +1,4 @@
-import { FONT_SIZE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
@@ -12,7 +12,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { AppLabel, Weight } from "ui/components/atoms/app_label/AppLabel";
 import { SvgProp } from "utils/Util";
 
 export interface AppButtonProps extends TouchableOpacityProps {
@@ -27,17 +27,15 @@ export interface AppButtonProps extends TouchableOpacityProps {
   rightIcon?: SvgProp;
   buttonType?: BUTTON_TYPES;
   isDisable?: boolean;
-  isSelected?: boolean;
   iconStyle?: StyleProp<ImageStyle>;
   shouldShowError?: boolean;
-  shouldAlignTitleWithLeftIcon?: boolean;
+  fontWeight?: Weight;
 }
 
 export enum BUTTON_TYPES {
   NORMAL = "normal",
   BORDER = "border",
-  DASH = "dashed",
-  LINK = "link"
+  DASH = "dashed"
 }
 
 export const AppButton = React.memo<AppButtonProps>(
@@ -52,9 +50,8 @@ export const AppButton = React.memo<AppButtonProps>(
     rightIcon,
     buttonType = BUTTON_TYPES.NORMAL,
     isDisable = false,
-    isSelected = false,
     shouldShowError = false,
-    shouldAlignTitleWithLeftIcon = false
+    fontWeight = "normal"
   }) => {
     const theme = usePreferredTheme();
     const getButtonStyle = () => {
@@ -75,7 +72,7 @@ export const AppButton = React.memo<AppButtonProps>(
       }
     };
     const getShadowStyle = () => {
-      if (!isDisable && buttonType !== BUTTON_TYPES.LINK) {
+      if (!isDisable) {
         return [
           style.buttonWithShadow,
           { shadowColor: theme.themedColors.background }
@@ -99,27 +96,21 @@ export const AppButton = React.memo<AppButtonProps>(
           buttonStyle
         ]}>
         <View testID="button-container" style={style.viewContainer}>
-          <View
-            style={
-              shouldAlignTitleWithLeftIcon ? null : style.leftIconContainer
-            }>
-            {leftIcon && !shouldShowProgressBar
-              ? leftIcon?.(theme.themedColors.label, 20, 20)
-              : null}
-          </View>
-          <View
-            style={
-              shouldAlignTitleWithLeftIcon ? null : style.textWithLoader
-            }>
+          {leftIcon && !shouldShowProgressBar && (
+            <View style={style.leftIconContainer}>
+              {leftIcon?.(theme.themedColors.label, 20, 20)}
+            </View>
+          )}
+          <View style={style.textWithLoader}>
             {!shouldShowProgressBar && (
               <AppLabel
                 style={[
                   style.text,
-                  isSelected === true
-                    ? textStyle
-                    : { color: theme.themedColors.label }
+                  { color: theme.themedColors.primary },
+                  textStyle
                 ]}
                 text={text}
+                weight={fontWeight}
               />
             )}
             {shouldShowProgressBar && (
@@ -131,11 +122,11 @@ export const AppButton = React.memo<AppButtonProps>(
               />
             )}
           </View>
-          <View style={style.rightIconContainer}>
-            {rightIcon && !shouldShowProgressBar
-              ? rightIcon?.(theme.themedColors.label, 20, 20)
-              : null}
-          </View>
+          {rightIcon && !shouldShowProgressBar && (
+            <View style={style.rightIconContainer}>
+              {rightIcon?.(theme.themedColors.label, 20, 20)}
+            </View>
+          )}
         </View>
       </TouchableOpacity>
     );
@@ -150,7 +141,8 @@ const style = StyleSheet.create({
     shadowOpacity: 0.15
   },
   text: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.lg,
+    overflow: "hidden"
   },
   loader: {
     marginLeft: 10
@@ -162,7 +154,8 @@ const style = StyleSheet.create({
     justifyContent: "center"
   },
   leftIconContainer: {
-    flex: 0.3,
+    position: "absolute",
+    left: SPACE.sm,
     alignItems: "flex-start"
   },
   leftIcon: {
@@ -171,7 +164,8 @@ const style = StyleSheet.create({
     height: 20
   },
   rightIconContainer: {
-    flex: 0.3,
+    position: "absolute",
+    right: SPACE.sm,
     justifyContent: "flex-end",
     alignItems: "flex-end"
   },
@@ -195,7 +189,7 @@ const style = StyleSheet.create({
     height: 40,
     justifyContent: "space-between",
     alignItems: "center",
-    borderRadius: 10
+    borderRadius: 6
   },
   viewContainer: {
     flexDirection: "row",
