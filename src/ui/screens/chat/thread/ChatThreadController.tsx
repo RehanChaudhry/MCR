@@ -1,6 +1,6 @@
 import React, { FC, useLayoutEffect, useState } from "react";
 import { ChatThreadScreen } from "ui/screens/chat/thread/ChatThreadScreen";
-import { ChatParamsLIst } from "routes/ChatParams";
+import { ChatParamsLIst } from "routes/ChatStack";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import DataGenerator from "utils/DataGenerator";

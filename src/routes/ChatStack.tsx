@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 export type ChatParamsLIst = {
   ChatThread: undefined;
+  NewConversation: undefined;
 };
 
-export const ProfileBottomBar = createStackNavigator<ChatParamsLIst>();
+export const ChatStack = createStackNavigator<ChatParamsLIst>();
