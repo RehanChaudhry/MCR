@@ -12,6 +12,7 @@ import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { usePreferredTheme } from "hooks";
 import ChatItem from "models/ChatItem";
 import { moderateScale } from "config/Dimens";
+import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
 export interface ItemChatThreadProps extends ViewStyle {
   item: ChatItem;
@@ -21,6 +22,9 @@ export interface ItemChatThreadProps extends ViewStyle {
 export const ItemChatThread = React.memo<ItemChatThreadProps>(
   ({ style, item }) => {
     const { themedColors } = usePreferredTheme();
+
+    let prettyTime = new PrettyTimeFormat().getPrettyTime(item.createdAt);
+
     return (
       <View style={[styles.container, style]}>
         <Image style={styles.imgStyle} source={item.image} />
@@ -34,7 +38,7 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
             />
             <AppLabel
               style={styles.timeText(themedColors)}
-              text="10m ago"
+              text={prettyTime}
               weight="normal"
             />
           </View>

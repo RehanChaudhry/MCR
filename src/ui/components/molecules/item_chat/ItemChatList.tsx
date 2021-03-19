@@ -15,6 +15,8 @@ import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem from "models/ChatItem";
 import { moderateScale } from "config/Dimens";
+import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
+
 export interface ItemChatListProps extends ViewStyle {
   onPress: () => void;
   item: ChatItem;
@@ -24,6 +26,15 @@ export interface ItemChatListProps extends ViewStyle {
 export const ItemChatList = React.memo<ItemChatListProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
+
+    let prettyTime = new PrettyTimeFormat(
+      "m ago",
+      "s ago",
+      "y ago",
+      "d ago",
+      "h ago"
+    ).getPrettyTime(item.createdAt);
+
     return (
       <TouchableOpacity onPress={onPress}>
         <View style={styles.container(item.name.length > 1, themedColors)}>
@@ -58,7 +69,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
               />
               <AppLabel
                 style={styles.timeText(themedColors)}
-                text="10m ago"
+                text={prettyTime}
                 weight="normal"
               />
             </View>
