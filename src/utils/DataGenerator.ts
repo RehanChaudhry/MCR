@@ -4,6 +4,7 @@ import {
   NotificationsResponseModel
 } from "models/api_responses/NotificationsResponseModel";
 import { SectionResponse } from "models/api_responses/QuestionsResponseModel";
+import { UniSelectionResponseModel } from "models/api_responses/UniSelectionResponseModel";
 import ChatItem, { SenderType } from "models/ChatItem";
 import { BaseQuestion } from "models/Question";
 import moment from "moment";
@@ -51,6 +52,27 @@ const getNotifications = () => {
   }
 
   return notifications;
+};
+
+const getUnis = () => {
+  const response: UniSelectionResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        name: "Ohio University",
+        location: "Athens, Ohio",
+        logo: ""
+      },
+      {
+        id: "2",
+        name: "Boise State University",
+        location: "Boise, Idaho",
+        logo: ""
+      }
+    ]
+  };
+  return response;
 };
 
 const getQuestion = (
@@ -248,5 +270,6 @@ export default {
   getNotifications,
   getCommunityAnnouncementList,
   createChatThread,
-  createChat
+  createChat,
+  getUnis
 };
