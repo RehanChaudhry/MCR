@@ -1,5 +1,6 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
+import { Uni } from "models/api_responses/UniSelectionResponseModel";
 import React, { FC } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -8,16 +9,18 @@ import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
-import { Uni } from "../../../screens/uni_selection/UniSelectionView";
 
 type Props = {
   uni: Uni;
+  onSelection: (item: Uni) => void;
 };
 
-const UniSelectionCell: FC<Props> = ({ uni }) => {
+const UniSelectionCell: FC<Props> = ({ uni, onSelection }) => {
   const theme = usePreferredTheme();
   return (
-    <TouchableOpacity style={styles.content}>
+    <TouchableOpacity
+      style={styles.content}
+      onPress={() => onSelection(uni)}>
       <View>
         <AppImageBackground
           style={styles.logo}
