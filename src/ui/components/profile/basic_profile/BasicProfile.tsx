@@ -313,7 +313,8 @@ const styles = StyleSheet.create({
     marginVertical: SPACE.lg
   },
   cardStyles: {
-    margin: SPACE.lg,
+    marginTop: SPACE.lg,
+    marginHorizontal: SPACE.lg,
     padding: SPACE.lg
   },
   aboutMe: {

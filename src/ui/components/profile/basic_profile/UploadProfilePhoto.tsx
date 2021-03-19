@@ -43,10 +43,11 @@ export const UploadProfilePhoto = React.memo(() => {
           ]}
           buttonType={BUTTON_TYPES.BORDER}
           textStyle={{
-            fontWeight: "bold",
+            color: theme.themedColors.label,
             borderColor: theme.themedColors.interface["700"]
           }}
           shouldShowError={false}
+          fontWeight={"semi-bold"}
         />
       </View>
       <AppLabel
