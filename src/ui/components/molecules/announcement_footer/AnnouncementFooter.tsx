@@ -12,8 +12,10 @@ import {
   View,
   ViewStyle
 } from "react-native";
+import { Color, NumberProp } from "react-native-svg";
+import { AppCompactButton } from "ui/components/atoms/app_compact_button/AppCompactButton";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { LikeCommentButton } from "ui/components/atoms/like_comment_button/LikeCommentButton";
+import { SvgProp } from "utils/Util";
 
 export interface AnnouncementFooterProps extends TouchableOpacityProps {
   commentCount: number;
@@ -30,18 +32,22 @@ export interface AnnouncementFooterProps extends TouchableOpacityProps {
 }
 
 export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
-  ({
-    likeCount = 3,
-    commentCount = 5,
-    leftContainerLeftTextStyle,
-    leftContainerRightTextStyle,
-    leftContainerLeftIconStyle,
-    leftContainerRightIconStyle,
-    leftContainerLeftButtonStyle,
-    leftContainerRightButtonStyle,
-    bottomLineStyle
-  }) => {
+  ({ likeCount = 3, commentCount = 5, bottomLineStyle }) => {
     const theme = usePreferredTheme();
+    const likeImage: SvgProp = (
+      color?: Color,
+      width?: NumberProp,
+      height?: NumberProp
+    ) => {
+      return <Like width={width} height={height} fill={color} />;
+    };
+    const commentImage: SvgProp = (
+      color?: Color,
+      width?: NumberProp,
+      height?: NumberProp
+    ) => {
+      return <Chat width={width} height={height} fill={color} />;
+    };
     return (
       <View>
         <View
@@ -54,42 +60,22 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
         <View style={style.container}>
           <View style={style.leftRightContainer}>
             <View>
-              <LikeCommentButton
+              <AppCompactButton
                 unSelectedText="Like"
                 selectedText="Liked"
-                buttonStyle={[
-                  {
-                    backgroundColor: theme.themedColors.interface["200"]
-                  },
-                  leftContainerLeftButtonStyle
-                ]}
-                textStyle={[
-                  { color: theme.themedColors.interface["700"] },
-                  leftContainerLeftTextStyle
-                ]}
-                iconStyle={[
-                  { tintColor: theme.themedColors.interface["700"] },
-                  leftContainerLeftIconStyle
-                ]}
+                icon={likeImage}
+                shouldIconColorChangeOnClick={true}
+                shouldTextChangeOnClick={true}
+                shouldShowBgColorCahange={false}
               />
             </View>
             <View style={style.leftContainerRightSide}>
-              <LikeCommentButton
+              <AppCompactButton
                 unSelectedText="Comment"
-                buttonStyle={[
-                  {
-                    backgroundColor: theme.themedColors.interface["200"]
-                  },
-                  leftContainerRightButtonStyle
-                ]}
-                textStyle={[
-                  { color: theme.themedColors.interface["700"] },
-                  leftContainerRightTextStyle
-                ]}
-                iconStyle={[
-                  { tintColor: theme.themedColors.interface["700"] },
-                  leftContainerRightIconStyle
-                ]}
+                icon={commentImage}
+                shouldIconColorChangeOnClick={false}
+                shouldTextChangeOnClick={false}
+                shouldShowBgColorCahange={false}
               />
             </View>
           </View>

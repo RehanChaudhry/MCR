@@ -68,8 +68,8 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
                 ? theme.themedColors.primary
                 : theme.themedColors.label
               : theme.themedColors.label,
-            15,
-            15
+            12,
+            12
           )}
           <AppLabel
             style={[

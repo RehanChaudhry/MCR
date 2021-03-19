@@ -1,10 +1,11 @@
 import Code from "assets/images/code.svg";
 import InfoCircle from "assets/images/info_circle.svg";
 import Link from "assets/images/link.svg";
+import Photo from "assets/images/photo.svg";
 import { COLORS, FONT_SIZE, SPACE } from "config";
 import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -12,39 +13,51 @@ import {
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { LikeCommentButton } from "ui/components/atoms/like_comment_button/LikeCommentButton";
+import { Color, NumberProp } from "react-native-svg";
+import { AppCompactButton } from "ui/components/atoms/app_compact_button/AppCompactButton";
 import Screen from "ui/components/atoms/Screen";
 import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
 import { ImageWithCross } from "ui/components/molecules/image_with_cross/ImageWithCross";
-import { SvgProp } from "utils/Util";
+import { AppLog, SvgProp } from "utils/Util";
 
 type Props = {
   shouldShowProgressBar?: boolean;
 };
 
+export enum POST_TYPES {
+  PHOTOS = "photos",
+  LINK = "link",
+  EMBED = "embed",
+  NONE = "none"
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const CreatePostView: FC<Props> = (props) => {
   const theme = usePreferredTheme();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const linkImage: SvgProp = () => {
-    return (
-      <Link
-        width={18}
-        height={18}
-        fill={theme.themedColors.interface["500"]}
-      />
-    );
+  const [postType, setPostType] = useState<POST_TYPES>(POST_TYPES.NONE);
+  const linkImage: SvgProp = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    return <Link width={width} height={height} fill={color} />;
   };
-  const embededCodeImage: SvgProp = () => {
-    return (
-      <Code
-        width={18}
-        height={18}
-        fill={theme.themedColors.interface["500"]}
-      />
-    );
+  const embedCodeImage: SvgProp = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    return <Code width={width} height={height} fill={color} />;
+  };
+  const photoImage: SvgProp = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    return <Photo width={width} height={height} fill={color} />;
   };
   const dummyProfileImageUrl =
     "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
@@ -83,20 +96,39 @@ export const CreatePostView: FC<Props> = (props) => {
               textAlignVertical={"top"}
             />
             <View style={styles.buttonsContainer}>
-              <LikeCommentButton
-                unSelectedText="Like"
-                selectedText="Liked"
-                buttonStyle={{ marginRight: SPACE.lg }}
+              <AppCompactButton
+                unSelectedText="Photos"
+                icon={photoImage}
+                shouldIconColorChangeOnClick={true}
+                shouldTextChangeOnClick={true}
+                shouldShowBgColorCahange={true}
+                buttonStyle={styles.photosLinkEmbedButton}
+                onPress={() => {
+                  AppLog.logForcefully("photos");
+                  setPostType(POST_TYPES.PHOTOS);
+                }}
               />
-              <LikeCommentButton
-                unSelectedText="Like"
-                selectedText="Liked"
-                buttonStyle={{ marginRight: SPACE.lg }}
+              <AppCompactButton
+                unSelectedText="Link"
+                icon={linkImage}
+                shouldIconColorChangeOnClick={true}
+                shouldTextChangeOnClick={true}
+                shouldShowBgColorCahange={true}
+                buttonStyle={styles.photosLinkEmbedButton}
+                onPress={() => {
+                  setPostType(POST_TYPES.LINK);
+                }}
               />
-              <LikeCommentButton
-                unSelectedText="Like"
-                selectedText="Liked"
-                buttonStyle={{ marginRight: SPACE.lg }}
+              <AppCompactButton
+                unSelectedText="Embed"
+                icon={embedCodeImage}
+                shouldIconColorChangeOnClick={true}
+                shouldTextChangeOnClick={true}
+                shouldShowBgColorCahange={true}
+                buttonStyle={styles.photosLinkEmbedButton}
+                onPress={() => {
+                  setPostType(POST_TYPES.EMBED);
+                }}
               />
               <InfoCircle
                 width={23}
@@ -107,29 +139,39 @@ export const CreatePostView: FC<Props> = (props) => {
 
             <ImageWithCross imageUrl={dummyProfileImageUrl} />
 
-            {/*<AppInputField*/}
-            {/*  style={{ color: theme.themedColors.label }}*/}
-            {/*  placeholder="Enter link (https://..)"*/}
-            {/*  leftIcon={linkImage}*/}
-            {/*  viewStyle={{*/}
-            {/*    backgroundColor: theme.themedColors.background,*/}
-            {/*    borderColor: theme.themedColors.secondary*/}
-            {/*  }}*/}
-            {/*  iconStyle={{*/}
-            {/*    tintColor: theme.themedColors.interface["500"]*/}
-            {/*  }}*/}
-            {/*/>*/}
-
             <AppInputField
               style={{ color: theme.themedColors.label }}
-              placeholder="Enter embed code"
-              leftIcon={embededCodeImage}
+              placeholder="Enter link (https://..)"
+              leftIcon={() => {
+                return (
+                  <Link
+                    width={12}
+                    height={12}
+                    fill={theme.themedColors.interface["500"]}
+                  />
+                );
+              }}
               viewStyle={{
                 backgroundColor: theme.themedColors.background,
                 borderColor: theme.themedColors.secondary
               }}
-              iconStyle={{
-                tintColor: theme.themedColors.interface["500"]
+            />
+
+            <AppInputField
+              style={{ color: theme.themedColors.label }}
+              placeholder="Enter embed code"
+              leftIcon={() => {
+                return (
+                  <Code
+                    width={12}
+                    height={12}
+                    fill={theme.themedColors.interface["500"]}
+                  />
+                );
+              }}
+              viewStyle={{
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.secondary
               }}
             />
 
@@ -208,5 +250,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 1,
     marginVertical: SPACE.lg
+  },
+  photosLinkEmbedButton: {
+    marginRight: SPACE.md
   }
 });
