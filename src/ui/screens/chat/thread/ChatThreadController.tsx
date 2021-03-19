@@ -34,13 +34,6 @@ export const ChatThreadController: FC<Props> = () => {
     });
   }, [navigation]);
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitleAlign: "center",
-      title: "Chat"
-    });
-  }, [navigation]);
-
   const loadChatsApi = useApi<any, ChatsResponseModel>(ChatApis.getChats);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

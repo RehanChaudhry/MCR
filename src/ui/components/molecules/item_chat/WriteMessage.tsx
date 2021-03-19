@@ -10,20 +10,26 @@ import PaperAirplane from "assets/images/paper_airplane.svg";
 import { AppLog, SvgProp } from "utils/Util";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
-import DataGenerator from "utils/DataGenerator";
-import ChatItem, { SenderType } from "models/ChatItem";
 import { Color, NumberProp } from "react-native-svg";
 
 export interface TypingComponentProps {
-  updateMessagesList: (message: ChatItem) => void;
+  btnImage?: SvgProp;
+  appInputFieldCallback?: (text: string) => void;
+  appInputPlaceHolder: string;
+  btnPressCallback: (text: string) => void;
 }
 
 export const WriteMessage = React.memo<TypingComponentProps>(
-  ({ updateMessagesList }) => {
-    const [initialText, setInitialText] = useState<string | undefined>("");
+  ({
+    btnImage,
+    appInputPlaceHolder,
+    btnPressCallback,
+    appInputFieldCallback
+  }) => {
+    const [initialText, setInitialText] = useState<string>("");
     const { themedColors } = usePreferredTheme();
 
-    const icon: SvgProp = (
+    const defaultIcon: SvgProp = (
       color?: Color,
       width?: NumberProp,
       height?: NumberProp
@@ -39,37 +45,27 @@ export const WriteMessage = React.memo<TypingComponentProps>(
       );
     };
 
-    const sentMessage = () => {
-      let chatMessage = DataGenerator.createChat(
-        1009,
-        ["Nikki Engelin"],
-        false,
-        SenderType.STUDENTS,
-        1,
-        require("assets/images/d_user_pic.png"),
-        initialText
-      );
-      updateMessagesList(chatMessage);
-      setInitialText("");
-    };
-
     return (
       <View style={[styles.container(themedColors)]}>
         <AppInputField
           multiline={true}
-          placeholderTextColor="#4b5563"
-          placeholder="Start typing your message"
+          placeholderTextColor={themedColors.interface["600"]}
+          placeholder={appInputPlaceHolder}
           viewStyle={styles.inputField(themedColors)}
           onChangeText={(text: string) => {
             setInitialText(text);
+            appInputFieldCallback?.(text);
           }}
           valueToShowAtStart={initialText}
         />
 
         <AppImageBackground
-          icon={icon}
+          icon={btnImage ?? defaultIcon}
           containerShape={CONTAINER_TYPES.SQUARE}
-          onPress={sentMessage}
+          onPress={() => {
+            setInitialText("");
+            btnPressCallback(initialText);
+          }}
           containerStyle={styles.imgPaper(themedColors)}
         />
       </View>

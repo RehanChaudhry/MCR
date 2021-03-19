@@ -5,7 +5,8 @@ import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog } from "utils/Util";
-import ChatItem from "models/ChatItem";
+import ChatItem, { SenderType } from "models/ChatItem";
+import DataGenerator from "utils/DataGenerator";
 
 type Props = {
   data: ChatItem[];
@@ -32,6 +33,20 @@ export const ChatThreadScreen = React.memo<Props>(
       setChats(newList);
     };
 
+    const sentMessage = (text: string) => {
+      let chatMessage = DataGenerator.createChat(
+        1009,
+        ["Nikki Engelin"],
+        false,
+        SenderType.STUDENTS,
+        1,
+        require("assets/images/d_user_pic.png"),
+        text
+      );
+
+      updateMessagesList(chatMessage);
+    };
+
     return (
       <Screen style={styles.container}>
         <FlatListWithPb
@@ -44,7 +59,10 @@ export const ChatThreadScreen = React.memo<Props>(
           inverted={true}
           keyExtractor={(item, index) => index.toString()}
         />
-        <WriteMessage updateMessagesList={updateMessagesList} />
+        <WriteMessage
+          btnPressCallback={sentMessage}
+          appInputPlaceHolder="Start typing your message"
+        />
       </Screen>
     );
   }
