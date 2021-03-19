@@ -19,6 +19,8 @@ export default {
   GET_QUESTIONS: "questions/",
   POST_ANSWERS: "answer/",
 
+  //community
+  GET_COMMUNITY: "community/",
   //chat
   GET_CHATS: "chats"
 };

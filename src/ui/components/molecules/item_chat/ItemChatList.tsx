@@ -14,6 +14,8 @@ import NotifyIndicInActive from "assets/images/notification-indicator-inactive.s
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem from "models/ChatItem";
+import { moderateScale } from "config/Dimens";
+import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
 export interface ItemChatListProps extends ViewStyle {
   onPress: () => void;
@@ -24,13 +26,19 @@ export interface ItemChatListProps extends ViewStyle {
 export const ItemChatList = React.memo<ItemChatListProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
+
+    let prettyTime = new PrettyTimeFormat(
+      "m ago",
+      "s ago",
+      "y ago",
+      "d ago",
+      "h ago"
+    ).getPrettyTime(item.createdAt);
+
     return (
       <TouchableOpacity onPress={onPress}>
-        <View style={styles.container(false, themedColors)}>
-          <Image
-            style={styles.imgStyle}
-            source={require("assets/images/d_user_pic.png")}
-          />
+        <View style={styles.container(item.name.length > 1, themedColors)}>
+          <Image style={styles.imgStyle} source={item.image} />
 
           <NotifyIndic width={12} height={12} style={styles.indicator} />
           <NotifyIndicInActive
@@ -42,13 +50,26 @@ export const ItemChatList = React.memo<ItemChatListProps>(
           <View style={styles.textWrapper(themedColors)}>
             <View style={styles.nameContainer}>
               <AppLabel
-                style={styles.nameText(themedColors)}
-                text={item.name[0]}
-                weight="semi-bold"
+                style={styles.nameText(
+                  themedColors,
+                  item.name.length,
+                  item.isMessageRead
+                )}
+                text={
+                  item.name.length === 1
+                    ? item.name[0]
+                    : item.name.length === 2
+                    ? item.name[0] + " & " + item.name[1]
+                    : item.name[0] +
+                      " & " +
+                      (item.name.length - 1) +
+                      " more"
+                }
+                weight={item.isMessageRead ? "normal" : "semi-bold"}
               />
               <AppLabel
                 style={styles.timeText(themedColors)}
-                text="10m ago"
+                text={prettyTime}
                 weight="normal"
               />
             </View>
@@ -67,22 +88,24 @@ export const ItemChatList = React.memo<ItemChatListProps>(
 );
 
 const styles = StyleSheet.create({
-  container: (shouldSHowBorder: boolean, themedColors: ColorPalette) => {
+  container: (shouldShowBorder: boolean, themedColors: ColorPalette) => {
     return {
       paddingHorizontal: SPACE.md,
       flexDirection: "row",
-      borderStartColor: themedColors.primary,
-      borderStartWidth: shouldSHowBorder ? 5 : 0
+      borderStartColor: shouldShowBorder
+        ? themedColors.primary
+        : themedColors.background,
+      borderStartWidth: 5
     };
   },
   indicator: {
     position: "absolute",
-    start: 45,
-    top: 10
+    start: moderateScale(45),
+    top: moderateScale(10)
   },
   imgStyle: {
-    width: 45,
-    height: 45,
+    width: moderateScale(45),
+    height: moderateScale(45),
     resizeMode: "cover",
     marginTop: SPACE.md
   },
@@ -101,10 +124,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center"
   },
-  nameText: (theme: ColorPalette) => {
+  nameText: (
+    theme: ColorPalette,
+    recipientLength: number,
+    isMessageRead: boolean
+  ) => {
     return {
       fontSize: FONT_SIZE.md,
-      color: theme.primary,
+      color:
+        recipientLength > 1 && !isMessageRead
+          ? theme.primary
+          : theme.interface["600"],
       lineHeight: 25
     };
   },

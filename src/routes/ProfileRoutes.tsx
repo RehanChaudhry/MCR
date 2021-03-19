@@ -18,6 +18,7 @@ export const ProfileRoutes = () => {
       <ProfileBottomBar.Screen
         name="UpdateQuestionnaire"
         component={QuestionsController}
+        initialParams={{ isUpdating: true }}
       />
     </ProfileBottomBar.Navigator>
   );

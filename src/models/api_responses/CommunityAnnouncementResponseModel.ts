@@ -1,16 +1,17 @@
-export type CommunityResponseModel = {
+export type CommunityAnnouncementResponseModel = {
   message: string;
-  data: CommunityData[];
+  data: CommunityAnnouncement[];
 };
 
-export type CommunityData = {
-  id: string;
+export type CommunityAnnouncement = {
+  id: number;
   profileImageUrl: string;
   name: string;
   time: string;
   text?: string | null;
   images?: string[] | null;
-  videoUrl?: string | null;
+  link?: string | null;
+  embeddedUrl?: string | null;
   likeCount: number;
   commentCount: number;
   metaDataUrl?: string;

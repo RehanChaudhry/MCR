@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Image,
   StyleProp,
   StyleSheet,
   SwitchProps,
@@ -8,6 +7,8 @@ import {
 } from "react-native";
 import ToggleSwitch from "toggle-switch-react-native";
 import { usePreferredTheme } from "hooks";
+import SwitchActive from "assets/images/switch_active.svg";
+import SwitchInActive from "assets/images/switch_inactive.svg";
 
 export interface AppButtonProps extends SwitchProps {
   defaultValue: boolean;
@@ -50,14 +51,11 @@ export const AppSwitch = React.memo<AppButtonProps>(
         thumbOffStyle={styles.thumb}
         icon={
           showCustomThumb ? (
-            <Image
-              source={
-                isEnabled
-                  ? require("assets/images/switch-active.png")
-                  : require("assets/images/switch-inactive.png")
-              }
-              style={styles.tinyLogo}
-            />
+            isEnabled ? (
+              <SwitchActive width={20} height={20} />
+            ) : (
+              <SwitchInActive width={20} height={20} />
+            )
           ) : null
         }
         style={[style, styles.switch]}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ImageStyle,
   StyleProp,
@@ -10,6 +10,7 @@ import {
   ViewStyle
 } from "react-native";
 import { COLORS, FONTS, FONT_SIZE, SPACE } from "config";
+import { AppLog } from "utils/Util";
 
 export interface AppInputFieldProps extends TextInputProps {
   style?: StyleProp<TextStyle>;
@@ -44,6 +45,12 @@ export const AppInputField = React.memo<Props>(
     ...rest
   }) => {
     const [value, setTextInputValue] = useState(valueToShowAtStart);
+
+    useEffect(() => {
+      setTextInputValue(valueToShowAtStart);
+    }, [valueToShowAtStart]);
+
+    AppLog.logForcefully("rendering app input..." + valueToShowAtStart);
     return (
       <View style={[styles.input, viewStyle]}>
         {leftIcon && (

@@ -12,10 +12,11 @@ import { View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { useNavigation } from "@react-navigation/native";
-import { HomeDrawerParamList } from "routes";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { NotificationParamList } from "routes/NotificationParams";
+
 type NotificationNavigationProp = StackNavigationProp<
-  HomeDrawerParamList,
+  NotificationParamList,
   "Notification"
 >;
 type Props = {};
@@ -27,7 +28,8 @@ const NotificationController: FC<Props> = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitleAlign: "center",
-      title: "Notification"
+      title: "Notification",
+      headerStyle: { elevation: 0 }
     });
   }, [navigation]);
 

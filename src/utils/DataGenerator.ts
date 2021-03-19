@@ -1,12 +1,13 @@
-import { BaseQuestion } from "models/Question";
-import { SectionResponse } from "models/api_responses/QuestionsResponseModel";
-import ChatItem, { SenderType } from "models/ChatItem";
+import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import {
   NotificationData,
   NotificationsResponseModel
 } from "models/api_responses/NotificationsResponseModel";
-import { AppLog } from "utils/Util";
+import { SectionResponse } from "models/api_responses/QuestionsResponseModel";
+import ChatItem, { SenderType } from "models/ChatItem";
+import { BaseQuestion } from "models/Question";
 import moment from "moment";
+import { AppLog } from "utils/Util";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -30,6 +31,7 @@ const getQuestionSections = () => {
 
   return sections;
 };
+
 const getNotifications = () => {
   const notifications: NotificationData[] = [];
   const date = new Date();
@@ -67,31 +69,193 @@ const getQuestion = (
   };
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getCommunityAnnouncementList = (pageToLoad: number) => {
+  const communitiesAnnouncements: CommunityAnnouncement[] = [
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      name: "Phoenix Walker",
+      time: "2 hours ago",
+      text:
+        "In the spirit of Ohio University's Mental Health Day break, I've decided to abstain from playing Super Smash Bros Ultimate today. Take care of yourself everyone! Sparkling heartSparkling heartSparkling heart ❤❤❤",
+      likeCount: 20,
+      commentCount: 5
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      name: "Zane Mayes",
+      time: "3 hours ago",
+      text:
+        "First day at college, Ohio university. Thank you so much for watching",
+      link: "https://www.youtube.com/watch?v=zWh3CShX_do",
+      likeCount: 20,
+      commentCount: 5
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      name: "Sarah Steiner",
+      time: "3 hours ago",
+      text:
+        "OHIO’s beloved Rufus has undergone many makeovers since 1804, and did you know that he used to be accompanied by the Bobkitten?! Check out this iconic transformation from 1977 to now 😸 ",
+      images: [
+        "https://source.unsplash.com/1024x768/?nature",
+        "https://source.unsplash.com/1024x768/?water",
+        "https://source.unsplash.com/1024x768/?nature",
+        "https://source.unsplash.com/1024x768/?tree"
+      ],
+      likeCount: 20,
+      commentCount: 5
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      name: "Jasmine Lambert",
+      time: "3 hours ago",
+      text:
+        "OHIO’s beloved Rufus has undergone many makeovers since 1804, and did you know that he used to be accompanied by the Bobkitten?! Check out this iconic transformation from 1977 to now 😸 ",
+      images: ["https://source.unsplash.com/1024x768/?nature"],
+      likeCount: 20,
+      commentCount: 5
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      name: "Alden Chaney",
+      time: "3 hours ago",
+      text:
+        "OHIO’s beloved Rufus has undergone many makeovers since 1804, and did you know that he used to be accompanied by the Bobkitten?! Check out this iconic transformation from 1977 to now 😸 ",
+      likeCount: 20,
+      commentCount: 5,
+      metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      name: "Zane Mayes",
+      time: "3 hours ago",
+      text:
+        "First day at college, Ohio university. Thank you so much for watching",
+      embeddedUrl:
+        '<iframe width="100%" height="50%" src="https://www.youtube.com/embed/cqyziA30whE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
+      likeCount: 20,
+      commentCount: 5
+    }
+  ];
+  return communitiesAnnouncements;
+};
+
 const getChats = (): ChatItem[] => {
   const chats: ChatItem[] = [];
 
-  for (let i = 0; i < 15; i++) {
-    chats.push(createChat(i));
+  chats.push(
+    createChat(
+      0,
+      ["Phoenix Walker", "Angela", "Grey"],
+      false,
+      SenderType.STUDENTS,
+      0
+    )
+  );
+
+  for (let i = 1; i < 15; i++) {
+    if (i === 1) {
+      chats.push(
+        createChat(i, ["Nikki Engelin"], false, SenderType.STAFF, i)
+      );
+    } else if (i === 2) {
+      chats.push(
+        createChat(i, ["Jacoby Roman"], true, SenderType.STAFF, i)
+      );
+    } else {
+      if (i === 3) {
+        chats.push(
+          createChat(
+            i,
+            ["Luukas Haapala", "Abriella Bond"],
+            true,
+            SenderType.STUDENTS,
+            i
+          )
+        );
+      } else {
+        chats.push(
+          createChat(i, ["John Hopkins"], true, SenderType.STUDENTS, i)
+        );
+      }
+    }
   }
 
   return chats;
 };
 
-function createChat(id: number): ChatItem {
+const createChatThread = (): ChatItem[] => {
+  const chats: ChatItem[] = [];
+
+  const userOneId = 1;
+  const userTwoId = 2;
+  for (let i = 1; i < 15; i++) {
+    chats.push(
+      createChat(
+        i,
+        i % 2 === 0 ? ["Nikki Engelin"] : ["Phoenix Walker"],
+        false,
+        SenderType.STUDENTS,
+        i % 2 === 0 ? userOneId : userTwoId,
+        i % 2 === 0
+          ? require("assets/images/d_user_pic.png")
+          : require("assets/images/d_user_pick_1.png")
+      )
+    );
+  }
+  return chats;
+};
+
+function createChat(
+  id: number,
+  args: string[],
+  isMessageRead: boolean = true,
+  type: SenderType,
+  userId: number,
+  image?: string | null,
+  message?: string
+): ChatItem {
+  const date = randomDate(new Date(2012, 0, 1), new Date());
+  AppLog.log("generated date : " + date);
   return {
-    id: id + 1,
-    name: ["John Hopkins"],
-    image: require("assets/images/d_user_pic.png"),
-    message: "First test message for your..Say hi...",
-    type: SenderType.STAFF,
-    createdAt: "2021-03-15T07:18:24.000Z",
-    updatedAt: "2021-03-15T07:18:24.000Z"
+    id: id,
+    name: args,
+    image: image ? image : require("assets/images/d_user_pic.png"),
+    message: message
+      ? message
+      : "OK, I'll let him know.. sorry just saw your message",
+    type: type,
+    userId: userId,
+    isMessageRead: isMessageRead,
+    createdAt: date.toString(),
+    updatedAt: date.toString()
   };
 }
+
+const randomDate = (start: Date, end: Date) =>
+  new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
 
 export default {
   getQuestionSections,
   getQuestion,
   getChats,
-  getNotifications
+  getNotifications,
+  getCommunityAnnouncementList,
+  createChatThread,
+  createChat
 };
