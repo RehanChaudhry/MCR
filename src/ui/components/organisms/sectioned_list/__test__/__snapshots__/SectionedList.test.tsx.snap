@@ -75,13 +75,7 @@ exports[`Sectioned List tests snapshot 1`] = `
   onScrollToIndexFailed={[Function]}
   renderItem={[Function]}
   scrollEventThrottle={50}
-  stickyHeaderIndices={
-    Array [
-      0,
-      5,
-      9,
-    ]
-  }
+  stickyHeaderIndices={Array []}
   updateCellsBatchingPeriod={50}
   windowSize={21}
 >

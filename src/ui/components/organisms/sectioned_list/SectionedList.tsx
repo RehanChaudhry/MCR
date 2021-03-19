@@ -123,6 +123,7 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
         AppLog.log("Failed to scroll to " + info.index);
       }}
       ListFooterComponent={listFooterComponent}
+      stickySectionHeadersEnabled={false} // true by default for iOS, for same experience
     />
   );
 };

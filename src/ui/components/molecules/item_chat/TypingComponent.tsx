@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
 import { SPACE } from "config";
@@ -7,76 +7,99 @@ import {
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import PaperAirplane from "assets/images/paper_airplane.svg";
-import { AppLog } from "utils/Util";
+import { SvgProp } from "utils/Util";
+import { usePreferredTheme } from "hooks";
+import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
+import DataGenerator from "utils/DataGenerator";
+import ChatItem, { SenderType } from "models/ChatItem";
 
-export interface TypingComponentProps {}
+export interface TypingComponentProps {
+  updateMessagesList: (message: ChatItem) => void;
+}
 
-export const TypingComponent = React.memo<TypingComponentProps>(({}) => {
-  let message = "";
+export const TypingComponent = React.memo<TypingComponentProps>(
+  ({ updateMessagesList }) => {
+    const [initialText, setInitialText] = useState<string | undefined>("");
+    const { themedColors } = usePreferredTheme();
 
-  const icon1 = () => {
+    const sentMessage = () => {
+      let chatMessage = DataGenerator.createChat(
+        1009,
+        ["Nikki Engelin"],
+        false,
+        SenderType.STUDENTS,
+        1,
+        require("assets/images/d_user_pic.png"),
+        initialText
+      );
+      updateMessagesList(chatMessage);
+      setInitialText("");
+    };
+
     return (
-      <PaperAirplane
-        testID="icon"
-        width={25}
-        height={25}
-        fill={"#00694e"}
-      />
+      <View style={[styles.container(themedColors)]}>
+        <AppInputField
+          multiline={true}
+          placeholderTextColor="#4b5563"
+          placeholder="Start typing your message"
+          viewStyle={styles.inputField(themedColors)}
+          onChangeText={(text: string) => {
+            setInitialText(text);
+          }}
+          valueToShowAtStart={initialText}
+        />
+
+        <AppImageBackground
+          icon={
+            ((
+              <PaperAirplane
+                testID="icon"
+                width={25}
+                height={25}
+                fill={themedColors.primary}
+              />
+            ) as unknown) as SvgProp
+          }
+          containerShape={CONTAINER_TYPES.SQUARE}
+          onPress={sentMessage}
+          containerStyle={styles.imgPaper(themedColors)}
+        />
+      </View>
     );
-  };
-
-  const sentMessage = () => {
-    //sent message from this method
-    AppLog.logForcefully("current message is : " + message);
-  };
-
-  return (
-    <View style={[styles.container]}>
-      <AppInputField
-        multiline={true}
-        placeholderTextColor="#4b5563"
-        placeholder="Start typing your message"
-        viewStyle={styles.inputField}
-        onChangeText={(text: string) => {
-          message = text;
-        }}
-      />
-
-      <AppImageBackground
-        icon={icon1}
-        containerShape={CONTAINER_TYPES.SQUARE}
-        onPress={sentMessage}
-        containerStyle={styles.imgPaper}
-      />
-    </View>
-  );
-});
+  }
+);
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: SPACE.md,
-    paddingHorizontal: SPACE.md,
-    flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-    borderTopWidth: 0.5,
-    borderTopColor: "#d1d5db"
+  container: (themedColors: ColorPalette) => {
+    return {
+      paddingVertical: SPACE.md,
+      paddingHorizontal: SPACE.md,
+      flexDirection: "row",
+      backgroundColor: themedColors.background,
+      borderTopWidth: 0.5,
+      borderTopColor: themedColors.interface["300"]
+    };
   },
-  imgPaper: {
-    marginStart: SPACE.md,
-    backgroundColor: "#f3f4f6",
-    elevation: 0
+  imgPaper: (themedColors: ColorPalette) => {
+    return {
+      marginStart: SPACE.md,
+      backgroundColor: themedColors.primaryShade,
+      elevation: 0
+    };
   },
-  inputField: {
-    borderColor: "#b2b7bf",
-    color: "#4b5563",
+  inputField: (themedColors: ColorPalette) => {
+    return {
+      borderColor: themedColors.border,
+      color: themedColors.interface["600"],
 
-    //Its for IOS
-    shadowColor: "#00000000",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0,
+      //Its for IOS
+      shadowColor: themedColors.transparent,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0,
 
-    // its for android
-    elevation: 0,
-    backgroundColor: "#00000000"
+      // its for android
+      elevation: 0,
+      backgroundColor: themedColors.transparent
+    };
   }
 });

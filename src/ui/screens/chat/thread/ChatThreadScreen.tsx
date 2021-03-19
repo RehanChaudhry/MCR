@@ -1,35 +1,54 @@
 import { StyleSheet } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { ItemChatThread } from "ui/components/molecules/item_chat/ItemChatThread";
 import { TypingComponent } from "ui/components/molecules/item_chat/TypingComponent";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog } from "utils/Util";
+import ChatItem from "models/ChatItem";
 
-type Props = {};
+type Props = {
+  data: ChatItem[];
+  sentMessageApi: (message: ChatItem) => void;
+};
 
-const items: string[] = ["1", "2", "3", "4", "5", "6", "7", "8"];
+export const ChatThreadScreen = React.memo<Props>(
+  ({ data, sentMessageApi }) => {
+    let [chats, setChats] = useState<ChatItem[]>(data);
 
-export const ChatThreadScreen = React.memo<Props>(() => {
-  const renderItem = ({ item }: { item: string }) => {
-    AppLog.log("rendering list item : " + JSON.stringify(item));
-    return <ItemChatThread />;
-  };
+    const renderItem = ({ item }: { item: ChatItem }) => {
+      AppLog.log("rendering list item : " + JSON.stringify(item));
+      return <ItemChatThread item={item} />;
+    };
 
-  return (
-    <Screen style={styles.container}>
-      <FlatListWithPb
-        shouldShowProgressBar={false}
-        data={items}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-        removeClippedSubviews={true}
-        style={styles.list}
-      />
-      <TypingComponent />
-    </Screen>
-  );
-});
+    const updateMessagesList = (message: ChatItem) => {
+      sentMessageApi(message);
+
+      let newList: ChatItem[] = [];
+
+      newList.push(message);
+      newList.push(...chats);
+
+      setChats(newList);
+    };
+
+    return (
+      <Screen style={styles.container}>
+        <FlatListWithPb
+          shouldShowProgressBar={false}
+          data={chats}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+          removeClippedSubviews={true}
+          style={[styles.list]}
+          inverted={true}
+          keyExtractor={(item, index) => index.toString()}
+        />
+        <TypingComponent updateMessagesList={updateMessagesList} />
+      </Screen>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: {
