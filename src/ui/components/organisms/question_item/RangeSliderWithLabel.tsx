@@ -10,7 +10,6 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import { AppLog } from "utils/Util";
 
 interface RangeSliderWithLabelProps {
   initialValues: number[] | undefined;
@@ -51,7 +50,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = ({
     );
   };
 
-  if (initialValues == undefined) {
+  if (initialValues === undefined) {
     initialValues = enableTwoThumbs ? [0, 0] : [0];
   }
 
@@ -67,12 +66,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = ({
   return (
     <>
       <AppLabel style={styles.label} text={labelLeft} />
-      <View
-        style={{
-          flex: 1,
-          flexDirection: "row",
-          justifyContent: "center"
-        }}>
+      <View style={styles.sliderContainer}>
         <MultiSlider
           values={initialValues}
           {...(enableTwoThumbs
@@ -87,36 +81,36 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = ({
                 allowOverlap: false
               }
             : {
-                selectedStyle: {},
-                unselectedStyle: {},
+                selectedStyle: {
+                  backgroundColor: themedColors.interface[200]
+                },
+                unselectedStyle: {
+                  backgroundColor: themedColors.interface[200]
+                },
                 allowOverlap: true
                 /* minMarkerOverlapDistance: 15*/
               })}
           isMarkersSeparated={true}
-          customMarkerLeft={(e) => {
-            AppLog.log(
+          customMarkerLeft={(_) => {
+            /*AppLog.log(
               "RangeSlider() => customMarkerLeft: " + e.currentValue
-            );
+            );*/
             return customSliderMarker(styles.markerLeft);
           }}
-          customMarkerRight={(e) => {
-            AppLog.log("RangeSlider() => customMarkerRight: " + e);
+          customMarkerRight={(_) => {
+            // AppLog.log("RangeSlider() => customMarkerRight: " + e);
             return customSliderMarker(styles.markerRight);
           }}
           onValuesChangeFinish={(values: number[]) => {
             result(values);
-            AppLog.log("RangeSlider() => onValuesChangeFinish: " + values);
+            // AppLog.log("RangeSlider() => onValuesChangeFinish: " + values);
           }}
           trackStyle={styles.track}
           sliderLength={sliderWidth}
           min={minValue}
           max={maxValue}
           step={1}
-          containerStyle={{
-            height: 45,
-            paddingVertical: 15,
-            paddingHorizontal: 10
-          }}
+          containerStyle={styles.sliderInnerContainer}
           enabledOne={enableThumbOne}
           enabledTwo={enableThumbTwo}
           allowSliderClick={allowSliderClick}
@@ -157,5 +151,15 @@ const styles = StyleSheet.create({
   },
   labelXsm: {
     fontSize: FONT_SIZE.xsm
+  },
+  sliderContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center"
+  },
+  sliderInnerContainer: {
+    height: 45,
+    paddingVertical: 15,
+    paddingHorizontal: 10
   }
 });

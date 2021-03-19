@@ -36,7 +36,7 @@ export const DropdownModal = React.memo<DropDownModalProps>(
     const { themedColors } = usePreferredTheme();
 
     const getItemColor = (id: string): string => {
-      if (selectedItemId == id) {
+      if (selectedItemId === id) {
         return themedColors.primary;
       } else {
         return themedColors.label;

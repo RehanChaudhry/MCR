@@ -34,8 +34,11 @@ export const MARGIN_SIZE = {
 };
 
 export const SPACE = {
-  sm: moderateScale(6.0),
+  xxsm: moderateScale(4.0),
+  xsm: moderateScale(6.0),
+  sm: moderateScale(8.0),
   md: moderateScale(12.0),
-  lg: moderateScale(18.0),
-  xl: moderateScale(24.0)
+  lg: moderateScale(16.0),
+  xl: moderateScale(18.0),
+  _2xl: moderateScale(24.0)
 };

@@ -5,7 +5,6 @@ import {
   SwitchProps,
   ViewStyle
 } from "react-native";
-import { AppLog } from "utils/Util";
 import ToggleSwitch from "toggle-switch-react-native";
 import { usePreferredTheme } from "hooks";
 import SwitchActive from "assets/images/switch_active.svg";
@@ -37,7 +36,7 @@ export const AppSwitch = React.memo<AppButtonProps>(
     }, []);
 
     const toggleSwitch = () => {
-      AppLog.log("AppSwitch() => toggle working");
+      // AppLog.log("AppSwitch() => toggle working");
       setIsEnabled((previousState) => !previousState);
       onValueChange(!isEnabled);
     };

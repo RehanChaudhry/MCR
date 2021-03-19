@@ -1,4 +1,4 @@
-import { ImageStyle, TextStyle, ViewStyle } from "react-native";
+import { ImageStyle, TextProps, TextStyle, ViewStyle } from "react-native";
 
 declare module "react-native" {
   namespace StyleSheet {
@@ -7,7 +7,9 @@ declare module "react-native" {
         | ViewStyle
         | TextStyle
         | ImageStyle
-        | ((...args: any[]) => ViewStyle | TextStyle | ImageStyle);
+        | ((
+            ...args: any[]
+          ) => ViewStyle | TextStyle | ImageStyle | TextProps);
     };
     export function create<
       T extends CustomNamedStyles<T> | CustomNamedStyles<any>

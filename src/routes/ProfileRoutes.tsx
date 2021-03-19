@@ -1,8 +1,8 @@
 import React from "react";
 import { ProfileBottomBar } from "routes/ProfileBottomBar";
 import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
-import UpdateQuestionnaireController from "ui/screens/home/profile/update_questionnaire/UpdateQuestionnaireController";
 import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
+import QuestionsController from "ui/screens/questions/QuestionsController";
 
 export const ProfileRoutes = () => {
   return (
@@ -17,7 +17,8 @@ export const ProfileRoutes = () => {
       />
       <ProfileBottomBar.Screen
         name="UpdateQuestionnaire"
-        component={UpdateQuestionnaireController}
+        component={QuestionsController}
+        initialParams={{ isUpdating: true }}
       />
     </ProfileBottomBar.Navigator>
   );
