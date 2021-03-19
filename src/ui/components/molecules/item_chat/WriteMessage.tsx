@@ -7,20 +7,37 @@ import {
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import PaperAirplane from "assets/images/paper_airplane.svg";
-import { SvgProp } from "utils/Util";
+import { AppLog, SvgProp } from "utils/Util";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import DataGenerator from "utils/DataGenerator";
 import ChatItem, { SenderType } from "models/ChatItem";
+import { Color, NumberProp } from "react-native-svg";
 
 export interface TypingComponentProps {
   updateMessagesList: (message: ChatItem) => void;
 }
 
-export const TypingComponent = React.memo<TypingComponentProps>(
+export const WriteMessage = React.memo<TypingComponentProps>(
   ({ updateMessagesList }) => {
     const [initialText, setInitialText] = useState<string | undefined>("");
     const { themedColors } = usePreferredTheme();
+
+    const icon: SvgProp = (
+      color?: Color,
+      width?: NumberProp,
+      height?: NumberProp
+    ) => {
+      AppLog.log("color : " + color + width + height); //just to avoid warning
+      return (
+        <PaperAirplane
+          testID="icon"
+          width={25}
+          height={25}
+          fill={themedColors.primary}
+        />
+      );
+    };
 
     const sentMessage = () => {
       let chatMessage = DataGenerator.createChat(
@@ -50,16 +67,7 @@ export const TypingComponent = React.memo<TypingComponentProps>(
         />
 
         <AppImageBackground
-          icon={
-            ((
-              <PaperAirplane
-                testID="icon"
-                width={25}
-                height={25}
-                fill={themedColors.primary}
-              />
-            ) as unknown) as SvgProp
-          }
+          icon={icon}
           containerShape={CONTAINER_TYPES.SQUARE}
           onPress={sentMessage}
           containerStyle={styles.imgPaper(themedColors)}

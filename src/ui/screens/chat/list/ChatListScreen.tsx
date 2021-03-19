@@ -9,7 +9,6 @@ import BottomBreadCrumbs, {
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
 import ChatItem from "models/ChatItem";
 import { ChatHeader } from "ui/components/molecules/item_chat/ChatHeader";
-
 type ConversationType = "Active" | "Archived";
 
 const showConversation = (conversationType: ConversationType) => {
@@ -39,7 +38,7 @@ interface ChatListProps {
 let lastHeaderTitle = "";
 export const ChatListScreen = React.memo<ChatListProps>(
   ({ data, onItemClick }) => {
-    AppLog.log("Rendering screen chat");
+    AppLog.log("Rendering chat screen...");
     const renderItem = ({ item }: { item: ChatItem }) => {
       AppLog.log("rendering list item : " + JSON.stringify(item));
       return (
@@ -48,7 +47,6 @@ export const ChatListScreen = React.memo<ChatListProps>(
             chatItem={item}
             lastHeaderTitle={lastHeaderTitle}
             onHeaderCreated={(title: string) => {
-              //   AppLog.logForcefully("Last header title" + title);
               lastHeaderTitle = title;
             }}
           />
