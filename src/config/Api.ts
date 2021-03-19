@@ -15,6 +15,9 @@ export default {
   UPDATE_PROFILE_URL: "profile",
   NOTIFICATION_URL: "notifications",
 
+  //Get universities
+  UNIS: "unis",
+
   // Profile
   GET_QUESTIONS: "questions/",
   POST_ANSWERS: "answer/",
