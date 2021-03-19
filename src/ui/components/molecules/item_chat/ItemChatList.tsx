@@ -14,6 +14,7 @@ import NotifyIndicInActive from "assets/images/notification-indicator-inactive.s
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem from "models/ChatItem";
+import { moderateScale } from "config/Dimens";
 export interface ItemChatListProps extends ViewStyle {
   onPress: () => void;
   item: ChatItem;
@@ -88,12 +89,12 @@ const styles = StyleSheet.create({
   },
   indicator: {
     position: "absolute",
-    start: 45,
-    top: 10
+    start: moderateScale(45),
+    top: moderateScale(10)
   },
   imgStyle: {
-    width: 45,
-    height: 45,
+    width: moderateScale(45),
+    height: moderateScale(45),
     resizeMode: "cover",
     marginTop: SPACE.md
   },
