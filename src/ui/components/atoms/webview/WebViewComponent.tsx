@@ -15,15 +15,25 @@ export enum URL_TYPES {
 
 export const WebViewComponent = React.memo<WebViewProps>(
   ({ url, urlType }) => {
+    const head = `<style>body{margin:0}</style><meta name="viewport" content="width=device-width, height=300px, initial-scale=1">`;
+    const html = `<!DOCTYPE html><html><head>${head}</head><body>${url}</body></html>`;
     return (
-      <View style={style.container}>
+      <View
+        style={[
+          style.container,
+          urlType === URL_TYPES.LINK ? { height: 350 } : {}
+        ]}>
         <WebView
-          cacheMode="LOAD_NO_CACHE"
-          startInLoadingState={true}
-          allowsInlineMediaPlayback={true}
+          bounces={false}
+          dataDetectorTypes="link"
+          scalesPageToFit={false}
+          scrollEnabled={false}
+          automaticallyAdjustContentInsets={false}
+          mediaPlaybackRequiresUserAction={true}
           source={
-            urlType === URL_TYPES.LINK ? { uri: url } : { html: url }
+            urlType === URL_TYPES.LINK ? { uri: url } : { html: html }
           }
+          style={style.container}
         />
       </View>
     );
@@ -34,6 +44,6 @@ const style = StyleSheet.create({
   container: {
     width: "100%",
     marginTop: SPACE.md,
-    height: 250
+    height: 150
   }
 });
