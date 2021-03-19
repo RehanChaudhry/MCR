@@ -28,7 +28,7 @@ exports[`Snapshot testing 1`] = `
           "marginTop": 16,
         },
         Object {
-          "width": 250,
+          "width": -93.75,
         },
       ]
     }
@@ -62,7 +62,7 @@ exports[`Snapshot testing 1`] = `
         style={
           Array [
             Object {
-              "borderRadius": 7,
+              "borderRadius": 10,
               "height": 16,
               "justifyContent": "flex-start",
               "width": 16,
@@ -129,7 +129,7 @@ exports[`Snapshot testing 1`] = `
           "marginTop": 16,
         },
         Object {
-          "width": 250,
+          "width": -93.75,
         },
       ]
     }
@@ -163,7 +163,7 @@ exports[`Snapshot testing 1`] = `
         style={
           Array [
             Object {
-              "borderRadius": 7,
+              "borderRadius": 10,
               "height": 16,
               "justifyContent": "flex-start",
               "width": 16,
@@ -230,7 +230,7 @@ exports[`Snapshot testing 1`] = `
           "marginTop": 16,
         },
         Object {
-          "width": 250,
+          "width": -93.75,
         },
       ]
     }
@@ -264,7 +264,7 @@ exports[`Snapshot testing 1`] = `
         style={
           Array [
             Object {
-              "borderRadius": 7,
+              "borderRadius": 10,
               "height": 16,
               "justifyContent": "flex-start",
               "width": 16,

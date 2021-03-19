@@ -7,17 +7,24 @@ import {
   AppDropdown,
   AppDropdownProps
 } from "../../organisms/app_dropdown/AppDropdown";
+import { FormikValues, useFormikContext } from "formik";
+import { AppFormValidationLabel } from "../app_form/AppFormValidationLabel";
 
 type Props = {
   labelProps?: AppLabelProps;
+  name: string;
   appDropDownProps: AppDropdownProps;
+  validationLabelTestID?: string;
 };
 
 export const AppFormDropDown: React.FC<Props> = ({
   labelProps,
-  appDropDownProps
+  name,
+  appDropDownProps,
+  validationLabelTestID
 }) => {
   const theme = usePreferredTheme();
+  const { errors, touched, values } = useFormikContext<FormikValues>();
   return (
     <>
       {labelProps && (
@@ -26,7 +33,19 @@ export const AppFormDropDown: React.FC<Props> = ({
           {...labelProps}
         />
       )}
-      <AppDropdown {...appDropDownProps} />
+      <AppDropdown
+        {...appDropDownProps}
+        selectedItemCallback={(item) => {
+          values[name] = item;
+        }}
+      />
+      {errors[name] && touched[name] && (
+        <AppFormValidationLabel
+          validationLabelTestID={validationLabelTestID}
+          errorString={errors[name] as string}
+          shouldVisible={true}
+        />
+      )}
     </>
   );
 };
