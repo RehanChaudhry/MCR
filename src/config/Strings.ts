@@ -35,5 +35,7 @@ export default {
 
   dummyText:
     "This accordion will automatically close after 5 seconds " +
-    "when the associated task will complete its execution."
+    "when the associated task will complete its execution.",
+
+  whats_new: "What’s new, Zane?"
 };
