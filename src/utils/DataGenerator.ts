@@ -32,6 +32,7 @@ const getQuestionSections = () => {
 
   return sections;
 };
+
 const getNotifications = () => {
   const notifications: NotificationData[] = [];
   const date = new Date();
@@ -222,6 +223,7 @@ const getChats = (): ChatItem[] => {
       0
     )
   );
+
   for (let i = 1; i < 15; i++) {
     if (i === 1) {
       chats.push(
@@ -284,6 +286,8 @@ function createChat(
   image?: string | null,
   message?: string
 ): ChatItem {
+  const date = randomDate(new Date(2012, 0, 1), new Date());
+  AppLog.log("generated date : " + date);
   return {
     id: id,
     name: args,
@@ -294,10 +298,15 @@ function createChat(
     type: type,
     userId: userId,
     isMessageRead: isMessageRead,
-    createdAt: "2021-03-15T07:18:24.000Z",
-    updatedAt: "2021-03-15T07:18:24.000Z"
+    createdAt: date.toString(),
+    updatedAt: date.toString()
   };
 }
+
+const randomDate = (start: Date, end: Date) =>
+  new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
 
 export default {
   getQuestionSections,

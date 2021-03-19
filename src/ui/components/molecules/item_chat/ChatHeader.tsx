@@ -5,7 +5,6 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem, { SenderType } from "models/ChatItem";
-import { AppLog } from "utils/Util";
 
 export interface ChatHeaderProps {
   chatItem: ChatItem;
@@ -17,49 +16,38 @@ const createHeader = (
   theme: ColorPalette,
   item: ChatItem,
   lastHeaderTitle: string,
-  headerCreated: any
+  callback: any
 ) => {
-  AppLog.logForcefully(
-    "last header title " + lastHeaderTitle + " type " + item.type
-  );
-  if (!item.isMessageRead && lastHeaderTitle !== "NEW MESSAGES") {
-    lastHeaderTitle = SenderType.NEW_MESSAGES;
-    headerCreated(lastHeaderTitle);
+  const label = (title: string) => {
     return (
       <AppLabel
-        text={lastHeaderTitle}
+        text={title}
         style={styles.listHeader(theme)}
         weight="semi-bold"
       />
     );
+  };
+
+  if (!item.isMessageRead && lastHeaderTitle !== SenderType.NEW_MESSAGES) {
+    lastHeaderTitle = SenderType.NEW_MESSAGES;
+    callback(lastHeaderTitle);
+    return label(lastHeaderTitle);
   } else if (
     item.type === SenderType.STAFF &&
     lastHeaderTitle !== SenderType.STAFF &&
     item.isMessageRead
   ) {
     lastHeaderTitle = SenderType.STAFF;
-    headerCreated(lastHeaderTitle);
-    return (
-      <AppLabel
-        text={lastHeaderTitle}
-        style={styles.listHeader(theme)}
-        weight="semi-bold"
-      />
-    );
+    callback(lastHeaderTitle);
+    return label(lastHeaderTitle);
   } else if (
     item.type === SenderType.STUDENTS &&
     lastHeaderTitle !== SenderType.STUDENTS &&
     item.isMessageRead
   ) {
     lastHeaderTitle = SenderType.STUDENTS;
-    headerCreated(lastHeaderTitle);
-    return (
-      <AppLabel
-        text={lastHeaderTitle}
-        style={styles.listHeader(theme)}
-        weight="semi-bold"
-      />
-    );
+    callback(lastHeaderTitle);
+    return label(lastHeaderTitle);
   }
 };
 
