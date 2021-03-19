@@ -10,7 +10,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { LoadMore } from "ui/components/atoms/app_load_more/LoadMore";
+import { AppLoadMore } from "ui/components/atoms/app_load_more/AppLoadMore";
 import ErrorWithRetryView from "ui/components/molecules/ErrorWithRetryView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 
@@ -111,7 +111,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
     }
 
     if (!isAllDataLoaded && shouldShowProgressBar && data !== undefined) {
-      return <LoadMore testID="loader" />;
+      return <AppLoadMore testID="loader" />;
     }
   }
 

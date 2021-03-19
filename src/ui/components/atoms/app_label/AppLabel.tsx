@@ -24,14 +24,19 @@ type Props = AppLabelProps;
 
 export enum TEXT_TYPE {
   NORMAL = "normal",
-  ITALIC = "italic",
-  BOLD = "bold",
   UNDERLINE = "underline",
   LINE_THROUGH = "line-through"
 }
 
 export const AppLabel = React.memo<Props>(
-  ({ text, weight = "normal", style, onPress, textType, ...rest }) => {
+  ({
+    text,
+    weight = "normal",
+    style,
+    onPress,
+    textType = TEXT_TYPE.NORMAL,
+    ...rest
+  }) => {
     function setFontWeightStyle(
       _weight?: Weight,
       _style?: StyleProp<TextStyle>
@@ -50,10 +55,6 @@ export const AppLabel = React.memo<Props>(
     const getTextStyle = () => {
       if (textType === TEXT_TYPE.NORMAL) {
         return styles.normal;
-      } else if (textType === TEXT_TYPE.ITALIC) {
-        return styles.italic;
-      } else if (textType === TEXT_TYPE.BOLD) {
-        return styles.bold;
       } else if (textType === TEXT_TYPE.UNDERLINE) {
         return styles.underLine;
       } else if (textType === TEXT_TYPE.LINE_THROUGH) {

@@ -6,10 +6,7 @@ import QuestionSection from "models/QuestionSection";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Color, NumberProp } from "react-native-svg";
-import {
-  AppLabel,
-  TEXT_TYPE
-} from "ui/components/atoms/app_label/AppLabel";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
   AppImageBackground,
   CONTAINER_TYPES
@@ -40,7 +37,7 @@ const QuestionHeader = ({ isExpanded = false, questionGroup }: Props) => {
         <AppLabel
           style={styles.title}
           text={questionGroup.title}
-          textType={TEXT_TYPE.BOLD}
+          weight="bold"
         />
         <AppLabel
           style={[
@@ -62,7 +59,7 @@ const QuestionHeader = ({ isExpanded = false, questionGroup }: Props) => {
         <AppLabel
           style={styles.title}
           text={questionGroup.title}
-          textType={TEXT_TYPE.BOLD}
+          weight="bold"
         />
 
         <AppImageBackground
