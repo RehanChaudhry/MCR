@@ -1,14 +1,17 @@
 import React from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
-import { AppLabel, AppLabelProps } from "../../atoms/app_label/AppLabel";
-import { COLORS, FONT_SIZE, FONTS, SPACE } from "../../../../config";
-import usePreferredTheme from "../../../../hooks/theme/usePreferredTheme";
+import {
+  AppLabel,
+  AppLabelProps
+} from "ui/components/atoms/app_label/AppLabel";
+import { COLORS, FONT_SIZE, FONTS, SPACE } from "config";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import {
   AppDropdown,
   AppDropdownProps
-} from "../../organisms/app_dropdown/AppDropdown";
+} from "ui/components/organisms/app_dropdown/AppDropdown";
 import { FormikValues, useFormikContext } from "formik";
-import { AppFormValidationLabel } from "../app_form/AppFormValidationLabel";
+import { AppFormValidationLabel } from "ui/components/molecules/app_form/AppFormValidationLabel";
 import { SvgProp } from "utils/Util";
 
 type Props = {
@@ -25,10 +28,10 @@ export const AppFormDropDown: React.FC<Props> = ({
   labelProps,
   name,
   appDropDownProps,
-  validationLabelTestID,
-  style,
-  dropDownIcon,
-  shouldShowCustomIcon = false
+  validationLabelTestID
+  // style,
+  // dropDownIcon,
+  // shouldShowCustomIcon = false
 }) => {
   const theme = usePreferredTheme();
   const { errors, touched, values } = useFormikContext<FormikValues>();
@@ -53,9 +56,9 @@ export const AppFormDropDown: React.FC<Props> = ({
           shouldVisible={true}
         />
       )}
-      style={style}
-      shouldShowCustomIcon={shouldShowCustomIcon}
-      dropDownIcon={dropDownIcon}
+      {/*style={style}*/}
+      {/*shouldShowCustomIcon={shouldShowCustomIcon}*/}
+      {/*dropDownIcon={dropDownIcon}*/}
     </>
   );
 };
