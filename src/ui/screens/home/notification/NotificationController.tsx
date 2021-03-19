@@ -28,7 +28,8 @@ const NotificationController: FC<Props> = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitleAlign: "center",
-      title: "Notification"
+      title: "Notification",
+      headerStyle: { elevation: 0 }
     });
   }, [navigation]);
 

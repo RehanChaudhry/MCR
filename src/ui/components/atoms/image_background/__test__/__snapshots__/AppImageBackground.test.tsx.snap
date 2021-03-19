@@ -20,7 +20,5 @@ exports[`snapshot testing 1`] = `
       undefined,
     ]
   }
->
-  20
-</View>
+/>
 `;
