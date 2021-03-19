@@ -8,18 +8,26 @@ import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb
 import UniSelectionCell from "../../components/organisms/uni_selection/UniSelectionCell";
 import Search from "assets/images/search_icon.svg";
 import { Uni } from "models/api_responses/UniSelectionResponseModel";
+import Screen from "ui/components/atoms/Screen";
+import { CardView } from "ui/components/atoms/CardView";
 
 type Props = {
   unis: Uni[];
   isLoading: boolean;
   isError?: string;
+  didSelectItem: (item: Uni) => void;
 };
 
-const listItem = ({ item }: { item: Uni }) => (
-  <UniSelectionCell uni={item} />
-);
+const listItem = (item: Uni, onSelection: (item: Uni) => void) => {
+  return <UniSelectionCell uni={item} onSelection={onSelection} />;
+};
 
-const UniSelectionView: FC<Props> = ({ unis, isLoading, isError }) => {
+const UniSelectionView: FC<Props> = ({
+  unis,
+  isLoading,
+  isError,
+  didSelectItem
+}) => {
   const theme = usePreferredTheme();
 
   const [filteredData, setFilteredData] = useState(unis);
@@ -43,18 +51,24 @@ const UniSelectionView: FC<Props> = ({ unis, isLoading, isError }) => {
   };
 
   return (
-    <View
+    <Screen
       style={[
         styles.container,
         { backgroundColor: theme.themedColors.backgroundSecondary }
-      ]}>
+      ]}
+      topSafeAreaViewStyle={{
+        backgroundColor: theme.themedColors.backgroundSecondary
+      }}
+      bottomSafeAreaViewStyle={{
+        backgroundColor: theme.themedColors.background
+      }}>
       <View style={[styles.logoContainer]}>
         <ImageBackground
           style={styles.logo}
           source={require("../../../../assets/images/mcr_logo.png")}
         />
       </View>
-      <View
+      <CardView
         style={[
           styles.contentContainer,
           { backgroundColor: theme.themedColors.background }
@@ -83,7 +97,9 @@ const UniSelectionView: FC<Props> = ({ unis, isLoading, isError }) => {
             error={isError}
             shouldShowProgressBar={isLoading}
             data={filteredData}
-            renderItem={listItem}
+            renderItem={({ item }) => {
+              return listItem(item, didSelectItem);
+            }}
             style={styles.listStyle}
             ItemSeparatorComponent={() => (
               <ListItemSeparator
@@ -95,8 +111,8 @@ const UniSelectionView: FC<Props> = ({ unis, isLoading, isError }) => {
             )}
           />
         </View>
-      </View>
-    </View>
+      </CardView>
+    </Screen>
   );
 };
 
@@ -108,7 +124,9 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     borderTopLeftRadius: 32,
-    borderTopRightRadius: 32
+    borderTopRightRadius: 32,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
   },
   logoContainer: {
     width: "100%",

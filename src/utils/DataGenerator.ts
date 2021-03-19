@@ -69,6 +69,42 @@ const getUnis = () => {
         name: "Boise State University",
         location: "Boise, Idaho",
         logo: ""
+      },
+      {
+        id: "3",
+        name: "Florida International University",
+        location: "Miami, Florida",
+        logo: ""
+      },
+      {
+        id: "4",
+        name: "Oregon State University",
+        location: "Corvillas, Oregon",
+        logo: ""
+      },
+      {
+        id: "5",
+        name: "Duquesne University",
+        location: "Pittsburgh, Pennsylvania",
+        logo: ""
+      },
+      {
+        id: "6",
+        name: "Lehigh University",
+        location: "Greenville, North Carolina",
+        logo: ""
+      },
+      {
+        id: "7",
+        name: "North Dakota State University",
+        location: "Fargo, North Dakota",
+        logo: ""
+      },
+      {
+        id: "8",
+        name: "George Mason University",
+        location: "Fairfax, Virginia",
+        logo: ""
       }
     ]
   };

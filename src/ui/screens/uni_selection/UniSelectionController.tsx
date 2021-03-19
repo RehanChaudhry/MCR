@@ -31,6 +31,10 @@ const UniSelectionController: FC<Props> = () => {
     }
   };
 
+  const uniDidSelect = (item: Uni) => {
+    AppLog.log("selected item: ", item);
+  };
+
   AppLog.log("handle getuni api: ", handleGetUnisApi);
 
   return (
@@ -38,6 +42,7 @@ const UniSelectionController: FC<Props> = () => {
       isError={unisApi.error}
       isLoading={unisApi.loading}
       unis={unis}
+      didSelectItem={uniDidSelect}
     />
   );
 };
