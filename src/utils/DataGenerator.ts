@@ -72,7 +72,8 @@ const getQuestion = (
 const getProfileMatch = () => {
   const profileMatch = new ProfileMatch(
     0,
-    "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fprofile%2520picture%2F&psig=AOvVaw1WNkH66B3w-qO0ca7aaQo4&ust=1616235756242000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCNCKicORvO8CFQAAAAAdAAAAABAD",
+    "Phoenix Walker",
+    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     "Freshman",
     "History",
     95,

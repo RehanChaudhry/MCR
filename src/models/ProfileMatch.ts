@@ -2,6 +2,7 @@ import ProfileMatchType from "models/enums/ProfileMatchType";
 
 export class ProfileMatch {
   userId!: number;
+  userName?: string;
   profilePicture?: string;
   classLevel?: string;
   major?: string;
@@ -13,6 +14,7 @@ export class ProfileMatch {
 
   constructor(
     userId: number,
+    userName: string,
     profilePicture: string,
     classLevel: string,
     major: string,
@@ -23,6 +25,7 @@ export class ProfileMatch {
     createdAt: string
   ) {
     this.userId = userId;
+    this.userName = userName;
     this.profilePicture = profilePicture;
     this.classLevel = classLevel;
     this.major = major;

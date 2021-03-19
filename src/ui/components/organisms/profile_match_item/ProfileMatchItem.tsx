@@ -1,10 +1,13 @@
-import { FONT_SIZE, SPACE } from "config";
-import { moderateScale } from "config/Dimens";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { AppLog, shadowStyleProps } from "utils/Util";
 import ProfileMatch from "models/ProfileMatch";
+import { moderateScale } from "config/Dimens";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { grayShades } from "hooks/theme/ColorPaletteContainer";
+import MatchScore from "ui/components/molecules/match_score/MatchScore";
 
 interface Props {
   profileMatch: ProfileMatch;
@@ -21,8 +24,28 @@ const ProfileMatchItem = ({ profileMatch }: Props) => {
       style={[
         styles.container,
         { backgroundColor: themedColors.background }
-      ]}
-    />
+      ]}>
+      <View style={styles.infoContainer}>
+        <Image
+          style={styles.profileImage}
+          source={{ uri: profileMatch.profilePicture }}
+        />
+        <View style={styles.infoTextContainer}>
+          <AppLabel
+            style={styles.userName}
+            text={profileMatch.userName ?? STRINGS.common.not_found}
+          />
+          <AppLabel
+            style={[styles.subtitle, { color: grayShades.coolGray[600] }]}
+            text={`${profileMatch.classLevel}, ${profileMatch.major}`}
+          />
+          <MatchScore
+            style={styles.matchScore}
+            matchScore={profileMatch.matchScore ?? 0}
+          />
+        </View>
+      </View>
+    </View>
   );
 };
 
@@ -32,28 +55,24 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     borderRadius: 5,
-    marginVertical: SPACE.xsm,
-    padding: SPACE.xsm,
-
+    padding: SPACE.md,
     ...shadowStyleProps
   },
-  expandedContainer: {
-    flexDirection: "column",
-    padding: SPACE.xsm,
-    overflow: "hidden",
-    borderTopStartRadius: 5,
-    borderTopEndRadius: 5,
-    marginTop: SPACE.xsm
-
-    // shadow
-    // ...shadowStyleProps
+  infoContainer: {
+    flexDirection: "row"
   },
-  title: { fontSize: FONT_SIZE.md, padding: SPACE.xsm },
-  description: { fontSize: FONT_SIZE.sm, padding: SPACE.xsm },
-  arrowContainer: {
-    width: moderateScale(30),
-    height: moderateScale(30),
-    marginRight: moderateScale(5)
+  profileImage: {
+    width: moderateScale(64),
+    height: moderateScale(64),
+    borderRadius: moderateScale(32)
+  },
+  infoTextContainer: {
+    marginStart: SPACE.md
+  },
+  userName: { fontSize: FONT_SIZE.md, includeFontPadding: false },
+  subtitle: { fontSize: FONT_SIZE.xsm },
+  matchScore: {
+    marginTop: SPACE.md
   }
 });
 

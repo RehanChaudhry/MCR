@@ -35,5 +35,9 @@ export default {
 
   dummyText:
     "This accordion will automatically close after 5 seconds " +
-    "when the associated task will complete its execution."
+    "when the associated task will complete its execution.",
+
+  matches: {
+    match_score: "Match Score: "
+  }
 };
