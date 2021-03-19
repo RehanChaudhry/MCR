@@ -8,6 +8,7 @@ import ChatItem, { SenderType } from "models/ChatItem";
 import { BaseQuestion } from "models/Question";
 import moment from "moment";
 import { AppLog } from "utils/Util";
+import ProfileMatch from "models/ProfileMatch";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -66,6 +67,21 @@ const getQuestion = (
     createdAt: "2021-03-15T07:18:24.000Z",
     updatedAt: "2021-03-15T07:18:24.000Z"
   };
+};
+
+const getProfileMatch = () => {
+  const profileMatch = new ProfileMatch(
+    0,
+    "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fprofile%2520picture%2F&psig=AOvVaw1WNkH66B3w-qO0ca7aaQo4&ust=1616235756242000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCNCKicORvO8CFQAAAAAdAAAAABAD",
+    "Freshman",
+    "History",
+    95,
+    "active",
+    false,
+    false,
+    "2021-03-15T07:18:24.000Z"
+  );
+  return profileMatch;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -248,5 +264,6 @@ export default {
   getNotifications,
   getCommunityAnnouncementList,
   createChatThread,
-  createChat
+  createChat,
+  getProfileMatch
 };
