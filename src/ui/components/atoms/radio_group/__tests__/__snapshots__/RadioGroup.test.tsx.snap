@@ -25,12 +25,10 @@ exports[`Snapshot testing 1`] = `
         Object {
           "alignSelf": "flex-start",
           "flexDirection": "row",
-          "marginStart": 10,
-          "marginTop": 5,
-          "paddingVertical": 10,
+          "marginTop": 16,
         },
         Object {
-          "width": 250,
+          "width": -93.75,
         },
       ]
     }
@@ -64,10 +62,10 @@ exports[`Snapshot testing 1`] = `
         style={
           Array [
             Object {
-              "borderRadius": 7,
-              "height": 14,
+              "borderRadius": 10,
+              "height": 16,
               "justifyContent": "flex-start",
-              "width": 14,
+              "width": 16,
             },
             Array [
               Object {
@@ -107,7 +105,7 @@ exports[`Snapshot testing 1`] = `
                 "color": "#111827",
               },
               Object {
-                "fontSize": 16,
+                "fontSize": 14,
                 "marginLeft": 10,
                 "marginRight": 16,
               },
@@ -128,12 +126,10 @@ exports[`Snapshot testing 1`] = `
         Object {
           "alignSelf": "flex-start",
           "flexDirection": "row",
-          "marginStart": 10,
-          "marginTop": 5,
-          "paddingVertical": 10,
+          "marginTop": 16,
         },
         Object {
-          "width": 250,
+          "width": -93.75,
         },
       ]
     }
@@ -167,10 +163,10 @@ exports[`Snapshot testing 1`] = `
         style={
           Array [
             Object {
-              "borderRadius": 7,
-              "height": 14,
+              "borderRadius": 10,
+              "height": 16,
               "justifyContent": "flex-start",
-              "width": 14,
+              "width": 16,
             },
             Array [
               Object {
@@ -210,7 +206,7 @@ exports[`Snapshot testing 1`] = `
                 "color": "#111827",
               },
               Object {
-                "fontSize": 16,
+                "fontSize": 14,
                 "marginLeft": 10,
                 "marginRight": 16,
               },
@@ -231,12 +227,10 @@ exports[`Snapshot testing 1`] = `
         Object {
           "alignSelf": "flex-start",
           "flexDirection": "row",
-          "marginStart": 10,
-          "marginTop": 5,
-          "paddingVertical": 10,
+          "marginTop": 16,
         },
         Object {
-          "width": 250,
+          "width": -93.75,
         },
       ]
     }
@@ -270,10 +264,10 @@ exports[`Snapshot testing 1`] = `
         style={
           Array [
             Object {
-              "borderRadius": 7,
-              "height": 14,
+              "borderRadius": 10,
+              "height": 16,
               "justifyContent": "flex-start",
-              "width": 14,
+              "width": 16,
             },
             Array [
               Object {
@@ -313,7 +307,7 @@ exports[`Snapshot testing 1`] = `
                 "color": "#111827",
               },
               Object {
-                "fontSize": 16,
+                "fontSize": 14,
                 "marginLeft": 10,
                 "marginRight": 16,
               },

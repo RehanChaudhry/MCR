@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { ItemChatThread } from "ui/components/molecules/item_chat/ItemChatThread";
-import { TypingComponent } from "ui/components/molecules/item_chat/TypingComponent";
+import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog } from "utils/Util";
@@ -44,7 +44,7 @@ export const ChatThreadScreen = React.memo<Props>(
           inverted={true}
           keyExtractor={(item, index) => index.toString()}
         />
-        <TypingComponent updateMessagesList={updateMessagesList} />
+        <WriteMessage updateMessagesList={updateMessagesList} />
       </Screen>
     );
   }

@@ -10,7 +10,7 @@ import {
   BUTTON_TYPES
 } from "ui/components/molecules/app_button/AppButton";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { FONT_SIZE, SPACE } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 
 export const UploadProfilePhoto = React.memo(() => {
@@ -36,25 +36,30 @@ export const UploadProfilePhoto = React.memo(() => {
           }}
         />
         <AppButton
-          text="Upload Profile Photo"
+          text={STRINGS.profile.buttonText.uploadProfilePhoto}
           buttonStyle={[
             styles.uploadButton,
             { borderColor: theme.themedColors.interface["700"] }
           ]}
           buttonType={BUTTON_TYPES.BORDER}
           textStyle={{
-            fontWeight: "bold",
+            color: theme.themedColors.label,
             borderColor: theme.themedColors.interface["700"]
           }}
           shouldShowError={false}
+          fontWeight={"semi-bold"}
         />
       </View>
       <AppLabel
-        text={
-          "You are encouraged to upload a photo of yourself to encourage others to interact with you. Pictures should be of you, the owner of the user account, only, and should be appropriate to all audiences. You may not use pictures of others or any photography that is provocative or lewd. Abuse of this system is a violation of the terms of use and can result in disciplinary action."
-        }
+        text={STRINGS.profile.basicProfile.uploadPhotoDescription}
         numberOfLines={0}
-        style={[styles.text, { fontSize: FONT_SIZE.sm }]}
+        style={[
+          styles.text,
+          {
+            fontSize: FONT_SIZE.sm,
+            color: theme.themedColors.interface["700"]
+          }
+        ]}
       />
     </View>
   );

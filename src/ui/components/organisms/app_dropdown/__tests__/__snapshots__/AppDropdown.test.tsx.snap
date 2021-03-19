@@ -352,7 +352,9 @@ exports[`Renders snapshot as expected 1`] = `
               Object {
                 "color": "#111827",
               },
-              undefined,
+              Object {
+                "color": "#374151",
+              },
             ],
             Object {
               "fontFamily": "Inter-Regular",

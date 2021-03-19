@@ -42,10 +42,10 @@ export const ChatListController: FC<Props> = () => {
       []
     );
     if (hasError || dataBody === undefined) {
-      AppLog.logForcefully("Unable to find chats " + errorBody);
+      AppLog.log("Unable to find chats " + errorBody);
       return;
     } else {
-      AppLog.logForcefully("Find chats" + errorBody);
+      AppLog.log("Find chats" + errorBody);
       setChats(dataBody.data);
       onComplete?.();
     }

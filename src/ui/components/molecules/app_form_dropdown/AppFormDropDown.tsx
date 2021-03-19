@@ -1,19 +1,40 @@
 import React from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { AppLabel, AppLabelProps } from "../../atoms/app_label/AppLabel";
-import { COLORS, FONT_SIZE, FONTS, SPACE } from "../../../../config";
-import usePreferredTheme from "../../../../hooks/theme/usePreferredTheme";
+import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import {
+  AppLabel,
+  AppLabelProps
+} from "ui/components/atoms/app_label/AppLabel";
+import { COLORS, FONT_SIZE, FONTS, SPACE } from "config";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import {
+  AppDropdown,
+  AppDropdownProps
+} from "ui/components/organisms/app_dropdown/AppDropdown";
+import { FormikValues, useFormikContext } from "formik";
+import { AppFormValidationLabel } from "ui/components/molecules/app_form/AppFormValidationLabel";
+import { SvgProp } from "utils/Util";
 
 type Props = {
   labelProps?: AppLabelProps;
-  viewStyle?: StyleProp<ViewStyle>;
+  name: string;
+  appDropDownProps: AppDropdownProps;
+  validationLabelTestID?: string;
+  style?: StyleProp<ViewStyle>;
+  dropDownIcon?: SvgProp;
+  shouldShowCustomIcon?: boolean;
 };
 
 export const AppFormDropDown: React.FC<Props> = ({
   labelProps,
-  viewStyle
+  name,
+  appDropDownProps,
+  validationLabelTestID
+  // style,
+  // dropDownIcon,
+  // shouldShowCustomIcon = false
 }) => {
   const theme = usePreferredTheme();
+  const { errors, touched, values } = useFormikContext<FormikValues>();
   return (
     <>
       {labelProps && (
@@ -22,7 +43,22 @@ export const AppFormDropDown: React.FC<Props> = ({
           {...labelProps}
         />
       )}
-      <View style={[styles.input, viewStyle]} />
+      <AppDropdown
+        {...appDropDownProps}
+        selectedItemCallback={(item) => {
+          values[name] = item;
+        }}
+      />
+      {errors[name] && touched[name] && (
+        <AppFormValidationLabel
+          validationLabelTestID={validationLabelTestID}
+          errorString={errors[name] as string}
+          shouldVisible={true}
+        />
+      )}
+      {/*style={style}*/}
+      {/*shouldShowCustomIcon={shouldShowCustomIcon}*/}
+      {/*dropDownIcon={dropDownIcon}*/}
     </>
   );
 };

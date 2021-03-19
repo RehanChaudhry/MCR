@@ -18,7 +18,7 @@ export const HeadingWithText = React.memo<Props>(
       <View testID={"HEADING_WITH_TEXT"}>
         <AppLabel
           text={headingText}
-          weight={"bold"}
+          weight={"semi-bold"}
           style={[{ fontSize: FONT_SIZE.lg }, headingStyle]}
         />
         <AppLabel

@@ -17,7 +17,7 @@ test("snapshot testing", () => {
   expect(rendered).toMatchSnapshot();
 });
 
-/*it("renders icon correctly", () => {
+it("renders icon correctly", () => {
   const { queryByTestId } = render(
     <AppImageBackground
       containerShape={CONTAINER_TYPES.CIRCLE}
@@ -26,7 +26,7 @@ test("snapshot testing", () => {
   );
   let icon = queryByTestId("icon");
   expect(icon).not.toBeNull();
-});*/
+});
 
 it("should properly perform click event", () => {
   const onPress = jest.fn();
