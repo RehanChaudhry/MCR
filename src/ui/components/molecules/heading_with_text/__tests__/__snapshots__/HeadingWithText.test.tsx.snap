@@ -16,10 +16,10 @@ exports[`Snapshot testing 1`] = `
             "color": "#111827",
           },
           Array [
-            undefined,
             Object {
               "fontSize": 24.186407766990293,
             },
+            undefined,
           ],
         ],
         Object {
@@ -43,10 +43,10 @@ exports[`Snapshot testing 1`] = `
             "color": "#111827",
           },
           Array [
-            undefined,
             Object {
               "fontSize": 21.163106796116505,
             },
+            undefined,
           ],
         ],
         Object {

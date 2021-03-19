@@ -10,7 +10,7 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { usePreferredTheme } from "hooks";
 
-type Weight = "bold" | "normal" | "semi-bold";
+export type Weight = "bold" | "normal" | "semi-bold";
 
 export interface AppLabelProps extends TextProps {
   text: string;

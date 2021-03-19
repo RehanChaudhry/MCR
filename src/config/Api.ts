@@ -12,5 +12,18 @@ export default {
   LOGIN_URL: "auth/login",
   FORGOT_PASS_URL: "password/request/",
   RESET_PASS_URL: "password/set/",
-  UPDATE_PROFILE_URL: "profile"
+  UPDATE_PROFILE_URL: "profile",
+  NOTIFICATION_URL: "notifications",
+
+  //Get universities
+  UNIS: "unis",
+
+  // Profile
+  GET_QUESTIONS: "questions/",
+  POST_ANSWERS: "answer/",
+
+  //community
+  GET_COMMUNITY: "community/",
+  //chat
+  GET_CHATS: "chats"
 };

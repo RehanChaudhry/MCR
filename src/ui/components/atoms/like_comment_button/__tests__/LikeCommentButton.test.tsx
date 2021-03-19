@@ -1,7 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
 import { LikeCommentButton } from "ui/components/atoms/like_comment_button/LikeCommentButton";
-import Like from "assets/images/like.svg";
 
 test("snapshot testing", () => {
   const rendered = render(
@@ -20,13 +19,10 @@ test("should properly perform click event", () => {
   expect(onPress).toBeCalledTimes(1);
 });
 
-it("renders  icon", () => {
+test("renders  icon", () => {
   const { queryByTestId } = render(
-    <LikeCommentButton
-      unSelectedText={"Like"}
-      icon={() => <Like testID={"icon"} width={16} height={16} />}
-    />
+    <LikeCommentButton unSelectedText={"Like"} />
   );
   const icon = queryByTestId("icon");
-  expect(icon).not.toBeNull();
+  expect(icon).toBeNull();
 });

@@ -1,24 +1,20 @@
-import { COLORS } from "config";
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { ScrollView } from "react-native";
+import Screen from "../../../../components/atoms/Screen";
+import { BasicProfile } from "ui/components/profile/basic_profile/BasicProfile";
+import { DemoGraphics } from "ui/components/profile/demographics/DemoGraphics";
+import { Interests } from "../../../../components/profile/interests/interests";
 
 type Props = {};
 
 export const UpdateProfileView: React.FC<Props> = () => {
   return (
-    <View style={styles.container}>
-      <AppLabel style={[{ alignSelf: "center" }]} text="Update Profile" />
-    </View>
+    <Screen>
+      <ScrollView>
+        <BasicProfile />
+        <DemoGraphics />
+        <Interests />
+      </ScrollView>
+    </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "stretch",
-    flexDirection: "column",
-    justifyContent: "center",
-    backgroundColor: COLORS.yellow,
-    flex: 1
-  }
-});

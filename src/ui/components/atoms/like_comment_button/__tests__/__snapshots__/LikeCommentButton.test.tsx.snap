@@ -21,8 +21,8 @@ exports[`snapshot testing 1`] = `
       "flexDirection": "row",
       "justifyContent": "center",
       "opacity": 1,
-      "paddingHorizontal": 16,
-      "paddingVertical": 10,
+      "paddingHorizontal": 10,
+      "paddingVertical": 6,
       "width": "auto",
     }
   }
@@ -36,6 +36,11 @@ exports[`snapshot testing 1`] = `
     }
     testID="button-container"
   >
+    <SvgMock
+      fill="#111827"
+      height={12}
+      width={12}
+    />
     <Text
       numberOfLines={1}
       style={
@@ -56,6 +61,7 @@ exports[`snapshot testing 1`] = `
               Object {
                 "color": "#111827",
               },
+              undefined,
             ],
           ],
           Object {
