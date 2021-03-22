@@ -47,9 +47,6 @@ export const CreatePostView: FC<Props> = (props) => {
   const theme = usePreferredTheme();
   const [images, setImages] = useState<ImagePickerResponse[]>([]);
   const [postType, setPostType] = useState<POST_TYPES>(POST_TYPES.NONE);
-  // const [shouldSelectLink, setShouldSelectLink] = useState(false);
-  // const [shouldSelectEmbed, setShouldSelectEmbed] = useState(false);
-  // const [shouldSelectPhotos, setShouldSelectPhotos] = useState(false);
   const linkImage: SvgProp = (
     color?: Color,
     width?: NumberProp,
@@ -144,21 +141,6 @@ export const CreatePostView: FC<Props> = (props) => {
 
   useEffect(() => {
     AppLog.logForcefully("post type in use Effect: " + postType);
-    // if (postType === POST_TYPES.PHOTOS) {
-    //   setShouldSelectPhotos(true);
-    //   setShouldSelectLink(false);
-    //   setShouldSelectEmbed(false);
-    // }
-    // if (postType === POST_TYPES.LINK) {
-    //   setShouldSelectPhotos(false);
-    //   setShouldSelectLink(true);
-    //   setShouldSelectEmbed(false);
-    // }
-    // if (postType === POST_TYPES.EMBED) {
-    //   setShouldSelectPhotos(false);
-    //   setShouldSelectLink(false);
-    //   setShouldSelectEmbed(true);
-    // }
   }, [postType]);
 
   const dummyProfileImageUrl =
@@ -245,57 +227,67 @@ export const CreatePostView: FC<Props> = (props) => {
               />
             </View>
 
-            {postType === POST_TYPES.PHOTOS && (
-              <View style={styles.imagesListContainer}>
-                <FlatListWithPb
-                  shouldShowProgressBar={false}
-                  data={images}
-                  style={styles.list}
-                  renderItem={listItem}
-                  horizontal={true}
-                />
-                {plusCircleImage()}
-              </View>
-            )}
-
-            {postType === POST_TYPES.LINK && (
-              <AppInputField
-                style={{ color: theme.themedColors.label }}
-                placeholder="Enter link (https://..)"
-                leftIcon={() => {
-                  return (
-                    <Link
-                      width={12}
-                      height={12}
-                      fill={theme.themedColors.interface["500"]}
+            {postType !== POST_TYPES.NONE && (
+              <>
+                {postType === POST_TYPES.PHOTOS && (
+                  <View style={styles.imagesListContainer}>
+                    <FlatListWithPb
+                      shouldShowProgressBar={false}
+                      data={images}
+                      style={styles.list}
+                      renderItem={listItem}
+                      horizontal={true}
                     />
-                  );
-                }}
-                viewStyle={{
-                  backgroundColor: theme.themedColors.background,
-                  borderColor: theme.themedColors.secondary
-                }}
-              />
-            )}
+                    {plusCircleImage()}
+                  </View>
+                )}
 
-            {postType === POST_TYPES.EMBED && (
-              <AppInputField
-                style={{ color: theme.themedColors.label }}
-                placeholder="Enter embed code"
-                leftIcon={() => {
-                  return (
-                    <Code
-                      width={12}
-                      height={12}
-                      fill={theme.themedColors.interface["500"]}
-                    />
-                  );
-                }}
-                viewStyle={{
-                  backgroundColor: theme.themedColors.background,
-                  borderColor: theme.themedColors.secondary
-                }}
-              />
+                {postType === POST_TYPES.LINK && (
+                  <AppInputField
+                    style={{ color: theme.themedColors.label }}
+                    placeholder="Enter link (https://..)"
+                    leftIcon={() => {
+                      return (
+                        <Link
+                          width={12}
+                          height={12}
+                          fill={theme.themedColors.interface["500"]}
+                        />
+                      );
+                    }}
+                    viewStyle={[
+                      {
+                        backgroundColor: theme.themedColors.background,
+                        borderColor: theme.themedColors.secondary
+                      },
+                      styles.list
+                    ]}
+                  />
+                )}
+
+                {postType === POST_TYPES.EMBED && (
+                  <AppInputField
+                    style={{ color: theme.themedColors.label }}
+                    placeholder="Enter embed code"
+                    leftIcon={() => {
+                      return (
+                        <Code
+                          width={12}
+                          height={12}
+                          fill={theme.themedColors.interface["500"]}
+                        />
+                      );
+                    }}
+                    viewStyle={[
+                      {
+                        backgroundColor: theme.themedColors.background,
+                        borderColor: theme.themedColors.secondary
+                      },
+                      styles.list
+                    ]}
+                  />
+                )}
+              </>
             )}
 
             <View
@@ -366,7 +358,7 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-    marginVertical: SPACE.lg,
+    marginTop: SPACE.lg,
     alignItems: "center"
   },
   bottomLine: {
@@ -378,6 +370,7 @@ const styles = StyleSheet.create({
     marginRight: SPACE.md
   },
   list: {
+    marginTop: SPACE.lg
     // flexGrow: 1,
     // flexBasis: 0
   },
