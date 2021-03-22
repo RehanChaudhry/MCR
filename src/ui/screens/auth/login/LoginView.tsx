@@ -62,7 +62,7 @@ export const LoginView = React.memo<Props>(({}) => {
           <AppLabel
             text={STRINGS.login.signin_to_your_account}
             weight={"bold"}
-            style={styles.SignInHeading}
+            style={styles.signInHeading}
           />
 
           <AppForm
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   logo: {
     marginTop: SPACE._2xl
   },
-  SignInHeading: {
+  signInHeading: {
     fontSize: FONT_SIZE._2xl,
     marginTop: 40
   },

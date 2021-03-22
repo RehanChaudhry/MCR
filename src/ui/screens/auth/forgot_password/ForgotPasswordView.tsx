@@ -9,7 +9,6 @@ import Colors from "config/Colors";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import Logo from "assets/images/logo.svg";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import * as Yup from "yup";
@@ -19,6 +18,7 @@ import Screen from "ui/components/atoms/Screen";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
+import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 
 type Props = {
   openForgotPasswordScreen?: () => void;
@@ -58,16 +58,12 @@ export const ForgotPasswordView = React.memo<Props>(({}) => {
 
           <Logo style={styles.logo} />
 
-          <AppLabel
-            text={STRINGS.forgotpassword.forgot_your_password}
-            weight={"bold"}
-            style={styles.SignInHeading}
-          />
-
-          <AppLabel
+          <HeadingWithText
+            headingText={STRINGS.forgotpassword.forgot_your_password}
+            headingFontWeight={"bold"}
+            headingStyle={styles.forgotPasswordHeading}
             text={STRINGS.forgotpassword.forgot_text}
-            numberOfLines={0}
-            style={styles.forgotText}
+            textStyle={styles.forgotText}
           />
 
           <AppForm
@@ -148,7 +144,7 @@ const styles = StyleSheet.create({
   logo: {
     marginTop: SPACE._2xl
   },
-  SignInHeading: {
+  forgotPasswordHeading: {
     fontSize: FONT_SIZE._2xl,
     marginTop: 40
   },
