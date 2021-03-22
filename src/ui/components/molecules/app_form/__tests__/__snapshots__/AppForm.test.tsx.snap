@@ -8,34 +8,49 @@ exports[`rendering... renders correctly 1`] = `
     }
   }
 >
-  <Text
-    numberOfLines={1}
+  <View
     style={
-      Array [
+      Object {
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      numberOfLines={1}
+      style={
         Array [
-          Object {
-            "fontFamily": "Inter-Regular",
-          },
-          Object {
-            "color": "#111827",
-          },
           Array [
             Object {
-              "paddingBottom": 9.069902912621359,
+              "fontFamily": "Inter-Regular",
             },
             Object {
               "color": "#111827",
             },
+            Array [
+              Object {
+                "paddingBottom": 9.069902912621359,
+              },
+              Object {
+                "color": "#111827",
+              },
+            ],
           ],
-        ],
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+        ]
+      }
+    >
+      EMAIL
+    </Text>
+    <View
+      style={
         Object {
-          "fontFamily": "Inter-Regular",
-        },
-      ]
-    }
-  >
-    EMAIL
-  </Text>
+          "flex": 1,
+        }
+      }
+    />
+  </View>
   <View
     style={
       Array [
@@ -94,34 +109,49 @@ exports[`rendering... renders correctly 1`] = `
       }
     }
   />
-  <Text
-    numberOfLines={1}
+  <View
     style={
-      Array [
+      Object {
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      numberOfLines={1}
+      style={
         Array [
-          Object {
-            "fontFamily": "Inter-Regular",
-          },
-          Object {
-            "color": "#111827",
-          },
           Array [
             Object {
-              "paddingBottom": 9.069902912621359,
+              "fontFamily": "Inter-Regular",
             },
             Object {
               "color": "#111827",
             },
+            Array [
+              Object {
+                "paddingBottom": 9.069902912621359,
+              },
+              Object {
+                "color": "#111827",
+              },
+            ],
           ],
-        ],
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+        ]
+      }
+    >
+      PASSWORD
+    </Text>
+    <View
+      style={
         Object {
-          "fontFamily": "Inter-Regular",
-        },
-      ]
-    }
-  >
-    PASSWORD
-  </Text>
+          "flex": 1,
+        }
+      }
+    />
+  </View>
   <View
     style={
       Array [
