@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { CircleImageBorder } from "ui/components/atoms/circle_image_border/CircleImageBorder";
-import { MultilineSpannableText } from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
+import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import Colors from "config/Colors";

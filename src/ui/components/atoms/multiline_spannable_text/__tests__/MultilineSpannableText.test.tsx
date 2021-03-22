@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
-import { MultilineSpannableText } from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
+import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 import { StyleSheet } from "react-native";
 
 test("check render properly", () => {
