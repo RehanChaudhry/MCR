@@ -1,18 +1,30 @@
 import React, { FC, useLayoutEffect } from "react";
-import { ChatParamsLIst } from "routes/ChatStack";
+import { ChatParamsList } from "routes/ChatStack";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
-import { useApi } from "repo/Client";
-import { ChatsResponseModel } from "models/api_responses/ChatsResponseModel";
-import ChatApis from "repo/chat/ChatAPis";
 import { NewConversationScreen } from "ui/screens/chat/new/NewConversationScreen";
+import { ConversationItem } from "models/ConversationItem";
+import Strings from "config/Strings";
 
 type conversationNavigationProp = StackNavigationProp<
-  ChatParamsLIst,
+  ChatParamsList,
   "NewConversation"
 >;
 
 type Props = {};
+
+const dummyData: ConversationItem[] = [
+  {
+    id: 1,
+    name: "Rose King",
+    userId: 1
+  },
+  {
+    id: 2,
+    name: "Lian Oneill",
+    userId: 2
+  }
+];
 
 export const NewConversationController: FC<Props> = () => {
   const navigation = useNavigation<conversationNavigationProp>();
@@ -20,12 +32,11 @@ export const NewConversationController: FC<Props> = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitleAlign: "center",
-      title: "Chat"
+      title: Strings.newConversation.title
     });
   }, [navigation]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const loadChatsApi = useApi<any, ChatsResponseModel>(ChatApis.getChats);
+  //const loadChatsApi = useApi<any, ChatsResponseModel>(ChatApis.getChats);
 
   /*  const handleLoadChatsApi = async (onComplete?: () => void) => {
     const { hasError, dataBody, errorBody } = await loadChatsApi.request(
@@ -40,5 +51,17 @@ export const NewConversationController: FC<Props> = () => {
     }
   };*/
 
-  return <NewConversationScreen />;
+  const removeItemFromList = (
+    items: ConversationItem[],
+    itemToDelete: ConversationItem
+  ) => {
+    return items.filter((item) => item.id !== itemToDelete.id);
+  };
+
+  return (
+    <NewConversationScreen
+      data={dummyData}
+      removeItem={removeItemFromList}
+    />
+  );
 };
