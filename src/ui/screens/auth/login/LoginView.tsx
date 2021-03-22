@@ -22,7 +22,7 @@ import { MultilineSpannableText } from "ui/components/atoms/multiline_spannable_
 
 type Props = {
   openForgotPasswordScreen?: () => void;
-  shouldShowProgressBar: boolean;
+  shouldShowProgressBar?: boolean;
 };
 
 const validationSchema = Yup.object().shape({
@@ -31,7 +31,6 @@ const validationSchema = Yup.object().shape({
 });
 
 let initialValues: FormikValues = {
-  // basic profile
   email: "",
   password: ""
 };
@@ -40,7 +39,7 @@ const onSubmit = (_value: FormikValues) => {
   AppLog.log("form values" + initialValues);
 };
 
-export const LoginInView = React.memo<Props>(({}) => {
+export const LoginView = React.memo<Props>(({}) => {
   const theme = usePreferredTheme();
 
   return (

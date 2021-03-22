@@ -8,7 +8,7 @@ import { Alert } from "react-native";
 import AuthApis from "repo/auth/AuthApis";
 import { AuthStackParamList } from "routes";
 import NoHeader from "ui/components/headers/NoHeader";
-import { LoginInView } from "ui/screens/auth/login/LoginView";
+import { LoginView } from "ui/screens/auth/login/LoginView";
 import { useApi } from "repo/Client";
 import { AppLog } from "utils/Util";
 
@@ -52,7 +52,7 @@ const LoginController: FC<Props> = () => {
 
   AppLog.log(handleSignIn);
 
-  return <LoginInView shouldShowProgressBar={signInApi.loading} />;
+  return <LoginView shouldShowProgressBar={signInApi.loading} />;
 };
 
 export default LoginController;
