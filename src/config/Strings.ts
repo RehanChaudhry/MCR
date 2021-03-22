@@ -35,5 +35,25 @@ export default {
 
   dummyText:
     "This accordion will automatically close after 5 seconds " +
-    "when the associated task will complete its execution."
+    "when the associated task will complete its execution.",
+
+  newConversation: {
+    title: "New Conversation",
+    typingHint: "Start typing student name",
+    createGroupText: "You can create a group of upto 5 people.",
+    segmentValues: [
+      { label: "Student", value: "Student" },
+      { label: "Staff", value: "Staff" }
+    ]
+  },
+
+  chatListScreen: {
+    title: "Chat",
+    activeConversations: "Active Conversations",
+    archivedConversations: "Archived"
+  },
+
+  chatThreadScreen: {
+    typingHint: "Start typing your message"
+  }
 };
