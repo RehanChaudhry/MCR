@@ -1,8 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useAuth, usePreventDoubleTap } from "hooks";
-import { SignInApiRequestModel } from "models/api_requests/SignInApiRequestModel";
-import { SignInApiResponseModel } from "models/api_responses/SignInApiResponseModel";
+import { usePreventDoubleTap } from "hooks";
 import React, { FC, useLayoutEffect, useRef } from "react";
 import { Alert } from "react-native";
 import AuthApis from "repo/auth/AuthApis";
@@ -11,6 +9,8 @@ import NoHeader from "ui/components/headers/NoHeader";
 import { useApi } from "repo/Client";
 import { AppLog } from "utils/Util";
 import { ForgotPasswordView } from "ui/screens/auth/forgot_password/ForgotPasswordView";
+import { ForgotPasswordApiRequestModel } from "models/api_requests/ForgotPasswordApiRequestModel";
+import { ForgotPasswordApiResponseModel } from "models/api_responses/ForgotPasswordApiResponseModel";
 
 type LoginNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -19,9 +19,8 @@ type LoginNavigationProp = StackNavigationProp<
 
 type Props = {};
 
-const LoginController: FC<Props> = () => {
-  const requestModel = useRef<SignInApiRequestModel>();
-  const auth = useAuth();
+const ForgotPasswordController: FC<Props> = () => {
+  const requestModel = useRef<ForgotPasswordApiRequestModel>();
 
   const navigation = useNavigation<LoginNavigationProp>();
 
@@ -31,15 +30,15 @@ const LoginController: FC<Props> = () => {
   }, [navigation]);
 
   const forgotPasswordApi = useApi<
-    SignInApiRequestModel,
-    SignInApiResponseModel
-  >(AuthApis.signIn);
+    ForgotPasswordApiRequestModel,
+    ForgotPasswordApiResponseModel
+  >(AuthApis.forgotPassword);
 
   const handleForgotPassword = usePreventDoubleTap(async () => {
     if (requestModel.current === undefined) {
       return;
     }
-    AppLog.log("handleSignIn: ");
+    AppLog.log("handle forgotpassword: ");
     const {
       hasError,
       errorBody,
@@ -49,7 +48,7 @@ const LoginController: FC<Props> = () => {
       Alert.alert("Unable to Sign In", errorBody);
       return;
     } else {
-      await auth.logIn(dataBody);
+      // await auth.logIn(dataBody.data);
     }
   });
 
@@ -62,4 +61,4 @@ const LoginController: FC<Props> = () => {
   );
 };
 
-export default LoginController;
+export default ForgotPasswordController;

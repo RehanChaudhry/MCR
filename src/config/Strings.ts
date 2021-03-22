@@ -22,6 +22,14 @@ export default {
       "Tell us your email address, and we’ll get you back on track in no time."
   },
 
+  preSSOLogin: {
+    sso_text:
+      "Ohio University requires that you sign in through its own system. Once you've verified your account you will be returned to My College Roomie.",
+    sso_second_text:
+      "If you are a Student, Faculty and Staff of Ohio University, click the button below to sign in.",
+    signIn_sso: "Sign In with SSO"
+  },
+
   signup: {},
 
   home: {},
