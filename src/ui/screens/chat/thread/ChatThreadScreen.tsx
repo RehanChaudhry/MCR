@@ -7,10 +7,11 @@ import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb
 import { AppLog } from "utils/Util";
 import ChatItem, { SenderType } from "models/ChatItem";
 import DataGenerator from "utils/DataGenerator";
+import Strings from "config/Strings";
 
 type Props = {
   data: ChatItem[];
-  sentMessageApi: (message: ChatItem) => void;
+  sentMessageApi: (list: ChatItem[], message: ChatItem) => ChatItem[];
 };
 
 export const ChatThreadScreen = React.memo<Props>(
@@ -22,18 +23,7 @@ export const ChatThreadScreen = React.memo<Props>(
       return <ItemChatThread item={item} />;
     };
 
-    const updateMessagesList = (message: ChatItem) => {
-      sentMessageApi(message);
-
-      let newList: ChatItem[] = [];
-
-      newList.push(message);
-      newList.push(...chats);
-
-      setChats(newList);
-    };
-
-    const sentMessage = (text: string) => {
+    function sentMessage(text: string) {
       let chatMessage = DataGenerator.createChat(
         1009,
         ["Nikki Engelin"],
@@ -44,8 +34,8 @@ export const ChatThreadScreen = React.memo<Props>(
         text
       );
 
-      updateMessagesList(chatMessage);
-    };
+      setChats(sentMessageApi(chats, chatMessage));
+    }
 
     return (
       <Screen style={styles.container}>
@@ -61,7 +51,7 @@ export const ChatThreadScreen = React.memo<Props>(
         />
         <WriteMessage
           btnPressCallback={sentMessage}
-          appInputPlaceHolder="Start typing your message"
+          appInputPlaceHolder={Strings.chatThreadScreen.typingHint}
         />
       </Screen>
     );

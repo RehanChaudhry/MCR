@@ -1,8 +1,15 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import { RouteProp } from "@react-navigation/native";
 
-export type ChatParamsLIst = {
-  ChatThread: undefined;
+export type ChatParamsList = {
+  ChatThread: {
+    title: string[];
+  };
   NewConversation: undefined;
 };
 
-export const ChatStack = createStackNavigator<ChatParamsLIst>();
+export const ChatStack = createStackNavigator<ChatParamsList>();
+
+export type ChatRouteProps<
+  RouteName extends keyof ChatParamsList
+> = RouteProp<ChatParamsList, RouteName>;

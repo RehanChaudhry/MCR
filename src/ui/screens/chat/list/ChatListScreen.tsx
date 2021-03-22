@@ -9,7 +9,13 @@ import BottomBreadCrumbs, {
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
 import ChatItem from "models/ChatItem";
 import { ChatHeader } from "ui/components/molecules/item_chat/ChatHeader";
+import Strings from "config/Strings";
 type ConversationType = "Active" | "Archived";
+
+interface ChatListProps {
+  onItemClick: (item: ChatItem) => void;
+  data: ChatItem[];
+}
 
 const showConversation = (conversationType: ConversationType) => {
   AppLog.log(conversationType);
@@ -17,23 +23,18 @@ const showConversation = (conversationType: ConversationType) => {
 
 const breadCrumbsItems: Item[] = [
   {
-    title: "Active Conversations",
+    title: Strings.chatListScreen.activeConversations,
     onPress: () => {
       showConversation("Active");
     }
   },
   {
-    title: "Archived",
+    title: Strings.chatListScreen.archivedConversations,
     onPress: () => {
       showConversation("Archived");
     }
   }
 ];
-
-interface ChatListProps {
-  onItemClick: () => void;
-  data: ChatItem[];
-}
 
 let lastHeaderTitle = "";
 export const ChatListScreen = React.memo<ChatListProps>(
@@ -53,7 +54,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
           <ItemChatList
             item={item}
             onPress={() => {
-              onItemClick();
+              onItemClick(item);
             }}
           />
         </>

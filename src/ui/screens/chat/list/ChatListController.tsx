@@ -8,13 +8,14 @@ import ChatApis from "repo/chat/ChatAPis";
 import { AppLog } from "utils/Util";
 import ChatItem from "models/ChatItem";
 import DataGenerator from "utils/DataGenerator";
-import { ChatParamsLIst } from "routes/ChatStack";
+import { ChatParamsList } from "routes/ChatStack";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import Strings from "config/Strings";
 
 type ChatListNavigationProp = StackNavigationProp<
-  ChatParamsLIst,
+  ChatParamsList,
   "ChatThread"
 >;
 
@@ -30,7 +31,7 @@ export const ChatListController: FC<Props> = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitleAlign: "center",
-      title: "Chat"
+      title: Strings.chatListScreen.title
     });
   }, [navigation]);
 
@@ -57,8 +58,8 @@ export const ChatListController: FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);*/
 
-  const openChatThread = () => {
-    navigation.navigate("ChatThread");
+  const openChatThread = (item: ChatItem) => {
+    navigation.navigate("ChatThread", { title: item.name });
   };
 
   return (
