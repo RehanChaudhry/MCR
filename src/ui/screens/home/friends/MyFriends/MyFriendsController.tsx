@@ -1,14 +1,10 @@
 import React, { FC } from "react";
-import { View, Text } from "react-native";
+import MyFriendsView from "./MyFriendsView";
 
 type Props = {};
 
 const MyFriendsController: FC<Props> = () => {
-  return (
-    <View>
-      <Text />
-    </View>
-  );
+  return <MyFriendsView />;
 };
 
 export default MyFriendsController;

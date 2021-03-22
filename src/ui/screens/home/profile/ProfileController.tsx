@@ -1,13 +1,14 @@
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
-import { COLORS } from "config";
 import React, { FC, useRef } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { ProfileRoutes } from "routes/ProfileRoutes";
 import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import BottomBreadCrumbs, {
   Item
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
+import Screen from "ui/components/atoms/Screen";
+import { usePreferredTheme } from "hooks";
 
 type ProfileNavigationProp = BottomTabNavigationProp<ProfileStackParamList>;
 
@@ -39,20 +40,23 @@ const ProfileController: FC<Props> = () => {
 
   const itemsRef = useRef(_items);
 
+  const theme = usePreferredTheme();
+
   return (
-    <View style={styles.container}>
+    <Screen
+      style={[
+        styles.container,
+        { backgroundColor: theme.themedColors.backgroundSecondary }
+      ]}>
       <ProfileRoutes />
       <BottomBreadCrumbs data={itemsRef.current} />
-    </View>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "stretch",
     flexDirection: "column",
-    justifyContent: "center",
-    backgroundColor: COLORS.backgroundColor,
     flex: 1
   }
 });

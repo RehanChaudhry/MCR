@@ -1,6 +1,5 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import Screen from "ui/components/atoms/Screen";
 import { BasicProfile } from "ui/components/profile/basic_profile/BasicProfile";
 import { DemoGraphics } from "ui/components/profile/demographics/DemoGraphics";
 import { Interests } from "ui/components/profile/interests/interests";
@@ -123,44 +122,42 @@ export const UpdateProfileView: React.FC<Props> = () => {
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
   return (
-    <Screen>
-      <ScrollView>
-        <AppForm
-          initialValues={initialValues}
-          onSubmit={onSubmit}
-          validationSchema={validationSchema}>
-          <View style={styles.headingView}>
-            <HeadingWithText
-              headingText={""}
-              text={STRINGS.profile.title}
-              textStyle={[
-                styles.textStyle,
-                { color: theme.themedColors.label }
-              ]}
-            />
-          </View>
-          <BasicProfile />
-          <DemoGraphics />
-          <Interests />
-          <LivingDetails />
-          <VideoIntroduction />
-          <View style={styles.buttonViewStyle}>
-            <AppFormFormSubmit
-              text={STRINGS.profile.buttonText.saveAndContinue}
-              buttonType={BUTTON_TYPES.NORMAL}
-              fontWeight={"semi-bold"}
-              textStyle={{ color: theme.themedColors.background }}
-              buttonStyle={[
-                styles.buttonStyle,
-                { backgroundColor: theme.themedColors.primary }
-              ]}
-              rightIcon={rightArrowIcon}
-              iconStyle={styles.iconStyle}
-            />
-          </View>
-        </AppForm>
-      </ScrollView>
-    </Screen>
+    <ScrollView>
+      <AppForm
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={validationSchema}>
+        <View style={styles.headingView}>
+          <HeadingWithText
+            headingText={""}
+            text={STRINGS.profile.title}
+            textStyle={[
+              styles.textStyle,
+              { color: theme.themedColors.label }
+            ]}
+          />
+        </View>
+        <BasicProfile />
+        <DemoGraphics />
+        <Interests />
+        <LivingDetails />
+        <VideoIntroduction />
+        <View style={styles.buttonViewStyle}>
+          <AppFormFormSubmit
+            text={STRINGS.profile.buttonText.saveAndContinue}
+            buttonType={BUTTON_TYPES.NORMAL}
+            fontWeight={"semi-bold"}
+            textStyle={{ color: theme.themedColors.background }}
+            buttonStyle={[
+              styles.buttonStyle,
+              { backgroundColor: theme.themedColors.primary }
+            ]}
+            rightIcon={rightArrowIcon}
+            iconStyle={styles.iconStyle}
+          />
+        </View>
+      </AppForm>
+    </ScrollView>
   );
 };
 
