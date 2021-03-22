@@ -48,6 +48,7 @@ export default {
     "This accordion will automatically close after 5 seconds " +
     "when the associated task will complete its execution.",
 
+  whats_new: "What’s new, Zane?",
   matches: {
     match_score: "Match Score: ",
     action_add_friend: "Add Friend",
