@@ -10,6 +10,7 @@ import { BaseQuestion } from "models/Question";
 import moment from "moment";
 import { AppLog } from "utils/Util";
 import ProfileMatch from "models/ProfileMatch";
+import { defaultPaletteCopy } from "hooks/theme/ColorPaletteContainer";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -64,49 +65,61 @@ const getUnis = () => {
         id: "1",
         name: "Ohio University",
         location: "Athens, Ohio",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       },
       {
         id: "2",
         name: "Boise State University",
         location: "Boise, Idaho",
-        logo: ""
+        logo: "",
+        colorPalette: {
+          ...defaultPaletteCopy,
+          background: "black",
+          label: "white"
+        }
       },
       {
         id: "3",
         name: "Florida International University",
         location: "Miami, Florida",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       },
       {
         id: "4",
         name: "Oregon State University",
         location: "Corvillas, Oregon",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       },
       {
         id: "5",
         name: "Duquesne University",
         location: "Pittsburgh, Pennsylvania",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       },
       {
         id: "6",
         name: "Lehigh University",
         location: "Greenville, North Carolina",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       },
       {
         id: "7",
         name: "North Dakota State University",
         location: "Fargo, North Dakota",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       },
       {
         id: "8",
         name: "George Mason University",
         location: "Fairfax, Virginia",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       }
     ]
   };

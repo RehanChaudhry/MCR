@@ -177,3 +177,7 @@ export const colorPaletteContainer: ColorPaletteContainer = {
     return mergeDefaultPaletteWith(darkPalette, customThemePalette);
   }
 };
+
+export const defaultPaletteCopy = {
+  ...defaultPalette
+};

@@ -8,6 +8,7 @@ import DataGenerator from "utils/DataGenerator";
 import UniSelectionView from "./UniSelectionView";
 import UniSelectionApis from "../../../repo/auth/UniSelectionApis";
 import { AppLog } from "utils/Util";
+import { usePreferredTheme } from "hooks";
 
 type Props = {};
 
@@ -31,8 +32,11 @@ const UniSelectionController: FC<Props> = () => {
     }
   };
 
+  const theme = usePreferredTheme();
+
   const uniDidSelect = (item: Uni) => {
     AppLog.log("selected item: ", item);
+    theme.saveCustomPalette(item.colorPalette);
   };
 
   AppLog.log("handle getuni api: ", handleGetUnisApi);
