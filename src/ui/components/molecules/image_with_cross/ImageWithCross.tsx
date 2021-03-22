@@ -9,6 +9,7 @@ import {
   TouchableOpacityProps,
   View
 } from "react-native";
+import { ImagePickerResponse } from "react-native-image-picker";
 import {
   AppImageBackground,
   CONTAINER_TYPES
@@ -16,12 +17,12 @@ import {
 import { AppLog, SvgProp } from "utils/Util";
 
 export interface ImageWithCrossProps extends TouchableOpacityProps {
-  imageUrl: string;
-  onImageRemoved?: (selectedImageIndexToBeRemoved: number) => void;
+  imageResponse: ImagePickerResponse;
+  onImageRemoved: (imageResponse: ImagePickerResponse) => void;
 }
 
 export const ImageWithCross = React.memo<ImageWithCrossProps>(
-  ({ imageUrl }) => {
+  ({ imageResponse, onImageRemoved }) => {
     const theme = usePreferredTheme();
     const closeIcon: SvgProp = () => {
       return (
@@ -37,7 +38,7 @@ export const ImageWithCross = React.memo<ImageWithCrossProps>(
         <AppImageBackground
           containerShape={CONTAINER_TYPES.CIRCLE}
           icon={closeIcon}
-          onPress={() => AppLog.logForcefully("clicked")}
+          // onPress={() => onImageRemoved(imageResponse)}
           containerStyle={[
             {
               backgroundColor: theme.themedColors.interface["200"]
@@ -49,9 +50,12 @@ export const ImageWithCross = React.memo<ImageWithCrossProps>(
     };
     return (
       <View style={style.container}>
-        <Image source={{ uri: imageUrl }} style={style.image} />
+        <Image source={{ uri: imageResponse.uri }} style={style.image} />
         <TouchableOpacity
-          onPress={() => AppLog.logForcefully("clicked")}
+          onPress={() => {
+            onImageRemoved(imageResponse);
+            AppLog.logForcefully("onImageRemoved clicked");
+          }}
           style={style.crossView}>
           {closeImage()}
         </TouchableOpacity>

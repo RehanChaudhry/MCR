@@ -5,14 +5,18 @@ import Photo from "assets/images/photo.svg";
 import { COLORS, FONT_SIZE, SPACE } from "config";
 import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import {
+  Button,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import * as ImagePicker from "react-native-image-picker";
+import { ImagePickerResponse } from "react-native-image-picker";
+import SimpleToast from "react-native-simple-toast";
 import { Color, NumberProp } from "react-native-svg";
 import { AppCompactButton } from "ui/components/atoms/app_compact_button/AppCompactButton";
 import Screen from "ui/components/atoms/Screen";
@@ -20,6 +24,7 @@ import { AnnouncementHeader } from "ui/components/molecules/announcement_header/
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
 import { ImageWithCross } from "ui/components/molecules/image_with_cross/ImageWithCross";
+import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, SvgProp } from "utils/Util";
 
 type Props = {
@@ -36,6 +41,7 @@ export enum POST_TYPES {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const CreatePostView: FC<Props> = (props) => {
   const theme = usePreferredTheme();
+  const [images, setImages] = useState<ImagePickerResponse[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [postType, setPostType] = useState<POST_TYPES>(POST_TYPES.NONE);
   const linkImage: SvgProp = (
@@ -58,6 +64,52 @@ export const CreatePostView: FC<Props> = (props) => {
     height?: NumberProp
   ) => {
     return <Photo width={width} height={height} fill={color} />;
+  };
+
+  const listItem = useCallback(
+    ({ item }: { item: ImagePickerResponse }) => (
+      <ImageWithCross
+        imageResponse={item}
+        onImageRemoved={(imageResponse) => {
+          AppLog.logForcefully(JSON.stringify(images));
+          AppLog.logForcefully(
+            "imageResponse" + JSON.stringify(imageResponse)
+          );
+          const filteredArray = images.filter((filteredImageResponse) => {
+            return imageResponse.uri !== filteredImageResponse.uri;
+          });
+          AppLog.logForcefully(JSON.stringify(filteredArray));
+          setImages(filteredArray);
+        }}
+      />
+    ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+  const openImageGallery = () => {
+    if (images.length < 5) {
+      ImagePicker.launchImageLibrary(
+        {
+          mediaType: "photo",
+          includeBase64: false,
+          maxHeight: 200,
+          maxWidth: 200
+        },
+        (response) => {
+          AppLog.logForcefully("response" + response);
+          if (response !== null && response !== undefined) {
+            setImages((prevState) => {
+              return [
+                ...(prevState === undefined ? [] : prevState),
+                response
+              ];
+            });
+          }
+        }
+      );
+    } else {
+      SimpleToast.show("you cannot enter more than 5 images");
+    }
   };
   const dummyProfileImageUrl =
     "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
@@ -137,7 +189,19 @@ export const CreatePostView: FC<Props> = (props) => {
               />
             </View>
 
-            <ImageWithCross imageUrl={dummyProfileImageUrl} />
+            <Button title="Select image" onPress={openImageGallery} />
+
+            <FlatListWithPb
+              shouldShowProgressBar={false}
+              data={images}
+              style={styles.list}
+              renderItem={listItem}
+              horizontal={true}
+            />
+
+            {/*{imageResponse && (*/}
+            {/*  <ImageWithCross imageUrl={imageResponse.uri} />*/}
+            {/*)}*/}
 
             <AppInputField
               style={{ color: theme.themedColors.label }}
@@ -253,5 +317,9 @@ const styles = StyleSheet.create({
   },
   photosLinkEmbedButton: {
     marginRight: SPACE.md
+  },
+  list: {
+    flexGrow: 1,
+    flexBasis: 0
   }
 });
