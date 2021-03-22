@@ -1,13 +1,21 @@
-import { FONT_SIZE, SPACE, STRINGS } from "config";
+import { FONT_SIZE, FONTS, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import { AppLog, shadowStyleProps } from "utils/Util";
 import ProfileMatch from "models/ProfileMatch";
 import { moderateScale } from "config/Dimens";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
 import MatchScore from "ui/components/molecules/match_score/MatchScore";
+import ProfileMatchType from "models/enums/ProfileMatchType";
+import { AppButton } from "ui/components/molecules/app_button/AppButton";
+import {
+  AppImageBackground,
+  CONTAINER_TYPES
+} from "ui/components/atoms/image_background/AppImageBackground";
+import ChatRound from "assets/images/chat_round.svg";
+import Cross from "assets/images/ic_cross.svg";
 
 interface Props {
   profileMatch: ProfileMatch;
@@ -45,15 +53,59 @@ const ProfileMatchItem = ({ profileMatch }: Props) => {
           />
         </View>
       </View>
+      <Pressable
+        style={styles.icCross}
+        onPress={() => {
+          /*call on on cross clicked (controller method)*/
+        }}>
+        <Cross
+          fill={grayShades.coolGray[400]}
+          width={moderateScale(20)}
+          height={moderateScale(20)}
+        />
+      </Pressable>
+      <View style={styles.buttonContainer}>
+        <AppImageBackground
+          containerStyle={styles.btnChat}
+          containerShape={CONTAINER_TYPES.SQUARE}
+          icon={() => (
+            <ChatRound
+              fill={grayShades.coolGray[800]}
+              width={moderateScale(27)}
+              height={moderateScale(27)}
+            />
+          )}
+        />
+        {profileMatch.getType() === ProfileMatchType.NOT_FRIEND && (
+          <AppButton
+            fontWeight={"semi-bold"}
+            textStyle={[
+              styles.btnActionText,
+              profileMatch.isFriendRequested
+                ? { color: grayShades.coolGray[500] }
+                : { color: themedColors.primary }
+            ]}
+            buttonStyle={[
+              styles.btnAction,
+              profileMatch.isFriendRequested
+                ? { backgroundColor: grayShades.coolGray[200] }
+                : { backgroundColor: themedColors.primaryShade }
+            ]}
+            text={
+              profileMatch.isFriendRequested
+                ? STRINGS.matches.label_pending_request
+                : STRINGS.matches.action_add_friend
+            }
+          />
+        )}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
+    flexDirection: "column",
     borderRadius: 5,
     padding: SPACE.md,
     ...shadowStyleProps
@@ -73,6 +125,25 @@ const styles = StyleSheet.create({
   subtitle: { fontSize: FONT_SIZE.xsm },
   matchScore: {
     marginTop: SPACE.md
+  },
+  buttonContainer: {
+    flexDirection: "row-reverse",
+    marginTop: SPACE.md
+  },
+  btnActionText: {
+    fontFamily: FONTS.semiBold,
+    fontSize: FONT_SIZE.sm
+  },
+  btnAction: {
+    alignSelf: "stretch",
+    flex: 1
+  },
+  btnChat: { marginLeft: SPACE.md },
+  icCross: {
+    position: "absolute",
+    top: SPACE.xsm,
+    end: SPACE.xsm,
+    padding: SPACE.xsm
   }
 });
 

@@ -38,7 +38,9 @@ export default {
     "when the associated task will complete its execution.",
 
   matches: {
-    match_score: "Match Score: "
+    match_score: "Match Score: ",
+    action_add_friend: "Add Friend",
+    label_pending_request: "Pending Request"
   },
   profile: {
     title:

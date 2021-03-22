@@ -129,7 +129,7 @@ const getQuestion = (
 };
 
 const getProfileMatch = () => {
-  const profileMatch = new ProfileMatch(
+  return new ProfileMatch(
     0,
     "Phoenix Walker",
     "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
@@ -139,9 +139,9 @@ const getProfileMatch = () => {
     "active",
     false,
     false,
+    true,
     "2021-03-15T07:18:24.000Z"
   );
-  return profileMatch;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -304,7 +304,7 @@ function createChat(
   message?: string
 ): ChatItem {
   const date = randomDate(new Date(2012, 0, 1), new Date());
-  AppLog.log("generated date : " + date);
+  // AppLog.log("generated date : " + date);
   return {
     id: id,
     name: args,
