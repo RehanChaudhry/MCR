@@ -22,6 +22,11 @@ export default {
   GET_QUESTIONS: "questions/",
   POST_ANSWERS: "answer/",
 
+  // matches
+  GET_MATCHES: "matches/",
+  POST_FRIEND_REQUEST: "friend-request/",
+  DISMISS_MATCH: "dismiss-match",
+
   //community
   GET_COMMUNITY: "community/",
   //chat

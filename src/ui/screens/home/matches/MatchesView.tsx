@@ -5,7 +5,14 @@ import ProfileMatch from "models/ProfileMatch";
 import DataGenerator from "utils/DataGenerator";
 import ProfileMatchItem from "ui/components/organisms/profile_match_item/ProfileMatchItem";
 
-type Props = {};
+type Props = {
+  matches: ProfileMatch[];
+  pullToRefreshCallback: (onComplete: () => void) => void;
+  onEndReached: () => void;
+  isAllDataLoaded: boolean;
+  postFriendRequest: (userId: number) => void;
+  postMatchDismiss: (userId: number) => void;
+};
 
 export const MatchesView = React.memo<Props>(() => {
   const profileMatchesItem = (item: ProfileMatch) => (
@@ -13,7 +20,7 @@ export const MatchesView = React.memo<Props>(() => {
   );
   return (
     <Screen style={styles.container}>
-      {profileMatchesItem(DataGenerator.getProfileMatch())}
+      {profileMatchesItem(DataGenerator.getProfileMatch(0))}
     </Screen>
   );
 });

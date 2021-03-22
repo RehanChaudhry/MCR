@@ -11,6 +11,8 @@ import moment from "moment";
 import { AppLog } from "utils/Util";
 import ProfileMatch from "models/ProfileMatch";
 import { defaultPaletteCopy } from "hooks/theme/ColorPaletteContainer";
+import MatchesApiRequestModel from "models/api_requests/MatchesApiRequestModel";
+import MatchesApiResponseModel from "models/api_responses/MatchesApiResponseModel";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -141,9 +143,9 @@ const getQuestion = (
   };
 };
 
-const getProfileMatch = () => {
+const getProfileMatch = (id: number) => {
   return new ProfileMatch(
-    0,
+    id,
     "Phoenix Walker",
     "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     "Freshman",
@@ -155,6 +157,38 @@ const getProfileMatch = () => {
     true,
     "2021-03-15T07:18:24.000Z"
   );
+};
+
+const getProfileMatches: (
+  request: MatchesApiRequestModel
+) => Promise<{
+  hasError: boolean;
+  errorBody: undefined;
+  dataBody: MatchesApiResponseModel;
+}> = async (request: MatchesApiRequestModel) => {
+  const profileMatches: ProfileMatch[] = [];
+  for (
+    let i = (request.pageNo - 1) * (request.limit ?? 5) + 1;
+    i < request.pageNo + (request.limit ?? 5);
+    i++
+  ) {
+    profileMatches.push(getProfileMatch(i));
+  }
+  return {
+    hasError: false,
+    errorBody: undefined,
+    dataBody: {
+      message: "Success",
+      data: profileMatches,
+      pagination: {
+        total: 15,
+        current: request.pageNo,
+        first: profileMatches[0].userId,
+        last: profileMatches[profileMatches.length - 1].userId,
+        next: request.pageNo + 1 <= 3 ? request.pageNo + 1 : 0
+      }
+    }
+  };
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -347,5 +381,6 @@ export default {
   createChatThread,
   createChat,
   getProfileMatch,
+  getProfileMatches,
   getUnis
 };
