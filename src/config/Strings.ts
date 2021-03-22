@@ -30,6 +30,18 @@ export default {
     signIn_sso: "Sign In with SSO"
   },
 
+  forgotPasswordFeedBack: {
+    check_your_inbox: "Check your inbox",
+    feedBack_one_text: "We have sent an email to ",
+    email: "laura.randall@ohio.edu.",
+    feedBack_third_text:
+      "Click the link in the email to reset your password.",
+    feedBack_fourth_text:
+      "If you didn’t see the email in your Inbox, check other places, like your junk, spam, social or other folders before submitting new request.",
+    did_not_recieve_email: "Didn’t received email? Try again",
+    go_back_signin: "Go back to Sign In"
+  },
+
   signup: {},
 
   home: {},
