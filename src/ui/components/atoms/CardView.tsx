@@ -9,7 +9,7 @@ interface ownProps {
 type props = ownProps;
 
 export const CardView = React.memo<props>(({ children, style }) => {
-  return <View style={[style, styles.container]}>{children}</View>;
+  return <View style={[styles.container, style]}>{children}</View>;
 });
 
 const styles = StyleSheet.create({
