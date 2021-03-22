@@ -1,222 +1,202 @@
-import { COLORS, FONT_SIZE, STRINGS } from "config";
-import { useFormik } from "formik";
-import React, { FC } from "react";
+import React from "react";
 import {
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  View
-} from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
-import {
-  AppButton,
-  BUTTON_TYPES
-} from "ui/components/molecules/app_button/AppButton";
+  AppImageBackground,
+  CONTAINER_TYPES
+} from "ui/components/atoms/image_background/AppImageBackground";
+import ArrowLeft from "assets/images/arrow_left.svg";
+import { usePreferredTheme } from "hooks";
+import Colors from "config/Colors";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
+import Logo from "assets/images/logo.svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { AppFormValidationLabel } from "ui/components/molecules/app_form/AppFormValidationLabel";
-import Screen from "ui/components/atoms/Screen";
-import { AppLog } from "utils/Util";
+import AppForm from "ui/components/molecules/app_form/AppForm";
+import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import * as Yup from "yup";
+import { FormikValues } from "formik";
+import { AppLog } from "utils/Util";
+import Screen from "ui/components/atoms/Screen";
+import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
+import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
+import { MultilineSpannableText } from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 
 type Props = {
-  signIn?: (values: LoginFormValues) => void;
+  openForgotPasswordScreen?: () => void;
   shouldShowProgressBar: boolean;
 };
 
-type LoginFormValues = {
-  email: string;
-  password: string;
-};
-
 const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .required("Email address is a required field.")
-    .email(STRINGS.login.enter_valid_email_validation),
-  password: Yup.string()
-    .required("Password is a required field.")
-    .min(8, STRINGS.login.pass_validation)
+  email: Yup.string().required("Enter your email address"),
+  password: Yup.string().required("Enter your password")
 });
 
-const initialFormValues: LoginFormValues = {
+let initialValues: FormikValues = {
+  // basic profile
   email: "",
   password: ""
 };
-
-export const LoginView: FC<Props> = (props) => {
-  AppLog.log(
-    "in LoginView, props.shouldShowProgressBar: " +
-      props.shouldShowProgressBar
-  );
-
-  const formik = useFormik({
-    initialValues: initialFormValues,
-    onSubmit: (values) => {
-      AppLog.log(values);
-      props.signIn?.(values);
-    },
-    validationSchema: validationSchema
-  });
-
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={styles.keyboardAvoidingView}>
-      <ScrollView
-        style={styles.scrollView}
-        keyboardShouldPersistTaps={"handled"}>
-        <Screen style={styles.container}>
-          <View style={styles.cardView}>
-            <AppLabel
-              text={STRINGS.login.email_address}
-              weight="semi-bold"
-              style={styles.headingBold}
-            />
-            <AppInputField
-              placeholder={STRINGS.login.enter_your_email}
-              valueToShowAtStart={initialFormValues.email}
-              shouldDisable={props.shouldShowProgressBar}
-              keyboardType="email-address"
-              autoFocus
-              textContentType="emailAddress"
-              onBlur={() => formik.setFieldTouched("email")}
-              onChangeText={formik.handleChange("email")}
-              style={styles.inputField}
-              // leftIcon={require("assets/images/cross.png")}
-              // rightIcon={require("assets/images/cross.png")}
-            />
-            <AppFormValidationLabel
-              errorString={formik.errors.email}
-              shouldVisible={formik.touched.email}
-            />
-
-            <AppLabel
-              text={STRINGS.login.password}
-              weight="semi-bold"
-              style={styles.headingBold}
-            />
-            <AppInputField
-              placeholder={STRINGS.login.enter_your_pass}
-              valueToShowAtStart={initialFormValues.password}
-              shouldDisable={props.shouldShowProgressBar}
-              secureTextEntry={true}
-              textContentType="password"
-              onBlur={() => formik.setFieldTouched("password")}
-              onChangeText={formik.handleChange("password")}
-              style={styles.inputField}
-            />
-            <AppFormValidationLabel
-              errorString={formik.errors.password}
-              shouldVisible={formik.touched.password}
-            />
-
-            <View style={styles.signInAndForgotPasswordContainer}>
-              <AppButton
-                text={STRINGS.login.sign_in}
-                onPress={formik.handleSubmit}
-                buttonStyle={styles.buttonWidth}
-                shouldShowProgressBar={props.shouldShowProgressBar}
-                buttonType={BUTTON_TYPES.BORDER}
-              />
-              <View style={styles.buttonContainer} />
-            </View>
-          </View>
-        </Screen>
-      </ScrollView>
-    </KeyboardAvoidingView>
-  );
+const onSubmit = (_value: FormikValues) => {
+  initialValues = _value;
+  AppLog.log("form values" + initialValues);
 };
 
+export const LoginInView = React.memo<Props>(({}) => {
+  const theme = usePreferredTheme();
+
+  return (
+    <Screen>
+      <ScrollView>
+        <View style={styles.mainContainer}>
+          <AppImageBackground
+            containerShape={CONTAINER_TYPES.CIRCLE}
+            icon={() => (
+              <ArrowLeft
+                width={20}
+                height={20}
+                fill={theme.themedColors.primary}
+              />
+            )}
+            containerStyle={styles.leftArrow}
+          />
+
+          <Logo style={styles.logo} />
+
+          <AppLabel
+            text={STRINGS.login.signin_to_your_account}
+            weight={"bold"}
+            style={styles.signInHeading}
+          />
+
+          <AppForm
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            validationSchema={validationSchema}>
+            <View style={styles.email} />
+            <AppFormField
+              fieldTestID="email"
+              validationLabelTestID={"emailValidationLabel"}
+              name="email"
+              labelProps={{
+                text: STRINGS.login.email_address,
+                weight: "semi-bold"
+              }}
+              fieldInputProps={{
+                textContentType: "emailAddress",
+                keyboardType: "default",
+                returnKeyType: "next",
+                placeholder: STRINGS.login.enter_your_email,
+                autoCapitalize: "none",
+                placeholderTextColor: theme.themedColors.placeholder,
+                style: { color: theme.themedColors.label },
+                viewStyle: [
+                  styles.textFieldStyle,
+                  {
+                    backgroundColor: theme.themedColors.background,
+                    borderColor: theme.themedColors.border
+                  }
+                ]
+              }}
+            />
+
+            <View style={styles.password} />
+
+            <AppFormField
+              fieldTestID="password"
+              validationLabelTestID={"passwordValidationLabel"}
+              name="password"
+              labelProps={{
+                text: STRINGS.login.password,
+                weight: "semi-bold"
+              }}
+              linkLabelProps={{
+                text: STRINGS.login.forgot_password
+              }}
+              fieldInputProps={{
+                textContentType: "password",
+                keyboardType: "default",
+                returnKeyType: "next",
+                placeholder: STRINGS.login.enter_your_pass,
+                autoCapitalize: "none",
+                placeholderTextColor: theme.themedColors.placeholder,
+                style: [{ color: theme.themedColors.label }],
+                viewStyle: [
+                  styles.textFieldStyle,
+                  {
+                    backgroundColor: theme.themedColors.background,
+                    borderColor: theme.themedColors.border
+                  }
+                ]
+              }}
+            />
+
+            <View style={styles.buttonViewStyle}>
+              <AppFormFormSubmit
+                text={STRINGS.login.sign_in}
+                buttonType={BUTTON_TYPES.NORMAL}
+                fontWeight={"semi-bold"}
+                textStyle={{ color: theme.themedColors.background }}
+                buttonStyle={[
+                  styles.buttonStyle,
+                  { backgroundColor: theme.themedColors.primary }
+                ]}
+              />
+            </View>
+          </AppForm>
+
+          <View style={styles.spannableText}>
+            <MultilineSpannableText
+              text={[
+                { id: 1, text: STRINGS.login.cant_log },
+                { id: 1, text: STRINGS.login.contact_us }
+              ]}
+              textStyle={[
+                { fontSize: SPACE.md },
+                { fontSize: SPACE.md, color: theme.themedColors.primary }
+              ]}
+            />
+          </View>
+        </View>
+      </ScrollView>
+    </Screen>
+  );
+});
+
 const styles = StyleSheet.create({
-  scrollView: { backgroundColor: COLORS.backgroundColor },
-
-  container: {
-    alignItems: "stretch",
-    flexDirection: "column",
-    justifyContent: "center",
-    backgroundColor: COLORS.backgroundColor,
-    padding: 17,
-    flex: 1
+  mainContainer: {
+    marginLeft: SPACE.lg,
+    marginRight: SPACE.lg
   },
-
-  alreadyAMember: {
-    color: COLORS.textColor2,
-    fontSize: FONT_SIZE.xl,
-    textAlign: "center",
-    alignSelf: "flex-start"
+  leftArrow: {
+    backgroundColor: Colors.white,
+    elevation: 2,
+    width: 32,
+    height: 32,
+    marginTop: SPACE.xl
   },
-
-  pleaseSignInUsing: {
-    color: COLORS.textColor1,
-    fontSize: FONT_SIZE.md,
-    marginTop: 6,
-    textAlign: "center",
-    alignSelf: "flex-start"
+  logo: {
+    marginTop: SPACE._2xl
   },
-
-  headingBold: {
-    color: COLORS.textColor2,
-    fontSize: FONT_SIZE.md,
-    marginTop: 16
+  signInHeading: {
+    fontSize: FONT_SIZE._2xl,
+    marginTop: 40
   },
-
-  inputField: { marginTop: 6 },
-
-  forgotPassword: {
-    color: COLORS.secondary,
-    fontSize: FONT_SIZE.md
+  email: {
+    marginTop: SPACE._2xl
   },
-
-  haveAnInviteCode: {
-    color: COLORS.textColor2,
-    fontSize: FONT_SIZE.md
+  password: {
+    marginTop: SPACE.md
   },
-
-  cardView: {
-    padding: 17,
-    flex: 1,
-    marginTop: 25,
-    backgroundColor: COLORS.white,
-    overflow: "hidden",
-
-    // border
-    borderStyle: "solid",
-    borderColor: COLORS.white,
-    borderRadius: 10,
-
-    //shadow
-    shadowColor: COLORS.black,
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5
+  textFieldStyle: {
+    borderWidth: 1
   },
-
-  signInAndForgotPasswordContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 16
+  buttonViewStyle: {
+    marginTop: SPACE._2xl,
+    marginBottom: SPACE.xl
   },
-
-  inviteAndActivateContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    margin: -17,
-    marginTop: 17,
-    padding: 17,
-    backgroundColor: COLORS.backgroundColor2
+  buttonStyle: {
+    height: 44
   },
-  keyboardAvoidingView: {
-    width: "100%",
-    height: "100%"
-  },
-  buttonWidth: {
-    width: "40%",
-    alignSelf: "flex-start"
-  },
-  buttonContainer: { flex: 1 }
+  spannableText: {
+    marginTop: SPACE.xl
+  }
 });

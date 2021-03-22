@@ -4,11 +4,15 @@ export default {
   login: {
     pass_validation: "Password must be of at least 8 characters.",
     enter_valid_email_validation: "Please enter a valid email address.",
-    email_address: "Email Address",
-    enter_your_email: "Enter your email",
+    email_address: "Email address",
+    enter_your_email: "Enter your email address",
     password: "Password",
-    enter_your_pass: "Enter your password",
-    sign_in: "Sign In"
+    enter_your_pass: "Enter your account password",
+    sign_in: "Sign In",
+    cant_log: "Can't log in or need help? ",
+    contact_us: "Contact Us",
+    forgot_password: "Forgot Password?",
+    signin_to_your_account: "Sign in to your account"
   },
 
   signup: {},
