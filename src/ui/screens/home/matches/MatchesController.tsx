@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { Alert, View } from "react-native";
@@ -106,6 +106,10 @@ const MatchesController: FC<Props> = () => {
     getProfileMatches();
   };
 
+  useEffect(() => {
+    getProfileMatches();
+  }, []);
+
   // Friend Request API
   const friendRequestApi = useApi<number, ApiSuccessResponseModel>(
     MatchesApis.friendRequest
@@ -183,7 +187,7 @@ const MatchesController: FC<Props> = () => {
       }}
       data={profileMatches?.data}>
       <MatchesView
-        matches={profileMatches!.data}
+        matches={profileMatches?.data}
         pullToRefreshCallback={refreshCallback}
         onEndReached={onEndReached}
         isAllDataLoaded={isAllDataLoaded}

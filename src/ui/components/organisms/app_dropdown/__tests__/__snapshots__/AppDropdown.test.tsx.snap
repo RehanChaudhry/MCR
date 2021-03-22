@@ -5,13 +5,10 @@ exports[`Renders snapshot as expected 1`] = `
   style={
     Array [
       Object {
-        "borderColor": "#ebebeb",
         "borderRadius": 5,
-        "borderWidth": 1,
       },
       Object {
         "backgroundColor": "#FFFFFF",
-        "borderColor": "#9CA3AF",
       },
       undefined,
     ]

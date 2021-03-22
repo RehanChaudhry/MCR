@@ -69,7 +69,6 @@ export const AppDropdown = React.memo<AppDropdownProps>(
         style={[
           styles.root,
           {
-            borderColor: themedColors.border,
             backgroundColor: themedColors.background
           },
           style
@@ -121,9 +120,7 @@ export const AppDropdown = React.memo<AppDropdownProps>(
 
 const styles = StyleSheet.create({
   root: {
-    borderRadius: 5,
-    borderColor: "#ebebeb",
-    borderWidth: 1
+    borderRadius: 5
   },
   wrapper: {
     paddingVertical: 10,

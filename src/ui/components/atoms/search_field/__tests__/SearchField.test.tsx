@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import React from "react";
-import { SearchField } from "../SearchField";
+import SearchField from "ui/components/atoms/search_field/SearchField";
 
 const searchText = () => {
   return "Muhammad noman";

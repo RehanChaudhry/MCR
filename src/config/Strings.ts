@@ -52,7 +52,8 @@ export default {
   matches: {
     match_score: "Match Score: ",
     action_add_friend: "Add Friend",
-    label_pending_request: "Pending Request"
+    label_pending_request: "Pending Request",
+    placeholder_search_keyword: "Search by keyword"
   },
   profile: {
     title:

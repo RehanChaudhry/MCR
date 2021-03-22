@@ -31,7 +31,7 @@ export enum BORDER_TYPE {
   DOTTED = "dotted"
 }
 
-export const SearchField = React.memo<Props>(
+const SearchField = React.memo<Props>(
   ({
     placeholder,
     style,
@@ -169,3 +169,5 @@ const styles = StyleSheet.create({
     borderWidth: 1
   }
 });
+
+export default SearchField;
