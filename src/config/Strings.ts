@@ -22,6 +22,26 @@ export default {
       "Tell us your email address, and we’ll get you back on track in no time."
   },
 
+  preSSOLogin: {
+    sso_text:
+      "Ohio University requires that you sign in through its own system. Once you've verified your account you will be returned to My College Roomie.",
+    sso_second_text:
+      "If you are a Student, Faculty and Staff of Ohio University, click the button below to sign in.",
+    signIn_sso: "Sign In with SSO"
+  },
+
+  forgotPasswordFeedBack: {
+    check_your_inbox: "Check your inbox",
+    feedBack_one_text: "We have sent an email to ",
+    email: "laura.randall@ohio.edu.",
+    feedBack_third_text:
+      "Click the link in the email to reset your password.",
+    feedBack_fourth_text:
+      "If you didn’t see the email in your Inbox, check other places, like your junk, spam, social or other folders before submitting new request.",
+    did_not_recieve_email: "Didn’t received email? Try again",
+    go_back_signin: "Go back to Sign In"
+  },
+
   signup: {},
 
   home: {},
