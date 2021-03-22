@@ -15,6 +15,13 @@ export default {
     signin_to_your_account: "Sign in to your account"
   },
 
+  forgotpassword: {
+    forgot_your_password: "Forgot your password",
+    reset_password: "Reset Password",
+    forgot_text:
+      "Tell us your email address, and we’ll get you back on track in no time."
+  },
+
   signup: {},
 
   home: {},

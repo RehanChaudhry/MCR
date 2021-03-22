@@ -19,26 +19,25 @@ import Screen from "ui/components/atoms/Screen";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
+
 type Props = {
   openForgotPasswordScreen?: () => void;
   shouldShowProgressBar?: boolean;
 };
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().required("Enter your email address"),
-  password: Yup.string().required("Enter your password")
+  email: Yup.string().required("Enter your email address")
 });
 
 let initialValues: FormikValues = {
-  email: "",
-  password: ""
+  email: ""
 };
 const onSubmit = (_value: FormikValues) => {
   initialValues = _value;
   AppLog.log("form values" + initialValues);
 };
 
-export const LoginView = React.memo<Props>(({}) => {
+export const ForgotPasswordView = React.memo<Props>(({}) => {
   const theme = usePreferredTheme();
 
   return (
@@ -60,9 +59,15 @@ export const LoginView = React.memo<Props>(({}) => {
           <Logo style={styles.logo} />
 
           <AppLabel
-            text={STRINGS.login.signin_to_your_account}
+            text={STRINGS.forgotpassword.forgot_your_password}
             weight={"bold"}
             style={styles.SignInHeading}
+          />
+
+          <AppLabel
+            text={STRINGS.forgotpassword.forgot_text}
+            numberOfLines={0}
+            style={styles.forgotText}
           />
 
           <AppForm
@@ -96,40 +101,9 @@ export const LoginView = React.memo<Props>(({}) => {
               }}
             />
 
-            <View style={styles.password} />
-
-            <AppFormField
-              fieldTestID="password"
-              validationLabelTestID={"passwordValidationLabel"}
-              name="password"
-              labelProps={{
-                text: STRINGS.login.password,
-                weight: "semi-bold"
-              }}
-              linkLabelProps={{
-                text: STRINGS.login.forgot_password
-              }}
-              fieldInputProps={{
-                textContentType: "password",
-                keyboardType: "default",
-                returnKeyType: "next",
-                placeholder: STRINGS.login.enter_your_pass,
-                autoCapitalize: "none",
-                placeholderTextColor: theme.themedColors.placeholder,
-                style: [{ color: theme.themedColors.label }],
-                viewStyle: [
-                  styles.textFieldStyle,
-                  {
-                    backgroundColor: theme.themedColors.background,
-                    borderColor: theme.themedColors.border
-                  }
-                ]
-              }}
-            />
-
             <View style={styles.buttonViewStyle}>
               <AppFormFormSubmit
-                text={STRINGS.login.sign_in}
+                text={STRINGS.forgotpassword.reset_password}
                 buttonType={BUTTON_TYPES.NORMAL}
                 fontWeight={"semi-bold"}
                 textStyle={{ color: theme.themedColors.background }}
@@ -181,9 +155,6 @@ const styles = StyleSheet.create({
   email: {
     marginTop: SPACE._2xl
   },
-  password: {
-    marginTop: SPACE.md
-  },
   textFieldStyle: {
     borderWidth: 1
   },
@@ -196,5 +167,9 @@ const styles = StyleSheet.create({
   },
   spannableText: {
     marginTop: SPACE.xl
+  },
+  forgotText: {
+    marginTop: SPACE._2xl,
+    fontSize: FONT_SIZE.md
   }
 });
