@@ -4,10 +4,12 @@ import {
   NotificationsResponseModel
 } from "models/api_responses/NotificationsResponseModel";
 import { SectionResponse } from "models/api_responses/QuestionsResponseModel";
+import { UniSelectionResponseModel } from "models/api_responses/UniSelectionResponseModel";
 import ChatItem, { SenderType } from "models/ChatItem";
 import { BaseQuestion } from "models/Question";
 import moment from "moment";
 import { AppLog } from "utils/Util";
+import ProfileMatch from "models/ProfileMatch";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -54,6 +56,63 @@ const getNotifications = () => {
   return notifications;
 };
 
+const getUnis = () => {
+  const response: UniSelectionResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        name: "Ohio University",
+        location: "Athens, Ohio",
+        logo: ""
+      },
+      {
+        id: "2",
+        name: "Boise State University",
+        location: "Boise, Idaho",
+        logo: ""
+      },
+      {
+        id: "3",
+        name: "Florida International University",
+        location: "Miami, Florida",
+        logo: ""
+      },
+      {
+        id: "4",
+        name: "Oregon State University",
+        location: "Corvillas, Oregon",
+        logo: ""
+      },
+      {
+        id: "5",
+        name: "Duquesne University",
+        location: "Pittsburgh, Pennsylvania",
+        logo: ""
+      },
+      {
+        id: "6",
+        name: "Lehigh University",
+        location: "Greenville, North Carolina",
+        logo: ""
+      },
+      {
+        id: "7",
+        name: "North Dakota State University",
+        location: "Fargo, North Dakota",
+        logo: ""
+      },
+      {
+        id: "8",
+        name: "George Mason University",
+        location: "Fairfax, Virginia",
+        logo: ""
+      }
+    ]
+  };
+  return response;
+};
+
 const getQuestion = (
   questionId: number,
   sectionId: number
@@ -67,6 +126,22 @@ const getQuestion = (
     createdAt: "2021-03-15T07:18:24.000Z",
     updatedAt: "2021-03-15T07:18:24.000Z"
   };
+};
+
+const getProfileMatch = () => {
+  return new ProfileMatch(
+    0,
+    "Phoenix Walker",
+    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    "Freshman",
+    "History",
+    95,
+    "active",
+    false,
+    false,
+    true,
+    "2021-03-15T07:18:24.000Z"
+  );
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -229,7 +304,7 @@ function createChat(
   message?: string
 ): ChatItem {
   const date = randomDate(new Date(2012, 0, 1), new Date());
-  AppLog.log("generated date : " + date);
+  // AppLog.log("generated date : " + date);
   return {
     id: id,
     name: args,
@@ -257,5 +332,7 @@ export default {
   getNotifications,
   getCommunityAnnouncementList,
   createChatThread,
-  createChat
+  createChat,
+  getProfileMatch,
+  getUnis
 };

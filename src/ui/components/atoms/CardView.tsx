@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     //padding: 8,
     shadowColor: "black",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 10,
-    elevation: 3,
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 5,
+    elevation: 2,
     backgroundColor: "white",
     borderRadius: 10
   }
