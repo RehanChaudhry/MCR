@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeDrawer } from "routes/HomeDrawer";
 import { ChatListController } from "ui/screens/chat/list/ChatListController";
@@ -6,7 +6,9 @@ import { ChatThreadController } from "ui/screens/chat/thread/ChatThreadControlle
 
 const Stack = createStackNavigator();
 
-export const ChatRoutes = () => {
+type Props = {};
+
+export const ChatRoutes: FC<Props> = () => {
   return (
     <Stack.Navigator>
       <HomeDrawer.Screen name="ChatList" component={ChatListController} />
