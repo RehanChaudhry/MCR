@@ -5,6 +5,7 @@ export type HomeDrawerParamList = {
   Community: undefined;
   Announcement: undefined;
   Profile: undefined;
+  Friends: undefined;
   ChatList: undefined;
   Notification: undefined;
 };

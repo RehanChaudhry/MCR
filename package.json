@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "https://github.com/AsadAli1/react-native-multi-slider",
-    "@react-native-community/async-storage": "^1.11.0",
+    "@react-native-async-storage/async-storage": "^1.14.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.8",
     "@react-navigation/drawer": "^5.12.4",
