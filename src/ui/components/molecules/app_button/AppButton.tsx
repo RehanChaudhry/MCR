@@ -23,7 +23,7 @@ export interface AppButtonProps extends TouchableOpacityProps {
   shouldShowProgressBar?: boolean;
   loaderSize?: number;
   loaderColor?: string;
-  leftIcon?: SvgProp;
+  leftIcon?: SvgProp | undefined;
   rightIcon?: SvgProp;
   buttonType?: BUTTON_TYPES;
   isDisable?: boolean;
