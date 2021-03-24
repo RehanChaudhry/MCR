@@ -19,7 +19,7 @@ import * as ImagePicker from "react-native-image-picker";
 import { ImagePickerResponse } from "react-native-image-picker";
 import SimpleToast from "react-native-simple-toast";
 import { Color, NumberProp } from "react-native-svg";
-import { AppCompactButton } from "ui/components/atoms/app_compact_button/AppCompactButton";
+import { PhotosEmbedButton } from "ui/components/atoms/app_compact_button/PhotosEmbedButton";
 import {
   AppImageBackground,
   CONTAINER_TYPES
@@ -245,12 +245,9 @@ export const CreatePostView = React.memo<Props>((props) => {
                 }}
               />
               <View style={styles.buttonsContainer}>
-                <AppCompactButton
-                  unSelectedText="Photos"
+                <PhotosEmbedButton
+                  text="Photos"
                   icon={photoImage}
-                  shouldIconColorChangeOnClick={true}
-                  shouldTextChangeOnClick={true}
-                  shouldShowBgColorCahange={true}
                   buttonStyle={styles.photosLinkEmbedButton}
                   shouldSelected={postType === POST_TYPES.PHOTOS}
                   onPress={() => {
@@ -259,12 +256,9 @@ export const CreatePostView = React.memo<Props>((props) => {
                     openImageGallery();
                   }}
                 />
-                <AppCompactButton
-                  unSelectedText="Link"
+                <PhotosEmbedButton
+                  text="Link"
                   icon={linkImage}
-                  shouldIconColorChangeOnClick={true}
-                  shouldTextChangeOnClick={true}
-                  shouldShowBgColorCahange={true}
                   buttonStyle={styles.photosLinkEmbedButton}
                   shouldSelected={postType === POST_TYPES.LINK}
                   onPress={() => {
@@ -273,12 +267,9 @@ export const CreatePostView = React.memo<Props>((props) => {
                     AppLog.logForcefully("postType: " + postType);
                   }}
                 />
-                <AppCompactButton
-                  unSelectedText="Embed"
+                <PhotosEmbedButton
+                  text="Embed"
                   icon={embedCodeImage}
-                  shouldIconColorChangeOnClick={true}
-                  shouldTextChangeOnClick={true}
-                  shouldShowBgColorCahange={true}
                   shouldSelected={postType === POST_TYPES.EMBED}
                   buttonStyle={styles.photosLinkEmbedButton}
                   onPress={() => {
