@@ -1,7 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ProfileHeader } from "ui/components/profile/view_profile/ProfileHeader";
-import Screen from "ui/components/atoms/Screen";
 import {
   AppButton,
   BUTTON_TYPES
@@ -22,40 +21,38 @@ export const ViewProfileView: React.FC<Props> = () => {
   );
 
   return (
-    <Screen>
-      <ScrollView>
-        <View style={styles.mainContainer}>
-          <View style={styles.headerContainer}>
-            <ProfileHeader />
-            <AppButton
-              text={STRINGS.profile.buttonText.uploadProfilePhoto}
-              buttonStyle={[
-                styles.uploadButton,
-                { borderColor: theme.themedColors.interface["700"] }
-              ]}
-              buttonType={BUTTON_TYPES.BORDER}
-              textStyle={{
-                color: theme.themedColors.label,
-                borderColor: theme.themedColors.interface["700"],
-                marginHorizontal: 32
-              }}
-              shouldShowError={false}
-              fontWeight={"semi-bold"}
-              leftIcon={watchVideo}
-            />
-            <AppLabel
-              text={"About Me"}
-              style={[
-                styles.aboutMe,
-                { color: theme.themedColors.labelSecondary }
-              ]}
-              weight={"semi-bold"}
-            />
-          </View>
-          <AboutMe />
+    <ScrollView>
+      <View style={styles.mainContainer}>
+        <View style={styles.headerContainer}>
+          <ProfileHeader />
+          <AppButton
+            text={STRINGS.profile.buttonText.uploadProfilePhoto}
+            buttonStyle={[
+              styles.uploadButton,
+              { borderColor: theme.themedColors.interface["700"] }
+            ]}
+            buttonType={BUTTON_TYPES.BORDER}
+            textStyle={{
+              color: theme.themedColors.label,
+              borderColor: theme.themedColors.interface["700"],
+              marginHorizontal: 32
+            }}
+            shouldShowError={false}
+            fontWeight={"semi-bold"}
+            leftIcon={watchVideo}
+          />
+          <AppLabel
+            text={"About Me"}
+            style={[
+              styles.aboutMe,
+              { color: theme.themedColors.labelSecondary }
+            ]}
+            weight={"semi-bold"}
+          />
         </View>
-      </ScrollView>
-    </Screen>
+        <AboutMe />
+      </View>
+    </ScrollView>
   );
 };
 

@@ -20,9 +20,11 @@ export interface AppCompactButtonProps extends TouchableOpacityProps {
   selectedText?: string;
   unSelectedText: string;
   icon?: SvgProp;
+  shouldSelected?: boolean;
   shouldIconColorChangeOnClick: boolean;
   shouldTextChangeOnClick: boolean;
   shouldShowBgColorCahange: boolean;
+  onPress: () => void;
 }
 
 export const AppCompactButton = React.memo<AppCompactButtonProps>(
@@ -35,9 +37,11 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
     icon,
     shouldIconColorChangeOnClick = false,
     shouldTextChangeOnClick = false,
-    shouldShowBgColorCahange = false
+    shouldShowBgColorCahange = false,
+    shouldSelected,
+    onPress
   }) => {
-    const [isSelected, setIsSelected] = useState(false);
+    const [isSelected, setIsSelected] = useState(shouldSelected);
     const theme = usePreferredTheme();
 
     return (
@@ -45,11 +49,12 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
         onPress={() => {
           setIsSelected(!isSelected);
           onValueChanged?.(!isSelected);
+          onPress();
         }}
         style={[
           style.button,
           shouldShowBgColorCahange
-            ? isSelected
+            ? isSelected || shouldSelected
               ? {
                   backgroundColor: theme.themedColors.primaryShade
                 }
@@ -64,26 +69,27 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
         <View testID="button-container" style={style.viewContainer}>
           {icon?.(
             shouldIconColorChangeOnClick
-              ? isSelected
+              ? isSelected || shouldSelected
                 ? theme.themedColors.primary
                 : theme.themedColors.label
               : theme.themedColors.label,
-            15,
-            15
+            12,
+            12
           )}
           <AppLabel
             style={[
               style.text,
               shouldTextChangeOnClick
-                ? isSelected
+                ? isSelected || shouldSelected
                   ? { color: theme.themedColors.primary }
                   : { color: theme.themedColors.label }
                 : { color: theme.themedColors.label },
               textStyle
             ]}
             text={
-              (isSelected ? selectedText : unSelectedText) ??
-              unSelectedText
+              (isSelected || shouldSelected
+                ? selectedText
+                : unSelectedText) ?? unSelectedText
             }
             weight={"semi-bold"}
           />

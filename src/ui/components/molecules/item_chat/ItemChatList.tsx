@@ -37,7 +37,11 @@ export const ItemChatList = React.memo<ItemChatListProps>(
 
     return (
       <TouchableOpacity onPress={onPress}>
-        <View style={styles.container(item.name.length > 1, themedColors)}>
+        <View
+          style={styles.container(
+            item.name.length > 1 && !item.isMessageRead,
+            themedColors
+          )}>
           <Image style={styles.imgStyle} source={item.image} />
 
           <NotifyIndic width={12} height={12} style={styles.indicator} />
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       borderStartColor: shouldShowBorder
         ? themedColors.primary
-        : themedColors.background,
+        : themedColors.backgroundSecondary,
       borderStartWidth: 5
     };
   },

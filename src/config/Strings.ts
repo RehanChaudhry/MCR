@@ -4,11 +4,42 @@ export default {
   login: {
     pass_validation: "Password must be of at least 8 characters.",
     enter_valid_email_validation: "Please enter a valid email address.",
-    email_address: "Email Address",
-    enter_your_email: "Enter your email",
+    email_address: "Email address",
+    enter_your_email: "Enter your email address",
     password: "Password",
-    enter_your_pass: "Enter your password",
-    sign_in: "Sign In"
+    enter_your_pass: "Enter your account password",
+    sign_in: "Sign In",
+    cant_log: "Can't log in or need help? ",
+    contact_us: "Contact Us",
+    forgot_password: "Forgot Password?",
+    signin_to_your_account: "Sign in to your account"
+  },
+
+  forgotpassword: {
+    forgot_your_password: "Forgot your password",
+    reset_password: "Reset Password",
+    forgot_text:
+      "Tell us your email address, and we’ll get you back on track in no time."
+  },
+
+  preSSOLogin: {
+    sso_text:
+      "Ohio University requires that you sign in through its own system. Once you've verified your account you will be returned to My College Roomie.",
+    sso_second_text:
+      "If you are a Student, Faculty and Staff of Ohio University, click the button below to sign in.",
+    signIn_sso: "Sign In with SSO"
+  },
+
+  forgotPasswordFeedBack: {
+    check_your_inbox: "Check your inbox",
+    feedBack_one_text: "We have sent an email to ",
+    email: "laura.randall@ohio.edu.",
+    feedBack_third_text:
+      "Click the link in the email to reset your password.",
+    feedBack_fourth_text:
+      "If you didn’t see the email in your Inbox, check other places, like your junk, spam, social or other folders before submitting new request.",
+    did_not_recieve_email: "Didn’t received email? Try again",
+    go_back_signin: "Go back to Sign In"
   },
 
   signup: {},
@@ -37,8 +68,11 @@ export default {
     "This accordion will automatically close after 5 seconds " +
     "when the associated task will complete its execution.",
 
+  whats_new: "What’s new, Zane?",
   matches: {
-    match_score: "Match Score: "
+    match_score: "Match Score: ",
+    action_add_friend: "Add Friend",
+    label_pending_request: "Pending Request"
   },
   profile: {
     title:
@@ -132,5 +166,25 @@ export default {
       title:
         "Record 60 seconds self-introduction video presentation and post it on YouTube."
     }
+  },
+
+  newConversation: {
+    title: "New Conversation",
+    typingHint: "Start typing student name",
+    createGroupText: "You can create a group of upto 5 people.",
+    segmentValues: [
+      { label: "Student", value: "Student" },
+      { label: "Staff", value: "Staff" }
+    ]
+  },
+
+  chatListScreen: {
+    title: "Chat",
+    activeConversations: "Active Conversations",
+    archivedConversations: "Archived"
+  },
+
+  chatThreadScreen: {
+    typingHint: "Start typing your message"
   }
 };

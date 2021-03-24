@@ -1748,6 +1748,13 @@
   version "2.2.2"
   resolved "https://github.com/AsadAli1/react-native-multi-slider#d5e57ba795a5f47a655e0ec80c0d2eeec4f2f932"
 
+"@react-native-async-storage/async-storage@^1.14.1":
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.14.1.tgz#3c2ff2b1a312df3b1c809a60fa88665e50a095b8"
+  integrity sha512-UkLUox2q5DKNYB6IMUzsuwrTJeXGLySvtQlnrqd3fd+96JErCT4X3xD+W1cvQjes0nm0LbaELbwObKc+Tea7wA==
+  dependencies:
+    deep-assign "^3.0.0"
+
 "@react-native-community/art@^1.1.2":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/art/-/art-1.2.0.tgz#386d95393f6042d9006f9d4bc6063fb898794460"
@@ -1756,13 +1763,6 @@
     art "^0.10.3"
     invariant "^2.2.4"
     prop-types "^15.7.2"
-
-"@react-native-community/async-storage@^1.11.0":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.12.1.tgz#25f821b4f6b13abe005ad67e47c6f1cee9f27b24"
-  integrity sha512-70WGaH3PKYASi4BThuEEKMkyAgE9k7VytBqmgPRx3MzJx9/MkspwqJGmn3QLCgHLIFUgF1pit2mWICbRJ3T3lg==
-  dependencies:
-    deep-assign "^3.0.0"
 
 "@react-native-community/cli-debugger-ui@^4.13.1":
   version "4.13.1"
@@ -8165,6 +8165,11 @@ react-native-gesture-handler@1.9.0:
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
     prop-types "^15.7.2"
+
+react-native-image-picker@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-3.3.2.tgz#dde494ce4fbb5c36a4ea56346b751b85223d6b25"
+  integrity sha512-7z902J7a7j2rUM6zzyLSGpBSDfXy/V9ssSDKV0QyoQpr7COZs3zsJye2PU1Z4TRqmuNtREIeG5m1NdwtpcXBkg==
 
 "react-native-image-slider-box@https://github.com/js1233/react-native-image-slider-box":
   version "1.0.13"

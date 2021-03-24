@@ -10,6 +10,7 @@ export class ProfileMatch {
   status?: string;
   isFriend?: boolean = false;
   isRoommate?: boolean = false;
+  isFriendRequested?: boolean = false;
   createdAt!: string;
 
   constructor(
@@ -22,6 +23,7 @@ export class ProfileMatch {
     status: string,
     isFriend: boolean,
     isRoommate: boolean,
+    isFriendRequested: boolean,
     createdAt: string
   ) {
     this.userId = userId;
@@ -33,6 +35,7 @@ export class ProfileMatch {
     this.status = status;
     this.isFriend = isFriend;
     this.isRoommate = isRoommate;
+    this.isFriendRequested = isFriendRequested;
     this.createdAt = createdAt;
   }
 
