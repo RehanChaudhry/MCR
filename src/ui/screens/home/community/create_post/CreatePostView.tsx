@@ -6,7 +6,7 @@ import PlusCircle from "assets/images/plus_circle.svg";
 import { COLORS, FONT_SIZE, SPACE } from "config";
 import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -43,7 +43,7 @@ export enum POST_TYPES {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const CreatePostView: FC<Props> = (props) => {
+export const CreatePostView = React.memo<Props>((props) => {
   const theme = usePreferredTheme();
   const [images, setImages] = useState<ImagePickerResponse[]>([]);
   const [postType, setPostType] = useState<POST_TYPES>(POST_TYPES.NONE);
@@ -76,13 +76,15 @@ export const CreatePostView: FC<Props> = (props) => {
         onImageRemoved={(imageResponse) => {
           AppLog.logForcefully(JSON.stringify(images));
           AppLog.logForcefully(
-            "imageResponse" + JSON.stringify(imageResponse)
+            "images length when item remove" + images.length
           );
-          const filteredArray = images.filter((filteredImageResponse) => {
-            return imageResponse.uri !== filteredImageResponse.uri;
+          setImages((prevState) => {
+            return [
+              ...prevState.filter((filteredImage) => {
+                return imageResponse.uri !== filteredImage.uri;
+              })
+            ];
           });
-          AppLog.logForcefully(JSON.stringify(filteredArray));
-          setImages(filteredArray);
         }}
       />
     ),
@@ -99,14 +101,19 @@ export const CreatePostView: FC<Props> = (props) => {
           maxWidth: 200
         },
         (response) => {
-          if (response !== null && response !== undefined) {
-            AppLog.logForcefully("response" + response);
+          if (
+            response !== null &&
+            response !== undefined &&
+            response.didCancel !== true
+          ) {
+            AppLog.logForcefully("response" + JSON.stringify(response));
             setImages((prevState) => {
               return [
                 ...(prevState === undefined ? [] : prevState),
                 response
               ];
             });
+            AppLog.logForcefully("images length" + images.length);
           }
         }
       );
@@ -133,7 +140,8 @@ export const CreatePostView: FC<Props> = (props) => {
         containerStyle={[
           {
             backgroundColor: theme.themedColors.interface["200"]
-          }
+          },
+          styles.list
         ]}
       />
     );
@@ -141,7 +149,8 @@ export const CreatePostView: FC<Props> = (props) => {
 
   useEffect(() => {
     AppLog.logForcefully("post type in use Effect: " + postType);
-  }, [postType]);
+    AppLog.logForcefully("images length in use effect" + images.length);
+  }, [postType, images]);
 
   const dummyProfileImageUrl =
     "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
@@ -203,6 +212,7 @@ export const CreatePostView: FC<Props> = (props) => {
                 buttonStyle={styles.photosLinkEmbedButton}
                 shouldSelected={postType === POST_TYPES.LINK}
                 onPress={() => {
+                  setImages([]);
                   setPostType(POST_TYPES.LINK);
                   AppLog.logForcefully("postType: " + postType);
                 }}
@@ -216,6 +226,7 @@ export const CreatePostView: FC<Props> = (props) => {
                 shouldSelected={postType === POST_TYPES.EMBED}
                 buttonStyle={styles.photosLinkEmbedButton}
                 onPress={() => {
+                  setImages([]);
                   setPostType(POST_TYPES.EMBED);
                   AppLog.logForcefully("postType: " + postType);
                 }}
@@ -229,7 +240,7 @@ export const CreatePostView: FC<Props> = (props) => {
 
             {postType !== POST_TYPES.NONE && (
               <>
-                {postType === POST_TYPES.PHOTOS && (
+                {postType === POST_TYPES.PHOTOS && images.length > 0 && (
                   <View style={styles.imagesListContainer}>
                     <FlatListWithPb
                       shouldShowProgressBar={false}
@@ -309,7 +320,7 @@ export const CreatePostView: FC<Props> = (props) => {
       </ScrollView>
     </KeyboardAvoidingView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   scrollView: { backgroundColor: COLORS.backgroundColor },
@@ -376,7 +387,6 @@ const styles = StyleSheet.create({
   },
   imagesListContainer: {
     flexDirection: "row",
-    alignItems: "center",
-    alignContent: "center"
+    alignItems: "center"
   }
 });
