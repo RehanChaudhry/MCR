@@ -28,6 +28,8 @@ import { moderateScale } from "config/Dimens";
 import { AppProgressBar } from "ui/components/molecules/app_progress_bar/AppProgressBar";
 import { Divider } from "react-native-elements";
 import Colors from "config/Colors";
+import { SvgProps } from "react-native-svg";
+import { HomeDrawerParamList } from "routes";
 
 export const CustomDrawer = React.memo<DrawerContentComponentProps>(
   (props) => {
@@ -40,22 +42,26 @@ export const CustomDrawer = React.memo<DrawerContentComponentProps>(
       props.state.routeNames[0]
     );
 
-    const Elements = {
-      Matches: Matches,
-      Community: NewPaper,
-      Announcement: Announcement,
-      Profile: NavProfile,
-      Friends: Friend,
-      ChatList: NavChat,
-      Notification: Bell
+    type ItemType<T> = {
+      [K in keyof T]: { name: string; icon: React.FC<SvgProps> };
     };
 
-    const defaultIcon = (name: string) => {
-      // @ts-ignore
-      const Element: any = Elements[name] ?? Elements.Matches;
+    const DrawerItems: ItemType<HomeDrawerParamList> = {
+      Matches: { name: "Matches", icon: Matches },
+      Community: { name: "Community", icon: NewPaper },
+      Announcement: { name: "Announcement", icon: Announcement },
+      Profile: { name: "Profile", icon: NavProfile },
+      Friends: { name: "Friends", icon: Friend },
+      ChatList: { name: "ChatList", icon: NavChat },
+      Notification: { name: "Notification", icon: Bell }
+    };
+
+    function defaultIcon<K extends keyof HomeDrawerParamList>(name: K) {
+      const Icon: React.FC<SvgProps> =
+        DrawerItems[name].icon ?? DrawerItems.Matches.icon;
 
       return (
-        <Element
+        <Icon
           width={20}
           height={20}
           fill={
@@ -65,7 +71,7 @@ export const CustomDrawer = React.memo<DrawerContentComponentProps>(
           }
         />
       );
-    };
+    }
 
     return (
       <View style={{ flex: 1 }}>
