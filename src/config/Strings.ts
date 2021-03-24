@@ -196,6 +196,11 @@ export default {
       startTypingYourMessage: "Start typing your message",
       link: "Enter link (https://..)",
       embed: "Enter embed code"
+    },
+    buttonsName: {
+      photo: "Photos",
+      link: "Link",
+      embed: "Embed"
     }
   }
 };

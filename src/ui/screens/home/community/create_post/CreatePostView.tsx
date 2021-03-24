@@ -246,7 +246,7 @@ export const CreatePostView = React.memo<Props>((props) => {
               />
               <View style={styles.buttonsContainer}>
                 <PhotosEmbedButton
-                  text="Photos"
+                  text={Strings.createPost.buttonsName.photo}
                   icon={photoImage}
                   buttonStyle={styles.photosLinkEmbedButton}
                   shouldSelected={postType === POST_TYPES.PHOTOS}
@@ -257,7 +257,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                   }}
                 />
                 <PhotosEmbedButton
-                  text="Link"
+                  text={Strings.createPost.buttonsName.link}
                   icon={linkImage}
                   buttonStyle={styles.photosLinkEmbedButton}
                   shouldSelected={postType === POST_TYPES.LINK}
@@ -268,7 +268,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                   }}
                 />
                 <PhotosEmbedButton
-                  text="Embed"
+                  text={Strings.createPost.buttonsName.embed}
                   icon={embedCodeImage}
                   shouldSelected={postType === POST_TYPES.EMBED}
                   buttonStyle={styles.photosLinkEmbedButton}
