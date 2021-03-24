@@ -24,13 +24,7 @@ export const CircleImageWithText = React.memo<Props>(
           <View style={styles.circleWithText}>
             <View>
               <MultilineSpannableText
-                text={[
-                  { id: 1, text: username },
-                  {
-                    id: 2,
-                    text: message
-                  }
-                ]}
+                text={[username, message]}
                 textStyle={[
                   [styles.name, { color: theme.themedColors.primary }],
                   styles.message

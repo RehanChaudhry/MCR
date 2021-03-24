@@ -7,11 +7,10 @@ import {
   TextStyle
 } from "react-native";
 
-export type TextStrings = { id: number; text: string };
 interface OwnProps {
   textStyle: Array<StyleProp<TextStyle>>;
-  text: Array<TextStrings>;
-  onPress?: (value: TextStrings, index: number) => void;
+  text: Array<string>;
+  onPress?: (value: string, index: number) => void;
 }
 
 type Props = OwnProps;
@@ -30,7 +29,7 @@ export const MultilineSpannableText = React.memo<Props>(
               <TouchableWithoutFeedback
                 key={index}
                 onPress={() => onPress?.(text[index], index)}>
-                <Text style={textStyle[index]}>{item.text}</Text>
+                <Text style={textStyle[index]}>{item}</Text>
               </TouchableWithoutFeedback>
             ))}
           </Text>
