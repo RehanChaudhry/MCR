@@ -23,9 +23,10 @@ export default {
   POST_ANSWERS: "answer/",
 
   // matches
-  GET_MATCHES: "matches/",
-  POST_FRIEND_REQUEST: "friend-request/",
+  GET_MATCHES: "matches",
+  POST_FRIEND_REQUEST: "friend-request",
   DISMISS_MATCH: "dismiss-match",
+  GET_MATCHES_FILTER_COUNT: "matches-count",
 
   //community
   GET_COMMUNITY: "community/",
