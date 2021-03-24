@@ -7,10 +7,13 @@ import CommunityController from "ui/screens/home/community/CommunityController";
 import FriendsController from "ui/screens/home/friends/FriendsController";
 import MatchesController from "ui/screens/home/matches/MatchesController";
 import ProfileController from "ui/screens/home/profile/ProfileController";
+import { CustomDrawer } from "ui/components/templates/drawer/CustomDrawer";
 
 export const HomeRoutes = () => {
   return (
-    <HomeDrawer.Navigator initialRouteName="Matches">
+    <HomeDrawer.Navigator
+      initialRouteName="Matches"
+      drawerContent={(props) => <CustomDrawer {...props} />}>
       <HomeDrawer.Screen name="Matches" component={MatchesController} />
       <HomeDrawer.Screen
         name="Community"

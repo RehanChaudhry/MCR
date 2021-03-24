@@ -27,7 +27,7 @@ exports[`Renders snapshot as expected 1`] = `
       Array [
         Object {
           "backgroundColor": "#E5E7EB",
-          "borderColor": "#111827",
+          "borderColor": "#000000",
           "borderRadius": 50,
           "borderWidth": 0,
           "overflow": "hidden",
@@ -41,9 +41,9 @@ exports[`Renders snapshot as expected 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": "#111827",
+          "backgroundColor": "#000000",
           "borderRadius": 50,
-          "height": 20,
+          "height": 18,
           "transform": Array [
             Object {
               "translateX": -0,
@@ -81,7 +81,7 @@ exports[`Renders snapshot as expected 1`] = `
             },
             Array [
               Object {
-                "fontSize": 18.139805825242718,
+                "fontSize": 15.116504854368934,
                 "fontWeight": "400",
               },
               undefined,
@@ -108,7 +108,7 @@ exports[`Renders snapshot as expected 1`] = `
             },
             Array [
               Object {
-                "fontSize": 18.139805825242718,
+                "fontSize": 15.116504854368934,
                 "fontWeight": "400",
               },
               Object {
