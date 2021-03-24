@@ -4,7 +4,6 @@ import ProgressErrorView from "ui/components/templates/progress_error_view/Progr
 import { Alert, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { HomeDrawerParamList } from "routes";
 import { useNavigation } from "@react-navigation/native";
 import { AppLog } from "utils/Util";
 import DataGenerator from "utils/DataGenerator";
@@ -19,9 +18,10 @@ import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseMode
 import MatchesFilterApiResponseModel, {
   FilterCount
 } from "models/api_responses/MatchesFilterApiResponseModel";
+import { MatchesStackParamList } from "routes/MatchesStack";
 
 type MatchesNavigationProp = StackNavigationProp<
-  HomeDrawerParamList,
+  MatchesStackParamList,
   "Matches"
 >;
 
