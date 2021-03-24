@@ -12,8 +12,8 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { Color, NumberProp } from "react-native-svg";
-import { AppCompactButton } from "ui/components/atoms/app_compact_button/AppCompactButton";
+import { LikeButton } from "ui/components/atoms/app_compact_button/LikeButton";
+import { PhotosEmbedButton } from "ui/components/atoms/app_compact_button/PhotosEmbedButton";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { SvgProp } from "utils/Util";
 
@@ -34,19 +34,10 @@ export interface AnnouncementFooterProps extends TouchableOpacityProps {
 export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
   ({ likeCount = 3, commentCount = 5, bottomLineStyle }) => {
     const theme = usePreferredTheme();
-    const likeImage: SvgProp = (
-      color?: Color,
-      width?: NumberProp,
-      height?: NumberProp
-    ) => {
-      return <Like width={width} height={height} fill={color} />;
-    };
-    const commentImage: SvgProp = (
-      color?: Color,
-      width?: NumberProp,
-      height?: NumberProp
-    ) => {
-      return <Chat width={width} height={height} fill={color} />;
+    const commentImage: SvgProp = () => {
+      return (
+        <Chat width={12} height={12} fill={theme.themedColors.label} />
+      );
     };
     return (
       <View>
@@ -60,22 +51,13 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
         <View style={style.container}>
           <View style={style.leftRightContainer}>
             <View>
-              <AppCompactButton
-                unSelectedText="Like"
-                selectedText="Liked"
-                icon={likeImage}
-                shouldIconColorChangeOnClick={true}
-                shouldTextChangeOnClick={true}
-                shouldShowBgColorCahange={false}
-              />
+              <LikeButton unSelectedText="Like" selectedText="Liked" />
             </View>
             <View style={style.leftContainerRightSide}>
-              <AppCompactButton
-                unSelectedText="Comment"
+              <PhotosEmbedButton
+                text="Comment"
                 icon={commentImage}
-                shouldIconColorChangeOnClick={false}
-                shouldTextChangeOnClick={false}
-                shouldShowBgColorCahange={false}
+                shouldSelected={false}
               />
             </View>
           </View>

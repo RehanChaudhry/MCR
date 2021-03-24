@@ -18,7 +18,7 @@ type Props = {
   textStyle?: StyleProp<TextStyle>;
   selectedText?: string;
   unSelectedText: string;
-  onPress: () => void;
+  onPress?: () => void;
 };
 
 export const LikeButton = React.memo<Props>(
