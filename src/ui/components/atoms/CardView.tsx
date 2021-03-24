@@ -15,7 +15,6 @@ export const CardView = React.memo<props>(({ children, style }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    //padding: 8,
     shadowColor: "black",
     shadowOpacity: 0.26,
     shadowOffset: { width: 0, height: 2 },

@@ -4,8 +4,8 @@ import { HeadingWithText } from "ui/components/molecules/heading_with_text/Headi
 import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE } from "config";
-import { AppFormDropDown } from "../../molecules/app_form_dropdown/AppFormDropDown";
-import { AppFormRadioButton } from "../../molecules/app_form_radio_buttons/AppFormRadioButton";
+import { AppFormDropDown } from "ui/components/molecules/app_form/AppFormDropDown";
+import { AppFormRadioButton } from "ui/components/molecules/app_form/AppFormRadioButton";
 import { DIRECTION_TYPE } from "../../atoms/radio_group/RadioGroup";
 import AppFormField from "../../molecules/app_form/AppFormField";
 import * as Yup from "yup";

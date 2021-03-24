@@ -1,12 +1,15 @@
 import React from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
-import { AppLabel, AppLabelProps } from "../../atoms/app_label/AppLabel";
-import { COLORS, FONT_SIZE, FONTS, SPACE } from "../../../../config";
-import usePreferredTheme from "../../../../hooks/theme/usePreferredTheme";
+import {
+  AppLabel,
+  AppLabelProps
+} from "ui/components/atoms/app_label/AppLabel";
+import { COLORS, FONT_SIZE, FONTS, SPACE } from "config";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import {
   AppDropdown,
   AppDropdownProps
-} from "../../organisms/app_dropdown/AppDropdown";
+} from "ui/components/organisms/app_dropdown/AppDropdown";
 import { SvgProp } from "utils/Util";
 
 type Props = {
