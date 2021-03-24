@@ -72,7 +72,8 @@ export default {
   matches: {
     match_score: "Match Score: ",
     action_add_friend: "Add Friend",
-    label_pending_request: "Pending Request"
+    label_pending_request: "Pending Request",
+    placeholder_search_keyword: "Search by keyword"
   },
   profile: {
     title:
@@ -186,5 +187,21 @@ export default {
 
   chatThreadScreen: {
     typingHint: "Start typing your message"
+  },
+
+  createPost: {
+    requiredField: {
+      message: "Message is a required field"
+    },
+    placeholder: {
+      startTypingYourMessage: "Start typing your message",
+      link: "Enter link (https://..)",
+      embed: "Enter embed code"
+    },
+    buttonsName: {
+      photo: "Photos",
+      link: "Link",
+      embed: "Embed"
+    }
   }
 };

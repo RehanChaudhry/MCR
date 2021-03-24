@@ -2,7 +2,7 @@ import { FONT_SIZE, FONTS, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
-import { AppLog, shadowStyleProps } from "utils/Util";
+import { shadowStyleProps } from "utils/Util";
 import ProfileMatch from "models/ProfileMatch";
 import { moderateScale } from "config/Dimens";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
@@ -19,13 +19,19 @@ import Cross from "assets/images/ic_cross.svg";
 
 interface Props {
   profileMatch: ProfileMatch;
+  postFriendRequest: (userId: number) => void;
+  postMatchDismiss: (userId: number) => void;
 }
 
-const ProfileMatchItem = ({ profileMatch }: Props) => {
+const ProfileMatchItem = ({
+  profileMatch,
+  postFriendRequest,
+  postMatchDismiss
+}: Props) => {
   const { themedColors } = usePreferredTheme();
-  AppLog.log(
-    "rendering ProfileMatchItem, item: " + JSON.stringify(profileMatch)
-  );
+  // AppLog.log(
+  //   "rendering ProfileMatchItem, item: " + JSON.stringify(profileMatch)
+  // );
 
   return (
     <View
@@ -56,7 +62,7 @@ const ProfileMatchItem = ({ profileMatch }: Props) => {
       <Pressable
         style={styles.icCross}
         onPress={() => {
-          /*call on on cross clicked (controller method)*/
+          postMatchDismiss(profileMatch.userId);
         }}>
         <Cross
           fill={grayShades.coolGray[400]}
@@ -78,6 +84,11 @@ const ProfileMatchItem = ({ profileMatch }: Props) => {
         />
         {profileMatch.getType() === ProfileMatchType.NOT_FRIEND && (
           <AppButton
+            onPress={() => {
+              if (!profileMatch.isFriendRequested) {
+                postFriendRequest(profileMatch.userId);
+              }
+            }}
             fontWeight={"semi-bold"}
             textStyle={[
               styles.btnActionText,

@@ -10,7 +10,7 @@ interface Props {
   matchScore: number;
 }
 
-const MatchScore = ({ style, matchScore }: Props) => {
+const MatchScore: React.FC<Props> = ({ style, matchScore }: Props) => {
   const { themedColors } = usePreferredTheme();
   return (
     <View
