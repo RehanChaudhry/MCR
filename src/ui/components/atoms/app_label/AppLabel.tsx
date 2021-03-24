@@ -13,7 +13,7 @@ import { usePreferredTheme } from "hooks";
 export type Weight = "bold" | "normal" | "semi-bold";
 
 export interface AppLabelProps extends TextProps {
-  text: string;
+  text?: string;
   weight?: Weight;
   style?: StyleProp<TextStyle>;
   onPress?: () => void;

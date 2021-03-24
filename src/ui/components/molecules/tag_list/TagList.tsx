@@ -1,28 +1,27 @@
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
-import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import TagListItem from "./TagListItem";
-import { dataType } from "ui/screens/demo/tag_list/TagListView";
+
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE } from "config";
+import { dataType } from "ui/components/profile/view_profile/Interest";
+import usePreferredTheme from "../../../../hooks/theme/usePreferredTheme";
 
 type Props = {
-  labelTitle: string;
+  labelTitle?: string;
   data: dataType[];
 };
 
 const TagList: FC<Props> = ({ data, labelTitle }) => {
   const theme = usePreferredTheme();
-
   return (
-    <View
-      style={[
-        styles.root,
-        { backgroundColor: theme.themedColors.primary }
-      ]}>
+    <View style={[styles.root]}>
       <AppLabel
         text={labelTitle}
-        style={styles.labelTitle}
+        style={[
+          styles.labelTitle,
+          { color: theme.themedColors.labelSecondary }
+        ]}
         weight={"semi-bold"}
       />
 
@@ -41,20 +40,13 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   labelTitle: {
-    paddingHorizontal: 14,
-    marginTop: 12,
     fontSize: FONT_SIZE.md
-  },
-  FlatList: {
-    paddingHorizontal: 8,
-    paddingVertical: 8
   },
   horizontalLine: {
     height: 1
   },
   chipView: {
     marginTop: 8,
-    marginHorizontal: 8,
     flexDirection: "row",
     flexWrap: "wrap"
   }

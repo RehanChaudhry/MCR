@@ -13,6 +13,7 @@ export const Interests = React.memo(({}) => {
       <HeadingWithText
         headingText={STRINGS.profile.interests.heading}
         text={STRINGS.profile.interests.title}
+        headingFontWeight={"semi-bold"}
         headingStyle={[
           styles.headingStyle,
           { color: theme.themedColors.label }

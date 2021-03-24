@@ -17,6 +17,7 @@ export const DemoGraphics = React.memo(({}) => {
       <HeadingWithText
         headingText={STRINGS.profile.demoGraphics.heading}
         text={STRINGS.profile.demoGraphics.title}
+        headingFontWeight={"semi-bold"}
         headingStyle={[
           styles.headingStyle,
           { color: theme.themedColors.label }

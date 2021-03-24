@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import { SvgProp } from "utils/Util";
-import usePreferredTheme from "../../../../../hooks/theme/usePreferredTheme";
-import { AppLabel } from "../../../atoms/app_label/AppLabel";
-import { FONT_SIZE, SPACE } from "../../../../../config";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { FONT_SIZE, SPACE } from "config";
 
 type Props = {
   icon: SvgProp;

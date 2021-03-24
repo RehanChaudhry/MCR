@@ -26,6 +26,7 @@ export const BasicProfile = React.memo(({}) => {
       <HeadingWithText
         headingText={STRINGS.profile.basicProfile.heading}
         text={STRINGS.profile.basicProfile.title}
+        headingFontWeight={"semi-bold"}
         headingStyle={[
           styles.headingStyle,
           { color: theme.themedColors.label }

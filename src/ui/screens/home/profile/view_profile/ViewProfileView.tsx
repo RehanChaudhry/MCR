@@ -10,7 +10,10 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import WatchVideo from "assets/images/watch_video_icon.svg";
 import Colors from "config/Colors";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import AboutMe from "../../../../components/profile/view_profile/about_me/AboutMe";
+import AboutMe from "ui/components/profile/view_profile/about_me/AboutMe";
+import Interests from "ui/components/profile/view_profile/Interest";
+import ViewProfileDemoGraphics from "ui/components/profile/view_profile/ViewProfileDemoGraphics";
+import EducationalInformation from "ui/components/profile/view_profile/EducationalInformation";
 
 type Props = {};
 
@@ -51,6 +54,9 @@ export const ViewProfileView: React.FC<Props> = () => {
           />
         </View>
         <AboutMe />
+        <ViewProfileDemoGraphics />
+        <Interests />
+        <EducationalInformation />
       </View>
     </ScrollView>
   );

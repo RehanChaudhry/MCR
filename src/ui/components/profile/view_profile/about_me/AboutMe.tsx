@@ -10,7 +10,6 @@ import TikTokIcon from "assets/images/tiktok_dark_icon.svg";
 import InstagramIcon from "assets/images/instagram_dark_icon.svg";
 import SnapChatIcon from "assets/images/snapchat_dark_icon.svg";
 import { COLORS, SPACE } from "config";
-import ViewProfileDemoGraphics from "../ViewProfileDemoGraphics";
 
 type Props = {};
 
@@ -61,7 +60,6 @@ const AboutMe: FC<Props> = () => {
           heading={"SnapChat Profile"}
           title={"snapchat.com/zanemayes"}
         />
-        <ViewProfileDemoGraphics />
       </View>
     </CardView>
   );
@@ -70,11 +68,13 @@ const AboutMe: FC<Props> = () => {
 const styles = StyleSheet.create({
   innerCardView: {
     marginHorizontal: SPACE.lg,
-    paddingVertical: SPACE.xsm
+    paddingTop: SPACE.xsm,
+    paddingBottom: SPACE._3xl
   },
   cardView: {
     marginHorizontal: SPACE.lg,
     marginTop: SPACE.xsm
+    //marginBottom: -16
   },
   horizontalLine: {
     backgroundColor: COLORS.grey,
