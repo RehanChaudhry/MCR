@@ -155,7 +155,7 @@ const style = StyleSheet.create({
   },
   leftIconContainer: {
     position: "absolute",
-    left: SPACE.sm,
+    left: SPACE.md,
     alignItems: "flex-start"
   },
   leftIcon: {

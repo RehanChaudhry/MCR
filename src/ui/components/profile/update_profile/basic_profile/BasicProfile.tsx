@@ -3,7 +3,7 @@ import { HeadingWithText } from "ui/components/molecules/heading_with_text/Headi
 import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { CardView } from "ui/components/atoms/CardView";
-import { UploadProfilePhoto } from "ui/components/profile/basic_profile/UploadProfilePhoto";
+import { UploadProfilePhoto } from "ui/components/profile/update_profile/basic_profile/UploadProfilePhoto";
 import { COLORS, SPACE, STRINGS } from "config";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import FacebookIcon from "assets/images/facebook_icon.svg";

@@ -40,5 +40,7 @@ export const SPACE = {
   md: moderateScale(12.0),
   lg: moderateScale(16.0),
   xl: moderateScale(18.0),
-  _2xl: moderateScale(24.0)
+  _2xl: moderateScale(24.0),
+  _3xl: moderateScale(32),
+  _4xl: moderateScale(48)
 };

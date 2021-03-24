@@ -9,7 +9,7 @@ import ProfileController from "ui/screens/home/profile/ProfileController";
 
 export const HomeRoutes = () => {
   return (
-    <HomeDrawer.Navigator initialRouteName="Matches">
+    <HomeDrawer.Navigator initialRouteName="Profile">
       <HomeDrawer.Screen name="Matches" component={MatchesController} />
       <HomeDrawer.Screen
         name="Community"
