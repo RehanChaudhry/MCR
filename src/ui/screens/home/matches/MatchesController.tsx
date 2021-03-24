@@ -9,11 +9,16 @@ import { useNavigation } from "@react-navigation/native";
 import { AppLog } from "utils/Util";
 import DataGenerator from "utils/DataGenerator";
 import MatchesApiRequestModel from "models/api_requests/MatchesApiRequestModel";
-import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
+import MatchesTypeFilter, {
+  getMatchesTypeFilterData
+} from "models/enums/MatchesTypeFilter";
 import { useApi } from "repo/Client";
 import MatchesApiResponseModel from "models/api_responses/MatchesApiResponseModel";
 import MatchesApis from "repo/home/MatchesApis";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
+import MatchesFilterApiResponseModel, {
+  FilterCount
+} from "models/api_responses/MatchesFilterApiResponseModel";
 
 type MatchesNavigationProp = StackNavigationProp<
   HomeDrawerParamList,
@@ -107,10 +112,6 @@ const MatchesController: FC<Props> = () => {
     getProfileMatches();
   };
 
-  useEffect(() => {
-    getProfileMatches();
-  }, []);
-
   // Friend Request API
   const friendRequestApi = useApi<number, ApiSuccessResponseModel>(
     MatchesApis.friendRequest
@@ -175,6 +176,34 @@ const MatchesController: FC<Props> = () => {
     }
   };
 
+  // Matches filter count API
+  const [filterCounts, setFilterCounts] = useState<FilterCount[]>(
+    getMatchesTypeFilterData()
+  );
+  const matchesFilterCountApi = useApi<any, MatchesFilterApiResponseModel>(
+    MatchesApis.filterCount
+  );
+
+  const getFilterCount = async () => {
+    const {
+      hasError,
+      errorBody,
+      dataBody
+    } = await matchesFilterCountApi.request([]);
+
+    if (!hasError) {
+      setFilterCounts(dataBody!.data);
+    } else {
+      AppLog.log("getFilterCount() > failed, error: " + errorBody);
+    }
+  };
+
+  useEffect(() => {
+    getFilterCount();
+    getProfileMatches();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <ProgressErrorView
       isLoading={matchesApi.loading}
@@ -188,6 +217,7 @@ const MatchesController: FC<Props> = () => {
       }}
       data={profileMatches?.data}>
       <MatchesView
+        filterCounts={filterCounts}
         matches={profileMatches?.data}
         pullToRefreshCallback={refreshCallback}
         onEndReached={onEndReached}

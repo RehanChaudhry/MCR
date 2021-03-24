@@ -3,6 +3,7 @@ import { apiClient } from "repo/Client";
 import MatchesApiRequestModel from "models/api_requests/MatchesApiRequestModel";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
 import MatchesApiResponseModel from "models/api_responses/MatchesApiResponseModel";
+import MatchesFilterApiResponseModel from "models/api_responses/MatchesFilterApiResponseModel";
 
 function matches(request: MatchesApiRequestModel) {
   return apiClient.get<MatchesApiResponseModel>(
@@ -23,8 +24,15 @@ function matchDismiss(userId: number) {
   });
 }
 
+function filterCount() {
+  return apiClient.get<MatchesFilterApiResponseModel>(
+    API.GET_MATCHES_FILTER_COUNT
+  );
+}
+
 export default {
   matches,
   friendRequest,
-  matchDismiss
+  matchDismiss,
+  filterCount
 };
