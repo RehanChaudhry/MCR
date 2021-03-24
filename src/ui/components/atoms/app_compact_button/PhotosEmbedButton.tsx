@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { FONT_SIZE, FONTS } from "config";
 import { usePreferredTheme } from "hooks";
+import React from "react";
 import {
   StyleProp,
   StyleSheet,
@@ -9,7 +10,6 @@ import {
   ViewStyle
 } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { FONT_SIZE, FONTS } from "config";
 import { SvgProp } from "utils/Util";
 
 type Props = {
@@ -19,39 +19,31 @@ type Props = {
   shouldSelected: boolean;
   text: string;
   icon?: SvgProp;
+  onPress?: () => void;
 };
-
 export const PhotosEmbedButton = React.memo<Props>(
   ({
-    onValueChanged,
     buttonStyle,
     shouldSelected = false,
     textStyle,
     text,
-    icon
+    icon,
+    onPress
   }) => {
-    const [isSelected, setIsSelected] = useState(shouldSelected);
     const theme = usePreferredTheme();
-    useEffect(() => {
-      onValueChanged?.(isSelected);
-    }, [isSelected, onValueChanged]);
-
     return (
       <TouchableOpacity
-        onPress={() => {
-          setIsSelected(!isSelected);
-          onValueChanged?.(!isSelected);
-        }}
+        onPress={onPress}
         style={[
           style.button,
-          isSelected
+          shouldSelected
             ? { backgroundColor: theme.themedColors.primaryShade }
             : { backgroundColor: theme.themedColors.interface[200] },
           buttonStyle
         ]}>
         <View testID="button-container" style={style.viewContainer}>
           {icon?.(
-            isSelected
+            shouldSelected
               ? theme.themedColors.primary
               : theme.themedColors.label,
             20,
@@ -60,11 +52,9 @@ export const PhotosEmbedButton = React.memo<Props>(
           <AppLabel
             style={[
               style.text,
-
-              isSelected
+              shouldSelected
                 ? { color: theme.themedColors.primary }
                 : { color: theme.themedColors.label },
-
               textStyle
             ]}
             text={text}
@@ -75,7 +65,6 @@ export const PhotosEmbedButton = React.memo<Props>(
     );
   }
 );
-
 const style = StyleSheet.create({
   button: {
     flexDirection: "row",
