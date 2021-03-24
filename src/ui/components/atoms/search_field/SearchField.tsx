@@ -1,4 +1,4 @@
-import { COLORS, FONTS, FONT_SIZE } from "config";
+import { COLORS, FONTS, FONT_SIZE, SPACE } from "config";
 import { moderateScale } from "config/Dimens";
 import useEffectWithSkipFirstTime from "hooks/useEffectWithSkipFirstTime";
 import React, { useState } from "react";
@@ -9,36 +9,35 @@ import {
   StyleProp,
   StyleSheet,
   TextInput,
+  TextStyle,
   TouchableOpacity,
   View,
   ViewStyle
 } from "react-native";
+import { Color } from "react-native-svg";
+import { grayShades } from "hooks/theme/ColorPaletteContainer";
 
 interface OwnProps {
   style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
   placeholder: string;
   onChangeText: (textToSearch?: string) => void;
-  leftIcon: boolean;
-  rightIcon: boolean;
-  borderType?: BORDER_TYPE;
+  searchIcon: boolean;
+  iconColor?: Color;
+  clearIcon: boolean;
 }
 
 type Props = OwnProps;
 
-export enum BORDER_TYPE {
-  DASHED = "dashed",
-  SOLID = "solid",
-  DOTTED = "dotted"
-}
-
-export const SearchField = React.memo<Props>(
+const SearchField = React.memo<Props>(
   ({
     placeholder,
     style,
+    textStyle,
     onChangeText,
-    leftIcon,
-    rightIcon,
-    borderType
+    searchIcon,
+    iconColor,
+    clearIcon
   }) => {
     const [currentSearchText, setCurrentSearchText] = useState("");
     const theme = usePreferredTheme();
@@ -53,57 +52,46 @@ export const SearchField = React.memo<Props>(
       };
     }, [currentSearchText, onChangeText]);
 
-    const getBorderStyle = () => {
-      if (borderType === BORDER_TYPE.DASHED) {
-        return styles.dashedBorderStyle;
-      } else if (borderType === BORDER_TYPE.SOLID) {
-        return styles.solidBorderStyle;
-      } else if (borderType === BORDER_TYPE.DOTTED) {
-        return styles.dottedBorderStyle;
-      }
-    };
-
     return (
       <View
         style={[
-          getBorderStyle(),
           styles.container,
           {
-            backgroundColor: theme.themedColors.primary,
-            borderColor: theme.themedColors.label
+            backgroundColor: theme.themedColors.primary
           },
           style
         ]}>
-        {leftIcon && (
+        {searchIcon && (
           <Search
             width={14}
             height={14}
             style={styles.leftIcon}
             testID={"left-icon"}
-            fill={theme.themedColors.interface[600]}
+            fill={iconColor ?? theme.themedColors.interface[600]}
           />
         )}
         <TextInput
           value={currentSearchText}
-          placeholderTextColor={COLORS.placeholderTextColor}
+          placeholderTextColor={grayShades.coolGray[600]}
           placeholder={placeholder}
           numberOfLines={1}
           testID="SEARCH"
           style={[
-            leftIcon ? styles.textInput : styles.textInput,
-            { color: theme.themedColors.label }
+            styles.textInput,
+            { color: theme.themedColors.label },
+            textStyle
           ]}
           onChangeText={setCurrentSearchText}
         />
 
-        {rightIcon && (
+        {clearIcon && currentSearchText !== "" && (
           <TouchableOpacity onPress={() => setCurrentSearchText("")}>
             <Cross
               width={14}
               height={14}
               testID={"right-icon"}
               style={styles.rightIcon}
-              fill={theme.themedColors.interface[600]}
+              fill={iconColor ?? theme.themedColors.interface[600]}
             />
           </TouchableOpacity>
         )}
@@ -118,20 +106,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "center",
-    padding: 8,
+    padding: SPACE.md,
     paddingTop: 2.5,
     paddingBottom: 2.5,
-    borderRadius: 10,
-    // shadow for ios
-    shadowColor: COLORS.black,
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    // shadow for android
-    elevation: 2
+    borderRadius: 10
   },
   leftIcon: {
     width: moderateScale(12),
@@ -155,17 +133,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm,
     padding: 0,
     color: COLORS.textColor1
-  },
-  dashedBorderStyle: {
-    borderStyle: "dashed",
-    borderWidth: 1
-  },
-  solidBorderStyle: {
-    borderStyle: "solid",
-    borderWidth: 1
-  },
-  dottedBorderStyle: {
-    borderStyle: "dotted",
-    borderWidth: 1
   }
 });
+
+export default SearchField;

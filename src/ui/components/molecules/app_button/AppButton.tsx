@@ -30,6 +30,7 @@ export interface AppButtonProps extends TouchableOpacityProps {
   iconStyle?: StyleProp<ImageStyle>;
   shouldShowError?: boolean;
   fontWeight?: Weight;
+  shouldAlignTextWithLeftIconWithFullWidth?: boolean;
 }
 
 export enum BUTTON_TYPES {
@@ -51,7 +52,8 @@ export const AppButton = React.memo<AppButtonProps>(
     buttonType = BUTTON_TYPES.NORMAL,
     isDisable = false,
     shouldShowError = false,
-    fontWeight = "normal"
+    fontWeight = "normal",
+    shouldAlignTextWithLeftIconWithFullWidth = false
   }) => {
     const theme = usePreferredTheme();
     const getButtonStyle = () => {
@@ -101,7 +103,13 @@ export const AppButton = React.memo<AppButtonProps>(
               {leftIcon?.(theme.themedColors.label, 20, 20)}
             </View>
           )}
-          <View style={style.textWithLoader}>
+          <View
+            style={[
+              style.textWithLoader,
+              shouldAlignTextWithLeftIconWithFullWidth
+                ? style.alignTitleWithLeftIcon
+                : undefined
+            ]}>
             {!shouldShowProgressBar && (
               <AppLabel
                 style={[
@@ -153,10 +161,15 @@ const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  alignTitleWithLeftIcon: {
+    position: "relative",
+    left: 20,
+    justifyContent: "flex-start"
+  },
   leftIconContainer: {
-    position: "absolute",
-    left: SPACE.md,
-    alignItems: "flex-start"
+    left: SPACE.sm,
+    alignItems: "flex-start",
+    backgroundColor: "red"
   },
   leftIcon: {
     marginLeft: 10,

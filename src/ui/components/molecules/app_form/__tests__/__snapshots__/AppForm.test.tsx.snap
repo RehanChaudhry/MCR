@@ -252,12 +252,15 @@ exports[`rendering... renders correctly 1`] = `
     >
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "flex": 1,
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "flex": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
         }
       >
         <Text
