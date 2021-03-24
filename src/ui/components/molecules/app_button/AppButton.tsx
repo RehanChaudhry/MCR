@@ -168,8 +168,7 @@ const style = StyleSheet.create({
   },
   leftIconContainer: {
     left: SPACE.sm,
-    alignItems: "flex-start",
-    backgroundColor: "red"
+    alignItems: "flex-start"
   },
   leftIcon: {
     marginLeft: 10,
