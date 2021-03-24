@@ -12,19 +12,28 @@ import { AppLog } from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { usePreferredTheme } from "hooks";
 import { FONT_SIZE } from "config";
+import { grayShades } from "hooks/theme/ColorPaletteContainer";
 
 export type Choice = { label: string; value: string };
 
 interface Props {
-  containerStyle?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>; //please dont pass padding start, end or horizontal because width is used to show selected item
   tabStyle?: StyleProp<ViewStyle>;
+  tabHeight?: number;
   values: Array<Choice>;
   selectedIndex?: number;
   onChange?: (value: Choice, index: number) => void;
 }
 
 export const SegmentedControl = React.memo<Props>(
-  ({ onChange, selectedIndex = 0, containerStyle, tabStyle, values }) => {
+  ({
+    onChange,
+    selectedIndex = 0,
+    containerStyle,
+    tabHeight = 40,
+    tabStyle,
+    values
+  }) => {
     AppLog.log("rendering SegmentedControl...");
 
     if (values.length < 2) {
@@ -36,6 +45,11 @@ export const SegmentedControl = React.memo<Props>(
     const [selectedPosition, setSelectedPosition] = useState<number>(
       values.length - 1 >= selectedIndex ? selectedIndex : 0
     );
+
+    const [
+      selectedIndexDuplicate,
+      setSelectedIndexDuplicate
+    ] = useState<number>(selectedIndex);
 
     // setup animation
     const [segmentWidth, setSegmentWidth] = useState(0);
@@ -59,18 +73,18 @@ export const SegmentedControl = React.memo<Props>(
     function getStyleAsPerSelectionStatus(position: number) {
       return selectedPosition === position
         ? [{ color: theme.themedColors.background }]
-        : [{ color: theme.themedColors.label }];
+        : [{ color: theme.themedColors.interface["500"] }];
     }
 
     function buttonPressed(position: number) {
       const oldSelectedOption = selectedPosition;
+      AppLog.logForcefully("position : " + position);
+      setSelectedIndexDuplicate(position);
       setSelectedPosition(position);
       if (position !== oldSelectedOption) {
         onChange?.(values[position], position);
       }
     }
-
-    const selectPadding = 3;
 
     return (
       <View
@@ -87,6 +101,8 @@ export const SegmentedControl = React.memo<Props>(
           const newSegmentWidth = values.length
             ? width / values.length
             : 0;
+
+          AppLog.logForcefully("width : " + width);
           if (newSegmentWidth !== segmentWidth) {
             animation.setValue(newSegmentWidth * (selectedIndex || 0));
             setSegmentWidth(newSegmentWidth);
@@ -95,24 +111,31 @@ export const SegmentedControl = React.memo<Props>(
         <Animated.View
           testID={"animatedView"}
           style={[
-            styles.selectedOptionBg,
+            styles.selectedOptionBg(
+              values.length - 1,
+              selectedIndexDuplicate
+            ),
             { transform: [{ translateX: animation }] },
             {
-              width: segmentWidth - selectPadding * 2,
-              top: selectPadding,
-              bottom: selectPadding,
-              start: selectPadding,
-              end: selectPadding,
-              backgroundColor: theme.themedColors.label
+              width: segmentWidth,
+              height: tabHeight,
+              borderWidth: 0.5,
+              borderColor: grayShades.gray["600"],
+              backgroundColor: grayShades.gray["600"]
             }
           ]}
         />
+
         <View style={styles.segmentsContainer}>
           {values &&
             values.map((value, index) => {
               return (
                 <TouchableOpacity
-                  style={[styles.tabContainer, tabStyle]}
+                  style={[
+                    styles.tabContainer(values.length, index),
+                    tabStyle,
+                    { height: tabHeight }
+                  ]}
                   key={value.value}
                   onPress={() => {
                     buttonPressed(index);
@@ -140,12 +163,16 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     alignItems: "center",
     borderRadius: 5,
-    overflow: "hidden",
-    height: 40
+    overflow: "hidden"
   },
-  selectedOptionBg: {
-    position: "absolute",
-    borderRadius: 5
+  selectedOptionBg: (size: number, index: number) => {
+    return {
+      position: "absolute",
+      borderBottomLeftRadius: index === 0 ? 5 : 0,
+      borderTopLeftRadius: index === 0 ? 5 : 0,
+      borderTopRightRadius: size === index ? 5 : 0,
+      borderBottomRightRadius: size === index ? 5 : 0
+    };
   },
   text: {
     fontSize: FONT_SIZE.md
@@ -159,9 +186,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "transparent"
   },
-  tabContainer: {
-    flex: 1,
-    alignContent: "center",
-    alignItems: "center"
+  tabContainer: (size: number, index: number) => {
+    return {
+      flex: 1,
+      alignContent: "center",
+      alignItems: "center",
+      justifyContent: "center",
+      borderBottomLeftRadius: index === 0 ? 5 : 0,
+      borderTopLeftRadius: index === 0 ? 5 : 0,
+      borderTopRightRadius: size - 1 === index ? 5 : 0,
+      borderBottomRightRadius: size - 1 === index ? 5 : 0,
+      borderWidth: 0.5,
+      borderColor: grayShades.gray["700"]
+    };
   }
 });

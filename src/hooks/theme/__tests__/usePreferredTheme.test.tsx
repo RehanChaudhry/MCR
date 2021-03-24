@@ -1,9 +1,10 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import { AppColorScheme, AppThemeProvider } from "hooks/theme";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import { Button, Text, View } from "react-native";
 import { colorPaletteContainer } from "hooks/theme/ColorPaletteContainer";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 describe("initialization check", () => {
   it("light dark theme should be defined", () => {
@@ -42,7 +43,7 @@ describe("color validation", () => {
           expect(isValidHex(colorValue)).toBeTruthy();
         } else if (typeof colorValue === "object") {
           for (const [, color] of Object.entries(colorValue)) {
-            expect(isValidHex(color)).toBeTruthy();
+            expect(isValidHex(color as string)).toBeTruthy();
           }
         } else {
           expect(false).toBeTruthy();
@@ -52,13 +53,20 @@ describe("color validation", () => {
   });
 });
 
-describe("check theme value is properly set", () => {
+describe("check theme is properly set", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   const TestComponent = () => {
     const theme = usePreferredTheme();
     return (
       <>
         <View>
-          <Text testID={"text"}>{theme.isDark.toString()}</Text>
+          <Text testID={"isDark"}>{theme.isDark.toString()}</Text>
+          <Text testID={"backgroundColor"}>
+            {theme.themedColors.background}
+          </Text>
           <Button
             testID={"toggleTheme"}
             title="Change theme"
@@ -68,26 +76,78 @@ describe("check theme value is properly set", () => {
               )
             }
           />
+          <Button
+            testID={"changeThemeBgColor"}
+            title="Change theme Bg Color"
+            onPress={() => {
+              theme.saveCustomPalette({
+                background: "#00694e"
+              });
+            }}
+          />
         </View>
       </>
     );
   };
 
-  it("theme toggle", () => {
+  it("toggles theme", () => {
+    // given
     const wrapper = render(
       <AppThemeProvider colorScheme={AppColorScheme.LIGHT}>
         <TestComponent />
       </AppThemeProvider>
     );
-
-    expect(wrapper.getByTestId("text").props.children).toEqual(
+    // then check initial state
+    expect(wrapper.getByTestId("isDark").props.children).toEqual(
       false.toString()
     );
+    expect(wrapper.getByTestId("backgroundColor").props.children).toEqual(
+      "#FFFFFF"
+    );
 
+    // when theme is toggled
     fireEvent.press(wrapper.getByTestId("toggleTheme"));
-
-    expect(wrapper.getByTestId("text").props.children).toEqual(
+    // then
+    expect(wrapper.getByTestId("isDark").props.children).toEqual(
       true.toString()
     );
+
+    // when custom theme is set
+    fireEvent.press(wrapper.getByTestId("changeThemeBgColor"));
+    // then
+    expect(wrapper.getByTestId("backgroundColor").props.children).toEqual(
+      "#00694e"
+    );
+  });
+
+  it("loads theme upon start", async () => {
+    // given
+    const wrapper = render(
+      <AppThemeProvider colorScheme={AppColorScheme.LIGHT}>
+        <TestComponent />
+      </AppThemeProvider>
+    );
+    await AsyncStorage.clear();
+
+    // then check initial state
+    expect(wrapper.getByTestId("backgroundColor").props.children).toEqual(
+      "#FFFFFF"
+    );
+
+    // when theme is changed
+    fireEvent.press(wrapper.getByTestId("changeThemeBgColor"));
+    // when component restarts
+    const wrapperAfter = render(
+      <AppThemeProvider colorScheme={AppColorScheme.LIGHT}>
+        <TestComponent />
+      </AppThemeProvider>
+    );
+
+    // then
+    await waitFor(() => {
+      expect(
+        wrapperAfter.getByTestId("backgroundColor").props.children
+      ).toEqual("#00694e");
+    });
   });
 });

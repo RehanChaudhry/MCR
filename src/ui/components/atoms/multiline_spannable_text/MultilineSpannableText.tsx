@@ -16,7 +16,7 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-export const MultilineSpannableText = React.memo<Props>(
+const MultilineSpannableText = React.memo<Props>(
   ({ textStyle, text, onPress }) => {
     if (
       text.length > 0 &&
@@ -41,3 +41,5 @@ export const MultilineSpannableText = React.memo<Props>(
     }
   }
 );
+
+export default MultilineSpannableText;

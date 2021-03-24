@@ -10,7 +10,6 @@ import {
   ViewStyle
 } from "react-native";
 import { COLORS, FONTS, FONT_SIZE, SPACE } from "config";
-import { AppLog } from "utils/Util";
 
 export interface AppInputFieldProps extends TextInputProps {
   style?: StyleProp<TextStyle>;
@@ -50,7 +49,6 @@ export const AppInputField = React.memo<Props>(
       setTextInputValue(valueToShowAtStart);
     }, [valueToShowAtStart]);
 
-    AppLog.logForcefully("rendering app input..." + valueToShowAtStart);
     return (
       <View style={[styles.input, viewStyle]}>
         {leftIcon && (
@@ -98,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.md,
     fontFamily: FONTS.regular,
     borderWidth: StyleSheet.hairlineWidth,
-    flex: 1
+    width: "100%"
 
     // //Its for IOS
     // shadowColor: COLORS.black,

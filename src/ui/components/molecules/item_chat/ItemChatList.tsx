@@ -14,6 +14,9 @@ import NotifyIndicInActive from "assets/images/notification-indicator-inactive.s
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem from "models/ChatItem";
+import { moderateScale } from "config/Dimens";
+import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
+
 export interface ItemChatListProps extends ViewStyle {
   onPress: () => void;
   item: ChatItem;
@@ -23,9 +26,22 @@ export interface ItemChatListProps extends ViewStyle {
 export const ItemChatList = React.memo<ItemChatListProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
+
+    let prettyTime = new PrettyTimeFormat(
+      "m ago",
+      "s ago",
+      "y ago",
+      "d ago",
+      "h ago"
+    ).getPrettyTime(item.createdAt);
+
     return (
       <TouchableOpacity onPress={onPress}>
-        <View style={styles.container(item.name.length > 1, themedColors)}>
+        <View
+          style={styles.container(
+            item.name.length > 1 && !item.isMessageRead,
+            themedColors
+          )}>
           <Image style={styles.imgStyle} source={item.image} />
 
           <NotifyIndic width={12} height={12} style={styles.indicator} />
@@ -57,7 +73,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
               />
               <AppLabel
                 style={styles.timeText(themedColors)}
-                text="10m ago"
+                text={prettyTime}
                 weight="normal"
               />
             </View>
@@ -82,18 +98,18 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       borderStartColor: shouldShowBorder
         ? themedColors.primary
-        : themedColors.background,
+        : themedColors.backgroundSecondary,
       borderStartWidth: 5
     };
   },
   indicator: {
     position: "absolute",
-    start: 45,
-    top: 10
+    start: moderateScale(45),
+    top: moderateScale(10)
   },
   imgStyle: {
-    width: 45,
-    height: 45,
+    width: moderateScale(45),
+    height: moderateScale(45),
     resizeMode: "cover",
     marginTop: SPACE.md
   },

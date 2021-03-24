@@ -117,12 +117,11 @@ export type ColorPalette = {
 };
 
 type ColorPaletteContainer = {
-  light: ColorPalette;
-  dark: ColorPalette;
-  [key: string]: ColorPalette;
+  light: (customThemePalette: Partial<ColorPalette>) => ColorPalette;
+  dark: (customThemePalette: Partial<ColorPalette>) => ColorPalette;
 };
 
-const branding: ColorPalette = {
+let defaultPalette: ColorPalette = {
   background: "#FFFFFF",
   backgroundSecondary: grayShades.coolGray[100],
 
@@ -156,7 +155,29 @@ const branding: ColorPalette = {
   transparent: "#FF000000"
 };
 
+let lightPalette: Partial<ColorPalette> = {};
+let darkPalette: Partial<ColorPalette> = {};
+
+function mergeDefaultPaletteWith(
+  schemePalette: Partial<ColorPalette>,
+  customThemePalette: Partial<ColorPalette>
+): ColorPalette {
+  return {
+    ...defaultPalette,
+    ...schemePalette,
+    ...customThemePalette
+  };
+}
+
 export const colorPaletteContainer: ColorPaletteContainer = {
-  light: branding,
-  dark: branding
+  light: (customThemePalette: Partial<ColorPalette>) => {
+    return mergeDefaultPaletteWith(lightPalette, customThemePalette);
+  },
+  dark: (customThemePalette: Partial<ColorPalette>) => {
+    return mergeDefaultPaletteWith(darkPalette, customThemePalette);
+  }
+};
+
+export const defaultPaletteCopy = {
+  ...defaultPalette
 };
