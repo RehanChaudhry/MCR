@@ -47,7 +47,11 @@ export const DemoGraphics = React.memo(({}) => {
           ],
           selectedItemCallback: () => {
             //setTitle(item.title);
-          }
+          },
+          style: [
+            styles.dropDown,
+            { borderColor: theme.themedColors.border }
+          ]
         }}
       />
 
@@ -159,5 +163,8 @@ const styles = StyleSheet.create({
   },
   spacer: {
     paddingBottom: SPACE.lg
+  },
+  dropDown: {
+    borderWidth: 1
   }
 });

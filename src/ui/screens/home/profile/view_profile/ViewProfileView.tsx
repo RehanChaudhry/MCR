@@ -43,6 +43,7 @@ export const ViewProfileView: React.FC<Props> = () => {
             shouldShowError={false}
             fontWeight={"semi-bold"}
             leftIcon={watchVideo}
+            shouldAlignTextWithLeftIconWithFullWidth={true}
           />
           <AppLabel
             text={"About Me"}
