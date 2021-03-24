@@ -23,7 +23,7 @@ exports[`Snapshot testing 1`] = `
           ],
         ],
         Object {
-          "fontFamily": "Inter-SemiBold",
+          "fontFamily": "Inter-Regular",
         },
       ]
     }
