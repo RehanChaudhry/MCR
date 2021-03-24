@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
-import { Alert, View } from "react-native";
+import { Alert, Pressable, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
@@ -19,6 +19,9 @@ import MatchesFilterApiResponseModel, {
   FilterCount
 } from "models/api_responses/MatchesFilterApiResponseModel";
 import { MatchesStackParamList } from "routes/MatchesStack";
+import InfoCircle from "assets/images/info_circle.svg";
+import { usePreferredTheme } from "hooks";
+import { SPACE } from "config";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -29,8 +32,23 @@ type Props = {};
 
 const MatchesController: FC<Props> = () => {
   AppLog.log("Opening MatchesController");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { themedColors } = usePreferredTheme();
+
   const navigation = useNavigation<MatchesNavigationProp>();
+
+  navigation.setOptions({
+    headerRight: () => (
+      <Pressable
+        onPress={() => {
+          navigation.navigate("MatchInfo");
+        }}>
+        <InfoCircle width={23} height={23} fill={themedColors.primary} />
+      </Pressable>
+    ),
+    headerRightContainerStyle: {
+      padding: SPACE.md
+    }
+  });
 
   // Matches API
   const matchesApi = useApi<
