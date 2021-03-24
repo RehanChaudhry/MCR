@@ -186,5 +186,16 @@ export default {
 
   chatThreadScreen: {
     typingHint: "Start typing your message"
+  },
+
+  createPost: {
+    requiredField: {
+      message: "Message is a required field"
+    },
+    placeholder: {
+      startTypingYourMessage: "Start typing your message",
+      link: "Enter link (https://..)",
+      embed: "Enter embed code"
+    }
   }
 };

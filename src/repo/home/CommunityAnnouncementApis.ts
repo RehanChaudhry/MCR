@@ -1,10 +1,23 @@
 import { API } from "config";
-import { CommunityAnnouncementResponseModel } from "models/api_responses/CommunityResponseModel";
+import { CreatePostApiRequestModel } from "models/api_requests/CreatePostApiRequestModel";
+import { CommunityAnnouncementResponseModel } from "models/api_responses/CommunityAnnouncementResponseModel";
+import { SignInApiResponseModel } from "models/api_responses/SignInApiResponseModel";
 import { apiClient } from "repo/Client";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getCommunity() {
   return apiClient.get<CommunityAnnouncementResponseModel>(
     API.GET_COMMUNITY
   );
 }
+
+function createPost(requestModel: CreatePostApiRequestModel) {
+  return apiClient.post<SignInApiResponseModel>(
+    API.CREATE_POST,
+    JSON.stringify(requestModel)
+  );
+}
+
+export default {
+  getCommunity,
+  createPost
+};

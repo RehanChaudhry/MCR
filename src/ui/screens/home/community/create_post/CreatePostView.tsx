@@ -3,10 +3,11 @@ import InfoCircle from "assets/images/info_circle.svg";
 import Link from "assets/images/link.svg";
 import Photo from "assets/images/photo.svg";
 import PlusCircle from "assets/images/plus_circle.svg";
-import { COLORS, FONT_SIZE, SPACE } from "config";
+import { COLORS, FONT_SIZE, SPACE, STRINGS } from "config";
 import Strings from "config/Strings";
+import { FormikValues } from "formik";
 import { usePreferredTheme } from "hooks";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -25,14 +26,35 @@ import {
 } from "ui/components/atoms/image_background/AppImageBackground";
 import Screen from "ui/components/atoms/Screen";
 import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
-import { AppButton } from "ui/components/molecules/app_button/AppButton";
-import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
+import AppForm from "ui/components/molecules/app_form/AppForm";
+import AppFormField from "ui/components/molecules/app_form/AppFormField";
+import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { ImageWithCross } from "ui/components/molecules/image_with_cross/ImageWithCross";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, SvgProp } from "utils/Util";
+import * as Yup from "yup";
 
 type Props = {
   shouldShowProgressBar?: boolean;
+  createPost?: (values: CreatePostFormValues) => void;
+};
+
+const validationSchema = Yup.object().shape({
+  message: Yup.string().required(Strings.createPost.requiredField.message)
+});
+
+type CreatePostFormValues = {
+  message: string;
+  link?: string;
+  embed?: string;
+  images?: string[];
+};
+
+let initialValues: FormikValues = {
+  message: "",
+  link: "",
+  embed: "",
+  images: []
 };
 
 export enum POST_TYPES {
@@ -47,6 +69,30 @@ export const CreatePostView = React.memo<Props>((props) => {
   const theme = usePreferredTheme();
   const [images, setImages] = useState<ImagePickerResponse[]>([]);
   const [postType, setPostType] = useState<POST_TYPES>(POST_TYPES.NONE);
+
+  const onSubmit = (_value: FormikValues) => {
+    initialValues = _value;
+    AppLog.log("form values" + initialValues);
+  };
+
+  const linkIcon = () => {
+    return (
+      <Link
+        width={15}
+        height={15}
+        fill={theme.themedColors.interface["500"]}
+      />
+    );
+  };
+  const embedIcon = () => {
+    return (
+      <Code
+        width={15}
+        height={15}
+        fill={theme.themedColors.interface["500"]}
+      />
+    );
+  };
   const linkImage: SvgProp = (
     color?: Color,
     width?: NumberProp,
@@ -147,11 +193,6 @@ export const CreatePostView = React.memo<Props>((props) => {
     );
   };
 
-  useEffect(() => {
-    AppLog.logForcefully("post type in use Effect: " + postType);
-    AppLog.logForcefully("images length in use effect" + images.length);
-  }, [postType, images]);
-
   const dummyProfileImageUrl =
     "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
   return (
@@ -171,150 +212,170 @@ export const CreatePostView = React.memo<Props>((props) => {
               titleFontWeight="bold"
               titleStyle={{ fontSize: FONT_SIZE.xl }}
             />
-            <AppInputField
-              style={[
-                styles.inputFieldRow,
-                { color: theme.themedColors.label }
-              ]}
-              placeholder="Start typing your message"
-              viewStyle={[
-                styles.descriptionView,
-                {
-                  backgroundColor: theme.themedColors.background,
-                  borderColor: theme.themedColors.secondary
-                }
-              ]}
-              multiline={true}
-              numberOfLines={6}
-              textAlignVertical={"top"}
-            />
-            <View style={styles.buttonsContainer}>
-              <AppCompactButton
-                unSelectedText="Photos"
-                icon={photoImage}
-                shouldIconColorChangeOnClick={true}
-                shouldTextChangeOnClick={true}
-                shouldShowBgColorCahange={true}
-                buttonStyle={styles.photosLinkEmbedButton}
-                shouldSelected={postType === POST_TYPES.PHOTOS}
-                onPress={() => {
-                  setPostType(POST_TYPES.PHOTOS);
-                  AppLog.logForcefully("postType: " + postType);
-                  openImageGallery();
-                }}
-              />
-              <AppCompactButton
-                unSelectedText="Link"
-                icon={linkImage}
-                shouldIconColorChangeOnClick={true}
-                shouldTextChangeOnClick={true}
-                shouldShowBgColorCahange={true}
-                buttonStyle={styles.photosLinkEmbedButton}
-                shouldSelected={postType === POST_TYPES.LINK}
-                onPress={() => {
-                  setImages([]);
-                  setPostType(POST_TYPES.LINK);
-                  AppLog.logForcefully("postType: " + postType);
-                }}
-              />
-              <AppCompactButton
-                unSelectedText="Embed"
-                icon={embedCodeImage}
-                shouldIconColorChangeOnClick={true}
-                shouldTextChangeOnClick={true}
-                shouldShowBgColorCahange={true}
-                shouldSelected={postType === POST_TYPES.EMBED}
-                buttonStyle={styles.photosLinkEmbedButton}
-                onPress={() => {
-                  setImages([]);
-                  setPostType(POST_TYPES.EMBED);
-                  AppLog.logForcefully("postType: " + postType);
-                }}
-              />
-              <InfoCircle
-                width={23}
-                height={23}
-                fill={theme.themedColors.interface["500"]}
-              />
-            </View>
 
-            {postType !== POST_TYPES.NONE && (
-              <>
-                {postType === POST_TYPES.PHOTOS && images.length > 0 && (
-                  <View style={styles.imagesListContainer}>
-                    <FlatListWithPb
-                      shouldShowProgressBar={false}
-                      data={images}
-                      style={styles.list}
-                      renderItem={listItem}
-                      horizontal={true}
+            <AppForm
+              initialValues={initialValues}
+              onSubmit={onSubmit}
+              validationSchema={validationSchema}>
+              <AppFormField
+                fieldTestID="message"
+                validationLabelTestID={"messageValidationLabel"}
+                name="message"
+                fieldInputProps={{
+                  multiline: true,
+                  numberOfLines: 6,
+                  textAlignVertical: "top",
+                  keyboardType: "default",
+                  returnKeyType: "next",
+                  placeholder:
+                    STRINGS.createPost.placeholder.startTypingYourMessage,
+                  autoCapitalize: "none",
+                  placeholderTextColor: theme.themedColors.placeholder,
+                  style: [
+                    { color: theme.themedColors.label },
+                    styles.inputFieldRow
+                  ],
+                  viewStyle: [
+                    styles.descriptionView,
+                    {
+                      backgroundColor: theme.themedColors.background,
+                      borderColor: theme.themedColors.secondary
+                    }
+                  ]
+                }}
+              />
+              <View style={styles.buttonsContainer}>
+                <AppCompactButton
+                  unSelectedText="Photos"
+                  icon={photoImage}
+                  shouldIconColorChangeOnClick={true}
+                  shouldTextChangeOnClick={true}
+                  shouldShowBgColorCahange={true}
+                  buttonStyle={styles.photosLinkEmbedButton}
+                  shouldSelected={postType === POST_TYPES.PHOTOS}
+                  onPress={() => {
+                    setPostType(POST_TYPES.PHOTOS);
+                    AppLog.logForcefully("postType: " + postType);
+                    openImageGallery();
+                  }}
+                />
+                <AppCompactButton
+                  unSelectedText="Link"
+                  icon={linkImage}
+                  shouldIconColorChangeOnClick={true}
+                  shouldTextChangeOnClick={true}
+                  shouldShowBgColorCahange={true}
+                  buttonStyle={styles.photosLinkEmbedButton}
+                  shouldSelected={postType === POST_TYPES.LINK}
+                  onPress={() => {
+                    setImages([]);
+                    setPostType(POST_TYPES.LINK);
+                    AppLog.logForcefully("postType: " + postType);
+                  }}
+                />
+                <AppCompactButton
+                  unSelectedText="Embed"
+                  icon={embedCodeImage}
+                  shouldIconColorChangeOnClick={true}
+                  shouldTextChangeOnClick={true}
+                  shouldShowBgColorCahange={true}
+                  shouldSelected={postType === POST_TYPES.EMBED}
+                  buttonStyle={styles.photosLinkEmbedButton}
+                  onPress={() => {
+                    setImages([]);
+                    setPostType(POST_TYPES.EMBED);
+                    AppLog.logForcefully("postType: " + postType);
+                  }}
+                />
+                <InfoCircle
+                  width={23}
+                  height={23}
+                  fill={theme.themedColors.interface["500"]}
+                />
+              </View>
+
+              {postType !== POST_TYPES.NONE && (
+                <>
+                  {postType === POST_TYPES.PHOTOS && images.length > 0 && (
+                    <View style={styles.imagesListContainer}>
+                      <FlatListWithPb
+                        shouldShowProgressBar={false}
+                        data={images}
+                        style={styles.list}
+                        renderItem={listItem}
+                        horizontal={true}
+                      />
+                      {plusCircleImage()}
+                    </View>
+                  )}
+
+                  {postType === POST_TYPES.LINK && (
+                    <AppFormField
+                      fieldTestID="link"
+                      validationLabelTestID={"linkValidationLabel"}
+                      name="link"
+                      fieldInputProps={{
+                        leftIcon: linkIcon,
+                        keyboardType: "default",
+                        returnKeyType: "next",
+                        placeholder: STRINGS.createPost.placeholder.link,
+                        autoCapitalize: "none",
+                        placeholderTextColor:
+                          theme.themedColors.placeholder,
+                        style: [{ color: theme.themedColors.label }],
+                        viewStyle: [
+                          styles.list,
+                          {
+                            backgroundColor: theme.themedColors.background,
+                            borderColor: theme.themedColors.border
+                          }
+                        ]
+                      }}
                     />
-                    {plusCircleImage()}
-                  </View>
-                )}
+                  )}
 
-                {postType === POST_TYPES.LINK && (
-                  <AppInputField
-                    style={{ color: theme.themedColors.label }}
-                    placeholder="Enter link (https://..)"
-                    leftIcon={() => {
-                      return (
-                        <Link
-                          width={12}
-                          height={12}
-                          fill={theme.themedColors.interface["500"]}
-                        />
-                      );
-                    }}
-                    viewStyle={[
-                      {
-                        backgroundColor: theme.themedColors.background,
-                        borderColor: theme.themedColors.secondary
-                      },
-                      styles.list
-                    ]}
-                  />
-                )}
+                  {postType === POST_TYPES.EMBED && (
+                    <AppFormField
+                      fieldTestID="embed"
+                      validationLabelTestID={"embedValidationLabel"}
+                      name="embed"
+                      fieldInputProps={{
+                        leftIcon: embedIcon,
+                        keyboardType: "default",
+                        returnKeyType: "next",
+                        placeholder: STRINGS.createPost.placeholder.embed,
+                        autoCapitalize: "none",
+                        placeholderTextColor:
+                          theme.themedColors.placeholder,
+                        style: [{ color: theme.themedColors.label }],
+                        viewStyle: [
+                          styles.list,
+                          {
+                            backgroundColor: theme.themedColors.background,
+                            borderColor: theme.themedColors.border
+                          }
+                        ]
+                      }}
+                    />
+                  )}
+                </>
+              )}
 
-                {postType === POST_TYPES.EMBED && (
-                  <AppInputField
-                    style={{ color: theme.themedColors.label }}
-                    placeholder="Enter embed code"
-                    leftIcon={() => {
-                      return (
-                        <Code
-                          width={12}
-                          height={12}
-                          fill={theme.themedColors.interface["500"]}
-                        />
-                      );
-                    }}
-                    viewStyle={[
-                      {
-                        backgroundColor: theme.themedColors.background,
-                        borderColor: theme.themedColors.secondary
-                      },
-                      styles.list
-                    ]}
-                  />
-                )}
-              </>
-            )}
-
-            <View
-              style={[
-                styles.bottomLine,
-                { backgroundColor: theme.themedColors.interface["300"] }
-              ]}
-            />
-            <AppButton
-              text="Create Post"
-              buttonStyle={{
-                backgroundColor: theme.themedColors.primary
-              }}
-              textStyle={{ color: theme.themedColors.background }}
-              fontWeight="bold"
-            />
+              <View
+                style={[
+                  styles.bottomLine,
+                  { backgroundColor: theme.themedColors.interface["300"] }
+                ]}
+              />
+              <AppFormFormSubmit
+                text="Create Post"
+                buttonStyle={{
+                  backgroundColor: theme.themedColors.primary
+                }}
+                textStyle={{ color: theme.themedColors.background }}
+                fontWeight="bold"
+              />
+            </AppForm>
           </View>
         </Screen>
       </ScrollView>

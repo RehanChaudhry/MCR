@@ -24,6 +24,7 @@ export default {
 
   //community
   GET_COMMUNITY: "community/",
+  CREATE_POST: "createPost/",
   //chat
   GET_CHATS: "chats"
 };
