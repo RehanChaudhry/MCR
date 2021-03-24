@@ -49,6 +49,7 @@ const MatchesController: FC<Props> = () => {
 
   const refreshCallback = async (onComplete: () => void) => {
     requestModel.current.pageNo = 1;
+    setIsAllDataLoaded(false);
     getProfileMatches().then(() => {
       onComplete();
     });
@@ -65,10 +66,10 @@ const MatchesController: FC<Props> = () => {
       return;
     }
 
-    AppLog.log(
-      "in getProfileMatches(), fetching page: " +
-        JSON.stringify(requestModel.current)
-    );
+    // AppLog.log(
+    //   "in getProfileMatches(), fetching page: " +
+    //     JSON.stringify(requestModel.current)
+    // );
 
     const {
       hasError,
@@ -168,9 +169,9 @@ const MatchesController: FC<Props> = () => {
           pagination: prevState?.pagination
         };
       });
-      Alert.alert("Fried Request Sent", dataBody!.message);
+      Alert.alert("Match Dismissed", dataBody!.message);
     } else {
-      Alert.alert("Unable to send friend request", errorBody);
+      Alert.alert("Unable to dismiss match", errorBody);
     }
   };
 

@@ -1,7 +1,7 @@
 import ProfileMatchType from "models/enums/ProfileMatchType";
 
 export class ProfileMatch {
-  userId!: number;
+  userId: number = 0;
   userName?: string;
   profilePicture?: string;
   classLevel?: string;
@@ -11,7 +11,7 @@ export class ProfileMatch {
   isFriend?: boolean = false;
   isRoommate?: boolean = false;
   isFriendRequested?: boolean = false;
-  createdAt!: string;
+  createdAt: string = "";
 
   constructor(
     userId: number,

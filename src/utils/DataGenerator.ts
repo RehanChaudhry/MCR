@@ -146,7 +146,7 @@ const getQuestion = (
 const getProfileMatch = (id: number) => {
   return new ProfileMatch(
     id,
-    "Phoenix Walker",
+    "Phoenix Walker " + id,
     "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     "Freshman",
     "History",
@@ -154,7 +154,7 @@ const getProfileMatch = (id: number) => {
     "active",
     false,
     false,
-    true,
+    Math.random() < 0.5,
     "2021-03-15T07:18:24.000Z"
   );
 };
@@ -166,15 +166,14 @@ const getProfileMatches: (
   errorBody: undefined;
   dataBody: MatchesApiResponseModel;
 }> = async (request: MatchesApiRequestModel) => {
+  AppLog.log("getProfileMatches(), request: " + JSON.stringify(request));
   const profileMatches: ProfileMatch[] = [];
-  for (
-    let i = (request.pageNo - 1) * (request.limit ?? 5) + 1;
-    i < request.pageNo + (request.limit ?? 5);
-    i++
-  ) {
-    profileMatches.push(getProfileMatch(i));
+  for (let i = 0; i < (request.limit ?? 5); i++) {
+    profileMatches.push(
+      getProfileMatch(Math.floor(Math.random() * 100) + 1)
+    );
   }
-  return {
+  const response = {
     hasError: false,
     errorBody: undefined,
     dataBody: {
@@ -189,6 +188,10 @@ const getProfileMatches: (
       }
     }
   };
+  AppLog.log(
+    "getProfileMatches(), response: " + JSON.stringify(response.dataBody)
+  );
+  return response;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

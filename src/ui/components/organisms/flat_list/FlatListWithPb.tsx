@@ -20,7 +20,7 @@ interface OwnProps<ItemT> extends FlatListProps<ItemT> {
   errorView?: (errorText: string) => React.ReactElement | null;
   retryCallback?: () => void;
   pullToRefreshCallback?: (onComplete: () => void) => void;
-  style: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   ItemSeparatorHeaderAndFooterComponent?: React.ComponentType<any> | null;
   isAllDataLoaded?: boolean;
   noRecordFoundText?: string;
