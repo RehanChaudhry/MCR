@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { usePreferredTheme } from "hooks";
 import SearchField from "ui/components/atoms/search_field/SearchField";
-import { SPACE, STRINGS } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import EGender, { genders } from "models/enums/EGender";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import { moderateScale } from "config/Dimens";
@@ -28,15 +28,20 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
       <SearchField
         style={[
           styles.search,
-          { backgroundColor: grayShades.coolGray[100] }
+          {
+            backgroundColor: grayShades.coolGray[100],
+            borderColor: themedColors.separator
+          }
         ]}
+        textStyle={styles.searchText}
         placeholder={STRINGS.matches.placeholder_search_keyword}
         onChangeText={(textToSearch?: string) => {
           keyword.current = textToSearch;
           onFilterChange(keyword.current, gender.current);
         }}
-        leftIcon={true}
-        rightIcon={false}
+        searchIcon={true}
+        clearIcon={true}
+        iconColor={grayShades.coolGray[500]}
       />
       <AppDropdown
         style={[
@@ -68,7 +73,8 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 0,
     borderBottomEndRadius: 0,
     height: moderateScale(40),
-    flex: 3
+    flex: 3,
+    borderEndWidth: StyleSheet.hairlineWidth
   },
   dropDown: {
     borderTopStartRadius: 0,
@@ -77,7 +83,8 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: moderateScale(20),
     height: moderateScale(40),
     flex: 2
-  }
+  },
+  searchText: { fontSize: FONT_SIZE.sm }
 });
 
 export default MatchesFilter;

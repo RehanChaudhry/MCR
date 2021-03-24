@@ -4,28 +4,18 @@ exports[`Snapshot testing 1`] = `
 <View
   style={
     Array [
-      undefined,
       Object {
         "alignItems": "center",
         "borderRadius": 10,
-        "elevation": 2,
         "flexDirection": "row",
         "height": 40,
         "justifyContent": "center",
-        "padding": 8,
+        "padding": 18.139805825242718,
         "paddingBottom": 2.5,
         "paddingTop": 2.5,
-        "shadowColor": "#000000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
-        },
-        "shadowOpacity": 0.2,
-        "shadowRadius": 1.41,
       },
       Object {
         "backgroundColor": "#00694e",
-        "borderColor": "#111827",
       },
       undefined,
     ]
@@ -50,6 +40,7 @@ exports[`Snapshot testing 1`] = `
         Object {
           "color": "#111827",
         },
+        undefined,
       ]
     }
     testID="SEARCH"
