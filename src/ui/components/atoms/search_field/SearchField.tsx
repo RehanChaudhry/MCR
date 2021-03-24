@@ -15,6 +15,7 @@ import {
   ViewStyle
 } from "react-native";
 import { Color } from "react-native-svg";
+import { grayShades } from "hooks/theme/ColorPaletteContainer";
 
 interface OwnProps {
   style?: StyleProp<ViewStyle>;
@@ -71,7 +72,7 @@ const SearchField = React.memo<Props>(
         )}
         <TextInput
           value={currentSearchText}
-          placeholderTextColor={COLORS.placeholderTextColor}
+          placeholderTextColor={grayShades.coolGray[600]}
           placeholder={placeholder}
           numberOfLines={1}
           testID="SEARCH"

@@ -3,6 +3,7 @@ import {
   Pressable,
   StyleProp,
   StyleSheet,
+  TextStyle,
   View,
   ViewStyle
 } from "react-native";
@@ -13,12 +14,14 @@ import { DropdownModal } from "ui/components/organisms/app_dropdown/DropdownModa
 import { usePreferredTheme } from "hooks";
 import { DropDownItem } from "models/DropDownItem";
 import ChevronDown from "assets/images/chevron-down.svg";
+import { grayShades } from "hooks/theme/ColorPaletteContainer";
 
 export interface AppDropdownProps {
   title: string;
   items: DropDownItem[];
   selectedItemCallback: (item: DropDownItem) => void;
   style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
   dropDownIconStyle?: StyleProp<ImageStyle>;
   dialogBgColor?: string;
   dialogCloseIconStyle?: StyleProp<ImageStyle>;
@@ -35,6 +38,7 @@ export const AppDropdown = React.memo<AppDropdownProps>(
     dropDownIconStyle,
     dialogCloseIconStyle,
     style,
+    textStyle,
     dropDownIcon,
     shouldShowCustomIcon = false
   }) => {
@@ -63,7 +67,7 @@ export const AppDropdown = React.memo<AppDropdownProps>(
       selectedItemCallback(item);
       setSelectedItemId(item.id);
     };
-    AppLog.logForcefully("condition check" + selectedItemText !== title);
+    AppLog.logForcefully("condition check" + selectedItemText === title);
     return (
       <View
         style={[
@@ -91,18 +95,19 @@ export const AppDropdown = React.memo<AppDropdownProps>(
             openModal();
           }}>
           <View style={[styles.wrapper]}>
-            {selectedItemText === title ? (
-              <AppLabel
-                text={selectedItemText}
-                style={{ color: themedColors.labelSecondary }}
-              />
-            ) : (
-              <AppLabel
-                text={selectedItemText}
-                style={{ color: themedColors.primary }}
-              />
-            )}
-
+            <AppLabel
+              text={selectedItemText}
+              style={[
+                styles.text,
+                {
+                  color:
+                    selectedItemText === title
+                      ? grayShades.coolGray[600]
+                      : themedColors.label
+                },
+                textStyle
+              ]}
+            />
             {!shouldShowCustomIcon ? (
               <ChevronDown
                 fill="#6B7280"
@@ -133,5 +138,6 @@ const styles = StyleSheet.create({
     width: 12,
     aspectRatio: 12 / 12,
     resizeMode: "contain"
-  }
+  },
+  text: { includeFontPadding: false }
 });

@@ -26,7 +26,7 @@ exports[`Snapshot testing 1`] = `
     numberOfLines={1}
     onChangeText={[Function]}
     placeholder="Enter text"
-    placeholderTextColor="#979797"
+    placeholderTextColor="#4B5563"
     rejectResponderTermination={true}
     style={
       Array [

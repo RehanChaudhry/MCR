@@ -48,6 +48,7 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
           styles.dropDown,
           { backgroundColor: grayShades.coolGray[100] }
         ]}
+        textStyle={styles.genderText}
         shouldShowCustomIcon={true}
         dropDownIcon={() => <Selector fill={grayShades.coolGray[500]} />}
         title={genders[0].title}
@@ -84,7 +85,8 @@ const styles = StyleSheet.create({
     height: moderateScale(40),
     flex: 2
   },
-  searchText: { fontSize: FONT_SIZE.sm }
+  searchText: { fontSize: FONT_SIZE.sm },
+  genderText: { fontSize: FONT_SIZE.sm }
 });
 
 export default MatchesFilter;
