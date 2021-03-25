@@ -1,10 +1,9 @@
-import React, { FC, useLayoutEffect, useRef, useState } from "react";
+import React, { FC, useRef, useState } from "react";
 import { AppLog } from "utils/Util";
 import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
 import QuestionSection from "models/QuestionSection";
 import Question from "models/Question";
 import { StackNavigationProp } from "@react-navigation/stack";
-import NoHeader from "ui/components/headers/NoHeader";
 import {
   RouteProp,
   useNavigation,
@@ -15,7 +14,7 @@ import { AnswerApiRequestModel } from "models/api_requests/AnswerApiRequestModel
 import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseModel";
 import ProfileApis from "repo/auth/ProfileApis";
 import { usePreventDoubleTap } from "hooks";
-import { Alert, View } from "react-native";
+import { Alert, Pressable, View } from "react-native";
 import {
   QuestionsResponseModel,
   toAnswersRequest,
@@ -26,8 +25,13 @@ import ProgressErrorView from "ui/components/templates/progress_error_view/Progr
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import DataGenerator from "utils/DataGenerator";
 import { ProfileStackParamList } from "routes/ProfileBottomBar";
+import { SPACE } from "../../../config";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { HomeDrawerParamList } from "../../../routes";
+import Menu from "assets/images/menu.svg";
+import usePreferredTheme from "../../../hooks/theme/usePreferredTheme";
 
-type QuestionsNavigationProp = StackNavigationProp<
+type ProfileNavigationProp = StackNavigationProp<
   ProfileStackParamList,
   "UpdateQuestionnaire"
 >;
@@ -35,6 +39,11 @@ type QuestionsNavigationProp = StackNavigationProp<
 type QuestionsRouteProp = RouteProp<
   ProfileStackParamList,
   "UpdateQuestionnaire"
+>;
+
+type ProfileNavigationDrawerProp = DrawerNavigationProp<
+  HomeDrawerParamList,
+  "Profile"
 >;
 
 type Props = {};
@@ -45,17 +54,30 @@ const QuestionsController: FC<Props> = () => {
   AppLog.log("Opening QuestionsController");
   const requestModel = useRef<AnswerApiRequestModel>();
 
-  const navigation = useNavigation<QuestionsNavigationProp>();
+  const navigation = useNavigation<ProfileNavigationProp>();
+  const navigationDrawer = useNavigation<ProfileNavigationDrawerProp>();
+  const theme = usePreferredTheme();
+
   const route = useRoute<QuestionsRouteProp>();
+  AppLog.log("route: " + route.params);
+  navigation.setOptions({
+    headerLeft: () => (
+      <Pressable
+        onPress={() => {
+          navigationDrawer.openDrawer();
+        }}>
+        <Menu width={23} height={23} fill={theme.themedColors.primary} />
+      </Pressable>
+    ),
+    headerLeftContainerStyle: {
+      padding: SPACE.md
+    },
+    headerTitleAlign: "center"
+  });
 
   const [questions, setQuestions] = useState<
     Section<QuestionSection, Question>[]
   >(toSections(questionSections));
-
-  // Add no toolbar
-  useLayoutEffect(() => {
-    navigation.setOptions(NoHeader.create());
-  }, [navigation]);
 
   const questionApi = useApi<any, QuestionsResponseModel>(
     ProfileApis.questions

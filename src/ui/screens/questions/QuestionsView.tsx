@@ -101,7 +101,7 @@ export const QuestionsView = ({
   );
 
   return (
-    <Screen>
+    <Screen shouldAddBottomInset={false}>
       <SectionedList<QuestionSection, Question>
         listHeaderComponent={listHeader()}
         style={styles.sectionedList}
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   headerCard: {
     overflow: "hidden",
     borderRadius: 5,
-    marginVertical: SPACE.sm,
+    //marginVertical: SPACE.sm,
     padding: SPACE.md,
 
     // shadow

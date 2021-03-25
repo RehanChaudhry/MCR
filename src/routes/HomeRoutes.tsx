@@ -7,7 +7,7 @@ import MatchesRoutes from "routes/MatchesRoutes";
 import { NotificationRoutes } from "routes/NotificationRoutes";
 import { CustomDrawer } from "ui/components/templates/drawer/CustomDrawer";
 import FriendsController from "ui/screens/home/friends/FriendsController";
-import ProfileController from "ui/screens/home/profile/ProfileController";
+import ProfileController from "../ui/screens/home/profile/ProfileController";
 
 export const HomeRoutes = () => {
   return (
