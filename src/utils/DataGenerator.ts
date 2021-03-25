@@ -9,6 +9,14 @@ import ChatItem, { SenderType } from "models/ChatItem";
 import { BaseQuestion } from "models/Question";
 import moment from "moment";
 import { AppLog } from "utils/Util";
+import ProfileMatch from "models/ProfileMatch";
+import { defaultPaletteCopy } from "hooks/theme/ColorPaletteContainer";
+import MatchesApiRequestModel from "models/api_requests/MatchesApiRequestModel";
+import MatchesApiResponseModel from "models/api_responses/MatchesApiResponseModel";
+import {
+  MyFriendsResponseModel,
+  ROOMMATE_REQUEST_STATE
+} from "models/api_responses/MyFriendsResponseModel";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -63,49 +71,91 @@ const getUnis = () => {
         id: "1",
         name: "Ohio University",
         location: "Athens, Ohio",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       },
       {
         id: "2",
         name: "Boise State University",
         location: "Boise, Idaho",
-        logo: ""
+        logo: "",
+        colorPalette: {
+          ...defaultPaletteCopy,
+          background: "black",
+          label: "white"
+        }
       },
       {
         id: "3",
         name: "Florida International University",
         location: "Miami, Florida",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       },
       {
         id: "4",
         name: "Oregon State University",
         location: "Corvillas, Oregon",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       },
       {
         id: "5",
         name: "Duquesne University",
         location: "Pittsburgh, Pennsylvania",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       },
       {
         id: "6",
         name: "Lehigh University",
         location: "Greenville, North Carolina",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       },
       {
         id: "7",
         name: "North Dakota State University",
         location: "Fargo, North Dakota",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
       },
       {
         id: "8",
         name: "George Mason University",
         location: "Fairfax, Virginia",
-        logo: ""
+        logo: "",
+        colorPalette: defaultPaletteCopy
+      }
+    ]
+  };
+  return response;
+};
+
+const getMyFriends = () => {
+  const response: MyFriendsResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        title: "Phoenix Walker",
+        subtitle: "Freshman, History",
+        profileImage: "",
+        requestState: ROOMMATE_REQUEST_STATE.NONE
+      },
+      {
+        id: "2",
+        title: "Fox Mccloud",
+        subtitle: "Honors, Fine Arts",
+        profileImage: "",
+        requestState: ROOMMATE_REQUEST_STATE.REQUEST_SENT
+      },
+      {
+        id: "3",
+        title: "Health Atwood",
+        subtitle: "Returner, Life Science",
+        profileImage: "",
+        requestState: ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE
       }
     ]
   };
@@ -125,6 +175,57 @@ const getQuestion = (
     createdAt: "2021-03-15T07:18:24.000Z",
     updatedAt: "2021-03-15T07:18:24.000Z"
   };
+};
+
+const getProfileMatch = (id: number) => {
+  return new ProfileMatch(
+    id,
+    "Phoenix Walker " + id,
+    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    "Freshman",
+    "History",
+    95,
+    "active",
+    false,
+    false,
+    Math.random() < 0.5,
+    "2021-03-15T07:18:24.000Z"
+  );
+};
+
+const getProfileMatches: (
+  request: MatchesApiRequestModel
+) => Promise<{
+  hasError: boolean;
+  errorBody: undefined;
+  dataBody: MatchesApiResponseModel;
+}> = async (request: MatchesApiRequestModel) => {
+  AppLog.log("getProfileMatches(), request: " + JSON.stringify(request));
+  const profileMatches: ProfileMatch[] = [];
+  for (let i = 0; i < (request.limit ?? 5); i++) {
+    profileMatches.push(
+      getProfileMatch(Math.floor(Math.random() * 100) + 1)
+    );
+  }
+  const response = {
+    hasError: false,
+    errorBody: undefined,
+    dataBody: {
+      message: "Success",
+      data: profileMatches,
+      pagination: {
+        total: 15,
+        current: request.pageNo,
+        first: profileMatches[0].userId,
+        last: profileMatches[profileMatches.length - 1].userId,
+        next: request.pageNo + 1 <= 3 ? request.pageNo + 1 : 0
+      }
+    }
+  };
+  AppLog.log(
+    "getProfileMatches(), response: " + JSON.stringify(response.dataBody)
+  );
+  return response;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -287,7 +388,7 @@ function createChat(
   message?: string
 ): ChatItem {
   const date = randomDate(new Date(2012, 0, 1), new Date());
-  AppLog.log("generated date : " + date);
+  // AppLog.log("generated date : " + date);
   return {
     id: id,
     name: args,
@@ -316,5 +417,8 @@ export default {
   getCommunityAnnouncementList,
   createChatThread,
   createChat,
-  getUnis
+  getProfileMatch,
+  getProfileMatches,
+  getUnis,
+  getMyFriends
 };

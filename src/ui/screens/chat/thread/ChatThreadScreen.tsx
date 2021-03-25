@@ -5,11 +5,13 @@ import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog } from "utils/Util";
-import ChatItem from "models/ChatItem";
+import ChatItem, { SenderType } from "models/ChatItem";
+import DataGenerator from "utils/DataGenerator";
+import Strings from "config/Strings";
 
 type Props = {
   data: ChatItem[];
-  sentMessageApi: (message: ChatItem) => void;
+  sentMessageApi: (list: ChatItem[], message: ChatItem) => ChatItem[];
 };
 
 export const ChatThreadScreen = React.memo<Props>(
@@ -21,16 +23,19 @@ export const ChatThreadScreen = React.memo<Props>(
       return <ItemChatThread item={item} />;
     };
 
-    const updateMessagesList = (message: ChatItem) => {
-      sentMessageApi(message);
+    function sentMessage(text: string) {
+      let chatMessage = DataGenerator.createChat(
+        1009,
+        ["Nikki Engelin"],
+        false,
+        SenderType.STUDENTS,
+        1,
+        require("assets/images/d_user_pic.png"),
+        text
+      );
 
-      let newList: ChatItem[] = [];
-
-      newList.push(message);
-      newList.push(...chats);
-
-      setChats(newList);
-    };
+      setChats(sentMessageApi(chats, chatMessage));
+    }
 
     return (
       <Screen style={styles.container}>
@@ -44,7 +49,10 @@ export const ChatThreadScreen = React.memo<Props>(
           inverted={true}
           keyExtractor={(item, index) => index.toString()}
         />
-        <WriteMessage updateMessagesList={updateMessagesList} />
+        <WriteMessage
+          btnPressCallback={sentMessage}
+          appInputPlaceHolder={Strings.chatThreadScreen.typingHint}
+        />
       </Screen>
     );
   }

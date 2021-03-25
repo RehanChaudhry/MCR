@@ -1,38 +1,37 @@
 import React, { FC } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { FONT_SIZE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { grayShades } from "hooks/theme/ColorPaletteContainer";
 
 type Props = {
-  title: string;
-  onPress?: () => void;
+  title?: string;
+  style?: StyleProp<ViewStyle>;
 };
 const TagListItem: FC<Props> = ({ title }) => {
   const theme = usePreferredTheme();
 
   return (
-    //<TouchableOpacity onPress={onPress}>
-    <View
-      style={[
-        styles.mainContainer,
-        { backgroundColor: theme.themedColors.interface[100] }
-      ]}>
-      <AppLabel text={title} style={styles.text} />
+    <View style={styles.mainContainer}>
+      <AppLabel
+        text={title}
+        style={[styles.text, { color: theme.themedColors.labelSecondary }]}
+      />
     </View>
-    //</TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
   mainContainer: {
+    backgroundColor: grayShades.warmGray[200],
     flexDirection: "row",
     flexWrap: "wrap",
     height: 36,
     alignItems: "center",
-    marginHorizontal: 8,
+    marginRight: SPACE.sm,
     padding: 8,
     borderRadius: 5,
-    marginBottom: 8
+    marginBottom: SPACE.xsm
   },
   text: {
     fontSize: FONT_SIZE.sm

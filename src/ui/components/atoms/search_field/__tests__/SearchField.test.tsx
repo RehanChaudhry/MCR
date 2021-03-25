@@ -1,14 +1,14 @@
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import React from "react";
-import { SearchField } from "../SearchField";
+import SearchField from "ui/components/atoms/search_field/SearchField";
 
 it("Snapshot testing", () => {
   const rendered = render(
     <SearchField
       placeholder="Enter text"
       onChangeText={() => {}}
-      leftIcon={false}
-      rightIcon={false}
+      searchIcon={false}
+      clearIcon={false}
     />
   ).toJSON();
   expect(rendered).toMatchSnapshot();
@@ -20,8 +20,8 @@ it("Search by entered characters", async () => {
     <SearchField
       placeholder="Enter text"
       onChangeText={onChangeText}
-      leftIcon={false}
-      rightIcon={false}
+      searchIcon={false}
+      clearIcon={false}
     />
   );
   const textToSearch = getByTestId("SEARCH");
@@ -38,8 +38,8 @@ it("renders left icon", () => {
     <SearchField
       placeholder={"Enter Text"}
       onChangeText={() => {}}
-      leftIcon={true}
-      rightIcon={false}
+      searchIcon={true}
+      clearIcon={false}
     />
   );
   const leftIcon = queryByTestId("left-icon");
@@ -53,12 +53,12 @@ it("renders right icon", () => {
     <SearchField
       placeholder={"Enter Text"}
       onChangeText={() => {}}
-      leftIcon={false}
-      rightIcon={true}
+      searchIcon={false}
+      clearIcon={true}
     />
   );
   const rightIcon = queryByTestId("right-icon");
   const leftIcon = queryByTestId("left-icon");
   expect(leftIcon).toBeNull();
-  expect(rightIcon).not.toBeNull();
+  expect(rightIcon).toBeNull();
 });

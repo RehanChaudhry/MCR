@@ -66,7 +66,7 @@ export const RadioGroup = React.memo<Props>(
             style={[
               styles.radioButtonContainer,
               {
-                width: Dimensions.get("window").width / (itemsInRow + 1)
+                width: Dimensions.get("window").width / (itemsInRow - 10)
               }
             ]}
             key={item.label}>
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   radioButtonIcon: {
     height: 16,
     width: 16,
-    borderRadius: 7,
+    borderRadius: 10,
     justifyContent: "flex-start"
   },
   radioButtonText: {

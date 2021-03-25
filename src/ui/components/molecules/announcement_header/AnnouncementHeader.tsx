@@ -12,7 +12,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { AppLabel, Weight } from "ui/components/atoms/app_label/AppLabel";
 import {
   AppImageBackground,
   CONTAINER_TYPES
@@ -22,11 +22,14 @@ import { SvgProp } from "utils/Util";
 export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   leftImageUrl?: string;
   title: string;
-  subTitle: string;
+  subTitle?: string;
   titleStyle?: StyleProp<TextStyle>;
   subTitleStyle?: StyleProp<TextStyle>;
   bottomLineStyle?: StyleProp<ViewStyle>;
   shouldShowRightImage?: boolean;
+  shouldHideSubTitle?: boolean;
+  shouldHideBottomSeparator?: boolean;
+  titleFontWeight?: Weight;
 }
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
@@ -37,7 +40,10 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
     titleStyle,
     subTitleStyle,
     bottomLineStyle,
-    shouldShowRightImage = false
+    shouldShowRightImage = false,
+    shouldHideSubTitle = false,
+    shouldHideBottomSeparator = false,
+    titleFontWeight = "normal"
   }) => {
     const theme = usePreferredTheme();
     const rightImage: SvgProp = () => {
@@ -67,15 +73,18 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
                   { color: theme.themedColors.label },
                   titleStyle
                 ]}
+                weight={titleFontWeight}
               />
-              <AppLabel
-                text={subTitle}
-                style={[
-                  style.subTitle,
-                  { color: theme.themedColors.labelSecondary },
-                  subTitleStyle
-                ]}
-              />
+              {!shouldHideSubTitle && subTitle !== undefined && (
+                <AppLabel
+                  text={subTitle}
+                  style={[
+                    style.subTitle,
+                    { color: theme.themedColors.labelSecondary },
+                    subTitleStyle
+                  ]}
+                />
+              )}
             </View>
           </View>
           {shouldShowRightImage && (
@@ -91,13 +100,15 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
             />
           )}
         </View>
-        <View
-          style={[
-            style.bottomLine,
-            { backgroundColor: theme.themedColors.interface["300"] },
-            bottomLineStyle
-          ]}
-        />
+        {!shouldHideBottomSeparator && (
+          <View
+            style={[
+              style.bottomLine,
+              { backgroundColor: theme.themedColors.interface["300"] },
+              bottomLineStyle
+            ]}
+          />
+        )}
       </View>
     );
   }

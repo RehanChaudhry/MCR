@@ -18,7 +18,10 @@ interface Props {
   isExpanded?: boolean;
 }
 
-const QuestionHeader = ({ isExpanded = false, questionGroup }: Props) => {
+const QuestionHeader: React.FC<Props> = ({
+  isExpanded = false,
+  questionGroup
+}: Props) => {
   const theme = usePreferredTheme();
   const chevronDownIcon: SvgProp = (
     color?: Color,

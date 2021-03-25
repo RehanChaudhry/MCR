@@ -1,7 +1,7 @@
 import { FormikValues, useFormikContext } from "formik";
 import { usePreferredTheme } from "hooks";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   AppLabel,
   AppLabelProps
@@ -11,7 +11,8 @@ import {
   AppInputFieldProps
 } from "../appinputfield/AppInputField";
 import { AppFormValidationLabel } from "./AppFormValidationLabel";
-import { SPACE } from "../../../../config";
+import { FONT_SIZE, SPACE } from "../../../../config";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export interface AppFormFieldProps {
   fieldTestID?: string;
@@ -21,6 +22,8 @@ export interface AppFormFieldProps {
   value?: string;
   labelProps?: AppLabelProps;
   fieldInputProps: AppInputFieldProps;
+  linkLabelProps?: AppLabelProps;
+  linkLabelOnPress?: () => void;
 }
 
 type Props = AppFormFieldProps;
@@ -32,7 +35,9 @@ const AppFormField = React.memo<Props>(
     labelProps,
     fieldInputProps,
     fieldTestID,
-    validationLabelTestID
+    validationLabelTestID,
+    linkLabelProps,
+    linkLabelOnPress
   }) => {
     const {
       errors,
@@ -47,10 +52,25 @@ const AppFormField = React.memo<Props>(
     return (
       <>
         {labelProps && (
-          <AppLabel
-            style={[styles.label, { color: theme.themedColors.label }]}
-            {...labelProps}
-          />
+          <View style={styles.linkLabelContainer}>
+            <AppLabel
+              style={[styles.label, { color: theme.themedColors.label }]}
+              {...labelProps}
+            />
+            <View style={styles.space} />
+
+            {linkLabelProps && (
+              <TouchableOpacity onPress={linkLabelOnPress}>
+                <AppLabel
+                  style={[
+                    styles.linkLabel,
+                    { color: theme.themedColors.primary }
+                  ]}
+                  {...linkLabelProps}
+                />
+              </TouchableOpacity>
+            )}
+          </View>
         )}
         <AppInputField
           testID={fieldTestID}
@@ -76,6 +96,15 @@ const AppFormField = React.memo<Props>(
 const styles = StyleSheet.create({
   label: {
     paddingBottom: SPACE.xsm
+  },
+  space: {
+    flex: 1
+  },
+  linkLabelContainer: {
+    flexDirection: "row"
+  },
+  linkLabel: {
+    fontSize: FONT_SIZE.md
   }
 });
 

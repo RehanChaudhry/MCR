@@ -12,8 +12,10 @@ import {
   View,
   ViewStyle
 } from "react-native";
+import { LikeButton } from "ui/components/atoms/app_compact_button/LikeButton";
+import { PhotosEmbedButton } from "ui/components/atoms/app_compact_button/PhotosEmbedButton";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { LikeCommentButton } from "ui/components/atoms/like_comment_button/LikeCommentButton";
+import { SvgProp } from "utils/Util";
 
 export interface AnnouncementFooterProps extends TouchableOpacityProps {
   commentCount: number;
@@ -30,18 +32,13 @@ export interface AnnouncementFooterProps extends TouchableOpacityProps {
 }
 
 export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
-  ({
-    likeCount = 3,
-    commentCount = 5,
-    leftContainerLeftTextStyle,
-    leftContainerRightTextStyle,
-    leftContainerLeftIconStyle,
-    leftContainerRightIconStyle,
-    leftContainerLeftButtonStyle,
-    leftContainerRightButtonStyle,
-    bottomLineStyle
-  }) => {
+  ({ likeCount = 3, commentCount = 5, bottomLineStyle }) => {
     const theme = usePreferredTheme();
+    const commentImage: SvgProp = () => {
+      return (
+        <Chat width={12} height={12} fill={theme.themedColors.label} />
+      );
+    };
     return (
       <View>
         <View
@@ -54,42 +51,13 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
         <View style={style.container}>
           <View style={style.leftRightContainer}>
             <View>
-              <LikeCommentButton
-                unSelectedText="Like"
-                selectedText="Liked"
-                buttonStyle={[
-                  {
-                    backgroundColor: theme.themedColors.interface["200"]
-                  },
-                  leftContainerLeftButtonStyle
-                ]}
-                textStyle={[
-                  { color: theme.themedColors.interface["700"] },
-                  leftContainerLeftTextStyle
-                ]}
-                iconStyle={[
-                  { tintColor: theme.themedColors.interface["700"] },
-                  leftContainerLeftIconStyle
-                ]}
-              />
+              <LikeButton unSelectedText="Like" selectedText="Liked" />
             </View>
             <View style={style.leftContainerRightSide}>
-              <LikeCommentButton
-                unSelectedText="Comment"
-                buttonStyle={[
-                  {
-                    backgroundColor: theme.themedColors.interface["200"]
-                  },
-                  leftContainerRightButtonStyle
-                ]}
-                textStyle={[
-                  { color: theme.themedColors.interface["700"] },
-                  leftContainerRightTextStyle
-                ]}
-                iconStyle={[
-                  { tintColor: theme.themedColors.interface["700"] },
-                  leftContainerRightIconStyle
-                ]}
+              <PhotosEmbedButton
+                text="Comment"
+                icon={commentImage}
+                shouldSelected={false}
               />
             </View>
           </View>

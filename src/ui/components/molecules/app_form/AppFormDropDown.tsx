@@ -10,11 +10,15 @@ import {
   AppDropdown,
   AppDropdownProps
 } from "ui/components/organisms/app_dropdown/AppDropdown";
+import { FormikValues, useFormikContext } from "formik";
+import { AppFormValidationLabel } from "ui/components/molecules/app_form/AppFormValidationLabel";
 import { SvgProp } from "utils/Util";
 
 type Props = {
   labelProps?: AppLabelProps;
+  name: string;
   appDropDownProps: AppDropdownProps;
+  validationLabelTestID?: string;
   style?: StyleProp<ViewStyle>;
   dropDownIcon?: SvgProp;
   shouldShowCustomIcon?: boolean;
@@ -22,12 +26,15 @@ type Props = {
 
 export const AppFormDropDown: React.FC<Props> = ({
   labelProps,
+  name,
   appDropDownProps,
-  style,
-  dropDownIcon,
-  shouldShowCustomIcon = false
+  validationLabelTestID
+  // style,
+  // dropDownIcon,
+  // shouldShowCustomIcon = false
 }) => {
   const theme = usePreferredTheme();
+  const { errors, touched, values } = useFormikContext<FormikValues>();
   return (
     <>
       {labelProps && (
@@ -38,10 +45,20 @@ export const AppFormDropDown: React.FC<Props> = ({
       )}
       <AppDropdown
         {...appDropDownProps}
-        style={style}
-        shouldShowCustomIcon={shouldShowCustomIcon}
-        dropDownIcon={dropDownIcon}
+        selectedItemCallback={(item) => {
+          values[name] = item;
+        }}
       />
+      {errors[name] && touched[name] && (
+        <AppFormValidationLabel
+          validationLabelTestID={validationLabelTestID}
+          errorString={errors[name] as string}
+          shouldVisible={true}
+        />
+      )}
+      {/*style={style}*/}
+      {/*shouldShowCustomIcon={shouldShowCustomIcon}*/}
+      {/*dropDownIcon={dropDownIcon}*/}
     </>
   );
 };

@@ -28,7 +28,7 @@ export const AppProgressBar = React.memo<AppProgressBarProps>(
     borderWidth = 0,
     borderRadius = 50,
     unFilledColor,
-    filledColor,
+    filledColor = "#000000",
     shouldShowBottomText = true,
     bottomTextStyle,
     progressPercentage
@@ -49,7 +49,7 @@ export const AppProgressBar = React.memo<AppProgressBarProps>(
           width={null}
           borderWidth={borderWidth}
           borderRadius={borderRadius}
-          height={20}
+          height={18}
           unfilledColor={
             unFilledColor ? unFilledColor : themedColors.interface[200]
           }
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     fontWeight: "700"
   },
   textStyle: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZE.xsm,
     fontWeight: "400"
   }
 });

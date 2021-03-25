@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { COLORS, Constants } from "config";
 import { AuthContext } from "hooks/useAuth";
 import { SignInApiResponseModel } from "models/api_responses/SignInApiResponseModel";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   StyleSheet,
@@ -12,7 +12,7 @@ import {
   Linking
 } from "react-native";
 import AuthStorage from "repo/auth/AuthStorage";
-import { AuthRoutes, HomeRoutes } from "routes";
+import { HomeRoutes } from "routes";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppLog } from "utils/Util";
 import VersionCheck from "react-native-version-check";
@@ -23,7 +23,7 @@ export const SplashView = React.memo<Props>(() => {
   AppLog.log("Rendering SplashView...");
   const [user, setUser] = useState<SignInApiResponseModel>();
   const [isReady, setIsReady] = useState(false);
-  const initialRouteNameRef = useRef<"SignUp" | "Login">("Login");
+  //const initialRouteNameRef = useRef<"SignUp" | "Login">("Login");
 
   const restoreUser = async () => {
     const _user = await AuthStorage.getUser();
@@ -116,12 +116,13 @@ export const SplashView = React.memo<Props>(() => {
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <NavigationContainer>
-        {AppLog.log("User exists: " + (user !== undefined))}
-        {user !== undefined ? (
-          <HomeRoutes />
-        ) : (
-          <AuthRoutes initialRouteName={initialRouteNameRef.current} />
-        )}
+        <HomeRoutes />
+        {/*{AppLog.log("User exists: " + (user !== undefined))}*/}
+        {/*{user !== undefined ? (*/}
+        {/*  <HomeRoutes />*/}
+        {/*) : (*/}
+        {/*  <AuthRoutes initialRouteName={initialRouteNameRef.current} />*/}
+        {/*)}*/}
       </NavigationContainer>
     </AuthContext.Provider>
   );

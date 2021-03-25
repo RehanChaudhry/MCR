@@ -50,18 +50,9 @@ const LoginController: FC<Props> = () => {
     }
   });
 
-  return (
-    <LoginView
-      signIn={(values) => {
-        requestModel.current = {
-          ...values,
-          remember: 1
-        };
-        handleSignIn();
-      }}
-      shouldShowProgressBar={signInApi.loading}
-    />
-  );
+  AppLog.log(handleSignIn);
+
+  return <LoginView shouldShowProgressBar={signInApi.loading} />;
 };
 
 export default LoginController;

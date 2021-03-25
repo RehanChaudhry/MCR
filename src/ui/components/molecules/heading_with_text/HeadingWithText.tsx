@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleProp, TextStyle, View } from "react-native";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { AppLabel, Weight } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE } from "config";
 
 interface OwnProps {
@@ -8,17 +8,24 @@ interface OwnProps {
   text: string;
   headingStyle?: StyleProp<TextStyle>;
   textStyle?: StyleProp<TextStyle>;
+  headingFontWeight?: Weight;
 }
 
 type Props = OwnProps;
 
 export const HeadingWithText = React.memo<Props>(
-  ({ text, headingText, headingStyle, textStyle }) => {
+  ({
+    text,
+    headingText,
+    headingStyle,
+    textStyle,
+    headingFontWeight = "normal"
+  }) => {
     return (
       <View testID={"HEADING_WITH_TEXT"}>
         <AppLabel
           text={headingText}
-          weight={"bold"}
+          weight={headingFontWeight}
           style={[{ fontSize: FONT_SIZE.lg }, headingStyle]}
         />
         <AppLabel

@@ -1,24 +1,30 @@
-import { COLORS } from "config";
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { SPACE } from "config";
+import AboutMe from "ui/components/templates/about_me/AboutMe";
+import InterestsTagsList from "ui/components/templates/Interest";
+import ViewProfileDemoGraphics from "ui/components/templates/ViewProfileDemoGraphics";
+import EducationalInformation from "ui/components/templates/EducationalInformation";
+import MyRoommates from "../../../../components/templates/my_roommates/MyRoommates";
 
 type Props = {};
 
 export const ViewProfileView: React.FC<Props> = () => {
   return (
-    <View style={styles.container}>
-      <AppLabel style={[{ alignSelf: "center" }]} text="View Profile" />
-    </View>
+    <ScrollView>
+      <View style={styles.mainContainer}>
+        <AboutMe />
+        <ViewProfileDemoGraphics />
+        <InterestsTagsList />
+        <EducationalInformation />
+        <MyRoommates />
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: "stretch",
-    flexDirection: "column",
-    justifyContent: "center",
-    backgroundColor: COLORS.yellow,
-    flex: 1
+  mainContainer: {
+    marginVertical: SPACE.lg
   }
 });

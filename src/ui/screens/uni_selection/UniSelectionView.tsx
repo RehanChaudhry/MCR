@@ -56,12 +56,7 @@ const UniSelectionView: FC<Props> = ({
         styles.container,
         { backgroundColor: theme.themedColors.backgroundSecondary }
       ]}
-      topSafeAreaViewStyle={{
-        backgroundColor: theme.themedColors.backgroundSecondary
-      }}
-      bottomSafeAreaViewStyle={{
-        backgroundColor: theme.themedColors.background
-      }}>
+      topSafeAreaBackgroundColor={theme.themedColors.backgroundSecondary}>
       <View style={[styles.logoContainer]}>
         <ImageBackground
           style={styles.logo}

@@ -67,6 +67,11 @@ export const parameterizedString = (...args: string[]) => {
   });
 };
 
+export const capitalizeWords = (str: string) =>
+  str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function delay<T, U, V>(t: T, v?: V) {
   return new Promise<U>(function (resolve) {
