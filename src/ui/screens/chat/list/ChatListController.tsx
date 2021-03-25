@@ -17,6 +17,7 @@ import { Pressable, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
+import Menu from "assets/images/menu.svg";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatParamsList,
