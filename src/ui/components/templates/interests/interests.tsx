@@ -4,7 +4,7 @@ import { HeadingWithText } from "ui/components/molecules/heading_with_text/Headi
 import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
-import { AppFormDropDown } from "ui/components/molecules/app_form_dropdown/AppFormDropDown";
+import { AppFormDropDown } from "ui/components/molecules/app_form/AppFormDropDown";
 
 export const Interests = React.memo(({}) => {
   const theme = usePreferredTheme();

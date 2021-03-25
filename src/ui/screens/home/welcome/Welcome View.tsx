@@ -101,7 +101,7 @@ export const WelcomeView = React.memo<Props>(({}) => {
 
           <View style={styles.continue}>
             <AppButton
-              text={STRINGS.welcome.play_video}
+              text={STRINGS.welcome.continue}
               buttonStyle={{ backgroundColor: theme.themedColors.primary }}
               textStyle={{ color: theme.themedColors.background }}
               fontWeight={"semi-bold"}

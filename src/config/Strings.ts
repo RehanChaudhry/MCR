@@ -47,6 +47,7 @@ export default {
     welcome_text:
       "It's great to have you on board. Let's watch a 2 minute video to get you started.",
     play_video: "Play this video",
+    continue: "Continue",
     learn_about_heading: "Learn more about My College Roomie",
     learn_about_text:
       "My College Roomie is a web-based student social networking and roommate self-selection platform that provides both students and staff with powerful tools to streamline, simplify, and improve the success rate of the roommate matching and assignments process.",
