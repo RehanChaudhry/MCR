@@ -1,3 +1,10 @@
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import Menu from "assets/images/menu.svg";
+import PencilAlt from "assets/images/pencil_alt.svg";
+import { SPACE } from "config";
+import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import { getFeedsTypeFilterData } from "models/enums/FeedsTypeFilter";
 import React, {
@@ -7,8 +14,22 @@ import React, {
   useRef,
   useState
 } from "react";
+import { Pressable, View } from "react-native";
+import { HomeDrawerParamList } from "routes";
+import { CommunityStackParamList } from "routes/CommunityStack";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { CommunityView } from "ui/screens/home/community/CommunityView";
 import DataGenerator from "utils/DataGenerator";
+
+type CommunityNavigationProp = StackNavigationProp<
+  CommunityStackParamList,
+  "Community"
+>;
+
+type CommunityNavigationDrawerProp = DrawerNavigationProp<
+  HomeDrawerParamList,
+  "Community"
+>;
 
 type Props = {};
 
@@ -22,6 +43,49 @@ const CommunityController: FC<Props> = () => {
     DataGenerator.getCommunityAnnouncementList(pageToReload.current)
   );
   const totalPages = 5;
+  const navigation = useNavigation<CommunityNavigationProp>();
+  const navigationDrawer = useNavigation<CommunityNavigationDrawerProp>();
+  const theme = usePreferredTheme();
+
+  navigation.setOptions({
+    headerRight: () => (
+      <Pressable
+        onPress={() => {
+          navigation.navigate("CreatePost");
+        }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <AppLabel
+            text="Create Post"
+            style={{
+              color: theme.themedColors.primary,
+              fontSize: SPACE.md
+            }}
+            weight="semi-bold"
+          />
+          <PencilAlt
+            width={23}
+            height={23}
+            fill={theme.themedColors.primary}
+          />
+        </View>
+      </Pressable>
+    ),
+    headerRightContainerStyle: {
+      padding: SPACE.md
+    },
+    headerLeft: () => (
+      <Pressable
+        onPress={() => {
+          navigationDrawer.openDrawer();
+        }}>
+        <Menu width={23} height={23} fill={theme.themedColors.primary} />
+      </Pressable>
+    ),
+    headerLeftContainerStyle: {
+      padding: SPACE.md
+    },
+    headerTitleAlign: "center"
+  });
 
   const fetchCommunities = useCallback(async () => {
     if (isFetchingInProgress.current) {
