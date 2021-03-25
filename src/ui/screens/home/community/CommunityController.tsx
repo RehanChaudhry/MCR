@@ -14,7 +14,7 @@ import React, {
   useRef,
   useState
 } from "react";
-import { Pressable, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { HomeDrawerParamList } from "routes";
 import { CommunityStackParamList } from "routes/CommunityStack";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
@@ -53,13 +53,15 @@ const CommunityController: FC<Props> = () => {
         onPress={() => {
           navigation.navigate("CreatePost");
         }}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={style.headerView}>
           <AppLabel
             text="Create Post"
-            style={{
-              color: theme.themedColors.primary,
-              fontSize: SPACE.md
-            }}
+            style={[
+              {
+                color: theme.themedColors.primary
+              },
+              style.headerLeftRightText
+            ]}
             weight="semi-bold"
           />
           <PencilAlt
@@ -156,5 +158,15 @@ const CommunityController: FC<Props> = () => {
     />
   );
 };
+
+const style = StyleSheet.create({
+  headerView: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  headerLeftRightText: {
+    fontSize: SPACE.md
+  }
+});
 
 export default CommunityController;

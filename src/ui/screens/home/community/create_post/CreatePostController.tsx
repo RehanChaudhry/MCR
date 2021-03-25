@@ -7,7 +7,7 @@ import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { CreatePostApiRequestModel } from "models/api_requests/CreatePostApiRequestModel";
 import { CreatePostApiResponseModel } from "models/api_responses/CreatePostApiResponseModel";
 import React, { FC, useRef } from "react";
-import { Alert, Pressable, View } from "react-native";
+import { Alert, Pressable, StyleSheet, View } from "react-native";
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { CommunityStackParamList } from "routes/CommunityStack";
@@ -37,13 +37,15 @@ const CreatePostController: FC<Props> = () => {
         onPress={() => {
           navigation.navigate("CreatePost");
         }}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={style.headerView}>
           <AppLabel
             text="Post"
-            style={{
-              color: theme.themedColors.primary,
-              fontSize: SPACE.md
-            }}
+            style={[
+              {
+                color: theme.themedColors.primary
+              },
+              style.headerLeftRightText
+            ]}
             weight="semi-bold"
           />
           <Check
@@ -62,7 +64,7 @@ const CreatePostController: FC<Props> = () => {
         onPress={() => {
           navigation.pop();
         }}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={style.headerView}>
           <Close
             width={20}
             height={20}
@@ -70,10 +72,12 @@ const CreatePostController: FC<Props> = () => {
           />
           <AppLabel
             text="Close"
-            style={{
-              color: theme.themedColors.interface["700"],
-              fontSize: SPACE.md
-            }}
+            style={[
+              {
+                color: theme.themedColors.interface["700"]
+              },
+              style.headerLeftRightText
+            ]}
           />
         </View>
       </Pressable>
@@ -102,5 +106,15 @@ const CreatePostController: FC<Props> = () => {
   });
   return <CreatePostView />;
 };
+
+const style = StyleSheet.create({
+  headerView: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  headerLeftRightText: {
+    fontSize: SPACE.md
+  }
+});
 
 export default CreatePostController;
