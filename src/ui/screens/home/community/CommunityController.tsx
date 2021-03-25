@@ -1,4 +1,5 @@
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
+import { getFeedsTypeFilterData } from "models/enums/FeedsTypeFilter";
 import React, {
   FC,
   useCallback,
@@ -72,6 +73,10 @@ const CommunityController: FC<Props> = () => {
     [pageToReload]
   );
 
+  const getFeedsFilterList = () => {
+    return getFeedsTypeFilterData();
+  };
+
   useEffect(() => {
     fetchCommunities();
   }, [fetchCommunities]);
@@ -83,6 +88,7 @@ const CommunityController: FC<Props> = () => {
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
       pullToRefreshCallback={refreshCallback}
+      feedsFilterData={getFeedsFilterList()}
     />
   );
 };
