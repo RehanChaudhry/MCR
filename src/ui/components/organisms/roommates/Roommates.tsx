@@ -1,3 +1,8 @@
+import AgreementIcon from "assets/images/agreement_icon.svg";
+import ChatRound from "assets/images/chat_round.svg";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
+import { usePreferredTheme } from "hooks";
+import ProfileMatch from "models/ProfileMatch";
 import React from "react";
 import {
   FlatList,
@@ -6,14 +11,10 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { usePreferredTheme } from "hooks";
-import ProfileMatch from "models/ProfileMatch";
-import { shadowStyleProps } from "utils/Util";
-import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
-import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import AgreementIcon from "assets/images/agreement_icon.svg";
+import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
+import { shadowStyleProps } from "utils/Util";
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -44,6 +45,14 @@ const Roommates: React.FC<Props> = ({
         title={item.userName ?? STRINGS.common.not_found}
         subTitle={`${item.classLevel}, ${item.major}`}
         shouldShowRightImage={true}
+        rightIcon={() => (
+          <ChatRound
+            testID="right-icon"
+            width={23}
+            height={23}
+            fill={themedColors.interface["700"]}
+          />
+        )}
       />
     );
   };
@@ -64,6 +73,7 @@ const Roommates: React.FC<Props> = ({
           color={themedColors.primary}
         />
       )}
+      viewStyle={styles.roommateAgreementView}
     />
   );
 
@@ -95,6 +105,9 @@ const styles = StyleSheet.create({
   title: { includeFontPadding: false },
   roommateAgreement: {
     fontSize: FONT_SIZE.sm
+  },
+  roommateAgreementView: {
+    marginTop: SPACE.md
   }
 });
 
