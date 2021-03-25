@@ -6,7 +6,7 @@ import { NewConversationScreen } from "ui/screens/chat/new/NewConversationScreen
 import { ConversationItem } from "models/ConversationItem";
 import Strings from "config/Strings";
 
-type conversationNavigationProp = StackNavigationProp<
+type ConversationNavigationProp = StackNavigationProp<
   ChatParamsList,
   "NewConversation"
 >;
@@ -27,7 +27,7 @@ const dummyData: ConversationItem[] = [
 ];
 
 export const NewConversationController: FC<Props> = () => {
-  const navigation = useNavigation<conversationNavigationProp>();
+  const navigation = useNavigation<ConversationNavigationProp>();
 
   useLayoutEffect(() => {
     navigation.setOptions({

@@ -1,4 +1,7 @@
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { SPACE } from "config";
 import React, { FC, useLayoutEffect, useState } from "react";
+import { HomeDrawerParamList } from "routes";
 import { ChatListScreen } from "ui/screens/chat/list/ChatListScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
@@ -10,13 +13,18 @@ import ChatItem from "models/ChatItem";
 import DataGenerator from "utils/DataGenerator";
 import { ChatParamsList } from "routes/ChatStack";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Strings from "config/Strings";
+import { usePreferredTheme } from "hooks";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatParamsList,
   "ChatThread"
+>;
+type ChatListDrawerNavigationProp = DrawerNavigationProp<
+  HomeDrawerParamList,
+  "ChatList"
 >;
 
 type Props = {};
@@ -25,15 +33,28 @@ const dummyChats = DataGenerator.getChats();
 
 export const ChatListController: FC<Props> = () => {
   const navigation = useNavigation<ChatListNavigationProp>();
+  const navigationDrawer = useNavigation<ChatListDrawerNavigationProp>();
+  const theme = usePreferredTheme();
 
   const [chats, setChats] = useState<ChatItem[]>(dummyChats);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitleAlign: "center",
-      title: Strings.chatListScreen.title
+      title: Strings.chatListScreen.title,
+      headerLeft: () => (
+        <Pressable
+          onPress={() => {
+            navigationDrawer.openDrawer();
+          }}>
+          <Menu width={23} height={23} fill={theme.themedColors.primary} />
+        </Pressable>
+      ),
+      headerLeftContainerStyle: {
+        padding: SPACE.md
+      }
     });
-  }, [navigation]);
+  }, [navigation, navigationDrawer, theme]);
 
   const loadChatsApi = useApi<any, ChatsResponseModel>(ChatApis.getChats);
 
