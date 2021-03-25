@@ -13,6 +13,10 @@ import ProfileMatch from "models/ProfileMatch";
 import { defaultPaletteCopy } from "hooks/theme/ColorPaletteContainer";
 import MatchesApiRequestModel from "models/api_requests/MatchesApiRequestModel";
 import MatchesApiResponseModel from "models/api_responses/MatchesApiResponseModel";
+import {
+  MyFriendsResponseModel,
+  ROOMMATE_REQUEST_STATE
+} from "models/api_responses/MyFriendsResponseModel";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -122,6 +126,36 @@ const getUnis = () => {
         location: "Fairfax, Virginia",
         logo: "",
         colorPalette: defaultPaletteCopy
+      }
+    ]
+  };
+  return response;
+};
+
+const getMyFriends = () => {
+  const response: MyFriendsResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        title: "Phoenix Walker",
+        subtitle: "Freshman, History",
+        profileImage: "",
+        requestState: ROOMMATE_REQUEST_STATE.NONE
+      },
+      {
+        id: "2",
+        title: "Fox Mccloud",
+        subtitle: "Honors, Fine Arts",
+        profileImage: "",
+        requestState: ROOMMATE_REQUEST_STATE.REQUEST_SENT
+      },
+      {
+        id: "3",
+        title: "Health Atwood",
+        subtitle: "Returner, Life Science",
+        profileImage: "",
+        requestState: ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE
       }
     ]
   };
@@ -385,5 +419,6 @@ export default {
   createChat,
   getProfileMatch,
   getProfileMatches,
-  getUnis
+  getUnis,
+  getMyFriends
 };
