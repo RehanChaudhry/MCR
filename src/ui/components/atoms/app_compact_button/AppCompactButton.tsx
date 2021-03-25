@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleProp,
   StyleSheet,
@@ -14,13 +14,13 @@ import { FONT_SIZE, FONTS } from "config";
 import { SvgProp } from "utils/Util";
 
 export interface AppCompactButtonProps extends TouchableOpacityProps {
-  onValueChanged?: (isSelected: boolean) => void;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   selectedText?: string;
   unSelectedText: string;
   icon?: SvgProp;
-  shouldSelected?: boolean;
+  isSelected?: boolean;
+  setIsSelected?: (isSelected: boolean) => void;
   shouldIconColorChangeOnClick: boolean;
   shouldTextChangeOnClick: boolean;
   shouldShowBgColorCahange: boolean;
@@ -29,7 +29,6 @@ export interface AppCompactButtonProps extends TouchableOpacityProps {
 
 export const AppCompactButton = React.memo<AppCompactButtonProps>(
   ({
-    onValueChanged,
     buttonStyle,
     textStyle,
     selectedText,
@@ -38,23 +37,18 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
     shouldIconColorChangeOnClick = false,
     shouldTextChangeOnClick = false,
     shouldShowBgColorCahange = false,
-    shouldSelected,
+    isSelected,
     onPress
   }) => {
-    const [isSelected, setIsSelected] = useState(shouldSelected);
     const theme = usePreferredTheme();
 
     return (
       <TouchableOpacity
-        onPress={() => {
-          setIsSelected(!isSelected);
-          onValueChanged?.(!isSelected);
-          onPress();
-        }}
+        onPress={onPress}
         style={[
           style.button,
           shouldShowBgColorCahange
-            ? isSelected || shouldSelected
+            ? isSelected
               ? {
                   backgroundColor: theme.themedColors.primaryShade
                 }
@@ -69,7 +63,7 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
         <View testID="button-container" style={style.viewContainer}>
           {icon?.(
             shouldIconColorChangeOnClick
-              ? isSelected || shouldSelected
+              ? isSelected
                 ? theme.themedColors.primary
                 : theme.themedColors.label
               : theme.themedColors.label,
@@ -80,16 +74,15 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
             style={[
               style.text,
               shouldTextChangeOnClick
-                ? isSelected || shouldSelected
+                ? isSelected
                   ? { color: theme.themedColors.primary }
                   : { color: theme.themedColors.label }
                 : { color: theme.themedColors.label },
               textStyle
             ]}
             text={
-              (isSelected || shouldSelected
-                ? selectedText
-                : unSelectedText) ?? unSelectedText
+              (isSelected ? selectedText : unSelectedText) ??
+              unSelectedText
             }
             weight={"semi-bold"}
           />
