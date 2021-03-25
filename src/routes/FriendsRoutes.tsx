@@ -80,7 +80,13 @@ const DismissedOrBlockedRoutes: FC<DismissedOrBlockedRoutesProps> = () => {
       <DismissedOrBlockStack.Screen
         name="DismissedOrBlocked"
         component={DismissedOrBlockedController}
-        options={{ title: "Dismissed or Blocked" }}
+        options={{
+          title: "Dismissed or Blocked",
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0
+          }
+        }}
       />
     </DismissedOrBlockStack.Navigator>
   );

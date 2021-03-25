@@ -26,6 +26,7 @@ const ConnectionListHeader: FC<Props> = ({
   return (
     <View style={styles.container}>
       <AppButton
+        shouldAlignTextWithLeftIconWithFullWidth={true}
         fontWeight="semi-bold"
         text={title}
         textStyle={[
@@ -58,7 +59,8 @@ const styles = StyleSheet.create({
     marginTop: SPACE.lg
   },
   buttonText: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.md,
+    paddingLeft: SPACE.xxsm
   }
 });
 
