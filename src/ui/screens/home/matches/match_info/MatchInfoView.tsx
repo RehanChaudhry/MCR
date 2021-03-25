@@ -15,9 +15,9 @@ import MatchingStatus from "assets/images/view_grid_add.svg";
 import MatchingDeadline from "assets/images/calendar.svg";
 import MatchingCriteria from "assets/images/puzzle.svg";
 import { moderateScale } from "config/Dimens";
-import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import SocialDetailForm from "ui/components/templates/about_me/SocialDetailForm";
 import moment from "moment";
+import UserHeader from "ui/components/organisms/user_header/UserHeader";
 
 type Props = {
   matchInfo: MatchInfo;
@@ -34,15 +34,13 @@ export const MatchInfoView: React.FC<Props> = ({ matchInfo }: Props) => {
             styles.card,
             { backgroundColor: themedColors.background }
           ]}>
-          <HeadingWithText
-            headingText={matchInfo.name ?? STRINGS.common.not_found}
-            headingFontWeight={"semi-bold"}
-            text={`${matchInfo.classLevel ?? STRINGS.common.not_found}, 
-                ${matchInfo.major ?? STRINGS.common.not_found}`}
-            textStyle={[
-              styles.textStyle,
-              { color: themedColors.interface["600"] }
-            ]}
+          <UserHeader
+            style={styles.userHeader}
+            name={matchInfo.name ?? STRINGS.common.not_found}
+            image={matchInfo.profilePicture ?? ""}
+            subtitle={`${
+              matchInfo.classLevel ?? STRINGS.common.not_found
+            }, ${matchInfo.major ?? STRINGS.common.not_found}`}
           />
           <AppLabel
             style={styles.description}
@@ -219,7 +217,7 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   container: {},
   card: {
-    borderRadius: 5,
+    borderRadius: 10,
     marginHorizontal: SPACE.md,
     marginTop: SPACE.md,
     ...shadowStyleProps
@@ -252,5 +250,9 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm,
     paddingHorizontal: SPACE.xsm
   },
-  matchingInfoData: { fontSize: FONT_SIZE.sm, marginTop: SPACE.xsm }
+  matchingInfoData: { fontSize: FONT_SIZE.sm, marginTop: SPACE.xsm },
+  userHeader: {
+    marginTop: SPACE.md,
+    marginHorizontal: SPACE.md
+  }
 });
