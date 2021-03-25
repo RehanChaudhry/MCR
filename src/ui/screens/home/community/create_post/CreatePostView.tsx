@@ -210,7 +210,7 @@ export const CreatePostView = React.memo<Props>((props) => {
               shouldHideSubTitle={true}
               shouldHideBottomSeparator={true}
               titleFontWeight="bold"
-              titleStyle={{ fontSize: FONT_SIZE.xl }}
+              titleStyle={styles.headerTitleStyle}
             />
 
             <AppForm
@@ -382,13 +382,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     backgroundColor: COLORS.backgroundColor,
-    padding: 17,
     flex: 1
   },
   cardView: {
-    padding: 17,
+    padding: SPACE.lg,
     flex: 1,
-    marginTop: 25,
+    margin: SPACE.lg,
     backgroundColor: COLORS.white,
     overflow: "hidden",
     paddingVertical: SPACE.lg,
@@ -430,7 +429,7 @@ const styles = StyleSheet.create({
     marginVertical: SPACE.lg
   },
   photosLinkEmbedButton: {
-    marginRight: SPACE.md
+    marginRight: SPACE.sm
   },
   list: {
     marginTop: SPACE.lg
@@ -440,5 +439,8 @@ const styles = StyleSheet.create({
   imagesListContainer: {
     flexDirection: "row",
     alignItems: "center"
+  },
+  headerTitleStyle: {
+    fontSize: FONT_SIZE.lg
   }
 });

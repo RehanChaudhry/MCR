@@ -155,7 +155,7 @@ const style = StyleSheet.create({
     shadowOpacity: 0.15
   },
   text: {
-    fontSize: FONT_SIZE.lg,
+    fontSize: FONT_SIZE.md,
     overflow: "hidden"
   },
   loader: {
@@ -183,7 +183,7 @@ const style = StyleSheet.create({
   },
   rightIconContainer: {
     position: "absolute",
-    right: SPACE.sm,
+    right: SPACE.lg,
     justifyContent: "flex-end",
     alignItems: "flex-end"
   },

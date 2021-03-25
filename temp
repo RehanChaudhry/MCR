@@ -1,4 +1,6 @@
- 1. Clear watchman watches: watchman watch-del-all
- 2. Delete node_modules and run yarn install
- 3. Reset Metro's cache: yarn start --reset-cache
- 4. Remove the cache: rm -rf /tmp/metro-*
+ * Test whether we could stop rendering upon theme switching to improve performance
+ * Make sectioned list memoized
+ * Make flat list momoized
+ * Check virtualized list vs flat list differences
+ * Make link/photos/embed context aware of each other
+   so that they can toggle selected states of each other
