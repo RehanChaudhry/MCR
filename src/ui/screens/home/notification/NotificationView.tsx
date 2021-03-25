@@ -6,7 +6,7 @@ import { AppLog } from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config/Dimens";
 import Colors from "config/Colors";
-import { AppFormDropDown } from "ui/components/molecules/app_form_dropdown/AppFormDropDown";
+import { AppFormDropDown } from "ui/components/molecules/app_form/AppFormDropDown";
 import Selector from "assets/images/selector.svg";
 import { usePreferredTheme } from "hooks";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";

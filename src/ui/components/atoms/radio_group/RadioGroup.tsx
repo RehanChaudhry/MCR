@@ -102,10 +102,8 @@ export const RadioGroup = React.memo<Props>(
 const styles = StyleSheet.create({
   radioButtonContainer: {
     flexDirection: "row",
-    //paddingVertical: 10,
     alignSelf: "flex-start",
     marginTop: 16
-    //marginStart: 10
   },
   radioButtonWrapper: {
     flexWrap: "wrap",

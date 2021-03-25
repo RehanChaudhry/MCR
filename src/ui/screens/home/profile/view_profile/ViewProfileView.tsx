@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SPACE } from "config";
 import AboutMe from "ui/components/templates/about_me/AboutMe";
-import Interests from "ui/components/templates/Interest";
+import InterestsTagsList from "ui/components/templates/InterestsTagsList";
 import ViewProfileDemoGraphics from "ui/components/templates/ViewProfileDemoGraphics";
 import EducationalInformation from "ui/components/templates/EducationalInformation";
 import MyRoommates from "../../../../components/templates/my_roommates/MyRoommates";
@@ -15,7 +15,7 @@ export const ViewProfileView: React.FC<Props> = () => {
       <View style={styles.mainContainer}>
         <AboutMe />
         <ViewProfileDemoGraphics />
-        <Interests />
+        <InterestsTagsList />
         <EducationalInformation />
         <MyRoommates />
       </View>

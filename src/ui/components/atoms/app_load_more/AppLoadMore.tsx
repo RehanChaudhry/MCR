@@ -17,7 +17,7 @@ export interface AppLoadMoreProps extends TouchableOpacityProps {
   shouldShowLoadMore?: boolean;
 }
 
-export const LoadMore = React.memo<AppLoadMoreProps>(
+export const AppLoadMore = React.memo<AppLoadMoreProps>(
   ({
     loaderSize = 25,
     text = "Loading, please wait",
