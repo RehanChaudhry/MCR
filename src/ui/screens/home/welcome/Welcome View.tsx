@@ -1,17 +1,17 @@
-import React from "react";
-import { usePreferredTheme } from "hooks";
-import Screen from "ui/components/atoms/Screen";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
+import ArrowRight from "assets/images/arrow_circle_right.svg";
+import Play from "assets/images/play.svg";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
+import { usePreferredTheme } from "hooks";
+import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { CardView } from "ui/components/atoms/CardView";
+import Screen from "ui/components/atoms/Screen";
 import {
   URL_TYPES,
   WebViewComponent
 } from "ui/components/atoms/webview/WebViewComponent";
-import Play from "assets/images/play.svg";
-import ArrowRight from "assets/images/arrow_circle_right.svg";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
-import { CardView } from "ui/components/atoms/CardView";
+import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 
 type Props = {
   openForgotPasswordScreen?: () => void;
@@ -32,7 +32,10 @@ export const WelcomeView = React.memo<Props>(({}) => {
           textStyle={styles.text}
         />
         <View style={styles.webView}>
-          <WebViewComponent url={""} urlType={URL_TYPES.LINK} />
+          <WebViewComponent
+            url={"https://www.youtube.com/watch?v=zWh3CShX_do"}
+            urlType={URL_TYPES.LINK}
+          />
           <View style={styles.buttonViewStyle}>
             <AppButton
               text={STRINGS.welcome.play_video}

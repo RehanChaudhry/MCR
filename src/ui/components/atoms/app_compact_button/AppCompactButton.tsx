@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleProp,
   StyleSheet,
@@ -12,22 +12,21 @@ import { usePreferredTheme } from "hooks";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, FONTS } from "config";
 import { SvgProp } from "utils/Util";
-
 export interface AppCompactButtonProps extends TouchableOpacityProps {
-  onValueChanged?: (isSelected: boolean) => void;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   selectedText?: string;
   unSelectedText: string;
   icon?: SvgProp;
+  isSelected?: boolean;
+  setIsSelected?: (isSelected: boolean) => void;
   shouldIconColorChangeOnClick: boolean;
   shouldTextChangeOnClick: boolean;
   shouldShowBgColorCahange: boolean;
+  onPress: () => void;
 }
-
 export const AppCompactButton = React.memo<AppCompactButtonProps>(
   ({
-    onValueChanged,
     buttonStyle,
     textStyle,
     selectedText,
@@ -35,17 +34,14 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
     icon,
     shouldIconColorChangeOnClick = false,
     shouldTextChangeOnClick = false,
-    shouldShowBgColorCahange = false
+    shouldShowBgColorCahange = false,
+    isSelected,
+    onPress
   }) => {
-    const [isSelected, setIsSelected] = useState(false);
     const theme = usePreferredTheme();
-
     return (
       <TouchableOpacity
-        onPress={() => {
-          setIsSelected(!isSelected);
-          onValueChanged?.(!isSelected);
-        }}
+        onPress={onPress}
         style={[
           style.button,
           shouldShowBgColorCahange
@@ -68,8 +64,8 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
                 ? theme.themedColors.primary
                 : theme.themedColors.label
               : theme.themedColors.label,
-            15,
-            15
+            12,
+            12
           )}
           <AppLabel
             style={[
@@ -92,7 +88,6 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
     );
   }
 );
-
 const style = StyleSheet.create({
   button: {
     flexDirection: "row",
