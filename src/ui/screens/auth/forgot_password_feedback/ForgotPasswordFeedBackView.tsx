@@ -21,102 +21,107 @@ import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text
 
 type Props = {
   openForgotPasswordScreen?: () => void;
+  openSignInScreen: () => void;
   shouldShowProgressBar?: boolean;
 };
 
-export const ForgotPasswordFeedBackView = React.memo<Props>(({}) => {
-  const theme = usePreferredTheme();
+export const ForgotPasswordFeedBackView = React.memo<Props>(
+  ({ openForgotPasswordScreen, openSignInScreen }) => {
+    const theme = usePreferredTheme();
 
-  return (
-    <Screen>
-      <ScrollView>
-        <AppImageBackground
-          containerShape={CONTAINER_TYPES.CIRCLE}
-          icon={() => (
-            <ArrowLeft
-              width={20}
-              height={20}
-              fill={theme.themedColors.primary}
-            />
-          )}
-          containerStyle={styles.leftArrow}
-        />
-
-        <Logo style={styles.logo} />
-        <LoginImage
-          style={styles.loginImage}
-          width={"100%"}
-          height={300}
-        />
-        <View style={styles.mainContainer}>
-          <AppLabel
-            text={STRINGS.forgotPasswordFeedBack.check_your_inbox}
-            weight={"bold"}
-            style={styles.signInHeading}
-          />
-
-          <MultilineSpannableText
-            textStyle={[
-              { fontSize: FONT_SIZE.md },
-              {
-                fontSize: FONT_SIZE.md,
-                color: theme.themedColors.primary
-              },
-              { fontSize: FONT_SIZE.md }
-            ]}
-            text={[
-              {
-                id: 1,
-                text: STRINGS.forgotPasswordFeedBack.feedBack_one_text
-              },
-              { id: 2, text: STRINGS.forgotPasswordFeedBack.email },
-              {
-                id: 3,
-                text: STRINGS.forgotPasswordFeedBack.feedBack_third_text
-              }
-            ]}
-          />
-
-          <AppLabel
-            text={STRINGS.forgotPasswordFeedBack.feedBack_fourth_text}
-            numberOfLines={0}
-            style={styles.fourthText}
-          />
-
-          <AppButton
-            text={STRINGS.forgotPasswordFeedBack.did_not_recieve_email}
-            buttonStyle={[
-              styles.recieveEmail,
-              { backgroundColor: theme.themedColors.primary }
-            ]}
-            textStyle={{ color: theme.themedColors.background }}
-            fontWeight={"semi-bold"}
-          />
-
-          <AppButton
-            text={STRINGS.forgotPasswordFeedBack.go_back_signin}
-            buttonStyle={[
-              styles.goBackSignIn,
-              {
-                backgroundColor: theme.themedColors.background
-              }
-            ]}
-            textStyle={{ color: theme.themedColors.interface["700"] }}
-            fontWeight={"semi-bold"}
-            buttonType={BUTTON_TYPES.BORDER}
-            leftIcon={() => (
-              <LeftArrow
-                width={16}
-                height={16}
-                fill={theme.themedColors.interface["700"]}
+    return (
+      <Screen>
+        <ScrollView>
+          <AppImageBackground
+            containerShape={CONTAINER_TYPES.CIRCLE}
+            icon={() => (
+              <ArrowLeft
+                width={20}
+                height={20}
+                fill={theme.themedColors.primary}
               />
             )}
+            containerStyle={styles.leftArrow}
+            onPress={openForgotPasswordScreen}
           />
-        </View>
-      </ScrollView>
-    </Screen>
-  );
-});
+
+          <Logo style={styles.logo} />
+          <LoginImage
+            style={styles.loginImage}
+            width={"100%"}
+            height={300}
+          />
+          <View style={styles.mainContainer}>
+            <AppLabel
+              text={STRINGS.forgotPasswordFeedBack.check_your_inbox}
+              weight={"bold"}
+              style={styles.signInHeading}
+            />
+
+            <MultilineSpannableText
+              textStyle={[
+                { fontSize: FONT_SIZE.md },
+                {
+                  fontSize: FONT_SIZE.md,
+                  color: theme.themedColors.primary
+                },
+                { fontSize: FONT_SIZE.md }
+              ]}
+              text={[
+                {
+                  id: 1,
+                  text: STRINGS.forgotPasswordFeedBack.feedBack_one_text
+                },
+                { id: 2, text: STRINGS.forgotPasswordFeedBack.email },
+                {
+                  id: 3,
+                  text: STRINGS.forgotPasswordFeedBack.feedBack_third_text
+                }
+              ]}
+            />
+
+            <AppLabel
+              text={STRINGS.forgotPasswordFeedBack.feedBack_fourth_text}
+              numberOfLines={0}
+              style={styles.fourthText}
+            />
+
+            <AppButton
+              text={STRINGS.forgotPasswordFeedBack.did_not_recieve_email}
+              buttonStyle={[
+                styles.recieveEmail,
+                { backgroundColor: theme.themedColors.primary }
+              ]}
+              textStyle={{ color: theme.themedColors.background }}
+              fontWeight={"semi-bold"}
+            />
+
+            <AppButton
+              text={STRINGS.forgotPasswordFeedBack.go_back_signin}
+              buttonStyle={[
+                styles.goBackSignIn,
+                {
+                  backgroundColor: theme.themedColors.background
+                }
+              ]}
+              textStyle={{ color: theme.themedColors.interface["700"] }}
+              fontWeight={"semi-bold"}
+              buttonType={BUTTON_TYPES.BORDER}
+              leftIcon={() => (
+                <LeftArrow
+                  width={16}
+                  height={16}
+                  fill={theme.themedColors.interface["700"]}
+                />
+              )}
+              onPress={openSignInScreen}
+            />
+          </View>
+        </ScrollView>
+      </Screen>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   mainContainer: {

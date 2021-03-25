@@ -1,13 +1,13 @@
 import React from "react";
+import AnnouncementRoutes from "routes/AnnouncementRoutes";
 import { ChatRoutes } from "routes/ChatRoutes";
+import CommunityRoutes from "routes/CommunityRoutes";
 import { HomeDrawer } from "routes/HomeDrawer";
+import MatchesRoutes from "routes/MatchesRoutes";
 import { NotificationRoutes } from "routes/NotificationRoutes";
-import AnnouncementController from "ui/screens/home/announcement/AnnouncementController";
-import CommunityController from "ui/screens/home/community/CommunityController";
+import { CustomDrawer } from "ui/components/templates/drawer/CustomDrawer";
 import FriendsController from "ui/screens/home/friends/FriendsController";
 import ProfileController from "ui/screens/home/profile/ProfileController";
-import { CustomDrawer } from "ui/components/templates/drawer/CustomDrawer";
-import MatchesRoutes from "routes/MatchesRoutes";
 
 export const HomeRoutes = () => {
   return (
@@ -15,13 +15,10 @@ export const HomeRoutes = () => {
       initialRouteName="Matches"
       drawerContent={(props) => <CustomDrawer {...props} />}>
       <HomeDrawer.Screen name="Matches" component={MatchesRoutes} />
-      <HomeDrawer.Screen
-        name="Community"
-        component={CommunityController}
-      />
+      <HomeDrawer.Screen name="Community" component={CommunityRoutes} />
       <HomeDrawer.Screen
         name="Announcement"
-        component={AnnouncementController}
+        component={AnnouncementRoutes}
       />
       <HomeDrawer.Screen name="Profile" component={ProfileController} />
       <HomeDrawer.Screen name="Friends" component={FriendsController} />

@@ -70,7 +70,9 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
 
 const style = StyleSheet.create({
   container: {
-    margin: SPACE.md,
+    marginRight: SPACE.md,
+    marginLeft: SPACE.md,
+    marginBottom: SPACE.md,
     borderRadius: 10,
     padding: SPACE.lg
   },

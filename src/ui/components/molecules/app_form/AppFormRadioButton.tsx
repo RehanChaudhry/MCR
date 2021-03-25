@@ -1,13 +1,16 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { AppLabel, AppLabelProps } from "../../atoms/app_label/AppLabel";
-import { SPACE } from "../../../../config";
-import usePreferredTheme from "../../../../hooks/theme/usePreferredTheme";
+import {
+  AppLabel,
+  AppLabelProps
+} from "ui/components/atoms/app_label/AppLabel";
+import { SPACE } from "config";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import {
   Choice,
   DIRECTION_TYPE,
   RadioGroup
-} from "../../atoms/radio_group/RadioGroup";
+} from "ui/components/atoms/radio_group/RadioGroup";
 
 type Props = {
   labelProps?: AppLabelProps;

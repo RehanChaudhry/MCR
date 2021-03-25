@@ -17,6 +17,8 @@ import {
   MyFriendsResponseModel,
   ROOMMATE_REQUEST_STATE
 } from "models/api_responses/MyFriendsResponseModel";
+import { MyRoommatesResponseModel } from "models/api_responses/MyRoommatesResponseModel";
+import { DismissedOrBlockedResponseModel } from "models/api_responses/DismissedOrBlockedResponseModel";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -156,6 +158,48 @@ const getMyFriends = () => {
         subtitle: "Returner, Life Science",
         profileImage: "",
         requestState: ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE
+      }
+    ]
+  };
+  return response;
+};
+
+const getMyRoommates = () => {
+  const response: MyRoommatesResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        title: "Maria Randall",
+        subtitle: "Freshman, History",
+        profileImage: ""
+      },
+      {
+        id: "2",
+        title: "Kari Rasmussen",
+        subtitle: "Honors, Fine Arts",
+        profileImage: ""
+      }
+    ]
+  };
+  return response;
+};
+
+const getDismissedOrBlocked = () => {
+  const response: DismissedOrBlockedResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        title: "Maria Randall",
+        subtitle: "Freshman, History",
+        profileImage: ""
+      },
+      {
+        id: "2",
+        title: "Kari Rasmussen",
+        subtitle: "Honors, Fine Arts",
+        profileImage: ""
       }
     ]
   };
@@ -420,5 +464,7 @@ export default {
   getProfileMatch,
   getProfileMatches,
   getUnis,
-  getMyFriends
+  getMyFriends,
+  getMyRoommates,
+  getDismissedOrBlocked
 };

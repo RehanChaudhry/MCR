@@ -382,13 +382,12 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     backgroundColor: COLORS.backgroundColor,
-    padding: 17,
     flex: 1
   },
   cardView: {
-    padding: 17,
+    padding: SPACE.lg,
     flex: 1,
-    marginTop: 25,
+    margin: SPACE.lg,
     backgroundColor: COLORS.white,
     overflow: "hidden",
     paddingVertical: SPACE.lg,

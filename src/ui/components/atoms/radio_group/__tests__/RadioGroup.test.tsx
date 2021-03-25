@@ -34,6 +34,7 @@ test("check radio button on Press", () => {
   const radioButton = getByText("Male");
   fireEvent.press(radioButton);
   expect(onPress).toBeCalledTimes(1);
+  expect(onPress).toBeCalledWith({ id: 1, label: "Male" }, 0);
 });
 
 test("check radio button label on Press", () => {
@@ -53,6 +54,7 @@ test("check radio button label on Press", () => {
   const radioButton = getByText("Female");
   fireEvent.press(radioButton);
   expect(onPress).toBeCalledTimes(1);
+  expect(onPress).toBeCalledWith({ id: 2, label: "Female" }, 1);
 });
 
 it("Snapshot testing", () => {

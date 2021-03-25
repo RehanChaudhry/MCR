@@ -2,29 +2,11 @@ import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import React from "react";
 import SearchField from "ui/components/atoms/search_field/SearchField";
 
-const searchText = () => {
-  return "Muhammad noman";
-};
-
-it("renders correctly", async () => {
-  const { getByTestId } = render(
-    <SearchField
-      placeholder="Enter text"
-      onChangeText={() => searchText}
-      searchIcon={false}
-      clearIcon={false}
-    />
-  );
-
-  const textToSearch = getByTestId("SEARCH");
-  fireEvent.changeText(textToSearch, searchText);
-});
-
 it("Snapshot testing", () => {
   const rendered = render(
     <SearchField
       placeholder="Enter text"
-      onChangeText={() => searchText}
+      onChangeText={() => {}}
       searchIcon={false}
       clearIcon={false}
     />
@@ -55,7 +37,7 @@ it("renders left icon", () => {
   const { queryByTestId } = render(
     <SearchField
       placeholder={"Enter Text"}
-      onChangeText={() => searchText}
+      onChangeText={() => {}}
       searchIcon={true}
       clearIcon={false}
     />
@@ -70,7 +52,7 @@ it("renders right icon", () => {
   const { queryByTestId } = render(
     <SearchField
       placeholder={"Enter Text"}
-      onChangeText={() => searchText}
+      onChangeText={() => {}}
       searchIcon={false}
       clearIcon={true}
     />
