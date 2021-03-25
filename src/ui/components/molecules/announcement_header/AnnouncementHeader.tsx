@@ -126,10 +126,10 @@ const style = StyleSheet.create({
     flexDirection: "row"
   },
   title: {
-    fontSize: FONT_SIZE.lg
+    fontSize: FONT_SIZE.md
   },
   subTitle: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE.xsm
   },
   titleSubtitle: {
     marginLeft: SPACE.md,

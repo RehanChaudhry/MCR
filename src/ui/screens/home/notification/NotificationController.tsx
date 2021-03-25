@@ -8,12 +8,17 @@ import {
   NotificationsResponseModel
 } from "models/api_responses/NotificationsResponseModel";
 import { AppLog } from "utils/Util";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { NotificationParamList } from "routes/NotificationParams";
+import Menu from "assets/images/menu.svg";
+import { SPACE } from "config";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { HomeDrawerParamList } from "routes";
+import { usePreferredTheme } from "hooks";
 
 type NotificationNavigationProp = StackNavigationProp<
   NotificationParamList,
@@ -24,6 +29,11 @@ type Props = {};
 const NotificationController: FC<Props> = () => {
   const navigation = useNavigation<NotificationNavigationProp>();
   const notify = DataGenerator.getNotifications();
+  const theme = usePreferredTheme();
+  type NotificationNavigationDrawerProp = DrawerNavigationProp<
+    HomeDrawerParamList,
+    "Notification"
+  >;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -40,6 +50,23 @@ const NotificationController: FC<Props> = () => {
   const notificationApi = useApi<any, NotificationsResponseModel>(
     ProfileApis.getNotifications
   );
+
+  const navigationDrawer = useNavigation<NotificationNavigationDrawerProp>();
+
+  navigation.setOptions({
+    headerLeft: () => (
+      <Pressable
+        onPress={() => {
+          navigationDrawer.openDrawer();
+        }}>
+        <Menu width={23} height={23} fill={theme.themedColors.primary} />
+      </Pressable>
+    ),
+    headerLeftContainerStyle: {
+      padding: SPACE.md
+    },
+    headerTitleAlign: "center"
+  });
 
   const handleGetNotificationApi = async (onComplete?: () => void) => {
     const {

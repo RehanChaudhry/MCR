@@ -6,7 +6,6 @@ import { shadowStyleProps } from "utils/Util";
 import ProfileMatch from "models/ProfileMatch";
 import { moderateScale } from "config/Dimens";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { grayShades } from "hooks/theme/ColorPaletteContainer";
 import MatchScore from "ui/components/molecules/match_score/MatchScore";
 import ProfileMatchType from "models/enums/ProfileMatchType";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
@@ -50,7 +49,10 @@ const ProfileMatchItem = ({
             text={profileMatch.userName ?? STRINGS.common.not_found}
           />
           <AppLabel
-            style={[styles.subtitle, { color: grayShades.coolGray[600] }]}
+            style={[
+              styles.subtitle,
+              { color: themedColors.interface[600] }
+            ]}
             text={`${profileMatch.classLevel}, ${profileMatch.major}`}
           />
           <MatchScore
@@ -65,7 +67,7 @@ const ProfileMatchItem = ({
           postMatchDismiss(profileMatch.userId);
         }}>
         <Cross
-          fill={grayShades.coolGray[400]}
+          fill={themedColors.interface[400]}
           width={moderateScale(20)}
           height={moderateScale(20)}
         />
@@ -76,7 +78,7 @@ const ProfileMatchItem = ({
           containerShape={CONTAINER_TYPES.SQUARE}
           icon={() => (
             <ChatRound
-              fill={grayShades.coolGray[800]}
+              fill={themedColors.interface[800]}
               width={moderateScale(27)}
               height={moderateScale(27)}
             />
@@ -93,13 +95,13 @@ const ProfileMatchItem = ({
             textStyle={[
               styles.btnActionText,
               profileMatch.isFriendRequested
-                ? { color: grayShades.coolGray[500] }
+                ? { color: themedColors.interface[500] }
                 : { color: themedColors.primary }
             ]}
             buttonStyle={[
               styles.btnAction,
               profileMatch.isFriendRequested
-                ? { backgroundColor: grayShades.coolGray[200] }
+                ? { backgroundColor: themedColors.interface[200] }
                 : { backgroundColor: themedColors.primaryShade }
             ]}
             text={

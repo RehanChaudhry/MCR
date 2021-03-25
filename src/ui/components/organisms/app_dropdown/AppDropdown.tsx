@@ -14,7 +14,6 @@ import { DropdownModal } from "ui/components/organisms/app_dropdown/DropdownModa
 import { usePreferredTheme } from "hooks";
 import { DropDownItem } from "models/DropDownItem";
 import ChevronDown from "assets/images/chevron-down.svg";
-import { grayShades } from "hooks/theme/ColorPaletteContainer";
 
 export interface AppDropdownProps {
   title: string;
@@ -102,7 +101,7 @@ export const AppDropdown = React.memo<AppDropdownProps>(
                 {
                   color:
                     selectedItemText === title
-                      ? grayShades.coolGray[600]
+                      ? themedColors.interface[600]
                       : themedColors.label
                 },
                 textStyle

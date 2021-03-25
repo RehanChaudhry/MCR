@@ -1,17 +1,25 @@
 import React, { FC } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleProp, StyleSheet, TextStyle, View } from "react-native";
 import { SvgProp } from "utils/Util";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config";
 
 type Props = {
+  headingStyle?: StyleProp<TextStyle>;
+  titleStyle?: StyleProp<TextStyle>;
   icon: SvgProp;
   heading: string;
   title: string;
 };
 
-const SocialDetailForm: FC<Props> = ({ icon, heading, title }) => {
+const SocialDetailForm: FC<Props> = ({
+  icon,
+  heading,
+  title,
+  headingStyle,
+  titleStyle
+}) => {
   const theme = usePreferredTheme();
   return (
     <View style={styles.mainContainer}>
@@ -20,12 +28,16 @@ const SocialDetailForm: FC<Props> = ({ icon, heading, title }) => {
         <AppLabel
           text={heading}
           weight={"semi-bold"}
-          style={styles.headingStyle}
+          style={[styles.headingStyle, headingStyle]}
         />
       </View>
       <AppLabel
         text={title}
-        style={[styles.titleStyle, { color: theme.themedColors.primary }]}
+        style={[
+          styles.titleStyle,
+          { color: theme.themedColors.primary },
+          titleStyle
+        ]}
       />
     </View>
   );

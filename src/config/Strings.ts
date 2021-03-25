@@ -229,5 +229,19 @@ export default {
       link: "Link",
       embed: "Embed"
     }
+  },
+  matchInfo: {
+    matching_information: "Matching Information",
+    action_update_profile: "Update Profile",
+    action_update_questionnaire: "Questionnaire",
+    matching_status: "Roommate Matching Opens",
+    label_open: "Currently Open",
+    label_close: "Currently Close",
+    matching_deadline: "Roommate Matching Deadline",
+    max_roommate_count: "How many Roommate can you have?",
+    matching_criteria: "Matching criteria",
+    title: "More Information",
+    my_roommates: "My Roommates",
+    roommate_agreement: "View Roommate Agreement"
   }
 };
