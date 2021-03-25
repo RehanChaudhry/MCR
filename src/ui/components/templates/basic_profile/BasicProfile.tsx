@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { CardView } from "ui/components/atoms/CardView";
 import { UploadProfilePhoto } from "ui/components/templates/basic_profile/UploadProfilePhoto";
-import { COLORS, SPACE, STRINGS } from "config";
+import { SPACE, STRINGS } from "config";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import FacebookIcon from "assets/images/facebook_icon.svg";
 import TwitterIcon from "assets/images/twitter_icon.svg";
@@ -12,6 +12,7 @@ import LinkedInIcon from "assets/images/linkedin_icon.svg";
 import InstagramIcon from "assets/images/instagram_icon.svg";
 import SnapChatIcon from "assets/images/snapchat_icon.svg";
 import TikTokIcon from "assets/images/tiktok_icon.svg";
+import { grayShades } from "hooks/theme/ColorPaletteContainer";
 
 export const BasicProfile = React.memo(({}) => {
   const theme = usePreferredTheme();
@@ -291,8 +292,8 @@ const styles = StyleSheet.create({
     paddingVertical: SPACE.sm
   },
   horizontalLine: {
-    backgroundColor: COLORS.grey,
-    height: 0.3,
+    backgroundColor: grayShades.warmGray["300"],
+    height: 0.5,
     marginVertical: SPACE.lg
   },
   cardStyles: {

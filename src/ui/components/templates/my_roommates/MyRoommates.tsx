@@ -7,10 +7,24 @@ import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb
 import { myRoommateData } from "models/MyRoommateDataType";
 import MyRoommateItem from "ui/components/templates/my_roommates/MyRoommateItem";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import {
+  AppButton,
+  BUTTON_TYPES
+} from "ui/components/molecules/app_button/AppButton";
+import AgreementIcon from "assets/images/agreement_icon.svg";
+
 type Props = {};
 
 const MyRoommates: FC<Props> = () => {
   const theme = usePreferredTheme();
+  const agreementIcon = () => (
+    <AgreementIcon
+      height={22}
+      width={22}
+      color={theme.themedColors.primary}
+    />
+  );
+
   return (
     <CardView style={styles.cardView}>
       <View style={styles.innerCardView}>
@@ -19,16 +33,30 @@ const MyRoommates: FC<Props> = () => {
           weight={"semi-bold"}
           style={[styles.mainHeading, { color: theme.themedColors.label }]}
         />
+
+        <FlatListWithPb
+          shouldShowProgressBar={false}
+          data={myRoommateData}
+          renderItem={({ item }) => (
+            <MyRoommateItem name={item.name} field={item.field} />
+          )}
+          style={styles.flatList}
+          scrollEnabled={false}
+        />
+        <AppButton
+          text={"View Roommate Agreement"}
+          buttonType={BUTTON_TYPES.NORMAL}
+          textStyle={{
+            color: theme.themedColors.primary,
+            marginHorizontal: SPACE.xxsm,
+            fontSize: FONT_SIZE.md
+          }}
+          shouldShowError={false}
+          fontWeight={"semi-bold"}
+          leftIcon={agreementIcon}
+          shouldAlignTextWithLeftIconWithFullWidth={true}
+        />
       </View>
-      <FlatListWithPb
-        shouldShowProgressBar={false}
-        data={myRoommateData}
-        renderItem={({ item }) => (
-          <MyRoommateItem name={item.name} field={item.field} />
-        )}
-        style={styles.flatList}
-        scrollEnabled={false}
-      />
     </CardView>
   );
 };
@@ -36,23 +64,25 @@ const styles = StyleSheet.create({
   cardView: {
     marginHorizontal: SPACE.lg,
     marginTop: SPACE.lg
-    //backgroundColor: Colors.red
   },
   innerCardView: {
     marginHorizontal: SPACE.lg,
     paddingTop: SPACE.lg,
-    paddingBottom: SPACE.xsm
-    //backgroundColor: Colors.grey
+    paddingBottom: SPACE.md
   },
   mainHeading: {
     fontSize: FONT_SIZE.lg
-    //backgroundColor: Colors.black
   },
   headingStyle: {
     fontSize: FONT_SIZE.md
   },
   flatList: {
-    paddingHorizontal: SPACE.lg
+    marginTop: SPACE.lg
+  },
+  uploadButton: {
+    height: 44,
+    width: "100%",
+    flexDirection: "row"
   }
 });
 

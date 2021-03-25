@@ -44,7 +44,8 @@ export const UploadProfilePhoto = React.memo(() => {
           buttonType={BUTTON_TYPES.BORDER}
           textStyle={{
             color: theme.themedColors.label,
-            borderColor: theme.themedColors.interface["700"]
+            borderColor: theme.themedColors.interface["700"],
+            fontSize: FONT_SIZE.md
           }}
           shouldShowError={false}
           fontWeight={"semi-bold"}
