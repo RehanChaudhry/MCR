@@ -110,7 +110,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
 
 const style = StyleSheet.create({
   mainContainer: {
-    marginBottom: SPACE.md
+    marginTop: SPACE.md
   },
   container: {
     flexDirection: "row",

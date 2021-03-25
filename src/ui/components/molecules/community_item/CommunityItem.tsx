@@ -87,9 +87,12 @@ const style = StyleSheet.create({
     marginLeft: SPACE.md,
     marginBottom: SPACE.md,
     borderRadius: 10,
-    padding: SPACE.lg
+    paddingRight: SPACE.lg,
+    paddingLeft: SPACE.lg,
+    paddingBottom: SPACE.lg
   },
   text: {
-    lineHeight: 20
+    lineHeight: 20,
+    paddingTop: SPACE.lg
   }
 });

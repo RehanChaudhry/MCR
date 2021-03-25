@@ -115,8 +115,8 @@ const style = StyleSheet.create({
     marginRight: SPACE.sm
   },
   row: {
-    flexDirection: "row",
-    marginRight: SPACE.sm
+    flexDirection: "row"
+    // marginRight: SPACE.sm
   },
   icon: {
     marginTop: SPACE.xxsm,
