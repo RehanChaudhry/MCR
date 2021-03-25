@@ -1,14 +1,14 @@
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import React, { FC, useRef } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ProfileRoutes } from "routes/ProfileRoutes";
 import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import BottomBreadCrumbs, {
   Item
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
-import Screen from "ui/components/atoms/Screen";
 import { usePreferredTheme } from "hooks";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type ProfileNavigationProp = BottomTabNavigationProp<ProfileStackParamList>;
 
@@ -16,6 +16,7 @@ type Props = {};
 
 const ProfileController: FC<Props> = () => {
   const navigation = useNavigation<ProfileNavigationProp>();
+  const safeAreaInsets = useSafeAreaInsets();
 
   const _items: Item[] = [
     {
@@ -33,7 +34,7 @@ const ProfileController: FC<Props> = () => {
     {
       title: "Update Questionnaire",
       onPress: () => {
-        navigation.navigate("UpdateQuestionnaire");
+        navigation.navigate("UpdateQuestionnaire", { isUpdating: true });
       }
     }
   ];
@@ -43,14 +44,23 @@ const ProfileController: FC<Props> = () => {
   const theme = usePreferredTheme();
 
   return (
-    <Screen
+    <View
       style={[
         styles.container,
         { backgroundColor: theme.themedColors.backgroundSecondary }
       ]}>
       <ProfileRoutes />
       <BottomBreadCrumbs data={itemsRef.current} />
-    </Screen>
+      <View
+        style={[
+          styles.bottomSafeArea,
+          {
+            backgroundColor: theme.themedColors.background,
+            height: safeAreaInsets.bottom
+          }
+        ]}
+      />
+    </View>
   );
 };
 
@@ -58,6 +68,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     flex: 1
+  },
+  bottomSafeArea: {
+    width: "100%"
   }
 });
 

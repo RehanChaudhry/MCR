@@ -1,7 +1,6 @@
 import Code from "assets/images/code.svg";
 import InfoCircle from "assets/images/info_circle.svg";
 import Link from "assets/images/link.svg";
-import Photo from "assets/images/photo.svg";
 import PlusCircle from "assets/images/plus_circle.svg";
 import { COLORS, FONT_SIZE, SPACE, STRINGS } from "config";
 import Strings from "config/Strings";
@@ -18,8 +17,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import * as ImagePicker from "react-native-image-picker";
 import { ImagePickerResponse } from "react-native-image-picker";
 import SimpleToast from "react-native-simple-toast";
-import { Color, NumberProp } from "react-native-svg";
-import { PhotosEmbedButton } from "ui/components/atoms/app_compact_button/PhotosEmbedButton";
+import { EmbedButton } from "ui/components/atoms/compact_buttons/EmbedButton";
+import { LinkButton } from "ui/components/atoms/compact_buttons/LinkButton";
+import { PhotosButton } from "ui/components/atoms/compact_buttons/PhotosButton";
 import {
   AppImageBackground,
   CONTAINER_TYPES
@@ -93,28 +93,6 @@ export const CreatePostView = React.memo<Props>((props) => {
       />
     );
   };
-  const linkImage: SvgProp = (
-    color?: Color,
-    width?: NumberProp,
-    height?: NumberProp
-  ) => {
-    return <Link width={width} height={height} fill={color} />;
-  };
-  const embedCodeImage: SvgProp = (
-    color?: Color,
-    width?: NumberProp,
-    height?: NumberProp
-  ) => {
-    return <Code width={width} height={height} fill={color} />;
-  };
-  const photoImage: SvgProp = (
-    color?: Color,
-    width?: NumberProp,
-    height?: NumberProp
-  ) => {
-    return <Photo width={width} height={height} fill={color} />;
-  };
-
   const listItem = useCallback(
     ({ item }: { item: ImagePickerResponse }) => (
       <ImageWithCross
@@ -245,33 +223,24 @@ export const CreatePostView = React.memo<Props>((props) => {
                 }}
               />
               <View style={styles.buttonsContainer}>
-                <PhotosEmbedButton
-                  text={Strings.createPost.buttonsName.photo}
-                  icon={photoImage}
-                  buttonStyle={styles.photosLinkEmbedButton}
-                  shouldSelected={postType === POST_TYPES.PHOTOS}
+                <PhotosButton
+                  isSelected={postType === POST_TYPES.PHOTOS}
                   onPress={() => {
                     setPostType(POST_TYPES.PHOTOS);
                     AppLog.logForcefully("postType: " + postType);
                     openImageGallery();
                   }}
                 />
-                <PhotosEmbedButton
-                  text={Strings.createPost.buttonsName.link}
-                  icon={linkImage}
-                  buttonStyle={styles.photosLinkEmbedButton}
-                  shouldSelected={postType === POST_TYPES.LINK}
+                <LinkButton
+                  isSelected={postType === POST_TYPES.LINK}
                   onPress={() => {
                     setImages([]);
                     setPostType(POST_TYPES.LINK);
                     AppLog.logForcefully("postType: " + postType);
                   }}
                 />
-                <PhotosEmbedButton
-                  text={Strings.createPost.buttonsName.embed}
-                  icon={embedCodeImage}
-                  shouldSelected={postType === POST_TYPES.EMBED}
-                  buttonStyle={styles.photosLinkEmbedButton}
+                <EmbedButton
+                  isSelected={postType === POST_TYPES.EMBED}
                   onPress={() => {
                     setImages([]);
                     setPostType(POST_TYPES.EMBED);
@@ -421,7 +390,8 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: "row",
     marginTop: SPACE.lg,
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   bottomLine: {
     width: "100%",

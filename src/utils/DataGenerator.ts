@@ -20,6 +20,8 @@ import {
 import MatchInfo from "models/MatchInfo";
 import { MyRoommatesResponseModel } from "models/api_responses/MyRoommatesResponseModel";
 import { DismissedOrBlockedResponseModel } from "models/api_responses/DismissedOrBlockedResponseModel";
+import { FriendRequestsResponseModel } from "models/api_responses/FriendRequestsResponseModel";
+import { RoommateRequestsResponseModel } from "models/api_responses/RoommateRequestsResponseModel";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -199,6 +201,48 @@ const getDismissedOrBlocked = () => {
       {
         id: "2",
         title: "Kari Rasmussen",
+        subtitle: "Honors, Fine Arts",
+        profileImage: ""
+      }
+    ]
+  };
+  return response;
+};
+
+const getRoommateRequests = () => {
+  const response: RoommateRequestsResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        title: "Maria Randall",
+        subtitle: "Freshman, History",
+        profileImage: ""
+      },
+      {
+        id: "2",
+        title: "Kari Rasmussen",
+        subtitle: "Honors, Fine Arts",
+        profileImage: ""
+      }
+    ]
+  };
+  return response;
+};
+
+const getFriendRequests = () => {
+  const response: FriendRequestsResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        title: "Mario Palmer",
+        subtitle: "Freshman, History",
+        profileImage: ""
+      },
+      {
+        id: "2",
+        title: "Lana Steiner",
         subtitle: "Honors, Fine Arts",
         profileImage: ""
       }
@@ -506,5 +550,7 @@ export default {
   getMyFriends,
   getMatchInfo,
   getMyRoommates,
-  getDismissedOrBlocked
+  getDismissedOrBlocked,
+  getFriendRequests,
+  getRoommateRequests
 };
