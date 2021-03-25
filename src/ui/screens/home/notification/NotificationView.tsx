@@ -6,10 +6,10 @@ import { AppLog } from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config/Dimens";
 import Colors from "config/Colors";
-import { AppFormDropDown } from "ui/components/molecules/app_form/AppFormDropDown";
 import Selector from "assets/images/selector.svg";
 import { usePreferredTheme } from "hooks";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
+import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 
 type Props = {
   notifications: NotificationData[];
@@ -81,23 +81,27 @@ export const NotificationView = React.memo<Props>(({ notifications }) => {
   return (
     <View>
       <View style={styles.dropDownBar}>
-        <AppFormDropDown
-          appDropDownProps={{
-            title: "Filter by notification type",
-            items: [
-              { id: "0", title: "View Request" },
-              { id: "1", title: "View Comment" },
-              { id: "2", title: "View Details" }
-            ],
-            selectedItemCallback: () => {
-              //setTitle(item.title);
-            }
-          }}
-          dropDownIcon={() => <Selector width={16} height={16} />}
+        <AppDropdown
+          items={[
+            { id: "0", title: "View Request" },
+            { id: "1", title: "View Comment" },
+            { id: "2", title: "View Details" }
+          ]}
+          title={"Filter by Notification"}
+          dropDownIcon={() => (
+            <Selector
+              width={16}
+              height={16}
+              fill={theme.themedColors.label}
+            />
+          )}
           style={[
             styles.dropDown,
             { backgroundColor: theme.themedColors.interface["100"] }
           ]}
+          selectedItemCallback={(item) =>
+            AppLog.log("Selected Item" + item)
+          }
           shouldShowCustomIcon={true}
         />
       </View>
