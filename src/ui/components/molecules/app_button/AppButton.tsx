@@ -23,13 +23,14 @@ export interface AppButtonProps extends TouchableOpacityProps {
   shouldShowProgressBar?: boolean;
   loaderSize?: number;
   loaderColor?: string;
-  leftIcon?: SvgProp;
+  leftIcon?: SvgProp | undefined;
   rightIcon?: SvgProp;
   buttonType?: BUTTON_TYPES;
   isDisable?: boolean;
   iconStyle?: StyleProp<ImageStyle>;
   shouldShowError?: boolean;
   fontWeight?: Weight;
+  shouldAlignTextWithLeftIconWithFullWidth?: boolean;
 }
 
 export enum BUTTON_TYPES {
@@ -51,7 +52,8 @@ export const AppButton = React.memo<AppButtonProps>(
     buttonType = BUTTON_TYPES.NORMAL,
     isDisable = false,
     shouldShowError = false,
-    fontWeight = "normal"
+    fontWeight = "normal",
+    shouldAlignTextWithLeftIconWithFullWidth = false
   }) => {
     const theme = usePreferredTheme();
     const getButtonStyle = () => {
@@ -97,11 +99,23 @@ export const AppButton = React.memo<AppButtonProps>(
         ]}>
         <View testID="button-container" style={style.viewContainer}>
           {leftIcon && !shouldShowProgressBar && (
-            <View style={style.leftIconContainer}>
+            <View
+              style={[
+                style.leftIconContainer,
+                !shouldAlignTextWithLeftIconWithFullWidth
+                  ? style.leftIconContainerPosition
+                  : undefined
+              ]}>
               {leftIcon?.(theme.themedColors.label, 20, 20)}
             </View>
           )}
-          <View style={style.textWithLoader}>
+          <View
+            style={[
+              style.textWithLoader,
+              !shouldAlignTextWithLeftIconWithFullWidth
+                ? style.textWithLoaderFlex
+                : undefined
+            ]}>
             {!shouldShowProgressBar && (
               <AppLabel
                 style={[
@@ -149,14 +163,18 @@ const style = StyleSheet.create({
   },
   textWithLoader: {
     flexDirection: "row",
-    flex: 1,
     alignItems: "center",
     justifyContent: "center"
   },
+  textWithLoaderFlex: {
+    flex: 1
+  },
   leftIconContainer: {
-    position: "absolute",
-    left: SPACE.sm,
     alignItems: "flex-start"
+  },
+  leftIconContainerPosition: {
+    position: "absolute",
+    left: SPACE.sm
   },
   leftIcon: {
     marginLeft: 10,
@@ -165,7 +183,7 @@ const style = StyleSheet.create({
   },
   rightIconContainer: {
     position: "absolute",
-    right: SPACE.sm,
+    right: SPACE.lg,
     justifyContent: "flex-end",
     alignItems: "flex-end"
   },
@@ -193,6 +211,7 @@ const style = StyleSheet.create({
   },
   viewContainer: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    padding: SPACE.sm
   }
 });

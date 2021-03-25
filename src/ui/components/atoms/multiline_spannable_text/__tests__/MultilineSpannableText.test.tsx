@@ -6,11 +6,7 @@ import { StyleSheet } from "react-native";
 test("check render properly", () => {
   const { getByTestId } = render(
     <MultilineSpannableText
-      text={[
-        { id: 1, text: "Male" },
-        { id: 2, text: "Female" },
-        { id: 3, text: "Others" }
-      ]}
+      text={["Male", "Female", "Others"]}
       textStyle={[styles.firstText, styles.email, styles.thirdText]}
     />
   );
@@ -21,11 +17,7 @@ test("check render properly", () => {
 test("Snapshot testing", () => {
   const rendered = render(
     <MultilineSpannableText
-      text={[
-        { id: 1, text: "Male" },
-        { id: 2, text: "Female" },
-        { id: 3, text: "Others" }
-      ]}
+      text={["Male", "Female", "Others"]}
       textStyle={[styles.firstText, styles.email, styles.thirdText]}
     />
   ).toJSON();
@@ -36,17 +28,14 @@ test("check spannable text on Press", () => {
   const onPress = jest.fn();
   const { getByText } = render(
     <MultilineSpannableText
-      text={[
-        { id: 1, text: "Male" },
-        { id: 2, text: "Female" },
-        { id: 3, text: "Others" }
-      ]}
+      text={["Male", "Female", "Others"]}
       textStyle={[styles.firstText, styles.email, styles.thirdText]}
       onPress={onPress}
     />
   );
-  const spannableText = getByText("Male");
+  const spannableText = getByText("Female");
   fireEvent.press(spannableText);
+  expect(onPress).toBeCalledWith("Female", 1);
   expect(onPress).toBeCalledTimes(1);
 });
 

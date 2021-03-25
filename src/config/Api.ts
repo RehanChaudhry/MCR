@@ -22,8 +22,19 @@ export default {
   GET_QUESTIONS: "questions/",
   POST_ANSWERS: "answer/",
 
+  // matches
+  GET_MATCHES: "matches",
+  POST_FRIEND_REQUEST: "friend-request",
+  DISMISS_MATCH: "dismiss-match",
+  GET_MATCHES_FILTER_COUNT: "matches-count",
+
   //community
   GET_COMMUNITY: "community/",
+  CREATE_POST: "createPost/",
   //chat
-  GET_CHATS: "chats"
+  GET_CHATS: "chats",
+
+  MY_FRIENDS: "myfriends",
+  MY_ROOMMATES: "myroommates",
+  DISMISSED_OR_BLOCKED: "dismissedorblocked"
 };

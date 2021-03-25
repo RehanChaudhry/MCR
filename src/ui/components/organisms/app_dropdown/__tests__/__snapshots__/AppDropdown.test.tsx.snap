@@ -5,13 +5,10 @@ exports[`Renders snapshot as expected 1`] = `
   style={
     Array [
       Object {
-        "borderColor": "#ebebeb",
         "borderRadius": 5,
-        "borderWidth": 1,
       },
       Object {
         "backgroundColor": "#FFFFFF",
-        "borderColor": "#9CA3AF",
       },
       undefined,
     ]
@@ -352,9 +349,15 @@ exports[`Renders snapshot as expected 1`] = `
               Object {
                 "color": "#111827",
               },
-              Object {
-                "color": "#374151",
-              },
+              Array [
+                Object {
+                  "includeFontPadding": false,
+                },
+                Object {
+                  "color": "#4B5563",
+                },
+                undefined,
+              ],
             ],
             Object {
               "fontFamily": "Inter-Regular",

@@ -11,6 +11,14 @@ import moment from "moment";
 import { AppLog } from "utils/Util";
 import ProfileMatch from "models/ProfileMatch";
 import { defaultPaletteCopy } from "hooks/theme/ColorPaletteContainer";
+import MatchesApiRequestModel from "models/api_requests/MatchesApiRequestModel";
+import MatchesApiResponseModel from "models/api_responses/MatchesApiResponseModel";
+import {
+  MyFriendsResponseModel,
+  ROOMMATE_REQUEST_STATE
+} from "models/api_responses/MyFriendsResponseModel";
+import { MyRoommatesResponseModel } from "models/api_responses/MyRoommatesResponseModel";
+import { DismissedOrBlockedResponseModel } from "models/api_responses/DismissedOrBlockedResponseModel";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -126,6 +134,78 @@ const getUnis = () => {
   return response;
 };
 
+const getMyFriends = () => {
+  const response: MyFriendsResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        title: "Phoenix Walker",
+        subtitle: "Freshman, History",
+        profileImage: "",
+        requestState: ROOMMATE_REQUEST_STATE.NONE
+      },
+      {
+        id: "2",
+        title: "Fox Mccloud",
+        subtitle: "Honors, Fine Arts",
+        profileImage: "",
+        requestState: ROOMMATE_REQUEST_STATE.REQUEST_SENT
+      },
+      {
+        id: "3",
+        title: "Health Atwood",
+        subtitle: "Returner, Life Science",
+        profileImage: "",
+        requestState: ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE
+      }
+    ]
+  };
+  return response;
+};
+
+const getMyRoommates = () => {
+  const response: MyRoommatesResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        title: "Maria Randall",
+        subtitle: "Freshman, History",
+        profileImage: ""
+      },
+      {
+        id: "2",
+        title: "Kari Rasmussen",
+        subtitle: "Honors, Fine Arts",
+        profileImage: ""
+      }
+    ]
+  };
+  return response;
+};
+
+const getDismissedOrBlocked = () => {
+  const response: DismissedOrBlockedResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        title: "Maria Randall",
+        subtitle: "Freshman, History",
+        profileImage: ""
+      },
+      {
+        id: "2",
+        title: "Kari Rasmussen",
+        subtitle: "Honors, Fine Arts",
+        profileImage: ""
+      }
+    ]
+  };
+  return response;
+};
+
 const getQuestion = (
   questionId: number,
   sectionId: number
@@ -141,10 +221,10 @@ const getQuestion = (
   };
 };
 
-const getProfileMatch = () => {
+const getProfileMatch = (id: number) => {
   return new ProfileMatch(
-    0,
-    "Phoenix Walker",
+    id,
+    "Phoenix Walker " + id,
     "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     "Freshman",
     "History",
@@ -152,9 +232,44 @@ const getProfileMatch = () => {
     "active",
     false,
     false,
-    true,
+    Math.random() < 0.5,
     "2021-03-15T07:18:24.000Z"
   );
+};
+
+const getProfileMatches: (
+  request: MatchesApiRequestModel
+) => Promise<{
+  hasError: boolean;
+  errorBody: undefined;
+  dataBody: MatchesApiResponseModel;
+}> = async (request: MatchesApiRequestModel) => {
+  AppLog.log("getProfileMatches(), request: " + JSON.stringify(request));
+  const profileMatches: ProfileMatch[] = [];
+  for (let i = 0; i < (request.limit ?? 5); i++) {
+    profileMatches.push(
+      getProfileMatch(Math.floor(Math.random() * 100) + 1)
+    );
+  }
+  const response = {
+    hasError: false,
+    errorBody: undefined,
+    dataBody: {
+      message: "Success",
+      data: profileMatches,
+      pagination: {
+        total: 15,
+        current: request.pageNo,
+        first: profileMatches[0].userId,
+        last: profileMatches[profileMatches.length - 1].userId,
+        next: request.pageNo + 1 <= 3 ? request.pageNo + 1 : 0
+      }
+    }
+  };
+  AppLog.log(
+    "getProfileMatches(), response: " + JSON.stringify(response.dataBody)
+  );
+  return response;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -347,5 +462,9 @@ export default {
   createChatThread,
   createChat,
   getProfileMatch,
-  getUnis
+  getProfileMatches,
+  getUnis,
+  getMyFriends,
+  getMyRoommates,
+  getDismissedOrBlocked
 };

@@ -150,12 +150,12 @@ const styles = StyleSheet.create({
   paginationColor: {
     borderRadius: 30,
     marginBottom: 10,
-    width: "23%",
+    width: "25%",
     height: 15
   },
   image: {
-    borderRadius: 15,
-    width: "86%",
+    borderRadius: 10,
+    width: "85%",
     marginTop: 5
   },
   sliderBoxContainer: {

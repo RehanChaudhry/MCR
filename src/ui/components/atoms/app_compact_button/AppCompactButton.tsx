@@ -12,7 +12,6 @@ import { usePreferredTheme } from "hooks";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, FONTS } from "config";
 import { SvgProp } from "utils/Util";
-
 export interface AppCompactButtonProps extends TouchableOpacityProps {
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -26,7 +25,6 @@ export interface AppCompactButtonProps extends TouchableOpacityProps {
   shouldShowBgColorCahange: boolean;
   onPress: () => void;
 }
-
 export const AppCompactButton = React.memo<AppCompactButtonProps>(
   ({
     buttonStyle,
@@ -41,7 +39,6 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
     onPress
   }) => {
     const theme = usePreferredTheme();
-
     return (
       <TouchableOpacity
         onPress={onPress}
@@ -91,7 +88,6 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
     );
   }
 );
-
 const style = StyleSheet.create({
   button: {
     flexDirection: "row",

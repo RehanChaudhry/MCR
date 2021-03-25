@@ -42,6 +42,32 @@ export default {
     go_back_signin: "Go back to Sign In"
   },
 
+  welcome: {
+    welcome: "Welcome Zane Mayes,",
+    welcome_text:
+      "It's great to have you on board. Let's watch a 2 minute video to get you started.",
+    play_video: "Play this video",
+    continue: "Continue",
+    learn_about_heading: "Learn more about My College Roomie",
+    learn_about_text:
+      "My College Roomie is a web-based student social networking and roommate self-selection platform that provides both students and staff with powerful tools to streamline, simplify, and improve the success rate of the roommate matching and assignments process.",
+    roommate_selection_heading: "Roommate Self Selection",
+    roommate_selection:
+      "Students can select the roommate or roommates of their choosing so they can enjoy the best campus living experience ever!",
+    socail_network_heading: "Social Networking",
+    socail_network_text:
+      "My College Roomie is independent from other Social Networks, yet offers similar tools to aid in finding & networking with others.",
+    roommate_designer: "Roommate Designer",
+    roommate_designer_text:
+      "Users identify what their ideal roomie is like (similar or different), and MCR shows them how closely other users match.",
+    accurate_matches: "Accurate Matches",
+    accurate_matches_text:
+      "Researched-based questionnaire featuring MCR’s Comfort Zone © Technology is coupled with machine-learning algorithm to provide students with suggested roommate matches based on true compatibility.",
+    friends_messages: "Friends & Messages",
+    friends_messages_text:
+      "Students form friend groups and use private messages to interact, making MCR a tool that can be used year-round."
+  },
+
   signup: {},
 
   home: {},
@@ -72,7 +98,8 @@ export default {
   matches: {
     match_score: "Match Score: ",
     action_add_friend: "Add Friend",
-    label_pending_request: "Pending Request"
+    label_pending_request: "Pending Request",
+    placeholder_search_keyword: "Search by keyword"
   },
   profile: {
     title:
@@ -186,5 +213,21 @@ export default {
 
   chatThreadScreen: {
     typingHint: "Start typing your message"
+  },
+
+  createPost: {
+    requiredField: {
+      message: "Message is a required field"
+    },
+    placeholder: {
+      startTypingYourMessage: "Start typing your message",
+      link: "Enter link (https://..)",
+      embed: "Enter embed code"
+    },
+    buttonsName: {
+      photo: "Photos",
+      link: "Link",
+      embed: "Embed"
+    }
   }
 };
