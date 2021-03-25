@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     textAlign: "left"
   },
   saveButton: { fontWeight: "bold", fontSize: FONT_SIZE.md },
-  saveButtonContainer: { paddingHorizontal: SPACE.sm },
+  saveButtonContainer: {},
   buttonView: {
     marginTop: SPACE.md
   }
