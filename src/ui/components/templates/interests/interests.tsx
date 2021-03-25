@@ -13,6 +13,7 @@ export const Interests = React.memo(({}) => {
       <HeadingWithText
         headingText={STRINGS.profile.interests.heading}
         text={STRINGS.profile.interests.title}
+        headingFontWeight={"semi-bold"}
         headingStyle={[
           styles.headingStyle,
           { color: theme.themedColors.label }
@@ -42,7 +43,11 @@ export const Interests = React.memo(({}) => {
           ],
           selectedItemCallback: () => {
             //setHobbiesTitle(item.title);
-          }
+          },
+          style: [
+            styles.dropDown,
+            { borderColor: theme.themedColors.border }
+          ]
         }}
       />
       <View style={styles.spacer} />
@@ -62,7 +67,11 @@ export const Interests = React.memo(({}) => {
           ],
           selectedItemCallback: () => {
             //setMembershipsTitle(item.title);
-          }
+          },
+          style: [
+            styles.dropDown,
+            { borderColor: theme.themedColors.border }
+          ]
         }}
       />
       <View style={styles.spacer} />
@@ -82,7 +91,11 @@ export const Interests = React.memo(({}) => {
           ],
           selectedItemCallback: () => {
             //setMoviesTitle(item.title);
-          }
+          },
+          style: [
+            styles.dropDown,
+            { borderColor: theme.themedColors.border }
+          ]
         }}
       />
       <View style={styles.spacer} />
@@ -102,7 +115,11 @@ export const Interests = React.memo(({}) => {
           ],
           selectedItemCallback: () => {
             //setMusicTitle(item.title);
-          }
+          },
+          style: [
+            styles.dropDown,
+            { borderColor: theme.themedColors.border }
+          ]
         }}
       />
       <View style={styles.spacer} />
@@ -122,7 +139,11 @@ export const Interests = React.memo(({}) => {
           ],
           selectedItemCallback: () => {
             //setBooksTitle(item.title);
-          }
+          },
+          style: [
+            styles.dropDown,
+            { borderColor: theme.themedColors.border }
+          ]
         }}
       />
       <View style={styles.spacer} />
@@ -142,7 +163,11 @@ export const Interests = React.memo(({}) => {
           ],
           selectedItemCallback: () => {
             //setGamesTitle(item.title);
-          }
+          },
+          style: [
+            styles.dropDown,
+            { borderColor: theme.themedColors.border }
+          ]
         }}
       />
     </CardView>
@@ -171,5 +196,8 @@ const styles = StyleSheet.create({
   },
   spacer: {
     paddingBottom: SPACE.lg
+  },
+  dropDown: {
+    borderWidth: 1
   }
 });

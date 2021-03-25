@@ -17,6 +17,7 @@ export const DemoGraphics = React.memo(({}) => {
       <HeadingWithText
         headingText={STRINGS.profile.demoGraphics.heading}
         text={STRINGS.profile.demoGraphics.title}
+        headingFontWeight={"semi-bold"}
         headingStyle={[
           styles.headingStyle,
           { color: theme.themedColors.label }
@@ -46,7 +47,11 @@ export const DemoGraphics = React.memo(({}) => {
           ],
           selectedItemCallback: () => {
             //setTitle(item.title);
-          }
+          },
+          style: [
+            styles.dropDown,
+            { borderColor: theme.themedColors.border }
+          ]
         }}
       />
 
@@ -158,5 +163,8 @@ const styles = StyleSheet.create({
   },
   spacer: {
     paddingBottom: SPACE.lg
+  },
+  dropDown: {
+    borderWidth: 1
   }
 });

@@ -17,6 +17,7 @@ export const VideoIntroduction = React.memo(() => {
         <HeadingWithText
           headingText={STRINGS.profile.videoIntroduction.heading}
           text={STRINGS.profile.videoIntroduction.title}
+          headingFontWeight={"semi-bold"}
           headingStyle={[
             styles.headingStyle,
             { color: theme.themedColors.label }

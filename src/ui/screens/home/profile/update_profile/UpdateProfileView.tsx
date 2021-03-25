@@ -1,10 +1,10 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { BasicProfile } from "ui/components/profile/basic_profile/BasicProfile";
-import { DemoGraphics } from "ui/components/profile/demographics/DemoGraphics";
-import { Interests } from "ui/components/profile/interests/interests";
-import { LivingDetails } from "ui/components/profile/living_details/LivingDetails";
-import { VideoIntroduction } from "ui/components/profile/video_introduction/VideoIntroduction";
+import { BasicProfile } from "ui/components/templates/basic_profile/BasicProfile";
+import { DemoGraphics } from "ui/components/templates/demographics/DemoGraphics";
+import { Interests } from "ui/components/templates/interests/interests";
+import { LivingDetails } from "ui/components/templates/living_details/LivingDetails";
+import { VideoIntroduction } from "ui/components/templates/video_introduction/VideoIntroduction";
 import * as Yup from "yup";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import { FormikValues } from "formik";
