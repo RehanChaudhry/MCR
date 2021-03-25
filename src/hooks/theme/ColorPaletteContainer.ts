@@ -136,7 +136,7 @@ let defaultPalette: ColorPalette = {
   danger: "#EF4444",
   dangerShade: "#FEE2E2",
 
-  success: "#111827",
+  success: "#22C55E",
   successShade: "#D1FAE5",
 
   warn: "#F97316",

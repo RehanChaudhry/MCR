@@ -246,6 +246,7 @@ exports[`rendering... renders correctly 1`] = `
         Object {
           "alignItems": "center",
           "flexDirection": "row",
+          "padding": 12.093203883495146,
         }
       }
       testID="button-container"
@@ -255,11 +256,12 @@ exports[`rendering... renders correctly 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "flex": 1,
               "flexDirection": "row",
               "justifyContent": "center",
             },
-            undefined,
+            Object {
+              "flex": 1,
+            },
           ]
         }
       >

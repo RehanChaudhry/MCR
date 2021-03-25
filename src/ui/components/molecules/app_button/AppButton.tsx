@@ -23,7 +23,7 @@ export interface AppButtonProps extends TouchableOpacityProps {
   shouldShowProgressBar?: boolean;
   loaderSize?: number;
   loaderColor?: string;
-  leftIcon?: SvgProp;
+  leftIcon?: SvgProp | undefined;
   rightIcon?: SvgProp;
   buttonType?: BUTTON_TYPES;
   isDisable?: boolean;
@@ -99,15 +99,21 @@ export const AppButton = React.memo<AppButtonProps>(
         ]}>
         <View testID="button-container" style={style.viewContainer}>
           {leftIcon && !shouldShowProgressBar && (
-            <View style={style.leftIconContainer}>
+            <View
+              style={[
+                style.leftIconContainer,
+                !shouldAlignTextWithLeftIconWithFullWidth
+                  ? style.leftIconContainerPosition
+                  : undefined
+              ]}>
               {leftIcon?.(theme.themedColors.label, 20, 20)}
             </View>
           )}
           <View
             style={[
               style.textWithLoader,
-              shouldAlignTextWithLeftIconWithFullWidth
-                ? style.alignTitleWithLeftIcon
+              !shouldAlignTextWithLeftIconWithFullWidth
+                ? style.textWithLoaderFlex
                 : undefined
             ]}>
             {!shouldShowProgressBar && (
@@ -157,19 +163,18 @@ const style = StyleSheet.create({
   },
   textWithLoader: {
     flexDirection: "row",
-    flex: 1,
     alignItems: "center",
     justifyContent: "center"
   },
-  alignTitleWithLeftIcon: {
-    position: "relative",
-    left: 20,
-    justifyContent: "flex-start"
+  textWithLoaderFlex: {
+    flex: 1
   },
   leftIconContainer: {
-    left: SPACE.sm,
-    alignItems: "flex-start",
-    backgroundColor: "red"
+    alignItems: "flex-start"
+  },
+  leftIconContainerPosition: {
+    position: "absolute",
+    left: SPACE.sm
   },
   leftIcon: {
     marginLeft: 10,
@@ -206,6 +211,7 @@ const style = StyleSheet.create({
   },
   viewContainer: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    padding: SPACE.sm
   }
 });
