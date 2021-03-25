@@ -1,3 +1,4 @@
+import { SPACE } from "config";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import { FilterCount } from "models/enums/FeedsTypeFilter";
 import React, { useCallback } from "react";
@@ -70,6 +71,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   list: {
+    marginTop: SPACE.md,
     flexGrow: 1,
     flexBasis: 0
   }

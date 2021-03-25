@@ -1,3 +1,4 @@
+import { SPACE } from "config";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import React, { useCallback } from "react";
 import { StyleSheet } from "react-native";
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   list: {
+    marginTop: SPACE.md,
     flexGrow: 1,
     flexBasis: 0
   }

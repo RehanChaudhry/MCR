@@ -104,7 +104,13 @@ const CreatePostController: FC<Props> = () => {
     } else {
     }
   });
-  return <CreatePostView />;
+  return (
+    <CreatePostView
+      createPost={() => {
+        navigation.goBack();
+      }}
+    />
+  );
 };
 
 const style = StyleSheet.create({
