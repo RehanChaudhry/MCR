@@ -70,7 +70,7 @@ const ViewProfileDemoGraphics: FC<Props> = () => {
 const styles = StyleSheet.create({
   cardView: {
     marginHorizontal: SPACE.lg,
-    marginTop: SPACE.xsm
+    marginTop: SPACE.lg
   },
   innerCardView: {
     marginHorizontal: SPACE.lg,

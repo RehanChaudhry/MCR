@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   cardView: {
     marginHorizontal: SPACE.lg,
-    marginTop: SPACE.xsm
+    marginTop: SPACE.lg
   },
   spacer: {
     marginTop: SPACE.sm
