@@ -12,6 +12,8 @@ import { AnnouncementFooter } from "ui/components/molecules/announcement_footer/
 import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
 import { ImagesSlideShow } from "ui/components/molecules/image_slide_show/ImagesSlideShow";
 import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
+import { SvgProp } from "utils/Util";
+import Shield from "assets/images/shield.svg";
 
 export interface CommunityItemProps extends TouchableOpacityProps {
   communityItem: CommunityAnnouncement;
@@ -20,6 +22,16 @@ export interface CommunityItemProps extends TouchableOpacityProps {
 export const CommunityItem = React.memo<CommunityItemProps>(
   ({ communityItem }) => {
     const theme = usePreferredTheme();
+    const rightImage: SvgProp = () => {
+      return (
+        <Shield
+          testID="right-icon"
+          width={23}
+          height={23}
+          fill={theme.themedColors.interface["700"]}
+        />
+      );
+    };
     return (
       <View
         style={[
@@ -31,6 +43,7 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           subTitle={communityItem.time}
           leftImageUrl={communityItem.profileImageUrl}
           shouldShowRightImage={true}
+          rightIcon={rightImage}
         />
         {communityItem.text != null && true && (
           <AppLabel
