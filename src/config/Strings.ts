@@ -239,6 +239,7 @@ export default {
     label_close: "Currently Close",
     matching_deadline: "Roommate Matching Deadline",
     max_roommate_count: "How many Roommate can you have?",
-    matching_criteria: "Matching criteria"
+    matching_criteria: "Matching criteria",
+    title: "More Information"
   }
 };
