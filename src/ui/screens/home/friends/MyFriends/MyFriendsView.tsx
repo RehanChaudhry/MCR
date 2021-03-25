@@ -3,7 +3,7 @@ import Screen from "ui/components/atoms/Screen";
 import ConnectionItem, {
   CONNECTION_ACTION_STATE
 } from "ui/components/organisms/friends/connection/ConnectionItem";
-import InfoIcon from "assets/images/info_circle.svg";
+import UserGroupIcon from "assets/images/icon_user_group.svg";
 import { usePreferredTheme } from "hooks";
 import { StyleSheet } from "react-native";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
@@ -91,7 +91,7 @@ const MyFriendsView: FC<Props> = ({
               "You have currently 7 friends and received 2 new friend requests."
             }
             icon={() => (
-              <InfoIcon
+              <UserGroupIcon
                 fill={theme.themedColors.labelSecondary}
                 width={18}
                 height={18}

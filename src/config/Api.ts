@@ -34,5 +34,7 @@ export default {
   //chat
   GET_CHATS: "chats",
 
-  MY_FRIENDS: "myfriends"
+  MY_FRIENDS: "myfriends",
+  MY_ROOMMATES: "myroommates",
+  DISMISSED_OR_BLOCKED: "dismissedorblocked"
 };
