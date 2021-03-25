@@ -36,5 +36,7 @@ export default {
 
   MY_FRIENDS: "myfriends",
   MY_ROOMMATES: "myroommates",
-  DISMISSED_OR_BLOCKED: "dismissedorblocked"
+  DISMISSED_OR_BLOCKED: "dismissedorblocked",
+  FRIEND_REQUESTS: "friendrequests",
+  ROOMMATE_REQUESTS: "roommaterequests"
 };
