@@ -6,12 +6,12 @@ import { CardView } from "ui/components/atoms/CardView";
 import { UploadProfilePhoto } from "ui/components/templates/basic_profile/UploadProfilePhoto";
 import { COLORS, SPACE, STRINGS } from "config";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
-import FacebookIcon from "../assets/images/facebook_icon.svg";
-import TwitterIcon from "../assets/images/twitter_icon.svg";
-import LinkedInIcon from "../assets/images/linkedin_icon.svg";
-import InstagramIcon from "../assets/images/instagram_icon.svg";
-import SnapChatIcon from "../assets/images/snapchat_icon.svg";
-import TikTokIcon from "../assets/images/tiktok_icon.svg";
+import FacebookIcon from "assets/images/facebook_icon.svg";
+import TwitterIcon from "assets/images/twitter_icon.svg";
+import LinkedInIcon from "assets/images/linkedin_icon.svg";
+import InstagramIcon from "assets/images/instagram_icon.svg";
+import SnapChatIcon from "assets/images/snapchat_icon.svg";
+import TikTokIcon from "assets/images/tiktok_icon.svg";
 
 export const BasicProfile = React.memo(({}) => {
   const theme = usePreferredTheme();

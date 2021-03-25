@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import ProfileAvatar from "../assets/images/profile_avatar.svg";
+import ProfileAvatar from "assets/images/profile_avatar.svg";
 import {
   AppImageBackground,
   CONTAINER_TYPES
