@@ -516,10 +516,25 @@ const getMatchInfo = () => {
       gender: "Male or female",
       majors: "Fine Arts Community"
     },
-    roommates: []
+    roommates: [getRoommate(0), getRoommate(1)]
   };
   return matchInfo;
 };
+
+const getRoommate = (id: number) =>
+  new ProfileMatch(
+    id,
+    "Phoenix Walker",
+    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    "Freshman",
+    "History",
+    95,
+    "active",
+    true,
+    true,
+    true,
+    "2021-03-15T07:18:24.000Z"
+  );
 
 export default {
   getQuestionSections,

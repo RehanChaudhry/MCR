@@ -240,6 +240,8 @@ export default {
     matching_deadline: "Roommate Matching Deadline",
     max_roommate_count: "How many Roommate can you have?",
     matching_criteria: "Matching criteria",
-    title: "More Information"
+    title: "More Information",
+    my_roommates: "My Roommates",
+    roommate_agreement: "View Roommate Agreement"
   }
 };

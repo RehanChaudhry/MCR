@@ -101,7 +101,7 @@ export const QuestionsView = ({
   );
 
   return (
-    <Screen>
+    <Screen shouldAddBottomInset={false}>
       <SectionedList<QuestionSection, Question>
         listHeaderComponent={listHeader()}
         style={styles.sectionedList}
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   headerCard: {
     overflow: "hidden",
     borderRadius: 5,
-    marginVertical: SPACE.sm,
+    //marginVertical: SPACE.sm,
     padding: SPACE.md,
 
     // shadow
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     textAlign: "left"
   },
   saveButton: { fontWeight: "bold", fontSize: FONT_SIZE.md },
-  saveButtonContainer: { paddingHorizontal: SPACE.sm },
+  saveButtonContainer: {},
   buttonView: {
     marginTop: SPACE.md
   }
