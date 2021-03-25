@@ -4,6 +4,7 @@ import React, { FC, useLayoutEffect } from "react";
 import { AuthStackParamList } from "routes";
 import NoHeader from "ui/components/headers/NoHeader";
 import { ForgotPasswordFeedBackView } from "ui/screens/auth/forgot_password_feedback/ForgotPasswordFeedBackView";
+import { usePreventDoubleTap } from "hooks";
 
 type LoginNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -20,7 +21,19 @@ const ForgotPasswordFeedBackController: FC<Props> = () => {
     navigation.setOptions(NoHeader.create());
   }, [navigation]);
 
-  return <ForgotPasswordFeedBackView />;
+  const openForgotPasswordScreen = usePreventDoubleTap(() => {
+    navigation.pop();
+  });
+  const openSignInScreen = usePreventDoubleTap(() => {
+    navigation.popToTop();
+  });
+
+  return (
+    <ForgotPasswordFeedBackView
+      openForgotPasswordScreen={openForgotPasswordScreen}
+      openSignInScreen={openSignInScreen}
+    />
+  );
 };
 
 export default ForgotPasswordFeedBackController;

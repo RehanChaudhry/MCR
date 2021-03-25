@@ -29,6 +29,14 @@ const ForgotPasswordController: FC<Props> = () => {
     navigation.setOptions(NoHeader.create());
   }, [navigation]);
 
+  const openForgotPasswordFeedBackScreen = usePreventDoubleTap(() => {
+    navigation.navigate("ForgotPasswordFeedBack");
+  });
+
+  const openSignInScreen = usePreventDoubleTap(() => {
+    navigation.pop();
+  });
+
   const forgotPasswordApi = useApi<
     ForgotPasswordApiRequestModel,
     ForgotPasswordApiResponseModel
@@ -57,6 +65,8 @@ const ForgotPasswordController: FC<Props> = () => {
   return (
     <ForgotPasswordView
       shouldShowProgressBar={forgotPasswordApi.loading}
+      openForgotPasswordFeedBackScreen={openForgotPasswordFeedBackScreen}
+      openSignInScreen={openSignInScreen}
     />
   );
 };

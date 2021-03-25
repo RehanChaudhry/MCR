@@ -1,15 +1,15 @@
+import { grayShades } from "hooks/theme/ColorPaletteContainer";
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { TagDataItem } from "ui/components/molecules/tag_list/TagDataItem";
 import TagListItem from "./TagListItem";
-
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE } from "config";
-import { dataType } from "ui/components/templates/Interest";
-import usePreferredTheme from "../../../../hooks/theme/usePreferredTheme";
 
 type Props = {
-  labelTitle?: string;
-  data: dataType[];
+  labelTitle: string;
+  data: TagDataItem[];
 };
 
 const TagList: FC<Props> = ({ data, labelTitle }) => {
@@ -26,9 +26,17 @@ const TagList: FC<Props> = ({ data, labelTitle }) => {
       />
 
       <View style={styles.chipView}>
-        {data.map((item) => {
-          return <TagListItem key={item.id} title={item.titleTag} />;
-        })}
+        {data.length > 0 &&
+          data.map((item) => {
+            return <TagListItem key={item.id} title={item.titleTag} />;
+          })}
+
+        {data.length === 0 && (
+          <TagListItem
+            title={"N/A"}
+            style={[{ backgroundColor: grayShades.warmGray[100] }]}
+          />
+        )}
       </View>
     </View>
   );

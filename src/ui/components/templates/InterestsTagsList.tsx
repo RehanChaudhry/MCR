@@ -7,13 +7,13 @@ import { HeadingWithText } from "ui/components/molecules/heading_with_text/Headi
 import TagList from "ui/components/molecules/tag_list/TagList";
 
 type Props = {};
-export type dataType = {
+export type Interest = {
   id: string;
-  titleTag?: string;
+  titleTag: string;
 };
 
-const Interests: FC<Props> = () => {
-  const hobbies: dataType[] = [
+const InterestsTagsList: FC<Props> = () => {
+  const hobbies: Interest[] = [
     {
       id: "1",
       titleTag: "Music"
@@ -27,17 +27,9 @@ const Interests: FC<Props> = () => {
       titleTag: "Movies"
     }
   ];
-  const clubs: dataType[] = [
-    {
-      id: "1"
-    }
-  ];
-  const living: dataType[] = [
-    {
-      id: "1"
-    }
-  ];
-  const movies: dataType[] = [
+  const clubs: Interest[] = [];
+  const living: Interest[] = [];
+  const movies: Interest[] = [
     {
       id: "1",
       titleTag: "The Queen’s Gambit"
@@ -47,7 +39,7 @@ const Interests: FC<Props> = () => {
       titleTag: "The Last Dance"
     }
   ];
-  const music: dataType[] = [
+  const music: Interest[] = [
     {
       id: "1",
       titleTag: "Rock & Dance"
@@ -69,16 +61,8 @@ const Interests: FC<Props> = () => {
       titleTag: "Rob Zombie"
     }
   ];
-  const books: dataType[] = [
-    {
-      id: "1"
-    }
-  ];
-  const games: dataType[] = [
-    {
-      id: "1"
-    }
-  ];
+  const books: Interest[] = [];
+  const games: Interest[] = [];
   return (
     <CardView style={styles.cardView}>
       <View style={styles.innerCardView}>
@@ -121,4 +105,4 @@ const styles = StyleSheet.create({
     marginTop: SPACE.sm
   }
 });
-export default Interests;
+export default InterestsTagsList;

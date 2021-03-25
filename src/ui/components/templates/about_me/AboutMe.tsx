@@ -64,11 +64,11 @@ const AboutMe: FC<Props> = () => {
           textStyle={{
             color: theme.themedColors.label,
             borderColor: theme.themedColors.interface["700"],
-            marginHorizontal: SPACE.xxsm,
-            fontSize: FONT_SIZE.lg
+            marginHorizontal: SPACE.xsm,
+            fontSize: FONT_SIZE.md
           }}
           shouldShowError={false}
-          fontWeight={"semi-bold"}
+          fontWeight={"bold"}
           leftIcon={watchVideo}
           shouldAlignTextWithLeftIconWithFullWidth={true}
         />

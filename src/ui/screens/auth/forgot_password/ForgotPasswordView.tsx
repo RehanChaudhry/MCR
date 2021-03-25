@@ -21,8 +21,9 @@ import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 
 type Props = {
-  openForgotPasswordScreen?: () => void;
+  openForgotPasswordFeedBackScreen: () => void;
   shouldShowProgressBar?: boolean;
+  openSignInScreen?: () => void;
 };
 
 const validationSchema = Yup.object().shape({
@@ -32,102 +33,105 @@ const validationSchema = Yup.object().shape({
 let initialValues: FormikValues = {
   email: ""
 };
-const onSubmit = (_value: FormikValues) => {
-  initialValues = _value;
-  AppLog.log("form values" + initialValues);
-};
 
-export const ForgotPasswordView = React.memo<Props>(({}) => {
-  const theme = usePreferredTheme();
-
-  return (
-    <Screen>
-      <ScrollView>
-        <View style={styles.mainContainer}>
-          <AppImageBackground
-            containerShape={CONTAINER_TYPES.CIRCLE}
-            icon={() => (
-              <ArrowLeft
-                width={20}
-                height={20}
-                fill={theme.themedColors.primary}
-              />
-            )}
-            containerStyle={styles.leftArrow}
-          />
-
-          <Logo style={styles.logo} />
-
-          <HeadingWithText
-            headingText={STRINGS.forgotpassword.forgot_your_password}
-            headingFontWeight={"bold"}
-            headingStyle={styles.forgotPasswordHeading}
-            text={STRINGS.forgotpassword.forgot_text}
-            textStyle={styles.forgotText}
-          />
-
-          <AppForm
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            validationSchema={validationSchema}>
-            <View style={styles.email} />
-            <AppFormField
-              fieldTestID="email"
-              validationLabelTestID={"emailValidationLabel"}
-              name="email"
-              labelProps={{
-                text: STRINGS.login.email_address,
-                weight: "semi-bold"
-              }}
-              fieldInputProps={{
-                textContentType: "emailAddress",
-                keyboardType: "default",
-                returnKeyType: "next",
-                placeholder: STRINGS.login.enter_your_email,
-                autoCapitalize: "none",
-                placeholderTextColor: theme.themedColors.placeholder,
-                style: { color: theme.themedColors.label },
-                viewStyle: [
-                  styles.textFieldStyle,
-                  {
-                    backgroundColor: theme.themedColors.background,
-                    borderColor: theme.themedColors.border
-                  }
-                ]
-              }}
+export const ForgotPasswordView = React.memo<Props>(
+  ({ openForgotPasswordFeedBackScreen, openSignInScreen }) => {
+    const theme = usePreferredTheme();
+    const onSubmit = (_value: FormikValues) => {
+      initialValues = _value;
+      AppLog.log("form values" + initialValues);
+      openForgotPasswordFeedBackScreen();
+    };
+    return (
+      <Screen>
+        <ScrollView>
+          <View style={styles.mainContainer}>
+            <AppImageBackground
+              containerShape={CONTAINER_TYPES.CIRCLE}
+              icon={() => (
+                <ArrowLeft
+                  width={20}
+                  height={20}
+                  fill={theme.themedColors.primary}
+                />
+              )}
+              containerStyle={styles.leftArrow}
+              onPress={openSignInScreen}
             />
 
-            <View style={styles.buttonViewStyle}>
-              <AppFormFormSubmit
-                text={STRINGS.forgotpassword.reset_password}
-                buttonType={BUTTON_TYPES.NORMAL}
-                fontWeight={"semi-bold"}
-                textStyle={{ color: theme.themedColors.background }}
-                buttonStyle={[
-                  styles.buttonStyle,
-                  { backgroundColor: theme.themedColors.primary }
+            <Logo style={styles.logo} />
+
+            <HeadingWithText
+              headingText={STRINGS.forgotpassword.forgot_your_password}
+              headingFontWeight={"bold"}
+              headingStyle={styles.forgotPasswordHeading}
+              text={STRINGS.forgotpassword.forgot_text}
+              textStyle={styles.forgotText}
+            />
+
+            <AppForm
+              initialValues={initialValues}
+              onSubmit={onSubmit}
+              validationSchema={validationSchema}>
+              <View style={styles.email} />
+              <AppFormField
+                fieldTestID="email"
+                validationLabelTestID={"emailValidationLabel"}
+                name="email"
+                labelProps={{
+                  text: STRINGS.login.email_address,
+                  weight: "semi-bold"
+                }}
+                fieldInputProps={{
+                  textContentType: "emailAddress",
+                  keyboardType: "default",
+                  returnKeyType: "next",
+                  placeholder: STRINGS.login.enter_your_email,
+                  autoCapitalize: "none",
+                  placeholderTextColor: theme.themedColors.placeholder,
+                  style: { color: theme.themedColors.label },
+                  viewStyle: [
+                    styles.textFieldStyle,
+                    {
+                      backgroundColor: theme.themedColors.background,
+                      borderColor: theme.themedColors.border
+                    }
+                  ]
+                }}
+              />
+
+              <View style={styles.buttonViewStyle}>
+                <AppFormFormSubmit
+                  text={STRINGS.forgotpassword.reset_password}
+                  buttonType={BUTTON_TYPES.NORMAL}
+                  fontWeight={"semi-bold"}
+                  textStyle={{ color: theme.themedColors.background }}
+                  buttonStyle={[
+                    styles.buttonStyle,
+                    { backgroundColor: theme.themedColors.primary }
+                  ]}
+                />
+              </View>
+            </AppForm>
+
+            <View style={styles.spannableText}>
+              <MultilineSpannableText
+                text={[
+                  { id: 1, text: STRINGS.login.cant_log },
+                  { id: 1, text: STRINGS.login.contact_us }
+                ]}
+                textStyle={[
+                  { fontSize: SPACE.md },
+                  { fontSize: SPACE.md, color: theme.themedColors.primary }
                 ]}
               />
             </View>
-          </AppForm>
-
-          <View style={styles.spannableText}>
-            <MultilineSpannableText
-              text={[
-                { id: 1, text: STRINGS.login.cant_log },
-                { id: 1, text: STRINGS.login.contact_us }
-              ]}
-              textStyle={[
-                { fontSize: SPACE.md },
-                { fontSize: SPACE.md, color: theme.themedColors.primary }
-              ]}
-            />
           </View>
-        </View>
-      </ScrollView>
-    </Screen>
-  );
-});
+        </ScrollView>
+      </Screen>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   mainContainer: {
