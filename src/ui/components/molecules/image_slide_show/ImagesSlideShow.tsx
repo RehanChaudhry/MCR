@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: 15,
-    width: "86%",
+    width: "89%",
     marginTop: 5
   },
   sliderBoxContainer: {
