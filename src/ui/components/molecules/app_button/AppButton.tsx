@@ -183,7 +183,7 @@ const style = StyleSheet.create({
   },
   rightIconContainer: {
     position: "absolute",
-    right: SPACE.sm,
+    right: SPACE.lg,
     justifyContent: "flex-end",
     alignItems: "flex-end"
   },
