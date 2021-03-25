@@ -1,30 +1,26 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { SPACE } from "config";
+import { ScrollView, View } from "react-native";
 import AboutMe from "ui/components/templates/about_me/AboutMe";
 import InterestsTagsList from "ui/components/templates/InterestsTagsList";
 import ViewProfileDemoGraphics from "ui/components/templates/ViewProfileDemoGraphics";
 import EducationalInformation from "ui/components/templates/EducationalInformation";
-import MyRoommates from "../../../../components/templates/my_roommates/MyRoommates";
+import MyRoommates from "ui/components/templates/my_roommates/MyRoommates";
+import Screen from "ui/components/atoms/Screen";
 
 type Props = {};
 
 export const ViewProfileView: React.FC<Props> = () => {
   return (
-    <ScrollView>
-      <View style={styles.mainContainer}>
-        <AboutMe />
-        <ViewProfileDemoGraphics />
-        <InterestsTagsList />
-        <EducationalInformation />
-        <MyRoommates />
-      </View>
-    </ScrollView>
+    <Screen shouldAddBottomInset={false}>
+      <ScrollView>
+        <View>
+          <AboutMe />
+          <ViewProfileDemoGraphics />
+          <InterestsTagsList />
+          <EducationalInformation />
+          <MyRoommates />
+        </View>
+      </ScrollView>
+    </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    marginVertical: SPACE.lg
-  }
-});
