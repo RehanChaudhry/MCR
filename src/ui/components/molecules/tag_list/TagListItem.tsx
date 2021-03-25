@@ -1,13 +1,14 @@
 import React, { FC } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { FONT_SIZE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { grayShades } from "../../../../hooks/theme/ColorPaletteContainer";
 
 type Props = {
-  title: string;
+  title?: string;
   //onPress: () => void;
-  //style: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
 };
 const TagListItem: FC<Props> = ({ title }) => {
   const theme = usePreferredTheme();
@@ -17,9 +18,14 @@ const TagListItem: FC<Props> = ({ title }) => {
     <View
       style={[
         styles.mainContainer,
-        { backgroundColor: theme.themedColors.interface[100] }
+        title
+          ? { backgroundColor: grayShades.warmGray[200] }
+          : { backgroundColor: grayShades.warmGray[100] }
       ]}>
-      <AppLabel text={title} style={styles.text} />
+      <AppLabel
+        text={title ? title : "N/A"}
+        style={[styles.text, { color: theme.themedColors.labelSecondary }]}
+      />
     </View>
     //</TouchableOpacity>
   );
@@ -30,10 +36,10 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     height: 36,
     alignItems: "center",
-    marginHorizontal: 8,
+    marginRight: SPACE.sm,
     padding: 8,
     borderRadius: 5,
-    marginBottom: 8
+    marginBottom: SPACE.xsm
   },
   text: {
     fontSize: FONT_SIZE.sm
