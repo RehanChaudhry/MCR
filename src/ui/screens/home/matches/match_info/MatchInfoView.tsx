@@ -18,6 +18,7 @@ import { moderateScale } from "config/Dimens";
 import SocialDetailForm from "ui/components/templates/about_me/SocialDetailForm";
 import moment from "moment";
 import UserHeader from "ui/components/organisms/user_header/UserHeader";
+import Roommates from "ui/components/organisms/roommates/Roommates";
 
 type Props = {
   matchInfo: MatchInfo;
@@ -207,7 +208,12 @@ export const MatchInfoView: React.FC<Props> = ({ matchInfo }: Props) => {
             }`}
           />
         </View>
-        {/*My Roommates Card Here*/}
+        {matchInfo.roommates && matchInfo.roommates.length > 0 && (
+          <Roommates
+            style={[styles.card, styles.lastCard]}
+            roommates={matchInfo.roommates}
+          />
+        )}
       </ScrollView>
     </Screen>
   );
@@ -215,7 +221,7 @@ export const MatchInfoView: React.FC<Props> = ({ matchInfo }: Props) => {
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
-  container: {},
+  container: { paddingBottom: SPACE.md },
   card: {
     borderRadius: 10,
     marginHorizontal: SPACE.md,
@@ -254,5 +260,6 @@ const styles = StyleSheet.create({
   userHeader: {
     marginTop: SPACE.md,
     marginHorizontal: SPACE.md
-  }
+  },
+  lastCard: { marginBottom: SPACE.md }
 });
