@@ -278,7 +278,7 @@ exports[`rendering... renders correctly 1`] = `
                 },
                 Array [
                   Object {
-                    "fontSize": 24.186407766990293,
+                    "fontSize": 21.163106796116505,
                     "overflow": "hidden",
                   },
                   Object {

@@ -1,8 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import Close from "assets/images/ic_cross.svg";
 import Check from "assets/images/check_circle.svg";
+import Close from "assets/images/ic_cross.svg";
 import { SPACE } from "config";
+import { moderateScale } from "config/Dimens";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { CreatePostApiRequestModel } from "models/api_requests/CreatePostApiRequestModel";
 import { CreatePostApiResponseModel } from "models/api_responses/CreatePostApiResponseModel";
@@ -119,7 +120,8 @@ const style = StyleSheet.create({
     alignItems: "center"
   },
   headerLeftRightText: {
-    fontSize: SPACE.md
+    fontSize: SPACE.md,
+    padding: moderateScale(2.0)
   }
 });
 

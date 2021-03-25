@@ -22,9 +22,17 @@ import { MatchesStackParamList } from "routes/MatchesStack";
 import InfoCircle from "assets/images/info_circle.svg";
 import { usePreferredTheme } from "hooks";
 import { SPACE } from "config";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { HomeDrawerParamList } from "routes";
+import Menu from "assets/images/menu.svg";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
+  "Matches"
+>;
+
+type MatchesNavigationDrawerProp = DrawerNavigationProp<
+  HomeDrawerParamList,
   "Matches"
 >;
 
@@ -35,6 +43,7 @@ const MatchesController: FC<Props> = () => {
   const { themedColors } = usePreferredTheme();
 
   const navigation = useNavigation<MatchesNavigationProp>();
+  const navigationDrawer = useNavigation<MatchesNavigationDrawerProp>();
 
   navigation.setOptions({
     headerRight: () => (
@@ -47,7 +56,19 @@ const MatchesController: FC<Props> = () => {
     ),
     headerRightContainerStyle: {
       padding: SPACE.md
-    }
+    },
+    headerLeft: () => (
+      <Pressable
+        onPress={() => {
+          navigationDrawer.openDrawer();
+        }}>
+        <Menu width={23} height={23} fill={themedColors.primary} />
+      </Pressable>
+    ),
+    headerLeftContainerStyle: {
+      padding: SPACE.md
+    },
+    headerTitleAlign: "center"
   });
 
   // Matches API

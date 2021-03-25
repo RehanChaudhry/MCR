@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import DismissedOrBlockedController from "ui/screens/home/friends/DismissedOrBlocked/DismissedOrBlockedController";
 import MyFriendsController from "ui/screens/home/friends/MyFriends/MyFriendsController";
 import MyRoommatesController from "ui/screens/home/friends/MyRoommates/MyRoommatesController";
@@ -41,7 +42,7 @@ const MyFriendsRoutes: FC<MyFriendsRoutesProps> = () => {
       <MyFriendsStack.Screen
         name="MyFriends"
         component={MyFriendsController}
-        options={{ title: "My Friends" }}
+        options={{ title: "My Friends", headerLeft: () => <Hamburger /> }}
       />
     </MyFriendsStack.Navigator>
   );
@@ -54,7 +55,10 @@ const MyRoommatesRoutes: FC<MyRoommatesRoutesProps> = () => {
       <MyRoommatesStack.Screen
         name="MyRoommates"
         component={MyRoommatesController}
-        options={{ title: "My Roommates" }}
+        options={{
+          title: "My Roommates",
+          headerLeft: () => <Hamburger />
+        }}
       />
     </MyRoommatesStack.Navigator>
   );
@@ -67,7 +71,10 @@ const RoommateAgreementRoutes: FC<RoommateAgreementRoutesProps> = () => {
       <RoommateAgreementStack.Screen
         name="RoomateAgreement"
         component={RoommateAgreementController}
-        options={{ title: "Roommate Agreement" }}
+        options={{
+          title: "Roommate Agreement",
+          headerLeft: () => <Hamburger />
+        }}
       />
     </RoommateAgreementStack.Navigator>
   );
@@ -85,7 +92,8 @@ const DismissedOrBlockedRoutes: FC<DismissedOrBlockedRoutesProps> = () => {
           headerStyle: {
             elevation: 0,
             shadowOpacity: 0
-          }
+          },
+          headerLeft: () => <Hamburger />
         }}
       />
     </DismissedOrBlockStack.Navigator>

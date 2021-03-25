@@ -17,8 +17,11 @@ import {
   MyFriendsResponseModel,
   ROOMMATE_REQUEST_STATE
 } from "models/api_responses/MyFriendsResponseModel";
+import MatchInfo from "models/MatchInfo";
 import { MyRoommatesResponseModel } from "models/api_responses/MyRoommatesResponseModel";
 import { DismissedOrBlockedResponseModel } from "models/api_responses/DismissedOrBlockedResponseModel";
+import { FriendRequestsResponseModel } from "models/api_responses/FriendRequestsResponseModel";
+import { RoommateRequestsResponseModel } from "models/api_responses/RoommateRequestsResponseModel";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -198,6 +201,48 @@ const getDismissedOrBlocked = () => {
       {
         id: "2",
         title: "Kari Rasmussen",
+        subtitle: "Honors, Fine Arts",
+        profileImage: ""
+      }
+    ]
+  };
+  return response;
+};
+
+const getRoommateRequests = () => {
+  const response: RoommateRequestsResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        title: "Maria Randall",
+        subtitle: "Freshman, History",
+        profileImage: ""
+      },
+      {
+        id: "2",
+        title: "Kari Rasmussen",
+        subtitle: "Honors, Fine Arts",
+        profileImage: ""
+      }
+    ]
+  };
+  return response;
+};
+
+const getFriendRequests = () => {
+  const response: FriendRequestsResponseModel = {
+    message: "",
+    data: [
+      {
+        id: "1",
+        title: "Mario Palmer",
+        subtitle: "Freshman, History",
+        profileImage: ""
+      },
+      {
+        id: "2",
+        title: "Lana Steiner",
         subtitle: "Honors, Fine Arts",
         profileImage: ""
       }
@@ -453,6 +498,29 @@ const randomDate = (start: Date, end: Date) =>
     start.getTime() + Math.random() * (end.getTime() - start.getTime())
   );
 
+const getMatchInfo = () => {
+  const matchInfo: MatchInfo = {
+    id: 1,
+    name: "Zane Mayes",
+    profilePicture:
+      "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    classLevel: "Freshman",
+    major: "Interior Architecture",
+    shortIntro:
+      "I am a Interior Architecture major who also likes to play the bass guitar. I always clean up after myself and I like having a quiet environment but I'm down to do fun stuff as well! I am kind of introverted but once we get to know each other, I’ll be your best friend.",
+    profileCompletePercentage: 65,
+    isRoommateMatchingOpen: true,
+    roommateMatchingDeadline: new Date(2021, 3, 10),
+    maxRoommateCount: 4,
+    matchingCriteria: {
+      gender: "Male or female",
+      majors: "Fine Arts Community"
+    },
+    roommates: []
+  };
+  return matchInfo;
+};
+
 export default {
   getQuestionSections,
   getQuestion,
@@ -465,6 +533,9 @@ export default {
   getProfileMatches,
   getUnis,
   getMyFriends,
+  getMatchInfo,
   getMyRoommates,
-  getDismissedOrBlocked
+  getDismissedOrBlocked,
+  getFriendRequests,
+  getRoommateRequests
 };
