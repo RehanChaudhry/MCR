@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { LikeCommentButton } from "ui/components/atoms/like_comment_button/LikeCommentButton";
 import { AppLog } from "utils/Util";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
-import { ThemeSwitcher } from "ui/components/templates/ThemeSwitcher";
+import { ThemeSwitcher } from "ui/components/templates/theme_switcher/ThemeSwitcher";
 
 export const LikeCommentButtonScreen = React.memo(() => {
   AppLog.log("Rendering App...");

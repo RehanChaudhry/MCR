@@ -6,8 +6,7 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 
 type Props = {
   title: string;
-  //onPress: () => void;
-  //style: StyleProp<ViewStyle>;
+  onPress?: () => void;
 };
 const TagListItem: FC<Props> = ({ title }) => {
   const theme = usePreferredTheme();

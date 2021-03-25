@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { TagDataItem } from "ui/components/molecules/tag_list/TagDataItem";
 import TagListItem from "./TagListItem";
-import { dataType } from "ui/screens/demo/tag_list/TagListView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE } from "config";
 
 type Props = {
   labelTitle: string;
-  data: dataType[];
+  data: TagDataItem[];
 };
 
 const TagList: FC<Props> = ({ data, labelTitle }) => {
