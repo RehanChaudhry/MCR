@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
-import UserImage from "assets/images/user_pic2.svg";
-import { HeadingWithText } from "../../../molecules/heading_with_text/HeadingWithText";
+import UserImage from "../assets/images/user_pic2.svg";
+import { HeadingWithText } from "../../molecules/heading_with_text/HeadingWithText";
 import { FONT_SIZE, SPACE } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
-import { grayShades } from "../../../../../hooks/theme/ColorPaletteContainer";
+import { grayShades } from "../../../../hooks/theme/ColorPaletteContainer";
 
 type Props = {
   name: string;

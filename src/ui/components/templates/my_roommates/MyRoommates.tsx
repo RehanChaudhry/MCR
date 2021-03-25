@@ -5,7 +5,7 @@ import { FONT_SIZE, SPACE } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { myRoommateData } from "models/MyRoommateDataType";
-import MyRoommateItem from "ui/components/profile/view_profile/my_roommates/MyRoommateItem";
+import MyRoommateItem from "ui/components/templates/my_roommates/MyRoommateItem";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 type Props = {};
 

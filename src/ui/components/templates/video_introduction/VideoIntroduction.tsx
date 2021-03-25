@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
-import YoutubeIcon from "assets/images/youtube_icon.svg";
+import YoutubeIcon from "../assets/images/youtube_icon.svg";
 
 export const VideoIntroduction = React.memo(() => {
   const theme = usePreferredTheme();

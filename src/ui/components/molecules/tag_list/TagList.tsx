@@ -4,7 +4,7 @@ import TagListItem from "./TagListItem";
 
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE } from "config";
-import { dataType } from "ui/components/profile/view_profile/Interest";
+import { dataType } from "ui/components/templates/Interest";
 import usePreferredTheme from "../../../../hooks/theme/usePreferredTheme";
 
 type Props = {
