@@ -11,7 +11,13 @@ import { Divider } from "react-native-elements";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
 import Profile from "assets/images/nav_profile.svg";
 import Questionnaire from "assets/images/request_state_icon.svg";
+import MatchingStatus from "assets/images/view_grid_add.svg";
+import MatchingDeadline from "assets/images/calendar.svg";
+import MatchingCriteria from "assets/images/puzzle.svg";
 import { moderateScale } from "config/Dimens";
+import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
+import SocialDetailForm from "ui/components/templates/about_me/SocialDetailForm";
+import moment from "moment";
 
 type Props = {
   matchInfo: MatchInfo;
@@ -28,7 +34,16 @@ export const MatchInfoView: React.FC<Props> = ({ matchInfo }: Props) => {
             styles.card,
             { backgroundColor: themedColors.background }
           ]}>
-          {/*Info Header Here*/}
+          <HeadingWithText
+            headingText={matchInfo.name ?? STRINGS.common.not_found}
+            headingFontWeight={"semi-bold"}
+            text={`${matchInfo.classLevel ?? STRINGS.common.not_found}, 
+                ${matchInfo.major ?? STRINGS.common.not_found}`}
+            textStyle={[
+              styles.textStyle,
+              { color: themedColors.interface["600"] }
+            ]}
+          />
           <AppLabel
             style={styles.description}
             text={matchInfo.shortIntro ?? STRINGS.common.not_found}
@@ -85,6 +100,114 @@ export const MatchInfoView: React.FC<Props> = ({ matchInfo }: Props) => {
             text={STRINGS.matchInfo.matching_information}
             weight={"semi-bold"}
           />
+          <SocialDetailForm
+            headingStyle={[
+              styles.matchingInfoLabel,
+              { color: themedColors.interface[600] }
+            ]}
+            titleStyle={[
+              styles.matchingInfoData,
+              { color: themedColors.label }
+            ]}
+            icon={() => (
+              <MatchingStatus
+                width={moderateScale(20)}
+                height={moderateScale(20)}
+                fill={themedColors.primary}
+              />
+            )}
+            heading={STRINGS.matchInfo.matching_status}
+            title={
+              matchInfo.isRoommateMatchingOpen
+                ? STRINGS.matchInfo.label_open
+                : STRINGS.matchInfo.label_close
+            }
+          />
+          <Divider
+            style={[
+              styles.infoCardDivider,
+              { backgroundColor: themedColors.separator }
+            ]}
+          />
+          <SocialDetailForm
+            headingStyle={[
+              styles.matchingInfoLabel,
+              { color: themedColors.interface[600] }
+            ]}
+            titleStyle={[
+              styles.matchingInfoData,
+              { color: themedColors.label }
+            ]}
+            icon={() => (
+              <MatchingDeadline
+                width={moderateScale(20)}
+                height={moderateScale(20)}
+                fill={themedColors.primary}
+              />
+            )}
+            heading={STRINGS.matchInfo.matching_deadline}
+            title={moment(matchInfo.roommateMatchingDeadline).format(
+              "MMMM DD, YYYY"
+            )}
+          />
+          <Divider
+            style={[
+              styles.infoCardDivider,
+              { backgroundColor: themedColors.separator }
+            ]}
+          />
+          <SocialDetailForm
+            headingStyle={[
+              styles.matchingInfoLabel,
+              { color: themedColors.interface[600] }
+            ]}
+            titleStyle={[
+              styles.matchingInfoData,
+              { color: themedColors.label }
+            ]}
+            icon={() => (
+              <Questionnaire
+                width={moderateScale(20)}
+                height={moderateScale(20)}
+                fill={themedColors.primary}
+              />
+            )}
+            heading={STRINGS.matchInfo.max_roommate_count}
+            title={`${matchInfo.maxRoommateCount} roommate${
+              matchInfo.maxRoommateCount ?? 0 > 1 ? "s" : ""
+            }`}
+          />
+          <Divider
+            style={[
+              styles.infoCardDivider,
+              { backgroundColor: themedColors.separator }
+            ]}
+          />
+          <SocialDetailForm
+            headingStyle={[
+              styles.matchingInfoLabel,
+              { color: themedColors.interface[600] }
+            ]}
+            titleStyle={[
+              styles.matchingInfoData,
+              { color: themedColors.label }
+            ]}
+            icon={() => (
+              <MatchingCriteria
+                width={moderateScale(20)}
+                height={moderateScale(20)}
+                fill={themedColors.primary}
+              />
+            )}
+            heading={STRINGS.matchInfo.matching_criteria}
+            title={`${
+              matchInfo.matchingCriteria?.gender ??
+              STRINGS.common.not_found
+            }, ${
+              matchInfo.matchingCriteria?.majors ??
+              STRINGS.common.not_found
+            }`}
+          />
         </View>
         {/*My Roommates Card Here*/}
       </ScrollView>
@@ -100,6 +223,10 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACE.md,
     marginTop: SPACE.md,
     ...shadowStyleProps
+  },
+  textStyle: {
+    paddingTop: SPACE.xsm,
+    fontSize: FONT_SIZE.md
   },
   description: {
     fontSize: FONT_SIZE.sm,
@@ -120,5 +247,10 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm
   },
   updateButton: { padding: SPACE.md },
-  cardPadding: { padding: SPACE.md }
+  cardPadding: { padding: SPACE.md },
+  matchingInfoLabel: {
+    fontSize: FONT_SIZE.sm,
+    paddingHorizontal: SPACE.xsm
+  },
+  matchingInfoData: { fontSize: FONT_SIZE.sm, marginTop: SPACE.xsm }
 });
