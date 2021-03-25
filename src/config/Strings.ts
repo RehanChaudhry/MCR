@@ -203,5 +203,10 @@ export default {
       link: "Link",
       embed: "Embed"
     }
+  },
+  matchInfo: {
+    matching_information: "Matching Information",
+    action_update_profile: "Update Profile",
+    action_update_questionnaire: "Questionnaire"
   }
 };

@@ -5,7 +5,7 @@ import MatchInfoController from "ui/screens/home/matches/match_info/MatchInfoCon
 
 const MatchesRoutes = () => {
   return (
-    <MatchesStack.Navigator initialRouteName={"Matches"}>
+    <MatchesStack.Navigator initialRouteName={"MatchInfo"}>
       <MatchesStack.Screen name="Matches" component={MatchesController} />
       <MatchesStack.Screen
         name="MatchInfo"

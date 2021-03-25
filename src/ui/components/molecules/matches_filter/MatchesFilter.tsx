@@ -6,7 +6,6 @@ import { FONT_SIZE, SPACE, STRINGS } from "config";
 import EGender, { genders } from "models/enums/EGender";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import { moderateScale } from "config/Dimens";
-import { grayShades } from "hooks/theme/ColorPaletteContainer";
 import Selector from "assets/images/selector.svg";
 
 interface Props {
@@ -29,7 +28,7 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
         style={[
           styles.search,
           {
-            backgroundColor: grayShades.coolGray[100],
+            backgroundColor: themedColors.interface[100],
             borderColor: themedColors.separator
           }
         ]}
@@ -41,16 +40,18 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
         }}
         searchIcon={true}
         clearIcon={true}
-        iconColor={grayShades.coolGray[500]}
+        iconColor={themedColors.interface[500]}
       />
       <AppDropdown
         style={[
           styles.dropDown,
-          { backgroundColor: grayShades.coolGray[100] }
+          { backgroundColor: themedColors.interface[100] }
         ]}
         textStyle={styles.genderText}
         shouldShowCustomIcon={true}
-        dropDownIcon={() => <Selector fill={grayShades.coolGray[500]} />}
+        dropDownIcon={() => (
+          <Selector fill={themedColors.interface[500]} />
+        )}
         title={genders[0].title}
         items={genders}
         selectedItemCallback={(item) => {
