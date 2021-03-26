@@ -1,8 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import { AppLog } from "utils/Util";
+import { AppLog, shadowStyleProps } from "utils/Util";
 import { ItemChatList } from "ui/components/molecules/item_chat/ItemChatList";
 import BottomBreadCrumbs, {
   Item
@@ -10,6 +10,11 @@ import BottomBreadCrumbs, {
 import ChatItem from "models/ChatItem";
 import { ChatHeader } from "ui/components/molecules/item_chat/ChatHeader";
 import Strings from "config/Strings";
+import SearchField from "ui/components/atoms/search_field/SearchField";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
+import { moderateScale } from "config/Dimens";
+import { usePreferredTheme } from "hooks";
+import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 type ConversationType = "Active" | "Archived";
 
 interface ChatListProps {
@@ -39,6 +44,7 @@ const breadCrumbsItems: Item[] = [
 let lastHeaderTitle = "";
 export const ChatListScreen = React.memo<ChatListProps>(
   ({ data, onItemClick }) => {
+    const { themedColors } = usePreferredTheme();
     AppLog.log("Rendering chat screen...");
     const renderItem = ({ item }: { item: ChatItem }) => {
       AppLog.log("rendering list item : " + JSON.stringify(item));
@@ -63,6 +69,22 @@ export const ChatListScreen = React.memo<ChatListProps>(
 
     return (
       <Screen style={styles.container}>
+        <View style={styles.searchContainer(themedColors)}>
+          <SearchField
+            style={styles.search(themedColors)}
+            textStyle={styles.searchText}
+            placeholder={STRINGS.chatListScreen.placeholder_search_keyword}
+            onChangeText={(textToSearch?: string) => {
+              AppLog.log(textToSearch);
+              //  keyword.current = textToSearch;
+              //  onFilterChange(keyword.current, gender.current);
+            }}
+            searchIcon={true}
+            clearIcon={true}
+            iconColor={themedColors.interface[500]}
+          />
+        </View>
+
         <FlatListWithPb
           shouldShowProgressBar={false}
           data={data}
@@ -83,9 +105,24 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flex: 1
   },
-  list: {
-    flex: 1
+  searchContainer: (theme: ColorPalette) => {
+    return {
+      backgroundColor: theme.background,
+      paddingBottom: SPACE.md,
+      paddingHorizontal: SPACE.md,
+      ...shadowStyleProps
+    };
   },
+  search: (theme: ColorPalette) => {
+    return {
+      borderRadius: moderateScale(20),
+      borderEndWidth: StyleSheet.hairlineWidth,
+      backgroundColor: theme.interface[100],
+      borderColor: theme.separator
+    };
+  },
+  searchText: { fontSize: FONT_SIZE._2xsm },
+  list: { flex: 1 },
   breadCrumbs: {},
   messageContainer: {}
 });

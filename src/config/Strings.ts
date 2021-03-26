@@ -210,7 +210,8 @@ export default {
   chatListScreen: {
     title: "Chat",
     activeConversations: "Active Conversations",
-    archivedConversations: "Archived"
+    archivedConversations: "Archived",
+    placeholder_search_keyword: "Search by name"
   },
 
   chatThreadScreen: {
