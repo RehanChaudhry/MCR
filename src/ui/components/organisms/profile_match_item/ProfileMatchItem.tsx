@@ -98,6 +98,7 @@ const ProfileMatchItem = ({
         />
         {profileMatch.getType() === ProfileMatchType.NOT_FRIEND && (
           <AppButton
+            isDisable={profileMatch.isFriendRequested}
             onPress={() => {
               if (!profileMatch.isFriendRequested) {
                 onFriendRequestClicked(profileMatch.userId);

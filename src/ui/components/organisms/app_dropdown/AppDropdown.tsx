@@ -124,7 +124,8 @@ export const AppDropdown = React.memo<AppDropdownProps>(
 
 const styles = StyleSheet.create({
   root: {
-    borderRadius: 5
+    borderRadius: 5,
+    justifyContent: "center"
   },
   wrapper: {
     paddingVertical: 10,

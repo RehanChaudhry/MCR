@@ -6,6 +6,7 @@ exports[`Renders snapshot as expected 1`] = `
     Array [
       Object {
         "borderRadius": 5,
+        "justifyContent": "center",
       },
       Object {
         "backgroundColor": "#FFFFFF",

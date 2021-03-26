@@ -19,7 +19,7 @@ exports[`snapshot testing 1`] = `
       "borderRadius": 6,
       "elevation": 1,
       "flexDirection": "row",
-      "height": 40,
+      "height": 60.466019417475735,
       "justifyContent": "space-between",
       "opacity": 1,
       "shadowColor": "#FFFFFF",
