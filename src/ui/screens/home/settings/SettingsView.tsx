@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { CardView } from "../../../components/atoms/CardView";
 import { SPACE } from "../../../../config";
 import AppFormField from "../../../components/molecules/app_form/AppFormField";
@@ -11,25 +11,8 @@ import { AppLog } from "../../../../utils/Util";
 import Screen from "../../../components/atoms/Screen";
 import AppFormFormSubmit from "../../../components/molecules/app_form/AppFormSubmit";
 import { BUTTON_TYPES } from "../../../components/molecules/app_button/AppButton";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { ProfileStackParamList } from "../../../../routes/ProfileBottomBar";
-import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { HomeDrawerParamList } from "../../../../routes";
-import Menu from "assets/images/menu.svg";
-import { useNavigation } from "@react-navigation/native";
 
 type Props = {};
-
-// for adding toolbar
-type ProfileNavigationProp = StackNavigationProp<
-  ProfileStackParamList,
-  "UpdateProfile"
->;
-
-type ProfileNavigationDrawerProp = DrawerNavigationProp<
-  HomeDrawerParamList,
-  "Profile"
->;
 
 const SettingsView: FC<Props> = () => {
   const validationSchema = Yup.object().shape({
@@ -72,23 +55,6 @@ const SettingsView: FC<Props> = () => {
 
   const theme = usePreferredTheme();
 
-  const navigation = useNavigation<ProfileNavigationProp>();
-  const navigationDrawer = useNavigation<ProfileNavigationDrawerProp>();
-
-  navigation.setOptions({
-    headerLeft: () => (
-      <Pressable
-        onPress={() => {
-          navigationDrawer.openDrawer();
-        }}>
-        <Menu width={23} height={23} fill={theme.themedColors.primary} />
-      </Pressable>
-    ),
-    headerLeftContainerStyle: {
-      padding: SPACE.md
-    },
-    headerTitleAlign: "center"
-  });
   return (
     <Screen>
       <ScrollView>

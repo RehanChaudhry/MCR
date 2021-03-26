@@ -76,9 +76,10 @@ exports[`Snapshot testing 1`] = `
         }
       />
     </View>
-    <View
+    <Text
       accessible={true}
       focusable={true}
+      numberOfLines={1}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -87,38 +88,29 @@ exports[`Snapshot testing 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "opacity": 1,
-        }
-      }
-      testID="RADIO_GROUP_LABEL"
-    >
-      <Text
-        numberOfLines={1}
-        style={
+        Array [
           Array [
-            Array [
-              Object {
-                "fontFamily": "Inter-Regular",
-              },
-              Object {
-                "color": "#111827",
-              },
-              Object {
-                "fontSize": 14,
-                "marginLeft": 10,
-                "marginRight": 16,
-              },
-            ],
             Object {
               "fontFamily": "Inter-Regular",
             },
-          ]
-        }
-      >
-        Male
-      </Text>
-    </View>
+            Object {
+              "color": "#111827",
+            },
+            Object {
+              "fontSize": 14,
+              "marginLeft": 10,
+              "marginRight": 16,
+            },
+          ],
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+        ]
+      }
+      testID="RADIO_GROUP_LABEL"
+    >
+      Male
+    </Text>
   </View>
   <View
     style={
@@ -177,9 +169,10 @@ exports[`Snapshot testing 1`] = `
         }
       />
     </View>
-    <View
+    <Text
       accessible={true}
       focusable={true}
+      numberOfLines={1}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -188,38 +181,29 @@ exports[`Snapshot testing 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "opacity": 1,
-        }
-      }
-      testID="RADIO_GROUP_LABEL"
-    >
-      <Text
-        numberOfLines={1}
-        style={
+        Array [
           Array [
-            Array [
-              Object {
-                "fontFamily": "Inter-Regular",
-              },
-              Object {
-                "color": "#111827",
-              },
-              Object {
-                "fontSize": 14,
-                "marginLeft": 10,
-                "marginRight": 16,
-              },
-            ],
             Object {
               "fontFamily": "Inter-Regular",
             },
-          ]
-        }
-      >
-        Female
-      </Text>
-    </View>
+            Object {
+              "color": "#111827",
+            },
+            Object {
+              "fontSize": 14,
+              "marginLeft": 10,
+              "marginRight": 16,
+            },
+          ],
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+        ]
+      }
+      testID="RADIO_GROUP_LABEL"
+    >
+      Female
+    </Text>
   </View>
   <View
     style={
@@ -278,9 +262,10 @@ exports[`Snapshot testing 1`] = `
         }
       />
     </View>
-    <View
+    <Text
       accessible={true}
       focusable={true}
+      numberOfLines={1}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -289,38 +274,29 @@ exports[`Snapshot testing 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "opacity": 1,
-        }
-      }
-      testID="RADIO_GROUP_LABEL"
-    >
-      <Text
-        numberOfLines={1}
-        style={
+        Array [
           Array [
-            Array [
-              Object {
-                "fontFamily": "Inter-Regular",
-              },
-              Object {
-                "color": "#111827",
-              },
-              Object {
-                "fontSize": 14,
-                "marginLeft": 10,
-                "marginRight": 16,
-              },
-            ],
             Object {
               "fontFamily": "Inter-Regular",
             },
-          ]
-        }
-      >
-        Others
-      </Text>
-    </View>
+            Object {
+              "color": "#111827",
+            },
+            Object {
+              "fontSize": 14,
+              "marginLeft": 10,
+              "marginRight": 16,
+            },
+          ],
+          Object {
+            "fontFamily": "Inter-Regular",
+          },
+        ]
+      }
+      testID="RADIO_GROUP_LABEL"
+    >
+      Others
+    </Text>
   </View>
 </View>
 `;

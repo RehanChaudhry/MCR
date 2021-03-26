@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
   aboutMe: {
     height: 80,
     borderWidth: 1,
-    paddingTop: SPACE.xsm
+    paddingVertical: SPACE.xsm
   },
   textFieldStyle: {
     borderWidth: 1

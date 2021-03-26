@@ -43,7 +43,7 @@ export const DemoGraphics = React.memo(({}) => {
           items: [
             { id: "0", title: "Male" },
             { id: "1", title: "Female" },
-            { id: "2", title: "Other" }
+            { id: "2", title: "Others" }
           ],
           selectedItemCallback: () => {
             //setTitle(item.title);

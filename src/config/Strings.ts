@@ -130,7 +130,7 @@ export default {
       homeTown: "Enter your hometown",
       intendedMajor: "Enter your intended major",
       programs: "Enter your educational program",
-      community: "Start typing seprated by comma",
+      community: "Start typing separated by comma",
       building: "Enter your building information",
       room: "Enter your room number",
       youTubeVideoUrl: "youtube.com/"
