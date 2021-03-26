@@ -41,6 +41,10 @@ const LoginController: FC<Props> = () => {
     AuthApis.signIn
   );
 
+  const openUniSelectionScreen = usePreventDoubleTap(() => {
+    navigation.push("Welcome");
+  });
+
   const openForgotPasswordScreen = usePreventDoubleTap(() => {
     navigation.navigate("ForgotPassword");
   });
@@ -71,6 +75,7 @@ const LoginController: FC<Props> = () => {
       shouldShowProgressBar={signInApi.loading}
       openForgotPasswordScreen={openForgotPasswordScreen}
       openWelcomeScreen={openWelcomeScreen}
+      openUniSelectionScreen={openUniSelectionScreen}
     />
   );
 };
