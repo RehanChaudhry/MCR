@@ -21,6 +21,9 @@ import MatchesFilterApiResponseModel, {
 import { MatchesStackParamList } from "routes/MatchesStack";
 import InfoCircle from "assets/images/info_circle.svg";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
+import ProfileMatch from "models/ProfileMatch";
+import { STRINGS } from "config";
+import { usePreferredTheme } from "hooks";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -31,6 +34,7 @@ type Props = {};
 
 const MatchesController: FC<Props> = () => {
   AppLog.log("Opening MatchesController");
+  const { themedColors } = usePreferredTheme();
 
   const navigation = useNavigation<MatchesNavigationProp>();
 
@@ -39,12 +43,35 @@ const MatchesController: FC<Props> = () => {
       <HeaderRightTextWithIcon
         text={"More"}
         onPress={() => navigation.navigate("MatchInfo")}
-        icon={(color) => (
-          <InfoCircle width={23} height={23} fill={color} />
-        )}
+        icon={(color, width, height) => {
+          AppLog.log(color);
+          return (
+            <InfoCircle
+              width={width}
+              height={height}
+              fill={themedColors.primary}
+            />
+          );
+        }}
       />
     )
   });
+
+  const moveToChatScreen = (profileMatch: ProfileMatch) => {
+    // AppLog.log(
+    //   "moveToChatScreen(), profile: " + JSON.stringify(profileMatch)
+    // );
+    navigation.navigate("Chat", {
+      title: [profileMatch.userName ?? STRINGS.common.not_found]
+    });
+  };
+
+  const moveToProfileScreen = (profileMatch: ProfileMatch) => {
+    AppLog.log(
+      "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
+    );
+    navigation.navigate("Profile");
+  };
 
   // Matches API
   const matchesApi = useApi<
@@ -132,6 +159,10 @@ const MatchesController: FC<Props> = () => {
   );
 
   const postFriendRequest = async (userId: number) => {
+    // For UI build
+    if (true) {
+      return;
+    }
     const {
       hasError,
       errorBody,
@@ -164,6 +195,10 @@ const MatchesController: FC<Props> = () => {
   );
 
   const postMatchDismiss = async (userId: number) => {
+    // For UI build
+    if (true) {
+      return;
+    }
     const {
       hasError,
       errorBody,
@@ -238,6 +273,8 @@ const MatchesController: FC<Props> = () => {
         isAllDataLoaded={isAllDataLoaded}
         postFriendRequest={postFriendRequest}
         postMatchDismiss={postMatchDismiss}
+        moveToChatScreen={moveToChatScreen}
+        moveToProfileScreen={moveToProfileScreen}
       />
     </ProgressErrorView>
   );

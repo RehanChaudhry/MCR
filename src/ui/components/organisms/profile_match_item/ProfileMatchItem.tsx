@@ -18,14 +18,18 @@ import Cross from "assets/images/ic_cross.svg";
 
 interface Props {
   profileMatch: ProfileMatch;
-  postFriendRequest: (userId: number) => void;
-  postMatchDismiss: (userId: number) => void;
+  onFriendRequestClicked: (userId: number) => void;
+  onCrossClicked: (userId: number) => void;
+  onChatButtonClicked: (profileMatch: ProfileMatch) => void;
+  onImageClicked: (profileMatch: ProfileMatch) => void;
 }
 
 const ProfileMatchItem = ({
   profileMatch,
-  postFriendRequest,
-  postMatchDismiss
+  onFriendRequestClicked,
+  onCrossClicked,
+  onChatButtonClicked,
+  onImageClicked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
   // AppLog.log(
@@ -39,10 +43,15 @@ const ProfileMatchItem = ({
         { backgroundColor: themedColors.background }
       ]}>
       <View style={styles.infoContainer}>
-        <Image
-          style={styles.profileImage}
-          source={{ uri: profileMatch.profilePicture }}
-        />
+        <Pressable
+          onPress={() => {
+            onImageClicked(profileMatch);
+          }}>
+          <Image
+            style={styles.profileImage}
+            source={{ uri: profileMatch.profilePicture }}
+          />
+        </Pressable>
         <View style={styles.infoTextContainer}>
           <AppLabel
             style={styles.userName}
@@ -64,7 +73,7 @@ const ProfileMatchItem = ({
       <Pressable
         style={styles.icCross}
         onPress={() => {
-          postMatchDismiss(profileMatch.userId);
+          onCrossClicked(profileMatch.userId);
         }}>
         <Cross
           fill={themedColors.interface[400]}
@@ -74,6 +83,9 @@ const ProfileMatchItem = ({
       </Pressable>
       <View style={styles.buttonContainer}>
         <AppImageBackground
+          onPress={() => {
+            onChatButtonClicked(profileMatch);
+          }}
           containerStyle={styles.btnChat}
           containerShape={CONTAINER_TYPES.SQUARE}
           icon={() => (
@@ -88,7 +100,7 @@ const ProfileMatchItem = ({
           <AppButton
             onPress={() => {
               if (!profileMatch.isFriendRequested) {
-                postFriendRequest(profileMatch.userId);
+                onFriendRequestClicked(profileMatch.userId);
               }
             }}
             fontWeight={"semi-bold"}
