@@ -21,7 +21,6 @@ import { usePreferredTheme } from "hooks";
 import Archive from "assets/images/archive.svg";
 import Close from "assets/images/close.svg";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
-import { Color, NumberProp, SvgProps } from "react-native-svg";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import Strings from "config/Strings";
@@ -49,6 +48,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
   const { themedColors } = usePreferredTheme();
 
   const getTitle = (): string => {
+    // @ts-ignore
     const title = params.title;
 
     if (title.length === 1) {
@@ -60,63 +60,45 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     }
   };
 
-  const iconLeft: SvgProps = (
-    color?: Color,
-    width?: NumberProp,
-    height?: NumberProp
-  ) => {
-    AppLog.log("color : " + color + width + height); //just to avoid warning
-    return (
-      <Close
-        testID="icon"
-        width={width}
-        height={height}
-        fill={themedColors.primary}
-      />
-    );
-  };
-
-  const iconRight: SvgProps = (
-    color?: Color,
-    width?: NumberProp,
-    height?: NumberProp
-  ) => {
-    AppLog.log("color : " + color + width + height); //just to avoid warning
-    return (
-      <Archive
-        testID="icon"
-        width={width}
-        height={height}
-        fill={COLORS.red}
-      />
-    );
-  };
-
   useLayoutEffect(() => {
     myNavigation.setOptions({
       headerTitle: () => (
         <HeaderTitle
           text={getTitle()}
-          labelStyle={{ paddingHorizontal: SPACE.xl }}
+          labelStyle={{ paddingHorizontal: SPACE._2xl }}
         />
       ),
       headerLeft: () => (
         <HeaderLeftTextWithIcon
           text={Strings.chatThreadScreen.titleLeft}
-          icon={iconLeft}
           onPress={() => {
             navigation.goBack();
           }}
+          icon={(color, width, height) => (
+            <Close
+              testID="icon"
+              width={width}
+              height={height}
+              fill={themedColors.primary}
+            />
+          )}
         />
       ),
       headerRight: () => (
         <HeaderRightTextWithIcon
           text={Strings.chatThreadScreen.titleRight}
-          icon={iconRight}
           onPress={() => {
             navigation.goBack();
           }}
           textStyle={{ color: COLORS.red }}
+          icon={(color, width, height) => (
+            <Archive
+              testID="icon"
+              width={width}
+              height={height}
+              fill={COLORS.red}
+            />
+          )}
         />
       ),
       headerLeftContainerStyle: {

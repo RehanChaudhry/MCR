@@ -9,6 +9,8 @@ import {
 } from "./ProfileStack";
 import QuestionsController from "../ui/screens/questions/QuestionsController";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
+import { STRINGS } from "config";
 
 export const ProfileRoutes = () => {
   return (
@@ -58,14 +60,17 @@ const UpdateProfileRoutes: FC<UpdateProfileRoutesProps> = () => {
 type UpdateQuestionnaireRoutesProps = {};
 const UpdateQuestionnaireRoutes: FC<UpdateQuestionnaireRoutesProps> = () => {
   return (
-    <UpdateQuestionnaireStack.Navigator>
+    <UpdateQuestionnaireStack.Navigator
+      screenOptions={{ headerTitleAlign: "center" }}>
       <UpdateQuestionnaireStack.Screen
         name="UpdateQuestionnaire"
         component={QuestionsController}
         initialParams={{ isUpdating: true }}
         options={{
-          title: "Update Questionnaire",
-          headerLeft: () => <Hamburger />
+          headerLeft: () => <Hamburger />,
+          headerTitle: () => (
+            <HeaderTitle text={STRINGS.questionnaire.title_update} />
+          )
         }}
       />
     </UpdateQuestionnaireStack.Navigator>

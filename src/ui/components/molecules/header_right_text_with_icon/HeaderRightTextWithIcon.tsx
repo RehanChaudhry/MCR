@@ -31,6 +31,7 @@ const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
           {
             color: theme.themedColors.primary
           },
+          style.text,
           textStyle
         ]}
         fontWeight="semi-bold"
@@ -43,6 +44,9 @@ const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
 const style = StyleSheet.create({
   container: {
     marginRight: SPACE.sm
+  },
+  text: {
+    paddingRight: SPACE.xxsm
   }
 });
 

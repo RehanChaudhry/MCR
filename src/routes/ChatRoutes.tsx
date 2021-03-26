@@ -14,8 +14,6 @@ import { usePreferredTheme } from "hooks";
 import { useNavigation } from "@react-navigation/native";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
-import { Color, NumberProp, SvgProps } from "react-native-svg";
-import { AppLog } from "utils/Util";
 import Strings from "config/Strings";
 
 const Stack = createStackNavigator();
@@ -32,22 +30,6 @@ export const ChatRoutes: FC<Props> = () => {
 
   const navigation = useNavigation<ChatListNavigationProp>();
 
-  const icon: SvgProps = (
-    color?: Color,
-    width?: NumberProp,
-    height?: NumberProp
-  ) => {
-    AppLog.log("color : " + color + width + height); //just to avoid warning
-    return (
-      <CircularPLus
-        testID="icon"
-        width={width}
-        height={height}
-        fill={themedColors.primary}
-      />
-    );
-  };
-
   return (
     <Stack.Navigator
       screenOptions={{
@@ -55,10 +37,17 @@ export const ChatRoutes: FC<Props> = () => {
         headerRight: () => (
           <HeaderRightTextWithIcon
             text={Strings.chatListScreen.titleRight}
-            icon={icon}
             onPress={() => {
               navigation.navigate("NewConversation");
             }}
+            icon={(color, width, height) => (
+              <CircularPLus
+                testID="icon"
+                width={width}
+                height={height}
+                fill={themedColors.primary}
+              />
+            )}
           />
         ),
         headerRightContainerStyle: {
