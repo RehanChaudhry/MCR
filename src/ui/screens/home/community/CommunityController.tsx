@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import PencilAlt from "assets/images/pencil_alt.svg";
-import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import { getFeedsTypeFilterData } from "models/enums/FeedsTypeFilter";
@@ -57,9 +56,6 @@ const CommunityController: FC<Props> = () => {
         }}
       />
     ),
-    headerRightContainerStyle: {
-      padding: SPACE.md
-    },
     headerLeft: () => <Hamburger />,
     headerTitleAlign: "center",
     headerTitle: () => <HeaderTitle text="Community" />

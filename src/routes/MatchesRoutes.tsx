@@ -4,6 +4,7 @@ import MatchesController from "ui/screens/home/matches/MatchesController";
 import MatchInfoController from "ui/screens/home/matches/match_info/MatchInfoController";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { STRINGS } from "config";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 
 const MatchesRoutes = () => {
   return (
@@ -14,14 +15,19 @@ const MatchesRoutes = () => {
         name="Matches"
         component={MatchesController}
         options={{
-          headerLeft: () => <Hamburger />
+          headerLeft: () => <Hamburger />,
+          headerTitle: () => <HeaderTitle text={STRINGS.matches.title} />,
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0
+          }
         }}
       />
       <MatchesStack.Screen
         name="MatchInfo"
         component={MatchInfoController}
         options={{
-          title: STRINGS.matchInfo.title
+          headerTitle: () => <HeaderTitle text={STRINGS.matchInfo.title} />
         }}
       />
     </MatchesStack.Navigator>
