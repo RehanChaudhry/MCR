@@ -4,14 +4,21 @@ import SignUpController from "ui/screens/auth/sign_up/SignUpController";
 import { AuthStack } from "./AuthStack";
 import ForgotPasswordController from "ui/screens/auth/forgot_password/ForgotPasswordController";
 import ForgotPasswordFeedBackController from "ui/screens/auth/forgot_password_feedback/ForgotPasswordfeedBackController";
+import UniSelectionController from "ui/screens/uni_selection/UniSelectionController";
+import { WelcomeRoutes } from "routes/WelcomeRoutes";
+import { WelcomeStack } from "routes/WelcomeStack";
 
 type Props = {
-  initialRouteName: "SignUp" | "Login";
+  initialRouteName: "SignUp" | "Login" | "UniSelection";
 };
 
 export const AuthRoutes: FC<Props> = ({ initialRouteName }) => {
   return (
     <AuthStack.Navigator initialRouteName={initialRouteName}>
+      <AuthStack.Screen
+        name="UniSelection"
+        component={UniSelectionController}
+      />
       <AuthStack.Screen name="Login" component={LoginController} />
       <AuthStack.Screen name="SignUp" component={SignUpController} />
       <AuthStack.Screen
@@ -21,6 +28,11 @@ export const AuthRoutes: FC<Props> = ({ initialRouteName }) => {
       <AuthStack.Screen
         name="ForgotPasswordFeedBack"
         component={ForgotPasswordFeedBackController}
+      />
+      <WelcomeStack.Screen
+        name="Welcome"
+        component={WelcomeRoutes}
+        options={{ headerShown: false }}
       />
     </AuthStack.Navigator>
   );
