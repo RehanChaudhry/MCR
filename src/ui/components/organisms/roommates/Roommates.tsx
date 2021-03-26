@@ -24,6 +24,7 @@ interface Props {
 }
 
 const Roommates: React.FC<Props> = ({
+  onChatClicked,
   onRoommateAgreementClicked,
   roommates,
   style
@@ -45,6 +46,9 @@ const Roommates: React.FC<Props> = ({
         title={item.userName ?? STRINGS.common.not_found}
         subTitle={`${item.classLevel}, ${item.major}`}
         shouldShowRightImage={true}
+        onPress={() => {
+          onChatClicked?.(item);
+        }}
         rightIcon={() => (
           <ChatRound
             testID="right-icon"
@@ -99,7 +103,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: SPACE.md,
     marginTop: SPACE.md,
-    padding: SPACE.md,
+    paddingHorizontal: SPACE.md,
+    paddingTop: SPACE.md,
     ...shadowStyleProps
   },
   title: { includeFontPadding: false },
@@ -107,7 +112,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm
   },
   roommateAgreementView: {
-    marginTop: SPACE.md
+    paddingVertical: SPACE.md
   }
 });
 
