@@ -74,10 +74,7 @@ export const PreSSOLoginView = React.memo<Props>(({}) => {
 
           <View style={styles.spannableText}>
             <MultilineSpannableText
-              text={[
-                { id: 1, text: STRINGS.login.cant_log },
-                { id: 1, text: STRINGS.login.contact_us }
-              ]}
+              text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
               textStyle={[
                 { fontSize: SPACE.md },
                 { fontSize: SPACE.md, color: theme.themedColors.primary }

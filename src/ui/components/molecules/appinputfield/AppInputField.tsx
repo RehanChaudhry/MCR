@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.xsm,
     fontFamily: FONTS.regular,
     borderWidth: StyleSheet.hairlineWidth,
-    width: "100%"
+    flex: 1
 
     // //Its for IOS
     // shadowColor: COLORS.black,

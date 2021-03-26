@@ -63,7 +63,8 @@ export const LinkButton = React.memo<LinkButtonProps>(
 
 const style = StyleSheet.create({
   text: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xsm,
+    includeFontPadding: false
   },
   leftIcon: {
     marginLeft: 10,

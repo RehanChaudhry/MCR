@@ -14,9 +14,18 @@ import { ChatsResponseModel } from "models/api_responses/ChatsResponseModel";
 import ChatApis from "repo/chat/ChatAPis";
 import { AppLog } from "utils/Util";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
-import { View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { HomeDrawerParamList } from "routes";
+import { COLORS, SPACE } from "config";
+import { usePreferredTheme } from "hooks";
+import Archive from "assets/images/archive.svg";
+import Close from "assets/images/close.svg";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
+import { Color, NumberProp, SvgProps } from "react-native-svg";
+import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
+import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
+import Strings from "config/Strings";
+import { View } from "react-native";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatParamsList,
@@ -37,6 +46,8 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
   const { params } = useRoute<typeof route>();
   const [chats, setChats] = useState<ChatItem[]>(dummyChats);
 
+  const { themedColors } = usePreferredTheme();
+
   const getTitle = (): string => {
     const title = params.title;
 
@@ -49,10 +60,68 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     }
   };
 
+  const iconLeft: SvgProps = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    AppLog.log("color : " + color + width + height); //just to avoid warning
+    return (
+      <Close
+        testID="icon"
+        width={width}
+        height={height}
+        fill={themedColors.primary}
+      />
+    );
+  };
+
+  const iconRight: SvgProps = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    AppLog.log("color : " + color + width + height); //just to avoid warning
+    return (
+      <Archive
+        testID="icon"
+        width={width}
+        height={height}
+        fill={COLORS.red}
+      />
+    );
+  };
+
   useLayoutEffect(() => {
     myNavigation.setOptions({
-      headerTitleAlign: "center",
-      title: getTitle()
+      headerTitle: () => (
+        <HeaderTitle
+          text={getTitle()}
+          labelStyle={{ paddingHorizontal: SPACE.xl }}
+        />
+      ),
+      headerLeft: () => (
+        <HeaderLeftTextWithIcon
+          text={Strings.chatThreadScreen.titleLeft}
+          icon={iconLeft}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
+      ),
+      headerRight: () => (
+        <HeaderRightTextWithIcon
+          text={Strings.chatThreadScreen.titleRight}
+          icon={iconRight}
+          onPress={() => {
+            navigation.goBack();
+          }}
+          textStyle={{ color: COLORS.red }}
+        />
+      ),
+      headerLeftContainerStyle: {
+        padding: SPACE.md
+      }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

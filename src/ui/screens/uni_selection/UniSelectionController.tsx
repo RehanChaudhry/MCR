@@ -8,11 +8,20 @@ import DataGenerator from "utils/DataGenerator";
 import UniSelectionView from "./UniSelectionView";
 import UniSelectionApis from "../../../repo/auth/UniSelectionApis";
 import { AppLog } from "utils/Util";
-import { usePreferredTheme } from "hooks";
+import { usePreferredTheme, usePreventDoubleTap } from "hooks";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AuthStackParamList } from "routes";
 
 type Props = {};
 
+type LoginNavigationProp = StackNavigationProp<
+  AuthStackParamList,
+  "Login"
+>;
+
 const UniSelectionController: FC<Props> = () => {
+  const navigation = useNavigation<LoginNavigationProp>();
   const [unis, setUnis] = useState<Array<Uni>>(
     DataGenerator.getUnis().data
   );
@@ -20,6 +29,10 @@ const UniSelectionController: FC<Props> = () => {
   const unisApi = useApi<any, UniSelectionResponseModel>(
     UniSelectionApis.getUnis
   );
+
+  const openLoginScreen = usePreventDoubleTap(() => {
+    navigation.navigate("Login");
+  });
 
   const handleGetUnisApi = async (onComplete?: () => void) => {
     const { hasError, dataBody, errorBody } = await unisApi.request([]);
@@ -37,6 +50,7 @@ const UniSelectionController: FC<Props> = () => {
   const uniDidSelect = (item: Uni) => {
     AppLog.log("selected item: ", item);
     theme.saveCustomPalette(item.colorPalette);
+    openLoginScreen();
   };
 
   AppLog.log("handle getuni api: ", handleGetUnisApi);
