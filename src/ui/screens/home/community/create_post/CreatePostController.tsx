@@ -13,6 +13,7 @@ import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { CommunityStackParamList } from "routes/CommunityStack";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { CreatePostView } from "ui/screens/home/community/create_post/CreatePostView";
 import { AppLog } from "utils/Util";
 
@@ -87,13 +88,7 @@ const CreatePostController: FC<Props> = () => {
       padding: SPACE.md
     },
     headerTitleAlign: "center",
-    headerTitle: () => (
-      <AppLabel
-        text="Create Post"
-        weight="semi-bold"
-        style={style.headerTitle}
-      />
-    )
+    headerTitle: () => <HeaderTitle text="Create Post" />
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
