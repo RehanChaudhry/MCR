@@ -134,8 +134,8 @@ const styles = StyleSheet.create({
   infoTextContainer: {
     marginStart: SPACE.md
   },
-  userName: { fontSize: FONT_SIZE.md, includeFontPadding: false },
-  subtitle: { fontSize: FONT_SIZE.xsm },
+  userName: { fontSize: FONT_SIZE.xsm, includeFontPadding: false },
+  subtitle: { fontSize: FONT_SIZE._3xm },
   matchScore: {
     marginTop: SPACE.md
   },
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   btnActionText: {
     fontFamily: FONTS.semiBold,
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE._2xsm
   },
   btnAction: {
     alignSelf: "stretch",

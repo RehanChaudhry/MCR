@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginTop: SPACE.lg
   },
   buttonText: {
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.xsm,
     paddingLeft: SPACE.xxsm
   }
 });

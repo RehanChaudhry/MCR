@@ -122,14 +122,14 @@ const styles = StyleSheet.create({
   textInput: {
     fontFamily: FONTS.regular,
     flex: 1,
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.xsm,
     padding: 0,
     color: COLORS.textColor1
   },
   textInputSmallFont: {
     fontFamily: FONTS.regular,
     flex: 1,
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZE._2xsm,
     padding: 0,
     color: COLORS.textColor1
   }

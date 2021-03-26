@@ -50,7 +50,7 @@ const CheckboxWithText = React.memo<Props>(
 );
 const styles = StyleSheet.create({
   checkboxText: {
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.xsm,
     marginLeft: 2,
     color: COLORS.textColor1,
     alignSelf: "center"

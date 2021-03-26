@@ -36,7 +36,7 @@ export const AppFormValidationLabel = React.memo<Props>(
 const styles = StyleSheet.create({
   error: {
     color: COLORS.red,
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.xsm,
     marginTop: 6
   }
 });

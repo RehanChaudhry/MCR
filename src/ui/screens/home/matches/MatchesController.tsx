@@ -47,8 +47,7 @@ const MatchesController: FC<Props> = () => {
     ),
     headerRightContainerStyle: {
       padding: SPACE.md
-    },
-    headerTitleAlign: "center"
+    }
   });
 
   // Matches API

@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     paddingTop: SPACE.xsm,
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE._2xsm
   },
 
   horizontalLine: {

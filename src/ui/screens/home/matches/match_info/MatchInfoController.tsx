@@ -9,7 +9,7 @@ import { MatchesStackParamList } from "routes/MatchesStack";
 import { MatchInfoView } from "ui/screens/home/matches/match_info/MatchInfoView";
 import DataGenerator from "utils/DataGenerator";
 import MatchInfo from "models/MatchInfo";
-import { SPACE, STRINGS } from "config";
+import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import Cross from "assets/images/ic_cross.svg";
 
@@ -26,7 +26,6 @@ const MatchInfoController: FC<Props> = () => {
   AppLog.log("Opening MatchesController");
 
   const { themedColors } = usePreferredTheme();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigation = useNavigation<MatchesNavigationProp>();
   navigation.setOptions({
     headerLeft: () => (
@@ -39,9 +38,7 @@ const MatchInfoController: FC<Props> = () => {
     ),
     headerLeftContainerStyle: {
       padding: SPACE.md
-    },
-    headerTitleAlign: "center",
-    title: STRINGS.matchInfo.title
+    }
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

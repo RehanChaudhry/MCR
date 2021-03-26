@@ -65,7 +65,7 @@ const AboutMe: FC<Props> = () => {
             color: theme.themedColors.label,
             borderColor: theme.themedColors.interface["700"],
             marginHorizontal: SPACE.xsm,
-            fontSize: FONT_SIZE.md
+            fontSize: FONT_SIZE.xsm
           }}
           shouldShowError={false}
           fontWeight={"bold"}
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     paddingTop: SPACE.xsm,
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm
   },
   container: {
     flexDirection: "row",
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     paddingLeft: SPACE.sm
     //alignItems: "flex-start"
   },
-  aboutMe: { fontSize: FONT_SIZE.md, paddingBottom: SPACE.sm }
+  aboutMe: { fontSize: FONT_SIZE.xsm, paddingBottom: SPACE.sm }
 });
 
 export default AboutMe;

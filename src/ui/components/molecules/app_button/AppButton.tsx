@@ -155,7 +155,7 @@ const style = StyleSheet.create({
     shadowOpacity: 0.15
   },
   text: {
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.xsm,
     overflow: "hidden"
   },
   loader: {

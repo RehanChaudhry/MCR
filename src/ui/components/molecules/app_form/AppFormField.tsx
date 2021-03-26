@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   linkLabel: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm
   }
 });
 
