@@ -45,10 +45,10 @@ export const LinkButton = React.memo<LinkButtonProps>(
             style={[
               style.text,
               { color: theme.themedColors.primary },
-              textStyle,
               leftIcon
                 ? { paddingLeft: SPACE.sm }
-                : { paddingRight: SPACE.sm }
+                : { paddingRight: SPACE.sm },
+              textStyle
             ]}
             text={text}
           />
