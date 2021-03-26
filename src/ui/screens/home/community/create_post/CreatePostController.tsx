@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Check from "assets/images/check_circle.svg";
 import Close from "assets/images/ic_cross.svg";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { moderateScale } from "config/Dimens";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { CreatePostApiRequestModel } from "models/api_requests/CreatePostApiRequestModel";
@@ -13,6 +13,7 @@ import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { CommunityStackParamList } from "routes/CommunityStack";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { CreatePostView } from "ui/screens/home/community/create_post/CreatePostView";
 import { AppLog } from "utils/Util";
 
@@ -87,7 +88,7 @@ const CreatePostController: FC<Props> = () => {
       padding: SPACE.md
     },
     headerTitleAlign: "center",
-    headerTitle: "Create Post"
+    headerTitle: () => <HeaderTitle text="Create Post" />
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -120,8 +121,11 @@ const style = StyleSheet.create({
     alignItems: "center"
   },
   headerLeftRightText: {
-    fontSize: SPACE.md,
+    fontSize: moderateScale(14.0),
     padding: moderateScale(2.0)
+  },
+  headerTitle: {
+    fontSize: FONT_SIZE.lg
   }
 });
 

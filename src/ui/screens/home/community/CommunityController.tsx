@@ -1,9 +1,7 @@
-import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import Menu from "assets/images/menu.svg";
 import PencilAlt from "assets/images/pencil_alt.svg";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
@@ -16,19 +14,15 @@ import React, {
   useState
 } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
-import { HomeDrawerParamList } from "routes";
 import { CommunityStackParamList } from "routes/CommunityStack";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import Hamburger from "ui/components/molecules/hamburger/Hamburger";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { CommunityView } from "ui/screens/home/community/CommunityView";
 import DataGenerator from "utils/DataGenerator";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
-  "Community"
->;
-
-type CommunityNavigationDrawerProp = DrawerNavigationProp<
-  HomeDrawerParamList,
   "Community"
 >;
 
@@ -45,7 +39,6 @@ const CommunityController: FC<Props> = () => {
   );
   const totalPages = 5;
   const navigation = useNavigation<CommunityNavigationProp>();
-  const navigationDrawer = useNavigation<CommunityNavigationDrawerProp>();
   const theme = usePreferredTheme();
 
   navigation.setOptions({
@@ -76,18 +69,9 @@ const CommunityController: FC<Props> = () => {
     headerRightContainerStyle: {
       padding: SPACE.md
     },
-    headerLeft: () => (
-      <Pressable
-        onPress={() => {
-          navigationDrawer.openDrawer();
-        }}>
-        <Menu width={23} height={23} fill={theme.themedColors.primary} />
-      </Pressable>
-    ),
-    headerLeftContainerStyle: {
-      padding: SPACE.md
-    },
-    headerTitleAlign: "center"
+    headerLeft: () => <Hamburger />,
+    headerTitleAlign: "center",
+    headerTitle: () => <HeaderTitle text="Community" />
   });
 
   const fetchCommunities = useCallback(async () => {
@@ -166,8 +150,11 @@ const style = StyleSheet.create({
     alignItems: "center"
   },
   headerLeftRightText: {
-    fontSize: SPACE.md,
-    padding: moderateScale(2.0)
+    padding: moderateScale(2.0),
+    fontSize: FONT_SIZE.md
+  },
+  headerTitle: {
+    fontSize: FONT_SIZE.lg
   }
 });
 
