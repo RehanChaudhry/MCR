@@ -68,15 +68,9 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
                 { fontSize: FONT_SIZE.md }
               ]}
               text={[
-                {
-                  id: 1,
-                  text: STRINGS.forgotPasswordFeedBack.feedBack_one_text
-                },
-                { id: 2, text: STRINGS.forgotPasswordFeedBack.email },
-                {
-                  id: 3,
-                  text: STRINGS.forgotPasswordFeedBack.feedBack_third_text
-                }
+                STRINGS.forgotPasswordFeedBack.feedBack_one_text,
+                STRINGS.forgotPasswordFeedBack.email,
+                STRINGS.forgotPasswordFeedBack.feedBack_third_text
               ]}
             />
 
