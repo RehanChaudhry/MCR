@@ -196,6 +196,8 @@ export default {
   },
 
   newConversation: {
+    titleLeft: "Close",
+    titleRight: "Done",
     title: "New Conversation",
     typingHint: "Start typing student name",
     createGroupText: "You can create a group of upto 5 people.",
@@ -206,6 +208,7 @@ export default {
   },
 
   chatListScreen: {
+    titleRight: "Create",
     title: "Chat",
     activeConversations: "Active Conversations",
     archivedConversations: "Archived",
@@ -213,6 +216,8 @@ export default {
   },
 
   chatThreadScreen: {
+    titleLeft: "Close",
+    titleRight: "Archive",
     typingHint: "Start typing your message"
   },
 

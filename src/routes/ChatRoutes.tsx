@@ -16,6 +16,7 @@ import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { Color, NumberProp, SvgProps } from "react-native-svg";
 import { AppLog } from "utils/Util";
+import Strings from "config/Strings";
 
 const Stack = createStackNavigator();
 
@@ -53,7 +54,7 @@ export const ChatRoutes: FC<Props> = () => {
         headerLeft: () => <Hamburger />,
         headerRight: () => (
           <HeaderRightTextWithIcon
-            text="create"
+            text={Strings.chatListScreen.titleRight}
             icon={icon}
             onPress={() => {
               navigation.navigate("NewConversation");
