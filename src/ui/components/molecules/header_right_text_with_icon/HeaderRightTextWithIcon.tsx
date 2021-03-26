@@ -23,6 +23,7 @@ const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
         textStyle={{
           color: theme.themedColors.primary
         }}
+        fontWeight="semi-bold"
       />
     );
   }
