@@ -78,8 +78,8 @@ export const CreatePostView = React.memo<Props>((props) => {
   const linkIcon = () => {
     return (
       <Link
-        width={15}
-        height={15}
+        width={18}
+        height={18}
         fill={theme.themedColors.interface["500"]}
       />
     );
@@ -87,8 +87,8 @@ export const CreatePostView = React.memo<Props>((props) => {
   const embedIcon = () => {
     return (
       <Code
-        width={15}
-        height={15}
+        width={18}
+        height={18}
         fill={theme.themedColors.interface["500"]}
       />
     );
@@ -231,6 +231,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                     openImageGallery();
                   }}
                 />
+                <View style={{ marginRight: SPACE.md }} />
                 <LinkButton
                   isSelected={postType === POST_TYPES.LINK}
                   onPress={() => {
@@ -239,6 +240,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                     AppLog.logForcefully("postType: " + postType);
                   }}
                 />
+                <View style={{ marginRight: SPACE.md }} />
                 <EmbedButton
                   isSelected={postType === POST_TYPES.EMBED}
                   onPress={() => {
@@ -247,6 +249,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                     AppLog.logForcefully("postType: " + postType);
                   }}
                 />
+                <View style={{ marginRight: SPACE.md }} />
                 <InfoCircle
                   width={23}
                   height={23}
@@ -384,7 +387,7 @@ const styles = StyleSheet.create({
   },
   inputFieldRow: {
     flex: 1,
-    marginTop: SPACE.lg
+    marginTop: SPACE.md
   },
   descriptionView: {
     height: 100,
@@ -393,8 +396,8 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: "row",
     marginTop: SPACE.lg,
-    alignItems: "center",
-    justifyContent: "space-between"
+    alignItems: "center"
+    // justifyContent: "space-between"
   },
   bottomLine: {
     width: "100%",

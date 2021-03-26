@@ -120,7 +120,7 @@ const style = StyleSheet.create({
     alignItems: "center"
   },
   headerLeftRightText: {
-    fontSize: SPACE.md,
+    fontSize: moderateScale(14.0),
     padding: moderateScale(2.0)
   }
 });
