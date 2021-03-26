@@ -354,12 +354,14 @@ const styles = StyleSheet.create({
     flex: 1
   },
   cardView: {
-    padding: SPACE.lg,
+    paddingRight: SPACE.lg,
+    paddingLeft: SPACE.lg,
+    paddingBottom: SPACE.lg,
     flex: 1,
     margin: SPACE.lg,
     backgroundColor: COLORS.white,
     overflow: "hidden",
-    paddingVertical: SPACE.lg,
+    // paddingVertical: SPACE.lg,
 
     // border
     borderStyle: "solid",
@@ -385,7 +387,8 @@ const styles = StyleSheet.create({
     marginTop: SPACE.lg
   },
   descriptionView: {
-    height: 100
+    height: 100,
+    marginTop: SPACE.lg
   },
   buttonsContainer: {
     flexDirection: "row",
