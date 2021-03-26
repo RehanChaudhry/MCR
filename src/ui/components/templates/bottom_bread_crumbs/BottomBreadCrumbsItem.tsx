@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   text: {
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.xsm,
     fontWeight: "bold",
     includeFontPadding: false
   }

@@ -94,21 +94,21 @@ const styles = StyleSheet.create({
   },
   backtoSignIn: {
     color: COLORS.secondary,
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.xsm,
     textAlign: "center",
     alignSelf: "flex-end"
   },
 
   tellUsYourEmail: {
     color: COLORS.textColor1,
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.xsm,
     marginTop: 6,
     alignSelf: "flex-start"
   },
 
   headingBold: {
     color: COLORS.textColor2,
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.xsm,
     marginTop: 16
   },
 

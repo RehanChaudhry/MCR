@@ -31,7 +31,7 @@ export const HeadingWithText = React.memo<Props>(
         <AppLabel
           text={text}
           numberOfLines={0}
-          style={[{ fontSize: FONT_SIZE.md }, textStyle]}
+          style={[{ fontSize: FONT_SIZE.xsm }, textStyle]}
         />
       </View>
     );

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     };
   },
   txt: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm
   },
   img: {
     width: moderateScale(35),

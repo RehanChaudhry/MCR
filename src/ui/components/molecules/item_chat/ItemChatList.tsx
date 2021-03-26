@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     isMessageRead: boolean
   ) => {
     return {
-      fontSize: FONT_SIZE.md,
+      fontSize: FONT_SIZE.xsm,
       color:
         recipientLength > 1 && !isMessageRead
           ? theme.primary
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   },
   timeText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE.sm,
+      fontSize: FONT_SIZE._2xsm,
       color: theme.interface["700"],
       lineHeight: 20,
       marginEnd: SPACE.md
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   messageText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE.sm,
+      fontSize: FONT_SIZE._2xsm,
       color: theme.label,
       lineHeight: 16
     };

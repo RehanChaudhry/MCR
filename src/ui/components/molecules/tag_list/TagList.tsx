@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   labelTitle: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm
   },
   horizontalLine: {
     height: 1

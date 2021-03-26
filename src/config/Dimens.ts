@@ -17,9 +17,11 @@ const moderateVerticalScale = (size: number, factor = 2) =>
 export { scale, verticalScale, moderateVerticalScale, moderateScale };
 
 export const FONT_SIZE = {
-  xsm: moderateScale(10.0),
-  sm: moderateScale(12.0),
-  md: moderateScale(14.0),
+  _3xm: moderateScale(10.0),
+  _2xsm: moderateScale(12.0),
+  xsm: moderateScale(13.0),
+  sm: moderateScale(14.0),
+  md: moderateScale(15.0),
   lg: moderateScale(16.0),
   xl: moderateScale(18.0),
   _2xl: moderateScale(20.0),
