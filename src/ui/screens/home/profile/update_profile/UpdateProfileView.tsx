@@ -14,7 +14,9 @@ import RightArrow from "assets/images/arrow_circle_right.svg";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import { AppLog } from "utils/Util";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
-type Props = {};
+type Props = {
+  isUpdating: boolean;
+};
 
 const validationSchema = Yup.object().shape({
   //basic profile component
