@@ -14,7 +14,6 @@ import RightArrow from "assets/images/arrow_circle_right.svg";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import { AppLog } from "utils/Util";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
-import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 type Props = {};
 
 const validationSchema = Yup.object().shape({
@@ -127,16 +126,6 @@ export const UpdateProfileView: React.FC<Props> = () => {
         initialValues={initialValues}
         onSubmit={onSubmit}
         validationSchema={validationSchema}>
-        <View style={styles.headingView}>
-          <HeadingWithText
-            headingText={""}
-            text={STRINGS.profile.title}
-            textStyle={[
-              styles.textStyle,
-              { color: theme.themedColors.label }
-            ]}
-          />
-        </View>
         <BasicProfile />
         <DemoGraphics />
         <Interests />
