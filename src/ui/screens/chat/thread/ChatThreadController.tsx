@@ -14,9 +14,16 @@ import { ChatsResponseModel } from "models/api_responses/ChatsResponseModel";
 import ChatApis from "repo/chat/ChatAPis";
 import { AppLog } from "utils/Util";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
-import { View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { HomeDrawerParamList } from "routes";
+import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
+import { COLORS, FONT_SIZE, SPACE } from "config";
+import { moderateScale } from "config/Dimens";
+import { usePreferredTheme } from "hooks";
+import Archive from "assets/images/archive.svg";
+import Close from "assets/images/close.svg";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatParamsList,
@@ -37,6 +44,8 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
   const { params } = useRoute<typeof route>();
   const [chats, setChats] = useState<ChatItem[]>(dummyChats);
 
+  const { themedColors } = usePreferredTheme();
+
   const getTitle = (): string => {
     const title = params.title;
 
@@ -51,8 +60,43 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
 
   useLayoutEffect(() => {
     myNavigation.setOptions({
-      headerTitleAlign: "center",
-      title: getTitle()
+      headerTitle: () => <HeaderTitle text={getTitle()} />,
+      headerLeft: () => (
+        <Pressable
+          onPress={() => {
+            navigation.goBack();
+          }}
+          style={styles.container}>
+          <Close width={23} height={23} fill={themedColors.primary} />
+          <AppLabel
+            text="Close"
+            weight="semi-bold"
+            style={styles.headerTextGrey(themedColors)}
+          />
+        </Pressable>
+      ),
+      headerRight: () => (
+        <Pressable
+          onPress={() => {
+            navigation.goBack();
+          }}
+          style={styles.container}>
+          <AppLabel
+            text="Archive"
+            weight="semi-bold"
+            style={styles.headerText}
+          />
+          <Archive
+            width={23}
+            height={23}
+            fill={COLORS.red}
+            style={styles.iconRight}
+          />
+        </Pressable>
+      ),
+      headerLeftContainerStyle: {
+        padding: SPACE.md
+      }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -118,3 +162,26 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     </ProgressErrorView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  headerText: {
+    color: COLORS.red,
+    fontSize: FONT_SIZE.sm
+  },
+  headerTextGrey: (theme: ColorPalette) => {
+    return {
+      marginStart: SPACE.xxsm,
+      color: theme.label,
+      fontSize: FONT_SIZE.sm
+    };
+  },
+  iconRight: {
+    resizeMode: "contain",
+    marginStart: moderateScale(SPACE.xxsm)
+  }
+});
