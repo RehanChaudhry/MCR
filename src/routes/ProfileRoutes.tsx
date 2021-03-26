@@ -49,6 +49,7 @@ const UpdateProfileRoutes: FC<UpdateProfileRoutesProps> = () => {
   return (
     <UpdateProfileStack.Navigator>
       <UpdateProfileStack.Screen
+        initialParams={{ isUpdating: true }}
         name="UpdateProfile"
         component={UpdateProfileController}
         options={{ title: "Update Profile" }}

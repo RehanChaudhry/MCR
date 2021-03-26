@@ -114,6 +114,7 @@ export const LoginView = React.memo<Props>(
                   text: STRINGS.login.password,
                   weight: "semi-bold"
                 }}
+                secureTextEntry={true}
                 linkLabelProps={{
                   text: STRINGS.login.forgot_password
                 }}

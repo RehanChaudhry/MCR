@@ -3,6 +3,7 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View
 } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
@@ -87,11 +88,11 @@ export const RadioGroup = React.memo<Props>(
                 ]}
               />
             </TouchableOpacity>
-            <TouchableOpacity
+            <TouchableWithoutFeedback
               testID="RADIO_GROUP_LABEL"
               onPress={() => buttonPressed(index)}>
               <AppLabel style={styles.radioButtonText} text={item.label} />
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
           </View>
         ))}
       </View>

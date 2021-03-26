@@ -54,11 +54,11 @@ export const CustomDrawer = React.memo<DrawerContentComponentProps>(
     const DrawerItems: ItemType<HomeDrawerParamList> = {
       Matches: { name: "Matches", icon: Matches },
       Community: { name: "Community", icon: NewPaper },
-      Announcement: { name: "Announcement", icon: Announcement },
-      Profile: { name: "Profile", icon: NavProfile },
-      Friends: { name: "Friends", icon: Friend },
-      ChatList: { name: "ChatList", icon: NavChat },
-      Notification: { name: "Notification", icon: Bell },
+      Announcement: { name: "Announcements", icon: Announcement },
+      Profile: { name: "My Profile", icon: NavProfile },
+      Friends: { name: "My Friends", icon: Friend },
+      ChatList: { name: "Chat", icon: NavChat },
+      Notification: { name: "Notifications", icon: Bell },
       Settings: { name: "Settings", icon: Bell, shouldNotDrawView: true }
     };
 
@@ -142,7 +142,8 @@ export const CustomDrawer = React.memo<DrawerContentComponentProps>(
                         {defaultIcon(route.name)}
                         <AppLabel
                           key={route.key}
-                          text={route.name}
+                          // @ts-ignore
+                          text={DrawerItems[route.name].name}
                           style={styles.itemText(
                             themedColors,
                             currentItem,
@@ -167,6 +168,7 @@ export const CustomDrawer = React.memo<DrawerContentComponentProps>(
                             </View>
                           </View>
                         )}
+                        {/* just showing on notifications for design build*/}
                       </View>
                     </TouchableNativeFeedback>
                   );

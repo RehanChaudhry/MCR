@@ -84,6 +84,7 @@ exports[`rendering... renders correctly 1`] = `
       placeholder="Enter your email address"
       placeholderTextColor="#979797"
       rejectResponderTermination={true}
+      secureTextEntry={false}
       style={
         Array [
           Object {
