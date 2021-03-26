@@ -76,6 +76,7 @@ const style = StyleSheet.create({
     height: 20
   },
   container: {
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems: "center"
   }
 });
