@@ -60,7 +60,12 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
 
   useLayoutEffect(() => {
     myNavigation.setOptions({
-      headerTitle: () => <HeaderTitle text={getTitle()} />,
+      headerTitle: () => (
+        <HeaderTitle
+          text={getTitle()}
+          labelStyle={{ paddingHorizontal: SPACE.lg }}
+        />
+      ),
       headerLeft: () => (
         <Pressable
           onPress={() => {
