@@ -39,6 +39,7 @@ const HeaderLeftTextWithIcon = React.memo<HeaderLeftTextWithIconProps>(
         leftIcon={icon ? icon : closeIcon}
         textStyle={[
           { color: theme.themedColors.interface["700"] },
+          style.text,
           textStyle
         ]}
         viewStyle={style.container}
@@ -50,6 +51,9 @@ const HeaderLeftTextWithIcon = React.memo<HeaderLeftTextWithIconProps>(
 const style = StyleSheet.create({
   container: {
     marginLeft: SPACE.sm
+  },
+  text: {
+    paddingLeft: SPACE.xxsm
   }
 });
 
