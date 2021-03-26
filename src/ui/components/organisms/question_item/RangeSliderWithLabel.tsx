@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   label: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE._2xsm
   },
   questionLabel: {
     fontWeight: "700",
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end"
   },
   labelXsm: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE._3xm
   },
   sliderContainer: {
     flex: 1,

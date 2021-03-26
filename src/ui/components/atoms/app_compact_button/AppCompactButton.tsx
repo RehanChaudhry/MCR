@@ -105,7 +105,7 @@ const style = StyleSheet.create({
     alignItems: "center"
   },
   text: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZE._2xsm,
     marginStart: 5,
     fontFamily: FONTS.semiBold
   }

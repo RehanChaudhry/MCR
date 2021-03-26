@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableNativeFeedback,
+  TouchableOpacity,
   View
 } from "react-native";
 import { SafeAreaView } from "react-navigation";
@@ -43,7 +44,11 @@ export const CustomDrawer = React.memo<DrawerContentComponentProps>(
     );
 
     type ItemType<T> = {
-      [K in keyof T]: { name: string; icon: React.FC<SvgProps> };
+      [K in keyof T]: {
+        name: string;
+        icon: React.FC<SvgProps>;
+        shouldNotDrawView?: boolean;
+      };
     };
 
     const DrawerItems: ItemType<HomeDrawerParamList> = {
@@ -53,7 +58,8 @@ export const CustomDrawer = React.memo<DrawerContentComponentProps>(
       Profile: { name: "Profile", icon: NavProfile },
       Friends: { name: "Friends", icon: Friend },
       ChatList: { name: "ChatList", icon: NavChat },
-      Notification: { name: "Notification", icon: Bell }
+      Notification: { name: "Notification", icon: Bell },
+      Settings: { name: "Settings", icon: Bell, shouldNotDrawView: true }
     };
 
     function defaultIcon<K extends keyof HomeDrawerParamList>(name: K) {
@@ -90,10 +96,15 @@ export const CustomDrawer = React.memo<DrawerContentComponentProps>(
                   <View style={styles.settingContainer}>
                     <AppLabel text="student" style={styles.userRole} />
 
-                    <Settings
-                      width={moderateScale(20)}
-                      height={moderateScale(20)}
-                    />
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate("Settings");
+                      }}>
+                      <Settings
+                        width={moderateScale(20)}
+                        height={moderateScale(20)}
+                      />
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
@@ -108,6 +119,11 @@ export const CustomDrawer = React.memo<DrawerContentComponentProps>(
             <DrawerContentScrollView {...props}>
               <View style={[styles.itemsContainer]}>
                 {state.routes.map((route: any, index: number) => {
+                  // @ts-ignore
+                  if (DrawerItems[route.name].shouldNotDrawView) {
+                    return null;
+                  }
+
                   return (
                     <TouchableNativeFeedback
                       onPress={() => {
@@ -215,7 +231,7 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   userRole: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZE._2xsm,
     textTransform: "capitalize"
   },
   settingContainer: {
@@ -265,7 +281,7 @@ const styles = StyleSheet.create({
   ) => {
     return {
       paddingStart: SPACE.md,
-      fontSize: FONT_SIZE.md,
+      fontSize: FONT_SIZE.xsm,
       color:
         currentSelected === routeName
           ? theme.primary
@@ -287,6 +303,6 @@ const styles = StyleSheet.create({
   },
   notifyText: {
     color: "#fff",
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE._3xm
   }
 });

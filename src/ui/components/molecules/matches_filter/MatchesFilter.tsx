@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
     height: moderateScale(40),
     flex: 2
   },
-  searchText: { fontSize: FONT_SIZE.sm },
-  genderText: { fontSize: FONT_SIZE.sm }
+  searchText: { fontSize: FONT_SIZE._2xsm },
+  genderText: { fontSize: FONT_SIZE._2xsm }
 });
 
 export default MatchesFilter;

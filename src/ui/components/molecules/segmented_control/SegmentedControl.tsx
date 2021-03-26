@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     };
   },
   text: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm
   },
   selectedOption: {},
   unselectedOption: {},

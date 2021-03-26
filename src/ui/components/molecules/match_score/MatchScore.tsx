@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     padding: moderateScale(4.0),
     justifyContent: "center"
   },
-  label: { fontSize: FONT_SIZE.xsm }
+  label: { fontSize: FONT_SIZE._3xm }
 });
 
 export default MatchScore;
