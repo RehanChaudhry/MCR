@@ -34,7 +34,7 @@ const ProfileController: FC<Props> = () => {
     {
       title: "Update Questionnaire",
       onPress: () => {
-        navigation.navigate("UpdateQuestionnaire", { isUpdating: true });
+        navigation.navigate("UpdateQuestionnaire");
       }
     }
   ];
