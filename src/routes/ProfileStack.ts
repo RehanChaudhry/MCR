@@ -6,7 +6,7 @@ export type ViewProfileStackParamList = {
 export const ViewProfileStack = createStackNavigator<ViewProfileStackParamList>();
 
 export type UpdateProfileStackParamList = {
-  UpdateProfile: undefined;
+  UpdateProfile: { isUpdating: boolean };
 };
 export const UpdateProfileStack = createStackNavigator<UpdateProfileStackParamList>();
 
