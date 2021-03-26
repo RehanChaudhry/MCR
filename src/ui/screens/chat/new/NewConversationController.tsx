@@ -5,15 +5,15 @@ import { useNavigation } from "@react-navigation/native";
 import { NewConversationScreen } from "ui/screens/chat/new/NewConversationScreen";
 import { ConversationItem } from "models/ConversationItem";
 import Strings from "config/Strings";
-import { Pressable, StyleSheet } from "react-native";
 import CircularTick from "assets/images/circular_tick.svg";
 import Close from "assets/images/close.svg";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
-import { FONT_SIZE, SPACE } from "config";
-import { moderateScale } from "config/Dimens";
+import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
+import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
+import { Color, NumberProp, SvgProps } from "react-native-svg";
+import { AppLog } from "utils/Util";
+import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 
 type conversationNavigationProp = StackNavigationProp<
   ChatParamsList,
@@ -39,43 +39,61 @@ export const NewConversationController: FC<Props> = () => {
   const navigation = useNavigation<conversationNavigationProp>();
 
   const { themedColors } = usePreferredTheme();
+
+  const iconLeft: SvgProps = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    AppLog.log("color : " + color + width + height); //just to avoid warning
+    return (
+      <Close
+        testID="icon"
+        width={width}
+        height={height}
+        fill={themedColors.primary}
+      />
+    );
+  };
+
+  const iconRight: SvgProps = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    AppLog.log("color : " + color + width + height); //just to avoid warning
+    return (
+      <CircularTick
+        testID="icon"
+        width={width}
+        height={height}
+        fill={themedColors.primary}
+      />
+    );
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
         <HeaderTitle text={Strings.newConversation.title} />
       ),
       headerLeft: () => (
-        <Pressable
+        <HeaderLeftTextWithIcon
+          text={Strings.newConversation.titleLeft}
+          icon={iconLeft}
           onPress={() => {
             navigation.goBack();
           }}
-          style={styles.container}>
-          <Close width={23} height={23} fill={themedColors.primary} />
-          <AppLabel
-            text="Close"
-            weight="semi-bold"
-            style={styles.headerTextGrey(themedColors)}
-          />
-        </Pressable>
+        />
       ),
       headerRight: () => (
-        <Pressable
+        <HeaderRightTextWithIcon
+          text={Strings.newConversation.titleRight}
+          icon={iconRight}
           onPress={() => {
             navigation.goBack();
           }}
-          style={styles.container}>
-          <AppLabel
-            text="Done"
-            weight="semi-bold"
-            style={styles.headerText(themedColors)}
-          />
-          <CircularTick
-            width={23}
-            height={23}
-            fill={themedColors.primary}
-            style={styles.iconRight}
-          />
-        </Pressable>
+        />
       ),
       headerLeftContainerStyle: {
         padding: SPACE.md
@@ -113,25 +131,3 @@ export const NewConversationController: FC<Props> = () => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  headerText: (theme: ColorPalette) => {
-    return {
-      color: theme.primary,
-      fontSize: FONT_SIZE.sm
-    };
-  },
-  headerTextGrey: (theme: ColorPalette) => {
-    return {
-      marginStart: SPACE.xxsm,
-      color: theme.label,
-      fontSize: FONT_SIZE.sm
-    };
-  },
-  iconRight: { marginStart: moderateScale(SPACE.xxsm) }
-});

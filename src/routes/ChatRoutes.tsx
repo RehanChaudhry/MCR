@@ -8,15 +8,15 @@ import { ChatParamsList, ChatStack } from "routes/ChatStack";
 import { ChatListController } from "ui/screens/chat/list/ChatListController";
 import { ChatThreadController } from "ui/screens/chat/thread/ChatThreadController";
 import { NewConversationController } from "ui/screens/chat/new/NewConversationController";
-import { Pressable, StyleSheet } from "react-native";
 import CircularPLus from "assets/images/circular_plus.svg";
-import { FONT_SIZE, SPACE } from "config";
+import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { useNavigation } from "@react-navigation/native";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { moderateScale } from "config/Dimens";
-import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
+import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
+import { Color, NumberProp, SvgProps } from "react-native-svg";
+import { AppLog } from "utils/Util";
+import Strings from "config/Strings";
 
 const Stack = createStackNavigator();
 
@@ -32,28 +32,34 @@ export const ChatRoutes: FC<Props> = () => {
 
   const navigation = useNavigation<ChatListNavigationProp>();
 
+  const icon: SvgProps = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => {
+    AppLog.log("color : " + color + width + height); //just to avoid warning
+    return (
+      <CircularPLus
+        testID="icon"
+        width={width}
+        height={height}
+        fill={themedColors.primary}
+      />
+    );
+  };
+
   return (
     <Stack.Navigator
       screenOptions={{
         headerLeft: () => <Hamburger />,
         headerRight: () => (
-          <Pressable
+          <HeaderRightTextWithIcon
+            text={Strings.chatListScreen.titleRight}
+            icon={icon}
             onPress={() => {
               navigation.navigate("NewConversation");
             }}
-            style={styles.container}>
-            <AppLabel
-              text="Create"
-              weight="semi-bold"
-              style={styles.headerText(themedColors)}
-            />
-            <CircularPLus
-              width={23}
-              height={23}
-              fill={themedColors.primary}
-              style={styles.iconRight}
-            />
-          </Pressable>
+          />
         ),
         headerRightContainerStyle: {
           padding: SPACE.md
@@ -72,18 +78,3 @@ export const ChatRoutes: FC<Props> = () => {
     </Stack.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  headerText: (theme: ColorPalette) => {
-    return {
-      color: theme.primary,
-      fontSize: FONT_SIZE.sm
-    };
-  },
-  iconRight: { marginStart: moderateScale(SPACE.xxsm) }
-});
