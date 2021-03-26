@@ -10,6 +10,7 @@ exports[`snapshot testing 1`] = `
         "borderStyle": "solid",
         "borderWidth": 0.5,
         "color": "#666666",
+        "flex": 1,
         "flexDirection": "row",
         "fontFamily": "Inter-Regular",
         "fontSize": 21.163106796116505,
@@ -17,7 +18,6 @@ exports[`snapshot testing 1`] = `
         "justifyContent": "center",
         "paddingLeft": 18.139805825242718,
         "paddingRight": 18.139805825242718,
-        "width": "100%",
       },
       undefined,
     ]
