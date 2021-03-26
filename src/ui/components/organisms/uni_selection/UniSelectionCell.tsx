@@ -33,7 +33,7 @@ const UniSelectionCell: FC<Props> = ({ uni, onSelection }) => {
             text={uni.name}
             style={{
               color: theme.themedColors.label,
-              fontSize: FONT_SIZE.md,
+              fontSize: FONT_SIZE.xsm,
               paddingBottom: SPACE.sm
             }}
           />
@@ -41,7 +41,7 @@ const UniSelectionCell: FC<Props> = ({ uni, onSelection }) => {
             text={uni.location}
             style={{
               color: theme.themedColors.labelSecondary,
-              fontSize: FONT_SIZE.md
+              fontSize: FONT_SIZE.xsm
             }}
           />
         </View>

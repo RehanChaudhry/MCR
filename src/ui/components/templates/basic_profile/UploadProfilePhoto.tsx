@@ -45,7 +45,7 @@ export const UploadProfilePhoto = React.memo(() => {
           textStyle={{
             color: theme.themedColors.label,
             borderColor: theme.themedColors.interface["700"],
-            fontSize: FONT_SIZE.md
+            fontSize: FONT_SIZE.xsm
           }}
           shouldShowError={false}
           fontWeight={"semi-bold"}
@@ -57,7 +57,7 @@ export const UploadProfilePhoto = React.memo(() => {
         style={[
           styles.text,
           {
-            fontSize: FONT_SIZE.sm,
+            fontSize: FONT_SIZE._2xsm,
             color: theme.themedColors.interface["700"]
           }
         ]}

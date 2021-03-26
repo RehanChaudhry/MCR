@@ -7,6 +7,7 @@ import EGender, { genders } from "models/enums/EGender";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import { moderateScale } from "config/Dimens";
 import Selector from "assets/images/selector.svg";
+import { shadowStyleProps } from "utils/Util";
 
 interface Props {
   onFilterChange: (keyword?: string, gender?: EGender) => void;
@@ -67,7 +68,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     padding: SPACE.md,
-    backgroundColor: "yellow"
+    backgroundColor: "yellow",
+    ...shadowStyleProps
   },
   search: {
     borderTopStartRadius: moderateScale(20),
@@ -86,8 +88,8 @@ const styles = StyleSheet.create({
     height: moderateScale(40),
     flex: 2
   },
-  searchText: { fontSize: FONT_SIZE.sm },
-  genderText: { fontSize: FONT_SIZE.sm }
+  searchText: { fontSize: FONT_SIZE._2xsm },
+  genderText: { fontSize: FONT_SIZE._2xsm }
 });
 
 export default MatchesFilter;

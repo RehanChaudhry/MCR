@@ -13,6 +13,7 @@ import ProgressErrorView from "ui/components/templates/progress_error_view/Progr
 import { View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Strings from "config/Strings";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatParamsList,
@@ -31,7 +32,9 @@ export const ChatListController: FC<Props> = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitleAlign: "center",
-      title: Strings.chatListScreen.title
+      headerTitle: () => (
+        <HeaderTitle text={Strings.chatListScreen.title} />
+      )
     });
   }, [navigation]);
 

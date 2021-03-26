@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     marginBottom: SPACE.xsm
   },
   text: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE._2xsm
   }
 });
 export default TagListItem;

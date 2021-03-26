@@ -8,6 +8,7 @@ import {
   ViewProfileStack
 } from "./ProfileStack";
 import QuestionsController from "../ui/screens/questions/QuestionsController";
+import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 
 export const ProfileRoutes = () => {
   return (
@@ -23,7 +24,6 @@ export const ProfileRoutes = () => {
       <ProfileBottomBar.Screen
         name="UpdateQuestionnaire"
         component={UpdateQuestionnaireRoutes}
-        initialParams={{ isUpdating: true }}
       />
     </ProfileBottomBar.Navigator>
   );
@@ -62,8 +62,11 @@ const UpdateQuestionnaireRoutes: FC<UpdateQuestionnaireRoutesProps> = () => {
       <UpdateQuestionnaireStack.Screen
         name="UpdateQuestionnaire"
         component={QuestionsController}
-        initialParams={{ isUpdating: false }}
-        options={{ title: "Update Questionnaire" }}
+        initialParams={{ isUpdating: true }}
+        options={{
+          title: "Update Questionnaire",
+          headerLeft: () => <Hamburger />
+        }}
       />
     </UpdateQuestionnaireStack.Navigator>
   );

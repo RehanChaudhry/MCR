@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 import { ViewProfileView } from "ui/screens/home/profile/view_profile/ViewProfileView";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { ProfileStackParamList } from "../../../../../routes/ProfileBottomBar";
+import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { HomeDrawerParamList } from "../../../../../routes";
-import usePreferredTheme from "../../../../../hooks/theme/usePreferredTheme";
+import { HomeDrawerParamList } from "routes";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable } from "react-native";
 import Menu from "assets/images/menu.svg";
-import { SPACE } from "../../../../../config";
+import { SPACE } from "config";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<

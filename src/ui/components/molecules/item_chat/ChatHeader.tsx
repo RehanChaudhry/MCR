@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     return {
       paddingStart: SPACE.md + 5,
       paddingVertical: SPACE.sm,
-      fontSize: FONT_SIZE.sm,
+      fontSize: FONT_SIZE._2xsm,
       color: themedColors.interface["600"]
     };
   }

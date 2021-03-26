@@ -49,7 +49,7 @@ const MyRoommates: FC<Props> = () => {
           textStyle={{
             color: theme.themedColors.primary,
             marginHorizontal: SPACE.xxsm,
-            fontSize: FONT_SIZE.md
+            fontSize: FONT_SIZE.xsm
           }}
           shouldShowError={false}
           fontWeight={"semi-bold"}
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.lg
   },
   headingStyle: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm
   },
   flatList: {
     marginTop: SPACE.lg
