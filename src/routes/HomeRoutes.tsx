@@ -8,7 +8,7 @@ import { NotificationRoutes } from "routes/NotificationRoutes";
 import { CustomDrawer } from "ui/components/templates/drawer/CustomDrawer";
 import FriendsController from "ui/screens/home/friends/FriendsController";
 import ProfileController from "../ui/screens/home/profile/ProfileController";
-import SettingsController from "../ui/screens/home/settings/SettingsController";
+import SettingsRoutes from "./SettingsRoutes";
 
 export const HomeRoutes = () => {
   return (
@@ -28,7 +28,7 @@ export const HomeRoutes = () => {
         name="Notification"
         component={NotificationRoutes}
       />
-      <HomeDrawer.Screen name="Settings" component={SettingsController} />
+      <HomeDrawer.Screen name="Settings" component={SettingsRoutes} />
     </HomeDrawer.Navigator>
   );
 };
