@@ -34,7 +34,12 @@ export const ChatListController: FC<Props> = () => {
       headerTitleAlign: "center",
       headerTitle: () => (
         <HeaderTitle text={Strings.chatListScreen.title} />
-      )
+      ),
+      headerStyle: {
+        elevation: 0,
+        shadowOpacity: 0,
+        shadowColor: "#00000000"
+      }
     });
   }, [navigation]);
 
