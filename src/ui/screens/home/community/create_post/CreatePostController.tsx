@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Check from "assets/images/check_circle.svg";
-import { SPACE } from "config";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { CreatePostApiRequestModel } from "models/api_requests/CreatePostApiRequestModel";
 import { CreatePostApiResponseModel } from "models/api_responses/CreatePostApiResponseModel";
@@ -47,9 +46,6 @@ const CreatePostController: FC<Props> = () => {
         }}
       />
     ),
-    headerRightContainerStyle: {
-      padding: SPACE.md
-    },
     headerLeft: () => (
       <HeaderLeftTextWithIcon
         onPress={() => {
@@ -57,9 +53,6 @@ const CreatePostController: FC<Props> = () => {
         }}
       />
     ),
-    headerLeftContainerStyle: {
-      padding: SPACE.md
-    },
     headerTitleAlign: "center",
     headerTitle: () => <HeaderTitle text="Create Post" />
   });

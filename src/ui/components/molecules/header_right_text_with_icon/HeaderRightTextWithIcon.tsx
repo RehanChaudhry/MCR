@@ -1,6 +1,12 @@
+import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
-import { StyleProp, TextStyle, TouchableOpacityProps } from "react-native";
+import {
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  TouchableOpacityProps
+} from "react-native";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
 import { SvgProp } from "utils/Util";
 
@@ -28,9 +34,16 @@ const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
           textStyle
         ]}
         fontWeight="semi-bold"
+        viewStyle={style.container}
       />
     );
   }
 );
+
+const style = StyleSheet.create({
+  container: {
+    marginRight: SPACE.sm
+  }
+});
 
 export default HeaderRightTextWithIcon;
