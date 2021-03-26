@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Check from "assets/images/check_circle.svg";
 import Close from "assets/images/ic_cross.svg";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { moderateScale } from "config/Dimens";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { CreatePostApiRequestModel } from "models/api_requests/CreatePostApiRequestModel";
@@ -87,7 +87,13 @@ const CreatePostController: FC<Props> = () => {
       padding: SPACE.md
     },
     headerTitleAlign: "center",
-    headerTitle: "Create Post"
+    headerTitle: () => (
+      <AppLabel
+        text="Create Post"
+        weight="semi-bold"
+        style={style.headerTitle}
+      />
+    )
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -122,6 +128,9 @@ const style = StyleSheet.create({
   headerLeftRightText: {
     fontSize: moderateScale(14.0),
     padding: moderateScale(2.0)
+  },
+  headerTitle: {
+    fontSize: FONT_SIZE.lg
   }
 });
 

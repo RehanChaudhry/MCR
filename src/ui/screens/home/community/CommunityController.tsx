@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Menu from "assets/images/menu.svg";
 import PencilAlt from "assets/images/pencil_alt.svg";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
@@ -87,7 +87,14 @@ const CommunityController: FC<Props> = () => {
     headerLeftContainerStyle: {
       padding: SPACE.md
     },
-    headerTitleAlign: "center"
+    headerTitleAlign: "center",
+    headerTitle: () => (
+      <AppLabel
+        text="Community"
+        weight="semi-bold"
+        style={style.headerTitle}
+      />
+    )
   });
 
   const fetchCommunities = useCallback(async () => {
@@ -166,8 +173,11 @@ const style = StyleSheet.create({
     alignItems: "center"
   },
   headerLeftRightText: {
-    fontSize: moderateScale(14.0),
-    padding: moderateScale(2.0)
+    padding: moderateScale(2.0),
+    fontSize: FONT_SIZE.md
+  },
+  headerTitle: {
+    fontSize: FONT_SIZE.lg
   }
 });
 

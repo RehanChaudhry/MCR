@@ -2,7 +2,7 @@ import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Menu from "assets/images/menu.svg";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import React, {
@@ -12,9 +12,10 @@ import React, {
   useRef,
   useState
 } from "react";
-import { Pressable } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { HomeDrawerParamList } from "routes";
 import { AnnouncementStackParamList } from "routes/AnnouncementStack";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AnnouncementView } from "ui/screens/home/announcement/AnnouncementView";
 import DataGenerator from "utils/DataGenerator";
 
@@ -56,7 +57,14 @@ const AnnouncementController: FC<Props> = () => {
     headerLeftContainerStyle: {
       padding: SPACE.md
     },
-    headerTitleAlign: "center"
+    headerTitleAlign: "center",
+    headerTitle: () => (
+      <AppLabel
+        text="Announcement"
+        weight="semi-bold"
+        style={style.headerTitle}
+      />
+    )
   });
 
   const fetchAnnouncements = useCallback(async () => {
@@ -127,5 +135,11 @@ const AnnouncementController: FC<Props> = () => {
     />
   );
 };
+
+const style = StyleSheet.create({
+  headerTitle: {
+    fontSize: FONT_SIZE.lg
+  }
+});
 
 export default AnnouncementController;
