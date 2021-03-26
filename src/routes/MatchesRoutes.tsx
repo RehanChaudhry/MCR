@@ -16,7 +16,11 @@ const MatchesRoutes = () => {
         component={MatchesController}
         options={{
           headerLeft: () => <Hamburger />,
-          headerTitle: () => <HeaderTitle text={STRINGS.matches.title} />
+          headerTitle: () => <HeaderTitle text={STRINGS.matches.title} />,
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0
+          }
         }}
       />
       <MatchesStack.Screen
