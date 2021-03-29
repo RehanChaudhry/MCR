@@ -34,6 +34,8 @@ import { MatchesStackParamList } from "routes/MatchesStack";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import RightArrow from "assets/images/right.svg";
 import LeftArrow from "assets/images/left.svg";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { HomeDrawerParamList } from "routes";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -50,6 +52,8 @@ type ProfileNavigationProp = StackNavigationProp<
   "UpdateQuestionnaire"
 >;
 
+type HomeNavigationProp = DrawerNavigationProp<HomeDrawerParamList>;
+
 type ProfileRouteProp = RouteProp<
   UpdateQuestionnaireStackParamList,
   "UpdateQuestionnaire"
@@ -65,6 +69,7 @@ const QuestionsController: FC<Props> = () => {
   const { themedColors } = usePreferredTheme();
 
   const route = useRoute<ProfileRouteProp>();
+  const homeNavigation = useNavigation<HomeNavigationProp>();
   const welcomeNavigation = useNavigation<WelcomeNavigationProp>();
   const profileNavigation = useNavigation<ProfileNavigationProp>();
   const matchesNavigation = useNavigation<MatchesNavigationProp>();
@@ -101,6 +106,9 @@ const QuestionsController: FC<Props> = () => {
                 fill={themedColors.interface["700"]}
               />
             );
+          }}
+          onPress={() => {
+            homeNavigation.navigate("Matches");
           }}
         />
       )
@@ -163,7 +171,7 @@ const QuestionsController: FC<Props> = () => {
     // For UI build
     if (true) {
       if (route.params.isFrom === EScreen.WELCOME) {
-        // move to home screen
+        homeNavigation.navigate("Matches");
       }
       return;
     }
@@ -172,7 +180,7 @@ const QuestionsController: FC<Props> = () => {
     }
     AppLog.log("handleSubmitAnswers: ");
     const { hasError, errorBody, dataBody } = await answerApi.request([
-      requestModel.current
+      requestModel.current!
     ]);
     if (hasError || dataBody === undefined) {
       Alert.alert("Unable to Submit answers.", errorBody);

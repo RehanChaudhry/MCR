@@ -7,6 +7,7 @@ import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { usePreferredTheme } from "hooks";
 import RightArrow from "assets/images/right.svg";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
+import EScreen from "models/enums/EScreen";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -20,7 +21,7 @@ const WelcomeController: FC<Props> = () => {
   const theme = usePreferredTheme();
 
   const moveToNextScreen = () => {
-    navigation.navigate("Questionnaire");
+    navigation.navigate("Questionnaire", { isFrom: EScreen.WELCOME });
   };
 
   navigation.setOptions({
