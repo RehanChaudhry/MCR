@@ -115,6 +115,10 @@ const CommunityController: FC<Props> = () => {
     return getFeedsTypeFilterData();
   };
 
+  const openCommentsScreen = () => {
+    navigation.navigate("Comments");
+  };
+
   useEffect(() => {
     fetchCommunities();
   }, [fetchCommunities]);
@@ -127,6 +131,7 @@ const CommunityController: FC<Props> = () => {
       isAllDataLoaded={isAllDataLoaded}
       pullToRefreshCallback={refreshCallback}
       feedsFilterData={getFeedsFilterList()}
+      openCommentsScreen={openCommentsScreen}
     />
   );
 };

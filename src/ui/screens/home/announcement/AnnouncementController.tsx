@@ -97,6 +97,10 @@ const AnnouncementController: FC<Props> = () => {
     }, 1000);
   }, [fetchAnnouncements]);
 
+  const openCommentsScreen = () => {
+    navigation.navigate("Comments");
+  };
+
   return (
     <AnnouncementView
       data={announcement}
@@ -104,6 +108,7 @@ const AnnouncementController: FC<Props> = () => {
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
       pullToRefreshCallback={refreshCallback}
+      openCommentsScreen={openCommentsScreen}
     />
   );
 };

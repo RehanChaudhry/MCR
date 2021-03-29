@@ -12,6 +12,7 @@ type Props = {
   onEndReached: () => void;
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete: () => void) => void;
+  openCommentsScreen?: () => void | undefined;
 };
 
 export const AnnouncementView = React.memo<Props>(
@@ -20,7 +21,8 @@ export const AnnouncementView = React.memo<Props>(
     shouldShowProgressBar,
     onEndReached,
     isAllDataLoaded,
-    pullToRefreshCallback
+    pullToRefreshCallback,
+    openCommentsScreen
   }) => {
     const keyExtractor = useCallback(
       (item: CommunityAnnouncement) => item.id.toString(),
@@ -29,9 +31,12 @@ export const AnnouncementView = React.memo<Props>(
 
     const listItem = useCallback(
       ({ item }: { item: CommunityAnnouncement }) => (
-        <AnnouncementItem announcementItem={item} />
+        <AnnouncementItem
+          announcementItem={item}
+          openCommentsScreen={openCommentsScreen}
+        />
       ),
-      []
+      [openCommentsScreen]
     );
     return (
       <Screen style={styles.container}>

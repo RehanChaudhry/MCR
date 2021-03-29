@@ -15,10 +15,11 @@ import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
 
 export interface AnnouncementItemProps extends TouchableOpacityProps {
   announcementItem: CommunityAnnouncement;
+  openCommentsScreen?: () => void | undefined;
 }
 
 export const AnnouncementItem = React.memo<AnnouncementItemProps>(
-  ({ announcementItem }) => {
+  ({ announcementItem, openCommentsScreen }) => {
     const theme = usePreferredTheme();
     return (
       <View
@@ -62,6 +63,7 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
         <AnnouncementFooter
           commentCount={announcementItem.commentCount}
           likeCount={announcementItem.likeCount}
+          openCommentsScreen={openCommentsScreen}
         />
       </View>
     );
