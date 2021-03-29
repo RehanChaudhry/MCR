@@ -536,6 +536,25 @@ const getRoommate = (id: number) =>
     "2021-03-15T07:18:24.000Z"
   );
 
+const createComments = (): ChatItem[] => {
+  const comments: ChatItem[] = [];
+
+  const userOneId = 1;
+  for (let i = 1; i < 15; i++) {
+    comments.push(
+      createChat(
+        i,
+        i % 2 === 0 ? ["Nikki Engelin"] : ["Phoenix Walker"],
+        false,
+        SenderType.STUDENTS,
+        userOneId,
+        require("assets/images/d_user_pic.png")
+      )
+    );
+  }
+  return comments;
+};
+
 export default {
   getQuestionSections,
   getQuestion,
@@ -552,5 +571,6 @@ export default {
   getMyRoommates,
   getDismissedOrBlocked,
   getFriendRequests,
-  getRoommateRequests
+  getRoommateRequests,
+  createComments
 };

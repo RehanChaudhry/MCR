@@ -18,10 +18,11 @@ import Shield from "assets/images/shield.svg";
 
 export interface CommunityItemProps extends TouchableOpacityProps {
   communityItem: CommunityAnnouncement;
+  openCommentsScreen?: () => void | undefined;
 }
 
 export const CommunityItem = React.memo<CommunityItemProps>(
-  ({ communityItem }) => {
+  ({ communityItem, openCommentsScreen }) => {
     const theme = usePreferredTheme();
     const rightImage: SvgProp = () => {
       return (
@@ -77,6 +78,7 @@ export const CommunityItem = React.memo<CommunityItemProps>(
         <AnnouncementFooter
           commentCount={communityItem.commentCount}
           likeCount={communityItem.likeCount}
+          openCommentsScreen={openCommentsScreen}
         />
       </View>
     );
