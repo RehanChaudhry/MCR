@@ -224,6 +224,11 @@ export default {
   },
 
   createPost: {
+    title: {
+      createPost: "Create Post",
+      post: "Post",
+      maxImageMessage: "You cannot select more than 5 images"
+    },
     requiredField: {
       message: "Post field is required"
     },
@@ -255,5 +260,13 @@ export default {
     title: "More Information",
     my_roommates: "My Roommates",
     roommate_agreement: "View Roommate Agreement"
+  },
+
+  comments: {
+    comments: "Comments"
+  },
+
+  announcement: {
+    announcementTitle: "Announcement"
   }
 };

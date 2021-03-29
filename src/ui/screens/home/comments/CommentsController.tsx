@@ -36,20 +36,15 @@ export const CommentsController: FC<Props> = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitleAlign: "center",
-      headerTitle: () => <HeaderTitle text={"Comments"} />,
+      headerTitle: () => <HeaderTitle text={Strings.comments.comments} />,
       headerLeft: () => (
         <HeaderLeftTextWithIcon
           text={Strings.chatThreadScreen.titleLeft}
           onPress={() => {
             navigation.goBack();
           }}
-          icon={(color, width, height) => (
-            <Close
-              testID="icon"
-              width={width}
-              height={height}
-              fill={themedColors.primary}
-            />
+          icon={() => (
+            <Close width={15} height={15} fill={themedColors.primary} />
           )}
         />
       )
