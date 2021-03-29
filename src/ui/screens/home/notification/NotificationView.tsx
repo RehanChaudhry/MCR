@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
 import { NotificationData } from "models/api_responses/NotificationsResponseModel";
 import { AppLog } from "utils/Util";
@@ -29,12 +29,13 @@ export const NotificationView = React.memo<Props>(({ notifications }) => {
     return parseInt(hours.toFixed(0));
   };
 
-  const getHeader = (label: string) => {
+  const getHeader = (label: string, style?: StyleProp<ViewStyle>) => {
     return (
       <AppLabel
         text={label}
         style={[
           styles.header,
+          style,
           { color: theme.themedColors.interface["700"] }
         ]}
         weight={"semi-bold"}
@@ -55,7 +56,7 @@ export const NotificationView = React.memo<Props>(({ notifications }) => {
 
     if (previousItemHours !== tag && tag === "1") {
       previousItemHours = tag;
-      return getHeader(label);
+      return getHeader(label, styles.mainContanier);
     } else if (previousItemHours !== tag && tag === "3") {
       previousItemHours = tag;
       label = "OLDER NOTIFICATIONS";
@@ -121,7 +122,6 @@ export const NotificationView = React.memo<Props>(({ notifications }) => {
       </View>
       <FlatListWithPb
         shouldShowProgressBar={false}
-        style={styles.mainContanier}
         data={notifications}
         keyExtractor={(item) => item.id}
         renderItem={listItem}
@@ -136,9 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: SPACE.lg,
     marginLeft: SPACE.lg
   },
-  mainContanier: {
-    marginTop: SPACE.md
-  },
+  mainContanier: { marginTop: SPACE.lg },
   dropDown: {
     marginLeft: SPACE.md,
     marginRight: SPACE.md,
