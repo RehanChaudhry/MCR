@@ -98,6 +98,7 @@ export const CustomDrawer = React.memo<CustomDrawerProps>((props) => {
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate("Settings");
+                      setCurrentItem("Settings");
                     }}>
                     <Settings
                       width={moderateScale(20)}

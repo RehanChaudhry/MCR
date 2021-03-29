@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import SettingsView from "./SettingsView";
 import { useNavigation } from "@react-navigation/native";
 import Hamburger from "../../../components/molecules/hamburger/Hamburger";
-import { HeaderTitle } from "../../../components/molecules/header_title/HeaderTitle";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { HomeDrawerParamList } from "../../../../routes";
+import { HomeDrawerParamList } from "routes";
 
 type Props = {};
 type SettingNavigationProp = StackNavigationProp<
