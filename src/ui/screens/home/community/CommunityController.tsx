@@ -48,8 +48,8 @@ const CommunityController: FC<Props> = () => {
         icon={() => {
           return (
             <PencilAlt
-              width={20}
-              height={20}
+              width={15}
+              height={15}
               fill={theme.themedColors.primary}
             />
           );
