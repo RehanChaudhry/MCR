@@ -47,7 +47,8 @@ export const Interests = React.memo(({}) => {
           style: [
             styles.dropDown,
             { borderColor: theme.themedColors.border }
-          ]
+          ],
+          textStyle: { color: theme.themedColors.primary }
         }}
       />
       <View style={styles.spacer} />
@@ -95,7 +96,8 @@ export const Interests = React.memo(({}) => {
           style: [
             styles.dropDown,
             { borderColor: theme.themedColors.border }
-          ]
+          ],
+          textStyle: { color: theme.themedColors.primary }
         }}
       />
       <View style={styles.spacer} />

@@ -155,7 +155,7 @@ export const CreatePostView = React.memo<Props>((props) => {
         }
       );
     } else {
-      SimpleToast.show("you cannot enter more than 5 images");
+      SimpleToast.show(Strings.createPost.title.maxImageMessage);
     }
   };
 
@@ -353,7 +353,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                 ]}
               />
               <AppFormFormSubmit
-                text="Create Post"
+                text={Strings.createPost.title.createPost}
                 buttonStyle={{
                   backgroundColor: theme.themedColors.primary
                 }}

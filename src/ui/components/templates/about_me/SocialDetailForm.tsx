@@ -1,5 +1,11 @@
 import React, { FC } from "react";
-import { StyleProp, StyleSheet, TextStyle, View } from "react-native";
+import {
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { SvgProp } from "utils/Util";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
@@ -11,6 +17,7 @@ type Props = {
   icon: SvgProp;
   heading: string;
   title: string;
+  onPress: () => void;
 };
 
 const SocialDetailForm: FC<Props> = ({
@@ -18,7 +25,8 @@ const SocialDetailForm: FC<Props> = ({
   heading,
   title,
   headingStyle,
-  titleStyle
+  titleStyle,
+  onPress
 }) => {
   const theme = usePreferredTheme();
   return (
@@ -31,22 +39,24 @@ const SocialDetailForm: FC<Props> = ({
           style={[styles.headingStyle, headingStyle]}
         />
       </View>
-      <AppLabel
-        text={title}
-        style={[
-          styles.titleStyle,
-          { color: theme.themedColors.primary },
-          titleStyle
-        ]}
-      />
+      <TouchableOpacity onPress={onPress}>
+        <AppLabel
+          text={title}
+          style={[
+            styles.titleStyle,
+            { color: theme.themedColors.primary },
+            titleStyle
+          ]}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   mainContainer: {
-    flexDirection: "column",
-    marginTop: SPACE.lg
+    flexDirection: "column"
+    //marginTop: SPACE.lg
   },
   subContainer: {
     flexDirection: "row",
@@ -57,7 +67,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACE.sm
   },
   titleStyle: {
-    marginTop: SPACE.sm
+    marginTop: SPACE.sm,
+    marginBottom: SPACE.lg
   }
 });
 
