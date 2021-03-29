@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   },
   actionButtonText: {
     fontFamily: FONTS.semiBold,
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE._2xsm
   },
   actionsContainer: {
     flexDirection: "row-reverse",
@@ -214,11 +214,11 @@ const styles = StyleSheet.create({
     flex: 1
   },
   subTitleText: {
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE._3xm,
     marginTop: SPACE.xxsm
   },
   titleText: {
-    fontSize: FONT_SIZE.lg
+    fontSize: FONT_SIZE.xsm
   }
 });
 

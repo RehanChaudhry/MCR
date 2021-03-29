@@ -1,3 +1,4 @@
+import { useRoute } from "@react-navigation/native";
 import React from "react";
 import { MatchesStack } from "routes/MatchesStack";
 import MatchesController from "ui/screens/home/matches/MatchesController";
@@ -11,7 +12,17 @@ import RoommateAgreementController from "ui/screens/home/friends/RoommateAgreeme
 import QuestionsController from "ui/screens/questions/QuestionsController";
 import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
 
-const MatchesRoutes = () => {
+const MatchesRoutes = ({ navigation }: any) => {
+  const route: any = useRoute();
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      route.params.changeSelectedDrawerItem();
+    });
+
+    return unsubscribe;
+  }, [navigation, route]);
+
   return (
     <MatchesStack.Navigator
       initialRouteName={"Matches"}

@@ -17,6 +17,7 @@ type Props = {
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete: () => void) => void;
   feedsFilterData: FilterCount[];
+  openCommentsScreen?: () => void | undefined;
 };
 
 export const CommunityView = React.memo<Props>(
@@ -26,7 +27,8 @@ export const CommunityView = React.memo<Props>(
     onEndReached,
     isAllDataLoaded,
     pullToRefreshCallback,
-    feedsFilterData
+    feedsFilterData,
+    openCommentsScreen
   }) => {
     const keyExtractor = useCallback(
       (item: CommunityAnnouncement) => item.id.toString(),
@@ -35,9 +37,12 @@ export const CommunityView = React.memo<Props>(
 
     const listItem = useCallback(
       ({ item }: { item: CommunityAnnouncement }) => (
-        <CommunityItem communityItem={item} />
+        <CommunityItem
+          communityItem={item}
+          openCommentsScreen={openCommentsScreen}
+        />
       ),
-      []
+      [openCommentsScreen]
     );
     function getFeedsFilterData(): Item[] {
       return feedsFilterData.map((value) => {

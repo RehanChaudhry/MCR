@@ -226,7 +226,7 @@ export default {
 
   createPost: {
     requiredField: {
-      message: "Message is a required field"
+      message: "Post field is required"
     },
     placeholder: {
       startTypingYourMessage: "Start typing your message",
@@ -239,8 +239,8 @@ export default {
       embed: "Embed"
     },
     fieldValidationMessage: {
-      invalidUrl: "Please enter valid link url",
-      invalidEmbedLink: "Please enter valid embed link"
+      invalidUrl: "Please enter valid link",
+      invalidEmbedLink: "Please enter valid embed code"
     }
   },
   matchInfo: {

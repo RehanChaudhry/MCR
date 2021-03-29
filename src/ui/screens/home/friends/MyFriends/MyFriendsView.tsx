@@ -18,6 +18,7 @@ type Props = {
   onPressChat: (item: MyFriend) => void;
   onPressAction: (item: MyFriend) => void;
   onPressCross: (item: MyFriend) => void;
+  onPressReceivedFriendRequests: () => void;
 };
 
 const listItem = (
@@ -76,7 +77,8 @@ const MyFriendsView: FC<Props> = ({
   data,
   onPressAction,
   onPressChat,
-  onPressCross
+  onPressCross,
+  onPressReceivedFriendRequests
 }) => {
   const theme = usePreferredTheme();
   return (
@@ -97,7 +99,7 @@ const MyFriendsView: FC<Props> = ({
                 height={18}
               />
             )}
-            onPressAction={() => {}}
+            onPressAction={onPressReceivedFriendRequests}
           />
         )}
         renderItem={({ item }) => {
