@@ -12,7 +12,6 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { usePreferredTheme } from "hooks";
 import { DropDownItem } from "models/DropDownItem";
-import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface DropDownModalProps {
   isVisible: boolean;
@@ -24,7 +23,7 @@ export interface DropDownModalProps {
   selectedItemId: string;
 }
 
-export const DropdownModal = optimizedMemo<DropDownModalProps>(
+export const DropdownModal = React.memo<DropDownModalProps>(
   ({
     isVisible,
     closeModal,

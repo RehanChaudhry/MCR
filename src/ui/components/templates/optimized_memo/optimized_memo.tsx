@@ -1,6 +1,8 @@
 import React, { FC } from "react";
 
 function propsMatcher<PropType>() {
+  // pass empty array as `propsNotToMatch` to never rerender/update
+  // or pass keys in the array that you want to ignore
   function of<Key extends keyof PropType>(propsNotToMatch?: Array<Key>) {
     return (prevProps: any, nextProps: any) => {
       if (!propsNotToMatch) {
@@ -23,7 +25,7 @@ function propsMatcher<PropType>() {
 }
 
 type Props = {
-  style?: any;
+  // style?: any;
 };
 
 export function optimizedMemo<MemoPropsType extends Props>(
@@ -31,6 +33,21 @@ export function optimizedMemo<MemoPropsType extends Props>(
 ): FC<MemoPropsType> {
   return React.memo<MemoPropsType>(
     Component,
-    propsMatcher<MemoPropsType>()(["style"])
+    propsMatcher<MemoPropsType>()(["style" as keyof MemoPropsType])
   );
+}
+
+export function optimizedMemoWithStyleProp<MemoPropsType extends Props>(
+  Component: FC<MemoPropsType>
+) {
+  function withStyleProps<Key extends keyof MemoPropsType>(
+    styleProps: Array<Key>
+  ): FC<MemoPropsType> {
+    return React.memo<MemoPropsType>(
+      Component,
+      propsMatcher<MemoPropsType>()(styleProps)
+    );
+  }
+
+  return withStyleProps;
 }
