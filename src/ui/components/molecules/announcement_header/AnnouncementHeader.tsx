@@ -98,7 +98,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
           <View
             style={[
               style.bottomLine,
-              { backgroundColor: theme.themedColors.interface["300"] },
+              { borderColor: theme.themedColors.interface["300"] },
               bottomLineStyle
             ]}
           />
@@ -131,8 +131,7 @@ const style = StyleSheet.create({
     justifyContent: "space-around"
   },
   bottomLine: {
-    width: "100%",
-    height: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     marginTop: SPACE.md
   },
   profileImage: {

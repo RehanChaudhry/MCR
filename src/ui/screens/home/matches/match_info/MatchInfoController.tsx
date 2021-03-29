@@ -9,8 +9,9 @@ import { MatchesStackParamList } from "routes/MatchesStack";
 import { MatchInfoView } from "ui/screens/home/matches/match_info/MatchInfoView";
 import DataGenerator from "utils/DataGenerator";
 import MatchInfo from "models/MatchInfo";
-import { SPACE } from "config";
+import { SPACE, STRINGS } from "config";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
+import ProfileMatch from "models/ProfileMatch";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -41,6 +42,43 @@ const MatchInfoController: FC<Props> = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [matchInfo, setMatchInfo] = useState<MatchInfo>(matchInfoData);
 
+  const moveToChatScreen = (profileMatch: ProfileMatch) => {
+    // AppLog.log(
+    //   "moveToChatScreen(), profile: " + JSON.stringify(profileMatch)
+    // );
+    navigation.navigate("Chat", {
+      title: [profileMatch.userName ?? STRINGS.common.not_found]
+    });
+  };
+
+  const moveToProfileScreen = (profileMatch: ProfileMatch) => {
+    AppLog.log(
+      "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
+    );
+    navigation.navigate("Profile");
+  };
+
+  const moveToRoommateAgreementScreen = () => {
+    // AppLog.log(
+    //   "moveToRoommateAgreementScreen(), profile: " + JSON.stringify(profileMatch)
+    // );
+    navigation.navigate("RoommateAgreement");
+  };
+
+  const moveToUpdateProfileScreen = () => {
+    // AppLog.log(
+    //   "moveToUpdateProfileScreen(), profile: " + JSON.stringify(profileMatch)
+    // );
+    navigation.navigate("UpdateProfile");
+  };
+
+  const moveToQuestionnaireScreen = () => {
+    // AppLog.log(
+    //   "moveToQuestionnaireScreen(), profile: " + JSON.stringify(profileMatch)
+    // );
+    navigation.navigate("Questionnaire", { isUpdating: true });
+  };
+
   return (
     <ProgressErrorView
       isLoading={false}
@@ -53,7 +91,14 @@ const MatchInfoController: FC<Props> = () => {
         );
       }}
       data={matchInfo}>
-      <MatchInfoView matchInfo={matchInfo} />
+      <MatchInfoView
+        matchInfo={matchInfo}
+        moveToChatScreen={moveToChatScreen}
+        moveToProfileScreen={moveToProfileScreen}
+        moveToRoommateAgreementScreen={moveToRoommateAgreementScreen}
+        moveToUpdateProfileScreen={moveToUpdateProfileScreen}
+        moveToQuestionnaireScreen={moveToQuestionnaireScreen}
+      />
     </ProgressErrorView>
   );
 };

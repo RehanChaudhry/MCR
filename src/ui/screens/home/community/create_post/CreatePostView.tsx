@@ -326,7 +326,7 @@ export const CreatePostView = React.memo<Props>((props) => {
 
               <View
                 style={[
-                  styles.bottomLine,
+                  styles.bottomBorder,
                   { backgroundColor: theme.themedColors.interface["300"] }
                 ]}
               />
@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
     // justifyContent: "space-between"
   },
-  bottomLine: {
+  bottomBorder: {
     width: "100%",
     height: 1,
     marginVertical: SPACE.lg
