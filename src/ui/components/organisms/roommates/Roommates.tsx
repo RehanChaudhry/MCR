@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     paddingTop: SPACE.md,
     ...shadowStyleProps
   },
-  title: { includeFontPadding: false, fontSize: FONT_SIZE.md },
+  title: { includeFontPadding: false, fontSize: FONT_SIZE.sm },
   roommateAgreement: {
     fontSize: FONT_SIZE._2xsm
   },

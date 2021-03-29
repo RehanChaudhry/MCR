@@ -43,7 +43,7 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
       <View>
         <View
           style={[
-            style.bottomLine,
+            style.bottomBorder,
             { backgroundColor: theme.themedColors.interface["300"] },
             bottomLineStyle
           ]}
@@ -109,7 +109,7 @@ const style = StyleSheet.create({
   rightContainerRightSide: {
     marginLeft: SPACE.sm
   },
-  bottomLine: {
+  bottomBorder: {
     width: "100%",
     height: 0.5,
     marginVertical: SPACE.md

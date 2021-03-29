@@ -49,7 +49,10 @@ const LoginController: FC<Props> = () => {
     navigation.navigate("ForgotPassword");
   });
   const openWelcomeScreen = usePreventDoubleTap(() => {
-    navigationWelcome.navigate("Welcome");
+    navigationWelcome.reset({
+      index: 0,
+      routes: [{ name: "Welcome" }]
+    });
   });
 
   const handleSignIn = usePreventDoubleTap(async () => {
