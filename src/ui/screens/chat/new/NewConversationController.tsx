@@ -77,6 +77,11 @@ export const NewConversationController: FC<Props> = () => {
       ),
       headerLeftContainerStyle: {
         padding: SPACE.md
+      },
+      headerStyle: {
+        elevation: 0,
+        shadowOpacity: 0,
+        shadowColor: "#00000000"
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

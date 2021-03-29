@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   searchContainer: (theme: ColorPalette) => {
     return {
       backgroundColor: theme.background,
-      paddingBottom: SPACE.md,
+      paddingBottom: SPACE.sm,
       paddingHorizontal: SPACE.md,
       ...shadowStyleProps
     };
