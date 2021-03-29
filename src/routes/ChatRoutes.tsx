@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import Strings from "config/Strings";
+import { moderateScale } from "config/Dimens";
 
 const Stack = createStackNavigator();
 
@@ -39,11 +40,11 @@ export const ChatRoutes: FC<Props> = () => {
             onPress={() => {
               navigation.navigate("NewConversation");
             }}
-            icon={(color, width, height) => (
+            icon={() => (
               <CircularPLus
                 testID="icon"
-                width={width}
-                height={height}
+                width={moderateScale(15)}
+                height={moderateScale(15)}
                 fill={themedColors.primary}
               />
             )}

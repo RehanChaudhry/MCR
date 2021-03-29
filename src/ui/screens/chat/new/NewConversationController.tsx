@@ -11,6 +11,7 @@ import { usePreferredTheme } from "hooks";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
+import { moderateScale } from "config/Dimens";
 
 type conversationNavigationProp = StackNavigationProp<
   ChatParamsList,
@@ -58,11 +59,11 @@ export const NewConversationController: FC<Props> = () => {
           onPress={() => {
             navigation.goBack();
           }}
-          icon={(color, width, height) => (
+          icon={() => (
             <Close
               testID="icon"
-              width={width}
-              height={height}
+              width={moderateScale(15)}
+              height={moderateScale(15)}
               fill={themedColors.primary}
             />
           )}
@@ -74,11 +75,11 @@ export const NewConversationController: FC<Props> = () => {
           onPress={() => {
             goBack();
           }}
-          icon={(color, width, height) => (
+          icon={() => (
             <CircularTick
               testID="icon"
-              width={width}
-              height={height}
+              width={moderateScale(15)}
+              height={moderateScale(15)}
               fill={themedColors.primary}
             />
           )}

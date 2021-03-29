@@ -25,6 +25,7 @@ import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_wit
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import Strings from "config/Strings";
 import { View } from "react-native";
+import { moderateScale } from "config/Dimens";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatParamsList,
@@ -74,11 +75,11 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
           onPress={() => {
             navigation.goBack();
           }}
-          icon={(color, width, height) => (
+          icon={() => (
             <Close
               testID="icon"
-              width={width}
-              height={height}
+              width={moderateScale(15)}
+              height={moderateScale(15)}
               fill={themedColors.primary}
             />
           )}
@@ -91,11 +92,11 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
             navigation.goBack();
           }}
           textStyle={{ color: COLORS.red }}
-          icon={(color, width, height) => (
+          icon={() => (
             <Archive
               testID="icon"
-              width={width}
-              height={height}
+              width={moderateScale(15)}
+              height={moderateScale(15)}
               fill={COLORS.red}
             />
           )}
