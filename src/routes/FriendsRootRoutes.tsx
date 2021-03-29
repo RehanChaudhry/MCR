@@ -13,7 +13,7 @@ const FriendsRootRoutes: FC<Props> = () => {
         component={FriendsController}
       />
       <FriendsRootStack.Screen
-        name={"FriendRequests"}
+        name={"ConnectRequests"}
         component={ConnectionRequestRoutes}
       />
     </FriendsRootStack.Navigator>

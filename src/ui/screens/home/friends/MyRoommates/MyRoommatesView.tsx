@@ -1,3 +1,5 @@
+import HomeOfficeIcon from "assets/images/icon_office_building.svg";
+import { usePreferredTheme } from "hooks";
 import { MyRoomate } from "models/api_responses/MyRoommatesResponseModel";
 import React, { FC } from "react";
 import { StyleSheet } from "react-native";
@@ -7,14 +9,13 @@ import ConnectionItem, {
   CONNECTION_ACTION_STATE
 } from "ui/components/organisms/friends/connection/ConnectionItem";
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
-import HomeOfficeIcon from "assets/images/icon_office_building.svg";
-import { usePreferredTheme } from "hooks";
 
 type Props = {
   data: MyRoomate[];
   onPressChat: (item: MyRoomate) => void;
   onPressAction: (item: MyRoomate) => void;
   onPressCross: (item: MyRoomate) => void;
+  onPressReceivedRoommateRequests: () => void;
 };
 
 const listItem = (
@@ -49,7 +50,8 @@ const MyRoommatesView: FC<Props> = ({
   data,
   onPressAction,
   onPressChat,
-  onPressCross
+  onPressCross,
+  onPressReceivedRoommateRequests
 }) => {
   const theme = usePreferredTheme();
   return (
@@ -70,7 +72,7 @@ const MyRoommatesView: FC<Props> = ({
                 height={18}
               />
             )}
-            onPressAction={() => {}}
+            onPressAction={onPressReceivedRoommateRequests}
           />
         )}
         renderItem={({ item }) => {
