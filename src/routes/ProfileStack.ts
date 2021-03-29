@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import EScreen from "models/enums/EScreen";
 
 export type ViewProfileStackParamList = {
   ViewProfile: undefined;
@@ -11,6 +12,6 @@ export type UpdateProfileStackParamList = {
 export const UpdateProfileStack = createStackNavigator<UpdateProfileStackParamList>();
 
 export type UpdateQuestionnaireStackParamList = {
-  UpdateQuestionnaire: { isUpdating: boolean };
+  UpdateQuestionnaire: { isFrom: EScreen };
 };
 export const UpdateQuestionnaireStack = createStackNavigator<UpdateQuestionnaireStackParamList>();

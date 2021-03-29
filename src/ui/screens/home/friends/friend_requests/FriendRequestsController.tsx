@@ -1,3 +1,5 @@
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import {
   FriendRequest,
   FriendRequestsResponseModel
@@ -5,11 +7,18 @@ import {
 import React, { FC, useState } from "react";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
+import { ConnectionRequestStackParamList } from "routes/ConnectionRequestStack";
+import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import DataGenerator from "utils/DataGenerator";
 import { AppLog } from "utils/Util";
 import FriendRequestsView from "./FriendRequestsView";
 
 type Props = {};
+
+type FriendRequestsNavigationProp = StackNavigationProp<
+  ConnectionRequestStackParamList,
+  "FriendRequests"
+>;
 
 const FriendRequestsController: FC<Props> = () => {
   const [friendRequests, setFriendRequests] = useState<
@@ -47,6 +56,18 @@ const FriendRequestsController: FC<Props> = () => {
   const onPressDeclined = (item: FriendRequest) => {
     AppLog.log("friend request item:", item);
   };
+
+  const navigation = useNavigation<FriendRequestsNavigationProp>();
+
+  navigation.setOptions({
+    headerLeft: () => (
+      <HeaderLeftTextWithIcon
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
+    )
+  });
 
   return (
     <FriendRequestsView

@@ -3,6 +3,7 @@ import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import React from "react";
 import { StyleSheet, TouchableOpacityProps, View } from "react-native";
+import SimpleToast from "react-native-simple-toast";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
   URL_TYPES,
@@ -17,10 +18,11 @@ import Shield from "assets/images/shield.svg";
 
 export interface CommunityItemProps extends TouchableOpacityProps {
   communityItem: CommunityAnnouncement;
+  openCommentsScreen?: () => void | undefined;
 }
 
 export const CommunityItem = React.memo<CommunityItemProps>(
-  ({ communityItem }) => {
+  ({ communityItem, openCommentsScreen }) => {
     const theme = usePreferredTheme();
     const rightImage: SvgProp = () => {
       return (
@@ -44,6 +46,7 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           leftImageUrl={communityItem.profileImageUrl}
           shouldShowRightImage={true}
           rightIcon={rightImage}
+          onPress={() => SimpleToast.show("Clicked on shield")}
         />
         {communityItem.text != null && true && (
           <AppLabel
@@ -75,6 +78,7 @@ export const CommunityItem = React.memo<CommunityItemProps>(
         <AnnouncementFooter
           commentCount={communityItem.commentCount}
           likeCount={communityItem.likeCount}
+          openCommentsScreen={openCommentsScreen}
         />
       </View>
     );

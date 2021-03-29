@@ -78,7 +78,7 @@ export const SegmentedControl = React.memo<Props>(
 
     function buttonPressed(position: number) {
       const oldSelectedOption = selectedPosition;
-      AppLog.logForcefully("position : " + position);
+      AppLog.log("position : " + position);
       setSelectedIndexDuplicate(position);
       setSelectedPosition(position);
       if (position !== oldSelectedOption) {
@@ -102,7 +102,7 @@ export const SegmentedControl = React.memo<Props>(
             ? width / values.length
             : 0;
 
-          AppLog.logForcefully("width : " + width);
+          AppLog.log("width : " + width);
           if (newSegmentWidth !== segmentWidth) {
             animation.setValue(newSegmentWidth * (selectedIndex || 0));
             setSegmentWidth(newSegmentWidth);

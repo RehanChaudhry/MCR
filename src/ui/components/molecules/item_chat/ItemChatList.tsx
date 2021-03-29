@@ -13,7 +13,7 @@ import NotifyIndic from "assets/images/notification-indicator.svg";
 import NotifyIndicInActive from "assets/images/notification-indicator-inactive.svg";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
-import ChatItem from "models/ChatItem";
+import ChatItem, { SenderType } from "models/ChatItem";
 import { moderateScale } from "config/Dimens";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
@@ -78,7 +78,11 @@ export const ItemChatList = React.memo<ItemChatListProps>(
               />
             </View>
             <AppLabel
-              style={styles.messageText(themedColors)}
+              style={styles.messageText(
+                themedColors,
+                item.type === SenderType.STAFF,
+                item.isMessageRead
+              )}
               text={item.message}
               numberOfLines={2}
               ellipsizeMode="tail"
@@ -138,8 +142,10 @@ const styles = StyleSheet.create({
       color:
         recipientLength > 1 && !isMessageRead
           ? theme.primary
-          : theme.interface["600"],
-      lineHeight: 25
+          : theme.label,
+      lineHeight: 25,
+      paddingEnd: SPACE.sm,
+      flex: 1
     };
   },
   timeText: (theme: ColorPalette) => {
@@ -150,10 +156,18 @@ const styles = StyleSheet.create({
       marginEnd: SPACE.md
     };
   },
-  messageText: (theme: ColorPalette) => {
+  messageText: (
+    theme: ColorPalette,
+    isStaffMessage: boolean,
+    isMessageRead: boolean
+  ) => {
     return {
       fontSize: FONT_SIZE._2xsm,
-      color: theme.label,
+      color: !isMessageRead
+        ? theme.label
+        : isStaffMessage
+        ? theme.interface["700"]
+        : theme.interface["600"],
       lineHeight: 16
     };
   }

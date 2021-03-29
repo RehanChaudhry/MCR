@@ -48,8 +48,8 @@ const CommunityController: FC<Props> = () => {
         icon={() => {
           return (
             <PencilAlt
-              width={20}
-              height={20}
+              width={15}
+              height={15}
               fill={theme.themedColors.primary}
             />
           );
@@ -115,6 +115,10 @@ const CommunityController: FC<Props> = () => {
     return getFeedsTypeFilterData();
   };
 
+  const openCommentsScreen = () => {
+    navigation.navigate("Comments");
+  };
+
   useEffect(() => {
     fetchCommunities();
   }, [fetchCommunities]);
@@ -127,6 +131,7 @@ const CommunityController: FC<Props> = () => {
       isAllDataLoaded={isAllDataLoaded}
       pullToRefreshCallback={refreshCallback}
       feedsFilterData={getFeedsFilterList()}
+      openCommentsScreen={openCommentsScreen}
     />
   );
 };

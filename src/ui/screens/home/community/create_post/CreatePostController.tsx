@@ -6,6 +6,7 @@ import { CreatePostApiRequestModel } from "models/api_requests/CreatePostApiRequ
 import { CreatePostApiResponseModel } from "models/api_responses/CreatePostApiResponseModel";
 import React, { FC, useRef } from "react";
 import { Alert } from "react-native";
+import SimpleToast from "react-native-simple-toast";
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { CommunityStackParamList } from "routes/CommunityStack";
@@ -38,18 +39,21 @@ const CreatePostController: FC<Props> = () => {
         icon={() => {
           return (
             <Check
-              width={20}
-              height={20}
+              width={15}
+              height={15}
               fill={theme.themedColors.primary}
             />
           );
+        }}
+        onPress={() => {
+          SimpleToast.show("Clicked on Post");
         }}
       />
     ),
     headerLeft: () => (
       <HeaderLeftTextWithIcon
         onPress={() => {
-          navigation.goBack();
+          navigation.pop();
         }}
       />
     ),
@@ -75,7 +79,7 @@ const CreatePostController: FC<Props> = () => {
   return (
     <CreatePostView
       createPost={() => {
-        navigation.goBack();
+        navigation.pop();
       }}
     />
   );
