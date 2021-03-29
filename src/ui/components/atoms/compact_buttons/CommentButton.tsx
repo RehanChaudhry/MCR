@@ -5,7 +5,7 @@ import Chat from "assets/images/chat.svg";
 import { AppCompactButton } from "ui/components/atoms/app_compact_button/AppCompactButton";
 
 type Props = {
-  onPress: () => void;
+  onPress?: () => void;
 };
 export const CommentButton = React.memo<Props>(({ onPress }) => {
   const chatIcon: SvgProp = (

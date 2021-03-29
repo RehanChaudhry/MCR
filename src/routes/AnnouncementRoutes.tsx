@@ -1,7 +1,7 @@
 import React from "react";
 import { CommunityStack } from "routes/CommunityStack";
 import AnnouncementController from "ui/screens/home/announcement/AnnouncementController";
-import { CommentsController } from "ui/screens/home/comments/commentsController";
+import { CommentsController } from "ui/screens/home/comments/CommentsController";
 import { AnnouncementStack } from "./AnnouncementStack";
 
 const AnnouncementRoutes = () => {
