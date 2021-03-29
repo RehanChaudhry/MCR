@@ -22,62 +22,63 @@ const validationSchema = Yup.object().shape({
   //basic profile component
   firstName: Yup.string()
     .required("Enter your first name")
-    .min(3, "First name should be atleast 3 characters")
-    .max(25, "First name should be less than 26 characters"),
+    .min(1, "First name should be atleast 1 characters")
+    .max(50, "First name should be less than 50 characters"),
   lastName: Yup.string()
     .required("Enter your last name")
-    .min(3, "Last name should be atleast 3 characters")
-    .max(25, "Last name should be less than 26 characters"),
-  aboutMe: Yup.string()
-    .required("Enter your profile description")
-    .min(3, "About Me should be atleast 25 characters")
-    .max(25, "About Me should be less than 50 characters"),
-  faceBookProfile: Yup.string().required("Enter your facebook profile"),
-  twitterProfile: Yup.string().required("Enter your twitter profile"),
-  linkedInProfile: Yup.string().required("Enter your linkedin profile"),
-  instagramProfile: Yup.string().required("Enter your instagram profile"),
-  snapChatProfile: Yup.string().required("Enter your snapchat profile"),
-  tikTokProfile: Yup.string().required("Enter your tiktok profile"),
+    .min(1, "Last name should be atleast 1 characters")
+    .max(50, "Last name should be less than 50 characters"),
+  aboutMe: Yup.string().max(
+    100,
+    "About Me should be less than 100 characters"
+  ),
+  faceBookProfile: Yup.string().url(
+    "Please Provide Valid Facebook profile"
+  ),
+  twitterProfile: Yup.string().url("Please Provide Twitter  profile"),
+  linkedInProfile: Yup.string().url(
+    "Please Provide Valid LinkedIn profile"
+  ),
+  instagramProfile: Yup.string().url(
+    "Please Provide Valid Instagram profile"
+  ),
+  snapChatProfile: Yup.string().url(
+    "Please Provide Valid SnapChat profile"
+  ),
+  tikTokProfile: Yup.string().url("Please Provide Valid TikTok profile"),
 
   //demo graphics component
   homeTown: Yup.string()
-    .required("Enter your hometown")
-    .min(3, "Home Town should be atleast 3 characters")
-    .max(25, "Home Town should be less than 26 characters"),
+    .min(1, "First name should be atleast 1 characters")
+    .max(50, "First name should be less than 50 characters"),
   intendedMajor: Yup.string()
-    .required("Enter your intended major")
-    .min(3, "Intended Major should be atleast 3 characters")
-    .max(25, "Intended Major should be less than 26 characters"),
-  gender: Yup.object().required("Please select your gender"),
+    .min(1, "First name should be atleast 1 characters")
+    .max(50, "First name should be less than 50 characters"),
+  //gender: Yup.object().required("Please select your gender"),
 
   //interests components
-  hobbies: Yup.object().required("Select your hobbies"),
-  memberships: Yup.object().required("Select your memberships"),
-  movies: Yup.object().required("Select your movies and tv shows"),
-  music: Yup.object().required("Select your music"),
-  books: Yup.object().required("Select your books"),
-  games: Yup.object().required("Select your games"),
+  // hobbies: Yup.object().required("Select your hobbies"),
+  // memberships: Yup.object().required("Select your memberships"),
+  // movies: Yup.object().required("Select your movies and tv shows"),
+  // music: Yup.object().required("Select your music"),
+  // books: Yup.object().required("Select your books"),
+  // games: Yup.object().required("Select your games"),
 
   //living details
   programs: Yup.string()
-    .required("Enter your educational program")
-    .min(3, "Programs should be atleast 3 characters")
-    .max(25, "Programs should be less than 26 characters"),
+    .min(1, "First name should be atleast 1 characters")
+    .max(100, "First name should be less than 100 characters"),
   community: Yup.string()
-    .required("Enter your community")
-    .min(3, "Community should be atleast 3 characters")
-    .max(25, "Community should be less than 26 characters"),
+    .min(1, "First name should be atleast 1 characters")
+    .max(100, "First name should be less than 100 characters"),
   building: Yup.string()
-    .required("Enter your building information")
-    .min(3, "Building should be atleast 3 characters")
-    .max(25, "Building should be less than 26 characters"),
+    .min(1, "First name should be atleast 1 characters")
+    .max(100, "First name should be less than 100 characters"),
   room: Yup.string()
-    .required("Enter your room number")
-    .min(3, "Room should be atleast 3 characters")
-    .max(25, "Room should be less than 26 characters"),
-
+    .min(1, "First name should be atleast 1 characters")
+    .max(100, "First name should be less than 100 characters"),
   //video introduction component
-  youtubeVideoUrl: Yup.string().required("Enter youtube video URL")
+  youtubeVideoUrl: Yup.string().url("Please Provide Valid YouTube URL")
 });
 let initialValues: FormikValues = {
   // basic profile

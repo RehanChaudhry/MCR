@@ -18,7 +18,6 @@ const ViewProfileDemoGraphics: FC<Props> = () => {
           text={""}
           headingStyle={{ color: theme.themedColors.label }}
         />
-        <View style={styles.spacer} />
         <HeadingWithText
           headingText={"Gender"}
           text={"Male"}

@@ -17,7 +17,7 @@ const ViewProfileController: FC<Props> = () => {
   navigation.setOptions({
     headerLeft: () => <Hamburger />,
     headerTitleAlign: "center",
-    headerTitle: () => <HeaderTitle text="View Profile" />
+    headerTitle: () => <HeaderTitle text="My Profile" />
   });
   return <ViewProfileView />;
 };
