@@ -100,10 +100,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
             />
           )}
         />
-      ),
-      headerLeftContainerStyle: {
-        padding: SPACE.md
-      }
+      )
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

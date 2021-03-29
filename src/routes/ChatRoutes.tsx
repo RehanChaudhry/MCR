@@ -9,7 +9,6 @@ import { ChatListController } from "ui/screens/chat/list/ChatListController";
 import { ChatThreadController } from "ui/screens/chat/thread/ChatThreadController";
 import { NewConversationController } from "ui/screens/chat/new/NewConversationController";
 import CircularPLus from "assets/images/circular_plus.svg";
-import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { useNavigation } from "@react-navigation/native";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
@@ -50,9 +49,6 @@ export const ChatRoutes: FC<Props> = () => {
             )}
           />
         ),
-        headerRightContainerStyle: {
-          padding: SPACE.md
-        },
         headerTitleAlign: "center"
       }}>
       <HomeDrawer.Screen name="ChatList" component={ChatListController} />

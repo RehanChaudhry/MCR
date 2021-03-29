@@ -7,7 +7,6 @@ import { ConversationItem } from "models/ConversationItem";
 import Strings from "config/Strings";
 import CircularTick from "assets/images/circular_tick.svg";
 import Close from "assets/images/close.svg";
-import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
@@ -85,9 +84,6 @@ export const NewConversationController: FC<Props> = () => {
           )}
         />
       ),
-      headerLeftContainerStyle: {
-        padding: SPACE.md
-      },
       headerStyle: {
         elevation: 0,
         shadowOpacity: 0,
