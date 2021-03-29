@@ -74,6 +74,13 @@ const QuestionsController: FC<Props> = () => {
   const profileNavigation = useNavigation<ProfileNavigationProp>();
   const matchesNavigation = useNavigation<MatchesNavigationProp>();
 
+  const moveToHomeScreen = () => {
+    homeNavigation.reset({
+      index: 0,
+      routes: [{ name: "Matches" }]
+    });
+  };
+
   if (route.params.isFrom === EScreen.WELCOME) {
     welcomeNavigation.setOptions({
       headerLeft: () => (
@@ -108,7 +115,7 @@ const QuestionsController: FC<Props> = () => {
             );
           }}
           onPress={() => {
-            homeNavigation.navigate("Matches");
+            moveToHomeScreen();
           }}
         />
       )
@@ -171,7 +178,7 @@ const QuestionsController: FC<Props> = () => {
     // For UI build
     if (true) {
       if (route.params.isFrom === EScreen.WELCOME) {
-        homeNavigation.navigate("Matches");
+        moveToHomeScreen();
       }
       return;
     }
