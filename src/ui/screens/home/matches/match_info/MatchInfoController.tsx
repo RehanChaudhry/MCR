@@ -12,6 +12,7 @@ import MatchInfo from "models/MatchInfo";
 import { SPACE, STRINGS } from "config";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import ProfileMatch from "models/ProfileMatch";
+import EScreen from "models/enums/EScreen";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -69,14 +70,14 @@ const MatchInfoController: FC<Props> = () => {
     // AppLog.log(
     //   "moveToUpdateProfileScreen(), profile: " + JSON.stringify(profileMatch)
     // );
-    navigation.navigate("UpdateProfile");
+    navigation.navigate("UpdateProfile", { isUpdating: true });
   };
 
   const moveToQuestionnaireScreen = () => {
     // AppLog.log(
     //   "moveToQuestionnaireScreen(), profile: " + JSON.stringify(profileMatch)
     // );
-    navigation.navigate("Questionnaire", { isUpdating: true });
+    navigation.navigate("Questionnaire", { isFrom: EScreen.MATCH_INFO });
   };
 
   return (

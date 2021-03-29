@@ -10,7 +10,6 @@ import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProf
 import RoommateAgreementController from "ui/screens/home/friends/RoommateAgreement/RoommateAgreementController";
 import QuestionsController from "ui/screens/questions/QuestionsController";
 import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
-import EScreen from "models/enums/EScreen";
 
 const MatchesRoutes = () => {
   return (
@@ -48,12 +47,10 @@ const MatchesRoutes = () => {
       <MatchesStack.Screen
         name="UpdateProfile"
         component={UpdateProfileController}
-        initialParams={{ isUpdating: true }}
       />
       <MatchesStack.Screen
         name="Questionnaire"
         component={QuestionsController}
-        initialParams={{ isFrom: EScreen.MATCH_INFO }}
         options={{
           headerTitle: () => (
             <HeaderTitle text={STRINGS.questionnaire.title_update} />
