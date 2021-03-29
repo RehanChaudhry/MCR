@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  BackHandler,
   Image,
   ScrollView,
   StyleSheet,
@@ -31,6 +32,7 @@ import { Divider } from "react-native-elements";
 import Colors from "config/Colors";
 import { SvgProps } from "react-native-svg";
 import { HomeDrawerParamList } from "routes";
+import { CommonActions } from "@react-navigation/native";
 
 export const CustomDrawer = React.memo<DrawerContentComponentProps>(
   (props) => {
@@ -78,6 +80,19 @@ export const CustomDrawer = React.memo<DrawerContentComponentProps>(
         />
       );
     }
+
+    const onBackPress = () => {
+      if (navigation.dangerouslyGetState().index !== 0) {
+        // resetPath(navigation, state.routes[0].name);
+        navigation.navigate(state.routes[0].name);
+        setCurrentItem(state.routes[0].name);
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
     return (
       <View style={styles.container}>
@@ -213,6 +228,14 @@ export const CustomDrawer = React.memo<DrawerContentComponentProps>(
   }
 );
 
+export const resetPath = (navigation: any, routeName: any) => {
+  let action = CommonActions.reset({
+    index: 0,
+    routes: [{ name: routeName }]
+  });
+
+  navigation.dispatch(action);
+};
 const styles = StyleSheet.create({
   header: {
     paddingVertical: SPACE.md,

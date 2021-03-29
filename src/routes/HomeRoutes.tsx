@@ -9,9 +9,12 @@ import { CustomDrawer } from "ui/components/templates/drawer/CustomDrawer";
 import FriendsController from "ui/screens/home/friends/FriendsController";
 import ProfileController from "../ui/screens/home/profile/ProfileController";
 import SettingsRoutes from "./SettingsRoutes";
+import { createStackNavigator } from "@react-navigation/stack";
 
 export const HomeRoutes = () => {
-  return (
+  const Stack = createStackNavigator();
+
+  const Drawer = () => (
     <HomeDrawer.Navigator
       initialRouteName="Matches"
       drawerContent={(props) => <CustomDrawer {...props} />}>
@@ -30,5 +33,18 @@ export const HomeRoutes = () => {
       />
       <HomeDrawer.Screen name="Settings" component={SettingsRoutes} />
     </HomeDrawer.Navigator>
+  );
+
+  return (
+    <Stack.Navigator
+      initialRouteName="ShowDrawer"
+      screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name="ShowDrawer"
+        component={({}) => {
+          return <Drawer />;
+        }}
+      />
+    </Stack.Navigator>
   );
 };
