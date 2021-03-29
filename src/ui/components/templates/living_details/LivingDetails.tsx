@@ -5,8 +5,9 @@ import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
-export const LivingDetails = React.memo(({}) => {
+export const LivingDetails = optimizedMemo(({}) => {
   const theme = usePreferredTheme();
   return (
     <CardView style={styles.cardStyles}>

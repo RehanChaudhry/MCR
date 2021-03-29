@@ -10,6 +10,7 @@ import {
   ViewStyle
 } from "react-native";
 import { SvgProp } from "utils/Util";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface AppImageBackgroundProps extends TouchableOpacityProps {
   containerStyle?: StyleProp<ViewStyle>;
@@ -23,7 +24,7 @@ export enum CONTAINER_TYPES {
   SQUARE = "square"
 }
 
-export const AppImageBackground = React.memo<AppImageBackgroundProps>(
+export const AppImageBackground = optimizedMemo<AppImageBackgroundProps>(
   ({ containerStyle, icon, containerShape, onPress }) => {
     const theme = usePreferredTheme();
     const imageWithBgJsx = (

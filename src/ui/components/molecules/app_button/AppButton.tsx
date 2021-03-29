@@ -15,6 +15,7 @@ import {
 import { AppLabel, Weight } from "ui/components/atoms/app_label/AppLabel";
 import { SvgProp } from "utils/Util";
 import { moderateScale } from "config/Dimens";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface AppButtonProps extends TouchableOpacityProps {
   onPress?: () => void;
@@ -40,7 +41,7 @@ export enum BUTTON_TYPES {
   DASH = "dashed"
 }
 
-export const AppButton = React.memo<AppButtonProps>(
+export const AppButton = optimizedMemo<AppButtonProps>(
   ({
     text,
     onPress,

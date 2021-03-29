@@ -14,6 +14,7 @@ import {
 } from "ui/components/atoms/image_background/AppImageBackground";
 import { moderateScale } from "config/Dimens";
 import { ConversationItem } from "models/ConversationItem";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface ItemConversationProps extends ViewStyle {
   onPress: (item: ConversationItem) => void;
@@ -21,7 +22,7 @@ export interface ItemConversationProps extends ViewStyle {
   style?: StyleProp<ViewStyle>;
 }
 
-export const ItemConversation = React.memo<ItemConversationProps>(
+export const ItemConversation = optimizedMemo<ItemConversationProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
 

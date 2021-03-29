@@ -3,13 +3,14 @@ import { AppCompactButton } from "ui/components/atoms/app_compact_button/AppComp
 import Like from "assets/images/like.svg";
 import { SvgProp } from "utils/Util";
 import { Color, NumberProp } from "react-native-svg";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 type Props = {
   onValueChanged?: (isSelected: boolean) => void;
   shouldSelected: boolean;
 };
 
-export const LikeButton = React.memo<Props>(
+export const LikeButton = optimizedMemo<Props>(
   ({ onValueChanged, shouldSelected = false }) => {
     const likeIcon: SvgProp = (
       color?: Color,

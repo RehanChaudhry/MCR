@@ -10,6 +10,7 @@ import * as Progress from "react-native-progress";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface AppProgressBarProps {
   style?: StyleProp<ViewStyle>;
@@ -22,7 +23,7 @@ export interface AppProgressBarProps {
   progressPercentage: number; //0 to 100
 }
 
-export const AppProgressBar = React.memo<AppProgressBarProps>(
+export const AppProgressBar = optimizedMemo<AppProgressBarProps>(
   ({
     style,
     borderWidth = 0,

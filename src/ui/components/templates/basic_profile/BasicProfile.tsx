@@ -13,8 +13,9 @@ import InstagramIcon from "assets/images/instagram_icon.svg";
 import SnapChatIcon from "assets/images/snapchat_icon.svg";
 import TikTokIcon from "assets/images/tiktok_icon.svg";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
-export const BasicProfile = React.memo(({}) => {
+export const BasicProfile = optimizedMemo(({}) => {
   const theme = usePreferredTheme();
   const facebookIcon = () => <FacebookIcon width={20} height={20} />;
   const twitterIcon = () => <TwitterIcon width={20} height={20} />;

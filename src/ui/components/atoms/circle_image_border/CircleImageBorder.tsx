@@ -3,10 +3,11 @@ import { StyleSheet, View } from "react-native";
 import Colors from "config/Colors";
 import UserPic from "assets/images/user_pic.svg";
 import UserGroup from "assets/images/user_group.svg";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 type Props = {};
 
-export const CircleImageBorder = React.memo<Props>(() => {
+export const CircleImageBorder = optimizedMemo<Props>(() => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.circle}>

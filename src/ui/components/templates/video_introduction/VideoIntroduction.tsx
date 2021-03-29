@@ -6,8 +6,9 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import YoutubeIcon from "assets/images/youtube_icon.svg";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
-export const VideoIntroduction = React.memo(() => {
+export const VideoIntroduction = optimizedMemo(() => {
   const theme = usePreferredTheme();
   const youtubeIcon = () => <YoutubeIcon width={20} height={20} />;
 

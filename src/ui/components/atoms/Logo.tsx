@@ -1,12 +1,13 @@
 import React from "react";
 import { StyleSheet, Image } from "react-native";
 import { moderateScale } from "config/Dimens";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 interface OwnProps {}
 
 type Props = OwnProps;
 
-export const Logo = React.memo<Props>(() => {
+export const Logo = optimizedMemo<Props>(() => {
   return (
     <Image
       style={styles.logoImage}

@@ -12,8 +12,9 @@ import {
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
-export const UploadProfilePhoto = React.memo(() => {
+export const UploadProfilePhoto = optimizedMemo(() => {
   const theme = usePreferredTheme();
   const profileIcon = () => {
     return (

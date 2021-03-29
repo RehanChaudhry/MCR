@@ -8,8 +8,9 @@ import { AppFormDropDown } from "ui/components/molecules/app_form/AppFormDropDow
 import { AppFormRadioButton } from "ui/components/molecules/app_form/AppFormRadioButton";
 import { DIRECTION_TYPE } from "ui/components/atoms/radio_group/RadioGroup";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
-export const DemoGraphics = React.memo(({}) => {
+export const DemoGraphics = optimizedMemo(({}) => {
   const theme = usePreferredTheme();
   //const [title, setTitle] = useState("Select your gender");
   return (

@@ -14,6 +14,7 @@ import { DropdownModal } from "ui/components/organisms/app_dropdown/DropdownModa
 import { usePreferredTheme } from "hooks";
 import { DropDownItem } from "models/DropDownItem";
 import ChevronDown from "assets/images/chevron-down.svg";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface AppDropdownProps {
   title: string;
@@ -28,7 +29,7 @@ export interface AppDropdownProps {
   shouldShowCustomIcon?: boolean;
 }
 
-export const AppDropdown = React.memo<AppDropdownProps>(
+export const AppDropdown = optimizedMemo<AppDropdownProps>(
   ({
     title,
     items,

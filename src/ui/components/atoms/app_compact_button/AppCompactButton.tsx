@@ -12,6 +12,8 @@ import { usePreferredTheme } from "hooks";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, FONTS } from "config";
 import { SvgProp } from "utils/Util";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+
 export interface AppCompactButtonProps extends TouchableOpacityProps {
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -25,7 +27,7 @@ export interface AppCompactButtonProps extends TouchableOpacityProps {
   shouldShowBgColorCahange: boolean;
   onPress: () => void;
 }
-export const AppCompactButton = React.memo<AppCompactButtonProps>(
+export const AppCompactButton = optimizedMemo<AppCompactButtonProps>(
   ({
     buttonStyle,
     textStyle,

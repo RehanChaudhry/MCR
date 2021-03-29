@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export type Choice = { id: number; label: string };
 type Props = {
@@ -23,7 +24,7 @@ export enum DIRECTION_TYPE {
   VERTICAL = "vertical"
 }
 
-export const RadioGroup = React.memo<Props>(
+export const RadioGroup = optimizedMemo<Props>(
   ({
     values,
     onChange,

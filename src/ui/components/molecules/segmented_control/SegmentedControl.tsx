@@ -13,6 +13,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { usePreferredTheme } from "hooks";
 import { FONT_SIZE } from "config";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export type Choice = { label: string; value: string };
 
@@ -25,7 +26,7 @@ interface Props {
   onChange?: (value: Choice, index: number) => void;
 }
 
-export const SegmentedControl = React.memo<Props>(
+export const SegmentedControl = optimizedMemo<Props>(
   ({
     onChange,
     selectedIndex = 0,
