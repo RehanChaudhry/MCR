@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import {
   MyFriend,
   MyFriendsResponseModel
@@ -6,14 +7,21 @@ import {
 import React, { FC, useState } from "react";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
+import { FriendsRootStackParamList } from "routes/FriendsRootStack";
 import DataGenerator from "utils/DataGenerator";
 import { AppLog } from "utils/Util";
+import { ConnectRequestType } from "../connect_requests/ConnectRequestsController";
 import MyFriendsView from "./MyFriendsView";
 
 type Props = {};
 
+type FriendsNavigationProp = StackNavigationProp<
+  FriendsRootStackParamList,
+  "ConnectRequests"
+>;
+
 const MyFriendsController: FC<Props> = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<FriendsNavigationProp>();
 
   const [myFriends, setMyFriends] = useState<Array<MyFriend>>(
     DataGenerator.getMyFriends().data
@@ -39,7 +47,10 @@ const MyFriendsController: FC<Props> = () => {
   AppLog.log("handlemyfriendresponse: ", handleMyFriendsResponse);
 
   const onPressReceivedFriendRequests = () => {
-    navigation.navigate("FriendRequests");
+    navigation.navigate("ConnectRequests", {
+      title: "Friend Requests",
+      type: ConnectRequestType.FRIEND_REQUESTS
+    });
   };
 
   return (

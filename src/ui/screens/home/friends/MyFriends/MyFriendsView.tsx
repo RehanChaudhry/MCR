@@ -1,16 +1,16 @@
-import React, { FC } from "react";
-import Screen from "ui/components/atoms/Screen";
-import ConnectionItem, {
-  CONNECTION_ACTION_STATE
-} from "ui/components/organisms/friends/connection/ConnectionItem";
 import UserGroupIcon from "assets/images/icon_user_group.svg";
 import { usePreferredTheme } from "hooks";
-import { StyleSheet } from "react-native";
-import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import {
   MyFriend,
   ROOMMATE_REQUEST_STATE
 } from "models/api_responses/MyFriendsResponseModel";
+import React, { FC } from "react";
+import { StyleSheet } from "react-native";
+import Screen from "ui/components/atoms/Screen";
+import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
+import ConnectionItem, {
+  CONNECTION_ACTION_STATE
+} from "ui/components/organisms/friends/connection/ConnectionItem";
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
 
 type Props = {
