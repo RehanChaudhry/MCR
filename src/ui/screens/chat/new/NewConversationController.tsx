@@ -7,11 +7,11 @@ import { ConversationItem } from "models/ConversationItem";
 import Strings from "config/Strings";
 import CircularTick from "assets/images/circular_tick.svg";
 import Close from "assets/images/close.svg";
-import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
+import { moderateScale } from "config/Dimens";
 
 type conversationNavigationProp = StackNavigationProp<
   ChatParamsList,
@@ -38,6 +38,16 @@ export const NewConversationController: FC<Props> = () => {
 
   const { themedColors } = usePreferredTheme();
 
+  const goBack = () => {
+    const users: string[] = dummyData.reduce(
+      (a: string[], o) => (a.push(o.name), a),
+      []
+    );
+
+    navigation.goBack();
+    navigation.navigate("ChatThread", { title: users });
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
@@ -49,11 +59,11 @@ export const NewConversationController: FC<Props> = () => {
           onPress={() => {
             navigation.goBack();
           }}
-          icon={(color, width, height) => (
+          icon={() => (
             <Close
               testID="icon"
-              width={width}
-              height={height}
+              width={moderateScale(15)}
+              height={moderateScale(15)}
               fill={themedColors.primary}
             />
           )}
@@ -63,20 +73,22 @@ export const NewConversationController: FC<Props> = () => {
         <HeaderRightTextWithIcon
           text={Strings.newConversation.titleRight}
           onPress={() => {
-            navigation.goBack();
+            goBack();
           }}
-          icon={(color, width, height) => (
+          icon={() => (
             <CircularTick
               testID="icon"
-              width={width}
-              height={height}
+              width={moderateScale(15)}
+              height={moderateScale(15)}
               fill={themedColors.primary}
             />
           )}
         />
       ),
-      headerLeftContainerStyle: {
-        padding: SPACE.md
+      headerStyle: {
+        elevation: 0,
+        shadowOpacity: 0,
+        shadowColor: "#00000000"
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

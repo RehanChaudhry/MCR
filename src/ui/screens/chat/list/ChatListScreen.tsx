@@ -20,6 +20,9 @@ type ConversationType = "Active" | "Archived";
 interface ChatListProps {
   onItemClick: (item: ChatItem) => void;
   data: ChatItem[];
+  pullToRefreshCallback: (onComplete: () => void) => void;
+  onEndReached: () => void;
+  isAllDataLoaded: boolean;
 }
 
 const showConversation = (conversationType: ConversationType) => {
@@ -43,7 +46,13 @@ const breadCrumbsItems: Item[] = [
 
 let lastHeaderTitle = "";
 export const ChatListScreen = React.memo<ChatListProps>(
-  ({ data, onItemClick }) => {
+  ({
+    data,
+    onItemClick,
+    pullToRefreshCallback,
+    onEndReached,
+    isAllDataLoaded
+  }) => {
     const { themedColors } = usePreferredTheme();
     AppLog.log("Rendering chat screen...");
     const renderItem = ({ item }: { item: ChatItem }) => {
@@ -92,6 +101,9 @@ export const ChatListScreen = React.memo<ChatListProps>(
           showsVerticalScrollIndicator={false}
           removeClippedSubviews={true}
           style={styles.list}
+          pullToRefreshCallback={pullToRefreshCallback}
+          onEndReached={onEndReached}
+          isAllDataLoaded={isAllDataLoaded}
         />
         <BottomBreadCrumbs data={breadCrumbsItems} />
       </Screen>
@@ -108,7 +120,7 @@ const styles = StyleSheet.create({
   searchContainer: (theme: ColorPalette) => {
     return {
       backgroundColor: theme.background,
-      paddingBottom: SPACE.md,
+      paddingBottom: SPACE.sm,
       paddingHorizontal: SPACE.md,
       ...shadowStyleProps
     };

@@ -1,6 +1,6 @@
 import React from "react";
 import { CommunityStack } from "routes/CommunityStack";
-import { CommentsController } from "ui/screens/home/comments/commentsController";
+import { CommentsController } from "ui/screens/home/comments/CommentsController";
 import CommunityController from "ui/screens/home/community/CommunityController";
 import CreatePostController from "ui/screens/home/community/create_post/CreatePostController";
 

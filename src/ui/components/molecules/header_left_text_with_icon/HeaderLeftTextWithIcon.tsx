@@ -27,8 +27,8 @@ const HeaderLeftTextWithIcon = React.memo<HeaderLeftTextWithIconProps>(
     const closeIcon: SvgProp = () => {
       return (
         <Close
-          width={20}
-          height={20}
+          width={15}
+          height={15}
           fill={theme.themedColors.interface["700"]}
         />
       );

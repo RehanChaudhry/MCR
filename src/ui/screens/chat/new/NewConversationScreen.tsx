@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import Screen from "ui/components/atoms/Screen";
-import { AppLog } from "utils/Util";
+import { AppLog, shadowStyleProps } from "utils/Util";
 import { Color, NumberProp } from "react-native-svg";
 import Plus from "assets/images/plus.svg";
 import { usePreferredTheme } from "hooks";
@@ -116,12 +116,13 @@ const styles = StyleSheet.create({
   },
   segmentControlWrapper: (theme: ColorPalette) => {
     return {
-      backgroundColor: theme.background
+      backgroundColor: theme.background,
+      ...shadowStyleProps
     };
   },
   segment: {
-    paddingVertical: SPACE.sm,
-    marginHorizontal: SPACE.md
+    marginHorizontal: SPACE.md,
+    marginBottom: SPACE.sm
   },
   contentWrapper: {
     flex: 1,
