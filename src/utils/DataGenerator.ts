@@ -339,7 +339,7 @@ const getCommunityAnnouncementList = (pageToLoad: number) => {
       time: "3 hours ago",
       text:
         "First day at college, Ohio university. Thank you so much for watching",
-      link: "https://www.youtube.com/watch?v=zWh3CShX_do",
+      link: "https://www.youtube.com/watch?v=cqyziA30whE",
       likeCount: 20,
       commentCount: 5
     },
@@ -393,7 +393,7 @@ const getCommunityAnnouncementList = (pageToLoad: number) => {
       text:
         "First day at college, Ohio university. Thank you so much for watching",
       embeddedUrl:
-        '<iframe width="100%" height="50%" src="https://www.youtube.com/embed/cqyziA30whE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
+        '<iframe width="100%" height="350" src="https://www.youtube.com/embed/cqyziA30whE?feature=oembed" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
       likeCount: 20,
       commentCount: 5
     }

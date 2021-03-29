@@ -3,6 +3,7 @@ import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import React from "react";
 import { StyleSheet, TouchableOpacityProps, View } from "react-native";
+import SimpleToast from "react-native-simple-toast";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
   URL_TYPES,
@@ -44,6 +45,7 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           leftImageUrl={communityItem.profileImageUrl}
           shouldShowRightImage={true}
           rightIcon={rightImage}
+          onPress={() => SimpleToast.show("Clicked on shield")}
         />
         {communityItem.text != null && true && (
           <AppLabel
