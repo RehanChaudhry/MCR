@@ -1,3 +1,4 @@
+import { useRoute } from "@react-navigation/native";
 import React from "react";
 import { MatchesStack } from "routes/MatchesStack";
 import MatchesController from "ui/screens/home/matches/MatchesController";
@@ -8,7 +9,17 @@ import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { ChatThreadController } from "ui/screens/chat/thread/ChatThreadController";
 import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
 
-const MatchesRoutes = () => {
+const MatchesRoutes = ({ navigation }: any) => {
+  const route: any = useRoute();
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      route.params.changeSelectedDrawerItem();
+    });
+
+    return unsubscribe;
+  }, [navigation, route]);
+
   return (
     <MatchesStack.Navigator
       initialRouteName={"Matches"}
