@@ -237,6 +237,10 @@ export default {
       photo: "Photos",
       link: "Link",
       embed: "Embed"
+    },
+    fieldValidationMessage: {
+      invalidUrl: "Please enter valid link url",
+      invalidEmbedLink: "Please enter valid embed link"
     }
   },
   matchInfo: {
