@@ -12,7 +12,7 @@ import SnapChatIcon from "assets/images/snapchat_dark_icon.svg";
 import UserImage from "assets/images/user_pic2.svg";
 import WatchVideo from "assets/images/watch_video_icon.svg";
 
-import { COLORS, FONT_SIZE, SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import {
@@ -89,7 +89,9 @@ const AboutMe: FC<Props> = () => {
           }
           numberOfLines={0}
         />
-        <View style={styles.horizontalLine} />
+      </View>
+      <View style={styles.horizontalLine} />
+      <View style={styles.innerCardView}>
         <SocialDetailForm
           icon={facebookIcon}
           heading={"Facebook Profile"}
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
     //marginBottom: -16
   },
   horizontalLine: {
-    backgroundColor: COLORS.grey,
+    backgroundColor: grayShades.warmGray["300"],
     height: 0.5,
     marginVertical: SPACE.md
   },
