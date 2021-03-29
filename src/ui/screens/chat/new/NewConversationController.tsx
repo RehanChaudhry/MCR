@@ -38,6 +38,16 @@ export const NewConversationController: FC<Props> = () => {
 
   const { themedColors } = usePreferredTheme();
 
+  const goBack = () => {
+    const users: string[] = dummyData.reduce(
+      (a: string[], o) => (a.push(o.name), a),
+      []
+    );
+
+    navigation.goBack();
+    navigation.navigate("ChatThread", { title: users });
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
@@ -63,7 +73,7 @@ export const NewConversationController: FC<Props> = () => {
         <HeaderRightTextWithIcon
           text={Strings.newConversation.titleRight}
           onPress={() => {
-            navigation.goBack();
+            goBack();
           }}
           icon={(color, width, height) => (
             <CircularTick
