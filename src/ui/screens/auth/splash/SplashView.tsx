@@ -121,7 +121,7 @@ export const SplashView = React.memo<Props>(() => {
         {/*{user !== undefined ? (*/}
         {/*  <HomeRoutes />*/}
         {/*) : (*/}
-        {/*  <AuthRoutes initialRouteName={initialRouteNameRef.current} />*/}
+        {/*  <AuthRoutes initialRouteName={"UniSelection"} />*/}
         {/*)}*/}
       </NavigationContainer>
     </AuthContext.Provider>

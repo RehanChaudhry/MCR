@@ -118,7 +118,7 @@ export const NotificationView = React.memo<Props>(({ notifications }) => {
 
 const styles = StyleSheet.create({
   header: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZE._2xsm,
     marginBottom: SPACE.lg,
     marginLeft: SPACE.lg
   },

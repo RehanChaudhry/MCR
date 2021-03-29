@@ -92,20 +92,20 @@ const styles = StyleSheet.create({
   },
   nameText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE.md,
+      fontSize: FONT_SIZE.xsm,
       color: theme.interface["800"]
     };
   },
   messageText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE.sm,
+      fontSize: FONT_SIZE._2xsm,
       color: theme.label,
       lineHeight: 16
     };
   },
   timeText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE.sm,
+      fontSize: FONT_SIZE._2xsm,
       color: theme.interface["700"],
       lineHeight: 20
     };

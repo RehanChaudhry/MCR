@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
     // shadow
     // ...shadowStyleProps
   },
-  title: { fontSize: FONT_SIZE.md, padding: SPACE.xsm },
-  description: { fontSize: FONT_SIZE.sm, padding: SPACE.xsm },
+  title: { fontSize: FONT_SIZE.xsm, padding: SPACE.xsm },
+  description: { fontSize: FONT_SIZE._2xsm, padding: SPACE.xsm },
   arrowContainer: {
     width: moderateScale(30),
     height: moderateScale(30),

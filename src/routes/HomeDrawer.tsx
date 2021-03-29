@@ -8,6 +8,7 @@ export type HomeDrawerParamList = {
   Friends: undefined;
   ChatList: undefined;
   Notification: undefined;
+  Settings: undefined;
 };
 
 export const HomeDrawer = createDrawerNavigator<HomeDrawerParamList>();

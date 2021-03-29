@@ -20,6 +20,8 @@ type Props = {
   postFriendRequest: (userId: number) => void;
   postMatchDismiss: (userId: number) => void;
   filterCounts: FilterCount[];
+  moveToChatScreen: (profileMatch: ProfileMatch) => void;
+  moveToProfileScreen: (profileMatch: ProfileMatch) => void;
 };
 
 export const MatchesView: React.FC<Props> = ({
@@ -29,13 +31,17 @@ export const MatchesView: React.FC<Props> = ({
   isAllDataLoaded,
   postFriendRequest,
   postMatchDismiss,
-  filterCounts
+  filterCounts,
+  moveToChatScreen,
+  moveToProfileScreen
 }: Props) => {
   const renderItem = ({ item }: { item: ProfileMatch }) => (
     <ProfileMatchItem
       profileMatch={item}
-      postFriendRequest={postFriendRequest}
-      postMatchDismiss={postMatchDismiss}
+      onFriendRequestClicked={postFriendRequest}
+      onCrossClicked={postMatchDismiss}
+      onChatButtonClicked={moveToChatScreen}
+      onImageClicked={moveToProfileScreen}
     />
   );
 

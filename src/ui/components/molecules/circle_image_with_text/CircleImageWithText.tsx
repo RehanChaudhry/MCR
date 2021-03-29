@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
     marginTop: SPACE.lg,
     marginBottom: SPACE.xl
   },
-  name: { fontWeight: "bold", fontSize: FONT_SIZE.md },
-  message: { fontWeight: "normal", fontSize: FONT_SIZE.md },
+  name: { fontWeight: "bold", fontSize: FONT_SIZE.xsm },
+  message: { fontWeight: "normal", fontSize: FONT_SIZE.xsm },
   time: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE._2xsm
   },
   buttonText: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE._2xsm
   },
   viewRequest: {
     flex: 1

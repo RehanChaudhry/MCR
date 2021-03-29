@@ -1,9 +1,5 @@
-import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import Menu from "assets/images/menu.svg";
-import { SPACE } from "config";
-import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import React, {
   FC,
@@ -12,19 +8,14 @@ import React, {
   useRef,
   useState
 } from "react";
-import { Pressable } from "react-native";
-import { HomeDrawerParamList } from "routes";
 import { AnnouncementStackParamList } from "routes/AnnouncementStack";
+import Hamburger from "ui/components/molecules/hamburger/Hamburger";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { AnnouncementView } from "ui/screens/home/announcement/AnnouncementView";
 import DataGenerator from "utils/DataGenerator";
 
 type AnnouncementNavigationProp = StackNavigationProp<
   AnnouncementStackParamList,
-  "Announcement"
->;
-
-type AnnouncementNavigationDrawerProp = DrawerNavigationProp<
-  HomeDrawerParamList,
   "Announcement"
 >;
 
@@ -41,22 +32,11 @@ const AnnouncementController: FC<Props> = () => {
     CommunityAnnouncement[] | undefined
   >(DataGenerator.getCommunityAnnouncementList(pageToReload.current));
   const navigation = useNavigation<AnnouncementNavigationProp>();
-  const navigationDrawer = useNavigation<AnnouncementNavigationDrawerProp>();
-  const theme = usePreferredTheme();
 
   navigation.setOptions({
-    headerLeft: () => (
-      <Pressable
-        onPress={() => {
-          navigationDrawer.openDrawer();
-        }}>
-        <Menu width={23} height={23} fill={theme.themedColors.primary} />
-      </Pressable>
-    ),
-    headerLeftContainerStyle: {
-      padding: SPACE.md
-    },
-    headerTitleAlign: "center"
+    headerLeft: () => <Hamburger />,
+    headerTitleAlign: "center",
+    headerTitle: () => <HeaderTitle text="Announcement" />
   });
 
   const fetchAnnouncements = useCallback(async () => {

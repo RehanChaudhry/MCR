@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     marginBottom: SPACE.sm
   },
   infoText: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZE._2xsm,
     marginBottom: SPACE.md,
     textAlign: "center"
   },
@@ -183,26 +183,26 @@ const styles = StyleSheet.create({
   },
   headerCard: {
     overflow: "hidden",
-    borderRadius: 5,
-    //marginVertical: SPACE.sm,
+    borderRadius: 10,
+    marginBottom: SPACE.sm,
     padding: SPACE.md,
 
     // shadow
     ...shadowStyleProps
   },
   infoCardHeading: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm
   },
   infoCardText: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZE._2xsm,
     marginTop: SPACE.sm
   },
   learnMore: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZE._2xsm,
     fontWeight: "bold",
     textAlign: "left"
   },
-  saveButton: { fontWeight: "bold", fontSize: FONT_SIZE.md },
+  saveButton: { fontWeight: "bold", fontSize: FONT_SIZE.xsm },
   saveButtonContainer: {},
   buttonView: {
     marginTop: SPACE.md

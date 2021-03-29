@@ -1,4 +1,3 @@
-import Shield from "assets/images/shield.svg";
 import { FONT_SIZE, SPACE } from "config";
 import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
@@ -30,6 +29,8 @@ export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   shouldHideSubTitle?: boolean;
   shouldHideBottomSeparator?: boolean;
   titleFontWeight?: Weight;
+  rightIcon?: SvgProp;
+  onPress?: () => void;
 }
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
@@ -43,19 +44,11 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
     shouldShowRightImage = false,
     shouldHideSubTitle = false,
     shouldHideBottomSeparator = false,
-    titleFontWeight = "normal"
+    titleFontWeight = "normal",
+    onPress,
+    rightIcon
   }) => {
     const theme = usePreferredTheme();
-    const rightImage: SvgProp = () => {
-      return (
-        <Shield
-          testID="right-icon"
-          width={23}
-          height={23}
-          fill={theme.themedColors.interface["700"]}
-        />
-      );
-    };
 
     return (
       <View style={style.mainContainer}>
@@ -89,7 +82,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
           </View>
           {shouldShowRightImage && (
             <AppImageBackground
-              icon={rightImage}
+              icon={rightIcon}
               containerShape={CONTAINER_TYPES.SQUARE}
               containerStyle={[
                 {
@@ -97,6 +90,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
                 },
                 style.rightImage
               ]}
+              onPress={onPress}
             />
           )}
         </View>
@@ -116,20 +110,21 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
 
 const style = StyleSheet.create({
   mainContainer: {
-    marginBottom: SPACE.md
+    marginTop: SPACE.md
   },
   container: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   leftContainer: {
     flexDirection: "row"
   },
   title: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm
   },
   subTitle: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE._3xm
   },
   titleSubtitle: {
     marginLeft: SPACE.md,

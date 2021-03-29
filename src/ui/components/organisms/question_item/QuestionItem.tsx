@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth
   },
   label: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE._2xsm
   },
   questionLabel: {
     fontWeight: "700",
@@ -179,6 +179,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   labelXsm: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE._3xm
   }
 });

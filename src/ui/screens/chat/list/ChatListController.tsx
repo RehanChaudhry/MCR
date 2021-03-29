@@ -18,6 +18,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
 import Menu from "assets/images/menu.svg";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatParamsList,
@@ -42,7 +43,14 @@ export const ChatListController: FC<Props> = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitleAlign: "center",
-      title: Strings.chatListScreen.title,
+      headerTitle: () => (
+        <HeaderTitle text={Strings.chatListScreen.title} />
+      ),
+      headerStyle: {
+        elevation: 0,
+        shadowOpacity: 0,
+        shadowColor: "#00000000"
+      },
       headerLeft: () => (
         <Pressable
           onPress={() => {

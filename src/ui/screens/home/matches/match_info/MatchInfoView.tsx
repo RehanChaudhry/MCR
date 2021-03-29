@@ -96,6 +96,7 @@ export const MatchInfoView: React.FC<Props> = ({ matchInfo }: Props) => {
             { backgroundColor: themedColors.background }
           ]}>
           <AppLabel
+            style={styles.heading}
             text={STRINGS.matchInfo.matching_information}
             weight={"semi-bold"}
           />
@@ -230,10 +231,10 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     paddingTop: SPACE.xsm,
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm
   },
   description: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZE._2xsm,
     marginTop: SPACE.md,
     marginHorizontal: SPACE.md
   },
@@ -248,18 +249,19 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   updateText: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE._2xsm
   },
   updateButton: { padding: SPACE.md },
   cardPadding: { padding: SPACE.md },
   matchingInfoLabel: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZE._2xsm,
     paddingHorizontal: SPACE.xsm
   },
-  matchingInfoData: { fontSize: FONT_SIZE.sm, marginTop: SPACE.xsm },
+  matchingInfoData: { fontSize: FONT_SIZE._2xsm, marginTop: SPACE.xsm },
   userHeader: {
     marginTop: SPACE.md,
     marginHorizontal: SPACE.md
   },
-  lastCard: { marginBottom: SPACE.md }
+  lastCard: { marginBottom: SPACE.md },
+  heading: { includeFontPadding: false, fontSize: FONT_SIZE.md }
 });

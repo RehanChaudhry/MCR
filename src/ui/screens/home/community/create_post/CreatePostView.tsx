@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  TouchableOpacity,
   View
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -31,31 +32,32 @@ import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { ImageWithCross } from "ui/components/molecules/image_with_cross/ImageWithCross";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import { AppLog, SvgProp } from "utils/Util";
+import { AppLog, iframePattern, pattern, SvgProp } from "utils/Util";
 import * as Yup from "yup";
 
 type Props = {
   shouldShowProgressBar?: boolean;
-  createPost?: (values: CreatePostFormValues) => void;
+  createPost: (values: FormikValues) => void;
 };
 
 const validationSchema = Yup.object().shape({
-  message: Yup.string().required(Strings.createPost.requiredField.message)
+  message: Yup.string().required(Strings.createPost.requiredField.message),
+  link: Yup.string().matches(
+    pattern,
+    Strings.createPost.fieldValidationMessage.invalidUrl
+  ),
+  embed: Yup.string().matches(
+    iframePattern,
+    Strings.createPost.fieldValidationMessage.invalidEmbedLink
+  )
 });
 
-type CreatePostFormValues = {
-  message: string;
-  link?: string;
-  embed?: string;
-  images?: string[];
-};
-
-let initialValues: FormikValues = {
-  message: "",
-  link: "",
-  embed: "",
-  images: []
-};
+// type CreatePostFormValues = {
+//   message: string;
+//   link?: string;
+//   embed?: string;
+//   images?: string[];
+// };
 
 export enum POST_TYPES {
   PHOTOS = "photos",
@@ -64,22 +66,33 @@ export enum POST_TYPES {
   NONE = "none"
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const CreatePostView = React.memo<Props>((props) => {
   const theme = usePreferredTheme();
   const [images, setImages] = useState<ImagePickerResponse[]>([]);
   const [postType, setPostType] = useState<POST_TYPES>(POST_TYPES.NONE);
 
+  let initialValues: FormikValues = {
+    message: "",
+    link: "",
+    embed: "",
+    images: []
+  };
+
+  AppLog.logForcefully(
+    "create post view message: " + JSON.stringify(initialValues)
+  );
+
   const onSubmit = (_value: FormikValues) => {
     initialValues = _value;
-    AppLog.log("form values" + initialValues);
+    AppLog.log("form values" + JSON.stringify(initialValues));
+    props.createPost(_value);
   };
 
   const linkIcon = () => {
     return (
       <Link
-        width={15}
-        height={15}
+        width={18}
+        height={18}
         fill={theme.themedColors.interface["500"]}
       />
     );
@@ -87,8 +100,8 @@ export const CreatePostView = React.memo<Props>((props) => {
   const embedIcon = () => {
     return (
       <Code
-        width={15}
-        height={15}
+        width={18}
+        height={18}
         fill={theme.themedColors.interface["500"]}
       />
     );
@@ -231,6 +244,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                     openImageGallery();
                   }}
                 />
+                <View style={{ marginRight: SPACE.md }} />
                 <LinkButton
                   isSelected={postType === POST_TYPES.LINK}
                   onPress={() => {
@@ -239,6 +253,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                     AppLog.logForcefully("postType: " + postType);
                   }}
                 />
+                <View style={{ marginRight: SPACE.md }} />
                 <EmbedButton
                   isSelected={postType === POST_TYPES.EMBED}
                   onPress={() => {
@@ -247,25 +262,35 @@ export const CreatePostView = React.memo<Props>((props) => {
                     AppLog.logForcefully("postType: " + postType);
                   }}
                 />
-                <InfoCircle
-                  width={23}
-                  height={23}
-                  fill={theme.themedColors.interface["500"]}
-                />
+                <View style={{ marginRight: SPACE.md }} />
+                <TouchableOpacity
+                  onPress={() =>
+                    SimpleToast.show("clicked on info icon ")
+                  }>
+                  <InfoCircle
+                    width={23}
+                    height={23}
+                    fill={theme.themedColors.interface["500"]}
+                  />
+                </TouchableOpacity>
               </View>
 
               {postType !== POST_TYPES.NONE && (
                 <>
                   {postType === POST_TYPES.PHOTOS && images.length > 0 && (
-                    <View style={styles.imagesListContainer}>
-                      <FlatListWithPb
-                        shouldShowProgressBar={false}
-                        data={images}
-                        style={styles.list}
-                        renderItem={listItem}
+                    <View>
+                      <ScrollView
                         horizontal={true}
-                      />
-                      {plusCircleImage()}
+                        contentContainerStyle={styles.imagesListContainer}>
+                        <FlatListWithPb
+                          shouldShowProgressBar={false}
+                          data={images}
+                          style={styles.list}
+                          renderItem={listItem}
+                          horizontal={true}
+                        />
+                        {plusCircleImage()}
+                      </ScrollView>
                     </View>
                   )}
 
@@ -354,12 +379,14 @@ const styles = StyleSheet.create({
     flex: 1
   },
   cardView: {
-    padding: SPACE.lg,
+    paddingRight: SPACE.lg,
+    paddingLeft: SPACE.lg,
+    paddingBottom: SPACE.lg,
     flex: 1,
     margin: SPACE.lg,
     backgroundColor: COLORS.white,
     overflow: "hidden",
-    paddingVertical: SPACE.lg,
+    // paddingVertical: SPACE.lg,
 
     // border
     borderStyle: "solid",
@@ -382,16 +409,17 @@ const styles = StyleSheet.create({
   },
   inputFieldRow: {
     flex: 1,
-    marginTop: SPACE.lg
+    marginTop: SPACE.md
   },
   descriptionView: {
-    height: 100
+    height: 100,
+    marginTop: SPACE.lg
   },
   buttonsContainer: {
     flexDirection: "row",
     marginTop: SPACE.lg,
-    alignItems: "center",
-    justifyContent: "space-between"
+    alignItems: "center"
+    // justifyContent: "space-between"
   },
   bottomLine: {
     width: "100%",

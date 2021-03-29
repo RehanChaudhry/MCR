@@ -1,18 +1,18 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Check from "assets/images/check_circle.svg";
-import Close from "assets/images/ic_cross.svg";
-import { SPACE } from "config";
-import { moderateScale } from "config/Dimens";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { CreatePostApiRequestModel } from "models/api_requests/CreatePostApiRequestModel";
 import { CreatePostApiResponseModel } from "models/api_responses/CreatePostApiResponseModel";
 import React, { FC, useRef } from "react";
-import { Alert, Pressable, StyleSheet, View } from "react-native";
+import { Alert } from "react-native";
+import SimpleToast from "react-native-simple-toast";
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { CommunityStackParamList } from "routes/CommunityStack";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
+import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { CreatePostView } from "ui/screens/home/community/create_post/CreatePostView";
 import { AppLog } from "utils/Util";
 
@@ -34,60 +34,31 @@ const CreatePostController: FC<Props> = () => {
 
   navigation.setOptions({
     headerRight: () => (
-      <Pressable
+      <HeaderRightTextWithIcon
+        text="Post"
+        icon={() => {
+          return (
+            <Check
+              width={20}
+              height={20}
+              fill={theme.themedColors.primary}
+            />
+          );
+        }}
         onPress={() => {
-          navigation.navigate("CreatePost");
-        }}>
-        <View style={style.headerView}>
-          <AppLabel
-            text="Post"
-            style={[
-              {
-                color: theme.themedColors.primary
-              },
-              style.headerLeftRightText
-            ]}
-            weight="semi-bold"
-          />
-          <Check
-            width={20}
-            height={20}
-            fill={theme.themedColors.primary}
-          />
-        </View>
-      </Pressable>
+          SimpleToast.show("Clicked on Post");
+        }}
+      />
     ),
-    headerRightContainerStyle: {
-      padding: SPACE.md
-    },
     headerLeft: () => (
-      <Pressable
+      <HeaderLeftTextWithIcon
         onPress={() => {
           navigation.pop();
-        }}>
-        <View style={style.headerView}>
-          <Close
-            width={20}
-            height={20}
-            fill={theme.themedColors.interface["700"]}
-          />
-          <AppLabel
-            text="Close"
-            style={[
-              {
-                color: theme.themedColors.interface["700"]
-              },
-              style.headerLeftRightText
-            ]}
-          />
-        </View>
-      </Pressable>
+        }}
+      />
     ),
-    headerLeftContainerStyle: {
-      padding: SPACE.md
-    },
     headerTitleAlign: "center",
-    headerTitle: "Create Post"
+    headerTitle: () => <HeaderTitle text="Create Post" />
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -108,21 +79,10 @@ const CreatePostController: FC<Props> = () => {
   return (
     <CreatePostView
       createPost={() => {
-        navigation.goBack();
+        navigation.pop();
       }}
     />
   );
 };
-
-const style = StyleSheet.create({
-  headerView: {
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  headerLeftRightText: {
-    fontSize: SPACE.md,
-    padding: moderateScale(2.0)
-  }
-});
 
 export default CreatePostController;

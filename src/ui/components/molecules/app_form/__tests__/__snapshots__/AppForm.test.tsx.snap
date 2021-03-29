@@ -60,14 +60,14 @@ exports[`rendering... renders correctly 1`] = `
           "borderStyle": "solid",
           "borderWidth": 0.5,
           "color": "#666666",
+          "flex": 1,
           "flexDirection": "row",
           "fontFamily": "Inter-Regular",
-          "fontSize": 21.163106796116505,
+          "fontSize": 19.651456310679613,
           "height": 42,
           "justifyContent": "center",
           "paddingLeft": 18.139805825242718,
           "paddingRight": 18.139805825242718,
-          "width": "100%",
         },
         undefined,
       ]
@@ -84,6 +84,7 @@ exports[`rendering... renders correctly 1`] = `
       placeholder="Enter your email address"
       placeholderTextColor="#979797"
       rejectResponderTermination={true}
+      secureTextEntry={false}
       style={
         Array [
           Object {
@@ -161,14 +162,14 @@ exports[`rendering... renders correctly 1`] = `
           "borderStyle": "solid",
           "borderWidth": 0.5,
           "color": "#666666",
+          "flex": 1,
           "flexDirection": "row",
           "fontFamily": "Inter-Regular",
-          "fontSize": 21.163106796116505,
+          "fontSize": 19.651456310679613,
           "height": 42,
           "justifyContent": "center",
           "paddingLeft": 18.139805825242718,
           "paddingRight": 18.139805825242718,
-          "width": "100%",
         },
         undefined,
       ]
@@ -227,7 +228,7 @@ exports[`rendering... renders correctly 1`] = `
         "borderRadius": 6,
         "elevation": 1,
         "flexDirection": "row",
-        "height": 40,
+        "height": 60.466019417475735,
         "justifyContent": "space-between",
         "opacity": 1,
         "shadowColor": "#FFFFFF",
@@ -278,7 +279,7 @@ exports[`rendering... renders correctly 1`] = `
                 },
                 Array [
                   Object {
-                    "fontSize": 21.163106796116505,
+                    "fontSize": 19.651456310679613,
                     "overflow": "hidden",
                   },
                   Object {

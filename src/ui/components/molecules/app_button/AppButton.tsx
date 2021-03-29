@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { AppLabel, Weight } from "ui/components/atoms/app_label/AppLabel";
 import { SvgProp } from "utils/Util";
+import { moderateScale } from "config/Dimens";
 
 export interface AppButtonProps extends TouchableOpacityProps {
   onPress?: () => void;
@@ -155,7 +156,7 @@ const style = StyleSheet.create({
     shadowOpacity: 0.15
   },
   text: {
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.xsm,
     overflow: "hidden"
   },
   loader: {
@@ -204,7 +205,7 @@ const style = StyleSheet.create({
     alignSelf: "center",
     flexDirection: "row",
     width: "100%",
-    height: 40,
+    height: moderateScale(40),
     justifyContent: "space-between",
     alignItems: "center",
     borderRadius: 6

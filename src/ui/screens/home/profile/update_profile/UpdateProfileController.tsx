@@ -1,14 +1,15 @@
 import React, { FC } from "react";
 import { UpdateProfileView } from "ui/screens/home/profile/update_profile/UpdateProfileView";
-import { Pressable } from "react-native";
-import Menu from "assets/images/menu.svg";
-import { SPACE } from "../../../../../config";
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { HomeDrawerParamList } from "../../../../../routes";
-import usePreferredTheme from "../../../../../hooks/theme/usePreferredTheme";
 import { ProfileStackParamList } from "../../../../../routes/ProfileBottomBar";
+import Hamburger from "../../../../components/molecules/hamburger/Hamburger";
+import { HeaderTitle } from "../../../../components/molecules/header_title/HeaderTitle";
+import { UpdateProfileStackParamList } from "../../../../../routes/ProfileStack";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -16,30 +17,21 @@ type ProfileNavigationProp = StackNavigationProp<
   "UpdateProfile"
 >;
 
-type ProfileNavigationDrawerProp = DrawerNavigationProp<
-  HomeDrawerParamList,
-  "Profile"
+type UpdateProfileRouteProp = RouteProp<
+  UpdateProfileStackParamList,
+  "UpdateProfile"
 >;
 
 const UpdateProfileController: FC<Props> = () => {
-  const theme = usePreferredTheme();
   const navigation = useNavigation<ProfileNavigationProp>();
-  const navigationDrawer = useNavigation<ProfileNavigationDrawerProp>();
+  const route = useRoute<UpdateProfileRouteProp>();
+
   navigation.setOptions({
-    headerLeft: () => (
-      <Pressable
-        onPress={() => {
-          navigationDrawer.openDrawer();
-        }}>
-        <Menu width={23} height={23} fill={theme.themedColors.primary} />
-      </Pressable>
-    ),
-    headerLeftContainerStyle: {
-      padding: SPACE.md
-    },
-    headerTitleAlign: "center"
+    headerLeft: () => <Hamburger />,
+    headerTitleAlign: "center",
+    headerTitle: () => <HeaderTitle text="Update Profile" />
   });
-  return <UpdateProfileView />;
+  return <UpdateProfileView isUpdating={route.params.isUpdating} />;
 };
 
 export default UpdateProfileController;

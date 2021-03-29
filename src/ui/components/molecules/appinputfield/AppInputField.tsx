@@ -17,6 +17,7 @@ export interface AppInputFieldProps extends TextInputProps {
   valueToShowAtStart?: string;
   // default false
   shouldDisable?: boolean;
+  secureTextEntry?: boolean;
 
   rightIcon?: () => React.ReactElement | null;
   leftIcon?: () => React.ReactElement | null;
@@ -40,6 +41,7 @@ export const AppInputField = React.memo<Props>(
     //iconStyle,
     multiline = false,
     textAlignVertical,
+    secureTextEntry = false,
     //iconStyle,
     ...rest
   }) => {
@@ -62,6 +64,7 @@ export const AppInputField = React.memo<Props>(
           }
           testID="InputField"
           value={value}
+          secureTextEntry={secureTextEntry}
           editable={!shouldDisable}
           onChangeText={(text) => {
             onChangeText?.(text);
@@ -93,10 +96,10 @@ const styles = StyleSheet.create({
     borderColor: COLORS.grey3,
     paddingRight: SPACE.md,
     paddingLeft: SPACE.md,
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.xsm,
     fontFamily: FONTS.regular,
     borderWidth: StyleSheet.hairlineWidth,
-    width: "100%"
+    flex: 1
 
     // //Its for IOS
     // shadowColor: COLORS.black,

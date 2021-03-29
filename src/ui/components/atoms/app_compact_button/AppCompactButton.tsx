@@ -62,8 +62,8 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
             shouldIconColorChangeOnClick
               ? isSelected
                 ? theme.themedColors.primary
-                : theme.themedColors.label
-              : theme.themedColors.label,
+                : theme.themedColors.interface["700"]
+              : theme.themedColors.interface["700"],
             12,
             12
           )}
@@ -73,8 +73,8 @@ export const AppCompactButton = React.memo<AppCompactButtonProps>(
               shouldTextChangeOnClick
                 ? isSelected
                   ? { color: theme.themedColors.primary }
-                  : { color: theme.themedColors.label }
-                : { color: theme.themedColors.label },
+                  : { color: theme.themedColors.interface["700"] }
+                : { color: theme.themedColors.interface["700"] },
               textStyle
             ]}
             text={
@@ -105,7 +105,7 @@ const style = StyleSheet.create({
     alignItems: "center"
   },
   text: {
-    fontSize: FONT_SIZE.sm,
+    fontSize: FONT_SIZE._2xsm,
     marginStart: 5,
     fontFamily: FONTS.semiBold
   }

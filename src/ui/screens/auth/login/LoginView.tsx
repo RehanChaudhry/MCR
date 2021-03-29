@@ -20,6 +20,7 @@ import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 type Props = {
+  openUniSelectionScreen: () => void;
   openForgotPasswordScreen?: () => void;
   openWelcomeScreen: () => void;
   shouldShowProgressBar?: boolean;
@@ -36,7 +37,11 @@ let initialValues: FormikValues = {
 };
 
 export const LoginView = React.memo<Props>(
-  ({ openForgotPasswordScreen, openWelcomeScreen }) => {
+  ({
+    openForgotPasswordScreen,
+    openWelcomeScreen,
+    openUniSelectionScreen
+  }) => {
     const theme = usePreferredTheme();
     const onSubmit = (_value: FormikValues) => {
       initialValues = _value;
@@ -57,6 +62,7 @@ export const LoginView = React.memo<Props>(
                 />
               )}
               containerStyle={styles.leftArrow}
+              onPress={openUniSelectionScreen}
             />
 
             <Logo style={styles.logo} />
@@ -108,6 +114,7 @@ export const LoginView = React.memo<Props>(
                   text: STRINGS.login.password,
                   weight: "semi-bold"
                 }}
+                secureTextEntry={true}
                 linkLabelProps={{
                   text: STRINGS.login.forgot_password
                 }}
@@ -146,10 +153,7 @@ export const LoginView = React.memo<Props>(
 
             <View style={styles.spannableText}>
               <MultilineSpannableText
-                text={[
-                  { id: 1, text: STRINGS.login.cant_log },
-                  { id: 1, text: STRINGS.login.contact_us }
-                ]}
+                text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
                 textStyle={[
                   { fontSize: SPACE.md },
                   { fontSize: SPACE.md, color: theme.themedColors.primary }

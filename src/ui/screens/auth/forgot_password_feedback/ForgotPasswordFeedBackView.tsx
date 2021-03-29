@@ -60,23 +60,17 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
 
             <MultilineSpannableText
               textStyle={[
-                { fontSize: FONT_SIZE.md },
+                { fontSize: FONT_SIZE.xsm },
                 {
-                  fontSize: FONT_SIZE.md,
+                  fontSize: FONT_SIZE.xsm,
                   color: theme.themedColors.primary
                 },
-                { fontSize: FONT_SIZE.md }
+                { fontSize: FONT_SIZE.xsm }
               ]}
               text={[
-                {
-                  id: 1,
-                  text: STRINGS.forgotPasswordFeedBack.feedBack_one_text
-                },
-                { id: 2, text: STRINGS.forgotPasswordFeedBack.email },
-                {
-                  id: 3,
-                  text: STRINGS.forgotPasswordFeedBack.feedBack_third_text
-                }
+                STRINGS.forgotPasswordFeedBack.feedBack_one_text,
+                STRINGS.forgotPasswordFeedBack.email,
+                STRINGS.forgotPasswordFeedBack.feedBack_third_text
               ]}
             />
 
@@ -160,11 +154,11 @@ const styles = StyleSheet.create({
   },
   fourthText: {
     marginTop: SPACE.xl,
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm
   },
   ssoText: {
     marginTop: SPACE._2xl,
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm
   },
   loginImage: {
     marginTop: SPACE._2xl

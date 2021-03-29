@@ -45,10 +45,10 @@ export const LinkButton = React.memo<LinkButtonProps>(
             style={[
               style.text,
               { color: theme.themedColors.primary },
-              textStyle,
               leftIcon
                 ? { paddingLeft: SPACE.sm }
-                : { paddingRight: SPACE.sm }
+                : { paddingRight: SPACE.sm },
+              textStyle
             ]}
             text={text}
           />
@@ -63,7 +63,8 @@ export const LinkButton = React.memo<LinkButtonProps>(
 
 const style = StyleSheet.create({
   text: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm,
+    includeFontPadding: false
   },
   leftIcon: {
     marginLeft: 10,
@@ -76,6 +77,7 @@ const style = StyleSheet.create({
     height: 20
   },
   container: {
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems: "center"
   }
 });

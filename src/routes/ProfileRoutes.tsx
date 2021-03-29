@@ -8,6 +8,9 @@ import {
   ViewProfileStack
 } from "./ProfileStack";
 import QuestionsController from "../ui/screens/questions/QuestionsController";
+import Hamburger from "ui/components/molecules/hamburger/Hamburger";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
+import { STRINGS } from "config";
 
 export const ProfileRoutes = () => {
   return (
@@ -23,7 +26,6 @@ export const ProfileRoutes = () => {
       <ProfileBottomBar.Screen
         name="UpdateQuestionnaire"
         component={UpdateQuestionnaireRoutes}
-        initialParams={{ isUpdating: true }}
       />
     </ProfileBottomBar.Navigator>
   );
@@ -47,6 +49,7 @@ const UpdateProfileRoutes: FC<UpdateProfileRoutesProps> = () => {
   return (
     <UpdateProfileStack.Navigator>
       <UpdateProfileStack.Screen
+        initialParams={{ isUpdating: true }}
         name="UpdateProfile"
         component={UpdateProfileController}
         options={{ title: "Update Profile" }}
@@ -58,12 +61,18 @@ const UpdateProfileRoutes: FC<UpdateProfileRoutesProps> = () => {
 type UpdateQuestionnaireRoutesProps = {};
 const UpdateQuestionnaireRoutes: FC<UpdateQuestionnaireRoutesProps> = () => {
   return (
-    <UpdateQuestionnaireStack.Navigator>
+    <UpdateQuestionnaireStack.Navigator
+      screenOptions={{ headerTitleAlign: "center" }}>
       <UpdateQuestionnaireStack.Screen
         name="UpdateQuestionnaire"
         component={QuestionsController}
-        initialParams={{ isUpdating: false }}
-        options={{ title: "Update Questionnaire" }}
+        initialParams={{ isUpdating: true }}
+        options={{
+          headerLeft: () => <Hamburger />,
+          headerTitle: () => (
+            <HeaderTitle text={STRINGS.questionnaire.title_update} />
+          )
+        }}
       />
     </UpdateQuestionnaireStack.Navigator>
   );

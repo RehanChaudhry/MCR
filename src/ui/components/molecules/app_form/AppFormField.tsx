@@ -24,6 +24,7 @@ export interface AppFormFieldProps {
   fieldInputProps: AppInputFieldProps;
   linkLabelProps?: AppLabelProps;
   linkLabelOnPress?: () => void;
+  secureTextEntry?: boolean;
 }
 
 type Props = AppFormFieldProps;
@@ -37,7 +38,8 @@ const AppFormField = React.memo<Props>(
     fieldTestID,
     validationLabelTestID,
     linkLabelProps,
-    linkLabelOnPress
+    linkLabelOnPress,
+    secureTextEntry
   }) => {
     const {
       errors,
@@ -79,6 +81,7 @@ const AppFormField = React.memo<Props>(
           onBlur={() => {
             setFieldTouched(name);
           }}
+          secureTextEntry={secureTextEntry}
           {...fieldInputProps}
         />
         {errors[name] && touched[name] && (
@@ -104,7 +107,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   linkLabel: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.xsm
   }
 });
 
