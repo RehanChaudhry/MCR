@@ -2,7 +2,7 @@ import {
   Uni,
   UniSelectionResponseModel
 } from "models/api_responses/UniSelectionResponseModel";
-import React, { FC, useState } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import { useApi } from "repo/Client";
 import DataGenerator from "utils/DataGenerator";
 import UniSelectionView from "./UniSelectionView";
@@ -12,6 +12,7 @@ import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthStackParamList } from "routes";
+import NoHeader from "ui/components/headers/NoHeader";
 
 type Props = {};
 
@@ -52,6 +53,11 @@ const UniSelectionController: FC<Props> = () => {
     theme.saveCustomPalette(item.colorPalette);
     openLoginScreen();
   };
+
+  // Add no toolbar
+  useLayoutEffect(() => {
+    navigation.setOptions(NoHeader.create());
+  }, [navigation]);
 
   AppLog.log("handle getuni api: ", handleGetUnisApi);
 

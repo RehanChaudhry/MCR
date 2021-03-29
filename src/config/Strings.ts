@@ -88,7 +88,8 @@ export default {
       "Each Question has 2 sliders, one to identify approximately where you fall within the range and second to determine the comfort zone. It will help us to find the compatibility with your roommates.",
     learn_more: "Learn more about questionnaire",
     action_save: "Save & Continue",
-    title_update: "Update Questionnaire"
+    title_update: "Update Questionnaire",
+    title_create: "Questionnaire"
   },
 
   dummyText:
@@ -224,8 +225,13 @@ export default {
   },
 
   createPost: {
+    title: {
+      createPost: "Create Post",
+      post: "Post",
+      maxImageMessage: "You cannot select more than 5 images"
+    },
     requiredField: {
-      message: "Message is a required field"
+      message: "Post field is required"
     },
     placeholder: {
       startTypingYourMessage: "Start typing your message",
@@ -236,6 +242,10 @@ export default {
       photo: "Photos",
       link: "Link",
       embed: "Embed"
+    },
+    fieldValidationMessage: {
+      invalidUrl: "Please enter valid link",
+      invalidEmbedLink: "Please enter valid embed code"
     }
   },
   matchInfo: {
@@ -251,5 +261,13 @@ export default {
     title: "More Information",
     my_roommates: "My Roommates",
     roommate_agreement: "View Roommate Agreement"
+  },
+
+  comments: {
+    comments: "Comments"
+  },
+
+  announcement: {
+    announcementTitle: "Announcement"
   }
 };

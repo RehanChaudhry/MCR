@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import Strings from "config/Strings";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import React, {
   FC,
@@ -36,7 +37,9 @@ const AnnouncementController: FC<Props> = () => {
   navigation.setOptions({
     headerLeft: () => <Hamburger />,
     headerTitleAlign: "center",
-    headerTitle: () => <HeaderTitle text="Announcement" />
+    headerTitle: () => (
+      <HeaderTitle text={Strings.announcement.announcementTitle} />
+    )
   });
 
   const fetchAnnouncements = useCallback(async () => {
@@ -97,6 +100,10 @@ const AnnouncementController: FC<Props> = () => {
     }, 1000);
   }, [fetchAnnouncements]);
 
+  const openCommentsScreen = () => {
+    navigation.navigate("Comments");
+  };
+
   return (
     <AnnouncementView
       data={announcement}
@@ -104,6 +111,7 @@ const AnnouncementController: FC<Props> = () => {
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
       pullToRefreshCallback={refreshCallback}
+      openCommentsScreen={openCommentsScreen}
     />
   );
 };

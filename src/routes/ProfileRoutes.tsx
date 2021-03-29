@@ -11,6 +11,7 @@ import QuestionsController from "../ui/screens/questions/QuestionsController";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { STRINGS } from "config";
+import EScreen from "models/enums/EScreen";
 
 export const ProfileRoutes = () => {
   return (
@@ -66,7 +67,7 @@ const UpdateQuestionnaireRoutes: FC<UpdateQuestionnaireRoutesProps> = () => {
       <UpdateQuestionnaireStack.Screen
         name="UpdateQuestionnaire"
         component={QuestionsController}
-        initialParams={{ isUpdating: true }}
+        initialParams={{ isFrom: EScreen.MY_PROFILE }}
         options={{
           headerLeft: () => <Hamburger />,
           headerTitle: () => (

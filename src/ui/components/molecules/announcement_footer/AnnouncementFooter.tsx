@@ -15,7 +15,6 @@ import {
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { CommentButton } from "ui/components/atoms/compact_buttons/CommentButton";
 import { LikeButton } from "ui/components/atoms/compact_buttons/LikeButton";
-import { AppLog } from "utils/Util";
 
 export interface AnnouncementFooterProps extends TouchableOpacityProps {
   commentCount: number;
@@ -29,16 +28,22 @@ export interface AnnouncementFooterProps extends TouchableOpacityProps {
 
   leftContainerLeftButtonStyle?: StyleProp<ViewStyle>;
   leftContainerRightButtonStyle?: StyleProp<ViewStyle>;
+  openCommentsScreen?: () => void | undefined;
 }
 
 export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
-  ({ likeCount = 3, commentCount = 5, bottomLineStyle }) => {
+  ({
+    likeCount = 3,
+    commentCount = 5,
+    bottomLineStyle,
+    openCommentsScreen
+  }) => {
     const theme = usePreferredTheme();
     return (
       <View>
         <View
           style={[
-            style.bottomLine,
+            style.bottomBorder,
             { backgroundColor: theme.themedColors.interface["300"] },
             bottomLineStyle
           ]}
@@ -49,9 +54,7 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
               <LikeButton shouldSelected={false} />
             </View>
             <View style={style.leftContainerRightSide}>
-              <CommentButton
-                onPress={() => AppLog.logForcefully("clicked")}
-              />
+              <CommentButton onPress={openCommentsScreen} />
             </View>
           </View>
           <View style={style.leftRightContainer}>
@@ -106,7 +109,7 @@ const style = StyleSheet.create({
   rightContainerRightSide: {
     marginLeft: SPACE.sm
   },
-  bottomLine: {
+  bottomBorder: {
     width: "100%",
     height: 0.5,
     marginVertical: SPACE.md

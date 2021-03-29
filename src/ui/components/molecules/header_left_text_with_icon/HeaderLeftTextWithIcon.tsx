@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
 import { SvgProp } from "utils/Util";
+import { Weight } from "ui/components/atoms/app_label/AppLabel";
 
 export interface HeaderLeftTextWithIconProps
   extends TouchableOpacityProps {
@@ -17,16 +18,17 @@ export interface HeaderLeftTextWithIconProps
   icon?: SvgProp;
   onPress: () => void;
   textStyle?: StyleProp<TextStyle>;
+  fontWeight?: Weight;
 }
 
 const HeaderLeftTextWithIcon = React.memo<HeaderLeftTextWithIconProps>(
-  ({ text = "Close", icon, onPress, textStyle }) => {
+  ({ text = "Close", icon, onPress, textStyle, fontWeight }) => {
     const theme = usePreferredTheme();
     const closeIcon: SvgProp = () => {
       return (
         <Close
-          width={20}
-          height={20}
+          width={15}
+          height={15}
           fill={theme.themedColors.interface["700"]}
         />
       );
@@ -43,6 +45,7 @@ const HeaderLeftTextWithIcon = React.memo<HeaderLeftTextWithIconProps>(
           textStyle
         ]}
         viewStyle={style.container}
+        fontWeight={fontWeight}
       />
     );
   }

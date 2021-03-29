@@ -17,20 +17,21 @@ import {
 } from "ui/components/organisms/question_item/QuestionItem";
 import { shadowStyleProps } from "utils/Util";
 import Screen from "ui/components/atoms/Screen";
+import EScreen from "models/enums/EScreen";
 import SectionedList, {
   Section
 } from "ui/components/organisms/sectioned_list/SectionedList";
 import { moderateScale } from "config/Dimens";
 
 type Props = {
-  isUpdating: boolean;
+  isFrom: EScreen;
   submitAnswersLoading: boolean;
   submitAnswers: () => void;
   questions: Section<QuestionSection, Question>[];
 };
 
 export const QuestionsView = ({
-  isUpdating,
+  isFrom,
   questions,
   submitAnswersLoading,
   submitAnswers
@@ -39,7 +40,7 @@ export const QuestionsView = ({
 
   const listHeader = () => (
     <View style={styles.headerContainer}>
-      {!isUpdating && (
+      {isFrom === EScreen.WELCOME && (
         <AppLabel
           style={styles.infoText}
           text={STRINGS.questionnaire.info}

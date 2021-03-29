@@ -1,11 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Check from "assets/images/check_circle.svg";
+import Strings from "config/Strings";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { CreatePostApiRequestModel } from "models/api_requests/CreatePostApiRequestModel";
 import { CreatePostApiResponseModel } from "models/api_responses/CreatePostApiResponseModel";
 import React, { FC, useRef } from "react";
 import { Alert } from "react-native";
+import SimpleToast from "react-native-simple-toast";
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { CommunityStackParamList } from "routes/CommunityStack";
@@ -34,27 +36,32 @@ const CreatePostController: FC<Props> = () => {
   navigation.setOptions({
     headerRight: () => (
       <HeaderRightTextWithIcon
-        text="Post"
+        text={Strings.createPost.title.post}
         icon={() => {
           return (
             <Check
-              width={20}
-              height={20}
+              width={15}
+              height={15}
               fill={theme.themedColors.primary}
             />
           );
+        }}
+        onPress={() => {
+          SimpleToast.show("Clicked on Post");
         }}
       />
     ),
     headerLeft: () => (
       <HeaderLeftTextWithIcon
         onPress={() => {
-          navigation.goBack();
+          navigation.pop();
         }}
       />
     ),
     headerTitleAlign: "center",
-    headerTitle: () => <HeaderTitle text="Create Post" />
+    headerTitle: () => (
+      <HeaderTitle text={Strings.createPost.title.createPost} />
+    )
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -75,7 +82,7 @@ const CreatePostController: FC<Props> = () => {
   return (
     <CreatePostView
       createPost={() => {
-        navigation.goBack();
+        navigation.pop();
       }}
     />
   );

@@ -19,12 +19,24 @@ import SocialDetailForm from "ui/components/templates/about_me/SocialDetailForm"
 import moment from "moment";
 import UserHeader from "ui/components/organisms/user_header/UserHeader";
 import Roommates from "ui/components/organisms/roommates/Roommates";
+import ProfileMatch from "models/ProfileMatch";
 
 type Props = {
   matchInfo: MatchInfo;
+  moveToChatScreen: (profileMatch: ProfileMatch) => void;
+  moveToProfileScreen: (profileMatch: ProfileMatch) => void;
+  moveToRoommateAgreementScreen: () => void;
+  moveToUpdateProfileScreen: () => void;
+  moveToQuestionnaireScreen: () => void;
 };
 
-export const MatchInfoView: React.FC<Props> = ({ matchInfo }: Props) => {
+export const MatchInfoView: React.FC<Props> = ({
+  matchInfo,
+  moveToChatScreen,
+  moveToRoommateAgreementScreen,
+  moveToUpdateProfileScreen,
+  moveToQuestionnaireScreen
+}: Props) => {
   const { themedColors } = usePreferredTheme();
 
   return (
@@ -73,6 +85,7 @@ export const MatchInfoView: React.FC<Props> = ({ matchInfo }: Props) => {
               )}
               fontWeight={"semi-bold"}
               text={STRINGS.matchInfo.action_update_profile}
+              onPress={moveToUpdateProfileScreen}
             />
             <LinkButton
               viewStyle={styles.updateButton}
@@ -86,6 +99,7 @@ export const MatchInfoView: React.FC<Props> = ({ matchInfo }: Props) => {
               )}
               fontWeight={"semi-bold"}
               text={STRINGS.matchInfo.action_update_questionnaire}
+              onPress={moveToQuestionnaireScreen}
             />
           </View>
         </View>
@@ -96,6 +110,7 @@ export const MatchInfoView: React.FC<Props> = ({ matchInfo }: Props) => {
             { backgroundColor: themedColors.background }
           ]}>
           <AppLabel
+            style={styles.heading}
             text={STRINGS.matchInfo.matching_information}
             weight={"semi-bold"}
           />
@@ -212,6 +227,8 @@ export const MatchInfoView: React.FC<Props> = ({ matchInfo }: Props) => {
           <Roommates
             style={[styles.card, styles.lastCard]}
             roommates={matchInfo.roommates}
+            onChatClicked={moveToChatScreen}
+            onRoommateAgreementClicked={moveToRoommateAgreementScreen}
           />
         )}
       </ScrollView>
@@ -261,5 +278,6 @@ const styles = StyleSheet.create({
     marginTop: SPACE.md,
     marginHorizontal: SPACE.md
   },
-  lastCard: { marginBottom: SPACE.md }
+  lastCard: { marginBottom: SPACE.md },
+  heading: { includeFontPadding: false, fontSize: FONT_SIZE.sm }
 });

@@ -42,14 +42,17 @@ const LoginController: FC<Props> = () => {
   );
 
   const openUniSelectionScreen = usePreventDoubleTap(() => {
-    navigation.push("Welcome");
+    navigation.push("UniSelection");
   });
 
   const openForgotPasswordScreen = usePreventDoubleTap(() => {
     navigation.navigate("ForgotPassword");
   });
   const openWelcomeScreen = usePreventDoubleTap(() => {
-    navigationWelcome.navigate("Welcome");
+    navigationWelcome.reset({
+      index: 0,
+      routes: [{ name: "Welcome" }]
+    });
   });
 
   const handleSignIn = usePreventDoubleTap(async () => {

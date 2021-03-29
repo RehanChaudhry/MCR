@@ -9,12 +9,12 @@ import { ChatListController } from "ui/screens/chat/list/ChatListController";
 import { ChatThreadController } from "ui/screens/chat/thread/ChatThreadController";
 import { NewConversationController } from "ui/screens/chat/new/NewConversationController";
 import CircularPLus from "assets/images/circular_plus.svg";
-import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { useNavigation } from "@react-navigation/native";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import Strings from "config/Strings";
+import { moderateScale } from "config/Dimens";
 
 const Stack = createStackNavigator();
 
@@ -40,19 +40,16 @@ export const ChatRoutes: FC<Props> = () => {
             onPress={() => {
               navigation.navigate("NewConversation");
             }}
-            icon={(color, width, height) => (
+            icon={() => (
               <CircularPLus
                 testID="icon"
-                width={width}
-                height={height}
+                width={moderateScale(15)}
+                height={moderateScale(15)}
                 fill={themedColors.primary}
               />
             )}
           />
         ),
-        headerRightContainerStyle: {
-          padding: SPACE.md
-        },
         headerTitleAlign: "center"
       }}>
       <HomeDrawer.Screen name="ChatList" component={ChatListController} />

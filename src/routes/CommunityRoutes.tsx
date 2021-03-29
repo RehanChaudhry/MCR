@@ -1,5 +1,6 @@
 import React from "react";
 import { CommunityStack } from "routes/CommunityStack";
+import { CommentsController } from "ui/screens/home/comments/CommentsController";
 import CommunityController from "ui/screens/home/community/CommunityController";
 import CreatePostController from "ui/screens/home/community/create_post/CreatePostController";
 
@@ -13,6 +14,10 @@ const CommunityRoutes = () => {
       <CommunityStack.Screen
         name="CreatePost"
         component={CreatePostController}
+      />
+      <CommunityStack.Screen
+        name="Comments"
+        component={CommentsController}
       />
     </CommunityStack.Navigator>
   );

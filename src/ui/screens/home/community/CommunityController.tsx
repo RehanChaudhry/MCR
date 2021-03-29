@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import PencilAlt from "assets/images/pencil_alt.svg";
+import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import { getFeedsTypeFilterData } from "models/enums/FeedsTypeFilter";
@@ -44,12 +45,12 @@ const CommunityController: FC<Props> = () => {
         onPress={() => {
           navigation.navigate("CreatePost");
         }}
-        text="Create Post"
+        text={Strings.createPost.title.createPost}
         icon={() => {
           return (
             <PencilAlt
-              width={20}
-              height={20}
+              width={15}
+              height={15}
               fill={theme.themedColors.primary}
             />
           );
@@ -115,6 +116,10 @@ const CommunityController: FC<Props> = () => {
     return getFeedsTypeFilterData();
   };
 
+  const openCommentsScreen = () => {
+    navigation.navigate("Comments");
+  };
+
   useEffect(() => {
     fetchCommunities();
   }, [fetchCommunities]);
@@ -127,6 +132,7 @@ const CommunityController: FC<Props> = () => {
       isAllDataLoaded={isAllDataLoaded}
       pullToRefreshCallback={refreshCallback}
       feedsFilterData={getFeedsFilterList()}
+      openCommentsScreen={openCommentsScreen}
     />
   );
 };

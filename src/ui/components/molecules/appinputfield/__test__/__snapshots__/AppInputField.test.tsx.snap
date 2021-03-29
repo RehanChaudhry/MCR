@@ -30,6 +30,7 @@ exports[`snapshot testing 1`] = `
     onChangeText={[Function]}
     placeholderTextColor="#979797"
     rejectResponderTermination={true}
+    secureTextEntry={false}
     style={
       Array [
         Object {
