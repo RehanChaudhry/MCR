@@ -1,4 +1,10 @@
-import React, { FC, useLayoutEffect, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
 import { ChatListScreen } from "ui/screens/chat/list/ChatListScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
@@ -26,8 +32,14 @@ const dummyChats = DataGenerator.getChats();
 
 export const ChatListController: FC<Props> = () => {
   const navigation = useNavigation<ChatListNavigationProp>();
-
+  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+  const pageToReload = useRef<number>(1);
+  const isFetchingInProgress = useRef(false);
   const [chats, setChats] = useState<ChatItem[]>(dummyChats);
+
+  AppLog.log(
+    "ChatListController() => " + pageToReload + isFetchingInProgress
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -70,6 +82,34 @@ export const ChatListController: FC<Props> = () => {
     navigation.navigate("ChatThread", { title: item.name });
   };
 
+  const refreshCallback = useCallback(
+    async (onComplete: () => void) => {
+      /*pageToReload.current = 1;
+      fetchCommunities().then(() => {
+        onComplete();
+      });*/
+
+      setTimeout(() => {
+        setChats(dummyChats);
+        setIsAllDataLoaded(true);
+        onComplete();
+      }, 2000);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      /*pageToReload*/
+    ]
+  );
+
+  const onEndReached = useCallback(
+    () => {
+      /* fetchCommunities();*/
+    },
+    [
+      /*fetchCommunities*/
+    ]
+  );
+
   return (
     <ProgressErrorView
       data={chats}
@@ -82,7 +122,13 @@ export const ChatListController: FC<Props> = () => {
           </View>
         );
       }}>
-      <ChatListScreen data={chats} onItemClick={openChatThread} />
+      <ChatListScreen
+        data={chats}
+        onItemClick={openChatThread}
+        pullToRefreshCallback={refreshCallback}
+        onEndReached={onEndReached}
+        isAllDataLoaded={isAllDataLoaded}
+      />
     </ProgressErrorView>
   );
 };
