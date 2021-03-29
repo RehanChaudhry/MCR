@@ -30,7 +30,16 @@ export const NotificationView = React.memo<Props>(({ notifications }) => {
   };
 
   const getHeader = (label: string) => {
-    return <AppLabel text={label} style={styles.header} weight={"bold"} />;
+    return (
+      <AppLabel
+        text={label}
+        style={[
+          styles.header,
+          { color: theme.themedColors.interface["700"] }
+        ]}
+        weight={"semi-bold"}
+      />
+    );
   };
 
   const getSortedItems = (hours: number) => {
@@ -83,16 +92,21 @@ export const NotificationView = React.memo<Props>(({ notifications }) => {
       <View style={styles.dropDownBar}>
         <AppDropdown
           items={[
-            { id: "0", title: "View Request" },
-            { id: "1", title: "View Comment" },
-            { id: "2", title: "View Details" }
+            { id: "0", title: "View Friend Request" },
+            { id: "1", title: "View Profile" },
+            { id: "2", title: "View Roommate Request" },
+            { id: "3", title: "View Announcement" },
+            { id: "4", title: "View Message" },
+            { id: "5", title: "View Post" },
+            { id: "6", title: "View Roommate Request" }
           ]}
-          title={"Filter by Notification"}
+          title={"Filter by notification type"}
+          textStyle={{ color: theme.themedColors.black }}
           dropDownIcon={() => (
             <Selector
-              width={16}
-              height={16}
-              fill={theme.themedColors.label}
+              width={20}
+              height={20}
+              fill={theme.themedColors.interface["600"]}
             />
           )}
           style={[
@@ -134,6 +148,6 @@ const styles = StyleSheet.create({
   },
   dropDownBar: {
     backgroundColor: Colors.white,
-    height: 50
+    height: 46
   }
 });

@@ -27,13 +27,19 @@ export const CircleImageWithText = React.memo<Props>(
                 text={[username, message]}
                 textStyle={[
                   [styles.name, { color: theme.themedColors.primary }],
-                  styles.message
+                  [styles.message, { color: theme.themedColors.black }]
                 ]}
               />
             </View>
           </View>
           <View style={styles.requestButtonWithText}>
-            <AppLabel text={"1h ago"} style={styles.time} />
+            <AppLabel
+              text={"1h ago"}
+              style={[
+                styles.time,
+                { color: theme.themedColors.interface["700"] }
+              ]}
+            />
 
             <AppButton
               text="View Request"
