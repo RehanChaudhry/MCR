@@ -6,9 +6,9 @@ import { HomeDrawer } from "routes/HomeDrawer";
 import MatchesRoutes from "routes/MatchesRoutes";
 import { NotificationRoutes } from "routes/NotificationRoutes";
 import { CustomDrawer } from "ui/components/templates/drawer/CustomDrawer";
-import FriendsController from "ui/screens/home/friends/FriendsController";
-import ProfileController from "ui/screens/home/profile/ProfileController";
-import SettingsRoutes from "routes/SettingsRoutes";
+import ProfileController from "../ui/screens/home/profile/ProfileController";
+import FriendsRootRoutes from "./FriendsRootRoutes";
+import SettingsRoutes from "./SettingsRoutes";
 
 export const HomeRoutes = () => {
   let [currentItem, setCurrentItem] = useState<string>("Matches");
@@ -42,7 +42,7 @@ export const HomeRoutes = () => {
         component={AnnouncementRoutes}
       />
       <HomeDrawer.Screen name="Profile" component={ProfileController} />
-      <HomeDrawer.Screen name="Friends" component={FriendsController} />
+      <HomeDrawer.Screen name="Friends" component={FriendsRootRoutes} />
       <HomeDrawer.Screen name="ChatList" component={ChatRoutes} />
       <HomeDrawer.Screen
         name="Notification"
