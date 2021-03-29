@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
-import { Alert, Pressable, View } from "react-native";
+import { Alert, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
@@ -20,8 +20,10 @@ import MatchesFilterApiResponseModel, {
 } from "models/api_responses/MatchesFilterApiResponseModel";
 import { MatchesStackParamList } from "routes/MatchesStack";
 import InfoCircle from "assets/images/info_circle.svg";
+import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
+import ProfileMatch from "models/ProfileMatch";
+import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
-import { SPACE } from "config";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -38,17 +40,38 @@ const MatchesController: FC<Props> = () => {
 
   navigation.setOptions({
     headerRight: () => (
-      <Pressable
-        onPress={() => {
-          navigation.navigate("MatchInfo");
-        }}>
-        <InfoCircle width={23} height={23} fill={themedColors.primary} />
-      </Pressable>
-    ),
-    headerRightContainerStyle: {
-      padding: SPACE.md
-    }
+      <HeaderRightTextWithIcon
+        text={"More"}
+        onPress={() => navigation.navigate("MatchInfo")}
+        icon={(color, width, height) => {
+          AppLog.log(color);
+          return (
+            <InfoCircle
+              width={width}
+              height={height}
+              fill={themedColors.primary}
+            />
+          );
+        }}
+      />
+    )
   });
+
+  const moveToChatScreen = (profileMatch: ProfileMatch) => {
+    // AppLog.log(
+    //   "moveToChatScreen(), profile: " + JSON.stringify(profileMatch)
+    // );
+    navigation.navigate("Chat", {
+      title: [profileMatch.userName ?? STRINGS.common.not_found]
+    });
+  };
+
+  const moveToProfileScreen = (profileMatch: ProfileMatch) => {
+    AppLog.log(
+      "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
+    );
+    navigation.navigate("Profile");
+  };
 
   // Matches API
   const matchesApi = useApi<
@@ -136,6 +159,10 @@ const MatchesController: FC<Props> = () => {
   );
 
   const postFriendRequest = async (userId: number) => {
+    // For UI build
+    if (true) {
+      return;
+    }
     const {
       hasError,
       errorBody,
@@ -168,6 +195,10 @@ const MatchesController: FC<Props> = () => {
   );
 
   const postMatchDismiss = async (userId: number) => {
+    // For UI build
+    if (true) {
+      return;
+    }
     const {
       hasError,
       errorBody,
@@ -242,6 +273,8 @@ const MatchesController: FC<Props> = () => {
         isAllDataLoaded={isAllDataLoaded}
         postFriendRequest={postFriendRequest}
         postMatchDismiss={postMatchDismiss}
+        moveToChatScreen={moveToChatScreen}
+        moveToProfileScreen={moveToProfileScreen}
       />
     </ProgressErrorView>
   );

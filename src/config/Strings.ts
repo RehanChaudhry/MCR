@@ -87,7 +87,8 @@ export default {
     how_it_works_detail:
       "Each Question has 2 sliders, one to identify approximately where you fall within the range and second to determine the comfort zone. It will help us to find the compatibility with your roommates.",
     learn_more: "Learn more about questionnaire",
-    action_save: "Save & Continue"
+    action_save: "Save & Continue",
+    title_update: "Update Questionnaire"
   },
 
   dummyText:
@@ -99,7 +100,8 @@ export default {
     match_score: "Match Score: ",
     action_add_friend: "Add Friend",
     label_pending_request: "Pending Request",
-    placeholder_search_keyword: "Search by keyword"
+    placeholder_search_keyword: "Search by keyword",
+    title: "Matches"
   },
   profile: {
     title:
@@ -128,7 +130,7 @@ export default {
       homeTown: "Enter your hometown",
       intendedMajor: "Enter your intended major",
       programs: "Enter your educational program",
-      community: "Start typing seprated by comma",
+      community: "Start typing separated by comma",
       building: "Enter your building information",
       room: "Enter your room number",
       youTubeVideoUrl: "youtube.com/"

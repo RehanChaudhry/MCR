@@ -11,8 +11,6 @@ import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import { Color, NumberProp, SvgProps } from "react-native-svg";
-import { AppLog } from "utils/Util";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 
 type conversationNavigationProp = StackNavigationProp<
@@ -40,38 +38,6 @@ export const NewConversationController: FC<Props> = () => {
 
   const { themedColors } = usePreferredTheme();
 
-  const iconLeft: SvgProps = (
-    color?: Color,
-    width?: NumberProp,
-    height?: NumberProp
-  ) => {
-    AppLog.log("color : " + color + width + height); //just to avoid warning
-    return (
-      <Close
-        testID="icon"
-        width={width}
-        height={height}
-        fill={themedColors.primary}
-      />
-    );
-  };
-
-  const iconRight: SvgProps = (
-    color?: Color,
-    width?: NumberProp,
-    height?: NumberProp
-  ) => {
-    AppLog.log("color : " + color + width + height); //just to avoid warning
-    return (
-      <CircularTick
-        testID="icon"
-        width={width}
-        height={height}
-        fill={themedColors.primary}
-      />
-    );
-  };
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: () => (
@@ -80,19 +46,33 @@ export const NewConversationController: FC<Props> = () => {
       headerLeft: () => (
         <HeaderLeftTextWithIcon
           text={Strings.newConversation.titleLeft}
-          icon={iconLeft}
           onPress={() => {
             navigation.goBack();
           }}
+          icon={(color, width, height) => (
+            <Close
+              testID="icon"
+              width={width}
+              height={height}
+              fill={themedColors.primary}
+            />
+          )}
         />
       ),
       headerRight: () => (
         <HeaderRightTextWithIcon
           text={Strings.newConversation.titleRight}
-          icon={iconRight}
           onPress={() => {
             navigation.goBack();
           }}
+          icon={(color, width, height) => (
+            <CircularTick
+              testID="icon"
+              width={width}
+              height={height}
+              fill={themedColors.primary}
+            />
+          )}
         />
       ),
       headerLeftContainerStyle: {

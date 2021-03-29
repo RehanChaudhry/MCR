@@ -14,8 +14,9 @@ import RightArrow from "assets/images/arrow_circle_right.svg";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import { AppLog } from "utils/Util";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
-import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
-type Props = {};
+type Props = {
+  isUpdating: boolean;
+};
 
 const validationSchema = Yup.object().shape({
   //basic profile component
@@ -30,13 +31,13 @@ const validationSchema = Yup.object().shape({
   aboutMe: Yup.string()
     .required("Enter your profile description")
     .min(3, "About Me should be atleast 25 characters")
-    .max(25, "Last name should be less than 50 characters"),
-  // faceBookProfile: Yup.string().required("Enter your facebook profile"),
-  // twitterProfile: Yup.string().required("Enter your twitter profile"),
-  // linkedInProfile: Yup.string().required("Enter your linkedin profile"),
-  // instagramProfile: Yup.string().required("Enter your instagram profile"),
-  // snapChatProfile: Yup.string().required("Enter your snapchat profile"),
-  // tikTokProfile: Yup.string().required("Enter your tiktok profile"),
+    .max(25, "About Me should be less than 50 characters"),
+  faceBookProfile: Yup.string().required("Enter your facebook profile"),
+  twitterProfile: Yup.string().required("Enter your twitter profile"),
+  linkedInProfile: Yup.string().required("Enter your linkedin profile"),
+  instagramProfile: Yup.string().required("Enter your instagram profile"),
+  snapChatProfile: Yup.string().required("Enter your snapchat profile"),
+  tikTokProfile: Yup.string().required("Enter your tiktok profile"),
 
   //demo graphics component
   homeTown: Yup.string()
@@ -76,7 +77,7 @@ const validationSchema = Yup.object().shape({
     .max(25, "Room should be less than 26 characters"),
 
   //video introduction component
-  youtubeVideoUrl: Yup.string().required("Enter youtube video url")
+  youtubeVideoUrl: Yup.string().required("Enter youtube video URL")
 });
 let initialValues: FormikValues = {
   // basic profile
@@ -127,16 +128,6 @@ export const UpdateProfileView: React.FC<Props> = () => {
         initialValues={initialValues}
         onSubmit={onSubmit}
         validationSchema={validationSchema}>
-        <View style={styles.headingView}>
-          <HeadingWithText
-            headingText={""}
-            text={STRINGS.profile.title}
-            textStyle={[
-              styles.textStyle,
-              { color: theme.themedColors.label }
-            ]}
-          />
-        </View>
         <BasicProfile />
         <DemoGraphics />
         <Interests />

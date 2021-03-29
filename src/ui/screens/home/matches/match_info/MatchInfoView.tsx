@@ -96,6 +96,7 @@ export const MatchInfoView: React.FC<Props> = ({ matchInfo }: Props) => {
             { backgroundColor: themedColors.background }
           ]}>
           <AppLabel
+            style={styles.heading}
             text={STRINGS.matchInfo.matching_information}
             weight={"semi-bold"}
           />
@@ -261,5 +262,6 @@ const styles = StyleSheet.create({
     marginTop: SPACE.md,
     marginHorizontal: SPACE.md
   },
-  lastCard: { marginBottom: SPACE.md }
+  lastCard: { marginBottom: SPACE.md },
+  heading: { includeFontPadding: false, fontSize: FONT_SIZE.md }
 });

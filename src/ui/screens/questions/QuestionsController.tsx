@@ -26,6 +26,8 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import DataGenerator from "utils/DataGenerator";
 import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import { UpdateQuestionnaireStackParamList } from "routes/ProfileStack";
+import Hamburger from "../../components/molecules/hamburger/Hamburger";
+import { HeaderTitle } from "../../components/molecules/header_title/HeaderTitle";
 
 type ProfileNavigationProp = StackNavigationProp<
   ProfileStackParamList,
@@ -47,6 +49,11 @@ const QuestionsController: FC<Props> = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigation = useNavigation<ProfileNavigationProp>();
+  navigation.setOptions({
+    headerLeft: () => <Hamburger />,
+    headerTitleAlign: "center",
+    headerTitle: () => <HeaderTitle text="Update Questionnaire" />
+  });
   const route = useRoute<ProfileRouteProp>();
 
   const [questions, setQuestions] = useState<
