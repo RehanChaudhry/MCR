@@ -13,7 +13,7 @@ import { useApi } from "repo/Client";
 import { AnswerApiRequestModel } from "models/api_requests/AnswerApiRequestModel";
 import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseModel";
 import ProfileApis from "repo/auth/ProfileApis";
-import { usePreventDoubleTap } from "hooks";
+import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { Alert, View } from "react-native";
 import {
   QuestionsResponseModel,
@@ -32,6 +32,8 @@ import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_wit
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { MatchesStackParamList } from "routes/MatchesStack";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
+import RightArrow from "assets/images/right.svg";
+import LeftArrow from "assets/images/left.svg";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -59,7 +61,8 @@ const questionSections = DataGenerator.getQuestionSections();
 
 const QuestionsController: FC<Props> = () => {
   AppLog.log("Opening QuestionsController");
-  const requestModel = useRef<AnswerApiRequestModel>();
+
+  const { themedColors } = usePreferredTheme();
 
   const route = useRoute<ProfileRouteProp>();
   const welcomeNavigation = useNavigation<WelcomeNavigationProp>();
@@ -70,12 +73,37 @@ const QuestionsController: FC<Props> = () => {
     welcomeNavigation.setOptions({
       headerLeft: () => (
         <HeaderLeftTextWithIcon
+          fontWeight={"semi-bold"}
+          text={"Back"}
+          icon={() => {
+            return (
+              <LeftArrow
+                width={20}
+                height={20}
+                fill={themedColors.interface["700"]}
+              />
+            );
+          }}
           onPress={() => {
-            welcomeNavigation.navigate("Welcome");
+            welcomeNavigation.pop();
           }}
         />
       ),
-      headerRight: () => <HeaderRightTextWithIcon text="Skip" />
+      headerRight: () => (
+        <HeaderRightTextWithIcon
+          text="Skip"
+          textStyle={{ color: themedColors.interface["700"] }}
+          icon={() => {
+            return (
+              <RightArrow
+                width={20}
+                height={20}
+                fill={themedColors.interface["700"]}
+              />
+            );
+          }}
+        />
+      )
     });
   }
 
@@ -96,6 +124,8 @@ const QuestionsController: FC<Props> = () => {
       )
     });
   }
+
+  const requestModel = useRef<AnswerApiRequestModel>();
 
   const [questions, setQuestions] = useState<
     Section<QuestionSection, Question>[]
@@ -130,6 +160,13 @@ const QuestionsController: FC<Props> = () => {
   };
 
   const handleSubmitAnswers = usePreventDoubleTap(async () => {
+    // For UI build
+    if (true) {
+      if (route.params.isFrom === EScreen.WELCOME) {
+        // move to home screen
+      }
+      return;
+    }
     if (requestModel.current === undefined) {
       return;
     }

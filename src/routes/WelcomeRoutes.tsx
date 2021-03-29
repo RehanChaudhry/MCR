@@ -16,6 +16,7 @@ export const WelcomeRoutes: FC = () => {
         component={QuestionsController}
         initialParams={{ isFrom: EScreen.WELCOME }}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => (
             <HeaderTitle text={STRINGS.questionnaire.title_create} />
           )
