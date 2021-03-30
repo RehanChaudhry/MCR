@@ -1,7 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 
 export type ConnectionRequestStackParamList = {
-  FriendRequests: undefined;
+  FriendRequests: { title: string; type: ConnectRequestType };
   RoommateRequests: undefined;
 };
 

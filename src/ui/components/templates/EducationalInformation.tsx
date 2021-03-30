@@ -14,11 +14,10 @@ const EducationalInformation: FC<Props> = () => {
       <View style={styles.innerCardView}>
         <HeadingWithText
           headingFontWeight={"semi-bold"}
-          headingText={"Educational Information"}
+          headingText={"Living Details"}
           text={""}
           headingStyle={{ color: theme.themedColors.label }}
         />
-        <View style={styles.spacer} />
         <HeadingWithText
           headingText={"Student ID"}
           text={"182883499"}

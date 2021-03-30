@@ -6,6 +6,7 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import YoutubeIcon from "assets/images/youtube_icon.svg";
+import { grayShades } from "../../../../hooks/theme/ColorPaletteContainer";
 
 export const VideoIntroduction = React.memo(() => {
   const theme = usePreferredTheme();
@@ -14,49 +15,47 @@ export const VideoIntroduction = React.memo(() => {
   return (
     <>
       <CardView style={styles.cardStyles}>
-        <HeadingWithText
-          headingText={STRINGS.profile.videoIntroduction.heading}
-          text={STRINGS.profile.videoIntroduction.title}
-          headingFontWeight={"semi-bold"}
-          headingStyle={[
-            styles.headingStyle,
-            { color: theme.themedColors.label }
-          ]}
-          textStyle={[{ color: theme.themedColors.labelSecondary }]}
-        />
-        <View
-          style={[
-            styles.horizontalLine,
-            { backgroundColor: theme.themedColors.interface["700"] }
-          ]}
-        />
-
-        <AppFormField
-          fieldTestID="youtubeVideoUrl"
-          validationLabelTestID={"youtubeVideoUrlValidationLabel"}
-          name="youtubeVideoUrl"
-          labelProps={{
-            text: STRINGS.profile.formTitle.youTubeVideoUrl,
-            weight: "semi-bold"
-          }}
-          fieldInputProps={{
-            textContentType: "name",
-            keyboardType: "default",
-            returnKeyType: "next",
-            placeholder: STRINGS.profile.placeHolder.youTubeVideoUrl,
-            autoCapitalize: "none",
-            placeholderTextColor: theme.themedColors.placeholder,
-            style: { color: theme.themedColors.label },
-            leftIcon: youtubeIcon,
-            viewStyle: [
-              styles.textFieldStyle,
-              {
-                backgroundColor: theme.themedColors.background,
-                borderColor: theme.themedColors.border
-              }
-            ]
-          }}
-        />
+        <View style={styles.innerCardStyles}>
+          <HeadingWithText
+            headingText={STRINGS.profile.videoIntroduction.heading}
+            text={STRINGS.profile.videoIntroduction.title}
+            headingFontWeight={"semi-bold"}
+            headingStyle={[
+              styles.headingStyle,
+              { color: theme.themedColors.label }
+            ]}
+            textStyle={[{ color: theme.themedColors.labelSecondary }]}
+          />
+        </View>
+        <View style={[styles.horizontalLine]} />
+        <View style={styles.innerCardStyles}>
+          <AppFormField
+            fieldTestID="youtubeVideoUrl"
+            validationLabelTestID={"youtubeVideoUrlValidationLabel"}
+            name="youtubeVideoUrl"
+            labelProps={{
+              text: STRINGS.profile.formTitle.youTubeVideoUrl,
+              weight: "semi-bold"
+            }}
+            fieldInputProps={{
+              textContentType: "name",
+              keyboardType: "default",
+              returnKeyType: "next",
+              placeholder: STRINGS.profile.placeHolder.youTubeVideoUrl,
+              autoCapitalize: "none",
+              placeholderTextColor: theme.themedColors.placeholder,
+              style: { color: theme.themedColors.label },
+              leftIcon: youtubeIcon,
+              viewStyle: [
+                styles.textFieldStyle,
+                {
+                  backgroundColor: theme.themedColors.background,
+                  borderColor: theme.themedColors.border
+                }
+              ]
+            }}
+          />
+        </View>
       </CardView>
     </>
   );
@@ -65,7 +64,9 @@ export const VideoIntroduction = React.memo(() => {
 const styles = StyleSheet.create({
   cardStyles: {
     marginTop: SPACE.lg,
-    marginHorizontal: SPACE.lg,
+    marginHorizontal: SPACE.lg
+  },
+  innerCardStyles: {
     padding: SPACE.lg
   },
   headingStyle: {
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   },
   horizontalLine: {
     height: 0.5,
-    marginVertical: SPACE.lg
+    backgroundColor: grayShades.warmGray["300"]
   },
   viewFieldStyle: {
     borderWidth: 1

@@ -67,11 +67,10 @@ const InterestsTagsList: FC<Props> = () => {
     <CardView style={styles.cardView}>
       <View style={styles.innerCardView}>
         <HeadingWithText
-          headingText={"Interests"}
+          headingText={"Interest"}
           text={""}
           headingFontWeight={"semi-bold"}
         />
-        <View style={styles.spacer} />
         <TagList labelTitle={"Interests & Hobbies"} data={hobbies} />
         <View style={styles.spacer} />
         <TagList labelTitle={"Club & Memberships"} data={clubs} />

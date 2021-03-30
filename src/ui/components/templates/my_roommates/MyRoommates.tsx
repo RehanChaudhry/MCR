@@ -63,7 +63,8 @@ const MyRoommates: FC<Props> = () => {
 const styles = StyleSheet.create({
   cardView: {
     marginHorizontal: SPACE.lg,
-    marginTop: SPACE.lg
+    marginTop: SPACE.lg,
+    marginBottom: SPACE.lg
   },
   innerCardView: {
     marginHorizontal: SPACE.lg,

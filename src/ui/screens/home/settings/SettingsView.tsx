@@ -21,23 +21,35 @@ const SettingsView: FC<Props> = () => {
     //   .required("Enter your first name")
     //   .min(3, "First name should be atleast 3 characters")
     //   .max(25, "First name should be less than 26 characters"),
-    alternateEmailAddress: Yup.string()
-      .required("Enter your alternative")
-      .email("Enter a valid email address"),
-    currentPassword: Yup.string()
-      .required("Enter your current password")
-      .min(8, "Password should be atleast 8 chars"),
+    alternateEmailAddress: Yup.string().email(
+      "Please provide valid email address"
+    ),
 
-    //demo graphics component
     newPassword: Yup.string()
-      .required("Enter your hometown")
-      .required("Enter your new password")
-      .min(8, "Password should be atleast 8 chars"),
-
-    confirmPassword: Yup.string()
-      .required("Enter your hometown")
-      .required("Enter your confirm password")
+      .matches(/[A-Z]/, "Password must contain one capital letter (A-Z)")
+      .matches(/[0-9]/, "Password must contain one number (0-9)")
       .min(8, "Password should be atleast 8 chars")
+      .optional(),
+
+    confirmPassword: Yup.string().when("newPassword", {
+      is: (value: string) => value?.length > 0,
+      then: Yup.string()
+        .oneOf(
+          [Yup.ref("newPassword")],
+          "The passwords you entered do not match"
+        )
+        .required("Field is required")
+    }),
+
+    currentPassword: Yup.string()
+      .optional()
+      .min(8, "Password should be atleast 8 chars")
+      .when("newPassword", {
+        is: (value: any[]) => {
+          return value?.length > 0;
+        },
+        then: Yup.string().required("Field is required")
+      })
   });
   let initialValues: FormikValues = {
     // basic profile
@@ -131,9 +143,10 @@ const SettingsView: FC<Props> = () => {
                   weight: "semi-bold"
                 }}
                 fieldInputProps={{
-                  textContentType: "name",
+                  textContentType: "password",
                   keyboardType: "default",
                   returnKeyType: "next",
+                  secureTextEntry: true,
                   placeholder: "Enter your current password",
                   autoCapitalize: "none",
                   placeholderTextColor: theme.themedColors.placeholder,
@@ -160,6 +173,7 @@ const SettingsView: FC<Props> = () => {
                   textContentType: "name",
                   keyboardType: "default",
                   returnKeyType: "next",
+                  secureTextEntry: true,
                   placeholder: "Create your new password",
                   autoCapitalize: "none",
                   placeholderTextColor: theme.themedColors.placeholder,
@@ -188,6 +202,7 @@ const SettingsView: FC<Props> = () => {
                   returnKeyType: "next",
                   placeholder: "Re-enter your new password",
                   autoCapitalize: "none",
+                  secureTextEntry: true,
                   placeholderTextColor: theme.themedColors.placeholder,
                   style: { color: theme.themedColors.label },
                   viewStyle: [
