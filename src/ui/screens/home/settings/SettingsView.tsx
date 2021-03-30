@@ -26,10 +26,7 @@ const SettingsView: FC<Props> = () => {
     ),
 
     newPassword: Yup.string()
-      .matches(
-        /[A-Za-z]/,
-        "Password must contain one capital letter (A-Z)"
-      )
+      .matches(/[A-Z]/, "Password must contain one capital letter (A-Z)")
       .matches(/[0-9]/, "Password must contain one number (0-9)")
       .min(8, "Password should be atleast 8 chars")
       .optional(),
