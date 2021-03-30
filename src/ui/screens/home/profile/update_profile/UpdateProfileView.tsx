@@ -1,6 +1,5 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { BasicProfile } from "ui/components/templates/basic_profile/BasicProfile";
 import { DemoGraphics } from "ui/components/templates/demographics/DemoGraphics";
 import { Interests } from "ui/components/templates/interests/interests";
 import { LivingDetails } from "ui/components/templates/living_details/LivingDetails";
@@ -14,6 +13,7 @@ import RightArrow from "assets/images/arrow_circle_right.svg";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import { AppLog } from "utils/Util";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
+import { BasicProfile } from "ui/components/templates/basic_profile/BasicProfile";
 type Props = {
   isUpdating: boolean;
 };
