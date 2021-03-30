@@ -40,7 +40,7 @@ export const NewConversationController: FC<Props> = () => {
 
   const goBack = () => {
     const users: string[] = dummyData.reduce(
-      (a: string[], o) => (a.push(o.name), a),
+      (newArray: string[], item) => (newArray.push(item.name), newArray),
       []
     );
 
