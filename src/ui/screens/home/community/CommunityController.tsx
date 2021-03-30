@@ -18,6 +18,7 @@ import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_w
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { CommunityView } from "ui/screens/home/community/CommunityView";
 import DataGenerator from "utils/DataGenerator";
+import { AppLog } from "utils/Util";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
@@ -123,6 +124,22 @@ const CommunityController: FC<Props> = () => {
   useEffect(() => {
     fetchCommunities();
   }, [fetchCommunities]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      AppLog.logForcefully("community screen is blur");
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      AppLog.logForcefully("community screen is focus");
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <CommunityView
