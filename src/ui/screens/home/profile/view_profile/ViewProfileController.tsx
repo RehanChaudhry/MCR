@@ -32,7 +32,7 @@ const ViewProfileController: FC<Props> = () => {
   if (route.params.isFrom === EScreen.NOTIFICATION) {
     navigation.setOptions({
       headerLeft: () => (
-        <HeaderLeftTextWithIcon onPress={() => navigation.goBack()} />
+        <HeaderLeftTextWithIcon onPress={() => navigation.pop()} />
       ),
 
       headerTitleAlign: "center",

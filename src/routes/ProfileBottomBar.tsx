@@ -3,7 +3,7 @@ import EScreen from "models/enums/EScreen";
 
 export type ProfileStackParamList = {
   ViewProfile: { isFrom: EScreen };
-  UpdateProfile: undefined;
+  UpdateProfile: { isFrom: EScreen };
   UpdateQuestionnaire: undefined;
 };
 
