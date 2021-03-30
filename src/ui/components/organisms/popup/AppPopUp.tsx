@@ -2,11 +2,12 @@ import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React, { FC } from "react";
 import { View, Modal, StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import {
   AppLabel,
   AppLabelProps
 } from "ui/components/atoms/app_label/AppLabel";
+import { moderateScale } from "config/Dimens";
 
 export type Action = {
   title: string;
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   },
   content: {
     width: "100%",
-    maxWidth: 320,
+    maxWidth: moderateScale(300),
     borderRadius: 12,
     overflow: "hidden"
   },
