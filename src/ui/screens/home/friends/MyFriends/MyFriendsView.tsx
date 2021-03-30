@@ -103,12 +103,7 @@ const MyFriendsView: FC<Props> = ({
           />
         )}
         renderItem={({ item }) => {
-          return listItem(
-            item,
-            (onPressAction = onPressAction),
-            (onPressChat = onPressChat),
-            (onPressCross = onPressCross)
-          );
+          return listItem(item, onPressChat, onPressAction, onPressCross);
         }}
         data={data}
       />
