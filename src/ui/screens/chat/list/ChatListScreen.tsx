@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, shadowStyleProps } from "utils/Util";
@@ -53,10 +53,22 @@ export const ChatListScreen = React.memo<ChatListProps>(
     onEndReached,
     isAllDataLoaded
   }) => {
-    const { themedColors } = usePreferredTheme();
     AppLog.log("Rendering chat screen...");
+
+    const { themedColors } = usePreferredTheme();
+    let [items, setItems] = useState<ChatItem[]>(data);
+
+    const performSearch = (textToSearch: string) =>
+      data.filter((obj: ChatItem) => {
+        return Object.values(obj).some((v) =>
+          `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
+        );
+      });
+
     const renderItem = ({ item }: { item: ChatItem }) => {
-      AppLog.log("rendering list item : " + JSON.stringify(item));
+      AppLog.logForcefully(
+        "rendering list item : " + JSON.stringify(item)
+      );
       return (
         <>
           <ChatHeader
@@ -84,9 +96,11 @@ export const ChatListScreen = React.memo<ChatListProps>(
             textStyle={styles.searchText}
             placeholder={STRINGS.chatListScreen.placeholder_search_keyword}
             onChangeText={(textToSearch?: string) => {
-              AppLog.log(textToSearch);
-              //  keyword.current = textToSearch;
-              //  onFilterChange(keyword.current, gender.current);
+              lastHeaderTitle = "";
+              (textToSearch !== "" &&
+                textToSearch !== undefined &&
+                setItems(performSearch(textToSearch))) ||
+                setItems(data);
             }}
             searchIcon={true}
             clearIcon={true}
@@ -96,8 +110,9 @@ export const ChatListScreen = React.memo<ChatListProps>(
 
         <FlatListWithPb
           shouldShowProgressBar={false}
-          data={data}
+          data={items}
           renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           removeClippedSubviews={true}
           style={styles.list}
