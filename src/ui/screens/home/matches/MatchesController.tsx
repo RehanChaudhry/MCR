@@ -1,4 +1,10 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, {
+  FC,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { Alert, View } from "react-native";
@@ -39,24 +45,26 @@ const MatchesController: FC<Props> = () => {
   const [showRequestAlert, setShowRequestAlert] = useState<boolean>(false);
   const navigation = useNavigation<MatchesNavigationProp>();
 
-  navigation.setOptions({
-    headerRight: () => (
-      <HeaderRightTextWithIcon
-        text={"More"}
-        onPress={() => navigation.navigate("MatchInfo")}
-        icon={(color, width, height) => {
-          AppLog.log(color);
-          return (
-            <InfoCircle
-              width={width}
-              height={height}
-              fill={themedColors.primary}
-            />
-          );
-        }}
-      />
-    )
-  });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderRightTextWithIcon
+          text={"More"}
+          onPress={() => navigation.navigate("MatchInfo")}
+          icon={(color, width, height) => {
+            AppLog.log(color);
+            return (
+              <InfoCircle
+                width={width}
+                height={height}
+                fill={themedColors.primary}
+              />
+            );
+          }}
+        />
+      )
+    });
+  }, [navigation, themedColors]);
 
   const moveToChatScreen = (profileMatch: ProfileMatch) => {
     // AppLog.log(

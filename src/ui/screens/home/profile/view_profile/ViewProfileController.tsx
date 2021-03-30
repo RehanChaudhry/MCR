@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useLayoutEffect } from "react";
 import { ViewProfileView } from "ui/screens/home/profile/view_profile/ViewProfileView";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ProfileStackParamList } from "routes/ProfileBottomBar";
@@ -35,24 +35,26 @@ const ViewProfileController: FC<Props> = () => {
 
   const viewProfileRoute = useRoute<ProfileRouteProp>();
 
-  if (route.params.isFrom === EScreen.NOTIFICATION) {
-    navigation.setOptions({
-      headerLeft: () => (
-        <HeaderLeftTextWithIcon
-          onPress={() => navigationNotification.goBack()}
-        />
-      ),
+  useLayoutEffect(() => {
+    if (route.params.isFrom === EScreen.NOTIFICATION) {
+      navigation.setOptions({
+        headerLeft: () => (
+          <HeaderLeftTextWithIcon
+            onPress={() => navigationNotification.goBack()}
+          />
+        ),
 
-      headerTitleAlign: "center",
-      headerTitle: () => <HeaderTitle text="View Profile" />
-    });
-  } else if (viewProfileRoute.params.isFrom === EScreen.HOME) {
-    navigation.setOptions({
-      headerLeft: () => <Hamburger />,
-      headerTitleAlign: "center",
-      headerTitle: () => <HeaderTitle text="View Profile" />
-    });
-  }
+        headerTitleAlign: "center",
+        headerTitle: () => <HeaderTitle text="View Profile" />
+      });
+    } else if (viewProfileRoute.params.isFrom === EScreen.HOME) {
+      navigation.setOptions({
+        headerLeft: () => <Hamburger />,
+        headerTitleAlign: "center",
+        headerTitle: () => <HeaderTitle text="View Profile" />
+      });
+    }
+  }, [navigation, route.params.isFrom, viewProfileRoute.params.isFrom]);
 
   return <ViewProfileView />;
 };
