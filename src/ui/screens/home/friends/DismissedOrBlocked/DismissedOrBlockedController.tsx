@@ -1,4 +1,4 @@
-import { COLORS, SPACE } from "config";
+import { COLORS, FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import {
   DismissedOrBlocked,
@@ -12,6 +12,7 @@ import {
   Choice,
   SegmentedControl
 } from "ui/components/molecules/segmented_control/SegmentedControl";
+import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 import DataGenerator from "utils/DataGenerator";
 import { AppLog } from "utils/Util";
 import DismissedOrBlockedView from "./DismissedOrBlockedView";
@@ -19,6 +20,7 @@ import DismissedOrBlockedView from "./DismissedOrBlockedView";
 type Props = {};
 
 const DismissedOrBlockedController: FC<Props> = () => {
+  const [showRestoreAlert, setShowRestoreAlert] = useState<boolean>(false);
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 
   const [dismissed, setDismissed] = useState<Array<DismissedOrBlocked>>(
@@ -76,65 +78,104 @@ const DismissedOrBlockedController: FC<Props> = () => {
     setSelectedTabIndex(index);
   };
 
+  const restoreAlert = () => {
+    return (
+      <AppPopUp
+        isVisible={showRestoreAlert}
+        title={"Restore from Dismissed List"}
+        message={
+          "Are you sure you want to restore Aris Johnson from your dismissed list?"
+        }
+        actions={[
+          {
+            title: "Yes, restore",
+            onPress: () => {
+              setShowRestoreAlert(false);
+            },
+            style: {
+              weight: "bold",
+              style: {
+                color: theme.themedColors.primary,
+                textAlign: "center",
+                fontSize: FONT_SIZE.lg
+              }
+            }
+          },
+          {
+            title: "Cancel",
+            onPress: () => {
+              setShowRestoreAlert(false);
+            }
+          }
+        ]}
+      />
+    );
+  };
+
   return (
-    <View style={styles.container}>
-      <View>
-        <View style={styles.segmentedControlContainer}>
-          <SegmentedControl
-            onChange={onTabChanged}
-            values={[
-              { label: "Dismissed", value: "0" },
-              { label: "Blocked", value: "1" }
+    <>
+      <View style={styles.container}>
+        <View>
+          <View style={styles.segmentedControlContainer}>
+            <SegmentedControl
+              onChange={onTabChanged}
+              values={[
+                { label: "Dismissed", value: "0" },
+                { label: "Blocked", value: "1" }
+              ]}
+            />
+          </View>
+          <View
+            style={[
+              styles.separator,
+              { backgroundColor: theme.themedColors.separator }
             ]}
           />
         </View>
-        <View
-          style={[
-            styles.separator,
-            { backgroundColor: theme.themedColors.separator }
-          ]}
-        />
+        {selectedTabIndex === 0 ? (
+          <DismissedOrBlockedView
+            headerTitle={"How it works?"}
+            headerSubtitle={
+              "Dismissed list users will be hide from your matches."
+            }
+            learnMoreTitle={"Learnmore about dismissed list"}
+            learnMoreAction={onPressDismissedLearnMore}
+            data={dismissed}
+            onPressAction={(item: DismissedOrBlocked) => {
+              AppLog.log("items: ", item);
+              setShowRestoreAlert(true);
+            }}
+            onPressChat={(item: DismissedOrBlocked) => {
+              AppLog.log("items: ", item);
+            }}
+            onPressCross={(item: DismissedOrBlocked) => {
+              AppLog.log("items: ", item);
+            }}
+          />
+        ) : (
+          <DismissedOrBlockedView
+            headerTitle={"How it works?"}
+            headerSubtitle={
+              "Blocked list users will be hide from your matches and cannot send you messages either."
+            }
+            learnMoreTitle={"Learnmore about blocked list"}
+            learnMoreAction={onPressBlockedLearnMore}
+            data={blocked}
+            onPressAction={(item: DismissedOrBlocked) => {
+              AppLog.log("items: ", item);
+              setShowRestoreAlert(true);
+            }}
+            onPressChat={(item: DismissedOrBlocked) => {
+              AppLog.log("items: ", item);
+            }}
+            onPressCross={(item: DismissedOrBlocked) => {
+              AppLog.log("items: ", item);
+            }}
+          />
+        )}
       </View>
-      {selectedTabIndex === 0 ? (
-        <DismissedOrBlockedView
-          headerTitle={"How it works?"}
-          headerSubtitle={
-            "Dismissed list users will be hide from your matches."
-          }
-          learnMoreTitle={"Learnmore about dismissed list"}
-          learnMoreAction={onPressDismissedLearnMore}
-          data={dismissed}
-          onPressAction={(item: DismissedOrBlocked) => {
-            AppLog.log("items: ", item);
-          }}
-          onPressChat={(item: DismissedOrBlocked) => {
-            AppLog.log("items: ", item);
-          }}
-          onPressCross={(item: DismissedOrBlocked) => {
-            AppLog.log("items: ", item);
-          }}
-        />
-      ) : (
-        <DismissedOrBlockedView
-          headerTitle={"How it works?"}
-          headerSubtitle={
-            "Blocked list users will be hide from your matches and cannot send you messages either."
-          }
-          learnMoreTitle={"Learnmore about blocked list"}
-          learnMoreAction={onPressBlockedLearnMore}
-          data={blocked}
-          onPressAction={(item: DismissedOrBlocked) => {
-            AppLog.log("items: ", item);
-          }}
-          onPressChat={(item: DismissedOrBlocked) => {
-            AppLog.log("items: ", item);
-          }}
-          onPressCross={(item: DismissedOrBlocked) => {
-            AppLog.log("items: ", item);
-          }}
-        />
-      )}
-    </View>
+      {restoreAlert()}
+    </>
   );
 };
 

@@ -22,8 +22,9 @@ import { MatchesStackParamList } from "routes/MatchesStack";
 import InfoCircle from "assets/images/info_circle.svg";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import ProfileMatch from "models/ProfileMatch";
-import { STRINGS } from "config";
+import { FONT_SIZE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
+import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -35,7 +36,7 @@ type Props = {};
 const MatchesController: FC<Props> = () => {
   AppLog.log("Opening MatchesController");
   const { themedColors } = usePreferredTheme();
-
+  const [showRequestAlert, setShowRequestAlert] = useState<boolean>(false);
   const navigation = useNavigation<MatchesNavigationProp>();
 
   navigation.setOptions({
@@ -158,7 +159,43 @@ const MatchesController: FC<Props> = () => {
     MatchesApis.friendRequest
   );
 
+  const sendRequestDialog = () => {
+    return (
+      <AppPopUp
+        isVisible={showRequestAlert}
+        title={"Friend Request"}
+        message={
+          "Are you sure you want to send friend request to Aris Johnson?"
+        }
+        actions={[
+          {
+            title: "Yes, send request",
+            onPress: () => {
+              setShowRequestAlert(false);
+            },
+            style: {
+              weight: "bold",
+              style: {
+                color: themedColors.primary,
+                textAlign: "center",
+                fontSize: FONT_SIZE.lg
+              }
+            }
+          },
+          {
+            title: "Cancel",
+            onPress: () => {
+              setShowRequestAlert(false);
+            }
+          }
+        ]}
+      />
+    );
+  };
+
   const postFriendRequest = async (userId: number) => {
+    setShowRequestAlert(true);
+
     // For UI build
     if (true) {
       return;
@@ -276,6 +313,7 @@ const MatchesController: FC<Props> = () => {
         moveToChatScreen={moveToChatScreen}
         moveToProfileScreen={moveToProfileScreen}
       />
+      {sendRequestDialog()}
     </ProgressErrorView>
   );
 };
