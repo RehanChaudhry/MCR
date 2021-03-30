@@ -5,6 +5,7 @@ export type WelcomeStackParamList = {
   Welcome: undefined;
   Questionnaire: { isFrom: EScreen };
   Matches: undefined;
+  UpdateProfile: { isFrom: EScreen };
 };
 
 export const WelcomeStack = createStackNavigator<WelcomeStackParamList>();

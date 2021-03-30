@@ -2,12 +2,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import EScreen from "models/enums/EScreen";
 
 export type ViewProfileStackParamList = {
-  ViewProfile: undefined;
+  ViewProfile: { isFrom: EScreen };
 };
 export const ViewProfileStack = createStackNavigator<ViewProfileStackParamList>();
 
 export type UpdateProfileStackParamList = {
-  UpdateProfile: { isUpdating: boolean };
+  UpdateProfile: { isFrom: EScreen };
 };
 export const UpdateProfileStack = createStackNavigator<UpdateProfileStackParamList>();
 
