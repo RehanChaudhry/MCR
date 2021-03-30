@@ -21,10 +21,16 @@ type ViewProfileRouteProp = RouteProp<
   "ViewProfile"
 >;
 
+type NotificationNavigationProp = StackNavigationProp<
+  NotificationParamList,
+  "Notification"
+>;
+
 type ProfileRouteProp = RouteProp<ProfileStackParamList, "ViewProfile">;
 
 const ViewProfileController: FC<Props> = () => {
   const navigation = useNavigation<ProfileNavigationProp>();
+  const navigationNotification = useNavigation<NotificationNavigationProp>();
   const route = useRoute<ViewProfileRouteProp>();
 
   const viewProfileRoute = useRoute<ProfileRouteProp>();
@@ -32,7 +38,9 @@ const ViewProfileController: FC<Props> = () => {
   if (route.params.isFrom === EScreen.NOTIFICATION) {
     navigation.setOptions({
       headerLeft: () => (
-        <HeaderLeftTextWithIcon onPress={() => navigation.pop()} />
+        <HeaderLeftTextWithIcon
+          onPress={() => navigationNotification.goBack()}
+        />
       ),
 
       headerTitleAlign: "center",

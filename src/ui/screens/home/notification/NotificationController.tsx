@@ -40,7 +40,7 @@ const NotificationController: FC<Props> = () => {
   );
 
   const openMyProfileScreen = usePreventDoubleTap(() => {
-    navigation.navigate("ViewProfile", { isFrom: EScreen.NOTIFICATION });
+    navigation.push("ViewProfile", { isFrom: EScreen.NOTIFICATION });
   });
 
   navigation.setOptions({
