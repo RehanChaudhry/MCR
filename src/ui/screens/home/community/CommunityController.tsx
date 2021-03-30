@@ -36,6 +36,7 @@ const CommunityController: FC<Props> = () => {
   const [communities, setCommunities] = useState<CommunityAnnouncement[]>(
     DataGenerator.getCommunityAnnouncementList(pageToReload.current)
   );
+  const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   const totalPages = 5;
   const navigation = useNavigation<CommunityNavigationProp>();
   const theme = usePreferredTheme();
@@ -128,6 +129,7 @@ const CommunityController: FC<Props> = () => {
   useEffect(() => {
     const unsubscribe = navigation.addListener("blur", () => {
       AppLog.logForcefully("community screen is blur");
+      setShouldPlayVideo(false);
     });
 
     return unsubscribe;
@@ -136,6 +138,7 @@ const CommunityController: FC<Props> = () => {
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       AppLog.logForcefully("community screen is focus");
+      setShouldPlayVideo(true);
     });
 
     return unsubscribe;
@@ -150,6 +153,7 @@ const CommunityController: FC<Props> = () => {
       pullToRefreshCallback={refreshCallback}
       feedsFilterData={getFeedsFilterList()}
       openCommentsScreen={openCommentsScreen}
+      shouldPlayVideo={shouldPlayVideo}
     />
   );
 };
