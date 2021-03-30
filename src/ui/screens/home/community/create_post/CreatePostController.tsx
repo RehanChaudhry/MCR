@@ -79,10 +79,13 @@ const CreatePostController: FC<Props> = () => {
     } else {
     }
   });
+  const closeScreen = usePreventDoubleTap(() => {
+    navigation.goBack();
+  });
   return (
     <CreatePostView
       createPost={() => {
-        navigation.pop();
+        closeScreen();
       }}
     />
   );
