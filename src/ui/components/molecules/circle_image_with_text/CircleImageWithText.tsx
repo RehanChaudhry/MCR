@@ -12,10 +12,11 @@ type Props = {
   username: string;
   message: string;
   onPress: () => void;
+  userNameOnPress?: (value: string, userNameindex: number) => void;
 };
 
 export const CircleImageWithText = React.memo<Props>(
-  ({ username, onPress, message }) => {
+  ({ username, onPress, message, userNameOnPress }) => {
     const theme = usePreferredTheme();
     return (
       <View style={styles.mainContainer}>
@@ -29,6 +30,9 @@ export const CircleImageWithText = React.memo<Props>(
                   [styles.name, { color: theme.themedColors.primary }],
                   [styles.message, { color: theme.themedColors.black }]
                 ]}
+                onPress={(value: string, index) => {
+                  userNameOnPress?.(value, index);
+                }}
               />
             </View>
           </View>

@@ -2,7 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import EScreen from "models/enums/EScreen";
 
 export type ViewProfileStackParamList = {
-  ViewProfile: undefined;
+  ViewProfile: { isFrom: EScreen };
 };
 export const ViewProfileStack = createStackNavigator<ViewProfileStackParamList>();
 
