@@ -88,7 +88,7 @@ const MyFriendsView: FC<Props> = ({
         shouldShowProgressBar={false}
         ListHeaderComponent={() => (
           <ConnectionListHeader
-            title="Received 2 new friends request"
+            title="Received 2 new friend requests"
             detail={
               "You have currently 7 friends and received 2 new friend requests."
             }

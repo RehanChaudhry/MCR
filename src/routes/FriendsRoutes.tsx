@@ -59,6 +59,10 @@ const MyRoommatesRoutes: FC<MyRoommatesRoutesProps> = () => {
       <MyRoommatesStack.Screen
         name="MyRoommates"
         component={MyRoommatesController}
+        options={{
+          headerTitle: () => <HeaderTitle text="My Roommates" />,
+          headerLeft: () => <Hamburger />
+        }}
       />
     </MyRoommatesStack.Navigator>
   );

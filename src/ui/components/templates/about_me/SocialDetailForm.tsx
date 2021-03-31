@@ -19,7 +19,7 @@ type Props = {
   icon: SvgProp;
   heading: string;
   title: string;
-  onPress: () => void;
+  onPress?: () => void;
 };
 
 const SocialDetailForm: FC<Props> = ({

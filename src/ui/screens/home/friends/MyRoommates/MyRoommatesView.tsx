@@ -64,7 +64,7 @@ const MyRoommatesView: FC<Props> = ({
           <ConnectionListHeader
             title="Received 1 new roommate request"
             detail={
-              "You have currently 2 roommates and received 1 new friend request."
+              "You have currently 2 roommates and received 1 new roommate request."
             }
             icon={() => (
               <HomeOfficeIcon
