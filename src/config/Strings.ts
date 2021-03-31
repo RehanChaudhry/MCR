@@ -276,5 +276,17 @@ export default {
 
   announcement: {
     announcementTitle: "Announcement"
+  },
+  dialogs: {
+    friend_request: {
+      title: "Friend Request",
+      success: "Yes, send request"
+    },
+    cancel: "Cancel",
+    dismiss_block: {
+      title: "Add to Dismissed or Blocked List",
+      dismiss: "Dismiss",
+      block: "Block"
+    }
   }
 };
