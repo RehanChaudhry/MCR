@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, shadowStyleProps } from "utils/Util";
@@ -65,6 +65,18 @@ export const ChatListScreen = React.memo<ChatListProps>(
         );
       });
 
+    const handleClick = useCallback((textToSearch?: string) => {
+      lastHeaderTitle = "";
+
+      textToSearch !== "" &&
+        textToSearch !== undefined &&
+        setItems(
+          performSearch(textToSearch)
+        ); /*||
+        setItems(data);*/
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const renderItem = ({ item }: { item: ChatItem }) => {
       AppLog.logForcefully(
         "rendering list item : " + JSON.stringify(item)
@@ -95,13 +107,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
             style={styles.search(themedColors)}
             textStyle={styles.searchText}
             placeholder={STRINGS.chatListScreen.placeholder_search_keyword}
-            onChangeText={(textToSearch?: string) => {
-              lastHeaderTitle = "";
-              (textToSearch !== "" &&
-                textToSearch !== undefined &&
-                setItems(performSearch(textToSearch))) ||
-                setItems(data);
-            }}
+            onChangeText={handleClick}
             searchIcon={true}
             clearIcon={true}
             iconColor={themedColors.interface[500]}
