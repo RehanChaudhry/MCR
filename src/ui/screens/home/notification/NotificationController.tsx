@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import { NotificationView } from "ui/screens/home/notification/NotificationView";
 import DataGenerator from "utils/DataGenerator";
 import { useApi } from "repo/Client";
@@ -40,15 +40,17 @@ const NotificationController: FC<Props> = () => {
   );
 
   const openMyProfileScreen = usePreventDoubleTap(() => {
-    navigation.navigate("ViewProfile", { isFrom: EScreen.NOTIFICATION });
+    navigation.push("ViewProfile", { isFrom: EScreen.NOTIFICATION });
   });
 
-  navigation.setOptions({
-    headerLeft: () => <Hamburger />,
-    headerTitleAlign: "center",
-    headerStyle: { elevation: 0 },
-    headerTitle: () => <HeaderTitle text="Notification" />
-  });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => <Hamburger />,
+      headerTitleAlign: "center",
+      headerStyle: { elevation: 0 },
+      headerTitle: () => <HeaderTitle text="Notification" />
+    });
+  }, [navigation]);
 
   const handleGetNotificationApi = async (onComplete?: () => void) => {
     const {

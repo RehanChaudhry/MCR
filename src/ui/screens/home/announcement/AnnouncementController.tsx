@@ -6,6 +6,7 @@ import React, {
   FC,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState
 } from "react";
@@ -36,13 +37,15 @@ const AnnouncementController: FC<Props> = () => {
   const navigation = useNavigation<AnnouncementNavigationProp>();
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
 
-  navigation.setOptions({
-    headerLeft: () => <Hamburger />,
-    headerTitleAlign: "center",
-    headerTitle: () => (
-      <HeaderTitle text={Strings.announcement.announcementTitle} />
-    )
-  });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => <Hamburger />,
+      headerTitleAlign: "center",
+      headerTitle: () => (
+        <HeaderTitle text={Strings.announcement.announcementTitle} />
+      )
+    });
+  }, [navigation]);
 
   const fetchAnnouncements = useCallback(async () => {
     if (isFetchingInProgress.current) {

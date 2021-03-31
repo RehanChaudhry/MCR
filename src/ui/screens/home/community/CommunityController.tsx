@@ -9,6 +9,7 @@ import React, {
   FC,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState
 } from "react";
@@ -41,28 +42,30 @@ const CommunityController: FC<Props> = () => {
   const navigation = useNavigation<CommunityNavigationProp>();
   const theme = usePreferredTheme();
 
-  navigation.setOptions({
-    headerRight: () => (
-      <HeaderRightTextWithIcon
-        onPress={() => {
-          navigation.navigate("CreatePost");
-        }}
-        text={Strings.createPost.title.createPost}
-        icon={() => {
-          return (
-            <PencilAlt
-              width={15}
-              height={15}
-              fill={theme.themedColors.primary}
-            />
-          );
-        }}
-      />
-    ),
-    headerLeft: () => <Hamburger />,
-    headerTitleAlign: "center",
-    headerTitle: () => <HeaderTitle text="Community" />
-  });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderRightTextWithIcon
+          onPress={() => {
+            navigation.navigate("CreatePost");
+          }}
+          text={Strings.createPost.title.createPost}
+          icon={() => {
+            return (
+              <PencilAlt
+                width={15}
+                height={15}
+                fill={theme.themedColors.primary}
+              />
+            );
+          }}
+        />
+      ),
+      headerLeft: () => <Hamburger />,
+      headerTitleAlign: "center",
+      headerTitle: () => <HeaderTitle text="Community" />
+    });
+  }, [navigation, theme]);
 
   const fetchCommunities = useCallback(async () => {
     if (isFetchingInProgress.current) {

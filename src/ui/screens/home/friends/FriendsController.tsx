@@ -21,25 +21,25 @@ const FriendsController: FC<Props> = () => {
     {
       title: "My Friends",
       onPress: () => {
-        navigation.navigate("MyFriends");
+        navigation.jumpTo("MyFriends");
       }
     },
     {
       title: "My Roommates",
       onPress: () => {
-        navigation.navigate("MyRoommates");
+        navigation.jumpTo("MyRoommates");
       }
     },
     {
       title: "Roommate Agreement",
       onPress: () => {
-        navigation.navigate("RoommateAgreement");
+        navigation.jumpTo("RoommateAgreement");
       }
     },
     {
       title: "Dismissed or Blocked",
       onPress: () => {
-        navigation.navigate("DismissedOrBlocked");
+        navigation.jumpTo("DismissedOrBlocked");
       }
     }
   ];
