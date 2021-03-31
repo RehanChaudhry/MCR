@@ -1,6 +1,6 @@
-import { DependencyList, EffectCallback, useEffect, useRef } from "react";
+import { EffectCallback, useEffect, useRef } from "react";
 
-export default (effect: EffectCallback, deps?: DependencyList) => {
+export default (effect: EffectCallback) => {
   const isFirstRun = useRef(true);
   useEffect(() => {
     if (isFirstRun.current) {
@@ -8,5 +8,5 @@ export default (effect: EffectCallback, deps?: DependencyList) => {
       return;
     }
     return effect();
-  }, [effect, deps]);
+  }, [effect]);
 };
