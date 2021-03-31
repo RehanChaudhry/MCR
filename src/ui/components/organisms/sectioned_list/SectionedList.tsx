@@ -7,6 +7,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { AppLog } from "utils/Util";
 import { SPACE } from "config";
 
@@ -30,6 +31,7 @@ interface Props<ItemT extends BaseItem, ItemU extends BaseItem> {
     index: number
   ) => React.ReactElement;
   bodyView: (
+    list: Section<ItemT, ItemU>[],
     bodyItem: ItemU,
     parentIndex: number,
     index: number
@@ -38,7 +40,7 @@ interface Props<ItemT extends BaseItem, ItemU extends BaseItem> {
   isCollapsable?: boolean;
 }
 
-const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
+const _SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
   style,
   listHeaderComponent,
   list,
@@ -48,7 +50,7 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
   listFooterComponent,
   isCollapsable = false
 }: Props<ItemT, ItemU>) => {
-  // AppLog.log("rendering SectionedList");
+  // AppLog.log("rendering _SectionedList");
   const [selectedIndex, setSelectedIndex] = useState<number>(
     selectedIndexProp ?? (list.length > 0 ? 0 : -1)
   );
@@ -71,7 +73,7 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
         return null;
       } else {
         // AppLog.log(`rendering BodyView ${item.key()}`);
-        return bodyView(item, parentPosition, index);
+        return bodyView(list, item, parentPosition, index);
       }
     },
     [isCollapsable, list, selectedIndex, bodyView]
@@ -134,5 +136,9 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   }
 });
+
+const SectionedList = optimizedMemo(
+  _SectionedList
+) as typeof _SectionedList;
 
 export default SectionedList;

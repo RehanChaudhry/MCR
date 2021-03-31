@@ -4,6 +4,7 @@ import { usePreferredTheme } from "hooks";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config";
 import { AppSwitch } from "ui/components/atoms/app_switch/AppSwitch";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { RangeSliderWithLabel } from "./RangeSliderWithLabel";
 import Question from "models/Question";
 
@@ -24,7 +25,7 @@ export interface RangeSliderProps {
   style?: StyleProp<ViewStyle>; //avoid passing padding use margin instead, it will handle range slide width
 }
 
-export const QuestionItem = React.memo<RangeSliderProps>(
+export const QuestionItem = optimizedMemo<RangeSliderProps>(
   ({
     question,
     initialValuesTopSlider = null,

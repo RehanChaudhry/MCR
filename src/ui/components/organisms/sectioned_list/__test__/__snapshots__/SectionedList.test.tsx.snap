@@ -160,17 +160,13 @@ exports[`Sectioned List tests snapshot 1`] = `
       onLayout={[Function]}
       style={null}
     >
-      <Text>
-        Body 4
-      </Text>
+      <Text />
     </View>
     <View
       onLayout={[Function]}
       style={null}
     >
-      <Text>
-        Body 5
-      </Text>
+      <Text />
     </View>
     <View
       onLayout={[Function]}

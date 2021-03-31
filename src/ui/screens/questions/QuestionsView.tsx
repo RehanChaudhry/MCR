@@ -2,9 +2,10 @@ import RightArrow from "assets/images/arrow_right.svg";
 import RightArrowCircle from "assets/images/right_arrow_circle.svg";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
+import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import Question from "models/Question";
 import QuestionSection from "models/QuestionSection";
-import React from "react";
+import React, { useRef } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
@@ -37,7 +38,72 @@ export const QuestionsView = ({
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
-  const listHeader = () => (
+  const listHeader = useRef(createListHeader(isUpdating, themedColors));
+
+  const listFooter = useRef(
+    createListFooter(submitAnswersLoading, submitAnswers, themedColors)
+  );
+
+  return (
+    <Screen shouldAddBottomInset={false}>
+      <SectionedList<QuestionSection, Question>
+        listHeaderComponent={listHeader.current}
+        style={styles.sectionedList}
+        list={questions}
+        isCollapsable={true}
+        headerView={headerView}
+        bodyView={bodyView}
+        listFooterComponent={listFooter.current}
+      />
+    </Screen>
+  );
+};
+
+function bodyView(
+  questions: Section<QuestionSection, Question>[],
+  bodyItem: Question,
+  parentIndex: number,
+  index: number
+) {
+  const style: StyleProp<ViewStyle> =
+    questions[parentIndex].data.length - 1 === index
+      ? styles.lastBody
+      : null;
+  return (
+    <QuestionItem
+      question={bodyItem}
+      initialValuesTopSlider={[bodyItem.answer?.answer ?? 5]}
+      initialValuesBottomSlider={[
+        bodyItem.answer?.minPreference ?? 3,
+        bodyItem.answer?.maxPreference ?? 7
+      ]}
+      style={style}
+      callback={(result: SliderCallback) => {
+        bodyItem.answer = {
+          answer: result.topRangeSliderResult[0],
+          maxPreference: result.bottomRangeSliderResult[1],
+          minPreference: result.bottomRangeSliderResult[0],
+          noPreference: !result.isPreferenceActive
+        };
+      }}
+      preferenceInitialValue={bodyItem.answer?.noPreference === false}
+    />
+  );
+}
+
+function headerView(
+  header: QuestionSection,
+  isSelected: boolean,
+  _: number
+) {
+  return <QuestionHeader questionGroup={header} isExpanded={isSelected} />;
+}
+
+function createListHeader(
+  isUpdating: boolean,
+  themedColors: ColorPalette
+) {
+  return (
     <View style={styles.headerContainer}>
       {!isUpdating && (
         <AppLabel
@@ -75,8 +141,14 @@ export const QuestionsView = ({
       </View>
     </View>
   );
+}
 
-  const listFooter = () => (
+function createListFooter(
+  submitAnswersLoading: boolean,
+  submitAnswers: () => void,
+  themedColors: ColorPalette
+) {
+  return (
     <View style={styles.footerContainer}>
       <AppButton
         shouldShowProgressBar={submitAnswersLoading}
@@ -99,68 +171,7 @@ export const QuestionsView = ({
       />
     </View>
   );
-
-  return (
-    <Screen shouldAddBottomInset={false}>
-      <SectionedList<QuestionSection, Question>
-        listHeaderComponent={listHeader()}
-        style={styles.sectionedList}
-        list={questions}
-        isCollapsable={true}
-        headerView={(
-          header: QuestionSection,
-          isSelected: boolean,
-          _: number
-        ) => (
-          <QuestionHeader questionGroup={header} isExpanded={isSelected} />
-        )}
-        bodyView={(
-          bodyItem: Question,
-          parentIndex: number,
-          index: number
-        ) => {
-          const style: StyleProp<ViewStyle> =
-            questions[parentIndex].data.length - 1 === index
-              ? styles.lastBody
-              : null;
-          /*AppLog.log(
-            `Rendering p${parentIndex}c${index}, answer: ${JSON.stringify(
-              bodyItem?.answer
-            )}`
-          );*/
-          return (
-            <QuestionItem
-              question={bodyItem}
-              initialValuesTopSlider={[bodyItem.answer?.answer ?? 5]}
-              initialValuesBottomSlider={[
-                bodyItem.answer?.minPreference ?? 3,
-                bodyItem.answer?.maxPreference ?? 7
-              ]}
-              style={style}
-              callback={(result: SliderCallback) => {
-                bodyItem.answer = {
-                  answer: result.topRangeSliderResult[0],
-                  maxPreference: result.bottomRangeSliderResult[1],
-                  minPreference: result.bottomRangeSliderResult[0],
-                  noPreference: !result.isPreferenceActive
-                };
-                /*AppLog.log(
-                  `Callback() p${parentIndex}c${index}, answer: ${JSON.stringify(
-                    result
-                  )}`
-                );*/
-              }}
-              preferenceInitialValue={
-                bodyItem.answer?.noPreference === false
-              }
-            />
-          );
-        }}
-        listFooterComponent={listFooter()}
-      />
-    </Screen>
-  );
-};
+}
 
 const styles = StyleSheet.create({
   sectionedList: { padding: SPACE.md },
