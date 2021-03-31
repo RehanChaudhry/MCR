@@ -5,9 +5,10 @@ import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
 import { AppFormDropDown } from "ui/components/molecules/app_form/AppFormDropDown";
-import { grayShades } from "../../../../hooks/theme/ColorPaletteContainer";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { grayShades } from "hooks/theme/ColorPaletteContainer";
 
-export const Interests = React.memo(({}) => {
+export const Interests = optimizedMemo(({}) => {
   const theme = usePreferredTheme();
   return (
     <CardView style={styles.cardStyles}>

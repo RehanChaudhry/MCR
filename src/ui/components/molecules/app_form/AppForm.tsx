@@ -10,17 +10,20 @@ export interface AppFormProps {
 
 type Props = AppFormProps;
 
-const AppForm = React.memo<Props>(
-  ({ initialValues, onSubmit, validationSchema, children }) => {
-    return (
-      <Formik
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validationSchema={validationSchema}>
-        {() => <>{children}</>}
-      </Formik>
-    );
-  }
-);
+const AppForm: React.FC<Props> = ({
+  initialValues,
+  onSubmit,
+  validationSchema,
+  children
+}) => {
+  return (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={validationSchema}>
+      {() => <>{children}</>}
+    </Formik>
+  );
+};
 
 export default AppForm;

@@ -4,12 +4,13 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppSwitch } from "ui/components/atoms/app_switch/AppSwitch";
 import { usePreferredTheme } from "hooks";
 import { AppColorScheme } from "hooks/theme";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 type props = {
   children: React.ReactNode;
 };
 
-export const ThemeSwitcher = React.memo<props>(({ children }) => {
+export const ThemeSwitcher = optimizedMemo<props>(({ children }) => {
   const { themedColors, setScheme, isDark } = usePreferredTheme();
 
   const [text, setText] = useState(

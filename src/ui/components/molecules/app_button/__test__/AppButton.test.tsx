@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import React from "react";
 import "react-native";
 import { ReactTestInstance } from "react-test-renderer";
@@ -110,11 +110,13 @@ it("works fine even when all hell broke loose", async () => {
   queryComponents();
 
   // then
-  expect(leftIcon).toBeNull();
-  expect(rightIcon).toBeNull();
-  expect(text).toBeNull();
-  expect(loader).not.toBeNull();
-  expect(onPress).toBeCalledTimes(1);
+  await waitFor(() => {
+    expect(leftIcon).toBeNull();
+    expect(rightIcon).toBeNull();
+    expect(text).toBeNull();
+    expect(loader).not.toBeNull();
+    expect(onPress).toBeCalledTimes(1);
+  });
 
   // when
   changePbStatus(onPress, update, false);

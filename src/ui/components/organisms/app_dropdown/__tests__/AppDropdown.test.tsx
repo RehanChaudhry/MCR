@@ -4,11 +4,12 @@ import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import {
   fireEvent,
   render,
-  RenderAPI
+  RenderAPI,
+  waitFor
 } from "@testing-library/react-native";
 import { DropDownItem } from "models/DropDownItem";
 
-const items: Array<DropDownItem> = [
+let items: Array<DropDownItem> = [
   {
     title: "Male",
     id: "1"
@@ -65,7 +66,7 @@ it("Renders snapshot as expected", () => {
 });
 
 describe("check visibility of modal", () => {
-  it("check modal visibility when item is not selected", () => {
+  it("check modal visibility when item is not selected", async () => {
     // given
     const onSelectedItem = jest.fn();
     const { getByTestId } = renderItem(onSelectedItem);
@@ -77,17 +78,21 @@ describe("check visibility of modal", () => {
     performDropDownClick(getByTestId);
 
     //then
-    expect(getDropDownModal(getByTestId).props.visible).toBe(true);
+    await waitFor(() => {
+      expect(getDropDownModal(getByTestId).props.visible).toBe(true);
+    });
 
     //when
     const closeModal = getByTestId("close-modal");
     fireEvent.press(closeModal);
 
     //then
-    expect(getDropDownModal(getByTestId).props.visible).toBe(false);
+    await waitFor(() => {
+      expect(getDropDownModal(getByTestId).props.visible).toBe(false);
+    });
   });
 
-  it("check modal should invisible when item is selected", () => {
+  it("check modal should invisible when item is selected", async () => {
     // given
     const onSelectedItem = jest.fn();
     const { getByTestId, queryAllByTestId } = renderItem(onSelectedItem);
@@ -99,18 +104,22 @@ describe("check visibility of modal", () => {
     performDropDownClick(getByTestId);
 
     //then
-    expect(getDropDownModal(getByTestId).props.visible).toBe(true);
+    await waitFor(() => {
+      expect(getDropDownModal(getByTestId).props.visible).toBe(true);
+    });
 
     //when
     const dropDownItemClick = queryAllByTestId("dropdown-item-click");
     fireEvent.press(dropDownItemClick[0]); //pick first item from dropdown list
 
     //then
-    expect(getDropDownModal(getByTestId).props.visible).toBe(false);
+    await waitFor(() => {
+      expect(getDropDownModal(getByTestId).props.visible).toBe(false);
+    });
   });
 });
 
-it("check dropdown shows 3 entries", () => {
+it("check dropdown shows 3 entries", async () => {
   // given
   const onSelectedItem = jest.fn();
   const { getByTestId, queryAllByTestId } = renderItem(onSelectedItem);
@@ -122,14 +131,16 @@ it("check dropdown shows 3 entries", () => {
   performDropDownClick(getByTestId);
 
   //then
-  expect(getDropDownModal(getByTestId).props.visible).toBe(true);
+  await waitFor(() => {
+    expect(getDropDownModal(getByTestId).props.visible).toBe(true);
+  });
 
   //then
   const dropDownItems = queryAllByTestId("dropdown-item-click");
   expect(dropDownItems.length).toBe(3);
 });
 
-it("check if dropdown shows selected item with right value", () => {
+it("check if dropdown shows selected item with right value", async () => {
   // given
   const onSelectedItem = jest.fn();
   const { getByTestId, queryAllByTestId } = renderItem(onSelectedItem);
@@ -140,9 +151,11 @@ it("check if dropdown shows selected item with right value", () => {
   fireEvent.press(dropDownItemClick[0]); //pick first item from dropdown list
 
   //then
-  expect(onSelectedItem).toHaveBeenCalledWith({
-    title: "Male",
-    id: "1"
+  await waitFor(() => {
+    expect(onSelectedItem).toHaveBeenCalledWith({
+      title: "Male",
+      id: "1"
+    });
   });
 
   //when
@@ -150,9 +163,11 @@ it("check if dropdown shows selected item with right value", () => {
   fireEvent.press(dropDownItemClick[2]); //pick 3rd item from dropdown list
 
   //then
-  expect(onSelectedItem).toHaveBeenLastCalledWith({
-    title: "Other",
-    id: "3"
+  await waitFor(() => {
+    expect(onSelectedItem).toHaveBeenLastCalledWith({
+      title: "Other",
+      id: "3"
+    });
   });
 
   //then

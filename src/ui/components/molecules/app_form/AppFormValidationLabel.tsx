@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { COLORS, FONT_SIZE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface AppFormValidationLabelProps {
   errorString?: string;
@@ -12,7 +13,7 @@ export interface AppFormValidationLabelProps {
 
 type Props = AppFormValidationLabelProps;
 
-export const AppFormValidationLabel = React.memo<Props>(
+export const AppFormValidationLabel = optimizedMemo<Props>(
   ({
     errorString,
     shouldVisible,
@@ -36,7 +37,7 @@ export const AppFormValidationLabel = React.memo<Props>(
 const styles = StyleSheet.create({
   error: {
     color: COLORS.red,
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.md,
     marginTop: 6
   }
 });

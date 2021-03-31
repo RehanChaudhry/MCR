@@ -2,6 +2,7 @@ import React from "react";
 import { StyleProp, TextStyle, View } from "react-native";
 import { AppLabel, Weight } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE } from "config";
+import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_memo/optimized_memo";
 
 interface OwnProps {
   headingText: string;
@@ -13,7 +14,7 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-export const HeadingWithText = React.memo<Props>(
+export const HeadingWithText = optimizedMemoWithStyleProp<Props>(
   ({
     text,
     headingText,
@@ -36,4 +37,4 @@ export const HeadingWithText = React.memo<Props>(
       </View>
     );
   }
-);
+)(["headingStyle", "textStyle"]);
