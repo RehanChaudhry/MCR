@@ -13,6 +13,7 @@ type Props = {
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete: () => void) => void;
   openCommentsScreen?: () => void | undefined;
+  shouldPlayVideo: boolean;
 };
 
 export const AnnouncementView = React.memo<Props>(
@@ -22,7 +23,8 @@ export const AnnouncementView = React.memo<Props>(
     onEndReached,
     isAllDataLoaded,
     pullToRefreshCallback,
-    openCommentsScreen
+    openCommentsScreen,
+    shouldPlayVideo
   }) => {
     const keyExtractor = useCallback(
       (item: CommunityAnnouncement) => item.id.toString(),
@@ -34,9 +36,10 @@ export const AnnouncementView = React.memo<Props>(
         <AnnouncementItem
           announcementItem={item}
           openCommentsScreen={openCommentsScreen}
+          shouldPlayVideo={shouldPlayVideo}
         />
       ),
-      [openCommentsScreen]
+      [openCommentsScreen, shouldPlayVideo]
     );
     return (
       <Screen style={styles.container}>

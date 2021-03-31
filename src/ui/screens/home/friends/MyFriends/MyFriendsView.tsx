@@ -34,7 +34,7 @@ const listItem = (
       case ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE:
         return "Not Eligible";
       case ROOMMATE_REQUEST_STATE.REQUEST_SENT:
-        return "Pending";
+        return "Pending Request";
     }
   };
 
@@ -103,12 +103,7 @@ const MyFriendsView: FC<Props> = ({
           />
         )}
         renderItem={({ item }) => {
-          return listItem(
-            item,
-            (onPressAction = onPressAction),
-            (onPressChat = onPressChat),
-            (onPressCross = onPressCross)
-          );
+          return listItem(item, onPressChat, onPressAction, onPressCross);
         }}
         data={data}
       />

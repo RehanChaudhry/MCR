@@ -15,7 +15,7 @@ import { AppLog } from "utils/Util";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BasicProfile } from "ui/components/templates/basic_profile/BasicProfile";
 type Props = {
-  isUpdating: boolean;
+  openUpdateQuestionnaireScreen: () => void;
 };
 
 const validationSchema = Yup.object().shape({
@@ -120,7 +120,9 @@ const onSubmit = (_value: FormikValues) => {
   AppLog.log("form values" + initialValues);
 };
 
-export const UpdateProfileView: React.FC<Props> = () => {
+export const UpdateProfileView: React.FC<Props> = ({
+  openUpdateQuestionnaireScreen
+}) => {
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
   return (
@@ -146,6 +148,7 @@ export const UpdateProfileView: React.FC<Props> = () => {
             ]}
             rightIcon={rightArrowIcon}
             iconStyle={styles.iconStyle}
+            onPress={openUpdateQuestionnaireScreen}
           />
         </View>
       </AppForm>
