@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     marginTop: SPACE.sm,
-    color: grayShades.warmGray["300"]
+    color: grayShades.coolGray["600"]
   },
   headingStyle: {
     fontSize: FONT_SIZE.md
