@@ -7,6 +7,7 @@ export type AuthStackParamList = {
   ForgotPasswordFeedBack: undefined;
   UniSelection: undefined;
   Welcome: undefined;
+  SSO_Login: undefined;
 };
 
 export const AuthStack = createStackNavigator<AuthStackParamList>();

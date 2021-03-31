@@ -88,7 +88,7 @@ export const LoginView = React.memo<Props>(
                 }}
                 fieldInputProps={{
                   textContentType: "emailAddress",
-                  keyboardType: "default",
+                  keyboardType: "email-address",
                   returnKeyType: "next",
                   placeholder: STRINGS.login.enter_your_email,
                   autoCapitalize: "none",
@@ -122,7 +122,7 @@ export const LoginView = React.memo<Props>(
                 fieldInputProps={{
                   textContentType: "password",
                   keyboardType: "default",
-                  returnKeyType: "next",
+                  returnKeyType: "done",
                   placeholder: STRINGS.login.enter_your_pass,
                   autoCapitalize: "none",
                   placeholderTextColor: theme.themedColors.placeholder,
