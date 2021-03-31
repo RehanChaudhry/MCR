@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
@@ -27,18 +27,21 @@ const MatchInfoController: FC<Props> = () => {
   AppLog.log("Opening MatchesController");
 
   const navigation = useNavigation<MatchesNavigationProp>();
-  navigation.setOptions({
-    headerLeft: () => (
-      <HeaderLeftTextWithIcon
-        onPress={() => {
-          navigation.pop();
-        }}
-      />
-    ),
-    headerLeftContainerStyle: {
-      padding: SPACE.md
-    }
-  });
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <HeaderLeftTextWithIcon
+          onPress={() => {
+            navigation.pop();
+          }}
+        />
+      ),
+      headerLeftContainerStyle: {
+        padding: SPACE.md
+      }
+    });
+  }, [navigation]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [matchInfo, setMatchInfo] = useState<MatchInfo>(matchInfoData);

@@ -1,5 +1,5 @@
-import React from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { Image, StyleSheet, View } from "react-native";
 import ProfileAvatar from "assets/images/profile_avatar.svg";
 import {
   AppImageBackground,
@@ -12,6 +12,9 @@ import {
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import * as ImagePicker from "react-native-image-picker";
+import { ImagePickerResponse } from "react-native-image-picker";
+import { AppLog } from "../../../../utils/Util";
 
 export const UploadProfilePhoto = React.memo(() => {
   const theme = usePreferredTheme();
@@ -25,16 +28,56 @@ export const UploadProfilePhoto = React.memo(() => {
       />
     );
   };
+
+  const [
+    imageResponse,
+    setImageResponse
+  ] = useState<ImagePickerResponse>();
+
+  const pickImage = () => {
+    ImagePicker.launchImageLibrary(
+      {
+        mediaType: "photo",
+        includeBase64: false,
+        maxHeight: 200,
+        maxWidth: 200
+      },
+      (response) => {
+        if (
+          response !== null &&
+          response !== undefined &&
+          response.didCancel !== true
+        ) {
+          setImageResponse(response);
+        }
+      }
+    );
+  };
+
+  AppLog.log("image uri" + imageResponse?.uri);
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
-        <AppImageBackground
-          icon={profileIcon}
-          containerShape={CONTAINER_TYPES.SQUARE}
-          onPress={() => {
-            Alert.alert("Profile Icon Tapped");
-          }}
-        />
+        <>
+          {!imageResponse && (
+            <AppImageBackground
+              icon={profileIcon}
+              containerShape={CONTAINER_TYPES.SQUARE}
+              // onPress={() => {
+              //   Alert.alert("Profile Icon Tapped");
+              // }}
+            />
+          )}
+
+          {imageResponse && (
+            <View style={styles.imageViewStyle}>
+              <Image
+                style={styles.image}
+                source={{ uri: imageResponse?.uri }}
+              />
+            </View>
+          )}
+        </>
         <AppButton
           text={STRINGS.profile.buttonText.uploadProfilePhoto}
           buttonStyle={[
@@ -49,6 +92,7 @@ export const UploadProfilePhoto = React.memo(() => {
           }}
           shouldShowError={false}
           fontWeight={"semi-bold"}
+          onPress={pickImage}
         />
       </View>
       <AppLabel
@@ -81,5 +125,15 @@ const styles = StyleSheet.create({
   },
   text: {
     paddingVertical: SPACE.xl
+  },
+  imageViewStyle: {
+    height: 50,
+    width: 50,
+    borderRadius: 8,
+    overflow: "hidden"
+  },
+  image: {
+    height: 50,
+    width: 50
   }
 });

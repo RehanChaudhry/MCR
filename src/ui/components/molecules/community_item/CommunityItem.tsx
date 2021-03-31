@@ -19,10 +19,11 @@ import Shield from "assets/images/shield.svg";
 export interface CommunityItemProps extends TouchableOpacityProps {
   communityItem: CommunityAnnouncement;
   openCommentsScreen?: () => void | undefined;
+  shouldPlayVideo: boolean;
 }
 
 export const CommunityItem = React.memo<CommunityItemProps>(
-  ({ communityItem, openCommentsScreen }) => {
+  ({ communityItem, openCommentsScreen, shouldPlayVideo }) => {
     const theme = usePreferredTheme();
     const rightImage: SvgProp = () => {
       return (
@@ -59,12 +60,14 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           <WebViewComponent
             url={communityItem.link}
             urlType={URL_TYPES.LINK}
+            shouldPlayVideo={shouldPlayVideo}
           />
         )}
         {communityItem.embeddedUrl != null && true && (
           <WebViewComponent
             url={communityItem.embeddedUrl}
             urlType={URL_TYPES.EMBEDDED}
+            shouldPlayVideo={shouldPlayVideo}
           />
         )}
         {communityItem.images != null &&

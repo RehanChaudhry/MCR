@@ -32,7 +32,7 @@ const listItem = (
   );
 };
 
-const FriendRequestsView: FC<Props> = ({
+const ConnectRequestsView: FC<Props> = ({
   data,
   onPressApproved,
   onPressDeclined
@@ -72,4 +72,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FriendRequestsView;
+export default ConnectRequestsView;

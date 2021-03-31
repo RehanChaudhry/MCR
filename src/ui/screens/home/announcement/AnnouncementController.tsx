@@ -6,6 +6,7 @@ import React, {
   FC,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState
 } from "react";
@@ -14,6 +15,7 @@ import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { AnnouncementView } from "ui/screens/home/announcement/AnnouncementView";
 import DataGenerator from "utils/DataGenerator";
+import { AppLog } from "utils/Util";
 
 type AnnouncementNavigationProp = StackNavigationProp<
   AnnouncementStackParamList,
@@ -33,14 +35,17 @@ const AnnouncementController: FC<Props> = () => {
     CommunityAnnouncement[] | undefined
   >(DataGenerator.getCommunityAnnouncementList(pageToReload.current));
   const navigation = useNavigation<AnnouncementNavigationProp>();
+  const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
 
-  navigation.setOptions({
-    headerLeft: () => <Hamburger />,
-    headerTitleAlign: "center",
-    headerTitle: () => (
-      <HeaderTitle text={Strings.announcement.announcementTitle} />
-    )
-  });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => <Hamburger />,
+      headerTitleAlign: "center",
+      headerTitle: () => (
+        <HeaderTitle text={Strings.announcement.announcementTitle} />
+      )
+    });
+  }, [navigation]);
 
   const fetchAnnouncements = useCallback(async () => {
     if (isFetchingInProgress.current) {
@@ -100,6 +105,24 @@ const AnnouncementController: FC<Props> = () => {
     }, 1000);
   }, [fetchAnnouncements]);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      AppLog.logForcefully("announcement screen is blur");
+      setShouldPlayVideo(false);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      AppLog.logForcefully("announcement screen is focus");
+      setShouldPlayVideo(true);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   const openCommentsScreen = () => {
     navigation.navigate("Comments");
   };
@@ -112,6 +135,7 @@ const AnnouncementController: FC<Props> = () => {
       isAllDataLoaded={isAllDataLoaded}
       pullToRefreshCallback={refreshCallback}
       openCommentsScreen={openCommentsScreen}
+      shouldPlayVideo={shouldPlayVideo}
     />
   );
 };

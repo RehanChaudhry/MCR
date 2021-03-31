@@ -96,6 +96,7 @@ const UniSelectionView: FC<Props> = ({
               return listItem(item, didSelectItem);
             }}
             style={styles.listStyle}
+            showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => (
               <ListItemSeparator
                 style={[
@@ -140,7 +141,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
   searchFieldContainer: {
-    padding: SPACE.lg
+    paddingHorizontal: SPACE.lg,
+    paddingTop: SPACE.lg,
+    flexDirection: "row"
   },
   searchField: {
     borderWidth: 1

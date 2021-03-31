@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: grayShades.warmGray[200],
     flexDirection: "row",
     flexWrap: "wrap",
-    height: 36,
+    height: 34,
     alignItems: "center",
     marginRight: SPACE.sm,
     padding: 8,
