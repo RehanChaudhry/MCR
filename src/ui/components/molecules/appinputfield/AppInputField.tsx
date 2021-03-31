@@ -10,6 +10,7 @@ import {
   ViewStyle
 } from "react-native";
 import { COLORS, FONTS, FONT_SIZE, SPACE } from "config";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface AppInputFieldProps extends TextInputProps {
   style?: StyleProp<TextStyle>;
@@ -29,7 +30,7 @@ export interface AppInputFieldProps extends TextInputProps {
 
 type Props = AppInputFieldProps;
 
-export const AppInputField = React.memo<Props>(
+export const AppInputField = optimizedMemo<Props>(
   ({
     onChangeText,
     style,

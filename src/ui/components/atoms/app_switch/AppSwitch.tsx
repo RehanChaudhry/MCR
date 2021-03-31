@@ -9,6 +9,7 @@ import ToggleSwitch from "toggle-switch-react-native";
 import { usePreferredTheme } from "hooks";
 import SwitchActive from "assets/images/switch_active.svg";
 import SwitchInActive from "assets/images/switch_inactive.svg";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface AppButtonProps extends SwitchProps {
   defaultValue: boolean;
@@ -17,7 +18,7 @@ export interface AppButtonProps extends SwitchProps {
   showCustomThumb?: boolean;
 }
 
-export const AppSwitch = React.memo<AppButtonProps>(
+export const AppSwitch = optimizedMemo<AppButtonProps>(
   ({
     defaultValue,
     onValueChange,

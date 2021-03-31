@@ -92,8 +92,8 @@ export const QuestionsView = ({
         textStyle={[styles.saveButton, { color: themedColors.background }]}
         rightIcon={() => (
           <RightArrowCircle
-            width={moderateScale(20)}
-            height={moderateScale(20)}
+            width={moderateScale(15)}
+            height={moderateScale(15)}
             fill={themedColors.background}
           />
         )}

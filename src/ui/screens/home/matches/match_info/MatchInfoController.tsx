@@ -73,7 +73,7 @@ const MatchInfoController: FC<Props> = () => {
     // AppLog.log(
     //   "moveToUpdateProfileScreen(), profile: " + JSON.stringify(profileMatch)
     // );
-    navigation.navigate("UpdateProfile", { isUpdating: true });
+    navigation.navigate("UpdateProfile", { isFrom: EScreen.MATCH_INFO });
   };
 
   const moveToQuestionnaireScreen = () => {

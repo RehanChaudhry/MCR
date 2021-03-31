@@ -13,7 +13,7 @@ import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_wit
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { moderateScale } from "config/Dimens";
 
-type conversationNavigationProp = StackNavigationProp<
+type ConversationNavigationProp = StackNavigationProp<
   ChatParamsList,
   "NewConversation"
 >;
@@ -34,7 +34,7 @@ const dummyData: ConversationItem[] = [
 ];
 
 export const NewConversationController: FC<Props> = () => {
-  const navigation = useNavigation<conversationNavigationProp>();
+  const navigation = useNavigation<ConversationNavigationProp>();
 
   const { themedColors } = usePreferredTheme();
 

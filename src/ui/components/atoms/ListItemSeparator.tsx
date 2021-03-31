@@ -1,6 +1,7 @@
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 interface OwnProps {
   style?: StyleProp<ViewStyle>;
@@ -8,7 +9,7 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const ListItemSeparator = React.memo<Props>(({ style }) => {
+const ListItemSeparator = optimizedMemo<Props>(({ style }) => {
   const theme = usePreferredTheme();
   return (
     <View

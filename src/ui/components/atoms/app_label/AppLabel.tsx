@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { usePreferredTheme } from "hooks";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export type Weight = "bold" | "normal" | "semi-bold";
 
@@ -28,7 +29,7 @@ export enum TEXT_TYPE {
   LINE_THROUGH = "line-through"
 }
 
-export const AppLabel = React.memo<Props>(
+export const AppLabel = optimizedMemo<Props>(
   ({
     text,
     weight = "normal",

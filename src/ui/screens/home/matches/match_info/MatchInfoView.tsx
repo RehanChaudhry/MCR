@@ -63,7 +63,7 @@ export const MatchInfoView: React.FC<Props> = ({
           <AppProgressBar
             style={styles.progress}
             progressPercentage={matchInfo.profileCompletePercentage ?? 0}
-            filledColor={themedColors.primary}
+            filledColor={themedColors.secondary}
             bottomTextStyle={{ color: themedColors.interface[600] }}
           />
           <Divider
@@ -127,7 +127,7 @@ export const MatchInfoView: React.FC<Props> = ({
               <MatchingStatus
                 width={moderateScale(20)}
                 height={moderateScale(20)}
-                fill={themedColors.primary}
+                fill={themedColors.interface[600]}
               />
             )}
             heading={STRINGS.matchInfo.matching_status}
@@ -156,7 +156,7 @@ export const MatchInfoView: React.FC<Props> = ({
               <MatchingDeadline
                 width={moderateScale(20)}
                 height={moderateScale(20)}
-                fill={themedColors.primary}
+                fill={themedColors.interface[600]}
               />
             )}
             heading={STRINGS.matchInfo.matching_deadline}
@@ -183,7 +183,7 @@ export const MatchInfoView: React.FC<Props> = ({
               <Questionnaire
                 width={moderateScale(20)}
                 height={moderateScale(20)}
-                fill={themedColors.primary}
+                fill={themedColors.interface[600]}
               />
             )}
             heading={STRINGS.matchInfo.max_roommate_count}
@@ -210,7 +210,7 @@ export const MatchInfoView: React.FC<Props> = ({
               <MatchingCriteria
                 width={moderateScale(20)}
                 height={moderateScale(20)}
-                fill={themedColors.primary}
+                fill={themedColors.interface[600]}
               />
             )}
             heading={STRINGS.matchInfo.matching_criteria}

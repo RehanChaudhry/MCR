@@ -183,7 +183,7 @@ export default {
       }
     },
     interests: {
-      heading: "Interests",
+      heading: "Interest",
       title: "Tell us about what do you love to do?"
     },
     livingDetails: {
@@ -195,6 +195,13 @@ export default {
       heading: "Video Introduction",
       title:
         "Record 60 seconds self-introduction video presentation and post it on YouTube."
+    },
+    viewProfile: {
+      videoIntroduction: "Watch Video Introduction",
+      roomMates: {
+        heading: "My Roommates"
+      },
+      agreementButtonTitle: "View Roommate Agreement"
     }
   },
 

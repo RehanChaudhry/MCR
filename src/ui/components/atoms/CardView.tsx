@@ -1,6 +1,7 @@
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 interface ownProps {
   children?: any;
@@ -9,7 +10,7 @@ interface ownProps {
 
 type props = ownProps;
 
-export const CardView = React.memo<props>(({ children, style }) => {
+export const CardView = optimizedMemo<props>(({ children, style }) => {
   const theme = usePreferredTheme();
   return (
     <View

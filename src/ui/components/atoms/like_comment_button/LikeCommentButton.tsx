@@ -15,6 +15,7 @@ import { FONT_SIZE, FONTS } from "config";
 import { Color } from "react-native-svg";
 import Like from "assets/images/like.svg";
 import Chat from "assets/images/chat.svg";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface LikeButtonProps extends TouchableOpacityProps {
   onValueChanged?: (isSelected: boolean) => void;
@@ -28,7 +29,7 @@ export interface LikeButtonProps extends TouchableOpacityProps {
     | null;
 }
 
-export const LikeCommentButton = React.memo<LikeButtonProps>(
+export const LikeCommentButton = optimizedMemo<LikeButtonProps>(
   ({
     onValueChanged,
     buttonStyle,

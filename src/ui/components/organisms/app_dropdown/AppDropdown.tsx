@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_memo/optimized_memo";
 import { AppLog, SvgProp } from "utils/Util";
 import { DropdownModal } from "ui/components/organisms/app_dropdown/DropdownModal";
 import { usePreferredTheme } from "hooks";
@@ -28,7 +29,7 @@ export interface AppDropdownProps {
   shouldShowCustomIcon?: boolean;
 }
 
-export const AppDropdown = React.memo<AppDropdownProps>(
+export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
   ({
     title,
     items,
@@ -120,7 +121,13 @@ export const AppDropdown = React.memo<AppDropdownProps>(
       </View>
     );
   }
-);
+)([
+  "style",
+  "textStyle",
+  "dialogCloseIconStyle",
+  "dropDownIconStyle",
+  "dropDownIcon"
+]);
 
 const styles = StyleSheet.create({
   root: {

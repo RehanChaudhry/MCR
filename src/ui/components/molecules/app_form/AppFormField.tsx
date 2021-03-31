@@ -13,6 +13,7 @@ import {
 import { AppFormValidationLabel } from "./AppFormValidationLabel";
 import { FONT_SIZE, SPACE } from "../../../../config";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface AppFormFieldProps {
   fieldTestID?: string;
@@ -29,7 +30,7 @@ export interface AppFormFieldProps {
 
 type Props = AppFormFieldProps;
 
-const AppFormField = React.memo<Props>(
+const AppFormField = optimizedMemo<Props>(
   ({
     name,
     value,

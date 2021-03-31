@@ -43,14 +43,13 @@ const dummyChats = DataGenerator.createChatThread();
 
 export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
   const myNavigation = useNavigation<typeof navigation>();
-  const { params } = useRoute<typeof route>();
+  const { params }: any = useRoute<typeof route>();
   const [chats, setChats] = useState<ChatItem[]>(dummyChats);
 
   const { themedColors } = usePreferredTheme();
 
   const getTitle = (): string => {
-    // @ts-ignore
-    const title = params.title;
+    const title = params?.title ?? "N/A";
 
     if (title.length === 1) {
       return title[0];

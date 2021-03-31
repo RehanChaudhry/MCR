@@ -15,13 +15,14 @@ import {
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import { AppLog, SvgProp } from "utils/Util";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface ImageWithCrossProps extends TouchableOpacityProps {
   imageResponse: ImagePickerResponse;
   onImageRemoved: (imageResponse: ImagePickerResponse) => void;
 }
 
-export const ImageWithCross = React.memo<ImageWithCrossProps>(
+export const ImageWithCross = optimizedMemo<ImageWithCrossProps>(
   ({ imageResponse, onImageRemoved }) => {
     const theme = usePreferredTheme();
     const closeIcon: SvgProp = () => {

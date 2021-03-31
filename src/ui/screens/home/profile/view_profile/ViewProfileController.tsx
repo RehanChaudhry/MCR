@@ -30,6 +30,7 @@ type ProfileRouteProp = RouteProp<ProfileStackParamList, "ViewProfile">;
 
 const ViewProfileController: FC<Props> = () => {
   const navigation = useNavigation<ProfileNavigationProp>();
+
   const navigationNotification = useNavigation<NotificationNavigationProp>();
   const route = useRoute<ViewProfileRouteProp>();
 
@@ -54,7 +55,12 @@ const ViewProfileController: FC<Props> = () => {
         headerTitle: () => <HeaderTitle text="View Profile" />
       });
     }
-  }, [navigation, route.params.isFrom, viewProfileRoute.params.isFrom]);
+  }, [
+    navigation,
+    route.params.isFrom,
+    viewProfileRoute.params.isFrom,
+    navigationNotification
+  ]);
 
   return <ViewProfileView />;
 };

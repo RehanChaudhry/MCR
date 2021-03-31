@@ -9,6 +9,7 @@ import {
   View
 } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface AppLoadMoreProps extends TouchableOpacityProps {
   text?: string;
@@ -17,7 +18,7 @@ export interface AppLoadMoreProps extends TouchableOpacityProps {
   shouldShowLoadMore?: boolean;
 }
 
-export const AppLoadMore = React.memo<AppLoadMoreProps>(
+export const AppLoadMore = optimizedMemo<AppLoadMoreProps>(
   ({
     loaderSize = 25,
     text = "Loading, please wait",

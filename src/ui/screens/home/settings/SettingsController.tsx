@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useLayoutEffect } from "react";
 import SettingsView from "./SettingsView";
 import { useNavigation } from "@react-navigation/native";
 import Hamburger from "../../../components/molecules/hamburger/Hamburger";
@@ -14,11 +14,15 @@ type SettingNavigationProp = StackNavigationProp<
 
 const SettingsController: FC<Props> = () => {
   const navigation = useNavigation<SettingNavigationProp>();
-  navigation.setOptions({
-    headerLeft: () => <Hamburger />,
-    headerTitleAlign: "center",
-    headerTitle: () => <HeaderTitle text="Settings" />
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => <Hamburger />,
+      headerTitleAlign: "center",
+      headerTitle: () => <HeaderTitle text="Settings" />
+    });
   });
+
   return <SettingsView />;
 };
 

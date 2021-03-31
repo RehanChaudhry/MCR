@@ -31,12 +31,13 @@ import { Divider } from "react-native-elements";
 import Colors from "config/Colors";
 import { SvgProps } from "react-native-svg";
 import { HomeDrawerParamList } from "routes";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
   currentItem: string;
   setCurrentItem: (name: string) => void;
 };
-export const CustomDrawer = React.memo<CustomDrawerProps>((props) => {
+export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
   const { currentItem, setCurrentItem } = props;
   // eslint-disable-next-line new-cap
   const ripple = TouchableNativeFeedback.Ripple("#adacac", false);

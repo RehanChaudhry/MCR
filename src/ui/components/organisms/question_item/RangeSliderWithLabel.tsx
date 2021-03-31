@@ -10,6 +10,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
+import { moderateScale } from "config/Dimens";
 
 interface RangeSliderWithLabelProps {
   initialValues: number[] | undefined;
@@ -67,6 +68,18 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = ({
     <>
       <AppLabel style={styles.label} text={labelLeft} />
       <View style={styles.sliderContainer}>
+        <View
+          style={[
+            styles.leftPointer,
+            { backgroundColor: themedColors.primary }
+          ]}
+        />
+        <View
+          style={[
+            styles.rightPointer,
+            { backgroundColor: themedColors.primary }
+          ]}
+        />
         <MultiSlider
           values={initialValues}
           {...(enableTwoThumbs
@@ -161,5 +174,21 @@ const styles = StyleSheet.create({
     height: 45,
     paddingVertical: 15,
     paddingHorizontal: 10
+  },
+  leftPointer: {
+    position: "absolute",
+    width: moderateScale(2),
+    height: moderateScale(10),
+    left: moderateScale(5),
+    top: "20%",
+    borderRadius: moderateScale(1)
+  },
+  rightPointer: {
+    position: "absolute",
+    width: moderateScale(2),
+    height: moderateScale(10),
+    right: moderateScale(5),
+    bottom: "20%",
+    borderRadius: moderateScale(1)
   }
 });

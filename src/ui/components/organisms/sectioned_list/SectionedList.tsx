@@ -117,13 +117,14 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
       sections={list}
       renderItem={bodyItemView}
       renderSectionHeader={sectionView}
+      renderSectionFooter={() => <View style={{ height: SPACE.md }} />}
       keyExtractor={(item) => item.key()}
       contentContainerStyle={style}
       onScrollToIndexFailed={(info) => {
         AppLog.log("Failed to scroll to " + info.index);
       }}
       ListFooterComponent={listFooterComponent}
-      stickySectionHeadersEnabled={false} // true by default for iOS, for same experience
+      stickySectionHeadersEnabled={true} // true by default for iOS, for same experience
     />
   );
 };
