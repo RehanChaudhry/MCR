@@ -3,12 +3,13 @@ import { SvgProp } from "utils/Util";
 import { Color, NumberProp } from "react-native-svg";
 import Code from "assets/images/code.svg";
 import { AppCompactButton } from "ui/components/atoms/app_compact_button/AppCompactButton";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 type Props = {
   onPress: () => void;
   isSelected: boolean;
 };
-export const EmbedButton = React.memo<Props>(
+export const EmbedButton = optimizedMemo<Props>(
   ({ onPress, isSelected = false }) => {
     const codeIcon: SvgProp = (
       color?: Color,

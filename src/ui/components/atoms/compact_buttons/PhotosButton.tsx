@@ -3,12 +3,13 @@ import { SvgProp } from "utils/Util";
 import { AppCompactButton } from "ui/components/atoms/app_compact_button/AppCompactButton";
 import { Color, NumberProp } from "react-native-svg";
 import Photo from "assets/images/photo.svg";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 type Props = {
   onPress: () => void;
   isSelected: boolean;
 };
-export const PhotosButton = React.memo<Props>(
+export const PhotosButton = optimizedMemo<Props>(
   ({ onPress, isSelected = false }) => {
     const photosIcon: SvgProp = (
       color?: Color,

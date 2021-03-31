@@ -68,12 +68,9 @@ export const ChatListScreen = React.memo<ChatListProps>(
     const handleClick = useCallback((textToSearch?: string) => {
       lastHeaderTitle = "";
 
-      textToSearch !== "" &&
-        textToSearch !== undefined &&
-        setItems(
-          performSearch(textToSearch)
-        ); /*||
-        setItems(data);*/
+      textToSearch !== "" && textToSearch !== undefined
+        ? setItems(performSearch(textToSearch))
+        : setItems(data);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

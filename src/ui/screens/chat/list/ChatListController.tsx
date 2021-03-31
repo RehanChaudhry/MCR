@@ -85,9 +85,9 @@ export const ChatListController: FC<Props> = () => {
   const refreshCallback = useCallback(
     async (onComplete: () => void) => {
       /*pageToReload.current = 1;
-      fetchCommunities().then(() => {
-        onComplete();
-      });*/
+        fetchCommunities().then(() => {
+          onComplete();
+        });*/
 
       setTimeout(() => {
         setChats(dummyChats);

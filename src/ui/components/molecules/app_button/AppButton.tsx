@@ -13,6 +13,7 @@ import {
   ViewStyle
 } from "react-native";
 import { AppLabel, Weight } from "ui/components/atoms/app_label/AppLabel";
+import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_memo/optimized_memo";
 import { SvgProp } from "utils/Util";
 import { moderateScale } from "config/Dimens";
 
@@ -40,7 +41,7 @@ export enum BUTTON_TYPES {
   DASH = "dashed"
 }
 
-export const AppButton = React.memo<AppButtonProps>(
+export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
   ({
     text,
     onPress,
@@ -146,7 +147,14 @@ export const AppButton = React.memo<AppButtonProps>(
       </TouchableOpacity>
     );
   }
-);
+)([
+  "textStyle",
+  "buttonStyle",
+  "style",
+  "iconStyle",
+  "rightIcon",
+  "leftIcon"
+]);
 
 const style = StyleSheet.create({
   buttonWithShadow: {

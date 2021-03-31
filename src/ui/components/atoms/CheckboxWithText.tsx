@@ -9,6 +9,7 @@ import {
   ViewStyle
 } from "react-native";
 import { CheckBox } from "react-native-elements";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 interface OwnProps extends ViewProps {
   text: string;
@@ -19,7 +20,7 @@ interface OwnProps extends ViewProps {
 
 type Props = OwnProps;
 
-const CheckboxWithText = React.memo<Props>(
+const CheckboxWithText = optimizedMemo<Props>(
   ({ text, isBold = false, style, onValueChange, ...rest }) => {
     const [checked, setChecked] = useState(false);
     return (

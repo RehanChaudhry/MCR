@@ -7,6 +7,7 @@ import {
   BUTTON_TYPES
 } from "ui/components/molecules/app_button/AppButton";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 type Props = {
   text?: string;
@@ -14,7 +15,7 @@ type Props = {
   style?: StyleProp<ViewStyle>;
 };
 
-const ErrorWithRetryView = React.memo<Props>(
+const ErrorWithRetryView = optimizedMemo<Props>(
   ({
     text = STRINGS.common.some_thing_bad_happened,
     retryCallback = () => {},

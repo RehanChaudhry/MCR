@@ -12,11 +12,12 @@ import {
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { AppLog } from "utils/Util";
 import * as ImagePicker from "react-native-image-picker";
 import { ImagePickerResponse } from "react-native-image-picker";
-import { AppLog } from "../../../../utils/Util";
 
-export const UploadProfilePhoto = React.memo(() => {
+export const UploadProfilePhoto = optimizedMemo(() => {
   const theme = usePreferredTheme();
   const profileIcon = () => {
     return (

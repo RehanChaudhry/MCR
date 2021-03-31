@@ -15,6 +15,7 @@ import {
   ViewStyle
 } from "react-native";
 import { Color } from "react-native-svg";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 interface OwnProps {
   style?: StyleProp<ViewStyle>;
@@ -28,8 +29,8 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const SearchField = React.memo<Props>((props) => {
-  const {
+const SearchField = optimizedMemo<Props>(
+  ({
     placeholder,
     style,
     textStyle,
@@ -37,66 +38,67 @@ const SearchField = React.memo<Props>((props) => {
     searchIcon,
     iconColor,
     clearIcon
-  } = props;
-  const [currentSearchText, setCurrentSearchText] = useState("");
-  const theme = usePreferredTheme();
+  }) => {
+    const [currentSearchText, setCurrentSearchText] = useState("");
+    const theme = usePreferredTheme();
 
-  useEffectWithSkipFirstTime(() => {
-    const timeoutRef = setTimeout(() => {
-      onChangeText(currentSearchText);
-    }, 1500);
+    useEffectWithSkipFirstTime(() => {
+      const timeoutRef = setTimeout(() => {
+        onChangeText(currentSearchText);
+      }, 1500);
 
-    return () => {
-      clearTimeout(timeoutRef);
-    };
-  });
+      return () => {
+        clearTimeout(timeoutRef);
+      };
+    });
 
-  return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: theme.themedColors.primary
-        },
-        style
-      ]}>
-      {searchIcon && (
-        <Search
-          width={14}
-          height={14}
-          style={styles.leftIcon}
-          testID={"left-icon"}
-          fill={iconColor ?? theme.themedColors.interface[600]}
-        />
-      )}
-      <TextInput
-        value={currentSearchText}
-        placeholderTextColor={theme.themedColors.interface[600]}
-        placeholder={placeholder}
-        numberOfLines={1}
-        testID="SEARCH"
+    return (
+      <View
         style={[
-          styles.textInput,
-          { color: theme.themedColors.label },
-          textStyle
-        ]}
-        onChangeText={setCurrentSearchText}
-      />
-
-      {clearIcon && currentSearchText !== "" && (
-        <TouchableOpacity onPress={() => setCurrentSearchText("")}>
-          <Cross
+          styles.container,
+          {
+            backgroundColor: theme.themedColors.primary
+          },
+          style
+        ]}>
+        {searchIcon && (
+          <Search
             width={14}
             height={14}
-            testID={"right-icon"}
-            style={styles.rightIcon}
+            style={styles.leftIcon}
+            testID={"left-icon"}
             fill={iconColor ?? theme.themedColors.interface[600]}
           />
-        </TouchableOpacity>
-      )}
-    </View>
-  );
-});
+        )}
+        <TextInput
+          value={currentSearchText}
+          placeholderTextColor={theme.themedColors.interface[600]}
+          placeholder={placeholder}
+          numberOfLines={1}
+          testID="SEARCH"
+          style={[
+            styles.textInput,
+            { color: theme.themedColors.label },
+            textStyle
+          ]}
+          onChangeText={setCurrentSearchText}
+        />
+
+        {clearIcon && currentSearchText !== "" && (
+          <TouchableOpacity onPress={() => setCurrentSearchText("")}>
+            <Cross
+              width={14}
+              height={14}
+              testID={"right-icon"}
+              style={styles.rightIcon}
+              fill={iconColor ?? theme.themedColors.interface[600]}
+            />
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: {
