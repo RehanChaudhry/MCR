@@ -6,6 +6,7 @@ import { usePreferredTheme } from "hooks";
 import Search from "assets/images/search_icon.svg";
 import Cross from "assets/images/cross.svg";
 import {
+  Keyboard,
   StyleProp,
   StyleSheet,
   TextInput,
@@ -45,7 +46,7 @@ const SearchField = optimizedMemoWithStyleProp<Props>(
     useEffectWithSkipFirstTime(() => {
       const timeoutRef = setTimeout(() => {
         onChangeText(currentSearchText);
-      }, 1500);
+      }, 1000);
 
       return () => {
         clearTimeout(timeoutRef);
@@ -85,7 +86,11 @@ const SearchField = optimizedMemoWithStyleProp<Props>(
         />
 
         {clearIcon && currentSearchText !== "" && (
-          <TouchableOpacity onPress={() => setCurrentSearchText("")}>
+          <TouchableOpacity
+            onPress={() => {
+              Keyboard.dismiss();
+              setCurrentSearchText("");
+            }}>
             <Cross
               width={14}
               height={14}
