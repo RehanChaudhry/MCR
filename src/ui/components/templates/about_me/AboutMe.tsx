@@ -20,7 +20,8 @@ import {
   BUTTON_TYPES
 } from "ui/components/molecules/app_button/AppButton";
 import Colors from "config/Colors";
-import { grayShades } from "../../../../hooks/theme/ColorPaletteContainer";
+import { grayShades } from "hooks/theme/ColorPaletteContainer";
+import Strings from "config/Strings";
 
 type Props = {};
 
@@ -56,7 +57,7 @@ const AboutMe: FC<Props> = () => {
           </View>
         </View>
         <AppButton
-          text={"Watch Video Introduction"}
+          text={Strings.profile.viewProfile.videoIntroduction}
           buttonStyle={[
             styles.uploadButton,
             { borderColor: theme.themedColors.interface["700"] }
@@ -75,7 +76,7 @@ const AboutMe: FC<Props> = () => {
         />
 
         <AppLabel
-          text={"About Me"}
+          text={Strings.profile.formTitle.aboutMe}
           style={[
             styles.aboutMe,
             { color: theme.themedColors.labelSecondary }
@@ -94,7 +95,7 @@ const AboutMe: FC<Props> = () => {
       <View style={styles.innerCardView}>
         <SocialDetailForm
           icon={facebookIcon}
-          heading={"Facebook Profile"}
+          heading={Strings.profile.formTitle.faceBookProfile}
           title={"facebook.com/zanemayes"}
           headingStyle={{ color: grayShades.warmGray["700"] }}
           onPress={() => {
@@ -103,7 +104,7 @@ const AboutMe: FC<Props> = () => {
         />
         <SocialDetailForm
           icon={twitterIcon}
-          heading={"Twitter Profile"}
+          heading={Strings.profile.formTitle.twitterProfile}
           title={"twitter.com/zanemayes"}
           headingStyle={{ color: grayShades.warmGray["700"] }}
           onPress={() => {
@@ -112,7 +113,7 @@ const AboutMe: FC<Props> = () => {
         />
         <SocialDetailForm
           icon={linkedInIcon}
-          heading={"LinkedIn Profile"}
+          heading={Strings.profile.formTitle.linkedInProfile}
           title={"linkedin.com/zanemayes"}
           headingStyle={{ color: grayShades.warmGray["700"] }}
           onPress={() => {
@@ -121,7 +122,7 @@ const AboutMe: FC<Props> = () => {
         />
         <SocialDetailForm
           icon={tikTokIcon}
-          heading={"TikTok Profile"}
+          heading={Strings.profile.formTitle.tikTokProfile}
           title={"tiktok.com/zanemayes"}
           headingStyle={{ color: grayShades.warmGray["700"] }}
           onPress={() => {
@@ -130,7 +131,7 @@ const AboutMe: FC<Props> = () => {
         />
         <SocialDetailForm
           icon={instagramIcon}
-          heading={"Instagram Profile"}
+          heading={Strings.profile.formTitle.instagramProfile}
           title={"instagram.com/zanemayes"}
           headingStyle={{ color: grayShades.warmGray["700"] }}
           onPress={() => {
@@ -139,7 +140,7 @@ const AboutMe: FC<Props> = () => {
         />
         <SocialDetailForm
           icon={snapchatIcon}
-          heading={"SnapChat Profile"}
+          heading={Strings.profile.formTitle.snapChatProfile}
           title={"snapchat.com/zanemayes"}
           headingStyle={{ color: grayShades.warmGray["700"] }}
           onPress={() => {
