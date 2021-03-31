@@ -22,6 +22,10 @@ import { MyRoommatesResponseModel } from "models/api_responses/MyRoommatesRespon
 import { DismissedOrBlockedResponseModel } from "models/api_responses/DismissedOrBlockedResponseModel";
 import { FriendRequestsResponseModel } from "models/api_responses/FriendRequestsResponseModel";
 import { RoommateRequestsResponseModel } from "models/api_responses/RoommateRequestsResponseModel";
+import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiRequestModel";
+import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
+import ActivityType from "models/enums/ActivityType";
+import ActivityLog from "models/ActivityLog";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -325,6 +329,49 @@ const getProfileMatches: (
   return response;
 };
 
+const getActivityLog = (id: number) => {
+  const activityLog: ActivityLog = {
+    id: id,
+    type: ActivityType.FRIEND_REQUEST_SENT,
+    message: "Sent a friend request to Taelyn Dickens",
+    date: randomDate(new Date(2021, 3, 30), new Date())
+  };
+  return activityLog;
+};
+
+const getActivityLogs: (
+  request: ActivityLogApiRequestModel
+) => Promise<{
+  hasError: boolean;
+  errorBody: undefined;
+  dataBody: ActivityLogsResponseModel;
+}> = async (request: ActivityLogApiRequestModel) => {
+  AppLog.log("getActivityLogs(), request: " + JSON.stringify(request));
+  const activityLogs: ActivityLog[] = [];
+  for (let i = 0; i < (request.limit ?? 5); i++) {
+    activityLogs.push(getActivityLog(Math.floor(Math.random() * 100) + 1));
+  }
+  const response = {
+    hasError: false,
+    errorBody: undefined,
+    dataBody: {
+      message: "Success",
+      data: activityLogs,
+      pagination: {
+        total: 15,
+        current: request.pageNo,
+        first: activityLogs[0].id,
+        last: activityLogs[activityLogs.length - 1].id,
+        next: request.pageNo + 1 <= 3 ? request.pageNo + 1 : 0
+      }
+    }
+  };
+  AppLog.log(
+    "getActivityLogs(), response: " + JSON.stringify(response.dataBody)
+  );
+  return response;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getCommunityAnnouncementList = (pageToLoad: number) => {
   const communitiesAnnouncements: CommunityAnnouncement[] = [
@@ -580,5 +627,6 @@ export default {
   getDismissedOrBlocked,
   getFriendRequests,
   getRoommateRequests,
-  createComments
+  createComments,
+  getActivityLogs
 };
