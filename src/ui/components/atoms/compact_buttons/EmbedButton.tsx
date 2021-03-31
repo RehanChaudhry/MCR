@@ -1,3 +1,4 @@
+import { FormikValues, useFormikContext } from "formik";
 import React from "react";
 import { SvgProp } from "utils/Util";
 import { Color, NumberProp } from "react-native-svg";
@@ -17,6 +18,7 @@ export const EmbedButton = React.memo<Props>(
     ) => {
       return <Code fill={color} width={width} height={height} />;
     };
+    const { values } = useFormikContext<FormikValues>();
     return (
       <AppCompactButton
         unSelectedText={"Embed"}
@@ -25,7 +27,10 @@ export const EmbedButton = React.memo<Props>(
         shouldShowBgColorCahange={true}
         isSelected={isSelected}
         icon={codeIcon}
-        onPress={onPress}
+        onPress={() => {
+          values.link = "";
+          onPress();
+        }}
       />
     );
   }

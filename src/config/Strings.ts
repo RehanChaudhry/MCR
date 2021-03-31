@@ -228,10 +228,10 @@ export default {
     title: {
       createPost: "Create Post",
       post: "Post",
-      maxImageMessage: "You cannot select more than 5 images"
+      maxImageMessage: "You cannot select more than 5 images."
     },
     requiredField: {
-      message: "Post field is required"
+      message: "Post field is required."
     },
     placeholder: {
       startTypingYourMessage: "Start typing your message",
@@ -244,8 +244,8 @@ export default {
       embed: "Embed"
     },
     fieldValidationMessage: {
-      invalidUrl: "Please enter valid link",
-      invalidEmbedLink: "Please enter valid embed code"
+      invalidUrl: "Please enter valid link.",
+      invalidEmbedLink: "Please enter valid embed code."
     }
   },
   matchInfo: {

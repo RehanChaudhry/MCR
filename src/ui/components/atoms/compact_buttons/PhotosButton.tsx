@@ -1,3 +1,4 @@
+import { FormikValues, useFormikContext } from "formik";
 import React from "react";
 import { SvgProp } from "utils/Util";
 import { AppCompactButton } from "ui/components/atoms/app_compact_button/AppCompactButton";
@@ -17,6 +18,7 @@ export const PhotosButton = React.memo<Props>(
     ) => {
       return <Photo fill={color} width={width} height={height} />;
     };
+    const { values } = useFormikContext<FormikValues>();
     return (
       <AppCompactButton
         unSelectedText={"Photos"}
@@ -25,7 +27,11 @@ export const PhotosButton = React.memo<Props>(
         shouldShowBgColorCahange={true}
         isSelected={isSelected}
         icon={photosIcon}
-        onPress={onPress}
+        onPress={() => {
+          values.link = "";
+          values.embed = "";
+          onPress();
+        }}
       />
     );
   }

@@ -48,7 +48,7 @@ const CreatePostController: FC<Props> = () => {
             );
           }}
           onPress={() => {
-            SimpleToast.show("Clicked on Post");
+            SimpleToast.show("Clicked on Post.");
           }}
         />
       ),
