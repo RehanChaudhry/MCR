@@ -4,7 +4,8 @@ import {
   StyleSheet,
   TextStyle,
   TouchableOpacity,
-  View
+  View,
+  ViewStyle
 } from "react-native";
 import { SvgProp } from "utils/Util";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
@@ -12,6 +13,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config";
 
 type Props = {
+  mainContainerStyle?: StyleProp<ViewStyle>;
   headingStyle?: StyleProp<TextStyle>;
   titleStyle?: StyleProp<TextStyle>;
   icon: SvgProp;
@@ -26,11 +28,12 @@ const SocialDetailForm: FC<Props> = ({
   title,
   headingStyle,
   titleStyle,
-  onPress
+  onPress,
+  mainContainerStyle
 }) => {
   const theme = usePreferredTheme();
   return (
-    <View style={styles.mainContainer}>
+    <View style={mainContainerStyle}>
       <View style={styles.subContainer}>
         {icon?.(theme.themedColors.label, 20, 20)}
         <AppLabel
@@ -54,10 +57,6 @@ const SocialDetailForm: FC<Props> = ({
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flexDirection: "column"
-    //marginTop: SPACE.lg
-  },
   subContainer: {
     flexDirection: "row",
     alignItems: "center"
