@@ -59,10 +59,6 @@ const MyRoommatesRoutes: FC<MyRoommatesRoutesProps> = () => {
       <MyRoommatesStack.Screen
         name="MyRoommates"
         component={MyRoommatesController}
-        options={{
-          headerTitle: () => <HeaderTitle text="My Roommates" />,
-          headerLeft: () => <Hamburger />
-        }}
       />
     </MyRoommatesStack.Navigator>
   );
@@ -73,7 +69,7 @@ const RoommateAgreementRoutes: FC<RoommateAgreementRoutesProps> = () => {
   return (
     <RoommateAgreementStack.Navigator>
       <RoommateAgreementStack.Screen
-        name="RoomateAgreement"
+        name="RoommateAgreement"
         component={RoommateAgreementController}
         options={{
           headerTitle: () => <HeaderTitle text="Roommate Agreement" />,

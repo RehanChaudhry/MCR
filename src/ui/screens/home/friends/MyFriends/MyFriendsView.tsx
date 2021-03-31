@@ -34,7 +34,7 @@ const listItem = (
       case ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE:
         return "Not Eligible";
       case ROOMMATE_REQUEST_STATE.REQUEST_SENT:
-        return "Pending";
+        return "Pending Request";
     }
   };
 

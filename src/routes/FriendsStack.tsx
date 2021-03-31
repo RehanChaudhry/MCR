@@ -11,7 +11,7 @@ export type MyRoomMatesStackParamList = {
 export const MyRoommatesStack = createStackNavigator<MyRoomMatesStackParamList>();
 
 export type RoommateAgreementStackParamList = {
-  RoomateAgreement: undefined;
+  RoommateAgreement: undefined;
 };
 export const RoommateAgreementStack = createStackNavigator<RoommateAgreementStackParamList>();
 

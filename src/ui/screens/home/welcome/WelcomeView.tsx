@@ -2,7 +2,7 @@ import ArrowRight from "assets/images/arrow_circle_right.svg";
 import Play from "assets/images/play.svg";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { CardView } from "ui/components/atoms/CardView";
 import Screen from "ui/components/atoms/Screen";
@@ -21,6 +21,7 @@ type Props = {
 export const WelcomeView = React.memo<Props>(
   ({ openUpdateProfileScreen }) => {
     const theme = usePreferredTheme();
+    const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
 
     // const openUpdateProfileScreen = () => {
     //   navigation.navigate("UpdateProfile", { isFrom: EScreen.WELCOME });
@@ -41,6 +42,7 @@ export const WelcomeView = React.memo<Props>(
               <WebViewComponent
                 url={"https://www.youtube.com/watch?v=zWh3CShX_do"}
                 urlType={URL_TYPES.LINK}
+                shouldPlayVideo={shouldPlayVideo}
               />
               <View style={styles.buttonViewStyle}>
                 <AppButton
@@ -57,6 +59,7 @@ export const WelcomeView = React.memo<Props>(
                       fill={theme.themedColors.background}
                     />
                   )}
+                  onPress={() => setShouldPlayVideo(true)}
                 />
               </View>
 

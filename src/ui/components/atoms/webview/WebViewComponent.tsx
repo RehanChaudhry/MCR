@@ -8,10 +8,12 @@ import {
   View
 } from "react-native";
 import { WebView } from "react-native-webview";
+import { AppLog } from "utils/Util";
 
 export interface WebViewProps extends TouchableOpacityProps {
   url: string;
   urlType: URL_TYPES;
+  shouldPlayVideo: boolean;
 }
 
 export enum URL_TYPES {
@@ -20,7 +22,8 @@ export enum URL_TYPES {
 }
 
 export const WebViewComponent = React.memo<WebViewProps>(
-  ({ url, urlType }) => {
+  ({ url, urlType, shouldPlayVideo }) => {
+    AppLog.logForcefully("should play video: " + shouldPlayVideo);
     const head = `<style>body{margin:0}</style><meta name="viewport" content="width=device-width, height=100%, initial-scale=1">`;
     const html = `<!DOCTYPE html><html><head>${head}</head><body>${url}</body></html>`;
     const theme = usePreferredTheme();
@@ -39,28 +42,31 @@ export const WebViewComponent = React.memo<WebViewProps>(
           // urlType === URL_TYPES.LINK ? { height: 350 } : {},
           { backgroundColor: theme.themedColors.interface["200"] }
         ]}>
-        <WebView
-          originWhitelist={["*"]}
-          bounces={false}
-          dataDetectorTypes="link"
-          scalesPageToFit={false}
-          scrollEnabled={false}
-          coverScreen={false}
-          renderLoading={loadingIndicatorView}
-          automaticallyAdjustContentInsets={false}
-          startInLoadingState={true}
-          allowsFullscreenVideo
-          useWebKit
-          javaScriptEnabled={true}
-          domStorageEnabled={true}
-          source={
-            urlType === URL_TYPES.LINK ? { uri: url } : { html: html }
-          }
-          style={[
-            style.webViewContainer,
-            { backgroundColor: theme.themedColors.interface["700"] }
-          ]}
-        />
+        {shouldPlayVideo && (
+          <WebView
+            originWhitelist={["*"]}
+            bounces={false}
+            mediaPlaybackRequiresUserAction={true}
+            dataDetectorTypes="link"
+            scalesPageToFit={false}
+            scrollEnabled={false}
+            coverScreen={false}
+            renderLoading={loadingIndicatorView}
+            automaticallyAdjustContentInsets={false}
+            startInLoadingState={true}
+            allowsFullscreenVideo
+            useWebKit
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            source={
+              urlType === URL_TYPES.LINK ? { uri: url } : { html: html }
+            }
+            style={[
+              style.webViewContainer,
+              { backgroundColor: theme.themedColors.interface["700"] }
+            ]}
+          />
+        )}
       </View>
     );
   }

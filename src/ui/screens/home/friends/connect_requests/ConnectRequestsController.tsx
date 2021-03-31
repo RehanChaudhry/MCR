@@ -8,7 +8,7 @@ import {
   FriendRequest,
   FriendRequestsResponseModel
 } from "models/api_responses/FriendRequestsResponseModel";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
 import { ConnectionRequestStackParamList } from "routes/ConnectionRequestStack";
@@ -81,7 +81,7 @@ const ConnectRequestsController: FC<Props> = () => {
 
   const navigation = useNavigation<ConnectRequestsNavigationProp>();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
         <HeaderLeftTextWithIcon

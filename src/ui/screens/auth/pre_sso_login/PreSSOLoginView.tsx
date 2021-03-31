@@ -18,74 +18,82 @@ import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 
 type Props = {
+  openWelcomeScreen?: () => void;
+  goBack?: () => void;
   openForgotPasswordScreen?: () => void;
   shouldShowProgressBar?: boolean;
 };
 
-export const PreSSOLoginView = React.memo<Props>(({}) => {
-  const theme = usePreferredTheme();
+export const PreSSOLoginView = React.memo<Props>(
+  ({ goBack, openWelcomeScreen }) => {
+    const theme = usePreferredTheme();
 
-  return (
-    <Screen>
-      <ScrollView>
-        <AppImageBackground
-          containerShape={CONTAINER_TYPES.CIRCLE}
-          icon={() => (
-            <ArrowLeft
-              width={20}
-              height={20}
-              fill={theme.themedColors.primary}
-            />
-          )}
-          containerStyle={styles.leftArrow}
-        />
-
-        <Logo style={styles.logo} />
-        <LoginImage
-          style={styles.loginImage}
-          width={"100%"}
-          height={300}
-        />
-        <View style={styles.mainContainer}>
-          <HeadingWithText
-            headingText={STRINGS.login.signin_to_your_account}
-            headingFontWeight={"bold"}
-            headingStyle={styles.signInHeading}
-            text={STRINGS.preSSOLogin.sso_text}
-            textStyle={styles.ssoText}
+    return (
+      <Screen>
+        <ScrollView>
+          <AppImageBackground
+            containerShape={CONTAINER_TYPES.CIRCLE}
+            icon={() => (
+              <ArrowLeft
+                width={20}
+                height={20}
+                fill={theme.themedColors.primary}
+              />
+            )}
+            containerStyle={styles.leftArrow}
+            onPress={goBack}
           />
 
-          <AppLabel
-            text={STRINGS.preSSOLogin.sso_second_text}
-            numberOfLines={0}
-            weight={"bold"}
-            style={styles.ssoSecondText}
+          <Logo style={styles.logo} />
+          <LoginImage
+            style={styles.loginImage}
+            width={"100%"}
+            height={300}
           />
-
-          <View style={styles.buttonViewStyle}>
-            <AppButton
-              text={STRINGS.preSSOLogin.signIn_sso}
-              buttonStyle={{ backgroundColor: theme.themedColors.primary }}
-              textStyle={{ color: theme.themedColors.background }}
-              fontWeight={"semi-bold"}
-              leftIcon={() => <Lock width={16} height={16} />}
+          <View style={styles.mainContainer}>
+            <HeadingWithText
+              headingText={STRINGS.login.signin_to_your_account}
+              headingFontWeight={"bold"}
+              headingStyle={styles.signInHeading}
+              text={STRINGS.preSSOLogin.sso_text}
+              textStyle={styles.ssoText}
             />
-          </View>
 
-          <View style={styles.spannableText}>
-            <MultilineSpannableText
-              text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
-              textStyle={[
-                { fontSize: SPACE.md },
-                { fontSize: SPACE.md, color: theme.themedColors.primary }
-              ]}
+            <AppLabel
+              text={STRINGS.preSSOLogin.sso_second_text}
+              numberOfLines={0}
+              weight={"bold"}
+              style={styles.ssoSecondText}
             />
+
+            <View style={styles.buttonViewStyle}>
+              <AppButton
+                text={STRINGS.preSSOLogin.signIn_sso}
+                buttonStyle={{
+                  backgroundColor: theme.themedColors.primary
+                }}
+                textStyle={{ color: theme.themedColors.background }}
+                fontWeight={"semi-bold"}
+                leftIcon={() => <Lock width={16} height={16} />}
+                onPress={openWelcomeScreen}
+              />
+            </View>
+
+            <View style={styles.spannableText}>
+              <MultilineSpannableText
+                text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
+                textStyle={[
+                  { fontSize: SPACE.md },
+                  { fontSize: SPACE.md, color: theme.themedColors.primary }
+                ]}
+              />
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </Screen>
-  );
-});
+        </ScrollView>
+      </Screen>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   mainContainer: {

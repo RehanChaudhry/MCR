@@ -1,4 +1,10 @@
-import React, { FC, useRef, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
 import { AppLog } from "utils/Util";
 import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
 import QuestionSection from "models/QuestionSection";
@@ -74,71 +80,81 @@ const QuestionsController: FC<Props> = () => {
   const profileNavigation = useNavigation<ProfileNavigationProp>();
   const matchesNavigation = useNavigation<MatchesNavigationProp>();
 
-  const moveToHomeScreen = () => {
+  const moveToHomeScreen = useCallback(() => {
     homeNavigation.reset({
       index: 0,
       routes: [{ name: "Matches" }]
     });
-  };
+  }, [homeNavigation]);
 
-  if (route.params.isFrom === EScreen.WELCOME) {
-    welcomeNavigation.setOptions({
-      headerLeft: () => (
-        <HeaderLeftTextWithIcon
-          fontWeight={"semi-bold"}
-          text={"Back"}
-          icon={() => {
-            return (
-              <LeftArrow
-                width={20}
-                height={20}
-                fill={themedColors.interface["700"]}
-              />
-            );
-          }}
-          onPress={() => {
-            welcomeNavigation.pop();
-          }}
-        />
-      ),
-      headerRight: () => (
-        <HeaderRightTextWithIcon
-          text="Skip"
-          textStyle={{ color: themedColors.interface["700"] }}
-          icon={() => {
-            return (
-              <RightArrow
-                width={20}
-                height={20}
-                fill={themedColors.interface["700"]}
-              />
-            );
-          }}
-          onPress={() => {
-            moveToHomeScreen();
-          }}
-        />
-      )
-    });
-  }
+  useLayoutEffect(() => {
+    if (route.params.isFrom === EScreen.WELCOME) {
+      welcomeNavigation.setOptions({
+        headerLeft: () => (
+          <HeaderLeftTextWithIcon
+            fontWeight={"semi-bold"}
+            text={"Back"}
+            icon={() => {
+              return (
+                <LeftArrow
+                  width={20}
+                  height={20}
+                  fill={themedColors.interface["700"]}
+                />
+              );
+            }}
+            onPress={() => {
+              welcomeNavigation.pop();
+            }}
+          />
+        ),
+        headerRight: () => (
+          <HeaderRightTextWithIcon
+            text="Skip"
+            textStyle={{ color: themedColors.interface["700"] }}
+            icon={() => {
+              return (
+                <RightArrow
+                  width={20}
+                  height={20}
+                  fill={themedColors.interface["700"]}
+                />
+              );
+            }}
+            onPress={() => {
+              moveToHomeScreen();
+            }}
+          />
+        )
+      });
+    }
 
-  if (route.params.isFrom === EScreen.MY_PROFILE) {
-    profileNavigation.setOptions({
-      headerLeft: () => <Hamburger />
-    });
-  }
+    if (route.params.isFrom === EScreen.MY_PROFILE) {
+      profileNavigation.setOptions({
+        headerLeft: () => <Hamburger />
+      });
+    }
 
-  if (route.params.isFrom === EScreen.MATCH_INFO) {
-    matchesNavigation.setOptions({
-      headerLeft: () => (
-        <HeaderLeftTextWithIcon
-          onPress={() => {
-            matchesNavigation.pop();
-          }}
-        />
-      )
-    });
-  }
+    if (route.params.isFrom === EScreen.MATCH_INFO) {
+      matchesNavigation.setOptions({
+        headerLeft: () => (
+          <HeaderLeftTextWithIcon
+            onPress={() => {
+              matchesNavigation.pop();
+            }}
+          />
+        )
+      });
+    }
+  }, [
+    matchesNavigation,
+    homeNavigation,
+    profileNavigation,
+    welcomeNavigation,
+    themedColors.interface,
+    route.params.isFrom,
+    moveToHomeScreen
+  ]);
 
   const requestModel = useRef<AnswerApiRequestModel>();
 

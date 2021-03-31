@@ -16,10 +16,11 @@ import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
 export interface AnnouncementItemProps extends TouchableOpacityProps {
   announcementItem: CommunityAnnouncement;
   openCommentsScreen?: () => void | undefined;
+  shouldPlayVideo: boolean;
 }
 
 export const AnnouncementItem = React.memo<AnnouncementItemProps>(
-  ({ announcementItem, openCommentsScreen }) => {
+  ({ announcementItem, openCommentsScreen, shouldPlayVideo }) => {
     const theme = usePreferredTheme();
     return (
       <View
@@ -44,12 +45,14 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
           <WebViewComponent
             url={announcementItem.link}
             urlType={URL_TYPES.LINK}
+            shouldPlayVideo={shouldPlayVideo}
           />
         )}
         {announcementItem.embeddedUrl != null && true && (
           <WebViewComponent
             url={announcementItem.embeddedUrl}
             urlType={URL_TYPES.EMBEDDED}
+            shouldPlayVideo={shouldPlayVideo}
           />
         )}
         {announcementItem.images != null &&

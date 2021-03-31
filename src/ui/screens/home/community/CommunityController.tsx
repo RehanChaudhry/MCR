@@ -9,6 +9,7 @@ import React, {
   FC,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState
 } from "react";
@@ -18,6 +19,7 @@ import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_w
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { CommunityView } from "ui/screens/home/community/CommunityView";
 import DataGenerator from "utils/DataGenerator";
+import { AppLog } from "utils/Util";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
@@ -35,32 +37,35 @@ const CommunityController: FC<Props> = () => {
   const [communities, setCommunities] = useState<CommunityAnnouncement[]>(
     DataGenerator.getCommunityAnnouncementList(pageToReload.current)
   );
+  const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   const totalPages = 5;
   const navigation = useNavigation<CommunityNavigationProp>();
   const theme = usePreferredTheme();
 
-  navigation.setOptions({
-    headerRight: () => (
-      <HeaderRightTextWithIcon
-        onPress={() => {
-          navigation.navigate("CreatePost");
-        }}
-        text={Strings.createPost.title.createPost}
-        icon={() => {
-          return (
-            <PencilAlt
-              width={15}
-              height={15}
-              fill={theme.themedColors.primary}
-            />
-          );
-        }}
-      />
-    ),
-    headerLeft: () => <Hamburger />,
-    headerTitleAlign: "center",
-    headerTitle: () => <HeaderTitle text="Community" />
-  });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderRightTextWithIcon
+          onPress={() => {
+            navigation.navigate("CreatePost");
+          }}
+          text={Strings.createPost.title.createPost}
+          icon={() => {
+            return (
+              <PencilAlt
+                width={15}
+                height={15}
+                fill={theme.themedColors.primary}
+              />
+            );
+          }}
+        />
+      ),
+      headerLeft: () => <Hamburger />,
+      headerTitleAlign: "center",
+      headerTitle: () => <HeaderTitle text="Community" />
+    });
+  }, [navigation, theme]);
 
   const fetchCommunities = useCallback(async () => {
     if (isFetchingInProgress.current) {
@@ -124,6 +129,24 @@ const CommunityController: FC<Props> = () => {
     fetchCommunities();
   }, [fetchCommunities]);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      AppLog.logForcefully("community screen is blur");
+      setShouldPlayVideo(false);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      AppLog.logForcefully("community screen is focus");
+      setShouldPlayVideo(true);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <CommunityView
       data={communities}
@@ -133,6 +156,7 @@ const CommunityController: FC<Props> = () => {
       pullToRefreshCallback={refreshCallback}
       feedsFilterData={getFeedsFilterList()}
       openCommentsScreen={openCommentsScreen}
+      shouldPlayVideo={shouldPlayVideo}
     />
   );
 };

@@ -1,14 +1,10 @@
 import React, { FC } from "react";
-import { View, Text } from "react-native";
+import RoommateAgreementView from "ui/screens/home/friends/RoommateAgreement/RoommateAgreementView";
 
 type Props = {};
 
 const RoommateAgreementController: FC<Props> = () => {
-  return (
-    <View>
-      <Text />
-    </View>
-  );
+  return <RoommateAgreementView />;
 };
 
 export default RoommateAgreementController;

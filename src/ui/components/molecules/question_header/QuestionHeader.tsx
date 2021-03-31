@@ -35,7 +35,10 @@ const QuestionHeader: React.FC<Props> = ({
       <View
         style={[
           styles.expandedContainer,
-          { backgroundColor: theme.themedColors.background }
+          {
+            backgroundColor: theme.themedColors.background,
+            borderColor: theme.themedColors.separator
+          }
         ]}>
         <AppLabel
           style={styles.title}
@@ -86,7 +89,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     borderRadius: 5,
-    marginVertical: SPACE.xsm,
     padding: SPACE.xsm,
 
     ...shadowStyleProps
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderTopStartRadius: 5,
     borderTopEndRadius: 5,
-    marginTop: SPACE.xsm
+    borderBottomWidth: StyleSheet.hairlineWidth
 
     // shadow
     // ...shadowStyleProps

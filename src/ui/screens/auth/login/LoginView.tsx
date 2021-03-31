@@ -27,13 +27,13 @@ type Props = {
 };
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().required("Enter your email address"),
+  email: Yup.string().email().required("Enter your email address"),
   password: Yup.string().required("Enter your password")
 });
 
 let initialValues: FormikValues = {
-  email: "",
-  password: ""
+  email: "john.doe@gmail.com",
+  password: "123456"
 };
 
 export const LoginView = React.memo<Props>(
@@ -88,7 +88,7 @@ export const LoginView = React.memo<Props>(
                 }}
                 fieldInputProps={{
                   textContentType: "emailAddress",
-                  keyboardType: "default",
+                  keyboardType: "email-address",
                   returnKeyType: "next",
                   placeholder: STRINGS.login.enter_your_email,
                   autoCapitalize: "none",
@@ -122,7 +122,7 @@ export const LoginView = React.memo<Props>(
                 fieldInputProps={{
                   textContentType: "password",
                   keyboardType: "default",
-                  returnKeyType: "next",
+                  returnKeyType: "done",
                   placeholder: STRINGS.login.enter_your_pass,
                   autoCapitalize: "none",
                   placeholderTextColor: theme.themedColors.placeholder,
