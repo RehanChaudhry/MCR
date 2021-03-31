@@ -84,8 +84,8 @@ export const ForgotPasswordView = React.memo<Props>(
                 }}
                 fieldInputProps={{
                   textContentType: "emailAddress",
-                  keyboardType: "default",
-                  returnKeyType: "next",
+                  keyboardType: "email-address",
+                  returnKeyType: "done",
                   placeholder: STRINGS.login.enter_your_email,
                   autoCapitalize: "none",
                   placeholderTextColor: theme.themedColors.placeholder,

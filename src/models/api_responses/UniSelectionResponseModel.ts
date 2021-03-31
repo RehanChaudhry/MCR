@@ -10,6 +10,7 @@ export type Uni = {
   name: string;
   location: string;
   logo: string;
+  sso_login: boolean;
 
   colorPalette: ColorPalette;
 };

@@ -77,7 +77,8 @@ const getUnis = () => {
         name: "Ohio University",
         location: "Athens, Ohio",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: false
       },
       {
         id: "2",
@@ -88,49 +89,56 @@ const getUnis = () => {
           ...defaultPaletteCopy,
           background: "black",
           label: "white"
-        }
+        },
+        sso_login: true
       },
       {
         id: "3",
         name: "Florida International University",
         location: "Miami, Florida",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: false
       },
       {
         id: "4",
         name: "Oregon State University",
         location: "Corvillas, Oregon",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: true
       },
       {
         id: "5",
         name: "Duquesne University",
         location: "Pittsburgh, Pennsylvania",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: false
       },
       {
         id: "6",
         name: "Lehigh University",
         location: "Greenville, North Carolina",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: true
       },
       {
         id: "7",
         name: "North Dakota State University",
         location: "Fargo, North Dakota",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: false
       },
       {
         id: "8",
         name: "George Mason University",
         location: "Fairfax, Virginia",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: true
       }
     ]
   };

@@ -35,6 +35,10 @@ const UniSelectionController: FC<Props> = () => {
     navigation.navigate("Login");
   });
 
+  const openSSOScreen = usePreventDoubleTap(() => {
+    navigation.navigate("SSO_Login");
+  });
+
   const handleGetUnisApi = async (onComplete?: () => void) => {
     const { hasError, dataBody, errorBody } = await unisApi.request([]);
     if (hasError || dataBody === undefined) {
@@ -51,7 +55,11 @@ const UniSelectionController: FC<Props> = () => {
   const uniDidSelect = (item: Uni) => {
     AppLog.log("selected item: ", item);
     theme.saveCustomPalette(item.colorPalette);
-    openLoginScreen();
+    if (item.sso_login === true) {
+      openSSOScreen();
+    } else {
+      openLoginScreen();
+    }
   };
 
   // Add no toolbar
