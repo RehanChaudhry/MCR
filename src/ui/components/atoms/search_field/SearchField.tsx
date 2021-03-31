@@ -15,7 +15,7 @@ import {
   ViewStyle
 } from "react-native";
 import { Color } from "react-native-svg";
-import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_memo/optimized_memo";
 
 interface OwnProps {
   style?: StyleProp<ViewStyle>;
@@ -29,7 +29,7 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const SearchField = optimizedMemo<Props>(
+const SearchField = optimizedMemoWithStyleProp<Props>(
   ({
     placeholder,
     style,
@@ -98,7 +98,7 @@ const SearchField = optimizedMemo<Props>(
       </View>
     );
   }
-);
+)(["style", "textStyle"]);
 
 const styles = StyleSheet.create({
   container: {
