@@ -309,5 +309,8 @@ export default {
       dismiss: "Dismiss",
       block: "Block"
     }
+  },
+  activity_log: {
+    title: "Activity Log"
   }
 };

@@ -8,6 +8,7 @@ export type HomeDrawerParamList = {
   Friends: undefined;
   ChatList: undefined;
   Notification: undefined;
+  ActivityLog: undefined;
   Settings: undefined;
 };
 
