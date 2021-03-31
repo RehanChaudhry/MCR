@@ -8,6 +8,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
+import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_memo/optimized_memo";
 import { AppLog } from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { usePreferredTheme } from "hooks";
@@ -25,7 +26,7 @@ interface Props {
   onChange?: (value: Choice, index: number) => void;
 }
 
-export const SegmentedControl = React.memo<Props>(
+export const SegmentedControl = optimizedMemoWithStyleProp<Props>(
   ({
     onChange,
     selectedIndex = 0,
@@ -155,7 +156,7 @@ export const SegmentedControl = React.memo<Props>(
       </View>
     );
   }
-);
+)(["containerStyle", "tabStyle"]);
 
 const styles = StyleSheet.create({
   container: {

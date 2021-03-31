@@ -16,6 +16,9 @@ function propsMatcher<PropType>() {
       for (let keyValue = 0; keyValue < keys.length; keyValue++) {
         hasAllPropsMatched =
           prevProps[keys[keyValue]] === nextProps[keys[keyValue]];
+        if (!hasAllPropsMatched) {
+          break;
+        }
       }
 
       return hasAllPropsMatched;

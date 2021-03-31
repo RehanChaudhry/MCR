@@ -1,12 +1,16 @@
 // prettier-ignore
+import React, { FC, useState } from 'react';
+import { Text } from "react-native";
+import { Button, StyleProp, TextStyle, View } from "react-native";
 import "react-native-gesture-handler";
-import React, { FC, useState } from "react";
-import { Button, StyleProp, Text, TextStyle, View } from "react-native";
 import {
   SafeAreaProvider,
   SafeAreaView
 } from "react-native-safe-area-context";
-import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import {
+  optimizedMemo,
+  optimizedMemoWithStyleProp
+} from "ui/components/templates/optimized_memo/optimized_memo";
 import { AppLog } from "utils/Util";
 
 type Props = {};
@@ -18,8 +22,28 @@ type LabelProps = {
 
 const MyLabel = optimizedMemo<LabelProps>((props) => {
   AppLog.log("Rendering MyLabel...");
-  return <Text style={props.style}>{props.text}</Text>;
+  return (
+    <Text style={[props.style, { textAlign: "center" }]}>
+      {props.text}
+    </Text>
+  );
 });
+
+type LabelWithCustomStyleProps = {
+  text: string;
+  textStyle?: StyleProp<TextStyle>;
+};
+
+const MyLabelWithCustomStyle = optimizedMemoWithStyleProp<LabelWithCustomStyleProps>(
+  (props) => {
+    AppLog.log("Rendering MyLabelWithCustomStyle...");
+    return (
+      <Text style={[props.textStyle, { textAlign: "center" }]}>
+        {props.text}
+      </Text>
+    );
+  }
+)(["textStyle"]);
 
 type ButtonProps = {
   text: string;
@@ -55,8 +79,12 @@ const OptimizedMemoDemo: React.FC<Props> = () => {
         ]}>
         <View>
           <MyLabel
-            text={`Counter: ${counter}`}
-            style={[{ backgroundColor: labelColor, textAlign: "center" }]}
+            text={`Counter (optimizedMemo): ${counter}`}
+            style={[{ backgroundColor: labelColor }]}
+          />
+          <MyLabelWithCustomStyle
+            text={`Counter (optimizedMemoWithStyleProp): ${counter}`}
+            textStyle={[{ backgroundColor: labelColor, marginTop: 5 }]}
           />
           <MyButton
             text="Change Style"
