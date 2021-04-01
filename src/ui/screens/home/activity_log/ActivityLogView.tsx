@@ -86,7 +86,6 @@ export const ActivityLogView: React.FC<Props> = ({
           sections={toSectionList(activityLogs)}
           renderSectionHeader={headerView}
           renderItem={renderItem}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
           onEndReached={isAllDataLoaded ? undefined : onEndReached}
           onRefresh={() => {
             setRefreshing(true);

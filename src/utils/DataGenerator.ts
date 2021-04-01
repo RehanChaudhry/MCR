@@ -334,7 +334,7 @@ const getActivityLog = (id: number) => {
     id,
     ActivityType.FRIEND_REQUEST_SENT,
     "Sent a friend request to Taelyn Dickens",
-    randomDate(new Date(2021, 3, 30), new Date())
+    randomDate(new Date(2021, 1, 30), new Date())
   );
 };
 

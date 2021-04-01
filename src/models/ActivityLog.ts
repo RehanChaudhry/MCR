@@ -1,5 +1,6 @@
 import ActivityType from "models/enums/ActivityType";
 import { DateUtils } from "utils/Util";
+import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
 class ActivityLog {
   id!: number;
@@ -21,6 +22,12 @@ class ActivityLog {
 
   getHoursDiff(): number {
     return DateUtils.diffInHours(this.date ?? new Date());
+  }
+
+  getDisplayTime(): string {
+    return new PrettyTimeFormat().getPrettyTime(
+      (this.date ?? new Date()).toString()
+    );
   }
 }
 
