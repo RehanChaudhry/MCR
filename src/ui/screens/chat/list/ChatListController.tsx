@@ -1,7 +1,10 @@
-import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { SPACE } from "config";
-import React, { FC, useLayoutEffect, useState } from "react";
-import { HomeDrawerParamList } from "routes";
+import React, {
+  FC,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
 import { ChatListScreen } from "ui/screens/chat/list/ChatListScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
@@ -13,20 +16,14 @@ import ChatItem from "models/ChatItem";
 import DataGenerator from "utils/DataGenerator";
 import { ChatParamsList } from "routes/ChatStack";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Strings from "config/Strings";
-import { usePreferredTheme } from "hooks";
-import Menu from "assets/images/menu.svg";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatParamsList,
   "ChatThread"
->;
-type ChatListDrawerNavigationProp = DrawerNavigationProp<
-  HomeDrawerParamList,
-  "ChatList"
 >;
 
 type Props = {};
@@ -35,10 +32,14 @@ const dummyChats = DataGenerator.getChats();
 
 export const ChatListController: FC<Props> = () => {
   const navigation = useNavigation<ChatListNavigationProp>();
-  const navigationDrawer = useNavigation<ChatListDrawerNavigationProp>();
-  const theme = usePreferredTheme();
-
+  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+  const pageToReload = useRef<number>(1);
+  const isFetchingInProgress = useRef(false);
   const [chats, setChats] = useState<ChatItem[]>(dummyChats);
+
+  AppLog.log(
+    "ChatListController() => " + pageToReload + isFetchingInProgress
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -50,20 +51,9 @@ export const ChatListController: FC<Props> = () => {
         elevation: 0,
         shadowOpacity: 0,
         shadowColor: "#00000000"
-      },
-      headerLeft: () => (
-        <Pressable
-          onPress={() => {
-            navigationDrawer.openDrawer();
-          }}>
-          <Menu width={23} height={23} fill={theme.themedColors.primary} />
-        </Pressable>
-      ),
-      headerLeftContainerStyle: {
-        padding: SPACE.md
       }
     });
-  }, [navigation, navigationDrawer, theme]);
+  }, [navigation]);
 
   const loadChatsApi = useApi<any, ChatsResponseModel>(ChatApis.getChats);
 
@@ -92,6 +82,34 @@ export const ChatListController: FC<Props> = () => {
     navigation.navigate("ChatThread", { title: item.name });
   };
 
+  const refreshCallback = useCallback(
+    async (onComplete: () => void) => {
+      /*pageToReload.current = 1;
+        fetchCommunities().then(() => {
+          onComplete();
+        });*/
+
+      setTimeout(() => {
+        setChats(dummyChats);
+        setIsAllDataLoaded(true);
+        onComplete();
+      }, 2000);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      /*pageToReload*/
+    ]
+  );
+
+  const onEndReached = useCallback(
+    () => {
+      /* fetchCommunities();*/
+    },
+    [
+      /*fetchCommunities*/
+    ]
+  );
+
   return (
     <ProgressErrorView
       data={chats}
@@ -104,7 +122,13 @@ export const ChatListController: FC<Props> = () => {
           </View>
         );
       }}>
-      <ChatListScreen data={chats} onItemClick={openChatThread} />
+      <ChatListScreen
+        data={chats}
+        onItemClick={openChatThread}
+        pullToRefreshCallback={refreshCallback}
+        onEndReached={onEndReached}
+        isAllDataLoaded={isAllDataLoaded}
+      />
     </ProgressErrorView>
   );
 };

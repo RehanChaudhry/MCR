@@ -4,6 +4,7 @@ import { FONT_SIZE, SPACE } from "config";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { CardView } from "ui/components/atoms/CardView";
+import Strings from "config/Strings";
 
 type Props = {};
 
@@ -14,13 +15,12 @@ const ViewProfileDemoGraphics: FC<Props> = () => {
       <View style={styles.innerCardView}>
         <HeadingWithText
           headingFontWeight={"semi-bold"}
-          headingText={"Demographics"}
+          headingText={Strings.profile.demoGraphics.heading}
           text={""}
           headingStyle={{ color: theme.themedColors.label }}
         />
-        <View style={styles.spacer} />
         <HeadingWithText
-          headingText={"Gender"}
+          headingText={Strings.profile.dropDownTitle.gender}
           text={"Male"}
           headingFontWeight={"semi-bold"}
           textStyle={styles.textStyle}
@@ -31,7 +31,7 @@ const ViewProfileDemoGraphics: FC<Props> = () => {
         />
         <View style={styles.spacer} />
         <HeadingWithText
-          headingText={"Hometown"}
+          headingText={Strings.profile.formTitle.homeTown}
           text={"Washington, DC"}
           headingFontWeight={"semi-bold"}
           textStyle={styles.textStyle}
@@ -42,7 +42,7 @@ const ViewProfileDemoGraphics: FC<Props> = () => {
         />
         <View style={styles.spacer} />
         <HeadingWithText
-          headingText={"Intended Major"}
+          headingText={Strings.profile.formTitle.intendedMajor}
           text={"Interior Architecture"}
           headingFontWeight={"semi-bold"}
           textStyle={styles.textStyle}
@@ -53,7 +53,9 @@ const ViewProfileDemoGraphics: FC<Props> = () => {
         />
         <View style={styles.spacer} />
         <HeadingWithText
-          headingText={"Smoking Habits"}
+          headingText={
+            Strings.profile.demoGraphics.radioButton.smokingHabitTitle
+          }
           text={"Never"}
           headingFontWeight={"semi-bold"}
           textStyle={styles.textStyle}

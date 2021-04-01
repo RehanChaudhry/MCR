@@ -27,6 +27,7 @@ const listItem = (
 ) => {
   return (
     <ConnectionItem
+      key={item.id}
       title={item.title}
       subtitle={item.subtitle}
       profileImage={item.profileImage}
@@ -71,12 +72,7 @@ const DismissedOrBlockedView: FC<Props> = ({
           />
         )}
         renderItem={({ item }) => {
-          return listItem(
-            item,
-            (onPressAction = onPressAction),
-            (onPressChat = onPressChat),
-            (onPressCross = onPressCross)
-          );
+          return listItem(item, onPressChat, onPressAction, onPressCross);
         }}
         data={data}
       />

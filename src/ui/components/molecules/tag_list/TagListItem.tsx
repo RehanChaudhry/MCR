@@ -9,11 +9,11 @@ type Props = {
   title?: string;
   style?: StyleProp<ViewStyle>;
 };
-const TagListItem: FC<Props> = ({ title }) => {
+const TagListItem: FC<Props> = ({ title, style }) => {
   const theme = usePreferredTheme();
 
   return (
-    <View style={styles.mainContainer}>
+    <View style={[styles.mainContainer, style]}>
       <AppLabel
         text={title}
         style={[styles.text, { color: theme.themedColors.labelSecondary }]}
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: grayShades.warmGray[200],
     flexDirection: "row",
     flexWrap: "wrap",
-    height: 36,
+    height: 34,
     alignItems: "center",
     marginRight: SPACE.sm,
     padding: 8,

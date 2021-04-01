@@ -1,10 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Check from "assets/images/check_circle.svg";
+import Strings from "config/Strings";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { CreatePostApiRequestModel } from "models/api_requests/CreatePostApiRequestModel";
 import { CreatePostApiResponseModel } from "models/api_responses/CreatePostApiResponseModel";
-import React, { FC, useRef } from "react";
+import React, { FC, useLayoutEffect, useRef } from "react";
 import { Alert } from "react-native";
 import SimpleToast from "react-native-simple-toast";
 import { useApi } from "repo/Client";
@@ -32,34 +33,38 @@ const CreatePostController: FC<Props> = () => {
     CreatePostApiResponseModel
   >(CommunityAnnouncementApis.createPost);
 
-  navigation.setOptions({
-    headerRight: () => (
-      <HeaderRightTextWithIcon
-        text="Post"
-        icon={() => {
-          return (
-            <Check
-              width={20}
-              height={20}
-              fill={theme.themedColors.primary}
-            />
-          );
-        }}
-        onPress={() => {
-          SimpleToast.show("Clicked on Post");
-        }}
-      />
-    ),
-    headerLeft: () => (
-      <HeaderLeftTextWithIcon
-        onPress={() => {
-          navigation.pop();
-        }}
-      />
-    ),
-    headerTitleAlign: "center",
-    headerTitle: () => <HeaderTitle text="Create Post" />
-  });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderRightTextWithIcon
+          text={Strings.createPost.title.post}
+          icon={() => {
+            return (
+              <Check
+                width={15}
+                height={15}
+                fill={theme.themedColors.primary}
+              />
+            );
+          }}
+          onPress={() => {
+            SimpleToast.show("Clicked on Post.");
+          }}
+        />
+      ),
+      headerLeft: () => (
+        <HeaderLeftTextWithIcon
+          onPress={() => {
+            navigation.pop();
+          }}
+        />
+      ),
+      headerTitleAlign: "center",
+      headerTitle: () => (
+        <HeaderTitle text={Strings.createPost.title.createPost} />
+      )
+    });
+  }, [navigation, theme]);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleCreatePost = usePreventDoubleTap(async () => {
@@ -76,10 +81,13 @@ const CreatePostController: FC<Props> = () => {
     } else {
     }
   });
+  const closeScreen = usePreventDoubleTap(() => {
+    navigation.goBack();
+  });
   return (
     <CreatePostView
       createPost={() => {
-        navigation.pop();
+        closeScreen();
       }}
     />
   );

@@ -25,7 +25,7 @@ export interface AppCompactButtonProps extends TouchableOpacityProps {
   shouldIconColorChangeOnClick: boolean;
   shouldTextChangeOnClick: boolean;
   shouldShowBgColorCahange: boolean;
-  onPress: () => void;
+  onPress?: () => void;
   shouldNotOptimize?: boolean;
 }
 export const AppCompactButton = optimizedMemo<AppCompactButtonProps>(

@@ -4,6 +4,7 @@ import { FONT_SIZE, SPACE } from "config";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { CardView } from "ui/components/atoms/CardView";
+import Strings from "config/Strings";
 
 type Props = {};
 
@@ -14,13 +15,12 @@ const EducationalInformation: FC<Props> = () => {
       <View style={styles.innerCardView}>
         <HeadingWithText
           headingFontWeight={"semi-bold"}
-          headingText={"Educational Information"}
+          headingText={Strings.profile.livingDetails.heading}
           text={""}
           headingStyle={{ color: theme.themedColors.label }}
         />
-        <View style={styles.spacer} />
         <HeadingWithText
-          headingText={"Student ID"}
+          headingText={Strings.profile.formTitle.studentID}
           text={"182883499"}
           headingFontWeight={"semi-bold"}
           textStyle={[styles.textStyle]}
@@ -31,7 +31,7 @@ const EducationalInformation: FC<Props> = () => {
         />
         <View style={styles.spacer} />
         <HeadingWithText
-          headingText={"Programs"}
+          headingText={Strings.profile.formTitle.programs}
           text={"Interior Architecture"}
           headingFontWeight={"semi-bold"}
           textStyle={styles.textStyle}
@@ -42,7 +42,7 @@ const EducationalInformation: FC<Props> = () => {
         />
         <View style={styles.spacer} />
         <HeadingWithText
-          headingText={"Building"}
+          headingText={Strings.profile.formTitle.building}
           text={"East Green, Perkins Hall"}
           headingFontWeight={"semi-bold"}
           textStyle={styles.textStyle}
@@ -53,7 +53,7 @@ const EducationalInformation: FC<Props> = () => {
         />
         <View style={styles.spacer} />
         <HeadingWithText
-          headingText={"Room"}
+          headingText={Strings.profile.formTitle.room}
           text={"N/A"}
           headingFontWeight={"semi-bold"}
           textStyle={styles.textStyle}

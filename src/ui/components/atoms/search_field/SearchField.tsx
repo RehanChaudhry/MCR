@@ -6,6 +6,7 @@ import { usePreferredTheme } from "hooks";
 import Search from "assets/images/search_icon.svg";
 import Cross from "assets/images/cross.svg";
 import {
+  Keyboard,
   StyleProp,
   StyleSheet,
   TextInput,
@@ -15,7 +16,7 @@ import {
   ViewStyle
 } from "react-native";
 import { Color } from "react-native-svg";
-import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_memo/optimized_memo";
 
 interface OwnProps {
   style?: StyleProp<ViewStyle>;
@@ -30,7 +31,7 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const SearchField = optimizedMemo<Props>(
+const SearchField = optimizedMemoWithStyleProp<Props>(
   ({
     placeholder,
     style,
@@ -46,12 +47,12 @@ const SearchField = optimizedMemo<Props>(
     useEffectWithSkipFirstTime(() => {
       const timeoutRef = setTimeout(() => {
         onChangeText(currentSearchText);
-      }, 1500);
+      }, 1000);
 
       return () => {
         clearTimeout(timeoutRef);
       };
-    }, [currentSearchText, onChangeText]);
+    });
 
     return (
       <View
@@ -86,7 +87,11 @@ const SearchField = optimizedMemo<Props>(
         />
 
         {clearIcon && currentSearchText !== "" && (
-          <TouchableOpacity onPress={() => setCurrentSearchText("")}>
+          <TouchableOpacity
+            onPress={() => {
+              Keyboard.dismiss();
+              setCurrentSearchText("");
+            }}>
             <Cross
               width={14}
               height={14}
@@ -99,7 +104,7 @@ const SearchField = optimizedMemo<Props>(
       </View>
     );
   }
-);
+)(["style", "textStyle"]);
 
 const styles = StyleSheet.create({
   container: {

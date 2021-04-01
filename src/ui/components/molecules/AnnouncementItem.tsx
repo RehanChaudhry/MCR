@@ -12,13 +12,16 @@ import { AnnouncementFooter } from "ui/components/molecules/announcement_footer/
 import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
 import { ImagesSlideShow } from "ui/components/molecules/image_slide_show/ImagesSlideShow";
 import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
+import { shadowStyleProps } from "utils/Util";
 
 export interface AnnouncementItemProps extends TouchableOpacityProps {
   announcementItem: CommunityAnnouncement;
+  openCommentsScreen?: () => void | undefined;
+  shouldPlayVideo: boolean;
 }
 
 export const AnnouncementItem = React.memo<AnnouncementItemProps>(
-  ({ announcementItem }) => {
+  ({ announcementItem, openCommentsScreen, shouldPlayVideo }) => {
     const theme = usePreferredTheme();
     return (
       <View
@@ -43,12 +46,14 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
           <WebViewComponent
             url={announcementItem.link}
             urlType={URL_TYPES.LINK}
+            shouldPlayVideo={shouldPlayVideo}
           />
         )}
         {announcementItem.embeddedUrl != null && true && (
           <WebViewComponent
             url={announcementItem.embeddedUrl}
             urlType={URL_TYPES.EMBEDDED}
+            shouldPlayVideo={shouldPlayVideo}
           />
         )}
         {announcementItem.images != null &&
@@ -62,6 +67,7 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
         <AnnouncementFooter
           commentCount={announcementItem.commentCount}
           likeCount={announcementItem.likeCount}
+          openCommentsScreen={openCommentsScreen}
         />
       </View>
     );
@@ -70,13 +76,11 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
 
 const style = StyleSheet.create({
   container: {
-    marginRight: SPACE.md,
-    marginLeft: SPACE.md,
-    marginBottom: SPACE.md,
-    borderRadius: 10,
-    paddingRight: SPACE.lg,
-    paddingLeft: SPACE.lg,
-    paddingBottom: SPACE.lg
+    borderRadius: 5,
+    paddingRight: SPACE.md,
+    paddingLeft: SPACE.md,
+    paddingBottom: SPACE.md,
+    ...shadowStyleProps
   },
   text: {
     lineHeight: 20,

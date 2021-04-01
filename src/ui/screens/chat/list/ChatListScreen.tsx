@@ -1,6 +1,6 @@
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, shadowStyleProps } from "utils/Util";
@@ -21,6 +21,9 @@ type ConversationType = "Active" | "Archived";
 interface ChatListProps {
   onItemClick: (item: ChatItem) => void;
   data: ChatItem[];
+  pullToRefreshCallback: (onComplete: () => void) => void;
+  onEndReached: () => void;
+  isAllDataLoaded: boolean;
 }
 
 const showConversation = (conversationType: ConversationType) => {
@@ -44,11 +47,39 @@ const breadCrumbsItems: Item[] = [
 
 let lastHeaderTitle = "";
 export const ChatListScreen = React.memo<ChatListProps>(
-  ({ data, onItemClick }) => {
-    const { themedColors } = usePreferredTheme();
+  ({
+    data,
+    onItemClick,
+    pullToRefreshCallback,
+    onEndReached,
+    isAllDataLoaded
+  }) => {
     AppLog.log("Rendering chat screen...");
+
+    const { themedColors } = usePreferredTheme();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let [items, setItems] = useState<ChatItem[]>(data);
+
+    const performSearch = (textToSearch: string) =>
+      data.filter((obj: ChatItem) => {
+        return Object.values(obj).some((v) =>
+          `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
+        );
+      });
+
+    const handleClick = useCallback((textToSearch?: string) => {
+      lastHeaderTitle = "";
+
+      textToSearch !== "" && textToSearch !== undefined
+        ? setItems(performSearch(textToSearch))
+        : setItems(data);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const renderItem = ({ item }: { item: ChatItem }) => {
-      AppLog.log("rendering list item : " + JSON.stringify(item));
+      AppLog.logForcefully(
+        "rendering list item : " + JSON.stringify(item)
+      );
       return (
         <>
           <ChatHeader
@@ -75,11 +106,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
             style={styles.search(themedColors)}
             textStyle={styles.searchText}
             placeholder={STRINGS.chatListScreen.placeholder_search_keyword}
-            onChangeText={(textToSearch?: string) => {
-              AppLog.log(textToSearch);
-              //  keyword.current = textToSearch;
-              //  onFilterChange(keyword.current, gender.current);
-            }}
+            onChangeText={handleClick}
             searchIcon={true}
             clearIcon={true}
             iconColor={themedColors.interface[500]}
@@ -92,9 +119,13 @@ export const ChatListScreen = React.memo<ChatListProps>(
               shouldShowProgressBar={false}
               data={data}
               renderItem={renderItem}
+              keyExtractor={(item) => item.id.toString()}
               showsVerticalScrollIndicator={false}
               removeClippedSubviews={true}
               style={styles.list}
+              pullToRefreshCallback={pullToRefreshCallback}
+              onEndReached={onEndReached}
+              isAllDataLoaded={isAllDataLoaded}
             />
             <BottomBreadCrumbs data={breadCrumbsItems} />
           </>
@@ -113,7 +144,7 @@ const styles = StyleSheet.create({
   searchContainer: (theme: ColorPalette) => {
     return {
       backgroundColor: theme.background,
-      paddingBottom: SPACE.md,
+      paddingBottom: SPACE.sm,
       paddingHorizontal: SPACE.md,
       ...shadowStyleProps
     };

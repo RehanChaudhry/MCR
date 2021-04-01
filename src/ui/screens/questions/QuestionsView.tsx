@@ -3,6 +3,7 @@ import RightArrowCircle from "assets/images/right_arrow_circle.svg";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
+import EScreen from "models/enums/EScreen";
 import Question from "models/Question";
 import QuestionSection from "models/QuestionSection";
 import React, { useRef } from "react";
@@ -24,21 +25,21 @@ import SectionedList, {
 import { moderateScale } from "config/Dimens";
 
 type Props = {
-  isUpdating: boolean;
+  isFrom: EScreen;
   submitAnswersLoading: boolean;
   submitAnswers: () => void;
   questions: Section<QuestionSection, Question>[];
 };
 
 export const QuestionsView = ({
-  isUpdating,
+  isFrom,
   questions,
   submitAnswersLoading,
   submitAnswers
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
-  const listHeader = useRef(createListHeader(isUpdating, themedColors));
+  const listHeader = useRef(createListHeader(isFrom, themedColors));
 
   const listFooter = useRef(
     createListFooter(submitAnswersLoading, submitAnswers, themedColors)
@@ -99,13 +100,10 @@ function headerView(
   return <QuestionHeader questionGroup={header} isExpanded={isSelected} />;
 }
 
-function createListHeader(
-  isUpdating: boolean,
-  themedColors: ColorPalette
-) {
+function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
   return (
     <View style={styles.headerContainer}>
-      {!isUpdating && (
+      {!isFrom && (
         <AppLabel
           style={styles.infoText}
           text={STRINGS.questionnaire.info}

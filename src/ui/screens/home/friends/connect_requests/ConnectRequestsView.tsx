@@ -1,6 +1,7 @@
+import { SPACE } from "config";
 import { FriendRequest } from "models/api_responses/FriendRequestsResponseModel";
 import React, { FC } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import ConnectRequestItem from "ui/components/organisms/friends/connect_request/ConnectRequestItem";
@@ -31,7 +32,7 @@ const listItem = (
   );
 };
 
-const FriendRequestsView: FC<Props> = ({
+const ConnectRequestsView: FC<Props> = ({
   data,
   onPressApproved,
   onPressDeclined
@@ -39,6 +40,9 @@ const FriendRequestsView: FC<Props> = ({
   return (
     <Screen style={styles.container}>
       <FlatListWithPb
+        ListHeaderComponent={() => {
+          return <View style={styles.header} />;
+        }}
         style={styles.list}
         shouldShowProgressBar={false}
         renderItem={({ item }) => {
@@ -59,10 +63,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
+  header: {
+    padding: SPACE.xxsm
+  },
   list: {
     width: "100%",
     height: "100%"
   }
 });
 
-export default FriendRequestsView;
+export default ConnectRequestsView;

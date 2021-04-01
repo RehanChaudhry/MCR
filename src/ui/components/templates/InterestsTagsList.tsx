@@ -5,6 +5,7 @@ import { StyleSheet, View } from "react-native";
 import { SPACE } from "config";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import TagList from "ui/components/molecules/tag_list/TagList";
+import Strings from "config/Strings";
 
 type Props = {};
 export type Interest = {
@@ -67,27 +68,44 @@ const InterestsTagsList: FC<Props> = () => {
     <CardView style={styles.cardView}>
       <View style={styles.innerCardView}>
         <HeadingWithText
-          headingText={"Interests"}
+          headingText={Strings.profile.interests.heading}
           text={""}
           headingFontWeight={"semi-bold"}
         />
+        <TagList
+          labelTitle={Strings.profile.dropDownTitle.hobbies}
+          data={hobbies}
+        />
         <View style={styles.spacer} />
-        <TagList labelTitle={"Interests & Hobbies"} data={hobbies} />
-        <View style={styles.spacer} />
-        <TagList labelTitle={"Club & Memberships"} data={clubs} />
+        <TagList
+          labelTitle={Strings.profile.dropDownTitle.memberShip}
+          data={clubs}
+        />
         <View style={styles.spacer} />
         <TagList
           labelTitle={"Living Learning Communities"}
           data={living}
         />
         <View style={styles.spacer} />
-        <TagList labelTitle={"Favorite Movies & TV Shows"} data={movies} />
+        <TagList
+          labelTitle={Strings.profile.dropDownTitle.movies}
+          data={movies}
+        />
         <View style={styles.spacer} />
-        <TagList labelTitle={"Music"} data={music} />
+        <TagList
+          labelTitle={Strings.profile.dropDownTitle.music}
+          data={music}
+        />
         <View style={styles.spacer} />
-        <TagList labelTitle={"Books"} data={books} />
+        <TagList
+          labelTitle={Strings.profile.dropDownTitle.books}
+          data={books}
+        />
         <View style={styles.spacer} />
-        <TagList labelTitle={"Games"} data={games} />
+        <TagList
+          labelTitle={Strings.profile.dropDownTitle.games}
+          data={games}
+        />
       </View>
     </CardView>
   );

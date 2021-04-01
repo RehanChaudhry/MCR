@@ -1,16 +1,16 @@
-import React, { FC } from "react";
-import Screen from "ui/components/atoms/Screen";
-import ConnectionItem, {
-  CONNECTION_ACTION_STATE
-} from "ui/components/organisms/friends/connection/ConnectionItem";
 import UserGroupIcon from "assets/images/icon_user_group.svg";
 import { usePreferredTheme } from "hooks";
-import { StyleSheet } from "react-native";
-import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import {
   MyFriend,
   ROOMMATE_REQUEST_STATE
 } from "models/api_responses/MyFriendsResponseModel";
+import React, { FC } from "react";
+import { StyleSheet } from "react-native";
+import Screen from "ui/components/atoms/Screen";
+import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
+import ConnectionItem, {
+  CONNECTION_ACTION_STATE
+} from "ui/components/organisms/friends/connection/ConnectionItem";
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
 
 type Props = {
@@ -18,6 +18,7 @@ type Props = {
   onPressChat: (item: MyFriend) => void;
   onPressAction: (item: MyFriend) => void;
   onPressCross: (item: MyFriend) => void;
+  onPressReceivedFriendRequests: () => void;
 };
 
 const listItem = (
@@ -33,7 +34,7 @@ const listItem = (
       case ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE:
         return "Not Eligible";
       case ROOMMATE_REQUEST_STATE.REQUEST_SENT:
-        return "Pending";
+        return "Pending Request";
     }
   };
 
@@ -76,7 +77,8 @@ const MyFriendsView: FC<Props> = ({
   data,
   onPressAction,
   onPressChat,
-  onPressCross
+  onPressCross,
+  onPressReceivedFriendRequests
 }) => {
   const theme = usePreferredTheme();
   return (
@@ -86,7 +88,7 @@ const MyFriendsView: FC<Props> = ({
         shouldShowProgressBar={false}
         ListHeaderComponent={() => (
           <ConnectionListHeader
-            title="Received 2 new friends request"
+            title="Received 2 new friend requests"
             detail={
               "You have currently 7 friends and received 2 new friend requests."
             }
@@ -97,16 +99,11 @@ const MyFriendsView: FC<Props> = ({
                 height={18}
               />
             )}
-            onPressAction={() => {}}
+            onPressAction={onPressReceivedFriendRequests}
           />
         )}
         renderItem={({ item }) => {
-          return listItem(
-            item,
-            (onPressAction = onPressAction),
-            (onPressChat = onPressChat),
-            (onPressCross = onPressCross)
-          );
+          return listItem(item, onPressChat, onPressAction, onPressCross);
         }}
         data={data}
       />

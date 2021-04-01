@@ -88,7 +88,8 @@ export default {
       "Each Question has 2 sliders, one to identify approximately where you fall within the range and second to determine the comfort zone. It will help us to find the compatibility with your roommates.",
     learn_more: "Learn more about questionnaire",
     action_save: "Save & Continue",
-    title_update: "Update Questionnaire"
+    title_update: "Update Questionnaire",
+    title_create: "Questionnaire"
   },
 
   dummyText:
@@ -182,7 +183,7 @@ export default {
       }
     },
     interests: {
-      heading: "Interests",
+      heading: "Interest",
       title: "Tell us about what do you love to do?"
     },
     livingDetails: {
@@ -194,6 +195,13 @@ export default {
       heading: "Video Introduction",
       title:
         "Record 60 seconds self-introduction video presentation and post it on YouTube."
+    },
+    viewProfile: {
+      videoIntroduction: "Watch Video Introduction",
+      roomMates: {
+        heading: "My Roommates"
+      },
+      agreementButtonTitle: "View Roommate Agreement"
     }
   },
 
@@ -224,8 +232,13 @@ export default {
   },
 
   createPost: {
+    title: {
+      createPost: "Create Post",
+      post: "Post",
+      maxImageMessage: "You cannot select more than 5 images."
+    },
     requiredField: {
-      message: "Message is a required field"
+      message: "Post field is required."
     },
     placeholder: {
       startTypingYourMessage: "Start typing your message",
@@ -238,8 +251,8 @@ export default {
       embed: "Embed"
     },
     fieldValidationMessage: {
-      invalidUrl: "Please enter valid link url",
-      invalidEmbedLink: "Please enter valid embed link"
+      invalidUrl: "Please enter valid link.",
+      invalidEmbedLink: "Please enter valid embed code."
     }
   },
   matchInfo: {
@@ -255,5 +268,49 @@ export default {
     title: "More Information",
     my_roommates: "My Roommates",
     roommate_agreement: "View Roommate Agreement"
+  },
+
+  comments: {
+    comments: "Comments"
+  },
+
+  announcement: {
+    announcementTitle: "Announcement"
+  },
+  roommateAgreement: {
+    dropDownTitle: {
+      frustrated:
+        "If we are frustrated with each other, we will address it by:"
+    },
+    formTitle: {
+      upset: "When we are upset, we need:",
+      substance:
+        "What will we do if someone comes home under the influence of a substance?",
+      temperature:
+        "How will we deal with differences in preferred room temperature?",
+      comfortable:
+        "We are comfortable with sharing these items with each other:",
+      notice:
+        "How much notice is needed before a guest stays overnight? How should we notify one another?",
+      support:
+        "How will we support each other during times of stress, sadness, or worry?",
+      feel:
+        "How do we feel about sexual behavior when the other roommate is in the room or away?"
+    },
+    textFieldPlaceholder: {
+      response: "Start typing the response"
+    }
+  },
+  dialogs: {
+    friend_request: {
+      title: "Friend Request",
+      success: "Yes, send request"
+    },
+    cancel: "Cancel",
+    dismiss_block: {
+      title: "Add to Dismissed or Blocked List",
+      dismiss: "Dismiss",
+      block: "Block"
+    }
   }
 };

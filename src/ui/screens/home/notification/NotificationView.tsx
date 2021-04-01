@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
 import { NotificationData } from "models/api_responses/NotificationsResponseModel";
 import { AppLog } from "utils/Util";
@@ -13,113 +13,131 @@ import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type Props = {
+  openMyProfileScreen: () => void;
   notifications: NotificationData[];
 };
 
-export const NotificationView = React.memo<Props>(({ notifications }) => {
-  let previousItemHours = "";
-  const theme = usePreferredTheme();
+export const NotificationView = React.memo<Props>(
+  ({ notifications, openMyProfileScreen }) => {
+    let previousItemHours = "";
+    const theme = usePreferredTheme();
 
-  const getHours = (prevDate: string) => {
-    const currDate1 = new Date();
-    let d1: any = new Date(currDate1); //firstDate
-    let d2: any = new Date(prevDate); //SecondDate
-    let diff = Math.abs(d1 - d2);
-    const hours = diff / (1000 * 60 * 60); //in milliseconds
+    const getHours = (prevDate: string) => {
+      const currDate1 = new Date();
+      let d1: any = new Date(currDate1); //firstDate
+      let d2: any = new Date(prevDate); //SecondDate
+      let diff = Math.abs(d1 - d2);
+      const hours = diff / (1000 * 60 * 60); //in milliseconds
 
-    return parseInt(hours.toFixed(0));
-  };
+      return parseInt(hours.toFixed(0));
+    };
 
-  const getHeader = (label: string) => {
-    return <AppLabel text={label} style={styles.header} weight={"bold"} />;
-  };
+    const getHeader = (label: string, style?: StyleProp<ViewStyle>) => {
+      return (
+        <AppLabel
+          text={label}
+          style={[
+            styles.header,
+            style,
+            { color: theme.themedColors.interface["700"] }
+          ]}
+          weight={"semi-bold"}
+        />
+      );
+    };
 
-  const getSortedItems = (hours: number) => {
-    let label = "NEW NOTIFICATIONS";
-    let tag = "3";
-    if (hours > 48) {
-      tag = "3";
-    } else if (hours >= 0 && hours <= 24) {
-      tag = "1";
-    } else if (hours > 24 || hours < 48) {
-      tag = "2";
-    }
+    const getSortedItems = (hours: number) => {
+      let label = "NEW NOTIFICATIONS";
+      let tag = "3";
+      if (hours > 48) {
+        tag = "3";
+      } else if (hours >= 0 && hours <= 24) {
+        tag = "1";
+      } else if (hours > 24 || hours < 48) {
+        tag = "2";
+      }
 
-    if (previousItemHours !== tag && tag === "1") {
-      previousItemHours = tag;
-      return getHeader(label);
-    } else if (previousItemHours !== tag && tag === "3") {
-      previousItemHours = tag;
-      label = "OLDER NOTIFICATIONS";
-      return getHeader(label);
-    } else if (previousItemHours !== tag && tag === "2") {
-      previousItemHours = tag;
-      label = "YESTERDAY";
-      return getHeader(label);
-    }
-  };
+      if (previousItemHours !== tag && tag === "1") {
+        previousItemHours = tag;
+        return getHeader(label, styles.mainContanier);
+      } else if (previousItemHours !== tag && tag === "3") {
+        previousItemHours = tag;
+        label = "OLDER NOTIFICATIONS";
+        return getHeader(label);
+      } else if (previousItemHours !== tag && tag === "2") {
+        previousItemHours = tag;
+        label = "YESTERDAY";
+        return getHeader(label);
+      }
+    };
 
-  const listItem = ({
-    item,
-    index
-  }: {
-    item: NotificationData;
-    index: number;
-  }) => {
+    const listItem = ({
+      item,
+      index
+    }: {
+      item: NotificationData;
+      index: number;
+    }) => {
+      return (
+        <View>
+          {getSortedItems(getHours(notifications[index].date))}
+          <CircleImageWithText
+            key={index}
+            username={"Fox Mccloud "}
+            message={item.message}
+            onPress={() => AppLog.log("Button pressed")}
+            userNameOnPress={(value, userNameIndex) => {
+              if (userNameIndex === 0) {
+                openMyProfileScreen();
+              }
+            }}
+          />
+        </View>
+      );
+    };
+
     return (
       <View>
-        {getSortedItems(getHours(notifications[index].date))}
-        <CircleImageWithText
-          key={index}
-          username={"Fox Mccloud "}
-          message={item.message}
-          onPress={() => AppLog.log("Button pressed")}
-        />
+        <View style={styles.dropDownBar}>
+          <AppDropdown
+            items={[
+              { id: "0", title: "View Request" },
+              { id: "1", title: "View Comment" },
+              { id: "2", title: "View Details" }
+            ]}
+            title={"Filter by Notification"}
+            dropDownIcon={() => (
+              <Selector
+                width={16}
+                height={16}
+                fill={theme.themedColors.label}
+              />
+            )}
+            style={[
+              styles.dropDown,
+              { backgroundColor: theme.themedColors.interface["100"] }
+            ]}
+            selectedItemCallback={(item) =>
+              AppLog.log("Selected Item" + item)
+            }
+            shouldShowCustomIcon={true}
+          />
+        </View>
+        {useLazyLoadInterface(
+          <>
+            <FlatListWithPb
+              shouldShowProgressBar={false}
+              style={styles.mainContanier}
+              data={notifications}
+              keyExtractor={(item) => item.id}
+              renderItem={listItem}
+            />
+          </>
+        )}
       </View>
     );
-  };
-
-  return (
-    <View>
-      <View style={styles.dropDownBar}>
-        <AppDropdown
-          items={[
-            { id: "0", title: "View Request" },
-            { id: "1", title: "View Comment" },
-            { id: "2", title: "View Details" }
-          ]}
-          title={"Filter by Notification"}
-          dropDownIcon={() => (
-            <Selector
-              width={16}
-              height={16}
-              fill={theme.themedColors.label}
-            />
-          )}
-          style={[
-            styles.dropDown,
-            { backgroundColor: theme.themedColors.interface["100"] }
-          ]}
-          selectedItemCallback={(item) =>
-            AppLog.log("Selected Item" + item)
-          }
-          shouldShowCustomIcon={true}
-        />
-      </View>
-      {useLazyLoadInterface(
-        <>
-          <FlatListWithPb
-            shouldShowProgressBar={false}
-            style={styles.mainContanier}
-            data={notifications}
-            keyExtractor={(item) => item.id}
-            renderItem={listItem}
-          />
-        </>
-      )}
-    </View>
-  );
-});
+  }
+);
 
 const styles = StyleSheet.create({
   header: {
@@ -127,9 +145,7 @@ const styles = StyleSheet.create({
     marginBottom: SPACE.lg,
     marginLeft: SPACE.lg
   },
-  mainContanier: {
-    marginTop: SPACE.md
-  },
+  mainContanier: { marginTop: SPACE.lg },
   dropDown: {
     marginLeft: SPACE.md,
     marginRight: SPACE.md,
@@ -139,6 +155,15 @@ const styles = StyleSheet.create({
   },
   dropDownBar: {
     backgroundColor: Colors.white,
-    height: 50
+    height: 46,
+    shadowColor: "#000",
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
+    elevation: 4
+  },
+  shadow: {
+    overflow: "hidden",
+    paddingBottom: 5
   }
 });

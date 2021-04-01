@@ -28,7 +28,7 @@ export const HeadingWithText = optimizedMemoWithStyleProp<Props>(
         <AppLabel
           text={headingText}
           weight={headingFontWeight}
-          style={[{ fontSize: FONT_SIZE.lg }, headingStyle]}
+          style={[{ fontSize: FONT_SIZE.md }, headingStyle]}
         />
         <AppLabel
           text={text}

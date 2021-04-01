@@ -25,264 +25,268 @@ export const BasicProfile = optimizedMemo(({}) => {
   const tikTokIcon = () => <TikTokIcon width={20} height={20} />;
   return (
     <CardView style={styles.cardStyles}>
-      <HeadingWithText
-        headingText={STRINGS.profile.basicProfile.heading}
-        text={STRINGS.profile.basicProfile.title}
-        headingFontWeight={"semi-bold"}
-        headingStyle={[
-          styles.headingStyle,
-          { color: theme.themedColors.label }
-        ]}
-        textStyle={[{ color: theme.themedColors.labelSecondary }]}
-      />
+      <View style={styles.innerCardStyle}>
+        <HeadingWithText
+          headingText={STRINGS.profile.basicProfile.heading}
+          text={STRINGS.profile.basicProfile.title}
+          headingFontWeight={"semi-bold"}
+          headingStyle={[
+            styles.headingStyle,
+            { color: theme.themedColors.label }
+          ]}
+          textStyle={[{ color: theme.themedColors.labelSecondary }]}
+        />
+      </View>
       <View style={styles.horizontalLine} />
-      <UploadProfilePhoto />
-      <AppFormField
-        fieldTestID="firstName"
-        validationLabelTestID={"firstNameValidationLabel"}
-        name="firstName"
-        labelProps={{
-          text: STRINGS.profile.formTitle.firstName,
-          weight: "semi-bold"
-        }}
-        fieldInputProps={{
-          textContentType: "name",
-          keyboardType: "default",
-          returnKeyType: "next",
-          placeholder: STRINGS.profile.placeHolder.firstName,
-          autoCapitalize: "none",
-          placeholderTextColor: theme.themedColors.placeholder,
-          style: { color: theme.themedColors.label },
-          viewStyle: [
-            styles.textFieldStyle,
-            {
-              backgroundColor: theme.themedColors.background,
-              borderColor: theme.themedColors.border
-            }
-          ]
-        }}
-      />
-      <View style={styles.spacer} />
-      <AppFormField
-        fieldTestID="lastName"
-        validationLabelTestID={"lastNameValidationLabel"}
-        name="lastName"
-        labelProps={{
-          text: STRINGS.profile.formTitle.lastName,
-          weight: "semi-bold"
-        }}
-        fieldInputProps={{
-          textContentType: "name",
-          keyboardType: "default",
-          returnKeyType: "next",
-          placeholder: STRINGS.profile.placeHolder.lastName,
-          autoCapitalize: "none",
-          placeholderTextColor: theme.themedColors.placeholder,
-          style: { color: theme.themedColors.label },
-          viewStyle: [
-            styles.textFieldStyle,
-            {
-              backgroundColor: theme.themedColors.background,
-              borderColor: theme.themedColors.border
-            }
-          ]
-        }}
-      />
-      <View style={styles.spacer} />
-      <AppFormField
-        fieldTestID="aboutMe"
-        validationLabelTestID={"aboutMeValidationLabel"}
-        name="aboutMe"
-        labelProps={{
-          text: STRINGS.profile.formTitle.aboutMe,
-          weight: "semi-bold"
-        }}
-        fieldInputProps={{
-          textContentType: "name",
-          keyboardType: "default",
-          returnKeyType: "next",
-          placeholder: STRINGS.profile.placeHolder.aboutMe,
-          autoCapitalize: "none",
-          placeholderTextColor: theme.themedColors.placeholder,
-          viewStyle: [
-            styles.aboutMe,
-            {
-              backgroundColor: theme.themedColors.background,
-              borderColor: theme.themedColors.border
-            }
-          ],
-          style: [
-            styles.inputFieldRow,
-            {
-              color: theme.themedColors.label
-            }
-          ],
-          multiline: true,
-          textAlignVertical: "top"
-        }}
-      />
-      <View style={styles.spacer} />
-      <AppFormField
-        fieldTestID="faceBookProfile"
-        validationLabelTestID={"faceBookProfileValidationLabel"}
-        name="faceBookProfile"
-        labelProps={{
-          text: STRINGS.profile.formTitle.faceBookProfile,
-          weight: "semi-bold"
-        }}
-        fieldInputProps={{
-          textContentType: "name",
-          keyboardType: "default",
-          returnKeyType: "next",
-          placeholder: STRINGS.profile.placeHolder.faceBookProfile,
-          autoCapitalize: "none",
-          placeholderTextColor: theme.themedColors.placeholder,
-          style: { color: theme.themedColors.label },
-          viewStyle: [
-            styles.textFieldStyle,
-            {
-              backgroundColor: theme.themedColors.background,
-              borderColor: theme.themedColors.border
-            }
-          ],
-          leftIcon: facebookIcon
-        }}
-      />
-      <View style={styles.spacer} />
-      <AppFormField
-        fieldTestID="twitterProfile"
-        validationLabelTestID={"twitterProfileValidationLabel"}
-        name="twitterProfile"
-        labelProps={{
-          text: STRINGS.profile.formTitle.twitterProfile,
-          weight: "semi-bold"
-        }}
-        fieldInputProps={{
-          textContentType: "name",
-          keyboardType: "default",
-          returnKeyType: "next",
-          placeholder: STRINGS.profile.placeHolder.twitterProfile,
-          autoCapitalize: "none",
-          placeholderTextColor: theme.themedColors.placeholder,
-          style: { color: theme.themedColors.label },
-          viewStyle: [
-            styles.textFieldStyle,
-            {
-              backgroundColor: theme.themedColors.background,
-              borderColor: theme.themedColors.border
-            }
-          ],
-          leftIcon: twitterIcon
-        }}
-      />
-      <View style={styles.spacer} />
-      <AppFormField
-        fieldTestID="linkedInProfile"
-        validationLabelTestID={"linkedInProfileValidationLabel"}
-        name="linkedInProfile"
-        labelProps={{
-          text: STRINGS.profile.formTitle.linkedInProfile,
-          weight: "semi-bold"
-        }}
-        fieldInputProps={{
-          textContentType: "name",
-          keyboardType: "default",
-          returnKeyType: "next",
-          placeholder: STRINGS.profile.placeHolder.linkedInProfile,
-          autoCapitalize: "none",
-          placeholderTextColor: theme.themedColors.placeholder,
-          style: { color: theme.themedColors.label },
-          viewStyle: [
-            styles.textFieldStyle,
-            {
-              backgroundColor: theme.themedColors.background,
-              borderColor: theme.themedColors.border
-            }
-          ],
-          leftIcon: linkedInIcon
-        }}
-      />
-      <View style={styles.spacer} />
-      <AppFormField
-        fieldTestID="instagramProfile"
-        validationLabelTestID={"instagramProfileValidationLabel"}
-        name="instagramProfile"
-        labelProps={{
-          text: STRINGS.profile.formTitle.instagramProfile,
-          weight: "semi-bold"
-        }}
-        fieldInputProps={{
-          textContentType: "name",
-          keyboardType: "default",
-          returnKeyType: "next",
-          placeholder: STRINGS.profile.placeHolder.instagramProfile,
-          autoCapitalize: "none",
-          placeholderTextColor: theme.themedColors.placeholder,
-          style: { color: theme.themedColors.label },
-          viewStyle: [
-            styles.textFieldStyle,
-            {
-              backgroundColor: theme.themedColors.background,
-              borderColor: theme.themedColors.border
-            }
-          ],
-          leftIcon: instagramIcon
-        }}
-      />
-      <View style={styles.spacer} />
-      <AppFormField
-        fieldTestID="snapChatProfile"
-        validationLabelTestID={"snapChatProfileValidationLabel"}
-        name="snapChatProfile"
-        labelProps={{
-          text: STRINGS.profile.formTitle.snapChatProfile,
-          weight: "semi-bold"
-        }}
-        fieldInputProps={{
-          textContentType: "name",
-          keyboardType: "default",
-          returnKeyType: "next",
-          placeholder: STRINGS.profile.placeHolder.snapChatProfile,
-          autoCapitalize: "none",
-          placeholderTextColor: theme.themedColors.placeholder,
-          style: { color: theme.themedColors.label },
-          viewStyle: [
-            styles.textFieldStyle,
-            {
-              backgroundColor: theme.themedColors.background,
-              borderColor: theme.themedColors.border
-            }
-          ],
-          leftIcon: snapChatIcon
-        }}
-      />
-      <View style={styles.spacer} />
-      <AppFormField
-        fieldTestID="tikTokProfile"
-        validationLabelTestID={"tikTokProfileValidationLabel"}
-        name="tikTokProfile"
-        labelProps={{
-          text: STRINGS.profile.formTitle.tikTokProfile,
-          weight: "semi-bold"
-        }}
-        fieldInputProps={{
-          textContentType: "name",
-          keyboardType: "default",
-          returnKeyType: "next",
-          placeholder: STRINGS.profile.placeHolder.tikTokProfile,
-          autoCapitalize: "none",
-          placeholderTextColor: theme.themedColors.placeholder,
-          style: { color: theme.themedColors.label },
-          viewStyle: [
-            styles.textFieldStyle,
-            {
-              backgroundColor: theme.themedColors.background,
-              borderColor: theme.themedColors.border
-            }
-          ],
-          leftIcon: tikTokIcon
-        }}
-      />
+      <View style={styles.innerCardStyle}>
+        <UploadProfilePhoto />
+        <AppFormField
+          fieldTestID="firstName"
+          validationLabelTestID={"firstNameValidationLabel"}
+          name="firstName"
+          labelProps={{
+            text: STRINGS.profile.formTitle.firstName,
+            weight: "semi-bold"
+          }}
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.placeHolder.firstName,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
+            ]
+          }}
+        />
+        <View style={styles.spacer} />
+        <AppFormField
+          fieldTestID="lastName"
+          validationLabelTestID={"lastNameValidationLabel"}
+          name="lastName"
+          labelProps={{
+            text: STRINGS.profile.formTitle.lastName,
+            weight: "semi-bold"
+          }}
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.placeHolder.lastName,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
+            ]
+          }}
+        />
+        <View style={styles.spacer} />
+        <AppFormField
+          fieldTestID="aboutMe"
+          validationLabelTestID={"aboutMeValidationLabel"}
+          name="aboutMe"
+          labelProps={{
+            text: STRINGS.profile.formTitle.aboutMe,
+            weight: "semi-bold"
+          }}
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.placeHolder.aboutMe,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            viewStyle: [
+              styles.aboutMe,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
+            ],
+            style: [
+              styles.inputFieldRow,
+              {
+                color: theme.themedColors.label
+              }
+            ],
+            multiline: true,
+            textAlignVertical: "top"
+          }}
+        />
+        <View style={styles.spacer} />
+        <AppFormField
+          fieldTestID="faceBookProfile"
+          validationLabelTestID={"faceBookProfileValidationLabel"}
+          name="faceBookProfile"
+          labelProps={{
+            text: STRINGS.profile.formTitle.faceBookProfile,
+            weight: "semi-bold"
+          }}
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.placeHolder.faceBookProfile,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
+            ],
+            leftIcon: facebookIcon
+          }}
+        />
+        <View style={styles.spacer} />
+        <AppFormField
+          fieldTestID="twitterProfile"
+          validationLabelTestID={"twitterProfileValidationLabel"}
+          name="twitterProfile"
+          labelProps={{
+            text: STRINGS.profile.formTitle.twitterProfile,
+            weight: "semi-bold"
+          }}
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.placeHolder.twitterProfile,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
+            ],
+            leftIcon: twitterIcon
+          }}
+        />
+        <View style={styles.spacer} />
+        <AppFormField
+          fieldTestID="linkedInProfile"
+          validationLabelTestID={"linkedInProfileValidationLabel"}
+          name="linkedInProfile"
+          labelProps={{
+            text: STRINGS.profile.formTitle.linkedInProfile,
+            weight: "semi-bold"
+          }}
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.placeHolder.linkedInProfile,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
+            ],
+            leftIcon: linkedInIcon
+          }}
+        />
+        <View style={styles.spacer} />
+        <AppFormField
+          fieldTestID="instagramProfile"
+          validationLabelTestID={"instagramProfileValidationLabel"}
+          name="instagramProfile"
+          labelProps={{
+            text: STRINGS.profile.formTitle.instagramProfile,
+            weight: "semi-bold"
+          }}
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.placeHolder.instagramProfile,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
+            ],
+            leftIcon: instagramIcon
+          }}
+        />
+        <View style={styles.spacer} />
+        <AppFormField
+          fieldTestID="snapChatProfile"
+          validationLabelTestID={"snapChatProfileValidationLabel"}
+          name="snapChatProfile"
+          labelProps={{
+            text: STRINGS.profile.formTitle.snapChatProfile,
+            weight: "semi-bold"
+          }}
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.placeHolder.snapChatProfile,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
+            ],
+            leftIcon: snapChatIcon
+          }}
+        />
+        <View style={styles.spacer} />
+        <AppFormField
+          fieldTestID="tikTokProfile"
+          validationLabelTestID={"tikTokProfileValidationLabel"}
+          name="tikTokProfile"
+          labelProps={{
+            text: STRINGS.profile.formTitle.tikTokProfile,
+            weight: "semi-bold"
+          }}
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.placeHolder.tikTokProfile,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
+            ],
+            leftIcon: tikTokIcon
+          }}
+        />
+      </View>
     </CardView>
   );
 });
@@ -294,12 +298,13 @@ const styles = StyleSheet.create({
   },
   horizontalLine: {
     backgroundColor: grayShades.warmGray["300"],
-    height: 0.5,
-    marginVertical: SPACE.lg
+    height: 0.5
   },
   cardStyles: {
     marginTop: SPACE.lg,
-    marginHorizontal: SPACE.lg,
+    marginHorizontal: SPACE.lg
+  },
+  innerCardStyle: {
     padding: SPACE.lg
   },
   aboutMe: {

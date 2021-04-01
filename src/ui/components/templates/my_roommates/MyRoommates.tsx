@@ -12,6 +12,7 @@ import {
   BUTTON_TYPES
 } from "ui/components/molecules/app_button/AppButton";
 import AgreementIcon from "assets/images/agreement_icon.svg";
+import Strings from "config/Strings";
 
 type Props = {};
 
@@ -29,7 +30,7 @@ const MyRoommates: FC<Props> = () => {
     <CardView style={styles.cardView}>
       <View style={styles.innerCardView}>
         <AppLabel
-          text={"My Roommates"}
+          text={Strings.profile.viewProfile.roomMates.heading}
           weight={"semi-bold"}
           style={[styles.mainHeading, { color: theme.themedColors.label }]}
         />
@@ -44,7 +45,7 @@ const MyRoommates: FC<Props> = () => {
           scrollEnabled={false}
         />
         <AppButton
-          text={"View Roommate Agreement"}
+          text={Strings.profile.viewProfile.agreementButtonTitle}
           buttonType={BUTTON_TYPES.NORMAL}
           textStyle={{
             color: theme.themedColors.primary,
@@ -63,7 +64,8 @@ const MyRoommates: FC<Props> = () => {
 const styles = StyleSheet.create({
   cardView: {
     marginHorizontal: SPACE.lg,
-    marginTop: SPACE.lg
+    marginTop: SPACE.lg,
+    marginBottom: SPACE.lg
   },
   innerCardView: {
     marginHorizontal: SPACE.lg,

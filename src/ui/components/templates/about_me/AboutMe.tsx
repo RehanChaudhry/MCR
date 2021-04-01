@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { CardView } from "ui/components/atoms/CardView";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import SocialDetailForm from "ui/components/templates/about_me/SocialDetailForm";
 import FacebookIcon from "assets/images/facebook_dark_icon.svg";
@@ -12,7 +12,7 @@ import SnapChatIcon from "assets/images/snapchat_dark_icon.svg";
 import UserImage from "assets/images/user_pic2.svg";
 import WatchVideo from "assets/images/watch_video_icon.svg";
 
-import { COLORS, FONT_SIZE, SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import {
@@ -20,6 +20,8 @@ import {
   BUTTON_TYPES
 } from "ui/components/molecules/app_button/AppButton";
 import Colors from "config/Colors";
+import { grayShades } from "hooks/theme/ColorPaletteContainer";
+import Strings from "config/Strings";
 
 type Props = {};
 
@@ -55,7 +57,7 @@ const AboutMe: FC<Props> = () => {
           </View>
         </View>
         <AppButton
-          text={"Watch Video Introduction"}
+          text={Strings.profile.viewProfile.videoIntroduction}
           buttonStyle={[
             styles.uploadButton,
             { borderColor: theme.themedColors.interface["700"] }
@@ -68,13 +70,13 @@ const AboutMe: FC<Props> = () => {
             fontSize: FONT_SIZE.xsm
           }}
           shouldShowError={false}
-          fontWeight={"bold"}
+          //fontWeight={"bold"}
           leftIcon={watchVideo}
           shouldAlignTextWithLeftIconWithFullWidth={true}
         />
 
         <AppLabel
-          text={"About Me"}
+          text={Strings.profile.formTitle.aboutMe}
           style={[
             styles.aboutMe,
             { color: theme.themedColors.labelSecondary }
@@ -88,36 +90,62 @@ const AboutMe: FC<Props> = () => {
           }
           numberOfLines={0}
         />
-        <View style={styles.horizontalLine} />
+      </View>
+      <View style={styles.horizontalLine} />
+      <View style={styles.innerCardView}>
         <SocialDetailForm
           icon={facebookIcon}
-          heading={"Facebook Profile"}
+          heading={Strings.profile.formTitle.faceBookProfile}
           title={"facebook.com/zanemayes"}
+          headingStyle={{ color: grayShades.warmGray["700"] }}
+          onPress={() => {
+            Alert.alert("Facebook profile link is pressed");
+          }}
         />
         <SocialDetailForm
           icon={twitterIcon}
-          heading={"Twitter Profile"}
+          heading={Strings.profile.formTitle.twitterProfile}
           title={"twitter.com/zanemayes"}
+          headingStyle={{ color: grayShades.warmGray["700"] }}
+          onPress={() => {
+            Alert.alert("Twitter profile link is pressed");
+          }}
         />
         <SocialDetailForm
           icon={linkedInIcon}
-          heading={"LinkedIn Profile"}
+          heading={Strings.profile.formTitle.linkedInProfile}
           title={"linkedin.com/zanemayes"}
+          headingStyle={{ color: grayShades.warmGray["700"] }}
+          onPress={() => {
+            Alert.alert("LinkedIn profile link is pressed");
+          }}
         />
         <SocialDetailForm
           icon={tikTokIcon}
-          heading={"TikTok Profile"}
+          heading={Strings.profile.formTitle.tikTokProfile}
           title={"tiktok.com/zanemayes"}
+          headingStyle={{ color: grayShades.warmGray["700"] }}
+          onPress={() => {
+            Alert.alert("TikTok profile link is pressed");
+          }}
         />
         <SocialDetailForm
           icon={instagramIcon}
-          heading={"Instagram Profile"}
+          heading={Strings.profile.formTitle.instagramProfile}
           title={"instagram.com/zanemayes"}
+          headingStyle={{ color: grayShades.warmGray["700"] }}
+          onPress={() => {
+            Alert.alert("Instagram profile link is pressed");
+          }}
         />
         <SocialDetailForm
           icon={snapchatIcon}
-          heading={"SnapChat Profile"}
+          heading={Strings.profile.formTitle.snapChatProfile}
           title={"snapchat.com/zanemayes"}
+          headingStyle={{ color: grayShades.warmGray["700"] }}
+          onPress={() => {
+            Alert.alert("SnapChat profile link is pressed");
+          }}
         />
       </View>
     </CardView>
@@ -127,8 +155,7 @@ const AboutMe: FC<Props> = () => {
 const styles = StyleSheet.create({
   innerCardView: {
     marginHorizontal: SPACE.lg,
-    paddingTop: SPACE.xsm,
-    paddingBottom: SPACE._3xl
+    paddingTop: SPACE.xsm
   },
   cardView: {
     marginHorizontal: SPACE.lg,
@@ -136,9 +163,9 @@ const styles = StyleSheet.create({
     //marginBottom: -16
   },
   horizontalLine: {
-    backgroundColor: COLORS.grey,
+    backgroundColor: grayShades.warmGray["300"],
     height: 0.5,
-    marginVertical: SPACE.lg
+    marginVertical: SPACE.md
   },
   imageView: {
     height: 64,

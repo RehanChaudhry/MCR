@@ -1,16 +1,18 @@
 import React, { FC } from "react";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import DismissedOrBlockedController from "ui/screens/home/friends/DismissedOrBlocked/DismissedOrBlockedController";
 import MyFriendsController from "ui/screens/home/friends/MyFriends/MyFriendsController";
 import MyRoommatesController from "ui/screens/home/friends/MyRoommates/MyRoommatesController";
 import RoommateAgreementController from "ui/screens/home/friends/RoommateAgreement/RoommateAgreementController";
 import { FriendsBottomBar } from "./FriendsBottomBar";
 import {
+  DismissedOrBlockStack,
   MyFriendsStack,
   MyRoommatesStack,
-  RoommateAgreementStack,
-  DismissedOrBlockStack
+  RoommateAgreementStack
 } from "./FriendsStack";
+import { FONT_SIZE } from "config";
 
 export const FriendsRoutes = () => {
   return (
@@ -42,7 +44,10 @@ const MyFriendsRoutes: FC<MyFriendsRoutesProps> = () => {
       <MyFriendsStack.Screen
         name="MyFriends"
         component={MyFriendsController}
-        options={{ title: "My Friends", headerLeft: () => <Hamburger /> }}
+        options={{
+          headerTitle: () => <HeaderTitle text="My Friends" />,
+          headerLeft: () => <Hamburger />
+        }}
       />
     </MyFriendsStack.Navigator>
   );
@@ -56,7 +61,7 @@ const MyRoommatesRoutes: FC<MyRoommatesRoutesProps> = () => {
         name="MyRoommates"
         component={MyRoommatesController}
         options={{
-          title: "My Roommates",
+          headerTitle: () => <HeaderTitle text="My Roommates" />,
           headerLeft: () => <Hamburger />
         }}
       />
@@ -69,10 +74,15 @@ const RoommateAgreementRoutes: FC<RoommateAgreementRoutesProps> = () => {
   return (
     <RoommateAgreementStack.Navigator>
       <RoommateAgreementStack.Screen
-        name="RoomateAgreement"
+        name="RoommateAgreement"
         component={RoommateAgreementController}
         options={{
-          title: "Roommate Agreement",
+          headerTitle: () => (
+            <HeaderTitle
+              text="Roommate Agreement"
+              labelStyle={{ fontSize: FONT_SIZE.xsm }}
+            />
+          ),
           headerLeft: () => <Hamburger />
         }}
       />
@@ -88,7 +98,7 @@ const DismissedOrBlockedRoutes: FC<DismissedOrBlockedRoutesProps> = () => {
         name="DismissedOrBlocked"
         component={DismissedOrBlockedController}
         options={{
-          title: "Dismissed or Blocked",
+          headerTitle: () => <HeaderTitle text="Dismissed or Blocked" />,
           headerStyle: {
             elevation: 0,
             shadowOpacity: 0

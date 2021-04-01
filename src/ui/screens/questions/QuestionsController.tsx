@@ -1,4 +1,10 @@
-import React, { FC, useRef, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
 import { AppLog } from "utils/Util";
 import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
 import QuestionSection from "models/QuestionSection";
@@ -13,7 +19,7 @@ import { useApi } from "repo/Client";
 import { AnswerApiRequestModel } from "models/api_requests/AnswerApiRequestModel";
 import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseModel";
 import ProfileApis from "repo/auth/ProfileApis";
-import { usePreventDoubleTap } from "hooks";
+import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { Alert, View } from "react-native";
 import {
   QuestionsResponseModel,
@@ -26,14 +32,34 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import DataGenerator from "utils/DataGenerator";
 import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import { UpdateQuestionnaireStackParamList } from "routes/ProfileStack";
-import Hamburger from "../../components/molecules/hamburger/Hamburger";
-import { HeaderTitle } from "../../components/molecules/header_title/HeaderTitle";
+import Hamburger from "ui/components/molecules/hamburger/Hamburger";
+import EScreen from "models/enums/EScreen";
+import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
+import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
+import { MatchesStackParamList } from "routes/MatchesStack";
+import { WelcomeStackParamList } from "routes/WelcomeStack";
+import RightArrow from "assets/images/right.svg";
+import LeftArrow from "assets/images/left.svg";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { HomeDrawerParamList } from "routes";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
+
+type WelcomeNavigationProp = StackNavigationProp<
+  WelcomeStackParamList,
+  "Questionnaire"
+>;
+
+type MatchesNavigationProp = StackNavigationProp<
+  MatchesStackParamList,
+  "Questionnaire"
+>;
 
 type ProfileNavigationProp = StackNavigationProp<
   ProfileStackParamList,
   "UpdateQuestionnaire"
 >;
+
+type HomeNavigationProp = DrawerNavigationProp<HomeDrawerParamList>;
 
 type ProfileRouteProp = RouteProp<
   UpdateQuestionnaireStackParamList,
@@ -46,16 +72,92 @@ const questionSections = DataGenerator.getQuestionSections();
 
 const QuestionsController: FC<Props> = () => {
   AppLog.log("Opening QuestionsController");
-  const requestModel = useRef<AnswerApiRequestModel>();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const navigation = useNavigation<ProfileNavigationProp>();
-  navigation.setOptions({
-    headerLeft: () => <Hamburger />,
-    headerTitleAlign: "center",
-    headerTitle: () => <HeaderTitle text="Update Questionnaire" />
-  });
+  const { themedColors } = usePreferredTheme();
+
   const route = useRoute<ProfileRouteProp>();
+  const homeNavigation = useNavigation<HomeNavigationProp>();
+  const welcomeNavigation = useNavigation<WelcomeNavigationProp>();
+  const profileNavigation = useNavigation<ProfileNavigationProp>();
+  const matchesNavigation = useNavigation<MatchesNavigationProp>();
+
+  const moveToHomeScreen = useCallback(() => {
+    homeNavigation.reset({
+      index: 0,
+      routes: [{ name: "Matches" }]
+    });
+  }, [homeNavigation]);
+
+  useLayoutEffect(() => {
+    if (route.params.isFrom === EScreen.WELCOME) {
+      welcomeNavigation.setOptions({
+        headerLeft: () => (
+          <HeaderLeftTextWithIcon
+            fontWeight={"semi-bold"}
+            text={"Back"}
+            icon={() => {
+              return (
+                <LeftArrow
+                  width={20}
+                  height={20}
+                  fill={themedColors.interface["700"]}
+                />
+              );
+            }}
+            onPress={() => {
+              welcomeNavigation.pop();
+            }}
+          />
+        ),
+        headerRight: () => (
+          <HeaderRightTextWithIcon
+            text="Skip"
+            textStyle={{ color: themedColors.interface["700"] }}
+            icon={() => {
+              return (
+                <RightArrow
+                  width={20}
+                  height={20}
+                  fill={themedColors.interface["700"]}
+                />
+              );
+            }}
+            onPress={() => {
+              moveToHomeScreen();
+            }}
+          />
+        )
+      });
+    }
+
+    if (route.params.isFrom === EScreen.MY_PROFILE) {
+      profileNavigation.setOptions({
+        headerLeft: () => <Hamburger />
+      });
+    }
+
+    if (route.params.isFrom === EScreen.MATCH_INFO) {
+      matchesNavigation.setOptions({
+        headerLeft: () => (
+          <HeaderLeftTextWithIcon
+            onPress={() => {
+              matchesNavigation.pop();
+            }}
+          />
+        )
+      });
+    }
+  }, [
+    matchesNavigation,
+    homeNavigation,
+    profileNavigation,
+    welcomeNavigation,
+    themedColors.interface,
+    route.params.isFrom,
+    moveToHomeScreen
+  ]);
+
+  const requestModel = useRef<AnswerApiRequestModel>();
 
   const [questions, setQuestions] = useState<
     Section<QuestionSection, Question>[]
@@ -90,12 +192,19 @@ const QuestionsController: FC<Props> = () => {
   };
 
   const handleSubmitAnswers = usePreventDoubleTap(async () => {
+    // For UI build
+    if (true) {
+      if (route.params.isFrom === EScreen.WELCOME) {
+        moveToHomeScreen();
+      }
+      return;
+    }
     if (requestModel.current === undefined) {
       return;
     }
     AppLog.log("handleSubmitAnswers: ");
     const { hasError, errorBody, dataBody } = await answerApi.request([
-      requestModel.current
+      requestModel.current!
     ]);
     if (hasError || dataBody === undefined) {
       Alert.alert("Unable to Submit answers.", errorBody);

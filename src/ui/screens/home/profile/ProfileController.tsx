@@ -9,6 +9,7 @@ import BottomBreadCrumbs, {
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
 import { usePreferredTheme } from "hooks";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import EScreen from "models/enums/EScreen";
 
 type ProfileNavigationProp = BottomTabNavigationProp<ProfileStackParamList>;
 
@@ -22,19 +23,19 @@ const ProfileController: FC<Props> = () => {
     {
       title: "View Profile",
       onPress: () => {
-        navigation.navigate("ViewProfile");
+        navigation.jumpTo("ViewProfile", { isFrom: EScreen.HOME });
       }
     },
     {
       title: "Update Profile",
       onPress: () => {
-        navigation.navigate("UpdateProfile");
+        navigation.jumpTo("UpdateProfile", { isFrom: EScreen.HOME });
       }
     },
     {
       title: "Update Questionnaire",
       onPress: () => {
-        navigation.navigate("UpdateQuestionnaire");
+        navigation.jumpTo("UpdateQuestionnaire");
       }
     }
   ];

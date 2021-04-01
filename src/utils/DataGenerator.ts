@@ -77,7 +77,8 @@ const getUnis = () => {
         name: "Ohio University",
         location: "Athens, Ohio",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: false
       },
       {
         id: "2",
@@ -88,49 +89,56 @@ const getUnis = () => {
           ...defaultPaletteCopy,
           background: "black",
           label: "white"
-        }
+        },
+        sso_login: true
       },
       {
         id: "3",
         name: "Florida International University",
         location: "Miami, Florida",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: false
       },
       {
         id: "4",
         name: "Oregon State University",
         location: "Corvillas, Oregon",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: true
       },
       {
         id: "5",
         name: "Duquesne University",
         location: "Pittsburgh, Pennsylvania",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: false
       },
       {
         id: "6",
         name: "Lehigh University",
         location: "Greenville, North Carolina",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: true
       },
       {
         id: "7",
         name: "North Dakota State University",
         location: "Fargo, North Dakota",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: false
       },
       {
         id: "8",
         name: "George Mason University",
         location: "Fairfax, Virginia",
         logo: "",
-        colorPalette: defaultPaletteCopy
+        colorPalette: defaultPaletteCopy,
+        sso_login: true
       }
     ]
   };
@@ -339,7 +347,7 @@ const getCommunityAnnouncementList = (pageToLoad: number) => {
       time: "3 hours ago",
       text:
         "First day at college, Ohio university. Thank you so much for watching",
-      link: "https://www.youtube.com/watch?v=zWh3CShX_do",
+      link: "https://www.youtube.com/watch?v=cqyziA30whE",
       likeCount: 20,
       commentCount: 5
     },
@@ -393,7 +401,7 @@ const getCommunityAnnouncementList = (pageToLoad: number) => {
       text:
         "First day at college, Ohio university. Thank you so much for watching",
       embeddedUrl:
-        '<iframe width="100%" height="50%" src="https://www.youtube.com/embed/cqyziA30whE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>',
+        '<iframe width="100%" height="350" src="https://www.youtube.com/embed/cqyziA30whE?feature=oembed" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
       likeCount: 20,
       commentCount: 5
     }
@@ -536,6 +544,25 @@ const getRoommate = (id: number) =>
     "2021-03-15T07:18:24.000Z"
   );
 
+const createComments = (): ChatItem[] => {
+  const comments: ChatItem[] = [];
+
+  const userOneId = 1;
+  for (let i = 1; i < 15; i++) {
+    comments.push(
+      createChat(
+        i,
+        i % 2 === 0 ? ["Nikki Engelin"] : ["Phoenix Walker"],
+        false,
+        SenderType.STUDENTS,
+        userOneId,
+        require("assets/images/d_user_pic.png")
+      )
+    );
+  }
+  return comments;
+};
+
 export default {
   getQuestionSections,
   getQuestion,
@@ -552,5 +579,6 @@ export default {
   getMyRoommates,
   getDismissedOrBlocked,
   getFriendRequests,
-  getRoommateRequests
+  getRoommateRequests,
+  createComments
 };

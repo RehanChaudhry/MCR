@@ -1,4 +1,10 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, {
+  FC,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { Alert, View } from "react-native";
@@ -24,6 +30,7 @@ import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_w
 import ProfileMatch from "models/ProfileMatch";
 import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
+import EScreen from "models/enums/EScreen";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -35,27 +42,28 @@ type Props = {};
 const MatchesController: FC<Props> = () => {
   AppLog.log("Opening MatchesController");
   const { themedColors } = usePreferredTheme();
-
   const navigation = useNavigation<MatchesNavigationProp>();
 
-  navigation.setOptions({
-    headerRight: () => (
-      <HeaderRightTextWithIcon
-        text={"More"}
-        onPress={() => navigation.navigate("MatchInfo")}
-        icon={(color, width, height) => {
-          AppLog.log(color);
-          return (
-            <InfoCircle
-              width={width}
-              height={height}
-              fill={themedColors.primary}
-            />
-          );
-        }}
-      />
-    )
-  });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderRightTextWithIcon
+          text={"More"}
+          onPress={() => navigation.navigate("MatchInfo")}
+          icon={(color, width, height) => {
+            AppLog.log(color);
+            return (
+              <InfoCircle
+                width={width}
+                height={height}
+                fill={themedColors.primary}
+              />
+            );
+          }}
+        />
+      )
+    });
+  }, [navigation, themedColors]);
 
   const moveToChatScreen = (profileMatch: ProfileMatch) => {
     // AppLog.log(
@@ -70,7 +78,7 @@ const MatchesController: FC<Props> = () => {
     AppLog.log(
       "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
     );
-    navigation.navigate("Profile");
+    navigation.navigate("Profile", { isFrom: EScreen.MATCH_INFO });
   };
 
   // Matches API

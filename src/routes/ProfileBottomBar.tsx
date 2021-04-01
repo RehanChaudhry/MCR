@@ -1,8 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import EScreen from "models/enums/EScreen";
 
 export type ProfileStackParamList = {
-  ViewProfile: undefined;
-  UpdateProfile: undefined;
+  ViewProfile: { isFrom: EScreen };
+  UpdateProfile: { isFrom: EScreen };
   UpdateQuestionnaire: undefined;
 };
 

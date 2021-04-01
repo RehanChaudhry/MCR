@@ -53,7 +53,10 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
       [
         preferenceSwitchValue,
         setPreferenceSwitchValue
-      ] = useState<boolean>(preferenceInitialValue);
+      ] = useState<boolean>(preferenceInitialValue),
+      lastRangeSelected: React.MutableRefObject<number[]> = useRef(
+        initialValuesBottomSlider ?? []
+      );
 
     const topSliderCallback = (result: number[]) => {
       topRangeSliderValues.current = result;
@@ -64,6 +67,10 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
     const bottomSliderCallback = (result: number[]) => {
       bottomRangeSliderValues.current = result;
       // AppLog.log("bottom slider callback: " + result);
+      if (!preferenceSwitchValue) {
+        lastRangeSelected.current = result;
+        // AppLog.log("bottom slider callback: " + lastRangeSelected.current);
+      }
       returnResultToComponent();
     };
 
@@ -137,7 +144,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
           initialValues={
             preferenceSwitchValue
               ? [minValue!, maxValue!]
-              : initialValuesBottomSlider!
+              : lastRangeSelected.current!
           }
           enableTwoThumbs={true}
           result={bottomSliderCallback}

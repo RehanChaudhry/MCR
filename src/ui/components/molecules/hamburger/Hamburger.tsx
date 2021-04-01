@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Keyboard, Pressable, StyleSheet } from "react-native";
 import Menu from "assets/images/menu.svg";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
@@ -18,6 +18,7 @@ const Hamburger: FC<Props> = () => {
     <Pressable
       style={styles.icon}
       onPress={() => {
+        Keyboard.dismiss();
         navigationDrawer.openDrawer();
       }}>
       <Menu width={23} height={23} fill={theme.themedColors.primary} />

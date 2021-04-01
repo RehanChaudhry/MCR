@@ -6,7 +6,7 @@ import { AppCompactButton } from "ui/components/atoms/app_compact_button/AppComp
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 type Props = {
-  onPress: () => void;
+  onPress?: () => void;
   shouldNotOptimize?: boolean;
 };
 export const CommentButton = optimizedMemo<Props>(({ onPress }) => {

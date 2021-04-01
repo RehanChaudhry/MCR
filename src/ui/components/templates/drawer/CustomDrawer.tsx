@@ -100,6 +100,7 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate("Settings");
+                      setCurrentItem("Settings");
                     }}>
                     <Settings
                       width={moderateScale(20)}

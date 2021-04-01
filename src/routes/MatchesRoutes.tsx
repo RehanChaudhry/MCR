@@ -8,6 +8,9 @@ import { STRINGS } from "config";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { ChatThreadController } from "ui/screens/chat/thread/ChatThreadController";
 import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
+import RoommateAgreementController from "ui/screens/home/friends/RoommateAgreement/RoommateAgreementController";
+import QuestionsController from "ui/screens/questions/QuestionsController";
+import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
 
 const MatchesRoutes = ({ navigation }: any) => {
   const route: any = useRoute();
@@ -47,6 +50,23 @@ const MatchesRoutes = ({ navigation }: any) => {
       <MatchesStack.Screen
         name="Profile"
         component={ViewProfileController}
+      />
+      <MatchesStack.Screen
+        name="RoommateAgreement"
+        component={RoommateAgreementController}
+      />
+      <MatchesStack.Screen
+        name="UpdateProfile"
+        component={UpdateProfileController}
+      />
+      <MatchesStack.Screen
+        name="Questionnaire"
+        component={QuestionsController}
+        options={{
+          headerTitle: () => (
+            <HeaderTitle text={STRINGS.questionnaire.title_update} />
+          )
+        }}
       />
     </MatchesStack.Navigator>
   );

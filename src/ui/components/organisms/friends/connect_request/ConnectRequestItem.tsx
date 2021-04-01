@@ -1,7 +1,7 @@
 import { FONTS, FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React, { FC } from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
   AppImageBackground,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   actionButtonText: {
     fontFamily: FONTS.semiBold,
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE._2xsm
   },
   actionsContainer: {
     flexDirection: "row",
@@ -126,11 +126,11 @@ const styles = StyleSheet.create({
     height: 48
   },
   subTitleText: {
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE._3xm,
     marginTop: SPACE.xxsm
   },
   titleText: {
-    fontSize: FONT_SIZE.lg
+    fontSize: FONT_SIZE.xsm
   },
   spacer: {
     padding: SPACE.xsm
