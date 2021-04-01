@@ -90,6 +90,7 @@ const ConnectRequestsController: FC<Props> = () => {
           }}
         />
       ),
+      headerTitleAlign: "center",
       headerTitle: () => <HeaderTitle text={title} />
     });
   }, [navigation, title]);
