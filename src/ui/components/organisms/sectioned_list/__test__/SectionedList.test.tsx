@@ -98,7 +98,9 @@ describe("Sectioned List tests", () => {
         isCollapsable={true}
         list={data}
         selectedIndexProp={1}
-        bodyView={(bodyItem: BodyModel) => <Text>{bodyItem.name}</Text>}
+        bodyView={(_: Section<any, any>[], bodyItem: BodyModel) => (
+          <Text>{bodyItem.name}</Text>
+        )}
         headerView={(header: HeaderModel, _: boolean) => (
           <Text>{header.name}</Text>
         )}

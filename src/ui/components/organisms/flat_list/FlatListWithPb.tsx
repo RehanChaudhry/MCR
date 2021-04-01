@@ -13,7 +13,6 @@ import {
 import { AppLoadMore } from "ui/components/atoms/app_load_more/AppLoadMore";
 import ErrorWithRetryView from "ui/components/molecules/ErrorWithRetryView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 interface OwnProps<ItemT> extends FlatListProps<ItemT> {
   shouldShowProgressBar: boolean;
@@ -27,13 +26,9 @@ interface OwnProps<ItemT> extends FlatListProps<ItemT> {
   noRecordFoundText?: string;
 }
 
-export const FlatListWithPb = optimizedMemo(
-  _FlatListWithPb
-) as typeof _FlatListWithPb;
-
 type Props<ItemT> = OwnProps<ItemT>;
 
-function _FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
+export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
   const {
     style,
     shouldShowProgressBar,

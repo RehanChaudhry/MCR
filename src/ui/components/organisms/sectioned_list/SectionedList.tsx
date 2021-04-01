@@ -7,7 +7,6 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { AppLog } from "utils/Util";
 import { SPACE } from "config";
 
@@ -40,7 +39,7 @@ interface Props<ItemT extends BaseItem, ItemU extends BaseItem> {
   isCollapsable?: boolean;
 }
 
-const _SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
+const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
   style,
   listHeaderComponent,
   list,
@@ -136,9 +135,5 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   }
 });
-
-const SectionedList = optimizedMemo(
-  _SectionedList
-) as typeof _SectionedList;
 
 export default SectionedList;
