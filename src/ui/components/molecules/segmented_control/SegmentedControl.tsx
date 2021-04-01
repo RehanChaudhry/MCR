@@ -24,6 +24,7 @@ interface Props {
   values: Array<Choice>;
   selectedIndex?: number;
   onChange?: (value: Choice, index: number) => void;
+  shouldNotOptimize?: boolean;
 }
 
 export const SegmentedControl = optimizedMemoWithStyleProp<Props>(

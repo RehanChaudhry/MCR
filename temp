@@ -1,2 +1,1 @@
- * Make sectioned list memoized
- * Make flat list momoized
+* Make all Props types implement shouldNotOptimize property

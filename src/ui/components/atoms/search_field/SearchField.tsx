@@ -25,6 +25,7 @@ interface OwnProps {
   searchIcon: boolean;
   iconColor?: Color;
   clearIcon: boolean;
+  shouldNotOptimize?: boolean;
 }
 
 type Props = OwnProps;

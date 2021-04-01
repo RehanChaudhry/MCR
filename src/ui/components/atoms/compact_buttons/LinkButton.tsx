@@ -8,6 +8,7 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 type Props = {
   onPress: () => void;
   isSelected: boolean;
+  shouldNotOptimize?: boolean;
 };
 export const LinkButton = optimizedMemo<Props>(
   ({ onPress, isSelected = false }) => {

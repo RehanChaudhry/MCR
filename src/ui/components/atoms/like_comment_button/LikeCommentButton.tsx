@@ -27,6 +27,7 @@ export interface LikeButtonProps extends TouchableOpacityProps {
   icon?:
     | ((isSelected: boolean, color: Color) => React.ReactElement)
     | null;
+  shouldNotOptimize?: boolean;
 }
 
 export const LikeCommentButton = optimizedMemo<LikeButtonProps>(

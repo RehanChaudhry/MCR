@@ -16,6 +16,7 @@ export interface AppButtonProps extends SwitchProps {
   onValueChange: (isSwitchEnabled: boolean) => void;
   style?: StyleProp<ViewStyle>;
   showCustomThumb?: boolean;
+  shouldNotOptimize?: boolean;
 }
 
 export const AppSwitch = optimizedMemo<AppButtonProps>(

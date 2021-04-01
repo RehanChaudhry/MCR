@@ -22,6 +22,7 @@ export interface RangeSliderProps {
   maxValue?: number; //slider maximum
   preferenceInitialValue?: boolean;
   callback: (result: SliderCallback) => void;
+  shouldNotOptimize?: boolean;
   style?: StyleProp<ViewStyle>; //avoid passing padding use margin instead, it will handle range slide width
 }
 

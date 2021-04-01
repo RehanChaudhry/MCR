@@ -20,6 +20,7 @@ type Props = {
   direction: DIRECTION_TYPE;
   byDefaultSelected?: number;
   itemsInRow?: number; //for horizontal buttons
+  shouldNotOptimize?: boolean;
 };
 
 export enum DIRECTION_TYPE {

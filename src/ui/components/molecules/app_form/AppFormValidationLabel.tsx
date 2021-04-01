@@ -9,6 +9,7 @@ export interface AppFormValidationLabelProps {
   shouldVisible?: boolean;
   numberOfLines?: number;
   validationLabelTestID?: string;
+  shouldNotOptimize?: boolean;
 }
 
 type Props = AppFormValidationLabelProps;

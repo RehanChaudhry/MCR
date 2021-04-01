@@ -10,6 +10,7 @@ interface OwnProps {
   headingStyle?: StyleProp<TextStyle>;
   textStyle?: StyleProp<TextStyle>;
   headingFontWeight?: Weight;
+  shouldNotOptimize?: boolean;
 }
 
 type Props = OwnProps;
