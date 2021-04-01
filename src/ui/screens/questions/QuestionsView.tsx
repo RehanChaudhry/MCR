@@ -103,7 +103,7 @@ function headerView(
 function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
   return (
     <View style={styles.headerContainer}>
-      {!isFrom && (
+      {isFrom === EScreen.WELCOME && (
         <AppLabel
           style={styles.infoText}
           text={STRINGS.questionnaire.info}
