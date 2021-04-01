@@ -359,52 +359,51 @@ const getCommunityAnnouncementList = (pageToLoad: number) => {
     {
       id: Math.floor(Math.random() * 100) + 1,
       profileImageUrl:
-        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      name: "Zane Mayes",
+        "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
+      name: "Jasmine Lambert",
       time: "3 hours ago",
       text:
-        "First day at college, Ohio university. Thank you so much for watching",
-      link: "https://www.youtube.com/watch?v=cqyziA30whE",
-      likeCount: 20,
-      commentCount: 5
+        "OHIO’s beloved Rufus has undergone many makeovers since 1804, and did you know that he used to be accompanied by the Bobkitten?! Check out this iconic transformation from 1977 to now 😸 ",
+      images: ["https://source.unsplash.com/1024x768/?nature"],
+      likeCount: 32,
+      commentCount: 8
     },
     {
       id: Math.floor(Math.random() * 100) + 1,
       profileImageUrl:
-        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      name: "Sarah Steiner",
-      time: "3 hours ago",
+        "https://publichealth.uga.edu/wp-content/uploads/2020/01/Thomas-Cameron_Student_Profile.jpg",
+      name: "Alden Chaney",
+      time: "5 hours ago",
       text:
-        "OHIO’s beloved Rufus has undergone many makeovers since 1804, and did you know that he used to be accompanied by the Bobkitten?! Check out this iconic transformation from 1977 to now 😸 ",
+        "Welcome back, Bobcats! 😺 We’re sending our best wishes to everyone on the first day of spring semester 💚",
       images: [
         "https://source.unsplash.com/1024x768/?nature",
         "https://source.unsplash.com/1024x768/?water",
         "https://source.unsplash.com/1024x768/?nature",
         "https://source.unsplash.com/1024x768/?tree"
       ],
+      likeCount: 22,
+      commentCount: 8
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://oregonctso.org/Websites/oregoncte/images/BlogFeaturedImages/decaheadshot.jpg",
+      name: "Sarah Steiner",
+      time: "8 hours ago",
+      text:
+        "First day at college, Ohio university. Thank you so much for watching",
+      link: "https://youtu.be/EeCKk94lmHQ",
       likeCount: 20,
       commentCount: 5
     },
     {
       id: Math.floor(Math.random() * 100) + 1,
       profileImageUrl:
-        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      name: "Jasmine Lambert",
-      time: "3 hours ago",
-      text:
-        "OHIO’s beloved Rufus has undergone many makeovers since 1804, and did you know that he used to be accompanied by the Bobkitten?! Check out this iconic transformation from 1977 to now 😸 ",
-      images: ["https://source.unsplash.com/1024x768/?nature"],
-      likeCount: 20,
-      commentCount: 5
-    },
-    {
-      id: Math.floor(Math.random() * 100) + 1,
-      profileImageUrl:
-        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      name: "Alden Chaney",
-      time: "3 hours ago",
-      text:
-        "OHIO’s beloved Rufus has undergone many makeovers since 1804, and did you know that he used to be accompanied by the Bobkitten?! Check out this iconic transformation from 1977 to now 😸 ",
+        "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
+      name: "Case Wolf",
+      time: "8 hours ago",
+      text: "Lofi 4 studying.. 🎵🎵🎵",
       likeCount: 20,
       commentCount: 5,
       metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
@@ -418,7 +417,7 @@ const getCommunityAnnouncementList = (pageToLoad: number) => {
       text:
         "First day at college, Ohio university. Thank you so much for watching",
       embeddedUrl:
-        '<iframe width="100%" height="350" src="https://www.youtube.com/embed/cqyziA30whE?feature=oembed" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+        '<iframe width=“100%” height=“350" src=“https://www.youtube.com/embed/EeCKk94lmHQ” title=“YouTube video player” frameborder=“0” allow=“accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture” allowfullscreen></iframe>',
       likeCount: 20,
       commentCount: 5
     }
