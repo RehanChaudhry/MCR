@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import Screen from "ui/components/atoms/Screen";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
 import { NotificationData } from "models/api_responses/NotificationsResponseModel";
 import { AppLog } from "utils/Util";
@@ -97,20 +98,25 @@ export const NotificationView = React.memo<Props>(
     };
 
     return (
-      <View>
+      <Screen style={styles.container}>
         <View style={styles.dropDownBar}>
           <AppDropdown
             items={[
-              { id: "0", title: "View Request" },
-              { id: "1", title: "View Comment" },
-              { id: "2", title: "View Details" }
+              { id: "0", title: "View Friend Request" },
+              { id: "1", title: "View Profile" },
+              { id: "2", title: "View Roommate Request" },
+              { id: "3", title: "View Announcement" },
+              { id: "4", title: "View Message" },
+              { id: "5", title: "View Post" },
+              { id: "6", title: "View Roommate Request" }
             ]}
-            title={"Filter by Notification"}
+            title={"Filter by notification type"}
+            textStyle={{ color: theme.themedColors.black }}
             dropDownIcon={() => (
               <Selector
-                width={16}
-                height={16}
-                fill={theme.themedColors.label}
+                width={20}
+                height={20}
+                fill={theme.themedColors.interface["600"]}
               />
             )}
             style={[
@@ -127,19 +133,22 @@ export const NotificationView = React.memo<Props>(
           <>
             <FlatListWithPb
               shouldShowProgressBar={false}
-              style={styles.mainContanier}
               data={notifications}
               keyExtractor={(item) => item.id}
               renderItem={listItem}
+              style={styles.list}
             />
           </>
         )}
-      </View>
+      </Screen>
     );
   }
 );
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   header: {
     fontSize: FONT_SIZE._2xsm,
     marginBottom: SPACE.lg,
@@ -165,5 +174,8 @@ const styles = StyleSheet.create({
   shadow: {
     overflow: "hidden",
     paddingBottom: 5
+  },
+  list: {
+    flex: 1
   }
 });
