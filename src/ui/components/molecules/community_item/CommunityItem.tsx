@@ -13,7 +13,7 @@ import { AnnouncementFooter } from "ui/components/molecules/announcement_footer/
 import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
 import { ImagesSlideShow } from "ui/components/molecules/image_slide_show/ImagesSlideShow";
 import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
-import { SvgProp } from "utils/Util";
+import { shadowStyleProps, SvgProp } from "utils/Util";
 import Shield from "assets/images/shield.svg";
 
 export interface CommunityItemProps extends TouchableOpacityProps {
@@ -90,13 +90,11 @@ export const CommunityItem = React.memo<CommunityItemProps>(
 
 const style = StyleSheet.create({
   container: {
-    marginRight: SPACE.md,
-    marginLeft: SPACE.md,
-    marginBottom: SPACE.md,
-    borderRadius: 10,
-    paddingRight: SPACE.lg,
-    paddingLeft: SPACE.lg,
-    paddingBottom: SPACE.lg
+    borderRadius: 5,
+    paddingRight: SPACE.md,
+    paddingLeft: SPACE.md,
+    paddingBottom: SPACE.md,
+    ...shadowStyleProps
   },
   text: {
     lineHeight: 20,

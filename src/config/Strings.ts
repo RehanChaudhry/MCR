@@ -296,6 +296,9 @@ export default {
         "How will we support each other during times of stress, sadness, or worry?",
       feel:
         "How do we feel about sexual behavior when the other roommate is in the room or away?"
+    },
+    textFieldPlaceholder: {
+      response: "Start typing the response"
     }
   },
   dialogs: {
