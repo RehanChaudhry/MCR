@@ -159,21 +159,24 @@ const getMyFriends = () => {
         id: "1",
         title: "Phoenix Walker",
         subtitle: "Freshman, History",
-        profileImage: "",
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
         requestState: ROOMMATE_REQUEST_STATE.NONE
       },
       {
         id: "2",
         title: "Fox Mccloud",
         subtitle: "Honors, Fine Arts",
-        profileImage: "",
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
         requestState: ROOMMATE_REQUEST_STATE.REQUEST_SENT
       },
       {
         id: "3",
         title: "Health Atwood",
         subtitle: "Returner, Life Science",
-        profileImage: "",
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
         requestState: ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE
       }
     ]
@@ -189,13 +192,15 @@ const getMyRoommates = () => {
         id: "1",
         title: "Maria Randall",
         subtitle: "Freshman, History",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       },
       {
         id: "2",
         title: "Kari Rasmussen",
         subtitle: "Honors, Fine Arts",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       }
     ]
   };
@@ -210,13 +215,15 @@ const getDismissedOrBlocked = () => {
         id: "1",
         title: "Maria Randall",
         subtitle: "Freshman, History",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       },
       {
         id: "2",
         title: "Kari Rasmussen",
         subtitle: "Honors, Fine Arts",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       }
     ]
   };
@@ -231,13 +238,15 @@ const getRoommateRequests = () => {
         id: "1",
         title: "Maria Randall",
         subtitle: "Freshman, History",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       },
       {
         id: "2",
         title: "Kari Rasmussen",
         subtitle: "Honors, Fine Arts",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       }
     ]
   };
@@ -252,13 +261,15 @@ const getFriendRequests = () => {
         id: "1",
         title: "Mario Palmer",
         subtitle: "Freshman, History",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       },
       {
         id: "2",
         title: "Lana Steiner",
         subtitle: "Honors, Fine Arts",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       }
     ]
   };
