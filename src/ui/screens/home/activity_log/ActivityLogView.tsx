@@ -79,7 +79,7 @@ export const ActivityLogView: React.FC<Props> = ({
       </View>
       {!isApiLoading && activityLogs && (
         <SectionList
-          onEndReachedThreshold={1}
+          onEndReachedThreshold={0.5}
           style={styles.activityLogList}
           sections={activityLogs}
           renderSectionHeader={headerView}

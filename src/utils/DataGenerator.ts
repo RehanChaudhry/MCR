@@ -334,7 +334,7 @@ const getActivityLog = (id: number) => {
     id,
     ActivityType.FRIEND_REQUEST_SENT,
     "Sent a friend request to <b>Taelyn Dickens</b>",
-    randomDate(new Date(2021, 1, 30), new Date())
+    randomDate(new Date(2021, 2, 30), new Date())
   );
 };
 
@@ -347,7 +347,7 @@ const getActivityLogs: (
 }> = async (request: ActivityLogApiRequestModel) => {
   AppLog.log("getActivityLogs(), request: " + JSON.stringify(request));
   const activityLogs: ActivityLog[] = [];
-  for (let i = 0; i < (request.limit ?? 5); i++) {
+  for (let i = 0; i < (request.limit ?? 10); i++) {
     activityLogs.push(getActivityLog(Math.floor(Math.random() * 100) + 1));
   }
   const response = {
@@ -357,7 +357,7 @@ const getActivityLogs: (
       message: "Success",
       data: activityLogs,
       pagination: {
-        total: 15,
+        total: 30,
         current: request.pageNo,
         first: activityLogs[0].id,
         last: activityLogs[activityLogs.length - 1].id,

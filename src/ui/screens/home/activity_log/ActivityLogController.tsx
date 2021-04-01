@@ -100,7 +100,7 @@ const ActivityLogController: FC<Props> = () => {
   };
 
   const onEndReached = () => {
-    getActivityLogs();
+    // getActivityLogs();
   };
 
   useEffect(() => {
