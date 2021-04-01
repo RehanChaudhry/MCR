@@ -4,6 +4,7 @@ import { Constants } from "config";
 import { Color, NumberProp } from "react-native-svg";
 import React from "react";
 import { ViewStyle } from "react-native";
+import moment from "moment";
 
 export const AppLog = (function () {
   return {
@@ -33,6 +34,62 @@ export const AppLog = (function () {
     }
   };
 })();
+
+export const DateUtils = {
+  diffInHours: (previousDate: Date, newDate: Date = new Date()) => {
+    let d1: any = new Date(newDate);
+    let d2: any = new Date(previousDate);
+    let diff = Math.abs(d1 - d2);
+    const hours = diff / (1000 * 60 * 60); //in milliseconds
+
+    return parseInt(hours.toFixed(0));
+  }
+};
+
+const epochs: [string, number][] = [
+  ["year", 31536000],
+  ["month", 2592000],
+  ["day", 86400],
+  ["hour", 3600],
+  ["minute", 60],
+  ["second", 1]
+];
+
+const getDuration: (
+  timeAgoInSeconds: number,
+  minScale: string
+) => { interval: number; epoch: string } | undefined = (
+  timeAgoInSeconds: number,
+  minScale: string
+) => {
+  let isMinReached: boolean = true;
+  for (let [name, seconds] of epochs) {
+    if (isMinReached) {
+      isMinReached = name !== minScale;
+    }
+    const interval = Math.floor(timeAgoInSeconds / seconds);
+    if (interval >= 1 && !isMinReached) {
+      return {
+        interval: interval,
+        epoch: name
+      };
+    }
+  }
+  return undefined;
+};
+
+export const timeAgo = (date: Date, minScale: string, format: string) => {
+  const timeAgoInSeconds = Math.floor(
+    (+new Date() - +new Date(date)) / 1000
+  );
+  const duration = getDuration(timeAgoInSeconds, minScale);
+  if (duration) {
+    const suffix = duration.interval === 1 ? "" : "s";
+    return `${duration.interval} ${duration.epoch}${suffix} ago`;
+  } else {
+    return moment(date).format(format);
+  }
+};
 
 export enum TruncateEnum {
   SHORT = 11,

@@ -25,6 +25,10 @@ import { MyRoommatesResponseModel } from "models/api_responses/MyRoommatesRespon
 import { DismissedOrBlockedResponseModel } from "models/api_responses/DismissedOrBlockedResponseModel";
 import { FriendRequestsResponseModel } from "models/api_responses/FriendRequestsResponseModel";
 import { RoommateRequestsResponseModel } from "models/api_responses/RoommateRequestsResponseModel";
+import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiRequestModel";
+import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
+import ActivityType from "models/enums/ActivityType";
+import ActivityLog from "models/ActivityLog";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -342,6 +346,48 @@ const getProfileMatches: (
   return response;
 };
 
+const getActivityLog = (id: number) => {
+  return new ActivityLog(
+    id,
+    ActivityType.FRIEND_REQUEST_SENT,
+    "Sent a friend request to <b>Taelyn Dickens</b>",
+    randomDate(new Date(2021, 2, 30), new Date())
+  );
+};
+
+const getActivityLogs: (
+  request: ActivityLogApiRequestModel
+) => Promise<{
+  hasError: boolean;
+  errorBody: undefined;
+  dataBody: ActivityLogsResponseModel;
+}> = async (request: ActivityLogApiRequestModel) => {
+  AppLog.log("getActivityLogs(), request: " + JSON.stringify(request));
+  const activityLogs: ActivityLog[] = [];
+  for (let i = 0; i < (request.limit ?? 10); i++) {
+    activityLogs.push(getActivityLog(Math.floor(Math.random() * 100) + 1));
+  }
+  const response = {
+    hasError: false,
+    errorBody: undefined,
+    dataBody: {
+      message: "Success",
+      data: activityLogs,
+      pagination: {
+        total: 30,
+        current: request.pageNo,
+        first: activityLogs[0].id,
+        last: activityLogs[activityLogs.length - 1].id,
+        next: request.pageNo + 1 <= 3 ? request.pageNo + 1 : 0
+      }
+    }
+  };
+  AppLog.log(
+    "getActivityLogs(), response: " + JSON.stringify(response.dataBody)
+  );
+  return response;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getAnnouncementList = (pageToLoad: number) => {
   const announcements: CommunityAnnouncement[] = [
@@ -503,11 +549,73 @@ const getChats = (): ChatItem[] => {
       ["Phoenix Walker", "Angela", "Grey"],
       false,
       SenderType.STUDENTS,
-      0
+      0,
+      null,
+      "OK, I'll let him know.. sorry just saw your message"
     )
   );
 
-  for (let i = 1; i < 15; i++) {
+  chats.push(
+    createChat(
+      1,
+      ["Nikki Engelin"],
+      false,
+      SenderType.STUDENTS,
+      1,
+      null,
+      "how are you?"
+    )
+  );
+
+  chats.push(
+    createChat(
+      1,
+      ["Jacoby Roman"],
+      true,
+      SenderType.STAFF,
+      1,
+      null,
+      "I haven’t received any respond on the last few messages.."
+    )
+  );
+
+  chats.push(
+    createChat(
+      1,
+      ["Reina Brooks"],
+      true,
+      SenderType.STUDENTS,
+      1,
+      null,
+      "Thank you for accepting my invitation."
+    )
+  );
+
+  chats.push(
+    createChat(
+      1,
+      ["Luukas Haapala", "Abriella Bond"],
+      true,
+      SenderType.STUDENTS,
+      1,
+      null,
+      "I heard about you and thought it would be worth reaching.. "
+    )
+  );
+
+  chats.push(
+    createChat(
+      1,
+      ["Macy Maher"],
+      true,
+      SenderType.STUDENTS,
+      1,
+      null,
+      "Life gets busy. Just wanted to make sure you got my last.."
+    )
+  );
+
+  /*  for (let i = 1; i < 15; i++) {
     if (i === 1) {
       chats.push(
         createChat(i, ["Nikki Engelin"], false, SenderType.STAFF, i)
@@ -533,7 +641,7 @@ const getChats = (): ChatItem[] => {
         );
       }
     }
-  }
+  }*/
 
   return chats;
 };
@@ -543,7 +651,20 @@ const createChatThread = (): ChatItem[] => {
 
   const userOneId = 1;
   const userTwoId = 2;
-  for (let i = 1; i < 15; i++) {
+
+  const messages = [
+    "Uh oh! What's the problem?",
+    "I was really happy when I invited you to stay with me in this apartment. I knew you had a problem with that girl you lived with before.",
+    "Oh yeah, she was terrible. I couldn't move without her complaining at me."
+  ];
+
+  let messageIndex = 0;
+
+  for (let i = 1; i < 8; i++) {
+    if (messageIndex % 3 === 0) {
+      messageIndex = 0;
+    }
+
     chats.push(
       createChat(
         i,
@@ -553,9 +674,12 @@ const createChatThread = (): ChatItem[] => {
         i % 2 === 0 ? userOneId : userTwoId,
         i % 2 === 0
           ? require("assets/images/d_user_pic.png")
-          : require("assets/images/d_user_pick_1.png")
+          : require("assets/images/d_user_pick_1.png"),
+        messages[messageIndex]
       )
     );
+
+    messageIndex++;
   }
   return chats;
 };
@@ -569,12 +693,13 @@ function createChat(
   image?: string | null,
   message?: string
 ): ChatItem {
-  const date = randomDate(new Date(2012, 0, 1), new Date());
+  const date = randomDate(new Date(2021, 3, 1), new Date());
   // AppLog.log("generated date : " + date);
   return {
     id: id,
     name: args,
-    image: image ? image : require("assets/images/d_user_pic.png"),
+    image:
+      image !== null ? image : require("assets/images/d_user_pic.png"),
     message: message
       ? message
       : "OK, I'll let him know.. sorry just saw your message",
@@ -666,5 +791,6 @@ export default {
   getFriendRequests,
   getRoommateRequests,
   createComments,
-  getAnnouncementList
+  getAnnouncementList,
+  getActivityLogs
 };
