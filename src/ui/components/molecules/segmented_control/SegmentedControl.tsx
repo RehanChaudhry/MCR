@@ -149,6 +149,7 @@ export const SegmentedControl = optimizedMemoWithStyleProp<Props>(
                     ]}
                     weight="semi-bold"
                     text={value.label}
+                    shouldNotOptimize={true}
                   />
                 </TouchableOpacity>
               );
