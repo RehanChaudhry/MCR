@@ -26,6 +26,7 @@ export interface AppFormFieldProps {
   linkLabelProps?: AppLabelProps;
   linkLabelOnPress?: () => void;
   secureTextEntry?: boolean;
+  shouldNotOptimize?: boolean;
 }
 
 type Props = AppFormFieldProps;

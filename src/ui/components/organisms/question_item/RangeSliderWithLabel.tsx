@@ -27,115 +27,117 @@ interface RangeSliderWithLabelProps {
   allowSliderClick?: boolean;
 }
 
-export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = ({
-  initialValues,
-  enableTwoThumbs,
-  result,
-  labelLeft,
-  labelRight,
-  minValue,
-  maxValue,
-  sliderWidth,
-  enableThumbOne = true,
-  enableThumbTwo = true,
-  allowSliderClick = false
-}) => {
-  const { themedColors } = usePreferredTheme();
+export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
+  ({
+    initialValues,
+    enableTwoThumbs,
+    result,
+    labelLeft,
+    labelRight,
+    minValue,
+    maxValue,
+    sliderWidth,
+    enableThumbOne = true,
+    enableThumbTwo = true,
+    allowSliderClick = false
+  }) => {
+    const { themedColors } = usePreferredTheme();
 
-  const customSliderMarker = (markerStyle: StyleProp<ImageStyle>) => {
+    const customSliderMarker = (markerStyle: StyleProp<ImageStyle>) => {
+      return (
+        <Image
+          source={require("assets/images/thumb.png")}
+          style={markerStyle}
+        />
+      );
+    };
+
+    if (initialValues === undefined) {
+      initialValues = enableTwoThumbs ? [0, 0] : [0];
+    }
+
+    if (!enableTwoThumbs && initialValues.length > 1) {
+      throw new Error(
+        "Array should contain only one initial value in Range Slider"
+      );
+    }
+
+    //callback with initial values
+    result(initialValues);
+
     return (
-      <Image
-        source={require("assets/images/thumb.png")}
-        style={markerStyle}
-      />
-    );
-  };
-
-  if (initialValues === undefined) {
-    initialValues = enableTwoThumbs ? [0, 0] : [0];
-  }
-
-  if (!enableTwoThumbs && initialValues.length > 1) {
-    throw new Error(
-      "Array should contain only one initial value in Range Slider"
-    );
-  }
-
-  //callback with initial values
-  result(initialValues);
-
-  return (
-    <>
-      <AppLabel style={styles.label} text={labelLeft} />
-      <View style={styles.sliderContainer}>
-        <View
-          style={[
-            styles.leftPointer,
-            { backgroundColor: themedColors.primary }
-          ]}
-        />
-        <View
-          style={[
-            styles.rightPointer,
-            { backgroundColor: themedColors.primary }
-          ]}
-        />
-        <MultiSlider
-          values={initialValues}
-          {...(enableTwoThumbs
-            ? {
-                selectedStyle: {
-                  backgroundColor: themedColors.secondaryShade
-                },
-                unselectedStyle: {
-                  backgroundColor: themedColors.interface[200]
-                },
-                minMarkerOverlapDistance: 15,
-                allowOverlap: false
-              }
-            : {
-                selectedStyle: {
-                  backgroundColor: themedColors.interface[200]
-                },
-                unselectedStyle: {
-                  backgroundColor: themedColors.interface[200]
-                },
-                allowOverlap: true
-                /* minMarkerOverlapDistance: 15*/
-              })}
-          isMarkersSeparated={true}
-          customMarkerLeft={(_) => {
-            /*AppLog.log(
+      <>
+        <AppLabel style={styles.label} text={labelLeft} />
+        <View style={styles.sliderContainer}>
+          <View
+            style={[
+              styles.leftPointer,
+              { backgroundColor: themedColors.primary }
+            ]}
+          />
+          <View
+            style={[
+              styles.rightPointer,
+              { backgroundColor: themedColors.primary }
+            ]}
+          />
+          <MultiSlider
+            values={initialValues}
+            {...(enableTwoThumbs
+              ? {
+                  selectedStyle: {
+                    backgroundColor: themedColors.secondaryShade
+                  },
+                  unselectedStyle: {
+                    backgroundColor: themedColors.interface[200]
+                  },
+                  minMarkerOverlapDistance: 15,
+                  allowOverlap: false
+                }
+              : {
+                  selectedStyle: {
+                    backgroundColor: themedColors.interface[200]
+                  },
+                  unselectedStyle: {
+                    backgroundColor: themedColors.interface[200]
+                  },
+                  allowOverlap: true
+                  /* minMarkerOverlapDistance: 15*/
+                })}
+            isMarkersSeparated={true}
+            customMarkerLeft={(_) => {
+              /*AppLog.log(
               "RangeSlider() => customMarkerLeft: " + e.currentValue
             );*/
-            return customSliderMarker(styles.markerLeft);
-          }}
-          customMarkerRight={(_) => {
-            // AppLog.log("RangeSlider() => customMarkerRight: " + e);
-            return customSliderMarker(styles.markerRight);
-          }}
-          onValuesChangeFinish={(values: number[]) => {
-            result(values);
-            // AppLog.log("RangeSlider() => onValuesChangeFinish: " + values);
-          }}
-          trackStyle={styles.track}
-          sliderLength={sliderWidth}
-          min={minValue}
-          max={maxValue}
-          step={1}
-          containerStyle={styles.sliderInnerContainer}
-          enabledOne={enableThumbOne}
-          enabledTwo={enableThumbTwo}
-          allowSliderClick={allowSliderClick}
+              return customSliderMarker(styles.markerLeft);
+            }}
+            customMarkerRight={(_) => {
+              // AppLog.log("RangeSlider() => customMarkerRight: " + e);
+              return customSliderMarker(styles.markerRight);
+            }}
+            onValuesChangeFinish={(values: number[]) => {
+              result(values);
+              // AppLog.log("RangeSlider() => onValuesChangeFinish: " + values);
+            }}
+            trackStyle={styles.track}
+            sliderLength={sliderWidth}
+            min={minValue}
+            max={maxValue}
+            step={1}
+            containerStyle={styles.sliderInnerContainer}
+            enabledOne={enableThumbOne}
+            enabledTwo={enableThumbTwo}
+            allowSliderClick={allowSliderClick}
+          />
+        </View>
+        <AppLabel
+          text={labelRight}
+          style={[styles.label, styles.labelRight]}
         />
-      </View>
-      <AppLabel
-        text={labelRight}
-        style={[styles.label, styles.labelRight]}
-      />
-    </>
-  );
-};
+      </>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   markerLeft: {

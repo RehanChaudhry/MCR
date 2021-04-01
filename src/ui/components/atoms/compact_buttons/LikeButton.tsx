@@ -8,6 +8,7 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 type Props = {
   onValueChanged?: (isSelected: boolean) => void;
   shouldSelected: boolean;
+  shouldNotOptimize?: boolean;
 };
 
 export const LikeButton = optimizedMemo<Props>(

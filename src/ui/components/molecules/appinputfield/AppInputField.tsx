@@ -26,6 +26,7 @@ export interface AppInputFieldProps extends TextInputProps {
   iconStyle?: StyleProp<ImageStyle>;
   multiline?: boolean;
   textAlignVertical?: any;
+  shouldNotOptimize?: boolean;
 }
 
 type Props = AppInputFieldProps;

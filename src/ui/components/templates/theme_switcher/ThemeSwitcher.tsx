@@ -6,11 +6,12 @@ import { usePreferredTheme } from "hooks";
 import { AppColorScheme } from "hooks/theme";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
-type props = {
+type Props = {
   children: React.ReactNode;
+  shouldNotOptimize?: boolean;
 };
 
-export const ThemeSwitcher = optimizedMemo<props>(({ children }) => {
+export const ThemeSwitcher = optimizedMemo<Props>(({ children }) => {
   const { themedColors, setScheme, isDark } = usePreferredTheme();
 
   const [text, setText] = useState(

@@ -17,6 +17,7 @@ import LeftArrow from "assets/images/left.svg";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -91,9 +92,11 @@ const UpdateProfileController: FC<Props> = () => {
   });
 
   return (
-    <UpdateProfileView
-      openUpdateQuestionnaireScreen={openQuestionnaireScreen}
-    />
+    <>
+      {useLazyLoadInterface(
+        <UpdateProfileView isUpdating={route.params.isUpdating} />
+      )}
+    </>
   );
 };
 

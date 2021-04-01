@@ -5,6 +5,7 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 
 interface OwnProps {
   style?: StyleProp<ViewStyle>;
+  shouldNotOptimize?: boolean;
 }
 
 type Props = OwnProps;

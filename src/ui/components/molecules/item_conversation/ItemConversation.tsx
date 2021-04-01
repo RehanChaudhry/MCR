@@ -20,6 +20,7 @@ export interface ItemConversationProps extends ViewStyle {
   onPress: (item: ConversationItem) => void;
   item: ConversationItem;
   style?: StyleProp<ViewStyle>;
+  shouldNotOptimize?: boolean;
 }
 
 export const ItemConversation = optimizedMemo<ItemConversationProps>(

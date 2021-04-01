@@ -5,7 +5,9 @@ import UserPic from "assets/images/user_pic.svg";
 import UserGroup from "assets/images/user_group.svg";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
-type Props = {};
+type Props = {
+  shouldNotOptimize?: boolean;
+};
 
 export const CircleImageBorder = optimizedMemo<Props>(() => {
   return (

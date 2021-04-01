@@ -5,6 +5,7 @@ import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { AnnouncementItem } from "ui/components/molecules/AnnouncementItem";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type Props = {
   data: CommunityAnnouncement[] | undefined;
@@ -43,20 +44,22 @@ export const AnnouncementView = React.memo<Props>(
     );
     return (
       <Screen style={styles.container}>
-        <FlatListWithPb
-          shouldShowProgressBar={shouldShowProgressBar}
-          data={data}
-          style={styles.list}
-          contentContainerStyle={styles.listContainer}
-          ItemSeparatorComponent={() => (
-            <View style={styles.itemSeparator} />
-          )}
-          renderItem={listItem}
-          keyExtractor={keyExtractor}
-          onEndReached={onEndReached}
-          isAllDataLoaded={isAllDataLoaded}
-          pullToRefreshCallback={pullToRefreshCallback}
-        />
+        {useLazyLoadInterface(
+          <FlatListWithPb
+            shouldShowProgressBar={shouldShowProgressBar}
+            data={data}
+            style={styles.list}
+            contentContainerStyle={styles.listContainer}
+            ItemSeparatorComponent={() => (
+              <View style={styles.itemSeparator} />
+            )}
+            renderItem={listItem}
+            keyExtractor={keyExtractor}
+            onEndReached={onEndReached}
+            isAllDataLoaded={isAllDataLoaded}
+            pullToRefreshCallback={pullToRefreshCallback}
+          />
+        )}
       </Screen>
     );
   }

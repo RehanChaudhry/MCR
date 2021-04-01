@@ -9,6 +9,7 @@ import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb
 import BottomBreadCrumbs, {
   Item
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type Props = {
   data: CommunityAnnouncement[] | undefined;
@@ -58,21 +59,25 @@ export const CommunityView = React.memo<Props>(
     }
     return (
       <Screen style={styles.container}>
-        <FlatListWithPb
-          shouldShowProgressBar={shouldShowProgressBar}
-          data={data}
-          style={styles.list}
-          renderItem={listItem}
-          keyExtractor={keyExtractor}
-          contentContainerStyle={styles.listContainer}
-          ItemSeparatorComponent={() => (
-            <View style={styles.itemSeparator} />
-          )}
-          onEndReached={onEndReached}
-          isAllDataLoaded={isAllDataLoaded}
-          pullToRefreshCallback={pullToRefreshCallback}
-        />
-        <BottomBreadCrumbs data={getFeedsFilterData()} />
+        {useLazyLoadInterface(
+          <>
+            <FlatListWithPb
+              shouldShowProgressBar={shouldShowProgressBar}
+              data={data}
+              style={styles.list}
+              renderItem={listItem}
+              keyExtractor={keyExtractor}
+              contentContainerStyle={styles.listContainer}
+              ItemSeparatorComponent={() => (
+                <View style={styles.itemSeparator} />
+              )}
+              onEndReached={onEndReached}
+              isAllDataLoaded={isAllDataLoaded}
+              pullToRefreshCallback={pullToRefreshCallback}
+            />
+            <BottomBreadCrumbs data={getFeedsFilterData()} />
+          </>
+        )}
       </Screen>
     );
   }

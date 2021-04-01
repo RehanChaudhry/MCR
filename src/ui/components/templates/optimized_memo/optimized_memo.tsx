@@ -1,16 +1,18 @@
 import React, { FC } from "react";
 
 function propsMatcher<PropType>() {
-  // pass empty array as `propsNotToMatch` to never rerender/update
-  // or pass keys in the array that you want to ignore
   function of<Key extends keyof PropType>(propsNotToMatch?: Array<Key>) {
     return (prevProps: any, nextProps: any) => {
-      if (!propsNotToMatch) {
-        return true;
-      }
-
       let keys = Object.keys(nextProps) as Array<Key>;
-      keys = keys.filter((value) => propsNotToMatch.indexOf(value) === -1);
+      if (
+        !prevProps.shouldNotOptimize &&
+        propsNotToMatch &&
+        propsNotToMatch.length > 0
+      ) {
+        keys = keys.filter(
+          (value) => propsNotToMatch.indexOf(value) === -1
+        );
+      }
 
       let hasAllPropsMatched = true;
       for (let keyValue = 0; keyValue < keys.length; keyValue++) {
@@ -29,6 +31,7 @@ function propsMatcher<PropType>() {
 
 type Props = {
   // style?: any;
+  shouldNotOptimize?: boolean;
 };
 
 export function optimizedMemo<MemoPropsType extends Props>(

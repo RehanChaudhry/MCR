@@ -1,3 +1,4 @@
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { StyleSheet, View } from "react-native";
 import React, { useCallback, useState } from "react";
 import Screen from "ui/components/atoms/Screen";
@@ -56,6 +57,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
     AppLog.log("Rendering chat screen...");
 
     const { themedColors } = usePreferredTheme();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [items, setItems] = useState<ChatItem[]>(data);
 
     const performSearch = (textToSearch: string) =>
@@ -111,19 +113,23 @@ export const ChatListScreen = React.memo<ChatListProps>(
           />
         </View>
 
-        <FlatListWithPb
-          shouldShowProgressBar={false}
-          data={items}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
-          style={styles.list}
-          pullToRefreshCallback={pullToRefreshCallback}
-          onEndReached={onEndReached}
-          isAllDataLoaded={isAllDataLoaded}
-        />
-        <BottomBreadCrumbs data={breadCrumbsItems} />
+        {useLazyLoadInterface(
+          <>
+            <FlatListWithPb
+              shouldShowProgressBar={false}
+              data={data}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id.toString()}
+              showsVerticalScrollIndicator={false}
+              removeClippedSubviews={true}
+              style={styles.list}
+              pullToRefreshCallback={pullToRefreshCallback}
+              onEndReached={onEndReached}
+              isAllDataLoaded={isAllDataLoaded}
+            />
+            <BottomBreadCrumbs data={breadCrumbsItems} />
+          </>
+        )}
       </Screen>
     );
   }

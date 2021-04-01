@@ -7,6 +7,7 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 
 type Props = {
   onPress?: () => void;
+  shouldNotOptimize?: boolean;
 };
 export const CommentButton = optimizedMemo<Props>(({ onPress }) => {
   const chatIcon: SvgProp = (

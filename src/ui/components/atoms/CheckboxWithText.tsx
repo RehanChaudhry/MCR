@@ -16,6 +16,7 @@ interface OwnProps extends ViewProps {
   isBold?: boolean;
   style?: StyleProp<ViewStyle>;
   onValueChange: (checked: boolean) => void;
+  shouldNotOptimize?: boolean;
 }
 
 type Props = OwnProps;

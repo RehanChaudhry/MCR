@@ -27,6 +27,7 @@ export interface AppDropdownProps {
   dialogCloseIconStyle?: StyleProp<ImageStyle>;
   dropDownIcon?: SvgProp;
   shouldShowCustomIcon?: boolean;
+  shouldNotOptimize?: boolean;
 }
 
 export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(

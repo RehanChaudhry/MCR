@@ -19,6 +19,7 @@ export interface AppLabelProps extends TextProps {
   style?: StyleProp<TextStyle>;
   onPress?: () => void;
   textType?: TEXT_TYPE;
+  shouldNotOptimize?: boolean;
 }
 
 type Props = AppLabelProps;

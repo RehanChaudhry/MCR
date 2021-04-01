@@ -17,6 +17,7 @@ export interface AppImageBackgroundProps extends TouchableOpacityProps {
   icon?: SvgProp;
   containerShape: CONTAINER_TYPES;
   onPress?: () => void;
+  shouldNotOptimize?: boolean;
 }
 
 export enum CONTAINER_TYPES {

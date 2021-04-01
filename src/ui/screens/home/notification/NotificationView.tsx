@@ -11,6 +11,7 @@ import Selector from "assets/images/selector.svg";
 import { usePreferredTheme } from "hooks";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type Props = {
   openMyProfileScreen: () => void;
@@ -128,13 +129,17 @@ export const NotificationView = React.memo<Props>(
             shouldShowCustomIcon={true}
           />
         </View>
-        <FlatListWithPb
-          shouldShowProgressBar={false}
-          data={notifications}
-          keyExtractor={(item) => item.id}
-          renderItem={listItem}
-          style={styles.list}
-        />
+        {useLazyLoadInterface(
+          <>
+            <FlatListWithPb
+              shouldShowProgressBar={false}
+              data={notifications}
+              keyExtractor={(item) => item.id}
+              renderItem={listItem}
+              style={styles.list}
+            />
+          </>
+        )}
       </Screen>
     );
   }

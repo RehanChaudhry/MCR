@@ -3,7 +3,9 @@ import { StyleSheet, Image } from "react-native";
 import { moderateScale } from "config/Dimens";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
-interface OwnProps {}
+interface OwnProps {
+  shouldNotOptimize?: boolean;
+}
 
 type Props = OwnProps;
 

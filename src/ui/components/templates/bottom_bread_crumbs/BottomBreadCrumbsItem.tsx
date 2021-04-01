@@ -27,6 +27,7 @@ const BottomBreadCrumbsItem: FC<Props> = ({
       <View style={[styles.mainContainer, style]}>
         <AppLabel
           text={title}
+          shouldNotOptimize={true}
           style={[styles.text, textStyle]}
           weight={"semi-bold"}
         />

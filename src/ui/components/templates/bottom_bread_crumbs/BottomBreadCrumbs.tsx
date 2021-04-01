@@ -17,6 +17,7 @@ type Props = {
 const BottomBreadCrumbs: FC<Props> = ({ data }) => {
   const theme = usePreferredTheme();
   const [selectedId, setSelectedId] = useState(data[0].title);
+
   const renderItem = ({ item }: { item: Item }) => {
     const backgroundColor =
       item.title === selectedId

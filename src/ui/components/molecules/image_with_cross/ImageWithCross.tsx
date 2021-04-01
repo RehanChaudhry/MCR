@@ -20,6 +20,7 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 export interface ImageWithCrossProps extends TouchableOpacityProps {
   imageResponse: ImagePickerResponse;
   onImageRemoved: (imageResponse: ImagePickerResponse) => void;
+  shouldNotOptimize?: boolean;
 }
 
 export const ImageWithCross = optimizedMemo<ImageWithCrossProps>(
