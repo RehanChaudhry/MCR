@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { DemoGraphics } from "ui/components/templates/demographics/DemoGraphics";
 import { Interests } from "ui/components/templates/interests/interests";
 import { LivingDetails } from "ui/components/templates/living_details/LivingDetails";
@@ -14,6 +14,7 @@ import AppForm from "ui/components/molecules/app_form/AppForm";
 import { AppLog } from "utils/Util";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BasicProfile } from "ui/components/templates/basic_profile/BasicProfile";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
 };
@@ -126,7 +127,7 @@ export const UpdateProfileView: React.FC<Props> = ({
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView keyboardOpeningTime={50} extraHeight={200}>
       <AppForm
         initialValues={initialValues}
         onSubmit={onSubmit}
@@ -152,7 +153,7 @@ export const UpdateProfileView: React.FC<Props> = ({
           />
         </View>
       </AppForm>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

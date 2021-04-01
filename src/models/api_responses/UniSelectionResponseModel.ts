@@ -11,6 +11,7 @@ export type Uni = {
   location: string;
   logo: string;
   sso_login: boolean;
+  imageLink: string;
 
   colorPalette: ColorPalette;
 };
