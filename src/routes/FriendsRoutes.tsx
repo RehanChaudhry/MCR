@@ -45,6 +45,7 @@ const MyFriendsRoutes: FC<MyFriendsRoutesProps> = () => {
         name="MyFriends"
         component={MyFriendsController}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => <HeaderTitle text="My Friends" />,
           headerLeft: () => <Hamburger />
         }}
@@ -61,6 +62,7 @@ const MyRoommatesRoutes: FC<MyRoommatesRoutesProps> = () => {
         name="MyRoommates"
         component={MyRoommatesController}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => <HeaderTitle text="My Roommates" />,
           headerLeft: () => <Hamburger />
         }}
@@ -77,6 +79,7 @@ const RoommateAgreementRoutes: FC<RoommateAgreementRoutesProps> = () => {
         name="RoommateAgreement"
         component={RoommateAgreementController}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => (
             <HeaderTitle
               text="Roommate Agreement"
@@ -98,6 +101,7 @@ const DismissedOrBlockedRoutes: FC<DismissedOrBlockedRoutesProps> = () => {
         name="DismissedOrBlocked"
         component={DismissedOrBlockedController}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => <HeaderTitle text="Dismissed or Blocked" />,
           headerStyle: {
             elevation: 0,
