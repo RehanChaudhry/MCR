@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "909996454299",
+    "project_id": "my-college-roomie",
+    "storage_bucket": "my-college-roomie.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:909996454299:android:e8ef1528326ff7e35df13e",
+        "android_client_info": {
+          "package_name": "com.mycollegeroomie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "909996454299-rmt9vmb31k0ffcikpcrmcgmhmd1bciks.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5Exh0DolAbEmL8h2fSGj-GBFukER6op8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "909996454299-rmt9vmb31k0ffcikpcrmcgmhmd1bciks.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

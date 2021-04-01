@@ -12,6 +12,7 @@ import {
   MyRoommatesStack,
   RoommateAgreementStack
 } from "./FriendsStack";
+import { FONT_SIZE } from "config";
 
 export const FriendsRoutes = () => {
   return (
@@ -44,6 +45,7 @@ const MyFriendsRoutes: FC<MyFriendsRoutesProps> = () => {
         name="MyFriends"
         component={MyFriendsController}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => <HeaderTitle text="My Friends" />,
           headerLeft: () => <Hamburger />
         }}
@@ -60,6 +62,7 @@ const MyRoommatesRoutes: FC<MyRoommatesRoutesProps> = () => {
         name="MyRoommates"
         component={MyRoommatesController}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => <HeaderTitle text="My Roommates" />,
           headerLeft: () => <Hamburger />
         }}
@@ -76,7 +79,13 @@ const RoommateAgreementRoutes: FC<RoommateAgreementRoutesProps> = () => {
         name="RoommateAgreement"
         component={RoommateAgreementController}
         options={{
-          headerTitle: () => <HeaderTitle text="Roommate Agreement" />,
+          headerTitleAlign: "center",
+          headerTitle: () => (
+            <HeaderTitle
+              text="Roommate Agreement"
+              labelStyle={{ fontSize: FONT_SIZE.xsm }}
+            />
+          ),
           headerLeft: () => <Hamburger />
         }}
       />
@@ -92,6 +101,7 @@ const DismissedOrBlockedRoutes: FC<DismissedOrBlockedRoutesProps> = () => {
         name="DismissedOrBlocked"
         component={DismissedOrBlockedController}
         options={{
+          headerTitleAlign: "center",
           headerTitle: () => <HeaderTitle text="Dismissed or Blocked" />,
           headerStyle: {
             elevation: 0,

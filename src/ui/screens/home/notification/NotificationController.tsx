@@ -47,7 +47,7 @@ const NotificationController: FC<Props> = () => {
     navigation.setOptions({
       headerLeft: () => <Hamburger />,
       headerTitleAlign: "center",
-      headerStyle: { elevation: 0 },
+      headerStyle: { elevation: 0, shadowOpacity: 0 },
       headerTitle: () => <HeaderTitle text="Notification" />
     });
   }, [navigation]);

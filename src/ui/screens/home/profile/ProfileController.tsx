@@ -23,7 +23,7 @@ const ProfileController: FC<Props> = () => {
     {
       title: "View Profile",
       onPress: () => {
-        navigation.navigate("ViewProfile", { isFrom: EScreen.HOME });
+        navigation.jumpTo("ViewProfile", { isFrom: EScreen.HOME });
       }
     },
     {
@@ -35,7 +35,7 @@ const ProfileController: FC<Props> = () => {
     {
       title: "Update Questionnaire",
       onPress: () => {
-        navigation.navigate("UpdateQuestionnaire");
+        navigation.jumpTo("UpdateQuestionnaire");
       }
     }
   ];

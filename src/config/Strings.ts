@@ -275,7 +275,7 @@ export default {
   },
 
   announcement: {
-    announcementTitle: "Announcement"
+    announcementTitle: "Announcements"
   },
   roommateAgreement: {
     dropDownTitle: {

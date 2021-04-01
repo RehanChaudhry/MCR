@@ -32,6 +32,7 @@ export interface AppButtonProps extends TouchableOpacityProps {
   iconStyle?: StyleProp<ImageStyle>;
   shouldShowError?: boolean;
   fontWeight?: Weight;
+  shouldNotOptimize?: boolean;
   shouldAlignTextWithLeftIconWithFullWidth?: boolean;
 }
 

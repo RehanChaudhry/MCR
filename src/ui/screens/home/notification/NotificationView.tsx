@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import Screen from "ui/components/atoms/Screen";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
 import { NotificationData } from "models/api_responses/NotificationsResponseModel";
 import { AppLog } from "utils/Util";
@@ -10,6 +11,7 @@ import Selector from "assets/images/selector.svg";
 import { usePreferredTheme } from "hooks";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type Props = {
   openMyProfileScreen: () => void;
@@ -96,7 +98,7 @@ export const NotificationView = React.memo<Props>(
     };
 
     return (
-      <View style={styles.shadow}>
+      <Screen style={styles.container}>
         <View style={styles.dropDownBar}>
           <AppDropdown
             items={[
@@ -127,18 +129,26 @@ export const NotificationView = React.memo<Props>(
             shouldShowCustomIcon={true}
           />
         </View>
-        <FlatListWithPb
-          shouldShowProgressBar={false}
-          data={notifications}
-          keyExtractor={(item) => item.id}
-          renderItem={listItem}
-        />
-      </View>
+        {useLazyLoadInterface(
+          <>
+            <FlatListWithPb
+              shouldShowProgressBar={false}
+              data={notifications}
+              keyExtractor={(item) => item.id}
+              renderItem={listItem}
+              style={styles.list}
+            />
+          </>
+        )}
+      </Screen>
     );
   }
 );
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   header: {
     fontSize: FONT_SIZE._2xsm,
     marginBottom: SPACE.lg,
@@ -164,5 +174,8 @@ const styles = StyleSheet.create({
   shadow: {
     overflow: "hidden",
     paddingBottom: 5
+  },
+  list: {
+    flex: 1
   }
 });

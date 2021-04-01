@@ -107,6 +107,7 @@ export const MatchInfoView: React.FC<Props> = ({
           style={[
             styles.card,
             styles.cardPadding,
+            styles.bottomPadding,
             { backgroundColor: themedColors.background }
           ]}>
           <AppLabel
@@ -115,6 +116,7 @@ export const MatchInfoView: React.FC<Props> = ({
             weight={"semi-bold"}
           />
           <SocialDetailForm
+            mainContainerStyle={styles.socialDetailContainer}
             headingStyle={[
               styles.matchingInfoLabel,
               { color: themedColors.interface[600] }
@@ -137,13 +139,9 @@ export const MatchInfoView: React.FC<Props> = ({
                 : STRINGS.matchInfo.label_close
             }
           />
-          <Divider
-            style={[
-              styles.infoCardDivider,
-              { backgroundColor: themedColors.separator }
-            ]}
-          />
+          <Divider style={{ backgroundColor: themedColors.separator }} />
           <SocialDetailForm
+            mainContainerStyle={styles.socialDetailContainer}
             headingStyle={[
               styles.matchingInfoLabel,
               { color: themedColors.interface[600] }
@@ -164,13 +162,9 @@ export const MatchInfoView: React.FC<Props> = ({
               "MMMM DD, YYYY"
             )}
           />
-          <Divider
-            style={[
-              styles.infoCardDivider,
-              { backgroundColor: themedColors.separator }
-            ]}
-          />
+          <Divider style={{ backgroundColor: themedColors.separator }} />
           <SocialDetailForm
+            mainContainerStyle={styles.socialDetailContainer}
             headingStyle={[
               styles.matchingInfoLabel,
               { color: themedColors.interface[600] }
@@ -191,13 +185,9 @@ export const MatchInfoView: React.FC<Props> = ({
               matchInfo.maxRoommateCount ?? 0 > 1 ? "s" : ""
             }`}
           />
-          <Divider
-            style={[
-              styles.infoCardDivider,
-              { backgroundColor: themedColors.separator }
-            ]}
-          />
+          <Divider style={{ backgroundColor: themedColors.separator }} />
           <SocialDetailForm
+            mainContainerStyle={styles.socialDetailContainer}
             headingStyle={[
               styles.matchingInfoLabel,
               { color: themedColors.interface[600] }
@@ -279,5 +269,11 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACE.md
   },
   lastCard: { marginBottom: SPACE.md },
-  heading: { includeFontPadding: false, fontSize: FONT_SIZE.sm }
+  heading: { includeFontPadding: false, fontSize: FONT_SIZE.sm },
+  socialDetailContainer: {
+    paddingTop: SPACE.md
+  },
+  bottomPadding: {
+    paddingBottom: 0
+  }
 });

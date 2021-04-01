@@ -42,6 +42,7 @@ import RightArrow from "assets/images/right.svg";
 import LeftArrow from "assets/images/left.svg";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { HomeDrawerParamList } from "routes";
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -214,29 +215,33 @@ const QuestionsController: FC<Props> = () => {
   });
 
   return (
-    <ProgressErrorView
-      isLoading={questionApi.loading}
-      error={questionApi.error}
-      errorView={(message) => {
-        return (
-          <View>
-            <AppLabel text={message} />
-          </View>
-        );
-      }}
-      data={questions}>
-      <QuestionsView
-        isFrom={route.params.isFrom}
-        submitAnswers={() => {
-          requestModel.current = {
-            data: toAnswersRequest(questions)
-          };
-          handleSubmitAnswers();
-        }}
-        questions={questions}
-        submitAnswersLoading={answerApi.loading}
-      />
-    </ProgressErrorView>
+    <>
+      {useLazyLoadInterface(
+        <ProgressErrorView
+          isLoading={questionApi.loading}
+          error={questionApi.error}
+          errorView={(message) => {
+            return (
+              <View>
+                <AppLabel text={message} />
+              </View>
+            );
+          }}
+          data={questions}>
+          <QuestionsView
+            isFrom={route.params.isFrom}
+            submitAnswers={() => {
+              requestModel.current = {
+                data: toAnswersRequest(questions)
+              };
+              handleSubmitAnswers();
+            }}
+            questions={questions}
+            submitAnswersLoading={answerApi.loading}
+          />
+        </ProgressErrorView>
+      )}
+    </>
   );
 };
 

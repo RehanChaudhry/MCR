@@ -1,3 +1,5 @@
+import { FONT_SIZE, SPACE } from "config";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import React, { FC } from "react";
 import {
   StyleProp,
@@ -7,10 +9,8 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { SvgProp } from "utils/Util";
-import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { FONT_SIZE, SPACE } from "config";
+import { SvgProp } from "utils/Util";
 
 type Props = {
   mainContainerStyle?: StyleProp<ViewStyle>;
@@ -32,6 +32,16 @@ const SocialDetailForm: FC<Props> = ({
   mainContainerStyle
 }) => {
   const theme = usePreferredTheme();
+  const titleJsx = () => (
+    <AppLabel
+      text={title}
+      style={[
+        styles.titleStyle,
+        { color: theme.themedColors.primary },
+        titleStyle
+      ]}
+    />
+  );
   return (
     <View style={mainContainerStyle}>
       <View style={styles.subContainer}>
@@ -42,16 +52,11 @@ const SocialDetailForm: FC<Props> = ({
           style={[styles.headingStyle, headingStyle]}
         />
       </View>
-      <TouchableOpacity onPress={onPress}>
-        <AppLabel
-          text={title}
-          style={[
-            styles.titleStyle,
-            { color: theme.themedColors.primary },
-            titleStyle
-          ]}
-        />
-      </TouchableOpacity>
+      {onPress ? (
+        <TouchableOpacity onPress={onPress}>{titleJsx()}</TouchableOpacity>
+      ) : (
+        titleJsx()
+      )}
     </View>
   );
 };

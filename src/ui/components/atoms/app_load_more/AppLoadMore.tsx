@@ -16,6 +16,7 @@ export interface AppLoadMoreProps extends TouchableOpacityProps {
   loaderSize?: number;
   textStyle?: StyleProp<TextStyle>;
   shouldShowLoadMore?: boolean;
+  shouldNotOptimize?: boolean;
 }
 
 export const AppLoadMore = optimizedMemo<AppLoadMoreProps>(

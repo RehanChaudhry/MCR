@@ -7,6 +7,7 @@ import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import Colors from "config/Colors";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
+import { moderateScale } from "config/Dimens";
 
 type Props = {
   username: string;
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     width: "40%",
-    height: 30,
+    height: moderateScale(32),
     borderRadius: 8,
     elevation: 0
   },

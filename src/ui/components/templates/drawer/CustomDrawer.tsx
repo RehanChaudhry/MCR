@@ -37,6 +37,7 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 type CustomDrawerProps = DrawerContentComponentProps & {
   currentItem: string;
   setCurrentItem: (name: string) => void;
+  shouldNotOptimize?: boolean;
 };
 export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
   const { currentItem, setCurrentItem } = props;

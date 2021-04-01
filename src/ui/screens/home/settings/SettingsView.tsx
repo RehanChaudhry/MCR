@@ -69,7 +69,7 @@ const SettingsView: FC<Props> = () => {
 
   return (
     <Screen>
-      <ScrollView>
+      <ScrollView style={styles.mainContainer}>
         <View style={styles.mainContainer}>
           <CardView style={styles.cardStyles}>
             <AppForm

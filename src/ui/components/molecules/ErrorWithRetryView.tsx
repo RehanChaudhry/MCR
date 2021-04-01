@@ -13,6 +13,7 @@ type Props = {
   text?: string;
   retryCallback?: () => void;
   style?: StyleProp<ViewStyle>;
+  shouldNotOptimize?: boolean;
 };
 
 const ErrorWithRetryView = optimizedMemo<Props>(

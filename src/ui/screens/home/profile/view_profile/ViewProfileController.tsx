@@ -9,6 +9,7 @@ import { RouteProp } from "@react-navigation/native";
 import EScreen from "models/enums/EScreen";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { NotificationParamList } from "routes/NotificationParams";
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -62,7 +63,7 @@ const ViewProfileController: FC<Props> = () => {
     navigationNotification
   ]);
 
-  return <ViewProfileView />;
+  return <>{useLazyLoadInterface(<ViewProfileView />)}</>;
 };
 
 export default ViewProfileController;

@@ -1,6 +1,1 @@
- * Test whether we could stop rendering upon theme switching to improve performance
- * Make sectioned list memoized
- * Make flat list momoized
- * Check virtualized list vs flat list differences
- * Make link/photos/embed context aware of each other
-   so that they can toggle selected states of each other
+* Make all Props types implement shouldNotOptimize property

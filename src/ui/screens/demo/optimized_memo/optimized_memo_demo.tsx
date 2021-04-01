@@ -18,10 +18,12 @@ type Props = {};
 type LabelProps = {
   text: string;
   style?: StyleProp<TextStyle>;
+  keyTag: string;
+  shouldNotOptimize?: boolean;
 };
 
 const MyLabel = optimizedMemo<LabelProps>((props) => {
-  AppLog.log("Rendering MyLabel...");
+  AppLog.log(`Rendering ${props.keyTag}...`);
   return (
     <Text style={[props.style, { textAlign: "center" }]}>
       {props.text}
@@ -31,12 +33,14 @@ const MyLabel = optimizedMemo<LabelProps>((props) => {
 
 type LabelWithCustomStyleProps = {
   text: string;
+  keyTag: string;
   textStyle?: StyleProp<TextStyle>;
+  shouldNotOptimize?: boolean;
 };
 
 const MyLabelWithCustomStyle = optimizedMemoWithStyleProp<LabelWithCustomStyleProps>(
   (props) => {
-    AppLog.log("Rendering MyLabelWithCustomStyle...");
+    AppLog.log(`Rendering ${props.keyTag}...`);
     return (
       <Text style={[props.textStyle, { textAlign: "center" }]}>
         {props.text}
@@ -79,12 +83,20 @@ const OptimizedMemoDemo: React.FC<Props> = () => {
         ]}>
         <View>
           <MyLabel
+            keyTag="optimizedMemo"
             text={`Counter (optimizedMemo): ${counter}`}
             style={[{ backgroundColor: labelColor }]}
           />
           <MyLabelWithCustomStyle
+            keyTag="optimizedMemoWithStyleProp"
             text={`Counter (optimizedMemoWithStyleProp): ${counter}`}
             textStyle={[{ backgroundColor: labelColor, marginTop: 5 }]}
+          />
+          <MyLabel
+            keyTag="non-optimized"
+            text={`Counter (non-optimized): ${counter}`}
+            shouldNotOptimize={true}
+            style={[{ backgroundColor: labelColor, marginTop: 5 }]}
           />
           <MyButton
             text="Change Style"
