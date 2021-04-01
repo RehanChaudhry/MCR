@@ -29,10 +29,12 @@ export const WebViewComponent = React.memo<WebViewProps>(
     const theme = usePreferredTheme();
     function loadingIndicatorView() {
       return (
-        <ActivityIndicator
-          color={theme.themedColors.primary}
-          size="large"
-        />
+        <View style={style.webViewContainer}>
+          <ActivityIndicator
+            color={theme.themedColors.primary}
+            size="small"
+          />
+        </View>
       );
     }
     return (
@@ -63,7 +65,7 @@ export const WebViewComponent = React.memo<WebViewProps>(
             }
             style={[
               style.webViewContainer,
-              { backgroundColor: theme.themedColors.interface["700"] }
+              { backgroundColor: theme.themedColors.interface["200"] }
             ]}
           />
         )}

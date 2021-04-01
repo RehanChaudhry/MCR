@@ -35,10 +35,10 @@ const CommunityController: FC<Props> = () => {
   const pageToReload = useRef<number>(1);
   const isFetchingInProgress = useRef(false);
   const [communities, setCommunities] = useState<CommunityAnnouncement[]>(
-    DataGenerator.getCommunityAnnouncementList(pageToReload.current)
+    DataGenerator.getCommunityList(pageToReload.current)
   );
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
-  const totalPages = 5;
+  const totalPages = 3;
   const navigation = useNavigation<CommunityNavigationProp>();
   const theme = usePreferredTheme();
 
@@ -78,7 +78,7 @@ const CommunityController: FC<Props> = () => {
       setIsAllDataLoaded(true);
       return;
     }
-    const communitiesData = DataGenerator.getCommunityAnnouncementList(
+    const communitiesData = DataGenerator.getCommunityList(
       pageToReload.current
     );
     if (pageToReload.current < totalPages) {
