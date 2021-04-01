@@ -1,6 +1,5 @@
 import ActivityType from "models/enums/ActivityType";
-import { DateUtils } from "utils/Util";
-import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
+import { DateUtils, timeAgo } from "utils/Util";
 
 class ActivityLog {
   id!: number;
@@ -25,9 +24,7 @@ class ActivityLog {
   }
 
   getDisplayTime(): string {
-    return new PrettyTimeFormat().getPrettyTime(
-      (this.date ?? new Date()).toString()
-    );
+    return timeAgo(this.date ?? new Date(), "day", "MMM DD, YYYY hh:mm A");
   }
 }
 

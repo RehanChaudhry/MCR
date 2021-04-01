@@ -10,6 +10,7 @@ import ProfileApis from "repo/auth/ProfileApis";
 import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiRequestModel";
 import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
 import { ActivityLogView } from "ui/screens/home/activity_log/ActivityLogView";
+import { toSectionList } from "utils/SectionListHelper";
 
 type ActivityLogNavigationProp = StackNavigationProp<
   ActivityLogStackParamList,
@@ -109,7 +110,7 @@ const ActivityLogController: FC<Props> = () => {
   return (
     <ActivityLogView
       isApiLoading={activityLogApi.loading}
-      activityLogs={activityLogs?.data}
+      activityLogs={toSectionList(activityLogs?.data ?? [])}
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}

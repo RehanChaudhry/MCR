@@ -9,15 +9,12 @@ import { moderateScale } from "config/Dimens";
 import Selector from "assets/images/selector.svg";
 import ActivityLogItem from "ui/components/organisms/activity_log_item/ActivityLogItem";
 import { getActivityTypeFilterData } from "models/enums/ActivityType";
-import {
-  ActivityLogSection,
-  toSectionList
-} from "utils/SectionListHelper";
+import { ActivityLogSection } from "utils/SectionListHelper";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 
 type Props = {
   isApiLoading: boolean;
-  activityLogs?: ActivityLog[];
+  activityLogs?: ActivityLogSection[];
   pullToRefreshCallback: (onComplete: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
@@ -82,8 +79,9 @@ export const ActivityLogView: React.FC<Props> = ({
       </View>
       {!isApiLoading && activityLogs && (
         <SectionList
+          onEndReachedThreshold={1}
           style={styles.activityLogList}
-          sections={toSectionList(activityLogs)}
+          sections={activityLogs}
           renderSectionHeader={headerView}
           renderItem={renderItem}
           onEndReached={isAllDataLoaded ? undefined : onEndReached}

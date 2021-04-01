@@ -333,7 +333,7 @@ const getActivityLog = (id: number) => {
   return new ActivityLog(
     id,
     ActivityType.FRIEND_REQUEST_SENT,
-    "Sent a friend request to Taelyn Dickens",
+    "Sent a friend request to <b>Taelyn Dickens</b>",
     randomDate(new Date(2021, 1, 30), new Date())
   );
 };

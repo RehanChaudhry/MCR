@@ -1,4 +1,4 @@
-import { FONT_SIZE, SPACE } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -13,6 +13,7 @@ import ActivityType from "models/enums/ActivityType";
 import UserAdd from "assets/images/user-add.svg";
 import { moderateScale } from "config/Dimens";
 import { Divider } from "react-native-elements";
+import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
 
 interface Props {
   activityLog: ActivityLog;
@@ -63,10 +64,13 @@ const ActivityLogItem = ({ activityLog }: Props) => {
             icon={icon}
           />
         </View>
-        <AppLabel
-          style={[styles.message, { color: themedColors.interface[600] }]}
-          text={activityLog.message}
-          numberOfLines={0}
+        <LabelHtml
+          containerStyle={styles.message}
+          style={[
+            styles.messageText,
+            { color: themedColors.interface[600] }
+          ]}
+          text={activityLog.message ?? STRINGS.common.not_found}
         />
       </View>
       <View style={styles.bottomContainer}>
@@ -93,7 +97,8 @@ const styles = StyleSheet.create({
     padding: SPACE.xxsm,
     borderRadius: moderateScale(25)
   },
-  message: { fontSize: FONT_SIZE._2xsm, marginStart: SPACE.xsm },
+  message: { marginStart: SPACE.xsm },
+  messageText: { fontSize: FONT_SIZE._2xsm },
   bottomContainer: {
     marginStart: moderateScale(55),
     paddingBottom: SPACE.md
