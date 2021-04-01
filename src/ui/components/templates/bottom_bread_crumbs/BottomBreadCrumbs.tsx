@@ -1,4 +1,3 @@
-import Colors from "config/Colors";
 import React, { FC, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
@@ -25,7 +24,9 @@ const BottomBreadCrumbs: FC<Props> = ({ data }) => {
         ? theme.themedColors.primaryShade
         : theme.themedColors.interface[100];
     const textColor =
-      item.title === selectedId ? Colors.red : Colors.yellow;
+      item.title === selectedId
+        ? theme.themedColors.primary
+        : theme.themedColors.label;
     return (
       <BottomBreadCrumbsItem
         title={item.title}

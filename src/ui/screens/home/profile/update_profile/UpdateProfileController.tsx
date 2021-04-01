@@ -10,6 +10,7 @@ import { ProfileStackParamList } from "../../../../../routes/ProfileBottomBar";
 import Hamburger from "../../../../components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "../../../../components/molecules/header_title/HeaderTitle";
 import { UpdateProfileStackParamList } from "../../../../../routes/ProfileStack";
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -31,7 +32,13 @@ const UpdateProfileController: FC<Props> = () => {
     headerTitleAlign: "center",
     headerTitle: () => <HeaderTitle text="Update Profile" />
   });
-  return <UpdateProfileView isUpdating={route.params.isUpdating} />;
+  return (
+    <>
+      {useLazyLoadInterface(
+        <UpdateProfileView isUpdating={route.params.isUpdating} />
+      )}
+    </>
+  );
 };
 
 export default UpdateProfileController;

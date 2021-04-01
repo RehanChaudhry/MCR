@@ -1,7 +1,6 @@
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { StyleSheet, View } from "react-native";
 import React from "react";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, shadowStyleProps } from "utils/Util";
@@ -88,7 +87,6 @@ export const ChatListScreen = React.memo<ChatListProps>(
         </View>
 
         {useLazyLoadInterface(
-          <AppLabel text="Loading..." />,
           <>
             <FlatListWithPb
               shouldShowProgressBar={false}

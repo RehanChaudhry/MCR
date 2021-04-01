@@ -5,6 +5,7 @@ import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import { useNavigation } from "@react-navigation/native";
 import Hamburger from "../../../../components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "../../../../components/molecules/header_title/HeaderTitle";
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -19,7 +20,7 @@ const ViewProfileController: FC<Props> = () => {
     headerTitleAlign: "center",
     headerTitle: () => <HeaderTitle text="View Profile" />
   });
-  return <ViewProfileView />;
+  return <>{useLazyLoadInterface(<ViewProfileView />)}</>;
 };
 
 export default ViewProfileController;

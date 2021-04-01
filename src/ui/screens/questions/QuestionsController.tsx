@@ -28,6 +28,7 @@ import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import { UpdateQuestionnaireStackParamList } from "routes/ProfileStack";
 import Hamburger from "../../components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "../../components/molecules/header_title/HeaderTitle";
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type ProfileNavigationProp = StackNavigationProp<
   ProfileStackParamList,
@@ -105,29 +106,33 @@ const QuestionsController: FC<Props> = () => {
   });
 
   return (
-    <ProgressErrorView
-      isLoading={questionApi.loading}
-      error={questionApi.error}
-      errorView={(message) => {
-        return (
-          <View>
-            <AppLabel text={message} />
-          </View>
-        );
-      }}
-      data={questions}>
-      <QuestionsView
-        isUpdating={route.params.isUpdating}
-        submitAnswers={() => {
-          requestModel.current = {
-            data: toAnswersRequest(questions)
-          };
-          handleSubmitAnswers();
-        }}
-        questions={questions}
-        submitAnswersLoading={answerApi.loading}
-      />
-    </ProgressErrorView>
+    <>
+      {useLazyLoadInterface(
+        <ProgressErrorView
+          isLoading={questionApi.loading}
+          error={questionApi.error}
+          errorView={(message) => {
+            return (
+              <View>
+                <AppLabel text={message} />
+              </View>
+            );
+          }}
+          data={questions}>
+          <QuestionsView
+            isUpdating={route.params.isUpdating}
+            submitAnswers={() => {
+              requestModel.current = {
+                data: toAnswersRequest(questions)
+              };
+              handleSubmitAnswers();
+            }}
+            questions={questions}
+            submitAnswersLoading={answerApi.loading}
+          />
+        </ProgressErrorView>
+      )}
+    </>
   );
 };
 
