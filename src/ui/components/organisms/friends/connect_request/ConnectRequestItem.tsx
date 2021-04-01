@@ -1,12 +1,8 @@
 import { FONTS, FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React, { FC } from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import {
-  AppImageBackground,
-  CONTAINER_TYPES
-} from "ui/components/atoms/image_background/AppImageBackground";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import { shadowStyleProps } from "utils/Util";
 
@@ -21,7 +17,7 @@ type Props = {
 const ConnectRequestItem: FC<Props> = ({
   title,
   subtitle,
-  // profileImage,
+  profileImage,
   onPressApproved,
   onPressReject
 }) => {
@@ -34,9 +30,12 @@ const ConnectRequestItem: FC<Props> = ({
           { backgroundColor: theme.themedColors.background }
         ]}>
         <View style={styles.infoContainer}>
-          <AppImageBackground
-            style={styles.profileImage}
-            containerShape={CONTAINER_TYPES.CIRCLE}
+          <Image
+            style={[
+              styles.profileImage,
+              { backgroundColor: theme.themedColors.interface[200] }
+            ]}
+            source={{ uri: profileImage }}
           />
           <View style={styles.infoTextContainer}>
             <AppLabel
@@ -123,7 +122,8 @@ const styles = StyleSheet.create({
   },
   profileImage: {
     width: 48,
-    height: 48
+    height: 48,
+    borderRadius: 24
   },
   subTitleText: {
     fontSize: FONT_SIZE._3xm,

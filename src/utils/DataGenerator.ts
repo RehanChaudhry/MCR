@@ -10,7 +10,10 @@ import { BaseQuestion } from "models/Question";
 import moment from "moment";
 import { AppLog } from "utils/Util";
 import ProfileMatch from "models/ProfileMatch";
-import { defaultPaletteCopy } from "hooks/theme/ColorPaletteContainer";
+import {
+  defaultPaletteCopy,
+  grayShades
+} from "hooks/theme/ColorPaletteContainer";
 import MatchesApiRequestModel from "models/api_requests/MatchesApiRequestModel";
 import MatchesApiResponseModel from "models/api_responses/MatchesApiResponseModel";
 import {
@@ -91,8 +94,11 @@ const getUnis = () => {
         logo: "",
         colorPalette: {
           ...defaultPaletteCopy,
-          background: "black",
-          label: "white"
+          primary: "#0033a0",
+          primaryShade: "#DBEAFE",
+          secondary: "#AB3607",
+          secondaryShade: "#EBA184",
+          interface: grayShades.gray
         },
         sso_login: true
       },
@@ -157,21 +163,24 @@ const getMyFriends = () => {
         id: "1",
         title: "Phoenix Walker",
         subtitle: "Freshman, History",
-        profileImage: "",
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
         requestState: ROOMMATE_REQUEST_STATE.NONE
       },
       {
         id: "2",
         title: "Fox Mccloud",
         subtitle: "Honors, Fine Arts",
-        profileImage: "",
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
         requestState: ROOMMATE_REQUEST_STATE.REQUEST_SENT
       },
       {
         id: "3",
         title: "Health Atwood",
         subtitle: "Returner, Life Science",
-        profileImage: "",
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
         requestState: ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE
       }
     ]
@@ -187,13 +196,15 @@ const getMyRoommates = () => {
         id: "1",
         title: "Maria Randall",
         subtitle: "Freshman, History",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       },
       {
         id: "2",
         title: "Kari Rasmussen",
         subtitle: "Honors, Fine Arts",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       }
     ]
   };
@@ -208,13 +219,15 @@ const getDismissedOrBlocked = () => {
         id: "1",
         title: "Maria Randall",
         subtitle: "Freshman, History",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       },
       {
         id: "2",
         title: "Kari Rasmussen",
         subtitle: "Honors, Fine Arts",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       }
     ]
   };
@@ -229,13 +242,15 @@ const getRoommateRequests = () => {
         id: "1",
         title: "Maria Randall",
         subtitle: "Freshman, History",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       },
       {
         id: "2",
         title: "Kari Rasmussen",
         subtitle: "Honors, Fine Arts",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       }
     ]
   };
@@ -250,13 +265,15 @@ const getFriendRequests = () => {
         id: "1",
         title: "Mario Palmer",
         subtitle: "Freshman, History",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       },
       {
         id: "2",
         title: "Lana Steiner",
         subtitle: "Honors, Fine Arts",
-        profileImage: ""
+        profileImage:
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
       }
     ]
   };
@@ -464,11 +481,73 @@ const getChats = (): ChatItem[] => {
       ["Phoenix Walker", "Angela", "Grey"],
       false,
       SenderType.STUDENTS,
-      0
+      0,
+      null,
+      "OK, I'll let him know.. sorry just saw your message"
     )
   );
 
-  for (let i = 1; i < 15; i++) {
+  chats.push(
+    createChat(
+      1,
+      ["Nikki Engelin"],
+      false,
+      SenderType.STUDENTS,
+      1,
+      null,
+      "how are you?"
+    )
+  );
+
+  chats.push(
+    createChat(
+      1,
+      ["Jacoby Roman"],
+      true,
+      SenderType.STAFF,
+      1,
+      null,
+      "I haven’t received any respond on the last few messages.."
+    )
+  );
+
+  chats.push(
+    createChat(
+      1,
+      ["Reina Brooks"],
+      true,
+      SenderType.STUDENTS,
+      1,
+      null,
+      "Thank you for accepting my invitation."
+    )
+  );
+
+  chats.push(
+    createChat(
+      1,
+      ["Luukas Haapala", "Abriella Bond"],
+      true,
+      SenderType.STUDENTS,
+      1,
+      null,
+      "I heard about you and thought it would be worth reaching.. "
+    )
+  );
+
+  chats.push(
+    createChat(
+      1,
+      ["Macy Maher"],
+      true,
+      SenderType.STUDENTS,
+      1,
+      null,
+      "Life gets busy. Just wanted to make sure you got my last.."
+    )
+  );
+
+  /*  for (let i = 1; i < 15; i++) {
     if (i === 1) {
       chats.push(
         createChat(i, ["Nikki Engelin"], false, SenderType.STAFF, i)
@@ -494,7 +573,7 @@ const getChats = (): ChatItem[] => {
         );
       }
     }
-  }
+  }*/
 
   return chats;
 };
@@ -504,7 +583,20 @@ const createChatThread = (): ChatItem[] => {
 
   const userOneId = 1;
   const userTwoId = 2;
-  for (let i = 1; i < 15; i++) {
+
+  const messages = [
+    "Uh oh! What's the problem?",
+    "I was really happy when I invited you to stay with me in this apartment. I knew you had a problem with that girl you lived with before.",
+    "Oh yeah, she was terrible. I couldn't move without her complaining at me."
+  ];
+
+  let messageIndex = 0;
+
+  for (let i = 1; i < 8; i++) {
+    if (messageIndex % 3 === 0) {
+      messageIndex = 0;
+    }
+
     chats.push(
       createChat(
         i,
@@ -514,9 +606,12 @@ const createChatThread = (): ChatItem[] => {
         i % 2 === 0 ? userOneId : userTwoId,
         i % 2 === 0
           ? require("assets/images/d_user_pic.png")
-          : require("assets/images/d_user_pick_1.png")
+          : require("assets/images/d_user_pick_1.png"),
+        messages[messageIndex]
       )
     );
+
+    messageIndex++;
   }
   return chats;
 };
@@ -530,12 +625,13 @@ function createChat(
   image?: string | null,
   message?: string
 ): ChatItem {
-  const date = randomDate(new Date(2012, 0, 1), new Date());
+  const date = randomDate(new Date(2021, 3, 1), new Date());
   // AppLog.log("generated date : " + date);
   return {
     id: id,
     name: args,
-    image: image ? image : require("assets/images/d_user_pic.png"),
+    image:
+      image !== null ? image : require("assets/images/d_user_pic.png"),
     message: message
       ? message
       : "OK, I'll let him know.. sorry just saw your message",

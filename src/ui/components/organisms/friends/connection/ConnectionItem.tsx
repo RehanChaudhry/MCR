@@ -1,7 +1,7 @@
 import { FONTS, SPACE, FONT_SIZE } from "config";
 import { usePreferredTheme } from "hooks";
 import React, { FC } from "react";
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable, Image } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
   AppImageBackground,
@@ -38,7 +38,7 @@ type Props = {
 const ConnectionItem: FC<Props> = ({
   title,
   subtitle,
-  // profileImage,
+  profileImage,
   actionButtonTitle,
   actionButtonState,
   shouldShowLeftInfoIcon = false,
@@ -83,9 +83,12 @@ const ConnectionItem: FC<Props> = ({
           { backgroundColor: theme.themedColors.background }
         ]}>
         <View style={styles.infoContainer}>
-          <AppImageBackground
-            style={styles.profileImage}
-            containerShape={CONTAINER_TYPES.CIRCLE}
+          <Image
+            style={[
+              styles.profileImage,
+              { backgroundColor: theme.themedColors.interface[200] }
+            ]}
+            source={{ uri: profileImage }}
           />
           <View style={styles.infoTextContainer}>
             <AppLabel
@@ -208,7 +211,8 @@ const styles = StyleSheet.create({
   },
   profileImage: {
     width: 48,
-    height: 48
+    height: 48,
+    borderRadius: 24
   },
   spacer: {
     flex: 1

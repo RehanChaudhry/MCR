@@ -16,6 +16,7 @@ import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
+import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 type ConversationType = "Active" | "Archived";
 
 interface ChatListProps {
@@ -61,7 +62,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
     let [items, setItems] = useState<ChatItem[]>(data);
 
     const performSearch = (textToSearch: string) =>
-      data.filter((obj: ChatItem) => {
+      items.filter((obj: ChatItem) => {
         return Object.values(obj).some((v) =>
           `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
         );
@@ -117,7 +118,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
           <>
             <FlatListWithPb
               shouldShowProgressBar={false}
-              data={data}
+              data={items}
               renderItem={renderItem}
               keyExtractor={(item) => item.id.toString()}
               showsVerticalScrollIndicator={false}
@@ -126,6 +127,9 @@ export const ChatListScreen = React.memo<ChatListProps>(
               pullToRefreshCallback={pullToRefreshCallback}
               onEndReached={onEndReached}
               isAllDataLoaded={isAllDataLoaded}
+              ItemSeparatorComponent={() => (
+                <ListItemSeparator style={styles.separator} />
+              )}
             />
             <BottomBreadCrumbs data={breadCrumbsItems} />
           </>
@@ -160,5 +164,9 @@ const styles = StyleSheet.create({
   searchText: { fontSize: FONT_SIZE._2xsm },
   list: { flex: 1 },
   breadCrumbs: {},
-  messageContainer: {}
+  messageContainer: {},
+  separator: {
+    marginLeft: moderateScale(75),
+    marginRight: SPACE.lg
+  }
 });

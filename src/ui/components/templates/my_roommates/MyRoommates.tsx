@@ -1,30 +1,20 @@
-import React, { FC } from "react";
-import { CardView } from "ui/components/atoms/CardView";
-import { StyleSheet, View } from "react-native";
-import { FONT_SIZE, SPACE } from "config";
-import usePreferredTheme from "hooks/theme/usePreferredTheme";
-import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import { myRoommateData } from "models/MyRoommateDataType";
-import MyRoommateItem from "ui/components/templates/my_roommates/MyRoommateItem";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import {
-  AppButton,
-  BUTTON_TYPES
-} from "ui/components/molecules/app_button/AppButton";
 import AgreementIcon from "assets/images/agreement_icon.svg";
+import { FONT_SIZE, SPACE } from "config";
 import Strings from "config/Strings";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { myRoommateData } from "models/MyRoommateDataType";
+import React, { FC } from "react";
+import { StyleSheet, View } from "react-native";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { CardView } from "ui/components/atoms/CardView";
+import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
+import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
+import MyRoommateItem from "ui/components/templates/my_roommates/MyRoommateItem";
 
 type Props = {};
 
 const MyRoommates: FC<Props> = () => {
   const theme = usePreferredTheme();
-  const agreementIcon = () => (
-    <AgreementIcon
-      height={22}
-      width={22}
-      color={theme.themedColors.primary}
-    />
-  );
 
   return (
     <CardView style={styles.cardView}>
@@ -44,18 +34,17 @@ const MyRoommates: FC<Props> = () => {
           style={styles.flatList}
           scrollEnabled={false}
         />
-        <AppButton
+        <LinkButton
           text={Strings.profile.viewProfile.agreementButtonTitle}
-          buttonType={BUTTON_TYPES.NORMAL}
-          textStyle={{
-            color: theme.themedColors.primary,
-            marginHorizontal: SPACE.xxsm,
-            fontSize: FONT_SIZE.xsm
-          }}
-          shouldShowError={false}
+          textStyle={[{ color: theme.themedColors.primary }]}
           fontWeight={"semi-bold"}
-          leftIcon={agreementIcon}
-          shouldAlignTextWithLeftIconWithFullWidth={true}
+          leftIcon={() => (
+            <AgreementIcon
+              height={22}
+              width={22}
+              color={theme.themedColors.primary}
+            />
+          )}
         />
       </View>
     </CardView>
@@ -85,6 +74,9 @@ const styles = StyleSheet.create({
     height: 44,
     width: "100%",
     flexDirection: "row"
+  },
+  roommateAgreement: {
+    fontSize: FONT_SIZE._2xsm
   }
 });
 

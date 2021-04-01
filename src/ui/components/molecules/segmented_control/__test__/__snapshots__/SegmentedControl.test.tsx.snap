@@ -81,6 +81,7 @@ exports[`Segmented control tests snapshot 1`] = `
     >
       <Text
         numberOfLines={1}
+        shouldNotOptimize={true}
         style={
           Array [
             Array [
@@ -139,6 +140,7 @@ exports[`Segmented control tests snapshot 1`] = `
     >
       <Text
         numberOfLines={1}
+        shouldNotOptimize={true}
         style={
           Array [
             Array [
@@ -197,6 +199,7 @@ exports[`Segmented control tests snapshot 1`] = `
     >
       <Text
         numberOfLines={1}
+        shouldNotOptimize={true}
         style={
           Array [
             Array [
