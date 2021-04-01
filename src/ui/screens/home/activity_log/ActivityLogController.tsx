@@ -31,7 +31,7 @@ const ActivityLogController: FC<Props> = () => {
   >(ProfileApis.activityLogs);
 
   const requestModel = useRef<ActivityLogApiRequestModel>({
-    limit: 5,
+    limit: 10,
     pageNo: 1,
     type: undefined
   });

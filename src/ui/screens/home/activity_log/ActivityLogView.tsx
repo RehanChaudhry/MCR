@@ -5,12 +5,15 @@ import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import ActivityLog from "models/ActivityLog";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
-import { genders } from "models/enums/EGender";
 import { moderateScale } from "config/Dimens";
 import Selector from "assets/images/selector.svg";
 import ActivityLogItem from "ui/components/organisms/activity_log_item/ActivityLogItem";
 import { getActivityTypeFilterData } from "models/enums/ActivityType";
-import { toSectionList } from "utils/SectionListHelper";
+import {
+  ActivityLogSection,
+  toSectionList
+} from "utils/SectionListHelper";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 
 type Props = {
   isApiLoading: boolean;
@@ -34,6 +37,27 @@ export const ActivityLogView: React.FC<Props> = ({
     <ActivityLogItem activityLog={item} />
   );
 
+  const headerView = ({ section }: { section: ActivityLogSection }) => {
+    // AppLog.log(`rendering HeaderView ${section.header.key()}`);
+
+    return (
+      <View
+        style={[
+          styles.headerContainer,
+          { backgroundColor: themedColors.backgroundSecondary }
+        ]}>
+        <AppLabel
+          text={section.title}
+          style={[
+            styles.headerText,
+            { color: themedColors.interface[600] }
+          ]}
+          weight={"semi-bold"}
+        />
+      </View>
+    );
+  };
+
   return (
     <Screen style={styles.container}>
       <View
@@ -51,7 +75,7 @@ export const ActivityLogView: React.FC<Props> = ({
           dropDownIcon={() => (
             <Selector fill={themedColors.interface[500]} />
           )}
-          title={genders[0].title}
+          title={getActivityTypeFilterData()[0].title}
           items={getActivityTypeFilterData()}
           selectedItemCallback={(_) => {}}
         />
@@ -60,6 +84,7 @@ export const ActivityLogView: React.FC<Props> = ({
         <SectionList
           style={styles.activityLogList}
           sections={toSectionList(activityLogs)}
+          renderSectionHeader={headerView}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
           onEndReached={isAllDataLoaded ? undefined : onEndReached}
@@ -71,6 +96,7 @@ export const ActivityLogView: React.FC<Props> = ({
           }}
           refreshing={isRefreshing}
           keyExtractor={(item) => item.id.toString()}
+          stickySectionHeadersEnabled={true}
         />
       )}
     </Screen>
@@ -83,8 +109,11 @@ const styles = StyleSheet.create({
   activityLogList: { flex: 1 },
   dropDown: {
     borderRadius: moderateScale(20),
-    height: moderateScale(40)
+    height: moderateScale(40),
+    paddingHorizontal: SPACE.xsm
   },
   filterText: { fontSize: FONT_SIZE._2xsm },
-  separator: { height: SPACE.md }
+  separator: { height: SPACE.md },
+  headerContainer: { padding: SPACE.md },
+  headerText: { fontSize: FONT_SIZE._2xsm }
 });

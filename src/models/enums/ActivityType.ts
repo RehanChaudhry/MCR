@@ -1,6 +1,7 @@
 import { DropDownItem } from "models/DropDownItem";
 
 enum ActivityType {
+  ALL = "",
   FRIEND_REQUEST_SENT = "matches",
   ADDED_TO_DISMISSED = "dismissed",
   CREATED_CONVERSATION = "conversation"
@@ -8,6 +9,11 @@ enum ActivityType {
 
 export const getActivityTypeFilterData = () => {
   const filters: DropDownItem[] = [];
+
+  filters.push({
+    title: "Filter by activity log",
+    id: ActivityType.ALL
+  });
 
   filters.push({
     title: "Friend Request Sent",
