@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import Screen from "ui/components/atoms/Screen";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
 import { NotificationData } from "models/api_responses/NotificationsResponseModel";
 import { AppLog } from "utils/Util";
@@ -96,7 +97,7 @@ export const NotificationView = React.memo<Props>(
     };
 
     return (
-      <View style={styles.shadow}>
+      <Screen style={styles.container}>
         <View style={styles.dropDownBar}>
           <AppDropdown
             items={[
@@ -132,13 +133,17 @@ export const NotificationView = React.memo<Props>(
           data={notifications}
           keyExtractor={(item) => item.id}
           renderItem={listItem}
+          style={styles.list}
         />
-      </View>
+      </Screen>
     );
   }
 );
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   header: {
     fontSize: FONT_SIZE._2xsm,
     marginBottom: SPACE.lg,
@@ -164,5 +169,8 @@ const styles = StyleSheet.create({
   shadow: {
     overflow: "hidden",
     paddingBottom: 5
+  },
+  list: {
+    flex: 1
   }
 });
