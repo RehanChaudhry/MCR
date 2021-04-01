@@ -176,7 +176,7 @@ export const MatchesView: React.FC<Props> = ({
         renderItem={renderItem}
         contentContainerStyle={styles.matchesListContainer}
         ItemSeparatorComponent={() => (
-          <View style={{ height: SPACE.md }} />
+          <View style={styles.itemSeparator} />
         )}
         onEndReached={onEndReached}
         pullToRefreshCallback={pullToRefreshCallback}
@@ -194,6 +194,9 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   matchesListContainer: { padding: SPACE.md },
   matchesList: { flex: 1 },
+  itemSeparator: {
+    height: SPACE.md
+  },
   dialogButtonStyle: {
     textAlign: "center",
     fontSize: FONT_SIZE.sm

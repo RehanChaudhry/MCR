@@ -1,7 +1,7 @@
 import { SPACE } from "config";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import React, { useCallback } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { AnnouncementItem } from "ui/components/molecules/AnnouncementItem";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
@@ -47,6 +47,10 @@ export const AnnouncementView = React.memo<Props>(
           shouldShowProgressBar={shouldShowProgressBar}
           data={data}
           style={styles.list}
+          contentContainerStyle={styles.listContainer}
+          ItemSeparatorComponent={() => (
+            <View style={styles.itemSeparator} />
+          )}
           renderItem={listItem}
           keyExtractor={keyExtractor}
           onEndReached={onEndReached}
@@ -62,9 +66,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  listContainer: { padding: SPACE.md },
   list: {
-    marginTop: SPACE.md,
-    flexGrow: 1,
-    flexBasis: 0
+    flex: 1
+  },
+  itemSeparator: {
+    height: SPACE.md
   }
 });
