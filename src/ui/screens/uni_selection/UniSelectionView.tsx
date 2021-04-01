@@ -1,7 +1,7 @@
 import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React, { FC, useState } from "react";
-import { View, StyleSheet, ImageBackground } from "react-native";
+import { View, StyleSheet } from "react-native";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
@@ -10,6 +10,11 @@ import Search from "assets/images/search_icon.svg";
 import { Uni } from "models/api_responses/UniSelectionResponseModel";
 import Screen from "ui/components/atoms/Screen";
 import { CardView } from "ui/components/atoms/CardView";
+import {
+  AppImageBackground,
+  CONTAINER_TYPES
+} from "ui/components/atoms/image_background/AppImageBackground";
+import MRCLogo from "assets/images/mcr_logo.svg";
 
 type Props = {
   unis: Uni[];
@@ -58,9 +63,9 @@ const UniSelectionView: FC<Props> = ({
       ]}
       topSafeAreaBackgroundColor={theme.themedColors.backgroundSecondary}>
       <View style={[styles.logoContainer]}>
-        <ImageBackground
-          style={styles.logo}
-          source={require("../../../../assets/images/mcr_logo.png")}
+        <AppImageBackground
+          containerShape={CONTAINER_TYPES.SQUARE}
+          icon={() => <MRCLogo width={264} height={82} />}
         />
       </View>
       <CardView
@@ -129,10 +134,6 @@ const styles = StyleSheet.create({
     height: 200,
     justifyContent: "center",
     alignItems: "center"
-  },
-  logo: {
-    width: 264,
-    height: 87
   },
   listContainer: {
     flex: 1

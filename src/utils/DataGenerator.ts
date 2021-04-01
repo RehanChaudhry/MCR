@@ -10,7 +10,10 @@ import { BaseQuestion } from "models/Question";
 import moment from "moment";
 import { AppLog } from "utils/Util";
 import ProfileMatch from "models/ProfileMatch";
-import { defaultPaletteCopy } from "hooks/theme/ColorPaletteContainer";
+import {
+  defaultPaletteCopy,
+  grayShades
+} from "hooks/theme/ColorPaletteContainer";
 import MatchesApiRequestModel from "models/api_requests/MatchesApiRequestModel";
 import MatchesApiResponseModel from "models/api_responses/MatchesApiResponseModel";
 import {
@@ -87,8 +90,11 @@ const getUnis = () => {
         logo: "",
         colorPalette: {
           ...defaultPaletteCopy,
-          background: "black",
-          label: "white"
+          primary: "#0033a0",
+          primaryShade: "#DBEAFE",
+          secondary: "#AB3607",
+          secondaryShade: "#EBA184",
+          interface: grayShades.gray
         },
         sso_login: true
       },
