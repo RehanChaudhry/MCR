@@ -21,7 +21,7 @@ const listItem = (
     <ConnectRequestItem
       title={item.title}
       subtitle={item.subtitle}
-      profileImage={""}
+      profileImage={item.profileImage}
       onPressApproved={() => {
         onPressApproved(item);
       }}
