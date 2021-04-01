@@ -276,5 +276,41 @@ export default {
 
   announcement: {
     announcementTitle: "Announcement"
+  },
+  roommateAgreement: {
+    dropDownTitle: {
+      frustrated:
+        "If we are frustrated with each other, we will address it by:"
+    },
+    formTitle: {
+      upset: "When we are upset, we need:",
+      substance:
+        "What will we do if someone comes home under the influence of a substance?",
+      temperature:
+        "How will we deal with differences in preferred room temperature?",
+      comfortable:
+        "We are comfortable with sharing these items with each other:",
+      notice:
+        "How much notice is needed before a guest stays overnight? How should we notify one another?",
+      support:
+        "How will we support each other during times of stress, sadness, or worry?",
+      feel:
+        "How do we feel about sexual behavior when the other roommate is in the room or away?"
+    },
+    textFieldPlaceholder: {
+      response: "Start typing the response"
+    }
+  },
+  dialogs: {
+    friend_request: {
+      title: "Friend Request",
+      success: "Yes, send request"
+    },
+    cancel: "Cancel",
+    dismiss_block: {
+      title: "Add to Dismissed or Blocked List",
+      dismiss: "Dismiss",
+      block: "Block"
+    }
   }
 };
