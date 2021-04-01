@@ -2,7 +2,7 @@ import { SPACE } from "config";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import { FilterCount } from "models/enums/FeedsTypeFilter";
 import React, { useCallback } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { CommunityItem } from "ui/components/molecules/community_item/CommunityItem";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
@@ -64,6 +64,10 @@ export const CommunityView = React.memo<Props>(
           style={styles.list}
           renderItem={listItem}
           keyExtractor={keyExtractor}
+          contentContainerStyle={styles.listContainer}
+          ItemSeparatorComponent={() => (
+            <View style={styles.itemSeparator} />
+          )}
           onEndReached={onEndReached}
           isAllDataLoaded={isAllDataLoaded}
           pullToRefreshCallback={pullToRefreshCallback}
@@ -78,9 +82,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  listContainer: { padding: SPACE.md },
   list: {
-    marginTop: SPACE.md,
-    flexGrow: 1,
-    flexBasis: 0
+    flex: 1
+  },
+  itemSeparator: {
+    height: SPACE.md
   }
 });
