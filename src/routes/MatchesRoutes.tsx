@@ -4,7 +4,7 @@ import { MatchesStack } from "routes/MatchesStack";
 import MatchesController from "ui/screens/home/matches/MatchesController";
 import MatchInfoController from "ui/screens/home/matches/match_info/MatchInfoController";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
-import { STRINGS } from "config";
+import { FONT_SIZE, STRINGS } from "config";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { ChatThreadController } from "ui/screens/chat/thread/ChatThreadController";
 import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
@@ -54,6 +54,14 @@ const MatchesRoutes = ({ navigation }: any) => {
       <MatchesStack.Screen
         name="RoommateAgreement"
         component={RoommateAgreementController}
+        options={{
+          headerTitle: () => (
+            <HeaderTitle
+              text={"Roommate Agreement"}
+              labelStyle={{ fontSize: FONT_SIZE.xsm }}
+            />
+          )
+        }}
       />
       <MatchesStack.Screen
         name="UpdateProfile"
