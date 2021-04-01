@@ -123,7 +123,6 @@ const styles = StyleSheet.create({
       marginStart: SPACE.md,
       flexDirection: "column",
       borderBottomColor: theme.interface["300"],
-      borderBottomWidth: 0.5,
       flex: 1
     };
   },
