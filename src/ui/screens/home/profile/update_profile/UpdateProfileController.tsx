@@ -53,6 +53,8 @@ const UpdateProfileController: FC<Props> = () => {
     });
     if (route.params.isFrom === EScreen.WELCOME) {
       navigation.setOptions({
+        headerTitleAlign: "center",
+        headerTitle: () => <HeaderTitle text="Complete Profile" />,
         headerLeft: () => (
           <HeaderLeftTextWithIcon
             fontWeight={"semi-bold"}

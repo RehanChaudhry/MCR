@@ -61,7 +61,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
     let [items, setItems] = useState<ChatItem[]>(data);
 
     const performSearch = (textToSearch: string) =>
-      data.filter((obj: ChatItem) => {
+      items.filter((obj: ChatItem) => {
         return Object.values(obj).some((v) =>
           `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
         );
@@ -117,7 +117,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
           <>
             <FlatListWithPb
               shouldShowProgressBar={false}
-              data={data}
+              data={items}
               renderItem={renderItem}
               keyExtractor={(item) => item.id.toString()}
               showsVerticalScrollIndicator={false}

@@ -229,7 +229,7 @@ const QuestionsController: FC<Props> = () => {
           }}
           data={questions}>
           <QuestionsView
-            isUpdating={route.params.isUpdating}
+            isFrom={route.params.isFrom}
             submitAnswers={() => {
               requestModel.current = {
                 data: toAnswersRequest(questions)
