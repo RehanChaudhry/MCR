@@ -1,16 +1,11 @@
 import React, { FC } from "react";
-import {
-  Image,
-  ImageStyle,
-  StyleProp,
-  StyleSheet,
-  View
-} from "react-native";
+import { ImageStyle, StyleProp, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { moderateScale } from "config/Dimens";
+import Thumb from "assets/images/thumb.svg";
 
 interface RangeSliderWithLabelProps {
   initialValues: number[] | undefined;
@@ -45,8 +40,11 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
 
     const customSliderMarker = (markerStyle: StyleProp<ImageStyle>) => {
       return (
-        <Image
-          source={require("assets/images/thumb.png")}
+        <Thumb
+          testID="icon"
+          width={30}
+          height={30}
+          fill={themedColors.secondary}
           style={markerStyle}
         />
       );
