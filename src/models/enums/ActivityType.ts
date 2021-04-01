@@ -1,4 +1,3 @@
-import { FilterCount } from "models/api_responses/MatchesFilterApiResponseModel";
 import { DropDownItem } from "models/DropDownItem";
 
 enum ActivityType {

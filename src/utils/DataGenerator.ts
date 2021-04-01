@@ -330,13 +330,12 @@ const getProfileMatches: (
 };
 
 const getActivityLog = (id: number) => {
-  const activityLog: ActivityLog = {
-    id: id,
-    type: ActivityType.FRIEND_REQUEST_SENT,
-    message: "Sent a friend request to Taelyn Dickens",
-    date: randomDate(new Date(2021, 3, 30), new Date())
-  };
-  return activityLog;
+  return new ActivityLog(
+    id,
+    ActivityType.FRIEND_REQUEST_SENT,
+    "Sent a friend request to Taelyn Dickens",
+    randomDate(new Date(2021, 3, 30), new Date())
+  );
 };
 
 const getActivityLogs: (

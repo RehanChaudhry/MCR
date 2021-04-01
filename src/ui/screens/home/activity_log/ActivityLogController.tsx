@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { Alert } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
@@ -105,11 +104,11 @@ const ActivityLogController: FC<Props> = () => {
 
   useEffect(() => {
     getActivityLogs();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <ActivityLogView
+      isApiLoading={activityLogApi.loading}
       activityLogs={activityLogs?.data}
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}

@@ -34,6 +34,17 @@ export const AppLog = (function () {
   };
 })();
 
+export const DateUtils = {
+  diffInHours: (previousDate: Date, newDate: Date = new Date()) => {
+    let d1: any = new Date(newDate);
+    let d2: any = new Date(previousDate);
+    let diff = Math.abs(d1 - d2);
+    const hours = diff / (1000 * 60 * 60); //in milliseconds
+
+    return parseInt(hours.toFixed(0));
+  }
+};
+
 export enum TruncateEnum {
   SHORT = 11,
   MEDIUM = 15,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { SectionList, StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FONT_SIZE, SPACE } from "config";
@@ -10,8 +10,10 @@ import { moderateScale } from "config/Dimens";
 import Selector from "assets/images/selector.svg";
 import ActivityLogItem from "ui/components/organisms/activity_log_item/ActivityLogItem";
 import { getActivityTypeFilterData } from "models/enums/ActivityType";
+import { toSectionList } from "utils/SectionListHelper";
 
 type Props = {
+  isApiLoading: boolean;
   activityLogs?: ActivityLog[];
   pullToRefreshCallback: (onComplete: () => void) => void;
   onEndReached: () => void;
@@ -19,12 +21,14 @@ type Props = {
 };
 
 export const ActivityLogView: React.FC<Props> = ({
+  isApiLoading,
   activityLogs,
   pullToRefreshCallback,
   onEndReached,
   isAllDataLoaded
 }: Props) => {
   const { themedColors } = usePreferredTheme();
+  const [isRefreshing, setRefreshing] = useState<boolean>(false);
 
   const renderItem = ({ item }: { item: ActivityLog }) => (
     <ActivityLogItem activityLog={item} />
@@ -42,28 +46,33 @@ export const ActivityLogView: React.FC<Props> = ({
             styles.dropDown,
             { backgroundColor: themedColors.interface[100] }
           ]}
-          textStyle={styles.genderText}
+          textStyle={styles.filterText}
           shouldShowCustomIcon={true}
           dropDownIcon={() => (
             <Selector fill={themedColors.interface[500]} />
           )}
           title={genders[0].title}
           items={getActivityTypeFilterData()}
-          selectedItemCallback={(item) => {}}
+          selectedItemCallback={(_) => {}}
         />
       </View>
-      <SectionList
-        style={styles.matchesList}
-        sections={activityLogs}
-        renderItem={renderItem}
-        ItemSeparatorComponent={() => (
-          <View style={{ height: SPACE.md }} />
-        )}
-        onEndReached={onEndReached}
-        pullToRefreshCallback={pullToRefreshCallback}
-        isAllDataLoaded={isAllDataLoaded}
-        keyExtractor={(item) => item.id.toString()}
-      />
+      {!isApiLoading && activityLogs && (
+        <SectionList
+          style={styles.activityLogList}
+          sections={toSectionList(activityLogs)}
+          renderItem={renderItem}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          onEndReached={isAllDataLoaded ? undefined : onEndReached}
+          onRefresh={() => {
+            setRefreshing(true);
+            pullToRefreshCallback?.(() => {
+              setRefreshing(false);
+            });
+          }}
+          refreshing={isRefreshing}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      )}
     </Screen>
   );
 };
@@ -71,10 +80,11 @@ export const ActivityLogView: React.FC<Props> = ({
 const styles = StyleSheet.create({
   container: { flex: 1 },
   dropdownContainer: { padding: SPACE.md },
-  matchesList: { flex: 1 },
+  activityLogList: { flex: 1 },
   dropDown: {
     borderRadius: moderateScale(20),
     height: moderateScale(40)
   },
-  genderText: { fontSize: FONT_SIZE._2xsm }
+  filterText: { fontSize: FONT_SIZE._2xsm },
+  separator: { height: SPACE.md }
 });
