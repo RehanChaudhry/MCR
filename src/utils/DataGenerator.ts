@@ -343,8 +343,77 @@ const getProfileMatches: (
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getCommunityAnnouncementList = (pageToLoad: number) => {
-  const communitiesAnnouncements: CommunityAnnouncement[] = [
+const getAnnouncementList = (pageToLoad: number) => {
+  const announcements: CommunityAnnouncement[] = [
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+      name: "Ohio University",
+      time: "2 hours ago",
+      text:
+        "A surprising way that OHIO is monitoring COVID-19 trends is by analyzing campus wastewater 😷\n" +
+        "\n" +
+        "“One of the real advantages of looking for COVID-19 this way is that people shed the virus before they express symptoms and if people are asymptomatic, they will also shed the virus without knowing they’re infected,” said Dr. Guy Riefler, who is leading the project along with Dr. Karen Coschigano. 🎵🎵🎵",
+      likeCount: 32,
+      commentCount: 8,
+      metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+      name: "Ohio University",
+      time: "3 hours ago",
+      text:
+        "Bobcats on the Athens campus… Stay tuned to our social media channels to see how you can get a #ForeverOHIO t-shirt next week 💚 👀",
+      images: ["https://source.unsplash.com/1024x768/?nature"],
+      likeCount: 30,
+      commentCount: 2
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+      name: "Ohio University",
+      time: "2 hours ago",
+      text:
+        "Ohio University takes all allegations of sexual misconduct seriously and investigates these matters thoroughly. The personal safety and welfare of our students and the campus community are our top priorities, and equitable measures are taken to ensure any and all complaints are handled appropriately.🎵🎵🎵",
+      likeCount: 32,
+      commentCount: 8,
+      metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+      name: "Ohio University",
+      time: "3 hours ago",
+      text:
+        "Vaccines are one way to stop COVID-19, but Dr. Jennifer Hines, a professor in the Department of Chemistry and Biochemistry, has discovered another- by disrupting the virus’s RNA and ability to reproduce.",
+      images: ["https://source.unsplash.com/1024x768/?water"],
+      likeCount: 30,
+      commentCount: 2
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+      name: "Ohio University",
+      time: "2 hours ago",
+      text:
+        "Ohio University takes all allegations of sexual misconduct seriously and investigates these matters thoroughly. The personal safety and welfare of our students and the campus community are our top priorities, and equitable measures are taken to ensure any and all complaints are handled appropriately.🎵🎵🎵",
+      likeCount: 32,
+      commentCount: 8,
+      metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
+    }
+  ];
+  return announcements;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getCommunityList = (pageToLoad: number) => {
+  const communities: CommunityAnnouncement[] = [
     {
       id: Math.floor(Math.random() * 100) + 1,
       profileImageUrl:
@@ -417,12 +486,12 @@ const getCommunityAnnouncementList = (pageToLoad: number) => {
       text:
         "First day at college, Ohio university. Thank you so much for watching",
       embeddedUrl:
-        '<iframe width=“100%” height=“350" src=“https://www.youtube.com/embed/EeCKk94lmHQ” title=“YouTube video player” frameborder=“0” allow=“accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture” allowfullscreen></iframe>',
+        '<iframe width="100%" height="350" src="https://www.youtube.com/embed/EeCKk94lmHQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
       likeCount: 20,
       commentCount: 5
     }
   ];
-  return communitiesAnnouncements;
+  return communities;
 };
 
 const getChats = (): ChatItem[] => {
@@ -584,7 +653,7 @@ export default {
   getQuestion,
   getChats,
   getNotifications,
-  getCommunityAnnouncementList,
+  getCommunityList,
   createChatThread,
   createChat,
   getProfileMatch,
@@ -596,5 +665,6 @@ export default {
   getDismissedOrBlocked,
   getFriendRequests,
   getRoommateRequests,
-  createComments
+  createComments,
+  getAnnouncementList
 };
