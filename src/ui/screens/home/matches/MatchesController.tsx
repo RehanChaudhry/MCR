@@ -30,6 +30,7 @@ import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_w
 import ProfileMatch from "models/ProfileMatch";
 import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
+import EScreen from "models/enums/EScreen";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -77,7 +78,7 @@ const MatchesController: FC<Props> = () => {
     AppLog.log(
       "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
     );
-    navigation.navigate("Profile");
+    navigation.navigate("Profile", { isFrom: EScreen.MATCH_INFO });
   };
 
   // Matches API

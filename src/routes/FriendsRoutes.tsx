@@ -12,6 +12,7 @@ import {
   MyRoommatesStack,
   RoommateAgreementStack
 } from "./FriendsStack";
+import { FONT_SIZE } from "config";
 
 export const FriendsRoutes = () => {
   return (
@@ -76,7 +77,12 @@ const RoommateAgreementRoutes: FC<RoommateAgreementRoutesProps> = () => {
         name="RoommateAgreement"
         component={RoommateAgreementController}
         options={{
-          headerTitle: () => <HeaderTitle text="Roommate Agreement" />,
+          headerTitle: () => (
+            <HeaderTitle
+              text="Roommate Agreement"
+              labelStyle={{ fontSize: FONT_SIZE.xsm }}
+            />
+          ),
           headerLeft: () => <Hamburger />
         }}
       />
