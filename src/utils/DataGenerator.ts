@@ -482,7 +482,7 @@ const getChats = (): ChatItem[] => {
       false,
       SenderType.STUDENTS,
       0,
-      null,
+      usersImages[0],
       "OK, I'll let him know.. sorry just saw your message"
     )
   );
@@ -494,7 +494,7 @@ const getChats = (): ChatItem[] => {
       false,
       SenderType.STUDENTS,
       1,
-      null,
+      usersImages[1],
       "how are you?"
     )
   );
@@ -506,7 +506,7 @@ const getChats = (): ChatItem[] => {
       true,
       SenderType.STAFF,
       1,
-      null,
+      "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s900-c-k-c0x00ffffff-no-rj",
       "I haven’t received any respond on the last few messages.."
     )
   );
@@ -518,7 +518,7 @@ const getChats = (): ChatItem[] => {
       true,
       SenderType.STUDENTS,
       1,
-      null,
+      usersImages[3],
       "Thank you for accepting my invitation."
     )
   );
@@ -530,7 +530,7 @@ const getChats = (): ChatItem[] => {
       true,
       SenderType.STUDENTS,
       1,
-      null,
+      usersImages[4],
       "I heard about you and thought it would be worth reaching.. "
     )
   );
@@ -542,7 +542,7 @@ const getChats = (): ChatItem[] => {
       true,
       SenderType.STUDENTS,
       1,
-      null,
+      usersImages[5],
       "Life gets busy. Just wanted to make sure you got my last.."
     )
   );
@@ -704,6 +704,18 @@ const createComments = (): ChatItem[] => {
   }
   return comments;
 };
+
+const usersImages = [
+  "https://news.umanitoba.ca/wp-content/uploads/2019/03/IMG_9991-1200x800.jpg",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST8F8--z5CdhblS5e6hH7DgsFPTlxs9p2w0w&usqp=CAU",
+  "https://vrs.amsi.org.au/wp-content/uploads/sites/78/2017/12/tobinsouth_vrs_2017-18.jpeg",
+  "https://oregonctso.org/Websites/oregoncte/images/BlogFeaturedImages/decaheadshot.jpg",
+  "https://the-bac.edu/images/content/News/2017/Fall/20171102-JacobFerreira-400x300.jpg",
+  "https://harris.uchicago.edu/files/styles/square/public/2019-10/emileigh_harrison_cropped.jpg?itok=zL13vTOG",
+  "https://history.ubc.ca/wp-content/uploads/sites/23/2020/01/Kevin-website.jpg",
+  "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
+  ""
+];
 
 export default {
   getQuestionSections,
