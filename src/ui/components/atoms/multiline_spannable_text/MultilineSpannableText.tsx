@@ -7,13 +7,13 @@ import {
   TextStyle
 } from "react-native";
 
-interface OwnProps {
+export interface SpannableProps {
   textStyle: Array<StyleProp<TextStyle>>;
   text: Array<string>;
   onPress?: (value: string, index: number) => void;
 }
 
-type Props = OwnProps;
+type Props = SpannableProps;
 
 const MultilineSpannableText = React.memo<Props>(
   ({ textStyle, text, onPress }) => {

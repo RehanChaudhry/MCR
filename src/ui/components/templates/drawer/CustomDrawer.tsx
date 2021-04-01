@@ -23,6 +23,7 @@ import Announcement from "assets/images/announcements.svg";
 import NavProfile from "assets/images/nav_profile.svg";
 import NavChat from "assets/images/nav_chat.svg";
 import Bell from "assets/images/bell.svg";
+import Clock from "assets/images/clock.svg";
 import Friend from "assets/images/user-group.svg";
 import Settings from "assets/images/settings.svg";
 import { moderateScale } from "config/Dimens";
@@ -61,6 +62,7 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
     Friends: { name: "My Friends", icon: Friend },
     ChatList: { name: "Chat", icon: NavChat },
     Notification: { name: "Notifications", icon: Bell },
+    ActivityLog: { name: "Activity Log", icon: Clock },
     Settings: { name: "Settings", icon: Bell, shouldNotDrawView: true }
   };
 
