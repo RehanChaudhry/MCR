@@ -4,9 +4,9 @@ import { HeadingWithText } from "ui/components/molecules/heading_with_text/Headi
 import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
-import { AppFormDropDown } from "ui/components/molecules/app_form/AppFormDropDown";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
+import AppFormField from "ui/components/molecules/app_form/AppFormField";
 
 export const Interests = optimizedMemo(({}) => {
   const theme = usePreferredTheme();
@@ -26,148 +26,152 @@ export const Interests = optimizedMemo(({}) => {
       </View>
       <View style={[styles.horizontalLine]} />
       <View style={styles.innerCardStyle}>
-        <AppFormDropDown
+        <AppFormField
           name={"hobbies"}
           validationLabelTestID={"hobbiesValidationTestID"}
           labelProps={{
             text: STRINGS.profile.dropDownTitle.hobbies,
             weight: "semi-bold"
           }}
-          appDropDownProps={{
-            title: STRINGS.profile.dropDownInitialValue.hobbies,
-            items: [
-              { id: "0", title: "Books" },
-              { id: "1", title: "Games" },
-              { id: "2", title: "Sports" }
-            ],
-            selectedItemCallback: () => {
-              //setHobbiesTitle(item.title);
-            },
-            style: [
-              styles.dropDown,
-              { borderColor: theme.themedColors.border }
-            ],
-            textStyle: { color: theme.themedColors.primary }
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.dropDownInitialValue.hobbies,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.primary,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
+            ]
           }}
         />
         <View style={styles.spacer} />
-        <AppFormDropDown
+        <AppFormField
           name={"memberships"}
           validationLabelTestID={"membershipsValidationTestID"}
           labelProps={{
             text: STRINGS.profile.dropDownTitle.memberShip,
             weight: "semi-bold"
           }}
-          appDropDownProps={{
-            title: STRINGS.profile.dropDownInitialValue.addOptions,
-            items: [
-              { id: "0", title: "Arena" },
-              { id: "1", title: "Golf" },
-              { id: "2", title: "Marena" }
-            ],
-            selectedItemCallback: () => {
-              //setMembershipsTitle(item.title);
-            },
-            style: [
-              styles.dropDown,
-              { borderColor: theme.themedColors.border }
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.dropDownInitialValue.addOptions,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
             ]
           }}
         />
         <View style={styles.spacer} />
-        <AppFormDropDown
+        <AppFormField
           name={"movies"}
           validationLabelTestID={"moviesValidationTestID"}
           labelProps={{
             text: STRINGS.profile.dropDownTitle.movies,
             weight: "semi-bold"
           }}
-          appDropDownProps={{
-            title: STRINGS.profile.dropDownInitialValue.movies,
-            items: [
-              { id: "0", title: "Money Heist" },
-              { id: "1", title: "You" },
-              { id: "2", title: "The Boys" }
-            ],
-            selectedItemCallback: () => {
-              //setMoviesTitle(item.title);
-            },
-            style: [
-              styles.dropDown,
-              { borderColor: theme.themedColors.border }
-            ],
-            textStyle: { color: theme.themedColors.primary }
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.dropDownInitialValue.movies,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.primary,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
+            ]
           }}
         />
         <View style={styles.spacer} />
-        <AppFormDropDown
+        <AppFormField
           name={"music"}
           validationLabelTestID={"musicValidationTestID"}
           labelProps={{
             text: STRINGS.profile.dropDownTitle.music,
             weight: "semi-bold"
           }}
-          appDropDownProps={{
-            title: STRINGS.profile.dropDownInitialValue.addOptions,
-            items: [
-              { id: "0", title: "ColdPlay" },
-              { id: "1", title: "Enrique" },
-              { id: "2", title: "Justin" }
-            ],
-            selectedItemCallback: () => {
-              //setMusicTitle(item.title);
-            },
-            style: [
-              styles.dropDown,
-              { borderColor: theme.themedColors.border }
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.dropDownInitialValue.addOptions,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
             ]
           }}
         />
         <View style={styles.spacer} />
-        <AppFormDropDown
+        <AppFormField
           name={"books"}
           validationLabelTestID={"booksValidationTestID"}
           labelProps={{
             text: STRINGS.profile.dropDownTitle.books,
             weight: "semi-bold"
           }}
-          appDropDownProps={{
-            title: STRINGS.profile.dropDownInitialValue.addOptions,
-            items: [
-              { id: "0", title: "Science" },
-              { id: "1", title: "Rules" },
-              { id: "2", title: "History" }
-            ],
-            selectedItemCallback: () => {
-              //setBooksTitle(item.title);
-            },
-            style: [
-              styles.dropDown,
-              { borderColor: theme.themedColors.border }
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.dropDownInitialValue.addOptions,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
             ]
           }}
         />
         <View style={styles.spacer} />
-        <AppFormDropDown
+        <AppFormField
           name={"games"}
           validationLabelTestID={"gamesValidationTestID"}
           labelProps={{
             text: STRINGS.profile.dropDownTitle.games,
             weight: "semi-bold"
           }}
-          appDropDownProps={{
-            title: STRINGS.profile.dropDownInitialValue.addOptions,
-            items: [
-              { id: "0", title: "BattleField" },
-              { id: "1", title: "Assassin Creed" },
-              { id: "2", title: "Call Of Duty" }
-            ],
-            selectedItemCallback: () => {
-              //setGamesTitle(item.title);
-            },
-            style: [
-              styles.dropDown,
-              { borderColor: theme.themedColors.border }
+          fieldInputProps={{
+            textContentType: "name",
+            keyboardType: "default",
+            returnKeyType: "next",
+            placeholder: STRINGS.profile.dropDownInitialValue.addOptions,
+            autoCapitalize: "none",
+            placeholderTextColor: theme.themedColors.placeholder,
+            style: { color: theme.themedColors.label },
+            viewStyle: [
+              styles.textFieldStyle,
+              {
+                backgroundColor: theme.themedColors.background,
+                borderColor: theme.themedColors.border
+              }
             ]
           }}
         />

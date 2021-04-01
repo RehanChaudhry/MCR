@@ -85,7 +85,9 @@ const getUnis = () => {
         location: "Athens, Ohio",
         logo: "",
         colorPalette: defaultPaletteCopy,
-        sso_login: false
+        sso_login: false,
+        imageLink:
+          "https://cdn.dribbble.com/users/482854/screenshots/4211816/bobcatsdribbble1.png"
       },
       {
         id: "2",
@@ -100,7 +102,9 @@ const getUnis = () => {
           secondaryShade: "#EBA184",
           interface: grayShades.gray
         },
-        sso_login: true
+        sso_login: true,
+        imageLink:
+          "https://www.bestcollegesonline.org/wp-content/uploads/2018/06/Boise-State-University-Top-30-Most-Affordable-Online-Nurse-Practitioner-Degree-Programs-2018.png"
       },
       {
         id: "3",
@@ -108,7 +112,9 @@ const getUnis = () => {
         location: "Miami, Florida",
         logo: "",
         colorPalette: defaultPaletteCopy,
-        sso_login: false
+        sso_login: false,
+        imageLink:
+          "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png"
       },
       {
         id: "4",
@@ -116,39 +122,9 @@ const getUnis = () => {
         location: "Corvillas, Oregon",
         logo: "",
         colorPalette: defaultPaletteCopy,
-        sso_login: true
-      },
-      {
-        id: "5",
-        name: "Duquesne University",
-        location: "Pittsburgh, Pennsylvania",
-        logo: "",
-        colorPalette: defaultPaletteCopy,
-        sso_login: false
-      },
-      {
-        id: "6",
-        name: "Lehigh University",
-        location: "Greenville, North Carolina",
-        logo: "",
-        colorPalette: defaultPaletteCopy,
-        sso_login: true
-      },
-      {
-        id: "7",
-        name: "North Dakota State University",
-        location: "Fargo, North Dakota",
-        logo: "",
-        colorPalette: defaultPaletteCopy,
-        sso_login: false
-      },
-      {
-        id: "8",
-        name: "George Mason University",
-        location: "Fairfax, Virginia",
-        logo: "",
-        colorPalette: defaultPaletteCopy,
-        sso_login: true
+        sso_login: true,
+        imageLink:
+          "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.18169-9/17992269_10155524054093287_8433506851861131962_n.png?_nc_cat=104&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=Pt9G3kMpEMUAX_cq_hK&_nc_oc=AQnFOoKTpjcnImOp6mluKgLfP4PPRTzjry4Yax0x5xaJgLGuymFLfbttRQShhbiHCks&_nc_ht=scontent.fkhi10-1.fna&oh=9238a3e3b73553a4a877fb732826f463&oe=608C8EF8"
       }
     ]
   };

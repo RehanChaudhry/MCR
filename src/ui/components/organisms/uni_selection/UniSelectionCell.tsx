@@ -5,10 +5,6 @@ import React, { FC } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import {
-  AppImageBackground,
-  CONTAINER_TYPES
-} from "ui/components/atoms/image_background/AppImageBackground";
 
 type Props = {
   uni: Uni;
@@ -21,11 +17,8 @@ const UniSelectionCell: FC<Props> = ({ uni, onSelection }) => {
     <TouchableOpacity
       style={styles.content}
       onPress={() => onSelection(uni)}>
-      <View>
-        <AppImageBackground
-          style={styles.logo}
-          containerShape={CONTAINER_TYPES.CIRCLE}
-        />
+      <View style={styles.imageCircle}>
+        <Image style={styles.image} source={{ uri: uni.imageLink }} />
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.textContainer}>
@@ -85,7 +78,17 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-  logo: { width: 40, height: 40 }
+  logo: { width: 40, height: 40 },
+  imageCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20
+  },
+  image: {
+    width: 40,
+    height: 40,
+    borderRadius: 20
+  }
 });
 
 export default UniSelectionCell;

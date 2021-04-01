@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { CardView } from "../../../components/atoms/CardView";
 import { SPACE } from "../../../../config";
 import AppFormField from "../../../components/molecules/app_form/AppFormField";
@@ -8,9 +8,9 @@ import AppForm from "../../../components/molecules/app_form/AppForm";
 import * as Yup from "yup";
 import { FormikValues } from "formik";
 import { AppLog } from "../../../../utils/Util";
-import Screen from "../../../components/atoms/Screen";
 import AppFormFormSubmit from "../../../components/molecules/app_form/AppFormSubmit";
 import { BUTTON_TYPES } from "../../../components/molecules/app_button/AppButton";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 type Props = {};
 
@@ -68,169 +68,165 @@ const SettingsView: FC<Props> = () => {
   const theme = usePreferredTheme();
 
   return (
-    <Screen>
-      <ScrollView style={styles.mainContainer}>
-        <View style={styles.mainContainer}>
-          <CardView style={styles.cardStyles}>
-            <AppForm
-              initialValues={initialValues}
-              onSubmit={onSubmit}
-              validationSchema={validationSchema}>
-              <AppFormField
-                fieldTestID="primaryEmailAddress"
-                validationLabelTestID={
-                  "primaryEmailAddressValidationLabel"
-                }
-                name="primaryEmailAddress"
-                labelProps={{
-                  text: "Primary Email Address",
-                  weight: "semi-bold"
-                }}
-                readOnly={true}
-                fieldInputProps={{
-                  textContentType: "name",
-                  keyboardType: "default",
-                  returnKeyType: "next",
-                  autoCapitalize: "none",
-                  value: "zane.mayes@ohio.edu",
-                  style: { color: theme.themedColors.label },
-                  shouldDisable: true,
-                  placeholderTextColor: theme.themedColors.placeholder,
-                  viewStyle: [
-                    styles.textFieldStyle,
-                    {
-                      backgroundColor: theme.themedColors.interface["100"],
-                      borderColor: theme.themedColors.border
-                    }
-                  ]
-                }}
+    <KeyboardAwareScrollView style={styles.mainContainer}>
+      <View style={styles.mainContainer}>
+        <CardView style={styles.cardStyles}>
+          <AppForm
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            validationSchema={validationSchema}>
+            <AppFormField
+              fieldTestID="primaryEmailAddress"
+              validationLabelTestID={"primaryEmailAddressValidationLabel"}
+              name="primaryEmailAddress"
+              labelProps={{
+                text: "Primary Email Address",
+                weight: "semi-bold"
+              }}
+              readOnly={true}
+              fieldInputProps={{
+                textContentType: "name",
+                keyboardType: "default",
+                returnKeyType: "next",
+                autoCapitalize: "none",
+                value: "zane.mayes@ohio.edu",
+                style: { color: theme.themedColors.label },
+                shouldDisable: true,
+                placeholderTextColor: theme.themedColors.placeholder,
+                viewStyle: [
+                  styles.textFieldStyle,
+                  {
+                    backgroundColor: theme.themedColors.interface["100"],
+                    borderColor: theme.themedColors.border
+                  }
+                ]
+              }}
+            />
+            <View style={styles.spacer} />
+            <AppFormField
+              fieldTestID="alternateEmailAddress"
+              validationLabelTestID={
+                "alternateEmailAddressValidationLabel"
+              }
+              name="alternateEmailAddress"
+              labelProps={{
+                text: "Alternative Email Address",
+                weight: "semi-bold"
+              }}
+              fieldInputProps={{
+                textContentType: "name",
+                keyboardType: "default",
+                returnKeyType: "next",
+                placeholder: "Enter your alternative email",
+                autoCapitalize: "none",
+                placeholderTextColor: theme.themedColors.placeholder,
+                style: { color: theme.themedColors.label },
+                viewStyle: [
+                  styles.textFieldStyle,
+                  {
+                    backgroundColor: theme.themedColors.background,
+                    borderColor: theme.themedColors.border
+                  }
+                ]
+              }}
+            />
+            <View style={styles.spacer} />
+            <AppFormField
+              fieldTestID="currentPassword"
+              validationLabelTestID={"currentPasswordValidationLabel"}
+              name="currentPassword"
+              labelProps={{
+                text: "Current Password",
+                weight: "semi-bold"
+              }}
+              fieldInputProps={{
+                textContentType: "password",
+                keyboardType: "default",
+                returnKeyType: "next",
+                secureTextEntry: true,
+                placeholder: "Enter your current password",
+                autoCapitalize: "none",
+                placeholderTextColor: theme.themedColors.placeholder,
+                style: { color: theme.themedColors.label },
+                viewStyle: [
+                  styles.textFieldStyle,
+                  {
+                    backgroundColor: theme.themedColors.background,
+                    borderColor: theme.themedColors.border
+                  }
+                ]
+              }}
+            />
+            <View style={styles.spacer} />
+            <AppFormField
+              fieldTestID="newPassword"
+              validationLabelTestID={"newPasswordValidationLabel"}
+              name="newPassword"
+              labelProps={{
+                text: "New Password",
+                weight: "semi-bold"
+              }}
+              fieldInputProps={{
+                textContentType: "name",
+                keyboardType: "default",
+                returnKeyType: "next",
+                secureTextEntry: true,
+                placeholder: "Create your new password",
+                autoCapitalize: "none",
+                placeholderTextColor: theme.themedColors.placeholder,
+                style: { color: theme.themedColors.label },
+                viewStyle: [
+                  styles.textFieldStyle,
+                  {
+                    backgroundColor: theme.themedColors.background,
+                    borderColor: theme.themedColors.border
+                  }
+                ]
+              }}
+            />
+            <View style={styles.spacer} />
+            <AppFormField
+              fieldTestID="confirmPassword"
+              validationLabelTestID={"confirmPasswordValidationLabel"}
+              name="confirmPassword"
+              labelProps={{
+                text: "Confirm Password",
+                weight: "semi-bold"
+              }}
+              fieldInputProps={{
+                textContentType: "name",
+                keyboardType: "default",
+                returnKeyType: "next",
+                placeholder: "Re-enter your new password",
+                autoCapitalize: "none",
+                secureTextEntry: true,
+                placeholderTextColor: theme.themedColors.placeholder,
+                style: { color: theme.themedColors.label },
+                viewStyle: [
+                  styles.textFieldStyle,
+                  {
+                    backgroundColor: theme.themedColors.background,
+                    borderColor: theme.themedColors.border
+                  }
+                ]
+              }}
+            />
+            <View style={styles.buttonViewStyle}>
+              <AppFormFormSubmit
+                text={"Save"}
+                buttonType={BUTTON_TYPES.NORMAL}
+                fontWeight={"semi-bold"}
+                textStyle={{ color: theme.themedColors.background }}
+                buttonStyle={[
+                  styles.buttonStyle,
+                  { backgroundColor: theme.themedColors.primary }
+                ]}
               />
-              <View style={styles.spacer} />
-              <AppFormField
-                fieldTestID="alternateEmailAddress"
-                validationLabelTestID={
-                  "alternateEmailAddressValidationLabel"
-                }
-                name="alternateEmailAddress"
-                labelProps={{
-                  text: "Alternative Email Address",
-                  weight: "semi-bold"
-                }}
-                fieldInputProps={{
-                  textContentType: "name",
-                  keyboardType: "default",
-                  returnKeyType: "next",
-                  placeholder: "Enter your alternative email",
-                  autoCapitalize: "none",
-                  placeholderTextColor: theme.themedColors.placeholder,
-                  style: { color: theme.themedColors.label },
-                  viewStyle: [
-                    styles.textFieldStyle,
-                    {
-                      backgroundColor: theme.themedColors.background,
-                      borderColor: theme.themedColors.border
-                    }
-                  ]
-                }}
-              />
-              <View style={styles.spacer} />
-              <AppFormField
-                fieldTestID="currentPassword"
-                validationLabelTestID={"currentPasswordValidationLabel"}
-                name="currentPassword"
-                labelProps={{
-                  text: "Current Password",
-                  weight: "semi-bold"
-                }}
-                fieldInputProps={{
-                  textContentType: "password",
-                  keyboardType: "default",
-                  returnKeyType: "next",
-                  secureTextEntry: true,
-                  placeholder: "Enter your current password",
-                  autoCapitalize: "none",
-                  placeholderTextColor: theme.themedColors.placeholder,
-                  style: { color: theme.themedColors.label },
-                  viewStyle: [
-                    styles.textFieldStyle,
-                    {
-                      backgroundColor: theme.themedColors.background,
-                      borderColor: theme.themedColors.border
-                    }
-                  ]
-                }}
-              />
-              <View style={styles.spacer} />
-              <AppFormField
-                fieldTestID="newPassword"
-                validationLabelTestID={"newPasswordValidationLabel"}
-                name="newPassword"
-                labelProps={{
-                  text: "New Password",
-                  weight: "semi-bold"
-                }}
-                fieldInputProps={{
-                  textContentType: "name",
-                  keyboardType: "default",
-                  returnKeyType: "next",
-                  secureTextEntry: true,
-                  placeholder: "Create your new password",
-                  autoCapitalize: "none",
-                  placeholderTextColor: theme.themedColors.placeholder,
-                  style: { color: theme.themedColors.label },
-                  viewStyle: [
-                    styles.textFieldStyle,
-                    {
-                      backgroundColor: theme.themedColors.background,
-                      borderColor: theme.themedColors.border
-                    }
-                  ]
-                }}
-              />
-              <View style={styles.spacer} />
-              <AppFormField
-                fieldTestID="confirmPassword"
-                validationLabelTestID={"confirmPasswordValidationLabel"}
-                name="confirmPassword"
-                labelProps={{
-                  text: "Confirm Password",
-                  weight: "semi-bold"
-                }}
-                fieldInputProps={{
-                  textContentType: "name",
-                  keyboardType: "default",
-                  returnKeyType: "next",
-                  placeholder: "Re-enter your new password",
-                  autoCapitalize: "none",
-                  secureTextEntry: true,
-                  placeholderTextColor: theme.themedColors.placeholder,
-                  style: { color: theme.themedColors.label },
-                  viewStyle: [
-                    styles.textFieldStyle,
-                    {
-                      backgroundColor: theme.themedColors.background,
-                      borderColor: theme.themedColors.border
-                    }
-                  ]
-                }}
-              />
-              <View style={styles.buttonViewStyle}>
-                <AppFormFormSubmit
-                  text={"Save"}
-                  buttonType={BUTTON_TYPES.NORMAL}
-                  fontWeight={"semi-bold"}
-                  textStyle={{ color: theme.themedColors.background }}
-                  buttonStyle={[
-                    styles.buttonStyle,
-                    { backgroundColor: theme.themedColors.primary }
-                  ]}
-                />
-              </View>
-            </AppForm>
-          </CardView>
-        </View>
-      </ScrollView>
-    </Screen>
+            </View>
+          </AppForm>
+        </CardView>
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
