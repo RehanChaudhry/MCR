@@ -697,7 +697,7 @@ const getChats = (): ChatItem[] => {
 
   chats.push(
     createChat(
-      1,
+      2,
       ["Jacoby Roman"],
       true,
       SenderType.STAFF,
@@ -709,7 +709,7 @@ const getChats = (): ChatItem[] => {
 
   chats.push(
     createChat(
-      1,
+      3,
       ["Reina Brooks"],
       true,
       SenderType.STUDENTS,
@@ -721,7 +721,7 @@ const getChats = (): ChatItem[] => {
 
   chats.push(
     createChat(
-      1,
+      4,
       ["Luukas Haapala", "Abriella Bond"],
       true,
       SenderType.STUDENTS,
@@ -733,7 +733,7 @@ const getChats = (): ChatItem[] => {
 
   chats.push(
     createChat(
-      1,
+      5,
       ["Macy Maher"],
       true,
       SenderType.STUDENTS,
