@@ -1,15 +1,14 @@
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
-import { CardView } from "../../../components/atoms/CardView";
-import { SPACE } from "../../../../config";
-import AppFormField from "../../../components/molecules/app_form/AppFormField";
-import usePreferredTheme from "../../../../hooks/theme/usePreferredTheme";
-import AppForm from "../../../components/molecules/app_form/AppForm";
+import { CardView } from "ui/components/atoms/CardView";
+import { SPACE } from "config";
+import AppFormField from "ui/components/molecules/app_form/AppFormField";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import AppForm from "ui/components/molecules/app_form/AppForm";
 import * as Yup from "yup";
 import { FormikValues } from "formik";
-import { AppLog } from "../../../../utils/Util";
-import AppFormFormSubmit from "../../../components/molecules/app_form/AppFormSubmit";
-import { BUTTON_TYPES } from "../../../components/molecules/app_button/AppButton";
+import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
+import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 type Props = {};
@@ -62,7 +61,6 @@ const SettingsView: FC<Props> = () => {
 
   const onSubmit = (_value: FormikValues) => {
     initialValues = _value;
-    AppLog.log("form values" + initialValues);
   };
 
   const theme = usePreferredTheme();
