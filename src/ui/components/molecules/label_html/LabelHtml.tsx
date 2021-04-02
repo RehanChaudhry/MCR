@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleProp, TextStyle, View, ViewStyle } from "react-native";
+import { StyleProp, TextStyle, ViewStyle } from "react-native";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 
 interface Props {
-  containerStyle: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
   text: string;
   style: StyleProp<TextStyle>;
 }
@@ -33,9 +33,11 @@ const LabelHtml: React.FC<Props> = ({
   }
 
   return (
-    <View style={containerStyle}>
-      <MultilineSpannableText textStyle={textStyles} text={texts} />
-    </View>
+    <MultilineSpannableText
+      textStyle={textStyles}
+      text={texts}
+      containerStyle={containerStyle}
+    />
   );
 };
 
