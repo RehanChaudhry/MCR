@@ -1,8 +1,5 @@
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
-import {
-  NotificationData,
-  NotificationsResponseModel
-} from "models/api_responses/NotificationsResponseModel";
+import { NotificationsResponseModel } from "models/api_responses/NotificationsResponseModel";
 import { SectionResponse } from "models/api_responses/QuestionsResponseModel";
 import { UniSelectionResponseModel } from "models/api_responses/UniSelectionResponseModel";
 import ChatItem, { SenderType } from "models/ChatItem";
@@ -50,25 +47,112 @@ const getQuestionSections = () => {
 };
 
 const getNotifications = () => {
-  const notifications: NotificationData[] = [];
   const date = new Date();
 
-  AppLog.log("Data Generaor" + moment(date).subtract(1, "day").toDate());
+  //date: moment(date).subtract(i, "day").toDate().toString(),
+  AppLog.log("Data Generaor" + moment(date).subtract(2, "day").toDate());
 
-  for (let i = 0; i < 15; i++) {
-    const notification: NotificationsResponseModel = {
-      message: "Success",
-      data: {
-        id: `${i}`,
-        type: `Lifestyle Preference ${i}`,
-        date: moment(date).subtract(i, "day").toDate().toString(),
+  const response: NotificationsResponseModel = {
+    message: "Success",
+    data: [
+      {
+        id: "1",
+        name: "Phoenix Walker",
+        profileUrl:
+          "https://news.umanitoba.ca/wp-content/uploads/2019/03/IMG_9991-1200x800.jpg",
+        type: `View Request`,
+        date: "Thurs April 1 2021 17:38:55 GMT+0500 (PKT)",
         message: "has sent you a friend request "
+      },
+      {
+        id: "2",
+        name: "Anne Mcfadden",
+        profileUrl:
+          "https://www.londonmet.ac.uk/media/london-metropolitan-university/london-met-photos/students-studying-at-london-met/student-profiles/Sophia-Allwood-900-x-524.jpg",
+        type: `View Message`,
+        date: "Fri April 2 2021 17:38:55 GMT+0500 (PKT)",
+        message:
+          "has started a new conversation with you, Aris Johonson & 2 more "
+      },
+      {
+        id: "3",
+        name: "Jakobe Snell",
+        profileUrl:
+          "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
+        type: `View Request`,
+        date: "Fri April 2 2021 17:38:55 GMT+0500 (PKT)",
+        message: "has sent you a roommate request "
+      },
+      {
+        id: "4",
+        name: "Katherine Moss",
+        profileUrl:
+          "https://oregonctso.org/Websites/oregoncte/images/BlogFeaturedImages/decaheadshot.jpg",
+        type: `View Details`,
+        date: "Wed Mar 31 2021 17:38:55 GMT+0500 (PKT)",
+        message: "has edited and agreed on roomate agreement "
+      },
+      {
+        id: "5",
+        name: "Britney Cooper",
+        profileUrl:
+          "https://the-bac.edu/images/content/News/2017/Fall/20171102-JacobFerreira-400x300.jpg",
+        type: `View Details`,
+        date: "Tue Mar 31 2021 17:38:55 GMT+0500 (PKT)",
+        message: "has edited and disagreed on roomate agreement "
+      },
+      {
+        id: "6",
+        name: "Ohio University's Staff",
+        profileUrl:
+          "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
+        type: `View Post`,
+        date: "Tues Mar 30 2021 17:38:55 GMT+0500 (PKT)",
+        message: "has sent you a friend request "
+      },
+      {
+        id: "7",
+        name: "Fox Mccloud",
+        profileUrl:
+          "https://history.ubc.ca/wp-content/uploads/sites/23/2020/01/Kevin-website.jpg",
+        type: `View Comment`,
+        date: "Tues Mar 30 2021 17:38:55 GMT+0500 (PKT)",
+        message:
+          "has posted a comment on your post, “Forever can seem daunting..” "
+      },
+      {
+        id: "8",
+        name: "Abriella Bond",
+        profileUrl:
+          "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
+        type: `View Post`,
+        date: "Tues Mar 30 2021 17:38:55 GMT+0500 (PKT)",
+        message:
+          "has liked your post, “Forever can seem daunting from the outside..” "
+      },
+      {
+        id: "9",
+        name: "Kianna Pham",
+        profileUrl:
+          "https://publichealth.uga.edu/wp-content/uploads/2020/01/Thomas-Cameron_Student_Profile.jpg",
+        type: `View Request  `,
+        date: "Tues Mar 30 2021 17:38:55 GMT+0500 (PKT)",
+        message: "has sent you a friend request"
+      },
+      {
+        id: "10",
+        name: "Ellis Schaefer ",
+        profileUrl:
+          "https://harris.uchicago.edu/files/styles/square/public/2019-10/emileigh_harrison_cropped.jpg?itok=zL13vTOG",
+        type: `View Message`,
+        date: "Tue Mar 23 2021 17:38:55 GMT+0500 (PKT)",
+        message:
+          "has sent you a new chat message, “Thanks for your help, lets meet..”"
       }
-    };
-    notifications.push(notification.data);
-  }
+    ]
+  };
 
-  return notifications;
+  return response;
 };
 
 const getUnis = () => {

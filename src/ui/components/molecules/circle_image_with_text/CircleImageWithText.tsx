@@ -13,15 +13,16 @@ type Props = {
   username: string;
   message: string;
   onPress: () => void;
+  imageUrl: string;
   userNameOnPress?: (value: string, userNameindex: number) => void;
 };
 
 export const CircleImageWithText = React.memo<Props>(
-  ({ username, onPress, message, userNameOnPress }) => {
+  ({ username, onPress, message, userNameOnPress, imageUrl }) => {
     const theme = usePreferredTheme();
     return (
       <View style={styles.mainContainer}>
-        <CircleImageBorder />
+        <CircleImageBorder imageUrl={imageUrl} />
         <View style={styles.viewRequest}>
           <View style={styles.circleWithText}>
             <View>
