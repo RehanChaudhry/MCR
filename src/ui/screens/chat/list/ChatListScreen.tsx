@@ -107,7 +107,6 @@ export const ChatListScreen = React.memo<ChatListProps>(
             textStyle={styles.searchText}
             placeholder={STRINGS.chatListScreen.placeholder_search_keyword}
             onChangeText={handleClick}
-            searchIcon={true}
             clearIcon={true}
             iconColor={themedColors.interface[500]}
           />

@@ -7,7 +7,7 @@ it("Snapshot testing", () => {
     <SearchField
       placeholder="Enter text"
       onChangeText={() => {}}
-      searchIcon={false}
+      searchIcon={<></>}
       clearIcon={false}
     />
   ).toJSON();
@@ -20,7 +20,6 @@ it("Search by entered characters", async () => {
     <SearchField
       placeholder="Enter text"
       onChangeText={onChangeText}
-      searchIcon={false}
       clearIcon={false}
     />
   );
@@ -38,7 +37,6 @@ it("renders left icon", () => {
     <SearchField
       placeholder={"Enter Text"}
       onChangeText={() => {}}
-      searchIcon={true}
       clearIcon={false}
     />
   );
@@ -53,12 +51,9 @@ it("renders right icon", () => {
     <SearchField
       placeholder={"Enter Text"}
       onChangeText={() => {}}
-      searchIcon={false}
       clearIcon={true}
     />
   );
   const rightIcon = queryByTestId("right-icon");
-  const leftIcon = queryByTestId("left-icon");
-  expect(leftIcon).toBeNull();
   expect(rightIcon).toBeNull();
 });

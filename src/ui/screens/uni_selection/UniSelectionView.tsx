@@ -88,7 +88,7 @@ const UniSelectionView: FC<Props> = ({
                 fill={theme.themedColors.interface[600]}
               />
             )}
-            placeholder="Search univeristy by name"
+            placeholder="Search university by name"
             onChangeText={(text) => searchFilterFunction(text)}
           />
         </View>
