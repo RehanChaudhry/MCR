@@ -39,7 +39,6 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
           keyword.current = textToSearch;
           onFilterChange(keyword.current, gender.current);
         }}
-        searchIcon={true}
         clearIcon={true}
         iconColor={themedColors.interface[500]}
       />

@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   leftPointer: {
     position: "absolute",
     width: moderateScale(2),
-    height: moderateScale(10),
+    height: moderateScale(7),
     left: moderateScale(5),
     top: "20%",
     borderRadius: moderateScale(1)
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   rightPointer: {
     position: "absolute",
     width: moderateScale(2),
-    height: moderateScale(10),
+    height: moderateScale(7),
     right: moderateScale(5),
     bottom: "20%",
     borderRadius: moderateScale(1)

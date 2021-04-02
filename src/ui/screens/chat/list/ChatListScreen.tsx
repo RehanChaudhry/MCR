@@ -5,19 +5,14 @@ import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, shadowStyleProps } from "utils/Util";
 import { ItemChatList } from "ui/components/molecules/item_chat/ItemChatList";
-import BottomBreadCrumbs, {
-  Item
-} from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
 import ChatItem from "models/ChatItem";
 import { ChatHeader } from "ui/components/molecules/item_chat/ChatHeader";
-import Strings from "config/Strings";
 import SearchField from "ui/components/atoms/search_field/SearchField";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
-type ConversationType = "Active" | "Archived";
 
 interface ChatListProps {
   onItemClick: (item: ChatItem) => void;
@@ -26,25 +21,6 @@ interface ChatListProps {
   onEndReached: () => void;
   isAllDataLoaded: boolean;
 }
-
-const showConversation = (conversationType: ConversationType) => {
-  AppLog.log(conversationType);
-};
-
-const breadCrumbsItems: Item[] = [
-  {
-    title: Strings.chatListScreen.activeConversations,
-    onPress: () => {
-      showConversation("Active");
-    }
-  },
-  {
-    title: Strings.chatListScreen.archivedConversations,
-    onPress: () => {
-      showConversation("Archived");
-    }
-  }
-];
 
 let lastHeaderTitle = "";
 export const ChatListScreen = React.memo<ChatListProps>(
@@ -62,9 +38,15 @@ export const ChatListScreen = React.memo<ChatListProps>(
 
     const performSearch = (textToSearch: string) =>
       items.filter((obj: ChatItem) => {
-        return Object.values(obj).some((v) =>
-          `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
-        );
+        return Object.values(obj).some((v) => {
+          AppLog.logForcefully("condition coming " + v);
+          AppLog.logForcefully(
+            `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
+          );
+          return `${v}`
+            .toLowerCase()
+            .includes(`${textToSearch}`.toLowerCase());
+        });
       });
 
     const handleClick = useCallback((textToSearch?: string) => {
@@ -107,7 +89,6 @@ export const ChatListScreen = React.memo<ChatListProps>(
             textStyle={styles.searchText}
             placeholder={STRINGS.chatListScreen.placeholder_search_keyword}
             onChangeText={handleClick}
-            searchIcon={true}
             clearIcon={true}
             iconColor={themedColors.interface[500]}
           />
@@ -129,7 +110,6 @@ export const ChatListScreen = React.memo<ChatListProps>(
                 <ListItemSeparator style={styles.separator} />
               )}
             />
-            <BottomBreadCrumbs data={breadCrumbsItems} />
           </>
         )}
       </Screen>

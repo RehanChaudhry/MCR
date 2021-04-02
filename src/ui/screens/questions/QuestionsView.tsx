@@ -121,6 +121,7 @@ function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
         <HeadingWithText
           headingText={STRINGS.questionnaire.how_it_works}
           headingStyle={styles.infoCardHeading}
+          headingFontWeight="bold"
           text={STRINGS.questionnaire.how_it_works_detail}
           textStyle={styles.infoCardText}
         />
@@ -130,8 +131,8 @@ function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
           text={STRINGS.questionnaire.learn_more}
           rightIcon={() => (
             <RightArrow
-              width={moderateScale(20)}
-              height={moderateScale(20)}
+              width={moderateScale(16)}
+              height={moderateScale(16)}
               fill={themedColors.primary}
             />
           )}
@@ -200,14 +201,14 @@ const styles = StyleSheet.create({
     ...shadowStyleProps
   },
   infoCardHeading: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.sm
   },
   infoCardText: {
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.xsm,
     marginTop: SPACE.sm
   },
   learnMore: {
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.xsm,
     fontWeight: "bold",
     textAlign: "left"
   },
