@@ -33,7 +33,7 @@ const NotificationController: FC<Props> = () => {
 
   const [notifications, setNotifications] = useState<
     Array<NotificationData>
-  >(notify);
+  >(notify.data);
 
   const notificationApi = useApi<any, NotificationsResponseModel>(
     ProfileApis.getNotifications
@@ -63,7 +63,7 @@ const NotificationController: FC<Props> = () => {
       AppLog.log("Unable to find questions " + errorBody);
       return;
     } else {
-      setNotifications([dataBody.data]);
+      setNotifications(dataBody.data);
       onComplete?.();
     }
   };

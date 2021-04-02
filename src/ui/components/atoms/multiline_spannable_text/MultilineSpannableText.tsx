@@ -29,7 +29,7 @@ const MultilineSpannableText = React.memo<Props>(
               <TouchableWithoutFeedback
                 key={index}
                 onPress={() => onPress?.(text[index], index)}>
-                <Text style={textStyle[index]}>{item}</Text>
+                <Text style={[textStyle[index]]}>{item}</Text>
               </TouchableWithoutFeedback>
             ))}
           </Text>
