@@ -139,8 +139,8 @@ android {
         applicationId "com.mycollegeroomie"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "1.1.1-DEV"
+        versionCode 4
+        versionName "1.1.2-DEV"
         multiDexEnabled true
     }
     splits {
