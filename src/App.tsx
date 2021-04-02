@@ -10,8 +10,6 @@ type Props = {};
 
 const App: React.FC<Props> = () => {
   AppLog.log("Rendering App...");
-  // @ts-ignore
-  AppLog.logForcefully(`V8 version is ${global?._v8runtime()?.version}`);
 
   return (
     <AppThemeProvider colorScheme={AppColorScheme.SYSTEM}>

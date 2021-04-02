@@ -31,6 +31,7 @@ import ProfileMatch from "models/ProfileMatch";
 import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import EScreen from "models/enums/EScreen";
+import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -40,16 +41,39 @@ type MatchesNavigationProp = StackNavigationProp<
 type Props = {};
 
 const MatchesController: FC<Props> = () => {
+  const [showAlert, setShowAlert] = useState<boolean>(false);
   AppLog.log("Opening MatchesController");
   const { themedColors } = usePreferredTheme();
   const navigation = useNavigation<MatchesNavigationProp>();
+
+  let showMoreDialogue: () => any;
+  showMoreDialogue = () => {
+    return (
+      <AppPopUp
+        isVisible={showAlert}
+        title={"More Screen"}
+        message={"Hello this is more screen"}
+        actions={[
+          {
+            title: "Cancel",
+            onPress: () => {
+              setShowAlert(false);
+            }
+          }
+        ]}
+      />
+    );
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRightTextWithIcon
           text={"More"}
-          onPress={() => navigation.navigate("MatchInfo")}
+          // onPress={() => navigation.navigate("MatchInfo")}
+          onPress={() => {
+            setShowAlert(true);
+          }}
           icon={(color, width, height) => {
             AppLog.log(color);
             return (
@@ -63,7 +87,7 @@ const MatchesController: FC<Props> = () => {
         />
       )
     });
-  }, [navigation, themedColors]);
+  }, [showMoreDialogue, navigation, themedColors]);
 
   const moveToChatScreen = (profileMatch: ProfileMatch) => {
     // AppLog.log(
@@ -284,6 +308,7 @@ const MatchesController: FC<Props> = () => {
         moveToChatScreen={moveToChatScreen}
         moveToProfileScreen={moveToProfileScreen}
       />
+      {showMoreDialogue()}
     </ProgressErrorView>
   );
 };
