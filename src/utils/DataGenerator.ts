@@ -26,6 +26,7 @@ import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiReques
 import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
 import ActivityType from "models/enums/ActivityType";
 import ActivityLog from "models/ActivityLog";
+import uuid from "uuid";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -363,19 +364,83 @@ const getQuestion = (
 };
 
 const getProfileMatch = (id: number) => {
-  return new ProfileMatch(
-    id,
-    "Phoenix Walker " + id,
-    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-    "Freshman",
-    "History",
-    95,
-    "active",
-    false,
-    false,
-    Math.random() < 0.5,
-    "2021-03-15T07:18:24.000Z"
+  const profileMatches: ProfileMatch[] = [];
+  profileMatches.push(
+    new ProfileMatch(
+      id,
+      "Phoenix Walker",
+      "https://publichealth.uga.edu/wp-content/uploads/2020/01/Thomas-Cameron_Student_Profile.jpg",
+      "Freshman",
+      "History",
+      95,
+      "active",
+      false,
+      false,
+      Math.random() < 0.5,
+      "2021-03-15T07:18:24.000Z"
+    )
   );
+  profileMatches.push(
+    new ProfileMatch(
+      id,
+      "Jasmine Lambert",
+      "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
+      "Freshman",
+      "History",
+      32,
+      "active",
+      false,
+      false,
+      Math.random() < 0.5,
+      "2021-03-15T07:18:24.000Z"
+    )
+  );
+  profileMatches.push(
+    new ProfileMatch(
+      id,
+      "Sarah Steiner",
+      "https://oregonctso.org/Websites/oregoncte/images/BlogFeaturedImages/decaheadshot.jpg",
+      "Freshman",
+      "History",
+      67,
+      "active",
+      false,
+      false,
+      Math.random() < 0.5,
+      "2021-03-15T07:18:24.000Z"
+    )
+  );
+  profileMatches.push(
+    new ProfileMatch(
+      id,
+      "Case Wolf",
+      "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
+      "Freshman",
+      "History",
+      89,
+      "active",
+      false,
+      false,
+      Math.random() < 0.5,
+      "2021-03-15T07:18:24.000Z"
+    )
+  );
+  profileMatches.push(
+    new ProfileMatch(
+      id,
+      "Alden Chaney",
+      "https://news.umanitoba.ca/wp-content/uploads/2019/03/IMG_9991-1200x800.jpg",
+      "Freshman",
+      "History",
+      23,
+      "active",
+      false,
+      false,
+      Math.random() < 0.5,
+      "2021-03-15T07:18:24.000Z"
+    )
+  );
+  return profileMatches;
 };
 
 const getProfileMatches: (
@@ -386,12 +451,9 @@ const getProfileMatches: (
   dataBody: MatchesApiResponseModel;
 }> = async (request: MatchesApiRequestModel) => {
   AppLog.log("getProfileMatches(), request: " + JSON.stringify(request));
-  const profileMatches: ProfileMatch[] = [];
-  for (let i = 0; i < (request.limit ?? 5); i++) {
-    profileMatches.push(
-      getProfileMatch(Math.floor(Math.random() * 100) + 1)
-    );
-  }
+  const profileMatches: ProfileMatch[] = getProfileMatch(
+    Math.floor(Math.random() * 100) + 1
+  );
   const response = {
     hasError: false,
     errorBody: undefined,
@@ -459,7 +521,7 @@ const getActivityLogs: (
 const getAnnouncementList = (pageToLoad: number) => {
   const announcements: CommunityAnnouncement[] = [
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
       name: "Ohio University",
@@ -473,7 +535,7 @@ const getAnnouncementList = (pageToLoad: number) => {
       metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
       name: "Ohio University",
@@ -485,7 +547,7 @@ const getAnnouncementList = (pageToLoad: number) => {
       commentCount: 2
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
       name: "Ohio University",
@@ -497,7 +559,7 @@ const getAnnouncementList = (pageToLoad: number) => {
       metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
       name: "Ohio University",
@@ -509,7 +571,7 @@ const getAnnouncementList = (pageToLoad: number) => {
       commentCount: 2
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
       name: "Ohio University",
@@ -528,7 +590,7 @@ const getAnnouncementList = (pageToLoad: number) => {
 const getCommunityList = (pageToLoad: number) => {
   const communities: CommunityAnnouncement[] = [
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       name: "Phoenix Walker",
@@ -539,7 +601,7 @@ const getCommunityList = (pageToLoad: number) => {
       commentCount: 5
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
       name: "Jasmine Lambert",
@@ -551,7 +613,7 @@ const getCommunityList = (pageToLoad: number) => {
       commentCount: 8
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://publichealth.uga.edu/wp-content/uploads/2020/01/Thomas-Cameron_Student_Profile.jpg",
       name: "Alden Chaney",
@@ -568,7 +630,7 @@ const getCommunityList = (pageToLoad: number) => {
       commentCount: 8
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://oregonctso.org/Websites/oregoncte/images/BlogFeaturedImages/decaheadshot.jpg",
       name: "Sarah Steiner",
@@ -580,7 +642,7 @@ const getCommunityList = (pageToLoad: number) => {
       commentCount: 5
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
       name: "Case Wolf",
@@ -591,7 +653,7 @@ const getCommunityList = (pageToLoad: number) => {
       metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       name: "Zane Mayes",
@@ -636,7 +698,7 @@ const getChats = (): ChatItem[] => {
 
   chats.push(
     createChat(
-      1,
+      2,
       ["Jacoby Roman"],
       true,
       SenderType.STAFF,
@@ -648,7 +710,7 @@ const getChats = (): ChatItem[] => {
 
   chats.push(
     createChat(
-      1,
+      3,
       ["Reina Brooks"],
       true,
       SenderType.STUDENTS,
@@ -660,7 +722,7 @@ const getChats = (): ChatItem[] => {
 
   chats.push(
     createChat(
-      1,
+      4,
       ["Luukas Haapala", "Abriella Bond"],
       true,
       SenderType.STUDENTS,
@@ -672,7 +734,7 @@ const getChats = (): ChatItem[] => {
 
   chats.push(
     createChat(
-      1,
+      5,
       ["Macy Maher"],
       true,
       SenderType.STUDENTS,

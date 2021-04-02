@@ -1,5 +1,4 @@
 import React, { FC, useLayoutEffect } from "react";
-import { ChatParamsList } from "routes/ChatStack";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { NewConversationScreen } from "ui/screens/chat/new/NewConversationScreen";
@@ -12,9 +11,10 @@ import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { moderateScale } from "config/Dimens";
+import { ChatRootStackParamList } from "routes/ChatRootStack";
 
 type ConversationNavigationProp = StackNavigationProp<
-  ChatParamsList,
+  ChatRootStackParamList,
   "NewConversation"
 >;
 

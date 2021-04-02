@@ -54,7 +54,7 @@ export const WebViewComponent = React.memo<WebViewProps>(
             scrollEnabled={false}
             coverScreen={false}
             renderLoading={loadingIndicatorView}
-            automaticallyAdjustContentInsets={false}
+            automaticallyAdjustContentInsets={true}
             startInLoadingState={true}
             allowsFullscreenVideo
             useWebKit

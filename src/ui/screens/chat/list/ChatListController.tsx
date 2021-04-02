@@ -1,10 +1,4 @@
-import React, {
-  FC,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState
-} from "react";
+import React, { FC, useCallback, useRef, useState } from "react";
 import { ChatListScreen } from "ui/screens/chat/list/ChatListScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
@@ -14,25 +8,20 @@ import ChatApis from "repo/chat/ChatAPis";
 import { AppLog } from "utils/Util";
 import ChatItem from "models/ChatItem";
 import DataGenerator from "utils/DataGenerator";
-import { ChatParamsList } from "routes/ChatStack";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import Strings from "config/Strings";
-import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
+import { ChatRootStackParamList } from "routes/ChatRootStack";
 
-type ChatListNavigationProp = StackNavigationProp<
-  ChatParamsList,
-  "ChatThread"
->;
+type ChatRootNavigationProp = StackNavigationProp<ChatRootStackParamList>;
 
 type Props = {};
 
 const dummyChats = DataGenerator.getChats();
 
 export const ChatListController: FC<Props> = () => {
-  const navigation = useNavigation<ChatListNavigationProp>();
-  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+  const navigation = useNavigation<ChatRootNavigationProp>();
+  const [isAllDataLoaded, setIsAllDataLoaded] = useState(true);
   const pageToReload = useRef<number>(1);
   const isFetchingInProgress = useRef(false);
   const [chats, setChats] = useState<ChatItem[]>(dummyChats);
@@ -40,20 +29,6 @@ export const ChatListController: FC<Props> = () => {
   AppLog.log(
     "ChatListController() => " + pageToReload + isFetchingInProgress
   );
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitleAlign: "center",
-      headerTitle: () => (
-        <HeaderTitle text={Strings.chatListScreen.title} />
-      ),
-      headerStyle: {
-        elevation: 0,
-        shadowOpacity: 0,
-        shadowColor: "#00000000"
-      }
-    });
-  }, [navigation]);
 
   const loadChatsApi = useApi<any, ChatsResponseModel>(ChatApis.getChats);
 
@@ -84,6 +59,8 @@ export const ChatListController: FC<Props> = () => {
     async (onComplete: () => void) => {
       /*pageToReload.current = 1;*/
 
+      return;
+      // eslint-disable-next-line no-unreachable
       AppLog.logForcefully("refresh callback");
       setTimeout(() => {
         setChats(dummyChats);
