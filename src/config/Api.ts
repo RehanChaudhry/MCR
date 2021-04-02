@@ -14,6 +14,7 @@ export default {
   RESET_PASS_URL: "password/set/",
   UPDATE_PROFILE_URL: "profile",
   NOTIFICATION_URL: "notifications",
+  AGREEMENT_DETAILS: "agreement_details",
 
   //Get universities
   UNIS: "unis",

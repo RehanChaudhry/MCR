@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { AgreementDetailsView } from "ui/screens/home/friends/agreement_details/AgreementDetailsView";
 import {
   AgreementDetailsData,
-  AgreementdetailsResponseModel
+  AgreementDetailsResponseModel
 } from "models/api_responses/AgreementDetailsResponseModel";
 import DataGenerator from "utils/DataGenerator";
 import { AppLog } from "utils/Util";
@@ -13,16 +13,20 @@ type Props = {};
 
 const AgreementDetailsController: FC<Props> = () => {
   const agreement = DataGenerator.getAgreementDetails();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [agreementDetails, setAgreementDetails] = useState<
     Array<AgreementDetailsData>
   >(agreement.data);
 
-  const agreementDetailsApi = useApi<any, AgreementdetailsResponseModel>(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const agreementDetailsApi = useApi<any, AgreementDetailsResponseModel>(
     ProfileApis.getAgreementDetails
   );
 
-  const handleGetAgreementDetailsApi = async (onComplete?: () => void) => {
-    const {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleGetAgreementDetailsApi = async (onComplete: () => void) => {
+    onComplete();
+    /*  const {
       hasError,
       dataBody,
       errorBody
@@ -34,10 +38,9 @@ const AgreementDetailsController: FC<Props> = () => {
     } else {
       setAgreementDetails(dataBody.data);
       onComplete?.();
-    }
+    }*/
   };
 
-  AppLog.log(handleGetAgreementDetailsApi());
   AppLog.log(agreementDetails);
 
   return <AgreementDetailsView agreementDetailsData={agreementDetails} />;

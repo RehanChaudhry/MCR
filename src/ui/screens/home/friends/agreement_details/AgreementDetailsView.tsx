@@ -1,6 +1,5 @@
 import React from "react";
 import { FlatList, ScrollView, StyleSheet, View } from "react-native";
-import { AgreementDetailsListItem } from "ui/components/organisms/friends/agreement_details/AgreementDetailsListItem";
 import { AgreementDetailsData } from "models/api_responses/AgreementDetailsResponseModel";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
@@ -16,6 +15,7 @@ import {
   BUTTON_TYPES
 } from "ui/components/molecules/app_button/AppButton";
 import Screen from "ui/components/atoms/Screen";
+import { AgreementDetailsListItem } from "ui/components/molecules/agreement_details_item/AgreementDetailsListItem";
 
 type Props = {
   agreementDetailsData: AgreementDetailsData[];
