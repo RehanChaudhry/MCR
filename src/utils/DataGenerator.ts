@@ -648,9 +648,7 @@ const createChatThread = (): ChatItem[] => {
         false,
         SenderType.STUDENTS,
         i % 2 === 0 ? userOneId : userTwoId,
-        i % 2 === 0
-          ? require("assets/images/d_user_pic.png")
-          : require("assets/images/d_user_pick_1.png"),
+        i % 2 === 0 ? usersImages[0] : usersImages[2],
         messages[messageIndex]
       )
     );

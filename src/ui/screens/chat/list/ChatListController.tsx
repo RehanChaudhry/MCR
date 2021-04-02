@@ -57,8 +57,7 @@ export const ChatListController: FC<Props> = () => {
 
   const loadChatsApi = useApi<any, ChatsResponseModel>(ChatApis.getChats);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleLoadChatsApi = async (onComplete?: () => void) => {
+  const handleLoadChatsApi = async () => {
     const { hasError, dataBody, errorBody } = await loadChatsApi.request(
       []
     );
@@ -68,7 +67,6 @@ export const ChatListController: FC<Props> = () => {
     } else {
       AppLog.log("Find chats" + errorBody);
       setChats(dataBody.data);
-      onComplete?.();
     }
   };
 
@@ -84,15 +82,17 @@ export const ChatListController: FC<Props> = () => {
 
   const refreshCallback = useCallback(
     async (onComplete: () => void) => {
-      /*pageToReload.current = 1;
-        fetchCommunities().then(() => {
-          onComplete();
-        });*/
+      /*pageToReload.current = 1;*/
 
+      AppLog.logForcefully("refresh callback");
       setTimeout(() => {
         setChats(dummyChats);
         setIsAllDataLoaded(true);
-        onComplete();
+        handleLoadChatsApi()
+          .then(() => {
+            onComplete();
+          })
+          .catch();
       }, 2000);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -101,14 +101,11 @@ export const ChatListController: FC<Props> = () => {
     ]
   );
 
-  const onEndReached = useCallback(
-    () => {
-      /* fetchCommunities();*/
-    },
-    [
-      /*fetchCommunities*/
-    ]
-  );
+  const onEndReached = useCallback(() => {
+    AppLog.logForcefully("onEndReached()=> ");
+    //  handleLoadChatsApi().then().catch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [handleLoadChatsApi]);
 
   return (
     <ProgressErrorView
