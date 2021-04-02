@@ -46,11 +46,18 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
           />
 
           <Logo style={styles.logo} />
-          <LoginImage
-            style={styles.loginImage}
-            width={"100%"}
-            height={300}
-          />
+          <View
+            style={{
+              aspectRatio: 1.39,
+              width: "100%"
+            }}>
+            <LoginImage
+              width={"100%"}
+              height={"100%"}
+              fill="red"
+              style={styles.loginImage}
+            />
+          </View>
           <View style={styles.mainContainer}>
             <AppLabel
               text={STRINGS.forgotPasswordFeedBack.check_your_inbox}
@@ -120,7 +127,8 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
 const styles = StyleSheet.create({
   mainContainer: {
     marginLeft: SPACE.lg,
-    marginRight: SPACE.lg
+    marginRight: SPACE.lg,
+    marginTop: SPACE.xl
   },
   leftArrow: {
     backgroundColor: Colors.white,
@@ -136,7 +144,6 @@ const styles = StyleSheet.create({
   },
   signInHeading: {
     fontSize: FONT_SIZE._2xl,
-    marginTop: SPACE.xl,
     marginBottom: SPACE.xl
   },
   email: {
@@ -161,7 +168,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.xsm
   },
   loginImage: {
-    marginTop: SPACE._2xl
+    marginTop: SPACE.lg
   },
   buttonViewStyle: {
     marginTop: SPACE._2xl,
