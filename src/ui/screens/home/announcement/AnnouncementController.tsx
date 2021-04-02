@@ -33,7 +33,7 @@ const AnnouncementController: FC<Props> = () => {
   const isFetchingInProgress = useRef(false);
   const [announcement, setAnnouncements] = useState<
     CommunityAnnouncement[] | undefined
-  >(DataGenerator.getCommunityAnnouncementList(pageToReload.current));
+  >(DataGenerator.getAnnouncementList(pageToReload.current));
   const navigation = useNavigation<AnnouncementNavigationProp>();
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
 
@@ -59,11 +59,11 @@ const AnnouncementController: FC<Props> = () => {
       return;
     }
     setShouldShowProgressBar(true);
-    const announcementsData = DataGenerator.getCommunityAnnouncementList(
+    const announcementsData = DataGenerator.getAnnouncementList(
       pageToReload.current
     );
     setShouldShowProgressBar(false);
-    if (pageToReload.current < 5) {
+    if (pageToReload.current < 3) {
       pageToReload.current = pageToReload.current + 1;
     } else {
       pageToReload.current = 0;

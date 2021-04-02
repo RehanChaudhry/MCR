@@ -58,7 +58,6 @@ export const ChatListScreen = React.memo<ChatListProps>(
     AppLog.log("Rendering chat screen...");
 
     const { themedColors } = usePreferredTheme();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let [items, setItems] = useState<ChatItem[]>(data);
 
     const performSearch = (textToSearch: string) =>
@@ -122,7 +121,6 @@ export const ChatListScreen = React.memo<ChatListProps>(
               renderItem={renderItem}
               keyExtractor={(item) => item.id.toString()}
               showsVerticalScrollIndicator={false}
-              removeClippedSubviews={true}
               style={styles.list}
               pullToRefreshCallback={pullToRefreshCallback}
               onEndReached={onEndReached}

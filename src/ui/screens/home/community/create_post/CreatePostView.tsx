@@ -255,7 +255,7 @@ export const CreatePostView = React.memo<Props>((props) => {
               />
               <View style={{ marginRight: SPACE.md }} />
               <TouchableOpacity
-                onPress={() => SimpleToast.show("clicked on info icon.")}>
+                onPress={() => SimpleToast.show("Clicked on info icon.")}>
                 <InfoCircle
                   width={23}
                   height={23}

@@ -365,8 +365,77 @@ const getActivityLogs: (
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getCommunityAnnouncementList = (pageToLoad: number) => {
-  const communitiesAnnouncements: CommunityAnnouncement[] = [
+const getAnnouncementList = (pageToLoad: number) => {
+  const announcements: CommunityAnnouncement[] = [
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+      name: "Ohio University",
+      time: "2 hours ago",
+      text:
+        "A surprising way that OHIO is monitoring COVID-19 trends is by analyzing campus wastewater 😷\n" +
+        "\n" +
+        "“One of the real advantages of looking for COVID-19 this way is that people shed the virus before they express symptoms and if people are asymptomatic, they will also shed the virus without knowing they’re infected,” said Dr. Guy Riefler, who is leading the project along with Dr. Karen Coschigano. 🎵🎵🎵",
+      likeCount: 32,
+      commentCount: 8,
+      metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+      name: "Ohio University",
+      time: "3 hours ago",
+      text:
+        "Bobcats on the Athens campus… Stay tuned to our social media channels to see how you can get a #ForeverOHIO t-shirt next week 💚 👀",
+      images: ["https://source.unsplash.com/1024x768/?nature"],
+      likeCount: 30,
+      commentCount: 2
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+      name: "Ohio University",
+      time: "2 hours ago",
+      text:
+        "Ohio University takes all allegations of sexual misconduct seriously and investigates these matters thoroughly. The personal safety and welfare of our students and the campus community are our top priorities, and equitable measures are taken to ensure any and all complaints are handled appropriately.🎵🎵🎵",
+      likeCount: 32,
+      commentCount: 8,
+      metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+      name: "Ohio University",
+      time: "3 hours ago",
+      text:
+        "Vaccines are one way to stop COVID-19, but Dr. Jennifer Hines, a professor in the Department of Chemistry and Biochemistry, has discovered another- by disrupting the virus’s RNA and ability to reproduce.",
+      images: ["https://source.unsplash.com/1024x768/?water"],
+      likeCount: 30,
+      commentCount: 2
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+      name: "Ohio University",
+      time: "2 hours ago",
+      text:
+        "Ohio University takes all allegations of sexual misconduct seriously and investigates these matters thoroughly. The personal safety and welfare of our students and the campus community are our top priorities, and equitable measures are taken to ensure any and all complaints are handled appropriately.🎵🎵🎵",
+      likeCount: 32,
+      commentCount: 8,
+      metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
+    }
+  ];
+  return announcements;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getCommunityList = (pageToLoad: number) => {
+  const communities: CommunityAnnouncement[] = [
     {
       id: Math.floor(Math.random() * 100) + 1,
       profileImageUrl:
@@ -381,52 +450,51 @@ const getCommunityAnnouncementList = (pageToLoad: number) => {
     {
       id: Math.floor(Math.random() * 100) + 1,
       profileImageUrl:
-        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      name: "Zane Mayes",
+        "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
+      name: "Jasmine Lambert",
       time: "3 hours ago",
       text:
-        "First day at college, Ohio university. Thank you so much for watching",
-      link: "https://www.youtube.com/watch?v=cqyziA30whE",
-      likeCount: 20,
-      commentCount: 5
+        "OHIO’s beloved Rufus has undergone many makeovers since 1804, and did you know that he used to be accompanied by the Bobkitten?! Check out this iconic transformation from 1977 to now 😸 ",
+      images: ["https://source.unsplash.com/1024x768/?nature"],
+      likeCount: 32,
+      commentCount: 8
     },
     {
       id: Math.floor(Math.random() * 100) + 1,
       profileImageUrl:
-        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      name: "Sarah Steiner",
-      time: "3 hours ago",
+        "https://publichealth.uga.edu/wp-content/uploads/2020/01/Thomas-Cameron_Student_Profile.jpg",
+      name: "Alden Chaney",
+      time: "5 hours ago",
       text:
-        "OHIO’s beloved Rufus has undergone many makeovers since 1804, and did you know that he used to be accompanied by the Bobkitten?! Check out this iconic transformation from 1977 to now 😸 ",
+        "Welcome back, Bobcats! 😺 We’re sending our best wishes to everyone on the first day of spring semester 💚",
       images: [
         "https://source.unsplash.com/1024x768/?nature",
         "https://source.unsplash.com/1024x768/?water",
         "https://source.unsplash.com/1024x768/?nature",
         "https://source.unsplash.com/1024x768/?tree"
       ],
+      likeCount: 22,
+      commentCount: 8
+    },
+    {
+      id: Math.floor(Math.random() * 100) + 1,
+      profileImageUrl:
+        "https://oregonctso.org/Websites/oregoncte/images/BlogFeaturedImages/decaheadshot.jpg",
+      name: "Sarah Steiner",
+      time: "8 hours ago",
+      text:
+        "First day at college, Ohio university. Thank you so much for watching",
+      link: "https://youtu.be/EeCKk94lmHQ",
       likeCount: 20,
       commentCount: 5
     },
     {
       id: Math.floor(Math.random() * 100) + 1,
       profileImageUrl:
-        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      name: "Jasmine Lambert",
-      time: "3 hours ago",
-      text:
-        "OHIO’s beloved Rufus has undergone many makeovers since 1804, and did you know that he used to be accompanied by the Bobkitten?! Check out this iconic transformation from 1977 to now 😸 ",
-      images: ["https://source.unsplash.com/1024x768/?nature"],
-      likeCount: 20,
-      commentCount: 5
-    },
-    {
-      id: Math.floor(Math.random() * 100) + 1,
-      profileImageUrl:
-        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      name: "Alden Chaney",
-      time: "3 hours ago",
-      text:
-        "OHIO’s beloved Rufus has undergone many makeovers since 1804, and did you know that he used to be accompanied by the Bobkitten?! Check out this iconic transformation from 1977 to now 😸 ",
+        "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
+      name: "Case Wolf",
+      time: "8 hours ago",
+      text: "Lofi 4 studying.. 🎵🎵🎵",
       likeCount: 20,
       commentCount: 5,
       metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
@@ -440,12 +508,12 @@ const getCommunityAnnouncementList = (pageToLoad: number) => {
       text:
         "First day at college, Ohio university. Thank you so much for watching",
       embeddedUrl:
-        '<iframe width="100%" height="350" src="https://www.youtube.com/embed/cqyziA30whE?feature=oembed" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+        '<iframe width="100%" height="350" src="https://www.youtube.com/embed/EeCKk94lmHQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
       likeCount: 20,
       commentCount: 5
     }
   ];
-  return communitiesAnnouncements;
+  return communities;
 };
 
 const getChats = (): ChatItem[] => {
@@ -580,9 +648,7 @@ const createChatThread = (): ChatItem[] => {
         false,
         SenderType.STUDENTS,
         i % 2 === 0 ? userOneId : userTwoId,
-        i % 2 === 0
-          ? require("assets/images/d_user_pic.png")
-          : require("assets/images/d_user_pick_1.png"),
+        i % 2 === 0 ? usersImages[0] : usersImages[2],
         messages[messageIndex]
       )
     );
@@ -666,18 +732,93 @@ const createComments = (): ChatItem[] => {
   const comments: ChatItem[] = [];
 
   const userOneId = 1;
-  for (let i = 1; i < 15; i++) {
-    comments.push(
-      createChat(
-        i,
-        i % 2 === 0 ? ["Nikki Engelin"] : ["Phoenix Walker"],
-        false,
-        SenderType.STUDENTS,
-        userOneId,
-        require("assets/images/d_user_pic.png")
-      )
-    );
-  }
+  comments.push(
+    createChat(
+      1,
+      ["Nikki Engelin"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[0]
+    )
+  );
+  comments.push(
+    createChat(
+      2,
+      ["Phoenix Walker"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[2],
+      "how are you?"
+    )
+  );
+  comments.push(
+    createChat(
+      3,
+      ["Jasmine Lambert"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[1],
+      "I haven’t received any respond on the last few messages.."
+    )
+  );
+  comments.push(
+    createChat(
+      4,
+      ["Alden Chaney"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[3],
+      "Thank you for accepting my invitation."
+    )
+  );
+  comments.push(
+    createChat(
+      5,
+      ["Sarah Steiner"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[1],
+      "I heard about you and thought it would be worth reaching.. "
+    )
+  );
+  comments.push(
+    createChat(
+      6,
+      ["Case Wolf"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[5],
+      "how are you?"
+    )
+  );
+  comments.push(
+    createChat(
+      7,
+      ["Jasmine Lambert"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[5],
+      "I haven’t received any respond on the last few messages.."
+    )
+  );
+  comments.push(
+    createChat(
+      8,
+      ["Zane Mayes"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[7],
+      "Life gets busy. Just wanted to make sure you got my last.."
+    )
+  );
   return comments;
 };
 
@@ -698,7 +839,7 @@ export default {
   getQuestion,
   getChats,
   getNotifications,
-  getCommunityAnnouncementList,
+  getCommunityList,
   createChatThread,
   createChat,
   getProfileMatch,
@@ -711,5 +852,6 @@ export default {
   getFriendRequests,
   getRoommateRequests,
   createComments,
+  getAnnouncementList,
   getActivityLogs
 };
