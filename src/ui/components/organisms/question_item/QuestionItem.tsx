@@ -99,6 +99,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
         <AppLabel
           style={[styles.label, styles.questionLabel]}
           text={question.title}
+          numberOfLines={0}
         />
 
         <RangeSliderWithLabel
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
   },
   questionLabel: {
     fontWeight: "700",
-    marginBottom: SPACE.xsm
+    marginBottom: SPACE.md
   },
   labelRight: {
     alignSelf: "flex-end"
@@ -179,13 +180,13 @@ const styles = StyleSheet.create({
   preferenceWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: SPACE.lg,
+    marginVertical: SPACE.md,
     alignItems: "center"
   },
   switchWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignContent: "center"
   },
   labelXsm: {
     fontSize: FONT_SIZE._3xm

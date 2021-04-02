@@ -31,6 +31,11 @@ const MyFriendsController: FC<Props> = () => {
     setShowNotEligibleAlert
   ] = useState<boolean>(false);
 
+  const [
+    showRemoveFriendAlert,
+    setShowRemoveFriendAlert
+  ] = useState<boolean>(false);
+
   const theme = usePreferredTheme();
 
   const navigation = useNavigation<FriendsNavigationProp>();
@@ -126,6 +131,40 @@ const MyFriendsController: FC<Props> = () => {
     );
   };
 
+  const removeFriendAlert = () => {
+    return (
+      <AppPopUp
+        isVisible={showRemoveFriendAlert}
+        title={"Remove Friend"}
+        message={
+          "Are you sure you want to remove Aris Johnson from your friends list?"
+        }
+        actions={[
+          {
+            title: "Yes, remove",
+            onPress: () => {
+              setShowRemoveFriendAlert(false);
+            },
+            style: {
+              weight: "bold",
+              style: {
+                color: theme.themedColors.danger,
+                textAlign: "center",
+                fontSize: FONT_SIZE.lg
+              }
+            }
+          },
+          {
+            title: "Cancel",
+            onPress: () => {
+              setShowRemoveFriendAlert(false);
+            }
+          }
+        ]}
+      />
+    );
+  };
+
   return (
     <>
       <MyFriendsView
@@ -143,10 +182,12 @@ const MyFriendsController: FC<Props> = () => {
           AppLog.log("onPressChat: ", item);
         }}
         onPressCross={(item: MyFriend) => {
+          setShowRemoveFriendAlert(true);
           AppLog.log("onPressCross: ", item);
         }}
         onPressReceivedFriendRequests={onPressReceivedFriendRequests}
       />
+      {removeFriendAlert()}
       {roomateRequestAlert()}
       {notEligibleAlert()}
     </>
