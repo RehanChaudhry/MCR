@@ -84,7 +84,10 @@ export const NotificationView = React.memo<Props>(
           {getSortedItems(getHours(notifications[index].date))}
           <CircleImageWithText
             key={index}
-            username={"Fox Mccloud "}
+            type={item.type}
+            boldText={item.boldText}
+            imageUrl={item.profileUrl}
+            username={item.name + " "}
             message={item.message}
             onPress={() => AppLog.log("Button pressed")}
             userNameOnPress={(value, userNameIndex) => {
