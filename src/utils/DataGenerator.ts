@@ -734,18 +734,93 @@ const createComments = (): ChatItem[] => {
   const comments: ChatItem[] = [];
 
   const userOneId = 1;
-  for (let i = 1; i < 15; i++) {
-    comments.push(
-      createChat(
-        i,
-        i % 2 === 0 ? ["Nikki Engelin"] : ["Phoenix Walker"],
-        false,
-        SenderType.STUDENTS,
-        userOneId,
-        require("assets/images/d_user_pic.png")
-      )
-    );
-  }
+  comments.push(
+    createChat(
+      1,
+      ["Nikki Engelin"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[0]
+    )
+  );
+  comments.push(
+    createChat(
+      2,
+      ["Phoenix Walker"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[2],
+      "how are you?"
+    )
+  );
+  comments.push(
+    createChat(
+      3,
+      ["Jasmine Lambert"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[1],
+      "I haven’t received any respond on the last few messages.."
+    )
+  );
+  comments.push(
+    createChat(
+      4,
+      ["Alden Chaney"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[3],
+      "Thank you for accepting my invitation."
+    )
+  );
+  comments.push(
+    createChat(
+      5,
+      ["Sarah Steiner"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[1],
+      "I heard about you and thought it would be worth reaching.. "
+    )
+  );
+  comments.push(
+    createChat(
+      6,
+      ["Case Wolf"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[5],
+      "how are you?"
+    )
+  );
+  comments.push(
+    createChat(
+      7,
+      ["Jasmine Lambert"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[5],
+      "I haven’t received any respond on the last few messages.."
+    )
+  );
+  comments.push(
+    createChat(
+      8,
+      ["Zane Mayes"],
+      false,
+      SenderType.STUDENTS,
+      userOneId,
+      usersImages[7],
+      "Life gets busy. Just wanted to make sure you got my last.."
+    )
+  );
   return comments;
 };
 
