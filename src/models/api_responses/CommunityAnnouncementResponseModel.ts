@@ -4,7 +4,7 @@ export type CommunityAnnouncementResponseModel = {
 };
 
 export type CommunityAnnouncement = {
-  id: number;
+  id: string;
   profileImageUrl: string;
   name: string;
   time: string;

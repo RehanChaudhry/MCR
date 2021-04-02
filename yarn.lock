@@ -2317,6 +2317,11 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.0.tgz#7036640b4e21cc2f259ae826ce843d277dad8cff"
   integrity sha512-RJJrrySY7A8havqpGObOB4W92QXKJo63/jFLLgpvOtsGUqbQZ9Sbgl35KMm1DjC6j7AvmmU2bIno+3IyEaemaw==
 
+"@types/uuid@^8.3.0":
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.0.tgz#215c231dff736d5ba92410e6d602050cce7e273f"
+  integrity sha512-eQ9qFW/fhfGJF8WKHGEHZEyVWfZxrT+6CLIJGBcZPfxUh/+BnEj+UCGYMlr9qZuX/2AltsvwrGqp0LhEW8D0zQ==
+
 "@types/yargs-parser@*":
   version "20.2.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-20.2.0.tgz#dd3e6699ba3237f0348cd085e4698780204842f9"
@@ -8314,6 +8319,11 @@ react-native-url-preview@^1.1.9:
   integrity sha512-ep18hsxuuVSF5sszjDgXfIBlWmP7NLl6XUFl3yZlIA21FIfbYPn4k4wXu5tpO//hgTlxwfeO9X6KRhOy5O+OuA==
   dependencies:
     link-preview-js "2.0.4"
+
+react-native-uuid@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.0.tgz#997cdebdbd015a176bd4e172f8a04764a8ccc95f"
+  integrity sha512-y6urDRY494TnO6ZS0JrWQvR/QPc2fbllls+ic1Ejc7NfDGU9wv5sRKAIhiOfrCFisyWQzaNoFG7KfIMPjOTv8g==
 
 react-native-v8@0.63.4-patch.1:
   version "0.63.4-patch.1"

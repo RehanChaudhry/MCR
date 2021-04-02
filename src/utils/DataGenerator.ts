@@ -26,26 +26,47 @@ import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiReques
 import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
 import ActivityType from "models/enums/ActivityType";
 import ActivityLog from "models/ActivityLog";
+import uuid from "uuid";
 
 const getQuestionSections = () => {
-  const sections: SectionResponse[] = [];
-  for (let i = 0; i < 5; i++) {
-    const section: SectionResponse = {
+  const sections: SectionResponse[] = [
+    {
       section: {
-        id: `${i}`,
-        title: `Lifestyle Preference ${i}`,
+        id: "1",
+        title: "Lifestyle Preference",
         description:
-          "Your answers to these questions will guide us to recommending the best roommate match for you. " +
-          i
+          "Your answers to these questions will guide us to recommending the best roommate match for you."
       },
-      questions: []
-    };
-
-    for (let j = 0; j < 5; j++) {
-      section.questions.push(getQuestion(j, i));
+      questions: getQuestions(1)
+    },
+    {
+      section: {
+        id: "2",
+        title: "Social Preference",
+        description:
+          "Your answers to these questions will guide us to recommending the best roommate match for you."
+      },
+      questions: getQuestions(2)
+    },
+    {
+      section: {
+        id: "3",
+        title: "Room Preference",
+        description:
+          "Your answers to these questions will guide us to recommending the best roommate match for you."
+      },
+      questions: getQuestions(3)
+    },
+    {
+      section: {
+        id: "4",
+        title: "Personality Preference",
+        description:
+          "Your answers to these questions will guide us to recommending the best roommate match for you."
+      },
+      questions: getQuestions(4)
     }
-    sections.push(section);
-  }
+  ];
 
   return sections;
 };
@@ -347,26 +368,97 @@ const getFriendRequests = () => {
   return response;
 };
 
-const getQuestion = (
-  questionId: number,
-  sectionId: number
-): BaseQuestion => {
-  return {
-    id: questionId,
-    sectionId: sectionId,
-    title: `When do you normally go to bed? ${questionId}`,
-    minOption: "Lights out at 10!",
-    maxOption: "Usually late, after 1 AM",
-    createdAt: "2021-03-15T07:18:24.000Z",
-    updatedAt: "2021-03-15T07:18:24.000Z"
-  };
+const getQuestions = (sectionId: number): BaseQuestion[] => {
+  return [
+    {
+      id: 1,
+      sectionId: sectionId,
+      title: `When do you normally go to bed?`,
+      minOption: "Lights out at 10!",
+      maxOption: "Usually late, after 1 AM",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 2,
+      sectionId: sectionId,
+      title: `Where do you plan on studying?`,
+      minOption: "Only in my room",
+      maxOption: "I can study anywhere - library, outside, etc.",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 3,
+      sectionId: sectionId,
+      title: `Do you smoke?`,
+      minOption: "Never",
+      maxOption: "A pack a day or more",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 4,
+      sectionId: sectionId,
+      title: `How often do you bathe or shower?`,
+      minOption: "Does wearing deodorant count as a shower?",
+      maxOption: "Minimum daily, sometimes more often!",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 5,
+      sectionId: sectionId,
+      title: `How often do you use technology (social media, electronics)?`,
+      minOption: "Occasionally",
+      maxOption: "Every waking moment",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 6,
+      sectionId: sectionId,
+      title: `What is your expected Study/Party balance?`,
+      minOption: "Occasionally",
+      maxOption: "Every waking moment",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 7,
+      sectionId: sectionId,
+      title: `Describe your expected alcohol consumption.`,
+      minOption: "I never drink alcohol",
+      maxOption: "What time is the party?",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 8,
+      sectionId: sectionId,
+      title: `What is your view on Marijuana?`,
+      minOption: "Should be off-limits",
+      maxOption: "Legalize it please",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 9,
+      sectionId: sectionId,
+      title: `How do you approach life?`,
+      minOption: "Seriously",
+      maxOption: "All seriousness aside",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    }
+  ];
 };
 
-const getProfileMatch = (id: number) => {
+const getProfileMatch = (tens: number) => {
   const profileMatches: ProfileMatch[] = [];
   profileMatches.push(
     new ProfileMatch(
-      id,
+      tens + 1,
       "Phoenix Walker",
       "https://publichealth.uga.edu/wp-content/uploads/2020/01/Thomas-Cameron_Student_Profile.jpg",
       "Freshman",
@@ -381,7 +473,7 @@ const getProfileMatch = (id: number) => {
   );
   profileMatches.push(
     new ProfileMatch(
-      id,
+      tens + 2,
       "Jasmine Lambert",
       "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
       "Freshman",
@@ -396,7 +488,7 @@ const getProfileMatch = (id: number) => {
   );
   profileMatches.push(
     new ProfileMatch(
-      id,
+      tens + 3,
       "Sarah Steiner",
       "https://oregonctso.org/Websites/oregoncte/images/BlogFeaturedImages/decaheadshot.jpg",
       "Freshman",
@@ -411,7 +503,7 @@ const getProfileMatch = (id: number) => {
   );
   profileMatches.push(
     new ProfileMatch(
-      id,
+      tens + 4,
       "Case Wolf",
       "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
       "Freshman",
@@ -426,7 +518,7 @@ const getProfileMatch = (id: number) => {
   );
   profileMatches.push(
     new ProfileMatch(
-      id,
+      tens + 5,
       "Alden Chaney",
       "https://news.umanitoba.ca/wp-content/uploads/2019/03/IMG_9991-1200x800.jpg",
       "Freshman",
@@ -451,7 +543,7 @@ const getProfileMatches: (
 }> = async (request: MatchesApiRequestModel) => {
   AppLog.log("getProfileMatches(), request: " + JSON.stringify(request));
   const profileMatches: ProfileMatch[] = getProfileMatch(
-    Math.floor(Math.random() * 100) + 1
+    request.pageNo * 10
   );
   const response = {
     hasError: false,
@@ -520,9 +612,9 @@ const getActivityLogs: (
 const getAnnouncementList = (pageToLoad: number) => {
   const announcements: CommunityAnnouncement[] = [
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "2 hours ago",
       text:
@@ -534,9 +626,9 @@ const getAnnouncementList = (pageToLoad: number) => {
       metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "3 hours ago",
       text:
@@ -546,9 +638,9 @@ const getAnnouncementList = (pageToLoad: number) => {
       commentCount: 2
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "2 hours ago",
       text:
@@ -558,9 +650,9 @@ const getAnnouncementList = (pageToLoad: number) => {
       metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "3 hours ago",
       text:
@@ -570,9 +662,9 @@ const getAnnouncementList = (pageToLoad: number) => {
       commentCount: 2
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "2 hours ago",
       text:
@@ -589,7 +681,7 @@ const getAnnouncementList = (pageToLoad: number) => {
 const getCommunityList = (pageToLoad: number) => {
   const communities: CommunityAnnouncement[] = [
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       name: "Phoenix Walker",
@@ -600,7 +692,7 @@ const getCommunityList = (pageToLoad: number) => {
       commentCount: 5
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
       name: "Jasmine Lambert",
@@ -612,7 +704,7 @@ const getCommunityList = (pageToLoad: number) => {
       commentCount: 8
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://publichealth.uga.edu/wp-content/uploads/2020/01/Thomas-Cameron_Student_Profile.jpg",
       name: "Alden Chaney",
@@ -629,7 +721,7 @@ const getCommunityList = (pageToLoad: number) => {
       commentCount: 8
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://oregonctso.org/Websites/oregoncte/images/BlogFeaturedImages/decaheadshot.jpg",
       name: "Sarah Steiner",
@@ -641,7 +733,7 @@ const getCommunityList = (pageToLoad: number) => {
       commentCount: 5
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
       name: "Case Wolf",
@@ -652,7 +744,7 @@ const getCommunityList = (pageToLoad: number) => {
       metaDataUrl: "https://www.youtube.com/watch?v=Kmiw4FYTg2U"
     },
     {
-      id: Math.floor(Math.random() * 100) + 1,
+      id: uuid.v4(),
       profileImageUrl:
         "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       name: "Zane Mayes",
@@ -988,7 +1080,6 @@ const usersImages = [
 
 export default {
   getQuestionSections,
-  getQuestion,
   getChats,
   getNotifications,
   getCommunityList,

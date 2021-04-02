@@ -1,7 +1,7 @@
 import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React, { FC, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
@@ -10,11 +10,6 @@ import Search from "assets/images/search_icon.svg";
 import { Uni } from "models/api_responses/UniSelectionResponseModel";
 import Screen from "ui/components/atoms/Screen";
 import { CardView } from "ui/components/atoms/CardView";
-import {
-  AppImageBackground,
-  CONTAINER_TYPES
-} from "ui/components/atoms/image_background/AppImageBackground";
-import MRCLogo from "assets/images/mcr_logo.svg";
 
 type Props = {
   unis: Uni[];
@@ -63,9 +58,9 @@ const UniSelectionView: FC<Props> = ({
       ]}
       topSafeAreaBackgroundColor={theme.themedColors.backgroundSecondary}>
       <View style={[styles.logoContainer]}>
-        <AppImageBackground
-          containerShape={CONTAINER_TYPES.SQUARE}
-          icon={() => <MRCLogo width={264} height={82} />}
+        <Image
+          style={styles.image}
+          source={require("assets/images/splash.gif")}
         />
       </View>
       <CardView
@@ -128,6 +123,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 32,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0
+  },
+  image: {
+    width: 260,
+    height: 87
   },
   logoContainer: {
     width: "100%",
