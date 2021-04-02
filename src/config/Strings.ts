@@ -318,5 +318,9 @@ export default {
     label_recent: "Recent Activities",
     label_yesterday: "Yesterday",
     label_older: "Older Activities"
+  },
+
+  roommateAgreementdetails: {
+    export_agreement: "Export Roommate Agreement"
   }
 };

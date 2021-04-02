@@ -27,6 +27,8 @@ import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponse
 import ActivityType from "models/enums/ActivityType";
 import ActivityLog from "models/ActivityLog";
 import uuid from "uuid";
+import AgreementStatus from "models/enums/AgreementStatusType";
+import { AgreementDetailsResponseModel } from "models/api_responses/AgreementDetailsResponseModel";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [];
@@ -250,6 +252,33 @@ const getMyFriends = () => {
         profileImage:
           "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
         requestState: ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE
+      }
+    ]
+  };
+  return response;
+};
+
+const getAgreementDetails = () => {
+  const response: AgreementDetailsResponseModel = {
+    message: "",
+    data: [
+      {
+        id: 1,
+        username: "kin lee",
+        updated_At: "",
+        status: AgreementStatus.AGREED
+      },
+      {
+        id: 2,
+        username: "John Doe",
+        updated_At: "",
+        status: AgreementStatus.DISAGREED
+      },
+      {
+        id: 2,
+        username: "John Doe",
+        updated_At: "",
+        status: AgreementStatus.PENDING
       }
     ]
   };
@@ -1006,5 +1035,6 @@ export default {
   getRoommateRequests,
   createComments,
   getAnnouncementList,
-  getActivityLogs
+  getActivityLogs,
+  getAgreementDetails
 };
