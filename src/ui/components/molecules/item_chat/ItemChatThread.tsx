@@ -27,7 +27,12 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
 
     return (
       <View style={[styles.container, style]}>
-        <Image style={styles.imgStyle} source={item.image} />
+        <Image
+          style={styles.imgStyle}
+          source={{
+            uri: item.image
+          }}
+        />
 
         <View style={styles.textWrapper(themedColors, item.userId === 1)}>
           <View style={styles.nameContainer}>
@@ -69,7 +74,8 @@ const styles = StyleSheet.create({
   imgStyle: {
     width: moderateScale(45),
     height: moderateScale(45),
-    resizeMode: "cover"
+    resizeMode: "cover",
+    borderRadius: 45 / 2
   },
   textWrapper: (theme: ColorPalette, isCurrentUser: boolean) => {
     return {
