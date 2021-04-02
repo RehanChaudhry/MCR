@@ -10,4 +10,5 @@ export type NotificationData = {
   type: string;
   message: string;
   date: string;
+  boldText: string;
 };

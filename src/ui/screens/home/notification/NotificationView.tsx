@@ -84,6 +84,8 @@ export const NotificationView = React.memo<Props>(
           {getSortedItems(getHours(notifications[index].date))}
           <CircleImageWithText
             key={index}
+            type={item.type}
+            boldText={item.boldText}
             imageUrl={item.profileUrl}
             username={item.name + " "}
             message={item.message}
