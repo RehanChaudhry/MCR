@@ -1,7 +1,7 @@
 import { COLORS, FONTS, FONT_SIZE, SPACE } from "config";
 import { moderateScale } from "config/Dimens";
 import useEffectWithSkipFirstTime from "hooks/useEffectWithSkipFirstTime";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { usePreferredTheme } from "hooks";
 import Search from "assets/images/search_icon.svg";
 import Cross from "assets/images/cross.svg";
@@ -22,10 +22,11 @@ interface OwnProps {
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   placeholder: string;
-  onChangeText: (textToSearch?: string) => void;
-  searchIcon: boolean;
+  onChangeText: (textToSearch: string) => void;
+  searchIcon?: React.ReactElement;
   iconColor?: Color;
   clearIcon: boolean;
+  delayBeforeCallingOnChangeText?: number;
   shouldNotOptimize?: boolean;
 }
 
@@ -39,15 +40,28 @@ const SearchField = optimizedMemoWithStyleProp<Props>(
     onChangeText,
     searchIcon,
     iconColor,
-    clearIcon
+    clearIcon,
+    delayBeforeCallingOnChangeText = 1000
   }) => {
     const [currentSearchText, setCurrentSearchText] = useState("");
     const theme = usePreferredTheme();
 
+    let _searchIcon = useRef(
+      searchIcon ?? (
+        <Search
+          width={14}
+          height={14}
+          style={styles.leftIcon}
+          testID={"left-icon"}
+          fill={iconColor ?? theme.themedColors.interface[600]}
+        />
+      )
+    );
+
     useEffectWithSkipFirstTime(() => {
       const timeoutRef = setTimeout(() => {
         onChangeText(currentSearchText);
-      }, 1000);
+      }, delayBeforeCallingOnChangeText);
 
       return () => {
         clearTimeout(timeoutRef);
@@ -63,15 +77,7 @@ const SearchField = optimizedMemoWithStyleProp<Props>(
           },
           style
         ]}>
-        {searchIcon && (
-          <Search
-            width={14}
-            height={14}
-            style={styles.leftIcon}
-            testID={"left-icon"}
-            fill={iconColor ?? theme.themedColors.interface[600]}
-          />
-        )}
+        {_searchIcon.current}
         <TextInput
           value={currentSearchText}
           placeholderTextColor={theme.themedColors.interface[600]}

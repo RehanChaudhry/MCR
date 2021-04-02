@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import AnnouncementRoutes from "routes/AnnouncementRoutes";
-import { ChatRoutes } from "routes/ChatRoutes";
 import CommunityRoutes from "routes/CommunityRoutes";
 import { HomeDrawer } from "routes/HomeDrawer";
 import MatchesRoutes from "routes/MatchesRoutes";
@@ -10,6 +9,7 @@ import ProfileController from "../ui/screens/home/profile/ProfileController";
 import FriendsRootRoutes from "./FriendsRootRoutes";
 import SettingsRoutes from "./SettingsRoutes";
 import ActivityLogRoutes from "routes/ActivityLogRoutes";
+import ChatRootRoutes from "routes/ChatRootRoutes";
 
 export const HomeRoutes = () => {
   let [currentItem, setCurrentItem] = useState<string>("Matches");
@@ -44,7 +44,7 @@ export const HomeRoutes = () => {
       />
       <HomeDrawer.Screen name="Profile" component={ProfileController} />
       <HomeDrawer.Screen name="Friends" component={FriendsRootRoutes} />
-      <HomeDrawer.Screen name="ChatList" component={ChatRoutes} />
+      <HomeDrawer.Screen name="ChatList" component={ChatRootRoutes} />
       <HomeDrawer.Screen
         name="Notification"
         component={NotificationRoutes}

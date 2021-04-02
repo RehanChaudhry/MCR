@@ -1,6 +1,5 @@
 import React, { FC, useLayoutEffect, useState } from "react";
 import { ChatThreadScreen } from "ui/screens/chat/thread/ChatThreadScreen";
-import { ChatParamsList } from "routes/ChatStack";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
   RouteProp,
@@ -15,7 +14,6 @@ import ChatApis from "repo/chat/ChatAPis";
 import { AppLog } from "utils/Util";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { HomeDrawerParamList } from "routes";
 import { COLORS, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import Archive from "assets/images/archive.svg";
@@ -26,13 +24,17 @@ import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_w
 import Strings from "config/Strings";
 import { View } from "react-native";
 import { moderateScale } from "config/Dimens";
+import { ChatRootStackParamList } from "routes/ChatRootStack";
 
 type ChatListNavigationProp = StackNavigationProp<
-  ChatParamsList,
+  ChatRootStackParamList,
   "ChatThread"
 >;
 
-type HomeDrawerNavigationProp = RouteProp<HomeDrawerParamList, "ChatList">;
+type HomeDrawerNavigationProp = RouteProp<
+  ChatRootStackParamList,
+  "ChatThread"
+>;
 
 type Props = {
   route: HomeDrawerNavigationProp;
