@@ -125,6 +125,10 @@ const CommunityController: FC<Props> = () => {
     navigation.navigate("Comments");
   };
 
+  const openReportContentScreen = () => {
+    navigation.navigate("ReportContent");
+  };
+
   useEffect(() => {
     fetchCommunities();
   }, [fetchCommunities]);
@@ -157,6 +161,7 @@ const CommunityController: FC<Props> = () => {
       feedsFilterData={getFeedsFilterList()}
       openCommentsScreen={openCommentsScreen}
       shouldPlayVideo={shouldPlayVideo}
+      openReportContentScreen={openReportContentScreen}
     />
   );
 };

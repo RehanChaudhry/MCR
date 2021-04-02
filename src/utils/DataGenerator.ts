@@ -29,24 +29,44 @@ import ActivityLog from "models/ActivityLog";
 import uuid from "uuid";
 
 const getQuestionSections = () => {
-  const sections: SectionResponse[] = [];
-  for (let i = 0; i < 5; i++) {
-    const section: SectionResponse = {
+  const sections: SectionResponse[] = [
+    {
       section: {
-        id: `${i}`,
-        title: `Lifestyle Preference ${i}`,
+        id: "1",
+        title: "Lifestyle Preference",
         description:
-          "Your answers to these questions will guide us to recommending the best roommate match for you. " +
-          i
+          "Your answers to these questions will guide us to recommending the best roommate match for you."
       },
-      questions: []
-    };
-
-    for (let j = 0; j < 5; j++) {
-      section.questions.push(getQuestion(j, i));
+      questions: getQuestions(1)
+    },
+    {
+      section: {
+        id: "2",
+        title: "Social Preference",
+        description:
+          "Your answers to these questions will guide us to recommending the best roommate match for you."
+      },
+      questions: getQuestions(2)
+    },
+    {
+      section: {
+        id: "3",
+        title: "Room Preference",
+        description:
+          "Your answers to these questions will guide us to recommending the best roommate match for you."
+      },
+      questions: getQuestions(3)
+    },
+    {
+      section: {
+        id: "4",
+        title: "Personality Preference",
+        description:
+          "Your answers to these questions will guide us to recommending the best roommate match for you."
+      },
+      questions: getQuestions(4)
     }
-    sections.push(section);
-  }
+  ];
 
   return sections;
 };
@@ -348,26 +368,97 @@ const getFriendRequests = () => {
   return response;
 };
 
-const getQuestion = (
-  questionId: number,
-  sectionId: number
-): BaseQuestion => {
-  return {
-    id: questionId,
-    sectionId: sectionId,
-    title: `When do you normally go to bed? ${questionId}`,
-    minOption: "Lights out at 10!",
-    maxOption: "Usually late, after 1 AM",
-    createdAt: "2021-03-15T07:18:24.000Z",
-    updatedAt: "2021-03-15T07:18:24.000Z"
-  };
+const getQuestions = (sectionId: number): BaseQuestion[] => {
+  return [
+    {
+      id: 1,
+      sectionId: sectionId,
+      title: `When do you normally go to bed?`,
+      minOption: "Lights out at 10!",
+      maxOption: "Usually late, after 1 AM",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 2,
+      sectionId: sectionId,
+      title: `Where do you plan on studying?`,
+      minOption: "Only in my room",
+      maxOption: "I can study anywhere - library, outside, etc.",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 3,
+      sectionId: sectionId,
+      title: `Do you smoke?`,
+      minOption: "Never",
+      maxOption: "A pack a day or more",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 4,
+      sectionId: sectionId,
+      title: `How often do you bathe or shower?`,
+      minOption: "Does wearing deodorant count as a shower?",
+      maxOption: "Minimum daily, sometimes more often!",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 5,
+      sectionId: sectionId,
+      title: `How often do you use technology (social media, electronics)?`,
+      minOption: "Occasionally",
+      maxOption: "Every waking moment",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 6,
+      sectionId: sectionId,
+      title: `What is your expected Study/Party balance?`,
+      minOption: "Occasionally",
+      maxOption: "Every waking moment",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 7,
+      sectionId: sectionId,
+      title: `Describe your expected alcohol consumption.`,
+      minOption: "I never drink alcohol",
+      maxOption: "What time is the party?",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 8,
+      sectionId: sectionId,
+      title: `What is your view on Marijuana?`,
+      minOption: "Should be off-limits",
+      maxOption: "Legalize it please",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    },
+    {
+      id: 9,
+      sectionId: sectionId,
+      title: `How do you approach life?`,
+      minOption: "Seriously",
+      maxOption: "All seriousness aside",
+      createdAt: "2021-03-15T07:18:24.000Z",
+      updatedAt: "2021-03-15T07:18:24.000Z"
+    }
+  ];
 };
 
-const getProfileMatch = (id: number) => {
+const getProfileMatch = (tens: number) => {
   const profileMatches: ProfileMatch[] = [];
   profileMatches.push(
     new ProfileMatch(
-      id,
+      tens + 1,
       "Phoenix Walker",
       "https://publichealth.uga.edu/wp-content/uploads/2020/01/Thomas-Cameron_Student_Profile.jpg",
       "Freshman",
@@ -382,7 +473,7 @@ const getProfileMatch = (id: number) => {
   );
   profileMatches.push(
     new ProfileMatch(
-      id,
+      tens + 2,
       "Jasmine Lambert",
       "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
       "Freshman",
@@ -397,7 +488,7 @@ const getProfileMatch = (id: number) => {
   );
   profileMatches.push(
     new ProfileMatch(
-      id,
+      tens + 3,
       "Sarah Steiner",
       "https://oregonctso.org/Websites/oregoncte/images/BlogFeaturedImages/decaheadshot.jpg",
       "Freshman",
@@ -412,7 +503,7 @@ const getProfileMatch = (id: number) => {
   );
   profileMatches.push(
     new ProfileMatch(
-      id,
+      tens + 4,
       "Case Wolf",
       "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
       "Freshman",
@@ -427,7 +518,7 @@ const getProfileMatch = (id: number) => {
   );
   profileMatches.push(
     new ProfileMatch(
-      id,
+      tens + 5,
       "Alden Chaney",
       "https://news.umanitoba.ca/wp-content/uploads/2019/03/IMG_9991-1200x800.jpg",
       "Freshman",
@@ -452,7 +543,7 @@ const getProfileMatches: (
 }> = async (request: MatchesApiRequestModel) => {
   AppLog.log("getProfileMatches(), request: " + JSON.stringify(request));
   const profileMatches: ProfileMatch[] = getProfileMatch(
-    Math.floor(Math.random() * 100) + 1
+    request.pageNo * 10
   );
   const response = {
     hasError: false,
@@ -475,13 +566,98 @@ const getProfileMatches: (
   return response;
 };
 
-const getActivityLog = (id: number) => {
-  return new ActivityLog(
-    id,
-    ActivityType.FRIEND_REQUEST_SENT,
-    "Sent a friend request to <b>Taelyn Dickens</b>",
-    randomDate(new Date(2021, 2, 30), new Date())
+const getActivityLog = () => {
+  const activityLogs: ActivityLog[] = [];
+  activityLogs.push(
+    new ActivityLog(
+      1,
+      ActivityType.FRIEND_REQUEST_SENT,
+      "Sent a friend request to <b>Taelyn Dickens</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
   );
+  activityLogs.push(
+    new ActivityLog(
+      2,
+      ActivityType.ADDED_TO_DISMISSED,
+      "Added <b>Milagro Betts</b> to the dismissed list",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      3,
+      ActivityType.CREATED_POST,
+      'Created a new post in community, <b>"Summer with friends..."</b>',
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      4,
+      ActivityType.CREATED_CONVERSATION,
+      "Created a new conservation with <b>Emmalee Mclain & Leo Gill</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      5,
+      ActivityType.ROOMMATE_REQUEST_SENT,
+      "Sent a roommate request to <b>Kyler Ochoa</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      6,
+      ActivityType.UPDATED_QUESTIONNAIRE,
+      "Updated your <b>Questionnaire</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      7,
+      ActivityType.UPDATED_PROFILE,
+      "Updated your <b>Profile</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      8,
+      ActivityType.UPDATED_AGREEMENT,
+      "Updated and agreed on <b>Roommate Agreement</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      9,
+      ActivityType.COMMENT,
+      'Posted a comment on <b>"A surprising way that OHIO is monitoring COVID-19"</b>',
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      10,
+      ActivityType.FRIEND_REQUEST_SENT,
+      "Sent a friend request to <b>Reina Brooks</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      11,
+      ActivityType.FRIEND_REQUEST_SENT,
+      "Created a new conservation with <b>Becky George & Inara Britt</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+
+  return activityLogs;
 };
 
 const getActivityLogs: (
@@ -492,10 +668,7 @@ const getActivityLogs: (
   dataBody: ActivityLogsResponseModel;
 }> = async (request: ActivityLogApiRequestModel) => {
   AppLog.log("getActivityLogs(), request: " + JSON.stringify(request));
-  const activityLogs: ActivityLog[] = [];
-  for (let i = 0; i < (request.limit ?? 10); i++) {
-    activityLogs.push(getActivityLog(Math.floor(Math.random() * 100) + 1));
-  }
+  const activityLogs: ActivityLog[] = getActivityLog();
   const response = {
     hasError: false,
     errorBody: undefined,
@@ -523,7 +696,7 @@ const getAnnouncementList = (pageToLoad: number) => {
     {
       id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "2 hours ago",
       text:
@@ -537,7 +710,7 @@ const getAnnouncementList = (pageToLoad: number) => {
     {
       id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "3 hours ago",
       text:
@@ -549,7 +722,7 @@ const getAnnouncementList = (pageToLoad: number) => {
     {
       id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "2 hours ago",
       text:
@@ -561,7 +734,7 @@ const getAnnouncementList = (pageToLoad: number) => {
     {
       id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "3 hours ago",
       text:
@@ -573,7 +746,7 @@ const getAnnouncementList = (pageToLoad: number) => {
     {
       id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "2 hours ago",
       text:
@@ -989,7 +1162,6 @@ const usersImages = [
 
 export default {
   getQuestionSections,
-  getQuestion,
   getChats,
   getNotifications,
   getCommunityList,

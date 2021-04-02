@@ -4,7 +4,13 @@ enum ActivityType {
   ALL = "",
   FRIEND_REQUEST_SENT = "matches",
   ADDED_TO_DISMISSED = "dismissed",
-  CREATED_CONVERSATION = "conversation"
+  CREATED_CONVERSATION = "conversation",
+  CREATED_POST = "post",
+  ROOMMATE_REQUEST_SENT = "roommate",
+  UPDATED_QUESTIONNAIRE = "questionnare",
+  UPDATED_PROFILE = "profile",
+  UPDATED_AGREEMENT = "agreement",
+  COMMENT = "comment"
 }
 
 export const getActivityTypeFilterData = () => {
