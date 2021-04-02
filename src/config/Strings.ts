@@ -318,5 +318,25 @@ export default {
     label_recent: "Recent Activities",
     label_yesterday: "Yesterday",
     label_older: "Older Activities"
+  },
+
+  reportContent: {
+    reportContent: "Report Content",
+    selectProblemToCont: "Please select a problem to continue",
+    reportPostAfterSelectingProb:
+      "You can report the post after selecting a problem.",
+    offensiveContent: "Offensive Content",
+    harassment: "Harassment",
+    bullying: "Bullying",
+    spam: "Spam",
+    violence: "Violence",
+    concerningContent: "Concerning Content",
+    nudity: "Nudity",
+    threats: "Threats",
+    hateSpeech: "Hate Speech",
+    somethingElse: "Something else",
+    reason: "Reason",
+    reasonPlaceholder: "Let us know why you think this is inappropriate",
+    submitSpamReport: "Submit Spam Report"
   }
 };

@@ -1,9 +1,9 @@
+import Shield from "assets/images/shield.svg";
 import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import React from "react";
 import { StyleSheet, TouchableOpacityProps, View } from "react-native";
-import SimpleToast from "react-native-simple-toast";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
   URL_TYPES,
@@ -14,16 +14,21 @@ import { AnnouncementHeader } from "ui/components/molecules/announcement_header/
 import { ImagesSlideShow } from "ui/components/molecules/image_slide_show/ImagesSlideShow";
 import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
 import { shadowStyleProps, SvgProp } from "utils/Util";
-import Shield from "assets/images/shield.svg";
 
 export interface CommunityItemProps extends TouchableOpacityProps {
   communityItem: CommunityAnnouncement;
   openCommentsScreen?: () => void | undefined;
   shouldPlayVideo: boolean;
+  openReportContentScreen?: () => void | undefined;
 }
 
 export const CommunityItem = React.memo<CommunityItemProps>(
-  ({ communityItem, openCommentsScreen, shouldPlayVideo }) => {
+  ({
+    communityItem,
+    openCommentsScreen,
+    shouldPlayVideo,
+    openReportContentScreen
+  }) => {
     const theme = usePreferredTheme();
     const rightImage: SvgProp = () => {
       return (
@@ -47,7 +52,7 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           leftImageUrl={communityItem.profileImageUrl}
           shouldShowRightImage={true}
           rightIcon={rightImage}
-          onPress={() => SimpleToast.show("Clicked on shield")}
+          onPress={openReportContentScreen}
         />
         {communityItem.text != null && true && (
           <AppLabel

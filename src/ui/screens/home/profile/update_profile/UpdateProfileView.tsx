@@ -128,6 +128,7 @@ export const UpdateProfileView: React.FC<Props> = ({
     <KeyboardAwareScrollView keyboardOpeningTime={50} extraHeight={200}>
       <AppForm
         initialValues={initialValues}
+        isInitialValid={false}
         onSubmit={onSubmit}
         validationSchema={validationSchema}>
         <BasicProfile />

@@ -31,3 +31,8 @@ jest.mock("toggle-switch-react-native", () => "");
 
 // Multi Slider
 jest.mock("@ptomasroos/react-native-multi-slider", () => "");
+
+//for simple toast
+jest.mock("react-native-simple-toast", () => ({
+  SHORT: jest.fn()
+}));
