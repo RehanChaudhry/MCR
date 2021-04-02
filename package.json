@@ -1,7 +1,7 @@
 {
-  "name": "MCR",
-  "version": "1.1.0-DEV",
-  "buildNumber": 2,
+  "name": "MyCollegeRoomie",
+  "version": "1.1.1-DEV",
+  "buildNumber": 3,
   "private": true,
   "scripts": {
     "clean": "yarn run cleanBuildAndroid && yarn run cleanBuildIOS",
