@@ -84,7 +84,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
             {...(enableTwoThumbs
               ? {
                   selectedStyle: {
-                    backgroundColor: themedColors.secondaryShade
+                    backgroundColor: themedColors.interface[400]
                   },
                   unselectedStyle: {
                     backgroundColor: themedColors.interface[200]
@@ -94,7 +94,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
                 }
               : {
                   selectedStyle: {
-                    backgroundColor: themedColors.interface[200]
+                    backgroundColor: themedColors.interface[400]
                   },
                   unselectedStyle: {
                     backgroundColor: themedColors.interface[200]
