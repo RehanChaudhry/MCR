@@ -14,7 +14,7 @@ import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 
 type Props = {
-  openUpdateProfileScreen?: () => void;
+  openUpdateProfileScreen: () => void;
   shouldShowProgressBar?: boolean;
 };
 
@@ -22,10 +22,6 @@ export const WelcomeView = React.memo<Props>(
   ({ openUpdateProfileScreen }) => {
     const theme = usePreferredTheme();
     const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
-
-    // const openUpdateProfileScreen = () => {
-    //   navigation.navigate("UpdateProfile", { isFrom: EScreen.WELCOME });
-    // };
 
     return (
       <Screen>
@@ -132,7 +128,14 @@ export const WelcomeView = React.memo<Props>(
                       fill={theme.themedColors.background}
                     />
                   )}
-                  onPress={openUpdateProfileScreen}
+                  onPress={() => {
+                    if (shouldPlayVideo) {
+                      setShouldPlayVideo(false);
+                      openUpdateProfileScreen();
+                    } else {
+                      openUpdateProfileScreen();
+                    }
+                  }}
                 />
               </View>
             </View>

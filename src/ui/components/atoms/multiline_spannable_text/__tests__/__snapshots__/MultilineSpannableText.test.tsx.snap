@@ -16,9 +16,11 @@ exports[`Snapshot testing 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "fontWeight": "normal",
-        }
+        Array [
+          Object {
+            "fontWeight": "normal",
+          },
+        ]
       }
     >
       Male
@@ -34,9 +36,11 @@ exports[`Snapshot testing 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "fontWeight": "bold",
-        }
+        Array [
+          Object {
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       Female
@@ -52,9 +56,11 @@ exports[`Snapshot testing 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "fontWeight": "normal",
-        }
+        Array [
+          Object {
+            "fontWeight": "normal",
+          },
+        ]
       }
     >
       Others

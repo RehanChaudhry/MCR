@@ -96,7 +96,9 @@ const UpdateProfileController: FC<Props> = () => {
   return (
     <>
       {useLazyLoadInterface(
-        <UpdateProfileView isUpdating={route.params.isUpdating} />
+        <UpdateProfileView
+          openUpdateQuestionnaireScreen={openQuestionnaireScreen}
+        />
       )}
     </>
   );

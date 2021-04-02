@@ -1,19 +1,19 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import Colors from "config/Colors";
-import UserPic from "assets/images/user_pic.svg";
 import UserGroup from "assets/images/user_group.svg";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 type Props = {
   shouldNotOptimize?: boolean;
+  imageUrl: string;
 };
 
-export const CircleImageBorder = optimizedMemo<Props>(() => {
+export const CircleImageBorder = optimizedMemo<Props>(({ imageUrl }) => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.circle}>
-        <UserPic width={50} height={50} />
+        <Image source={{ uri: imageUrl }} style={styles.image} />
         <View style={styles.innerContainer}>
           <UserGroup width={14} height={14} style={styles.userGroup} />
         </View>
@@ -31,6 +31,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 1,
     borderColor: Colors.white
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 50
   },
   innerContainer: {
     height: 20,

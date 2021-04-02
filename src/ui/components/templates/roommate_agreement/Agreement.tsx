@@ -15,7 +15,7 @@ const Agreement: FC<Props> = () => {
     <CardView style={styles.cardView}>
       <View style={styles.innerCardView}>
         <AppFormDropDown
-          name={"frustrated"}
+          name="frustrated"
           validationLabelTestID={"frustratedValidationTestID"}
           labelProps={{
             text: STRINGS.roommateAgreement.dropDownTitle.frustrated,

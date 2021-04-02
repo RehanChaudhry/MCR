@@ -5,7 +5,6 @@ import Agreement from "ui/components/templates/roommate_agreement/Agreement";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import * as Yup from "yup";
 import { FormikValues } from "formik";
-import { AppLog } from "utils/Util";
 import { ScrollView, StyleSheet, View } from "react-native";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { SPACE, STRINGS } from "config";
@@ -59,7 +58,6 @@ let initialValues: FormikValues = {
 
 const onSubmit = (_value: FormikValues) => {
   initialValues = _value;
-  AppLog.log("form values" + initialValues);
 };
 
 const RoommateAgreementView: FC<Props> = () => {
@@ -75,11 +73,11 @@ const RoommateAgreementView: FC<Props> = () => {
             numberOfLines={0}
           />
         </View>
+        <RoommateAgreementTerms />
         <AppForm
           initialValues={initialValues}
           onSubmit={onSubmit}
           validationSchema={validationSchema}>
-          <RoommateAgreementTerms />
           <Agreement />
           <View style={styles.buttonViewStyle}>
             <AppFormFormSubmit

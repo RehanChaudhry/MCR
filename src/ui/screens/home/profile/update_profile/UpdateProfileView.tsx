@@ -11,7 +11,6 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
 import RightArrow from "assets/images/arrow_circle_right.svg";
 import AppForm from "ui/components/molecules/app_form/AppForm";
-import { AppLog } from "utils/Util";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BasicProfile } from "ui/components/templates/basic_profile/BasicProfile";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -116,16 +115,15 @@ let initialValues: FormikValues = {
   youtubeVideoUrl: ""
 };
 
-const onSubmit = (_value: FormikValues) => {
-  initialValues = _value;
-  AppLog.log("form values" + initialValues);
-};
-
 export const UpdateProfileView: React.FC<Props> = ({
   openUpdateQuestionnaireScreen
 }) => {
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
+  const onSubmit = (_value: FormikValues) => {
+    initialValues = _value;
+    openUpdateQuestionnaireScreen();
+  };
   return (
     <KeyboardAwareScrollView keyboardOpeningTime={50} extraHeight={200}>
       <AppForm
@@ -149,7 +147,6 @@ export const UpdateProfileView: React.FC<Props> = ({
             ]}
             rightIcon={rightArrowIcon}
             iconStyle={styles.iconStyle}
-            onPress={openUpdateQuestionnaireScreen}
           />
         </View>
       </AppForm>

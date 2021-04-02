@@ -8,28 +8,41 @@ import Colors from "config/Colors";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { moderateScale } from "config/Dimens";
+import Fonts from "config/Fonts";
 
 type Props = {
+  type: string;
   username: string;
   message: string;
   onPress: () => void;
+  imageUrl: string;
+  boldText: string;
   userNameOnPress?: (value: string, userNameindex: number) => void;
 };
 
 export const CircleImageWithText = React.memo<Props>(
-  ({ username, onPress, message, userNameOnPress }) => {
+  ({
+    username,
+    onPress,
+    message,
+    userNameOnPress,
+    imageUrl,
+    boldText,
+    type
+  }) => {
     const theme = usePreferredTheme();
     return (
       <View style={styles.mainContainer}>
-        <CircleImageBorder />
+        <CircleImageBorder imageUrl={imageUrl} />
         <View style={styles.viewRequest}>
           <View style={styles.circleWithText}>
             <View>
               <MultilineSpannableText
-                text={[username, message]}
+                text={[username, message, boldText]}
                 textStyle={[
                   [styles.name, { color: theme.themedColors.primary }],
-                  [styles.message, { color: theme.themedColors.black }]
+                  [styles.message, { color: theme.themedColors.black }],
+                  [styles.boldText, { color: theme.themedColors.primary }]
                 ]}
                 onPress={(value: string, index) => {
                   userNameOnPress?.(value, index);
@@ -47,7 +60,7 @@ export const CircleImageWithText = React.memo<Props>(
             />
 
             <AppButton
-              text="View Request"
+              text={type}
               buttonStyle={[
                 styles.buttonStyle,
                 { backgroundColor: theme.themedColors.primaryShade }
@@ -100,8 +113,12 @@ const styles = StyleSheet.create({
     marginTop: SPACE.lg,
     marginBottom: SPACE.xl
   },
-  name: { fontWeight: "bold", fontSize: FONT_SIZE.xsm },
+  name: { fontFamily: Fonts.bold, fontSize: FONT_SIZE.xsm },
   message: { fontWeight: "normal", fontSize: FONT_SIZE.xsm },
+  boldText: {
+    fontFamily: Fonts.regular,
+    fontSize: FONT_SIZE.xsm
+  },
   time: {
     fontSize: FONT_SIZE._2xsm
   },
