@@ -40,13 +40,17 @@ const styles = StyleSheet.create({
     //flexDirection: "row",
     flexWrap: "wrap",
     height: 36,
-    margin: 8,
-    padding: 8,
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 6,
+    marginRight: 6,
+    paddingLeft: 10,
+    paddingRight: 10,
     borderRadius: 5,
     justifyContent: "center"
   },
   text: {
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE._2xsm,
     fontWeight: "bold",
     includeFontPadding: false
   }
