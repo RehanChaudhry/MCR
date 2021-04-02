@@ -523,7 +523,7 @@ const getAnnouncementList = (pageToLoad: number) => {
     {
       id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "2 hours ago",
       text:
@@ -537,7 +537,7 @@ const getAnnouncementList = (pageToLoad: number) => {
     {
       id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "3 hours ago",
       text:
@@ -549,7 +549,7 @@ const getAnnouncementList = (pageToLoad: number) => {
     {
       id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "2 hours ago",
       text:
@@ -561,7 +561,7 @@ const getAnnouncementList = (pageToLoad: number) => {
     {
       id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "3 hours ago",
       text:
@@ -573,7 +573,7 @@ const getAnnouncementList = (pageToLoad: number) => {
     {
       id: uuid.v4(),
       profileImageUrl:
-        "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png",
+        "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj",
       name: "Ohio University",
       time: "2 hours ago",
       text:
