@@ -40,8 +40,10 @@ export const WelcomeView = React.memo<Props>(
             />
             <View style={styles.webView}>
               <WebViewComponent
-                url={"https://www.youtube.com/watch?v=zWh3CShX_do"}
-                urlType={URL_TYPES.LINK}
+                url={
+                  '<iframe width="100%" height="350" src="https://www.youtube.com/embed/EeCKk94lmHQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+                }
+                urlType={URL_TYPES.EMBEDDED}
                 shouldPlayVideo={shouldPlayVideo}
               />
               <View style={styles.buttonViewStyle}>

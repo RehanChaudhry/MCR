@@ -9,6 +9,7 @@ import { CustomDrawer } from "ui/components/templates/drawer/CustomDrawer";
 import ProfileController from "../ui/screens/home/profile/ProfileController";
 import FriendsRootRoutes from "./FriendsRootRoutes";
 import SettingsRoutes from "./SettingsRoutes";
+import ActivityLogRoutes from "routes/ActivityLogRoutes";
 
 export const HomeRoutes = () => {
   let [currentItem, setCurrentItem] = useState<string>("Matches");
@@ -47,6 +48,10 @@ export const HomeRoutes = () => {
       <HomeDrawer.Screen
         name="Notification"
         component={NotificationRoutes}
+      />
+      <HomeDrawer.Screen
+        name="ActivityLog"
+        component={ActivityLogRoutes}
       />
       <HomeDrawer.Screen name="Settings" component={SettingsRoutes} />
     </HomeDrawer.Navigator>

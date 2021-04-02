@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { COLORS, Constants } from "config";
+import { COLORS, Constants, SPACE } from "config";
 import { AuthContext } from "hooks/useAuth";
 import { SignInApiResponseModel } from "models/api_responses/SignInApiResponseModel";
 import React, { useEffect, useState } from "react";
@@ -7,15 +7,16 @@ import {
   ActivityIndicator,
   Alert,
   BackHandler,
+  Image,
   Linking,
   StyleSheet,
   View
 } from "react-native";
 import AuthStorage from "repo/auth/AuthStorage";
 import { AuthRoutes, HomeRoutes } from "routes";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { AppLog } from "utils/Util";
+import { AppLog, shadowStyleProps } from "utils/Util";
 import VersionCheck from "react-native-version-check";
+import Screen from "ui/components/atoms/Screen";
 
 interface Props {}
 
@@ -100,16 +101,19 @@ export const SplashView = React.memo<Props>(() => {
 
   if (!isReady) {
     return (
-      <View style={styles.container}>
-        <View style={styles.logoSpacer} />
-        <AppLabel style={styles.logoImage} text="Splash Screen" />
-        <View style={styles.loaderSpacer} />
-        <ActivityIndicator
-          style={styles.loader}
-          color={COLORS.secondary}
-        />
-        <View style={styles.loaderSpacer} />
-      </View>
+      <Screen style={styles.container}>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={require("assets/images/splash.gif")}
+          />
+        </View>
+        <View style={styles.bottomContainer}>
+          <View style={styles.loaderContainer}>
+            <ActivityIndicator color={COLORS.secondary} />
+          </View>
+        </View>
+      </Screen>
     );
   }
 
@@ -129,35 +133,32 @@ export const SplashView = React.memo<Props>(() => {
 });
 
 const styles = StyleSheet.create({
+  bottomContainer: {
+    paddingBottom: SPACE.lg
+  },
   container: {
-    alignItems: "stretch",
+    alignItems: "center",
     flexDirection: "column",
     justifyContent: "center",
-    backgroundColor: COLORS.white,
     flex: 1
   },
-
-  loader: {},
-
-  logoImage: {
-    alignSelf: "center",
-    marginTop: 20
+  image: {
+    width: 260,
+    height: 87
   },
-  bottom: {
+  imageContainer: {
     flex: 1,
-    justifyContent: "flex-end",
-    marginBottom: 10
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center"
   },
-  bottomLogo: {
-    alignSelf: "center",
-    position: "absolute",
-    bottom: 0,
-    width: 200
-  },
-  logoSpacer: {
-    flex: 3
-  },
-  loaderSpacer: {
-    flex: 1
+  loaderContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLORS.white,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    ...shadowStyleProps
   }
 });

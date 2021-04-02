@@ -312,5 +312,11 @@ export default {
       dismiss: "Dismiss",
       block: "Block"
     }
+  },
+  activity_log: {
+    title: "Activity Log",
+    label_recent: "Recent Activities",
+    label_yesterday: "Yesterday",
+    label_older: "Older Activities"
   }
 };

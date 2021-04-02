@@ -42,7 +42,12 @@ export const ItemChatList = React.memo<ItemChatListProps>(
             item.name.length > 1 && !item.isMessageRead,
             themedColors
           )}>
-          <Image style={styles.imgStyle} source={item.image} />
+          <Image
+            style={styles.imgStyle}
+            source={{
+              uri: item.image
+            }}
+          />
 
           <NotifyIndic width={12} height={12} style={styles.indicator} />
           <NotifyIndicInActive
@@ -115,7 +120,9 @@ const styles = StyleSheet.create({
     width: moderateScale(45),
     height: moderateScale(45),
     resizeMode: "cover",
-    marginTop: SPACE.md
+    marginTop: SPACE.md,
+    borderRadius: 45 / 2,
+    overflow: "hidden"
   },
   textWrapper: (theme: ColorPalette) => {
     return {

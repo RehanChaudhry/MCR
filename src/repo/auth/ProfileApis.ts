@@ -4,6 +4,8 @@ import { AnswerApiRequestModel } from "models/api_requests/AnswerApiRequestModel
 import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseModel";
 import { QuestionsResponseModel } from "models/api_responses/QuestionsResponseModel";
 import { NotificationsResponseModel } from "models/api_responses/NotificationsResponseModel";
+import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiRequestModel";
+import { ActivityLogsResponseModel } from "models/api_responses/ActivityLogsResponseModel";
 
 function questions() {
   return apiClient.get<QuestionsResponseModel>(API.GET_QUESTIONS);
@@ -20,8 +22,16 @@ function answers(requestModel: AnswerApiRequestModel) {
   );
 }
 
+function activityLogs(requestModel: ActivityLogApiRequestModel) {
+  return apiClient.get<ActivityLogsResponseModel>(
+    API.GET_ACTIVITY_LOGS,
+    JSON.stringify(requestModel)
+  );
+}
+
 export default {
   questions,
   answers,
-  getNotifications
+  getNotifications,
+  activityLogs
 };
