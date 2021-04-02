@@ -20,6 +20,7 @@ type Props = {
   feedsFilterData: FilterCount[];
   openCommentsScreen?: () => void | undefined;
   shouldPlayVideo: boolean;
+  openReportContentScreen?: () => void | undefined;
 };
 
 export const CommunityView = React.memo<Props>(
@@ -31,7 +32,8 @@ export const CommunityView = React.memo<Props>(
     pullToRefreshCallback,
     feedsFilterData,
     openCommentsScreen,
-    shouldPlayVideo
+    shouldPlayVideo,
+    openReportContentScreen
   }) => {
     const keyExtractor = useCallback(
       (item: CommunityAnnouncement) => item.id.toString(),
@@ -44,9 +46,10 @@ export const CommunityView = React.memo<Props>(
           communityItem={item}
           openCommentsScreen={openCommentsScreen}
           shouldPlayVideo={shouldPlayVideo}
+          openReportContentScreen={openReportContentScreen}
         />
       ),
-      [openCommentsScreen, shouldPlayVideo]
+      [openCommentsScreen, shouldPlayVideo, openReportContentScreen]
     );
     function getFeedsFilterData(): Item[] {
       return feedsFilterData.map((value) => {

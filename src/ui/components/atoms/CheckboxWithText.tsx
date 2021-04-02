@@ -1,61 +1,48 @@
-import { FONTS, COLORS, FONT_SIZE } from "config";
+import CheckBox from "@react-native-community/checkbox";
+import { FONT_SIZE, FONTS, SPACE } from "config";
 import React, { useState } from "react";
 import {
   StyleProp,
   StyleSheet,
-  TouchableWithoutFeedback,
   View,
   ViewProps,
   ViewStyle
 } from "react-native";
-import { CheckBox } from "react-native-elements";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 interface OwnProps extends ViewProps {
   text: string;
   isBold?: boolean;
   style?: StyleProp<ViewStyle>;
-  onValueChange: (checked: boolean) => void;
+  onChange: (checked: boolean) => void;
   shouldNotOptimize?: boolean;
 }
 
 type Props = OwnProps;
 
 const CheckboxWithText = optimizedMemo<Props>(
-  ({ text, isBold = false, style, onValueChange, ...rest }) => {
+  ({ text, style, onChange }) => {
     const [checked, setChecked] = useState(false);
     return (
-      <View style={style}>
+      <View style={[styles.container, style]}>
         <CheckBox
-          Component={TouchableWithoutFeedback}
-          checked={checked}
-          title={text}
-          containerStyle={{
-            backgroundColor: COLORS.white,
-            borderColor: COLORS.white
-          }}
-          titleProps={{ ...rest }}
-          textStyle={[
-            styles.checkboxText,
-            isBold ? styles.bold : styles.normal
-          ]}
-          onPress={() => {
-            setChecked((prevState) => {
-              onValueChange(!prevState);
-              return !prevState;
-            });
+          disabled={false}
+          value={checked}
+          onValueChange={(value) => {
+            setChecked(value);
+            onChange(value);
           }}
         />
+        <AppLabel text={text} style={styles.checkboxText} />
       </View>
     );
   }
 );
 const styles = StyleSheet.create({
   checkboxText: {
-    fontSize: FONT_SIZE.xsm,
-    marginLeft: 2,
-    color: COLORS.textColor1,
-    alignSelf: "center"
+    fontSize: FONT_SIZE.sm,
+    marginLeft: SPACE.sm
   },
 
   bold: {
@@ -66,6 +53,10 @@ const styles = StyleSheet.create({
   normal: {
     fontFamily: FONTS.regular,
     fontWeight: "normal"
+  },
+  container: {
+    flexDirection: "row",
+    alignItems: "center"
   }
 });
 
