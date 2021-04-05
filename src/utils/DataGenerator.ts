@@ -284,19 +284,25 @@ const getAgreementDetails = () => {
     data: [
       {
         id: 1,
-        username: "kin lee",
-        updated_At: "",
+        username: "Kinslee Fink",
+        profileUrl:
+          "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
+        updated_At: "on Feb 10, 2021",
         status: AgreementStatus.AGREED
       },
       {
         id: 2,
-        username: "John Doe",
-        updated_At: "",
+        username: "Rosa Lawson",
+        profileUrl:
+          "https://harris.uchicago.edu/files/styles/square/public/2019-10/emileigh_harrison_cropped.jpg?itok=zL13vTOG",
+        updated_At: "on Feb 11, 2021",
         status: AgreementStatus.DISAGREED
       },
       {
-        id: 2,
-        username: "John Doe",
+        id: 3,
+        username: "Zane Mayes",
+        profileUrl:
+          "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
         updated_At: "",
         status: AgreementStatus.PENDING
       }

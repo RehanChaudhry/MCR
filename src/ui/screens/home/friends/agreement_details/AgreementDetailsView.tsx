@@ -29,7 +29,8 @@ export const AgreementDetailsView = React.memo<Props>(
         <AgreementDetailsListItem
           username={item.username}
           status={item.status}
-          time={item.updated_At}
+          updateAt={item.updated_At}
+          profileUrl={item.profileUrl}
         />
       );
     };

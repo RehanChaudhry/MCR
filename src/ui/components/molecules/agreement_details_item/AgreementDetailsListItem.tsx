@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import UserPic from "assets/images/user_pic2.svg";
+import { Image, StyleSheet, View } from "react-native";
 import Chat from "assets/images/chat_round.svg";
 import Thumb from "assets/images/thumb.svg";
 import DisAgreed from "assets/images/disagreed.svg";
@@ -16,21 +15,21 @@ import AgreementStatus from "models/enums/AgreementStatusType";
 
 type Props = {
   username: string;
-  time: string;
+  updateAt: string;
   status: string;
+  profileUrl: string;
 };
 
 export const AgreementDetailsListItem = React.memo<Props>(
-  ({ username, status }) => {
+  ({ username, status, updateAt, profileUrl }) => {
     const theme = usePreferredTheme();
 
     return (
       <View>
         <View style={styles.mainContainer}>
           <View style={styles.innerContainerLeft}>
-            <View style={styles.image}>
-              <UserPic width={50} height={50} />
-            </View>
+            <Image source={{ uri: profileUrl }} style={styles.image} />
+
             <View style={styles.userNameAndTime}>
               <AppLabel
                 text={username}
@@ -39,7 +38,7 @@ export const AgreementDetailsListItem = React.memo<Props>(
                 ellipsizeMode="tail"
               />
               <AppLabel
-                text={status + " on Feb 10,2021"}
+                text={status + " " + updateAt}
                 style={styles.time}
               />
             </View>
@@ -122,6 +121,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end"
   },
   image: {
+    width: 50,
+    height: 50,
     borderRadius: 50
   },
   userNameAndTime: {

@@ -1,7 +1,7 @@
 enum AgreementStatus {
-  PENDING = "pending",
-  AGREED = "agreed",
-  DISAGREED = "disagreed"
+  PENDING = "Signature Pending",
+  AGREED = "Agreed",
+  DISAGREED = "Disagreed"
 }
 
 export default AgreementStatus;

@@ -7,6 +7,7 @@ export type AgreementDetailsResponseModel = {
 export type AgreementDetailsData = {
   id: number;
   username: string;
+  profileUrl: string;
   updated_At: string;
   status: AgreementStatus;
 };
