@@ -94,7 +94,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
                 }
               : {
                   selectedStyle: {
-                    backgroundColor: themedColors.interface[400]
+                    backgroundColor: themedColors.interface[200]
                   },
                   unselectedStyle: {
                     backgroundColor: themedColors.interface[200]
