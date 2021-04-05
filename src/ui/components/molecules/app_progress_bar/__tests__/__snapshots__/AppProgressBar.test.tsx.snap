@@ -27,7 +27,7 @@ exports[`Renders snapshot as expected 1`] = `
       Array [
         Object {
           "backgroundColor": "#E5E7EB",
-          "borderColor": "#000000",
+          "borderColor": "#5e5851",
           "borderRadius": 50,
           "borderWidth": 0,
           "overflow": "hidden",
@@ -41,7 +41,7 @@ exports[`Renders snapshot as expected 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": "#000000",
+          "backgroundColor": "#5e5851",
           "borderRadius": 50,
           "height": 18,
           "transform": Array [

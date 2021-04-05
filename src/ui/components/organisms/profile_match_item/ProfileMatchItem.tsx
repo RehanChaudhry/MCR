@@ -32,9 +32,6 @@ const ProfileMatchItem = ({
   onImageClicked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
-  // AppLog.log(
-  //   "rendering ProfileMatchItem, item: " + JSON.stringify(profileMatch)
-  // );
 
   return (
     <View
@@ -66,7 +63,11 @@ const ProfileMatchItem = ({
           />
           <MatchScore
             style={styles.matchScore}
-            matchScore={profileMatch.matchScore ?? 0}
+            matchScore={
+              profileMatch.matchScore
+                ? `${profileMatch.matchScore}%`
+                : STRINGS.common.not_found
+            }
           />
         </View>
       </View>
@@ -145,7 +146,8 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(32)
   },
   infoTextContainer: {
-    marginStart: SPACE.md
+    marginStart: SPACE.md,
+    alignItems: "flex-start"
   },
   userName: { fontSize: FONT_SIZE.xsm, includeFontPadding: false },
   subtitle: { fontSize: FONT_SIZE._3xm },

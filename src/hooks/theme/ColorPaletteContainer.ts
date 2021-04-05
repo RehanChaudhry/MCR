@@ -133,7 +133,7 @@ let defaultPalette: ColorPalette = {
   primaryShade: "#e6f0ed",
 
   secondary: "#5e5851",
-  secondaryShade: "#918b84",
+  secondaryShade: "#e3e2e0",
 
   danger: "#EF4444",
   dangerShade: "#FEE2E2",
