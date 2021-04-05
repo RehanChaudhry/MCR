@@ -126,7 +126,7 @@ export const AgreementDetailsView = React.memo<Props>(
 
             <View style={{ marginTop: SPACE.md }}>
               <LinkButton
-                text={"Approved by"}
+                text={"Approved By"}
                 fontWeight={"semi-bold"}
                 leftIcon={() => (
                   <UserGroup
