@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   headingStyle: {
     // paddingHorizontal: SPACE.sm,
-    paddingVertical: SPACE.sm
+    paddingBottom: SPACE.sm
   },
   horizontalLine: {
     height: 0.5,

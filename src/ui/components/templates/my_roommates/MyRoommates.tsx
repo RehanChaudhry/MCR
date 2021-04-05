@@ -29,7 +29,11 @@ const MyRoommates: FC<Props> = () => {
           shouldShowProgressBar={false}
           data={myRoommateData}
           renderItem={({ item }) => (
-            <MyRoommateItem name={item.name} field={item.field} />
+            <MyRoommateItem
+              name={item.name}
+              field={item.field}
+              imageUrl={item.imageUrl}
+            />
           )}
           style={styles.flatList}
           scrollEnabled={false}

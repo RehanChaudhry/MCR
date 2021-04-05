@@ -7,7 +7,7 @@ import { STRINGS } from "config";
 
 interface Props {
   style?: StyleProp<ViewStyle>;
-  matchScore: number;
+  matchScore: string;
 }
 
 const MatchScore: React.FC<Props> = ({ style, matchScore }: Props) => {
@@ -26,7 +26,7 @@ const MatchScore: React.FC<Props> = ({ style, matchScore }: Props) => {
       <AppLabel
         style={[styles.label, { color: themedColors.secondary }]}
         weight={"semi-bold"}
-        text={matchScore ? `${matchScore}%` : STRINGS.common.not_found}
+        text={matchScore}
       />
     </View>
   );
@@ -36,7 +36,10 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: moderateScale(4),
     flexDirection: "row",
-    padding: moderateScale(4.0),
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
     justifyContent: "center"
   },
   label: { fontSize: FONT_SIZE._3xm }

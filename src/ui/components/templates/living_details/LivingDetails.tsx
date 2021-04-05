@@ -1,27 +1,32 @@
 import React from "react";
 import { CardView } from "ui/components/atoms/CardView";
-import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
-import { SPACE, STRINGS } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 
 export const LivingDetails = optimizedMemo(({}) => {
   const theme = usePreferredTheme();
   return (
     <CardView style={styles.cardStyles}>
       <View style={styles.innerCardStyle}>
-        <HeadingWithText
-          headingText={STRINGS.profile.livingDetails.heading}
-          text={STRINGS.profile.livingDetails.title}
-          headingFontWeight={"semi-bold"}
-          headingStyle={[
-            styles.headingStyle,
-            { color: theme.themedColors.label }
-          ]}
-          textStyle={[{ color: theme.themedColors.labelSecondary }]}
+        {/*<HeadingWithText*/}
+        {/*  headingText={STRINGS.profile.livingDetails.heading}*/}
+        {/*  //text={STRINGS.profile.livingDetails.title}*/}
+        {/*  headingFontWeight={"semi-bold"}*/}
+        {/*  headingStyle={[*/}
+        {/*    styles.headingStyle,*/}
+        {/*    { color: theme.themedColors.label }*/}
+        {/*  ]}*/}
+        {/*  //textStyle={[{ color: theme.themedColors.labelSecondary }]}*/}
+        {/*/>*/}
+        <AppLabel
+          text={STRINGS.profile.livingDetails.heading}
+          weight={"semi-bold"}
+          style={[styles.headingStyle, { fontSize: FONT_SIZE.md }]}
         />
       </View>
       <View style={[styles.horizontalLine]} />
@@ -172,7 +177,7 @@ const styles = StyleSheet.create({
   },
   headingStyle: {
     // paddingHorizontal: SPACE.sm,
-    paddingVertical: SPACE.sm
+    //paddingBottom: SPACE.sm
   },
   horizontalLine: {
     height: 0.5,
