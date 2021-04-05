@@ -55,20 +55,17 @@ const epochs: [string, number][] = [
   ["second", 1]
 ];
 
+const between = (x: number, min: number, max: number) =>
+  x >= min && x < max;
+
 const getDuration: (
-  timeAgoInSeconds: number,
-  minScale: string
+  timeAgoInSeconds: number
 ) => { interval: number; epoch: string } | undefined = (
-  timeAgoInSeconds: number,
-  minScale: string
+  timeAgoInSeconds: number
 ) => {
-  let isMinReached: boolean = true;
   for (let [name, seconds] of epochs) {
-    if (isMinReached) {
-      isMinReached = name !== minScale;
-    }
     const interval = Math.floor(timeAgoInSeconds / seconds);
-    if (interval >= 1 && !isMinReached) {
+    if (interval >= 1) {
       return {
         interval: interval,
         epoch: name
@@ -82,10 +79,10 @@ export const timeAgo = (date: Date, minScale: string, format: string) => {
   const timeAgoInSeconds = Math.floor(
     (+new Date() - +new Date(date)) / 1000
   );
-  const duration = getDuration(timeAgoInSeconds, minScale);
-  if (duration) {
-    const suffix = duration.interval === 1 ? "" : "s";
-    return `${duration.interval} ${duration.epoch}${suffix} ago`;
+  if (between(timeAgoInSeconds, 0, 86400)) {
+    const duration = getDuration(timeAgoInSeconds);
+    const suffix = duration!.interval === 1 ? "" : "s";
+    return `${duration!.interval} ${duration!.epoch}${suffix} ago`;
   } else {
     return moment(date).format(format);
   }
