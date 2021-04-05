@@ -558,13 +558,98 @@ const getProfileMatches: (
   return response;
 };
 
-const getActivityLog = (id: number) => {
-  return new ActivityLog(
-    id,
-    ActivityType.FRIEND_REQUEST_SENT,
-    "Sent a friend request to <b>Taelyn Dickens</b>",
-    randomDate(new Date(2021, 2, 30), new Date())
+const getActivityLog = () => {
+  const activityLogs: ActivityLog[] = [];
+  activityLogs.push(
+    new ActivityLog(
+      1,
+      ActivityType.FRIEND_REQUEST_SENT,
+      "Sent a friend request to <b>Taelyn Dickens</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
   );
+  activityLogs.push(
+    new ActivityLog(
+      2,
+      ActivityType.ADDED_TO_DISMISSED,
+      "Added <b>Milagro Betts</b> to the dismissed list",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      3,
+      ActivityType.CREATED_POST,
+      'Created a new post in community, <b>"Summer with friends..."</b>',
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      4,
+      ActivityType.CREATED_CONVERSATION,
+      "Created a new conservation with <b>Emmalee Mclain & Leo Gill</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      5,
+      ActivityType.ROOMMATE_REQUEST_SENT,
+      "Sent a roommate request to <b>Kyler Ochoa</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      6,
+      ActivityType.UPDATED_QUESTIONNAIRE,
+      "Updated your <b>Questionnaire</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      7,
+      ActivityType.UPDATED_PROFILE,
+      "Updated your <b>Profile</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      8,
+      ActivityType.UPDATED_AGREEMENT,
+      "Updated and agreed on <b>Roommate Agreement</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      9,
+      ActivityType.COMMENT,
+      'Posted a comment on <b>"A surprising way that OHIO is monitoring COVID-19"</b>',
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      10,
+      ActivityType.FRIEND_REQUEST_SENT,
+      "Sent a friend request to <b>Reina Brooks</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+  activityLogs.push(
+    new ActivityLog(
+      11,
+      ActivityType.FRIEND_REQUEST_SENT,
+      "Created a new conservation with <b>Becky George & Inara Britt</b>",
+      randomDate(new Date(2021, 2, 30), new Date())
+    )
+  );
+
+  return activityLogs;
 };
 
 const getActivityLogs: (
@@ -575,10 +660,7 @@ const getActivityLogs: (
   dataBody: ActivityLogsResponseModel;
 }> = async (request: ActivityLogApiRequestModel) => {
   AppLog.log("getActivityLogs(), request: " + JSON.stringify(request));
-  const activityLogs: ActivityLog[] = [];
-  for (let i = 0; i < (request.limit ?? 10); i++) {
-    activityLogs.push(getActivityLog(Math.floor(Math.random() * 100) + 1));
-  }
+  const activityLogs: ActivityLog[] = getActivityLog();
   const response = {
     hasError: false,
     errorBody: undefined,
