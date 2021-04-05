@@ -121,14 +121,18 @@ function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
         <HeadingWithText
           headingText={STRINGS.questionnaire.how_it_works}
           headingStyle={styles.infoCardHeading}
-          headingFontWeight="bold"
+          headingFontWeight="semi-bold"
           text={STRINGS.questionnaire.how_it_works_detail}
-          textStyle={styles.infoCardText}
+          textStyle={[
+            styles.infoCardText,
+            { color: themedColors.interface[600] }
+          ]}
         />
         <LinkButton
           viewStyle={styles.buttonView}
           textStyle={styles.learnMore}
           text={STRINGS.questionnaire.learn_more}
+          fontWeight={"semi-bold"}
           rightIcon={() => (
             <RightArrow
               width={moderateScale(16)}
@@ -194,8 +198,8 @@ const styles = StyleSheet.create({
   headerCard: {
     overflow: "hidden",
     borderRadius: 10,
-    marginBottom: SPACE.sm,
-    padding: SPACE.md,
+    marginBottom: SPACE.md,
+    padding: SPACE.lg,
 
     // shadow
     ...shadowStyleProps
@@ -204,8 +208,9 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm
   },
   infoCardText: {
-    fontSize: FONT_SIZE.xsm,
-    marginTop: SPACE.sm
+    fontSize: moderateScale(11.0),
+    marginTop: SPACE.sm,
+    lineHeight: moderateScale(16)
   },
   learnMore: {
     fontSize: FONT_SIZE.xsm,
