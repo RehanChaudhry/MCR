@@ -199,7 +199,7 @@ const getUnis = () => {
         colorPalette: defaultPaletteCopy,
         sso_login: false,
         imageLink:
-          "https://cdn.dribbble.com/users/482854/screenshots/4211816/bobcatsdribbble1.png"
+          "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj"
       },
       {
         id: "2",
