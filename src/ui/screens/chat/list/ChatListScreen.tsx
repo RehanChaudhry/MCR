@@ -82,7 +82,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
     };
 
     return (
-      <Screen style={styles.container}>
+      <Screen style={styles.container} shouldAddBottomInset={false}>
         <View style={styles.searchContainer(themedColors)}>
           <SearchField
             style={styles.search(themedColors)}
