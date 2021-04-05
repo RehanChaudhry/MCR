@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleProp, TextStyle, View } from "react-native";
+import { StyleProp, StyleSheet, TextStyle, View } from "react-native";
 import { AppLabel, Weight } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE } from "config";
 import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_memo/optimized_memo";
@@ -28,14 +28,19 @@ export const HeadingWithText = optimizedMemoWithStyleProp<Props>(
         <AppLabel
           text={headingText}
           weight={headingFontWeight}
-          style={[{ fontSize: FONT_SIZE.md }, headingStyle]}
+          style={[styles.heading, headingStyle]}
         />
         <AppLabel
           text={text}
           numberOfLines={0}
-          style={[{ fontSize: FONT_SIZE.xsm }, textStyle]}
+          style={[styles.title, textStyle]}
         />
       </View>
     );
   }
-)(["headingStyle", "textStyle"]);
+);
+
+const styles = StyleSheet.create({
+  heading: { fontSize: FONT_SIZE.md, includeFontPadding: false },
+  title: { fontSize: FONT_SIZE.xsm, includeFontPadding: false }
+});

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
 import { SvgProp } from "utils/Util";
+import { Weight } from "ui/components/atoms/app_label/AppLabel";
 
 export interface HeaderRightTextWithIconProps
   extends TouchableOpacityProps {
@@ -16,10 +17,11 @@ export interface HeaderRightTextWithIconProps
   icon?: SvgProp;
   onPress?: () => void;
   textStyle?: StyleProp<TextStyle>;
+  fontWeight?: Weight;
 }
 
 const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
-  ({ text, icon, onPress, textStyle }) => {
+  ({ text, icon, onPress, textStyle, fontWeight = "semi-bold" }) => {
     const theme = usePreferredTheme();
 
     return (
@@ -34,7 +36,7 @@ const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
           style.text,
           textStyle
         ]}
-        fontWeight="semi-bold"
+        fontWeight={fontWeight}
         viewStyle={style.container}
       />
     );

@@ -22,7 +22,7 @@ import Screen from "ui/components/atoms/Screen";
 import SectionedList, {
   Section
 } from "ui/components/organisms/sectioned_list/SectionedList";
-import { moderateScale } from "config/Dimens";
+import { lineHeight, moderateScale } from "config/Dimens";
 
 type Props = {
   isFrom: EScreen;
@@ -177,16 +177,17 @@ function createListFooter(
 }
 
 const styles = StyleSheet.create({
-  sectionedList: { padding: SPACE.md },
+  sectionedList: { padding: SPACE.lg },
   lastBody: {
     borderBottomStartRadius: 5,
     borderBottomEndRadius: 5,
     marginBottom: SPACE.sm
   },
   infoText: {
-    fontSize: FONT_SIZE._2xsm,
-    marginBottom: SPACE.md,
-    textAlign: "center"
+    fontSize: moderateScale(11),
+    marginBottom: SPACE.lg,
+    textAlign: "center",
+    lineHeight: lineHeight
   },
   headerContainer: {
     flexDirection: "column"
@@ -205,12 +206,12 @@ const styles = StyleSheet.create({
     ...shadowStyleProps
   },
   infoCardHeading: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE.xsm
   },
   infoCardText: {
     fontSize: moderateScale(11.0),
     marginTop: SPACE.sm,
-    lineHeight: moderateScale(16)
+    lineHeight: lineHeight
   },
   learnMore: {
     fontSize: FONT_SIZE.xsm,

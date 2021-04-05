@@ -93,8 +93,7 @@ export const AppLabel = optimizedMemo<Props>(
 
 const styles = StyleSheet.create({
   bold: {
-    fontWeight: "bold",
-    fontFamily: FONTS.regular
+    fontFamily: FONTS.bold
   },
   normal: {
     fontFamily: FONTS.regular

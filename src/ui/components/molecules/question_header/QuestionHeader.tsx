@@ -1,6 +1,6 @@
 import ChevronDown from "assets/images/chevron-down.svg";
 import { FONT_SIZE, SPACE } from "config";
-import { moderateScale } from "config/Dimens";
+import { lineHeight, moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import QuestionSection from "models/QuestionSection";
 import React from "react";
@@ -43,7 +43,7 @@ const QuestionHeader: React.FC<Props> = ({
         <AppLabel
           style={styles.title}
           text={questionGroup.title}
-          weight="bold"
+          weight="semi-bold"
         />
         <AppLabel
           style={[
@@ -51,7 +51,7 @@ const QuestionHeader: React.FC<Props> = ({
             { color: theme.themedColors.interface[600] }
           ]}
           text={questionGroup.description}
-          numberOfLines={5}
+          numberOfLines={0}
         />
       </View>
     );
@@ -89,13 +89,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     borderRadius: 5,
-    padding: SPACE.xsm,
+    paddingHorizontal: SPACE.lg,
+    paddingVertical: SPACE.sm,
 
     ...shadowStyleProps
   },
   expandedContainer: {
     flexDirection: "column",
-    padding: SPACE.xsm,
+    padding: SPACE.lg,
     overflow: "hidden",
     borderTopStartRadius: 5,
     borderTopEndRadius: 5,
@@ -104,8 +105,12 @@ const styles = StyleSheet.create({
     // shadow
     // ...shadowStyleProps
   },
-  title: { fontSize: FONT_SIZE.sm, padding: SPACE.xsm },
-  description: { fontSize: FONT_SIZE._2xsm, padding: SPACE.xsm },
+  title: { fontSize: FONT_SIZE.xsm },
+  description: {
+    fontSize: moderateScale(11.0),
+    marginTop: SPACE.sm,
+    lineHeight: lineHeight
+  },
   arrowContainer: {
     width: moderateScale(30),
     height: moderateScale(30),

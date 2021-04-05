@@ -46,3 +46,5 @@ export const SPACE = {
   _3xl: moderateScale(32),
   _4xl: moderateScale(48)
 };
+
+export const lineHeight = moderateScale(16);
