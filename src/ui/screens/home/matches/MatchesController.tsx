@@ -51,8 +51,8 @@ const MatchesController: FC<Props> = () => {
     return (
       <AppPopUp
         isVisible={showAlert}
-        title={"More Screen"}
-        message={"Hello this is more screen"}
+        title={"More Info"}
+        message={"This screen shows all your relevant matches."}
         actions={[
           {
             title: "Cancel",
