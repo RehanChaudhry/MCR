@@ -27,6 +27,8 @@ import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponse
 import ActivityType from "models/enums/ActivityType";
 import ActivityLog from "models/ActivityLog";
 import uuid from "uuid";
+import AgreementStatus from "models/enums/AgreementStatusType";
+import { AgreementDetailsResponseModel } from "models/api_responses/AgreementDetailsResponseModel";
 
 const getQuestionSections = () => {
   const sections: SectionResponse[] = [
@@ -268,6 +270,39 @@ const getMyFriends = () => {
         subtitle: "Returner, Life Science",
         profileImage: usersImages[2],
         requestState: ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE
+      }
+    ]
+  };
+  return response;
+};
+
+const getAgreementDetails = () => {
+  const response: AgreementDetailsResponseModel = {
+    message: "",
+    data: [
+      {
+        id: 1,
+        username: "Kinslee Fink",
+        profileUrl:
+          "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
+        updated_At: "on Feb 10, 2021",
+        status: AgreementStatus.AGREED
+      },
+      {
+        id: 2,
+        username: "Rosa Lawson",
+        profileUrl:
+          "https://harris.uchicago.edu/files/styles/square/public/2019-10/emileigh_harrison_cropped.jpg?itok=zL13vTOG",
+        updated_At: "on Feb 11, 2021",
+        status: AgreementStatus.DISAGREED
+      },
+      {
+        id: 3,
+        username: "Zane Mayes",
+        profileUrl:
+          "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
+        updated_At: "",
+        status: AgreementStatus.PENDING
       }
     ]
   };
@@ -1170,5 +1205,6 @@ export default {
   getRoommateRequests,
   createComments,
   getAnnouncementList,
-  getActivityLogs
+  getActivityLogs,
+  getAgreementDetails
 };

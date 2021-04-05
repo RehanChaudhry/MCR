@@ -20,6 +20,7 @@ export interface AppProgressBarProps {
   unFilledColor?: string;
   shouldShowBottomText?: boolean;
   bottomTextStyle?: StyleProp<TextStyle>;
+  shouldNotOptimize?: boolean;
   progressPercentage: number; //0 to 100
 }
 
@@ -29,7 +30,7 @@ export const AppProgressBar = optimizedMemo<AppProgressBarProps>(
     borderWidth = 0,
     borderRadius = 50,
     unFilledColor,
-    filledColor = "#000000",
+    filledColor,
     shouldShowBottomText = true,
     bottomTextStyle,
     progressPercentage
@@ -56,7 +57,7 @@ export const AppProgressBar = optimizedMemo<AppProgressBarProps>(
           }
           useNativeDriver={true}
           animationType="timing"
-          color={filledColor ? filledColor : themedColors.label}
+          color={filledColor ? filledColor : themedColors.secondary}
         />
         {shouldShowBottomText && (
           <View testID="bottom-view" style={styles.textWrapper}>

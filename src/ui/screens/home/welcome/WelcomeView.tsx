@@ -33,11 +33,7 @@ export const WelcomeView = React.memo<Props>(
             <Image
               source={require("assets/images/video_image.png")}
               resizeMode="cover"
-              style={{
-                width: "100%",
-                height: 200,
-                marginTop: SPACE.lg
-              }}
+              style={styles.image}
             />
             <View style={styles.buttonViewStyle}>
               <AppButton
@@ -188,5 +184,10 @@ const styles = StyleSheet.create({
   continue: {
     marginTop: SPACE.xl,
     marginBottom: SPACE.xl
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    marginTop: SPACE.lg
   }
 });

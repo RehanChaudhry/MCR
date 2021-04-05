@@ -109,8 +109,7 @@ export default {
       "This information will be help us to find better roomate match for you.",
     basicProfile: {
       heading: "Basic Profile",
-      title:
-        "This information will be displayed publicly so be careful what you share.",
+      title: "This information will be displayed publicly.",
       uploadPhotoDescription:
         "You are encouraged to upload a photo of yourself to encourage others to interact with you. Pictures should be of you, the owner of the user account, only, and should be appropriate to all audiences. You may not use pictures of others or any photography that is provocative or lewd. Abuse of this system is a violation of the terms of use and can result in disciplinary action."
     },
@@ -121,7 +120,7 @@ export default {
     placeHolder: {
       firstName: "Enter your first name",
       lastName: "Enter your last name",
-      aboutMe: "Brief description for your profile.",
+      aboutMe: "Brief description for your profile",
       faceBookProfile: "facebook.com/",
       twitterProfile: "twitter.com/",
       linkedInProfile: "linkedin.com/",
@@ -172,7 +171,7 @@ export default {
     },
     demoGraphics: {
       heading: "Demographics",
-      title: "Please take a moment to tell us more about you.",
+      title: "Please take a moment to tell us more about yourself.",
       radioButton: {
         smokingHabitTitle: "Smoking Habits",
         smokingHabitValues: {
@@ -184,17 +183,16 @@ export default {
     },
     interests: {
       heading: "Interest",
-      title: "Tell us about what do you love to do?"
+      title: "Tell others what you enjoy doing."
     },
     livingDetails: {
       heading: "Living Details",
-      title:
-        "Please provide your educational information to complete your profile."
+      title: ""
     },
     videoIntroduction: {
       heading: "Video Introduction",
       title:
-        "Record 60 seconds self-introduction video presentation and post it on YouTube."
+        "Record 60 seconds self-introduction video and post it on YouTube."
     },
     viewProfile: {
       videoIntroduction: "Watch Video Introduction",
@@ -338,5 +336,8 @@ export default {
     reason: "Reason",
     reasonPlaceholder: "Let us know why you think this is inappropriate",
     submitSpamReport: "Submit Spam Report"
+  },
+  roommateAgreementdetails: {
+    export_agreement: "Export Roommate Agreement"
   }
 };

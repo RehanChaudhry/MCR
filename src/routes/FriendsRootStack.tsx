@@ -4,6 +4,7 @@ import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/Con
 export type FriendsRootStackParamList = {
   Root: undefined;
   ConnectRequests: { title: string; type: ConnectRequestType };
+  AgreementDetails: undefined;
 };
 
 export const FriendsRootStack = createStackNavigator<FriendsRootStackParamList>();
