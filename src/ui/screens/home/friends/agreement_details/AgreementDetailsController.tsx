@@ -34,7 +34,7 @@ const AgreementDetailsController: FC<Props> = () => {
       ),
 
       headerTitleAlign: "center",
-      headerTitle: () => <HeaderTitle text="My Profile" />
+      headerTitle: () => <HeaderTitle text="Agreement Details" />
     })
   );
 
