@@ -201,7 +201,7 @@ const getUnis = () => {
         colorPalette: defaultPaletteCopy,
         sso_login: false,
         imageLink:
-          "https://cdn.dribbble.com/users/482854/screenshots/4211816/bobcatsdribbble1.png"
+          "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj"
       },
       {
         id: "2",
@@ -261,16 +261,14 @@ const getMyFriends = () => {
         id: "2",
         title: "Fox Mccloud",
         subtitle: "Honors, Fine Arts",
-        profileImage:
-          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        profileImage: usersImages[1],
         requestState: ROOMMATE_REQUEST_STATE.REQUEST_SENT
       },
       {
         id: "3",
         title: "Health Atwood",
         subtitle: "Returner, Life Science",
-        profileImage:
-          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        profileImage: usersImages[2],
         requestState: ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE
       }
     ]
@@ -319,15 +317,13 @@ const getMyRoommates = () => {
         id: "1",
         title: "Maria Randall",
         subtitle: "Freshman, History",
-        profileImage:
-          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        profileImage: usersImages[1]
       },
       {
         id: "2",
         title: "Kari Rasmussen",
         subtitle: "Honors, Fine Arts",
-        profileImage:
-          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        profileImage: usersImages[3]
       }
     ]
   };
@@ -342,15 +338,13 @@ const getDismissedOrBlocked = () => {
         id: "1",
         title: "Maria Randall",
         subtitle: "Freshman, History",
-        profileImage:
-          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        profileImage: usersImages[1]
       },
       {
         id: "2",
         title: "Kari Rasmussen",
         subtitle: "Honors, Fine Arts",
-        profileImage:
-          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        profileImage: usersImages[3]
       }
     ]
   };
@@ -388,15 +382,13 @@ const getFriendRequests = () => {
         id: "1",
         title: "Mario Palmer",
         subtitle: "Freshman, History",
-        profileImage:
-          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        profileImage: usersImages[1]
       },
       {
         id: "2",
         title: "Lana Steiner",
         subtitle: "Honors, Fine Arts",
-        profileImage:
-          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        profileImage: usersImages[3]
       }
     ]
   };
@@ -686,7 +678,7 @@ const getActivityLog = () => {
   activityLogs.push(
     new ActivityLog(
       11,
-      ActivityType.FRIEND_REQUEST_SENT,
+      ActivityType.CREATED_CONVERSATION,
       "Created a new conservation with <b>Becky George & Inara Britt</b>",
       randomDate(new Date(2021, 2, 30), new Date())
     )
