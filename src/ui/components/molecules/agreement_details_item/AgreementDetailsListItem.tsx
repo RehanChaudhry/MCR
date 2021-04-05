@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import Chat from "assets/images/chat_round.svg";
-import Thumb from "assets/images/thumb.svg";
+import Thumb from "assets/images/agreed.svg";
 import DisAgreed from "assets/images/disagreed.svg";
 import Clock from "assets/images/clock.svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
@@ -39,7 +39,10 @@ export const AgreementDetailsListItem = React.memo<Props>(
               />
               <AppLabel
                 text={status + " " + updateAt}
-                style={styles.time}
+                style={[
+                  styles.time,
+                  { color: theme.themedColors.interface["700"] }
+                ]}
               />
             </View>
           </View>
