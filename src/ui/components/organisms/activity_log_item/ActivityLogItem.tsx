@@ -172,7 +172,8 @@ const styles = StyleSheet.create({
   message: {
     marginStart: SPACE.xsm,
     paddingBottom: SPACE.md,
-    marginTop: moderateScale(15)
+    marginTop: moderateScale(15),
+    flex: 1
   },
   messageText: { fontSize: FONT_SIZE._2xsm },
   bottomContainer: {
