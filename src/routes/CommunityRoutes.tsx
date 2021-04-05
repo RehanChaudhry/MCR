@@ -3,6 +3,7 @@ import { CommunityStack } from "routes/CommunityStack";
 import { CommentsController } from "ui/screens/home/comments/CommentsController";
 import CommunityController from "ui/screens/home/community/CommunityController";
 import CreatePostController from "ui/screens/home/community/create_post/CreatePostController";
+import ReportContentController from "ui/screens/home/community/report_content/ReportContentController";
 
 const CommunityRoutes = () => {
   return (
@@ -18,6 +19,10 @@ const CommunityRoutes = () => {
       <CommunityStack.Screen
         name="Comments"
         component={CommentsController}
+      />
+      <CommunityStack.Screen
+        name="ReportContent"
+        component={ReportContentController}
       />
     </CommunityStack.Navigator>
   );

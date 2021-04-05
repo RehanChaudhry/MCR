@@ -4,10 +4,12 @@ import {
   View,
   Text,
   TouchableWithoutFeedback,
-  TextStyle
+  TextStyle,
+  ViewStyle
 } from "react-native";
 
 export interface SpannableProps {
+  containerStyle?: StyleProp<ViewStyle>;
   textStyle: Array<StyleProp<TextStyle>>;
   text: Array<string>;
   onPress?: (value: string, index: number) => void;
@@ -16,14 +18,14 @@ export interface SpannableProps {
 type Props = SpannableProps;
 
 const MultilineSpannableText = React.memo<Props>(
-  ({ textStyle, text, onPress }) => {
+  ({ textStyle, text, onPress, containerStyle }) => {
     if (
       text.length > 0 &&
       textStyle.length > 0 &&
       text.length === textStyle.length
     ) {
       return (
-        <View testID={"SPANNABLE_TEXT"}>
+        <View testID={"SPANNABLE_TEXT"} style={containerStyle}>
           <Text>
             {text.map((item, index) => (
               <TouchableWithoutFeedback

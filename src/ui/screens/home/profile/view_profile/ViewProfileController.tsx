@@ -47,13 +47,13 @@ const ViewProfileController: FC<Props> = () => {
         ),
 
         headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text="View Profile" />
+        headerTitle: () => <HeaderTitle text="My Profile" />
       });
     } else if (viewProfileRoute.params.isFrom === EScreen.HOME) {
       navigation.setOptions({
         headerLeft: () => <Hamburger />,
         headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text="View Profile" />
+        headerTitle: () => <HeaderTitle text="My Profile" />
       });
     }
   }, [

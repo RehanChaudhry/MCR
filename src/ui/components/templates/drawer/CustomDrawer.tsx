@@ -8,10 +8,7 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-navigation";
-import {
-  DrawerContentComponentProps,
-  DrawerContentScrollView
-} from "@react-navigation/drawer";
+import { DrawerContentComponentProps } from "@react-navigation/drawer";
 import SignOut from "assets/images/sign_out.svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config";
@@ -119,66 +116,64 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
           </View>
           <Divider />
           {/*drawer header end*/}
+          {/* Commented out because it is adding extra unwanted space below the divider */}
+          {/* <DrawerContentScrollView {...props}> */}
+          <View style={[styles.itemsContainer]}>
+            {state.routes.map((route: any, index: number) => {
+              // @ts-ignore
+              if (DrawerItems[route.name].shouldNotDrawView) {
+                return null;
+              }
 
-          <DrawerContentScrollView {...props}>
-            <View style={[styles.itemsContainer]}>
-              {state.routes.map((route: any, index: number) => {
-                // @ts-ignore
-                if (DrawerItems[route.name].shouldNotDrawView) {
-                  return null;
-                }
-
-                return (
-                  <TouchableNativeFeedback
-                    onPress={() => {
-                      setCurrentItem(route.name);
-                      navigation.navigate(route.name);
-                    }}
-                    background={ripple}>
-                    <View
-                      style={[
-                        styles.customItem(
-                          themedColors,
-                          currentItem,
-                          route.name
-                        )
-                      ]}>
-                      {defaultIcon(route.name)}
-                      <AppLabel
-                        key={route.key}
-                        // @ts-ignore
-                        text={DrawerItems[route.name].name}
-                        style={styles.itemText(
-                          themedColors,
-                          currentItem,
-                          route.name
-                        )}
-                        weight={
-                          currentItem === route.name
-                            ? "semi-bold"
-                            : "normal"
-                        }
-                      />
-
-                      {/* just showing on notifications for design build*/}
-                      {index === 6 && (
-                        <View style={styles.notifyContainer}>
-                          <View style={styles.notifyCountBg}>
-                            <AppLabel
-                              text="3"
-                              weight="semi-bold"
-                              style={styles.notifyText}
-                            />
-                          </View>
-                        </View>
+              return (
+                <TouchableNativeFeedback
+                  onPress={() => {
+                    setCurrentItem(route.name);
+                    navigation.navigate(route.name);
+                  }}
+                  background={ripple}>
+                  <View
+                    style={[
+                      styles.customItem(
+                        themedColors,
+                        currentItem,
+                        route.name
+                      )
+                    ]}>
+                    {defaultIcon(route.name)}
+                    <AppLabel
+                      key={route.key}
+                      // @ts-ignore
+                      text={DrawerItems[route.name].name}
+                      style={styles.itemText(
+                        themedColors,
+                        currentItem,
+                        route.name
                       )}
-                      {/* just showing on notifications for design build*/}
-                    </View>
-                  </TouchableNativeFeedback>
-                );
-              })}
-            </View>
-          </DrawerContentScrollView>
+                      weight={
+                        currentItem === route.name ? "semi-bold" : "normal"
+                      }
+                    />
+
+                    {/* just showing on notifications for design build*/}
+                    {index === 6 && (
+                      <View style={styles.notifyContainer}>
+                        <View style={styles.notifyCountBg}>
+                          <AppLabel
+                            text="3"
+                            weight="semi-bold"
+                            style={styles.notifyText}
+                          />
+                        </View>
+                      </View>
+                    )}
+                    {/* just showing on notifications for design build*/}
+                  </View>
+                </TouchableNativeFeedback>
+              );
+            })}
+          </View>
+          {/* </DrawerContentScrollView> */}
         </SafeAreaView>
       </ScrollView>
 

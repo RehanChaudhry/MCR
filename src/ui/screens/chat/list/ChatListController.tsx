@@ -58,18 +58,15 @@ export const ChatListController: FC<Props> = () => {
   const refreshCallback = useCallback(
     async (onComplete: () => void) => {
       /*pageToReload.current = 1;*/
-
-      return;
-      // eslint-disable-next-line no-unreachable
-      AppLog.logForcefully("refresh callback");
       setTimeout(() => {
         setChats(dummyChats);
         setIsAllDataLoaded(true);
-        handleLoadChatsApi()
+        onComplete();
+        /* handleLoadChatsApi()
           .then(() => {
             onComplete();
           })
-          .catch();
+          .catch();*/
       }, 2000);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
