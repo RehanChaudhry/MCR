@@ -33,7 +33,7 @@ export const CommentsView = React.memo<Props>(
         false,
         SenderType.STUDENTS,
         1,
-        require("assets/images/d_user_pic.png"),
+        "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
         text
       );
 
