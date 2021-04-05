@@ -294,7 +294,7 @@ export const BasicProfile = optimizedMemo(({}) => {
 const styles = StyleSheet.create({
   headingStyle: {
     // paddingHorizontal: SPACE.sm,
-    paddingVertical: SPACE.sm
+    paddingBottom: SPACE.sm
   },
   horizontalLine: {
     backgroundColor: grayShades.warmGray["300"],

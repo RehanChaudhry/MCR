@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { CardView } from "ui/components/atoms/CardView";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, Linking, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import SocialDetailForm from "ui/components/templates/about_me/SocialDetailForm";
 import FacebookIcon from "assets/images/facebook_dark_icon.svg";
@@ -99,7 +99,8 @@ const AboutMe: FC<Props> = () => {
           title={"facebook.com/zanemayes"}
           headingStyle={{ color: grayShades.warmGray["700"] }}
           onPress={() => {
-            Alert.alert("Facebook profile link is pressed");
+            // Alert.alert("Facebook profile link is pressed");
+            Linking.openURL("fb://profile/426253597411506");
           }}
         />
         <SocialDetailForm

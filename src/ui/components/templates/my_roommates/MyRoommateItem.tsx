@@ -1,6 +1,11 @@
 import React, { FC } from "react";
-import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
-import UserImage from "assets/images/user_pic2.svg";
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import { FONT_SIZE, SPACE } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
@@ -14,9 +19,10 @@ import {
 type Props = {
   name: string;
   field: string;
+  imageUrl: string;
 };
 
-const MyRoommateItem: FC<Props> = ({ name, field }) => {
+const MyRoommateItem: FC<Props> = ({ name, field, imageUrl }) => {
   const theme = usePreferredTheme();
   const onPressChat = () => {
     Alert.alert("Chat Clicked");
@@ -25,7 +31,7 @@ const MyRoommateItem: FC<Props> = ({ name, field }) => {
     <View style={styles.mainContainer}>
       <View style={styles.container}>
         <View style={styles.imageView}>
-          <UserImage height={48} width={48} />
+          <Image source={{ uri: imageUrl }} style={styles.imageView} />
         </View>
         <View style={styles.headingWithTextViewStyle}>
           <HeadingWithText
@@ -71,7 +77,7 @@ const styles = StyleSheet.create({
   imageView: {
     height: 48,
     width: 48,
-    borderRadius: SPACE._3xl
+    borderRadius: 24
   },
   headingWithTextViewStyle: {
     flexDirection: "column",
