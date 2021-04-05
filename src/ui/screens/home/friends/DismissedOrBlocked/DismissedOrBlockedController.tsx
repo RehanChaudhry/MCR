@@ -134,7 +134,7 @@ const DismissedOrBlockedController: FC<Props> = () => {
         </View>
         {selectedTabIndex === 0 ? (
           <DismissedOrBlockedView
-            headerTitle={"How it works?"}
+            headerTitle={"How does it work?"}
             headerSubtitle={
               "Dismissed list users will be hide from your matches."
             }
@@ -154,7 +154,7 @@ const DismissedOrBlockedController: FC<Props> = () => {
           />
         ) : (
           <DismissedOrBlockedView
-            headerTitle={"How it works?"}
+            headerTitle={"How does it work?"}
             headerSubtitle={
               "Blocked list users will be hide from your matches and cannot send you messages either."
             }
