@@ -643,7 +643,7 @@ const getActivityLog = () => {
   activityLogs.push(
     new ActivityLog(
       11,
-      ActivityType.FRIEND_REQUEST_SENT,
+      ActivityType.CREATED_CONVERSATION,
       "Created a new conservation with <b>Becky George & Inara Britt</b>",
       randomDate(new Date(2021, 2, 30), new Date())
     )
