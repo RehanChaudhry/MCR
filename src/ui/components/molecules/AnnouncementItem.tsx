@@ -1,4 +1,4 @@
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import React from "react";
@@ -84,6 +84,7 @@ const style = StyleSheet.create({
   },
   text: {
     lineHeight: 20,
-    paddingTop: SPACE.lg
+    paddingTop: SPACE.lg,
+    fontSize: FONT_SIZE.base
   }
 });

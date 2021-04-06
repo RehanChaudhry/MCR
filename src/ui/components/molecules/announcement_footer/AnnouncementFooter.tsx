@@ -1,6 +1,6 @@
 import Chat from "assets/images/chat.svg";
 import Like from "assets/images/like.svg";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
@@ -68,7 +68,10 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
                 />
                 <AppLabel
                   text={likeCount.toString()}
-                  style={{ color: theme.themedColors.interface["700"] }}
+                  style={[
+                    { color: theme.themedColors.interface["700"] },
+                    style.commentLikeCount
+                  ]}
                 />
               </View>
             </View>
@@ -82,7 +85,10 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
                 />
                 <AppLabel
                   text={commentCount.toString()}
-                  style={{ color: theme.themedColors.interface["700"] }}
+                  style={[
+                    { color: theme.themedColors.interface["700"] },
+                    style.commentLikeCount
+                  ]}
                 />
               </View>
             </View>
@@ -124,5 +130,8 @@ const style = StyleSheet.create({
   icon: {
     marginTop: SPACE._2xs,
     marginRight: SPACE.xs
+  },
+  commentLikeCount: {
+    fontSize: FONT_SIZE.xs
   }
 });
