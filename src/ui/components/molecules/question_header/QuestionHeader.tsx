@@ -48,7 +48,7 @@ const QuestionHeader: React.FC<Props> = ({
         <AppLabel
           style={[
             styles.description,
-            { color: theme.themedColors.labelSecondary }
+            { color: theme.themedColors.interface[600] }
           ]}
           text={questionGroup.description}
           numberOfLines={5}
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     // shadow
     // ...shadowStyleProps
   },
-  title: { fontSize: FONT_SIZE.xsm, padding: SPACE.xsm },
+  title: { fontSize: FONT_SIZE.sm, padding: SPACE.xsm },
   description: { fontSize: FONT_SIZE._2xsm, padding: SPACE.xsm },
   arrowContainer: {
     width: moderateScale(30),
