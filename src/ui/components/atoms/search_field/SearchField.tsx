@@ -49,8 +49,8 @@ const SearchField = optimizedMemoWithStyleProp<Props>(
     let _searchIcon = useRef(
       searchIcon ?? (
         <Search
-          width={14}
-          height={14}
+          width={20}
+          height={20}
           style={styles.leftIcon}
           testID={"left-icon"}
           fill={iconColor ?? theme.themedColors.interface[600]}

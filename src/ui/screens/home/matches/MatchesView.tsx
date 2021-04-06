@@ -192,10 +192,10 @@ export const MatchesView: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  matchesListContainer: { padding: SPACE.md },
+  matchesListContainer: { padding: SPACE.lg },
   matchesList: { flex: 1 },
   itemSeparator: {
-    height: SPACE.md
+    height: SPACE.lg
   },
   dialogButtonStyle: {
     textAlign: "center",
