@@ -7,6 +7,7 @@ import { AppSwitch } from "ui/components/atoms/app_switch/AppSwitch";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { RangeSliderWithLabel } from "./RangeSliderWithLabel";
 import Question from "models/Question";
+import { lineHeight, moderateScale } from "config/Dimens";
 
 export interface SliderCallback {
   topRangeSliderResult: number[];
@@ -88,7 +89,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
           styles.container,
           {
             backgroundColor: themedColors.background,
-            borderColor: themedColors.border
+            borderColor: themedColors.interface[300]
           },
           style
         ]}
@@ -100,6 +101,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
           style={[styles.title, styles.questionLabel]}
           text={question.title}
           numberOfLines={0}
+          weight={"bold"}
         />
 
         <RangeSliderWithLabel
@@ -116,17 +118,15 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
 
         <View style={styles.preferenceWrapper}>
           <AppLabel
-            style={[styles.label, styles.questionLabel]}
+            style={[styles.label]}
             text="Comfort Zone"
+            weight={"bold"}
           />
 
           <View style={styles.switchWrapper}>
             <AppLabel
-              style={[
-                styles.label,
-                styles.questionLabel,
-                { marginEnd: SPACE.xs }
-              ]}
+              style={[styles.label, { marginEnd: SPACE.xs }]}
+              weight={"bold"}
               text="I have no preference"
             />
 
@@ -164,18 +164,19 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
 
 const styles = StyleSheet.create({
   container: {
-    padding: SPACE.md,
+    padding: SPACE.lg,
     borderTopWidth: StyleSheet.hairlineWidth
   },
   title: {
-    fontSize: FONT_SIZE.xs
+    fontSize: moderateScale(13.0),
+    lineHeight: lineHeight
   },
   label: {
-    fontSize: FONT_SIZE.xs
+    fontSize: moderateScale(11.0),
+    includeFontPadding: false
   },
   questionLabel: {
-    fontWeight: "700",
-    marginBottom: SPACE.md
+    marginBottom: SPACE.lg
   },
   labelRight: {
     alignSelf: "flex-end"
@@ -183,13 +184,12 @@ const styles = StyleSheet.create({
   preferenceWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: SPACE.md,
+    marginVertical: SPACE.lg,
     alignItems: "center"
   },
   switchWrapper: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignContent: "center"
+    alignItems: "center"
   },
   labelXsm: {
     fontSize: FONT_SIZE.xs

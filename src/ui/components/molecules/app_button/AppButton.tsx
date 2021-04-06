@@ -214,10 +214,10 @@ const style = StyleSheet.create({
     alignSelf: "center",
     flexDirection: "row",
     width: "100%",
-    height: moderateScale(40),
+    height: moderateScale(44),
     justifyContent: "space-between",
     alignItems: "center",
-    borderRadius: 6
+    borderRadius: moderateScale(6)
   },
   viewContainer: {
     flexDirection: "row",

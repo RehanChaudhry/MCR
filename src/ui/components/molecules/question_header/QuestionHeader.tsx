@@ -1,11 +1,11 @@
 import ChevronDown from "assets/images/chevron-down.svg";
 import { FONT_SIZE, SPACE } from "config";
-import { moderateScale } from "config/Dimens";
+import { lineHeight, moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import QuestionSection from "models/QuestionSection";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Color, NumberProp } from "react-native-svg";
+import { Color } from "react-native-svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
   AppImageBackground,
@@ -23,12 +23,14 @@ const QuestionHeader: React.FC<Props> = ({
   questionGroup
 }: Props) => {
   const theme = usePreferredTheme();
-  const chevronDownIcon: SvgProp = (
-    color?: Color,
-    width?: NumberProp,
-    height?: NumberProp
-  ) => {
-    return <ChevronDown width={width} height={height} fill={color} />;
+  const chevronDownIcon: SvgProp = (color?: Color) => {
+    return (
+      <ChevronDown
+        width={moderateScale(20)}
+        height={moderateScale(20)}
+        fill={color}
+      />
+    );
   };
   if (isExpanded) {
     return (
@@ -37,13 +39,13 @@ const QuestionHeader: React.FC<Props> = ({
           styles.expandedContainer,
           {
             backgroundColor: theme.themedColors.background,
-            borderColor: theme.themedColors.separator
+            borderColor: theme.themedColors.interface[300]
           }
         ]}>
         <AppLabel
           style={styles.title}
           text={questionGroup.title}
-          weight="bold"
+          weight="semi-bold"
         />
         <AppLabel
           style={[
@@ -51,7 +53,7 @@ const QuestionHeader: React.FC<Props> = ({
             { color: theme.themedColors.interface[600] }
           ]}
           text={questionGroup.description}
-          numberOfLines={5}
+          numberOfLines={0}
         />
       </View>
     );
@@ -65,7 +67,7 @@ const QuestionHeader: React.FC<Props> = ({
         <AppLabel
           style={styles.title}
           text={questionGroup.title}
-          weight="bold"
+          weight="semi-bold"
         />
 
         <AppImageBackground
@@ -88,28 +90,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    borderRadius: 5,
-    padding: SPACE.xs,
+    borderRadius: moderateScale(6),
+    paddingHorizontal: SPACE.lg,
+    paddingVertical: SPACE.sm,
 
     ...shadowStyleProps
   },
   expandedContainer: {
     flexDirection: "column",
-    padding: SPACE.xs,
+    padding: SPACE.lg,
     overflow: "hidden",
-    borderTopStartRadius: 5,
-    borderTopEndRadius: 5,
+    borderTopStartRadius: moderateScale(6),
+    borderTopEndRadius: moderateScale(6),
     borderBottomWidth: StyleSheet.hairlineWidth
 
     // shadow
     // ...shadowStyleProps
   },
-  title: { fontSize: FONT_SIZE.sm, padding: SPACE.xs },
-  description: { fontSize: FONT_SIZE.xs, padding: SPACE.xs },
+  title: { fontSize: FONT_SIZE.base },
+  description: {
+    fontSize: FONT_SIZE.sm,
+    marginTop: SPACE.sm,
+    lineHeight: lineHeight
+  },
   arrowContainer: {
-    width: moderateScale(30),
-    height: moderateScale(30),
-    marginRight: moderateScale(5)
+    width: moderateScale(32),
+    height: moderateScale(32)
   }
 });
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { FONT_SIZE, moderateScale } from "config/Dimens";
+import { FONT_SIZE, moderateScale, SPACE } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { STRINGS } from "config";
@@ -36,11 +36,10 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: moderateScale(4),
     flexDirection: "row",
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 5,
-    paddingBottom: 5,
-    justifyContent: "center"
+    paddingHorizontal: SPACE.sm,
+    paddingVertical: SPACE._2xs,
+    justifyContent: "center",
+    alignItems: "center"
   },
   label: { fontSize: FONT_SIZE.xs }
 });
