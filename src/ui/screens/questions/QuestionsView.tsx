@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   headerCard: {
     overflow: "hidden",
     borderRadius: 10,
-    marginBottom: SPACE.md,
+    marginBottom: SPACE.lg,
     padding: SPACE.lg,
 
     // shadow
