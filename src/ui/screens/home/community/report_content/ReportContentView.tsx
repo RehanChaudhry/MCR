@@ -29,7 +29,8 @@ export const ReportContentView = React.memo<Props>(({ closeScreen }) => {
           text={Strings.reportContent.reportPostAfterSelectingProb}
           style={[
             styles.marginTop,
-            { color: theme.themedColors.interface["700"] }
+            { color: theme.themedColors.interface["700"] },
+            styles.subHeading
           ]}
         />
         <CheckboxWithText
@@ -76,7 +77,7 @@ export const ReportContentView = React.memo<Props>(({ closeScreen }) => {
         <AppLabel
           text={Strings.reportContent.reason}
           weight="semi-bold"
-          style={styles.marginTop}
+          style={[styles.marginTop, styles.subHeading]}
         />
         <View style={styles.reasonContainer}>
           <AppInputField
@@ -139,5 +140,8 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: FONT_SIZE.base
+  },
+  subHeading: {
+    fontSize: FONT_SIZE.sm
   }
 });
