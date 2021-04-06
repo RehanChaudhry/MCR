@@ -121,7 +121,7 @@ const style = StyleSheet.create({
     flexDirection: "row"
   },
   title: {
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.base
   },
   subTitle: {
     fontSize: FONT_SIZE.xs

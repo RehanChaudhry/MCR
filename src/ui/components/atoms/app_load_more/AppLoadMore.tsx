@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { FONT_SIZE } from "config";
 
 export interface AppLoadMoreProps extends TouchableOpacityProps {
   text?: string;
@@ -58,6 +59,7 @@ const style = StyleSheet.create({
     flexDirection: "row"
   },
   textStyle: {
-    paddingLeft: 5
+    paddingLeft: 5,
+    fontSize: FONT_SIZE.sm
   }
 });

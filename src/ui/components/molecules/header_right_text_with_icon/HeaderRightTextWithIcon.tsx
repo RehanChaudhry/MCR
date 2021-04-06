@@ -1,4 +1,4 @@
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
@@ -46,7 +46,8 @@ const style = StyleSheet.create({
     marginRight: SPACE.sm
   },
   text: {
-    paddingRight: SPACE._2xs
+    paddingRight: SPACE._2xs,
+    fontSize: FONT_SIZE.sm
   }
 });
 

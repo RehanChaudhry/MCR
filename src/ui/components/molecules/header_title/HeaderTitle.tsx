@@ -26,6 +26,6 @@ export const HeaderTitle = React.memo<HeaderTitleProps>(
 
 const style = StyleSheet.create({
   headerTitle: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE.base
   }
 });
