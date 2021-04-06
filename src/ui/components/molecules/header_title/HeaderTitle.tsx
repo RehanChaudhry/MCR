@@ -1,4 +1,4 @@
-import { FONT_SIZE } from "config";
+import { FONT_SIZE } from "config/Dimens";
 import React from "react";
 import {
   StyleSheet,

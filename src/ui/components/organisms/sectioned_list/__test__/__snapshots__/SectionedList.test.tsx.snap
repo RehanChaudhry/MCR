@@ -135,7 +135,7 @@ exports[`Sectioned List tests snapshot 1`] = `
       <View
         style={
           Object {
-            "height": 12,
+            "height": 16,
           }
         }
       />
@@ -193,7 +193,7 @@ exports[`Sectioned List tests snapshot 1`] = `
       <View
         style={
           Object {
-            "height": 12,
+            "height": 16,
           }
         }
       />
