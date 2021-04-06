@@ -26,11 +26,11 @@ export const ChatThreadScreen = React.memo<Props>(
     function sentMessage(text: string) {
       let chatMessage = DataGenerator.createChat(
         1009,
-        ["Nikki Engelin"],
+        ["Phoenix Walker"],
         false,
         SenderType.STUDENTS,
-        1,
-        require("assets/images/d_user_pic.png"),
+        2,
+        "https://vrs.amsi.org.au/wp-content/uploads/sites/78/2017/12/tobinsouth_vrs_2017-18.jpeg",
         text
       );
 
