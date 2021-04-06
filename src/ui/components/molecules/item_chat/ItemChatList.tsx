@@ -7,7 +7,7 @@ import {
   ViewStyle
 } from "react-native";
 import React from "react";
-import { FONT_SIZE, SPACE } from "config";
+import { SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import NotifyIndic from "assets/images/notification-indicator.svg";
 import NotifyIndicInActive from "assets/images/notification-indicator-inactive.svg";
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     isMessageRead: boolean
   ) => {
     return {
-      fontSize: FONT_SIZE.xsm,
+      fontSize: moderateScale(13),
       color:
         recipientLength > 1 && !isMessageRead
           ? theme.primary

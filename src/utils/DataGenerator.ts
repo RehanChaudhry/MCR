@@ -944,6 +944,18 @@ const getChats = (): ChatItem[] => {
     )
   );
 
+  chats.push(
+    createChat(
+      6,
+      ["Fox Mccloud"],
+      true,
+      SenderType.STUDENTS,
+      1,
+      usersImages[6],
+      "Life gets busy. Just wanted to make sure you got my last.."
+    )
+  );
+
   for (let i = 1; i < 15; i++) {
     /* if (i === 1) {
       chats.push(

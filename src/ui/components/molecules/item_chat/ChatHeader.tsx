@@ -1,10 +1,11 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
-import { FONT_SIZE, SPACE } from "config";
+import { SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem, { SenderType } from "models/ChatItem";
+import { moderateScale } from "config/Dimens";
 
 export interface ChatHeaderProps {
   chatItem: ChatItem;
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     return {
       paddingStart: SPACE.lg,
       paddingTop: SPACE.lg,
-      fontSize: FONT_SIZE._2xsm,
+      fontSize: moderateScale(11),
       color: themedColors.interface["600"]
     };
   }

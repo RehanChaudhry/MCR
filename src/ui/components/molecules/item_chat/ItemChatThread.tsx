@@ -98,20 +98,20 @@ const styles = StyleSheet.create({
   },
   nameText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE.xsm,
+      fontSize: moderateScale(13),
       color: theme.interface["800"]
     };
   },
   messageText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE._2xsm,
+      fontSize: FONT_SIZE.xsm,
       color: theme.label,
       lineHeight: 16
     };
   },
   timeText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE._2xsm,
+      fontSize: moderateScale(11),
       color: theme.interface["700"],
       lineHeight: 20
     };
