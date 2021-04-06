@@ -106,9 +106,6 @@ export const ChatListScreen = React.memo<ChatListProps>(
               onEndReached={onEndReached}
               isAllDataLoaded={isAllDataLoaded}
               contentContainerStyle={{ paddingBottom: SPACE.md }}
-              /*ItemSeparatorComponent={() => (
-                <ListItemSeparator style={styles.separator} />
-              )}*/
             />
           </>
         )}
@@ -139,7 +136,7 @@ const styles = StyleSheet.create({
       borderColor: theme.separator
     };
   },
-  searchText: { fontSize: FONT_SIZE.xs },
+  searchText: { fontSize: FONT_SIZE.sm, lineHeight: 20 },
   list: { flex: 1 },
   breadCrumbs: {},
   messageContainer: {},

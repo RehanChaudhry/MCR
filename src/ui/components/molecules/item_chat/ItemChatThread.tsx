@@ -62,8 +62,8 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: SPACE.md,
-    paddingHorizontal: SPACE.md,
+    marginTop: SPACE.lg,
+    paddingHorizontal: SPACE.lg,
     flexDirection: "row"
   },
   indicator: {
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
       marginStart: SPACE.md,
       paddingHorizontal: SPACE.md,
       flexDirection: "column",
-      borderRadius: 10,
+      borderRadius: 12,
       flex: 1,
       backgroundColor: isCurrentUser
         ? theme.background
@@ -94,26 +94,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingBottom: SPACE.sm
+    paddingBottom: SPACE.xs
   },
   nameText: (theme: ColorPalette) => {
     return {
-      fontSize: moderateScale(13),
-      color: theme.interface["800"]
+      fontSize: FONT_SIZE.sm,
+      color: theme.interface["800"],
+      lineHeight: 20
     };
   },
   messageText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE.xs,
+      fontSize: FONT_SIZE.sm,
       color: theme.label,
-      lineHeight: 16
+      lineHeight: 20
     };
   },
   timeText: (theme: ColorPalette) => {
     return {
-      fontSize: moderateScale(11),
+      fontSize: FONT_SIZE.xs,
       color: theme.interface["700"],
-      lineHeight: 20
+      lineHeight: 16
     };
   }
 });
