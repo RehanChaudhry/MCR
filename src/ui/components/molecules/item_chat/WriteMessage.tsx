@@ -63,9 +63,7 @@ export const WriteMessage = React.memo<TypingComponentProps>(
           icon={btnImage ?? defaultIcon}
           containerShape={CONTAINER_TYPES.SQUARE}
           onPress={() => {
-            if (initialText === "") {
-              return;
-            } else {
+            if (initialText !== "") {
               setInitialText("");
               btnPressCallback(initialText);
             }
