@@ -85,8 +85,8 @@ export const CommentsController: FC<Props> = () => {
 
     let newList: ChatItem[] = [];
 
-    newList.push(message);
     newList.push(...oldList);
+    newList.push(message);
 
     return newList;
   }
