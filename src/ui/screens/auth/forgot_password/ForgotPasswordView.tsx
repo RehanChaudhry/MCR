@@ -17,7 +17,6 @@ import { AppLog } from "utils/Util";
 import Screen from "ui/components/atoms/Screen";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
-import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 
 type Props = {
@@ -73,32 +72,33 @@ export const ForgotPasswordView = React.memo<Props>(
               initialValues={initialValues}
               onSubmit={onSubmit}
               validationSchema={validationSchema}>
-              <View style={styles.email} />
-              <AppFormField
-                fieldTestID="email"
-                validationLabelTestID={"emailValidationLabel"}
-                name="email"
-                labelProps={{
-                  text: STRINGS.login.email_address,
-                  weight: "semi-bold"
-                }}
-                fieldInputProps={{
-                  textContentType: "emailAddress",
-                  keyboardType: "email-address",
-                  returnKeyType: "done",
-                  placeholder: STRINGS.login.enter_your_email,
-                  autoCapitalize: "none",
-                  placeholderTextColor: theme.themedColors.placeholder,
-                  style: { color: theme.themedColors.label },
-                  viewStyle: [
-                    styles.textFieldStyle,
-                    {
-                      backgroundColor: theme.themedColors.background,
-                      borderColor: theme.themedColors.border
-                    }
-                  ]
-                }}
-              />
+              <View style={styles.email}>
+                <AppFormField
+                  fieldTestID="email"
+                  validationLabelTestID={"emailValidationLabel"}
+                  name="email"
+                  labelProps={{
+                    text: STRINGS.login.email_address,
+                    weight: "semi-bold"
+                  }}
+                  fieldInputProps={{
+                    textContentType: "emailAddress",
+                    keyboardType: "email-address",
+                    returnKeyType: "done",
+                    placeholder: STRINGS.login.enter_your_email,
+                    autoCapitalize: "none",
+                    placeholderTextColor: theme.themedColors.placeholder,
+                    style: { color: theme.themedColors.label },
+                    viewStyle: [
+                      styles.textFieldStyle,
+                      {
+                        backgroundColor: theme.themedColors.background,
+                        borderColor: theme.themedColors.border
+                      }
+                    ]
+                  }}
+                />
+              </View>
 
               <View style={styles.buttonViewStyle}>
                 <AppFormFormSubmit
@@ -113,16 +113,6 @@ export const ForgotPasswordView = React.memo<Props>(
                 />
               </View>
             </AppForm>
-
-            <View style={styles.spannableText}>
-              <MultilineSpannableText
-                text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
-                textStyle={[
-                  { fontSize: SPACE.md },
-                  { fontSize: SPACE.md, color: theme.themedColors.primary }
-                ]}
-              />
-            </View>
           </View>
         </ScrollView>
       </Screen>
@@ -147,7 +137,7 @@ const styles = StyleSheet.create({
   },
   forgotPasswordHeading: {
     fontSize: FONT_SIZE._2xl,
-    marginTop: 40
+    marginTop: SPACE._3xl
   },
   email: {
     marginTop: SPACE._2xl

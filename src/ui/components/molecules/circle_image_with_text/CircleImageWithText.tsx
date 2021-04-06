@@ -36,19 +36,17 @@ export const CircleImageWithText = React.memo<Props>(
         <CircleImageBorder imageUrl={imageUrl} />
         <View style={styles.viewRequest}>
           <View style={styles.circleWithText}>
-            <View>
-              <MultilineSpannableText
-                text={[username, message, boldText]}
-                textStyle={[
-                  [styles.name, { color: theme.themedColors.primary }],
-                  [styles.message, { color: theme.themedColors.black }],
-                  [styles.boldText, { color: theme.themedColors.primary }]
-                ]}
-                onPress={(value: string, index) => {
-                  userNameOnPress?.(value, index);
-                }}
-              />
-            </View>
+            <MultilineSpannableText
+              text={[username, message, boldText]}
+              textStyle={[
+                [styles.name, { color: theme.themedColors.primary }],
+                [styles.message, { color: theme.themedColors.black }],
+                [styles.boldText, { color: theme.themedColors.primary }]
+              ]}
+              onPress={(value: string, index) => {
+                userNameOnPress?.(value, index);
+              }}
+            />
           </View>
           <View style={styles.requestButtonWithText}>
             <AppLabel
@@ -110,8 +108,8 @@ const styles = StyleSheet.create({
     height: 0.5,
     width: "100%",
     alignSelf: "flex-end",
-    marginTop: SPACE.lg,
-    marginBottom: SPACE.xl
+    marginTop: SPACE.md,
+    marginBottom: SPACE.lg
   },
   name: { fontFamily: Fonts.bold, fontSize: FONT_SIZE.xsm },
   message: { fontWeight: "normal", fontSize: FONT_SIZE.xsm },

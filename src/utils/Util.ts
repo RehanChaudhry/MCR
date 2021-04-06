@@ -141,6 +141,10 @@ export const iframePattern = new RegExp(
   "(?:<iframe[^>]*)(?:(?:\\/>)|(?:>.*?<\\/iframe>))"
 );
 
+export const loginRegx = new RegExp(
+  "(?=.*[0-9])(?=.*[A-Z])[A-Za-z\\d]{8,}$"
+);
+
 export type SvgProp = (
   color?: Color,
   width?: NumberProp,

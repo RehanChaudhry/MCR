@@ -2,7 +2,8 @@ export default {
   splash: {},
 
   login: {
-    pass_validation: "Password must be of at least 8 characters.",
+    pass_validation:
+      "Password containing One alphabet (capital case), One number only and minimum eight characters.",
     enter_valid_email_validation: "Please enter a valid email address.",
     email_address: "Email address",
     enter_your_email: "Enter your email address",
@@ -38,7 +39,7 @@ export default {
       "Click the link in the email to reset your password.",
     feedBack_fourth_text:
       "If you didn’t see the email in your Inbox, check other places, like your junk, spam, social or other folders before submitting new request.",
-    did_not_recieve_email: "Didn’t received email? Try again",
+    did_not_recieve_email: "Didn’t receive email? Try again",
     go_back_signin: "Go back to Sign In"
   },
 
