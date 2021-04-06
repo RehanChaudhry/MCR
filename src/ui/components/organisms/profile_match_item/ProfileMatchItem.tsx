@@ -133,7 +133,7 @@ const ProfileMatchItem = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    borderRadius: moderateScale(12),
+    borderRadius: 12,
     padding: SPACE.md,
     ...shadowStyleProps
   },
@@ -141,9 +141,9 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   profileImage: {
-    width: moderateScale(64),
-    height: moderateScale(64),
-    borderRadius: moderateScale(32)
+    width: 64,
+    height: 64,
+    borderRadius: 32
   },
   infoTextContainer: {
     marginStart: SPACE.md
@@ -151,7 +151,8 @@ const styles = StyleSheet.create({
   userName: { fontSize: FONT_SIZE.lg, includeFontPadding: false },
   subtitle: { fontSize: FONT_SIZE.xs, marginTop: SPACE._2xs },
   matchScore: {
-    marginTop: SPACE.md
+    marginTop: SPACE.md,
+    alignSelf: "baseline"
   },
   buttonContainer: {
     flexDirection: "row-reverse",
@@ -162,13 +163,13 @@ const styles = StyleSheet.create({
   },
   btnAction: {
     alignSelf: "stretch",
-    height: moderateScale(36),
+    height: 36,
     flex: 1
   },
   btnChat: {
     marginLeft: SPACE.md,
-    height: moderateScale(36),
-    width: moderateScale(36)
+    height: 36,
+    width: 36
   },
   icCross: {
     position: "absolute",

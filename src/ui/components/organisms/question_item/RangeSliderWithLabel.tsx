@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { usePreferredTheme } from "hooks";
-import { FONT_SIZE, moderateScale, SPACE } from "config/Dimens";
+import { FONT_SIZE, SPACE } from "config/Dimens";
 import Thumb from "assets/images/thumb.svg";
 
 interface RangeSliderWithLabelProps {
@@ -41,8 +41,8 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
       return (
         <Thumb
           testID="icon"
-          width={moderateScale(24)}
-          height={moderateScale(24)}
+          width={24}
+          height={24}
           fill={themedColors.secondary}
           style={styles.marker}
         />
@@ -142,8 +142,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACE.sm
   },
   track: {
-    height: moderateScale(8),
-    borderRadius: moderateScale(4)
+    height: 8,
+    borderRadius: 4
   },
   label: {
     fontSize: FONT_SIZE.sm
@@ -158,24 +158,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACE.sm
   },
   sliderInnerContainer: {
-    height: moderateScale(40),
+    height: 40,
     paddingVertical: SPACE.lg,
     paddingHorizontal: SPACE.sm
   },
   leftPointer: {
     position: "absolute",
-    width: moderateScale(2),
-    height: moderateScale(8),
-    left: moderateScale(2),
+    width: 2,
+    height: 8,
+    left: 2,
     top: SPACE.sm,
-    borderRadius: moderateScale(1)
+    borderRadius: 1
   },
   rightPointer: {
     position: "absolute",
-    width: moderateScale(2),
-    height: moderateScale(8),
-    right: moderateScale(2),
+    width: 2,
+    height: 8,
+    right: 2,
     bottom: SPACE.sm,
-    borderRadius: moderateScale(1)
+    borderRadius: 1
   }
 });
