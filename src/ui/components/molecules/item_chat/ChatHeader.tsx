@@ -70,8 +70,8 @@ export const ChatHeader = React.memo<ChatHeaderProps>(
 const styles = StyleSheet.create({
   listHeader: (themedColors: ColorPalette) => {
     return {
-      paddingStart: SPACE.md + 5,
-      paddingVertical: SPACE.sm,
+      paddingStart: SPACE.lg,
+      paddingTop: SPACE.lg,
       fontSize: FONT_SIZE._2xsm,
       color: themedColors.interface["600"]
     };

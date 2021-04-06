@@ -16,6 +16,7 @@ import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem, { SenderType } from "models/ChatItem";
 import { moderateScale } from "config/Dimens";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
+import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 
 export interface ItemChatListProps extends ViewStyle {
   onPress: () => void;
@@ -93,6 +94,11 @@ export const ItemChatList = React.memo<ItemChatListProps>(
               ellipsizeMode="tail"
               weight="normal"
             />
+
+            <ListItemSeparator
+              style={styles.separator}
+              shouldNotOptimize={true}
+            />
           </View>
         </View>
       </TouchableOpacity>
@@ -108,7 +114,8 @@ const styles = StyleSheet.create({
       borderStartColor: shouldShowBorder
         ? themedColors.primary
         : themedColors.backgroundSecondary,
-      borderStartWidth: 5
+      borderStartWidth: 5,
+      marginTop: SPACE.md
     };
   },
   indicator: {
@@ -120,17 +127,16 @@ const styles = StyleSheet.create({
     width: moderateScale(45),
     height: moderateScale(45),
     resizeMode: "cover",
-    marginTop: SPACE.md,
     borderRadius: 45 / 2,
     overflow: "hidden"
   },
   textWrapper: (theme: ColorPalette) => {
     return {
-      paddingVertical: SPACE.md,
       marginStart: SPACE.md,
       flexDirection: "column",
       borderBottomColor: theme.interface["300"],
-      flex: 1
+      flex: 1,
+      justifyContent: "space-between"
     };
   },
   nameContainer: {
@@ -149,16 +155,16 @@ const styles = StyleSheet.create({
         recipientLength > 1 && !isMessageRead
           ? theme.primary
           : theme.label,
-      lineHeight: 25,
+      lineHeight: 20,
       paddingEnd: SPACE.sm,
       flex: 1
     };
   },
   timeText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE._2xsm,
+      fontSize: moderateScale(11),
       color: theme.interface["700"],
-      lineHeight: 20,
+      lineHeight: 16,
       marginEnd: SPACE.md
     };
   },
@@ -168,13 +174,17 @@ const styles = StyleSheet.create({
     isMessageRead: boolean
   ) => {
     return {
-      fontSize: FONT_SIZE._2xsm,
+      fontSize: moderateScale(11),
       color: !isMessageRead
         ? theme.label
         : isStaffMessage
         ? theme.interface["700"]
         : theme.interface["600"],
-      lineHeight: 16
+      lineHeight: 16,
+      marginTop: SPACE.xxsm
     };
+  },
+  separator: {
+    marginTop: SPACE.md
   }
 });
