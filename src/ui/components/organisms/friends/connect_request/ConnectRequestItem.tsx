@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   actionButtonText: {
     fontFamily: FONTS.semiBold,
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   },
   actionsContainer: {
     flexDirection: "row",
@@ -126,14 +126,14 @@ const styles = StyleSheet.create({
     borderRadius: 24
   },
   subTitleText: {
-    fontSize: FONT_SIZE._3xm,
-    marginTop: SPACE.xxsm
+    fontSize: FONT_SIZE.xs,
+    marginTop: SPACE._2xs
   },
   titleText: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   },
   spacer: {
-    padding: SPACE.xsm
+    padding: SPACE.xs
   }
 });
 

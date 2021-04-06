@@ -303,13 +303,13 @@ const styles = StyleSheet.create({
     color: grayShades.warmGray["300"]
   },
   headingStyle: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.base
   },
   buttonView: {
     marginTop: SPACE.md
   },
   learnMore: {
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.xs,
     fontWeight: "bold",
     textAlign: "left"
   },
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
   aboutMe: {
     height: 80,
     borderWidth: 1,
-    paddingVertical: SPACE.xsm
+    paddingVertical: SPACE.xs
   },
   inputFieldRow: {
     flex: 1

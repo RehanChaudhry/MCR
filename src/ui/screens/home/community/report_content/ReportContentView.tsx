@@ -126,18 +126,18 @@ const styles = StyleSheet.create({
   },
   inputFieldRow: {
     flex: 1,
-    paddingTop: SPACE.xxsm
+    paddingTop: SPACE._2xs
   },
   descriptionView: {
     height: 100,
     borderWidth: 1,
-    paddingVertical: SPACE.xsm
+    paddingVertical: SPACE.xs
   },
   reasonContainer: {
     flexDirection: "row",
     marginTop: SPACE.md
   },
   heading: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.base
   }
 });

@@ -236,11 +236,11 @@ const styles = StyleSheet.create({
     ...shadowStyleProps
   },
   textStyle: {
-    paddingTop: SPACE.xsm,
-    fontSize: FONT_SIZE.xsm
+    paddingTop: SPACE.xs,
+    fontSize: FONT_SIZE.xs
   },
   description: {
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.xs,
     marginTop: SPACE.md,
     marginHorizontal: SPACE.md
   },
@@ -255,15 +255,15 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   updateText: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   },
   updateButton: { padding: SPACE.md },
   cardPadding: { padding: SPACE.md },
   matchingInfoLabel: {
-    fontSize: FONT_SIZE._2xsm,
-    paddingHorizontal: SPACE.xsm
+    fontSize: FONT_SIZE.xs,
+    paddingHorizontal: SPACE.xs
   },
-  matchingInfoData: { fontSize: FONT_SIZE._2xsm, marginTop: SPACE.xsm },
+  matchingInfoData: { fontSize: FONT_SIZE.xs, marginTop: SPACE.xs },
   userHeader: {
     marginTop: SPACE.md,
     marginHorizontal: SPACE.md

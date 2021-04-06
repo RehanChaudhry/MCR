@@ -135,14 +135,14 @@ const styles = StyleSheet.create({
   textInput: {
     fontFamily: FONTS.regular,
     flex: 1,
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.xs,
     padding: 0,
     color: COLORS.textColor1
   },
   textInputSmallFont: {
     fontFamily: FONTS.regular,
     flex: 1,
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.xs,
     padding: 0,
     color: COLORS.textColor1
   }

@@ -202,5 +202,5 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.sm
   },
   dialogTitleStyle: { fontSize: FONT_SIZE.sm, textAlign: "center" },
-  dialogMessageStyle: { fontSize: FONT_SIZE._2xsm, textAlign: "center" }
+  dialogMessageStyle: { fontSize: FONT_SIZE.xs, textAlign: "center" }
 });

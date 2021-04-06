@@ -56,7 +56,7 @@ const style = StyleSheet.create({
     marginLeft: SPACE.sm
   },
   text: {
-    paddingLeft: SPACE.xxsm
+    paddingLeft: SPACE._2xs
   }
 });
 

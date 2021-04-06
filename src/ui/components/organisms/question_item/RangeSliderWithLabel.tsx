@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   label: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   },
   labelRight: {
     alignSelf: "flex-end"

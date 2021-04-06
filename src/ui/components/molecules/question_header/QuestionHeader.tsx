@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     borderRadius: 5,
-    padding: SPACE.xsm,
+    padding: SPACE.xs,
 
     ...shadowStyleProps
   },
   expandedContainer: {
     flexDirection: "column",
-    padding: SPACE.xsm,
+    padding: SPACE.xs,
     overflow: "hidden",
     borderTopStartRadius: 5,
     borderTopEndRadius: 5,
@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
     // shadow
     // ...shadowStyleProps
   },
-  title: { fontSize: FONT_SIZE.sm, padding: SPACE.xsm },
-  description: { fontSize: FONT_SIZE._2xsm, padding: SPACE.xsm },
+  title: { fontSize: FONT_SIZE.sm, padding: SPACE.xs },
+  description: { fontSize: FONT_SIZE.xs, padding: SPACE.xs },
   arrowContainer: {
     width: moderateScale(30),
     height: moderateScale(30),

@@ -149,8 +149,8 @@ const styles = StyleSheet.create({
     marginStart: SPACE.md,
     alignItems: "flex-start"
   },
-  userName: { fontSize: FONT_SIZE.xsm, includeFontPadding: false },
-  subtitle: { fontSize: FONT_SIZE._3xm },
+  userName: { fontSize: FONT_SIZE.xs, includeFontPadding: false },
+  subtitle: { fontSize: FONT_SIZE.xs },
   matchScore: {
     marginTop: SPACE.md
   },
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   btnActionText: {
     fontFamily: FONTS.semiBold,
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   },
   btnAction: {
     alignSelf: "stretch",
@@ -169,9 +169,9 @@ const styles = StyleSheet.create({
   btnChat: { marginLeft: SPACE.md },
   icCross: {
     position: "absolute",
-    top: SPACE.xsm,
-    end: SPACE.xsm,
-    padding: SPACE.xsm
+    top: SPACE.xs,
+    end: SPACE.xs,
+    padding: SPACE.xs
   }
 });
 

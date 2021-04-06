@@ -17,18 +17,13 @@ const moderateVerticalScale = (size: number, factor = 2) =>
 export { scale, verticalScale, moderateVerticalScale, moderateScale };
 
 export const FONT_SIZE = {
-  _3xm: moderateScale(10.0),
-  _2xsm: moderateScale(12.0),
-  xsm: moderateScale(13.0),
-  sm: moderateScale(14.0),
-  md: moderateScale(15.0),
-  lg: moderateScale(16.0),
-  xl: moderateScale(18.0),
-  _2xl: moderateScale(20.0),
-  _3xl: moderateScale(24.0),
-  _4xl: moderateScale(30.0),
-  _5xl: moderateScale(36.0),
-  _6xl: moderateScale(48.0)
+  xs: 12.0,
+  sm: 14.0,
+  base: 16.0,
+  lg: 18.0,
+  xl: 20.0,
+  _2xl: 24.0,
+  _3xl: 30.0
 };
 
 export const MARGIN_SIZE = {
@@ -36,13 +31,13 @@ export const MARGIN_SIZE = {
 };
 
 export const SPACE = {
-  xxsm: moderateScale(4.0),
-  xsm: moderateScale(6.0),
-  sm: moderateScale(8.0),
-  md: moderateScale(12.0),
-  lg: moderateScale(16.0),
-  xl: moderateScale(18.0),
-  _2xl: moderateScale(24.0),
-  _3xl: moderateScale(32),
-  _4xl: moderateScale(48)
+  _2xs: 4.0,
+  xs: 6.0,
+  sm: 8.0,
+  md: 12.0,
+  lg: 16.0,
+  xl: 18.0,
+  _2xl: 24.0,
+  _3xl: 32,
+  _4xl: 48
 };

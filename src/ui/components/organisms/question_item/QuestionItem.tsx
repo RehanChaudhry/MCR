@@ -125,7 +125,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
               style={[
                 styles.label,
                 styles.questionLabel,
-                { marginEnd: SPACE.xsm }
+                { marginEnd: SPACE.xs }
               ]}
               text="I have no preference"
             />
@@ -168,10 +168,10 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth
   },
   title: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   },
   label: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   },
   questionLabel: {
     fontWeight: "700",
@@ -192,6 +192,6 @@ const styles = StyleSheet.create({
     alignContent: "center"
   },
   labelXsm: {
-    fontSize: FONT_SIZE._3xm
+    fontSize: FONT_SIZE.xs
   }
 });

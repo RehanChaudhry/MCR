@@ -6,9 +6,9 @@ exports[`snapshot testing 1`] = `
     Array [
       Object {
         "alignItems": "center",
-        "height": 40,
+        "height": 60.466019417475735,
         "justifyContent": "center",
-        "width": 40,
+        "width": 60.466019417475735,
       },
       Object {
         "backgroundColor": "#E5E7EB",

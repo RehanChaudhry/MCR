@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
     height: moderateScale(64),
     borderRadius: moderateScale(32)
   },
-  userName: { fontSize: FONT_SIZE.xsm, includeFontPadding: false },
-  subtitle: { fontSize: FONT_SIZE._2xsm, marginTop: SPACE.xsm },
+  userName: { fontSize: FONT_SIZE.xs, includeFontPadding: false },
+  subtitle: { fontSize: FONT_SIZE.xs, marginTop: SPACE.xs },
   infoTextContainer: {
     flexDirection: "column",
     justifyContent: "center",

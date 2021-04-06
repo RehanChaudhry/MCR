@@ -100,7 +100,7 @@ const AppFormField = optimizedMemo<Props>(
 
 const styles = StyleSheet.create({
   label: {
-    paddingBottom: SPACE.xsm
+    paddingBottom: SPACE.xs
   },
   space: {
     flex: 1
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   linkLabel: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   }
 });
 

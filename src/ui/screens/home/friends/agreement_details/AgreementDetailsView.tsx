@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   cardView: { padding: SPACE.md, margin: SPACE.lg },
   heading: { fontSize: FONT_SIZE.lg },
   pending: {
-    marginTop: SPACE.xsm
+    marginTop: SPACE.xs
   },
   exportRoommateAgreement: {
     marginTop: SPACE.sm,

@@ -77,11 +77,11 @@ const styles = StyleSheet.create({
     marginBottom: SPACE.sm
   },
   subTitle: {
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.xs,
     marginBottom: SPACE.sm
   },
   buttonTitle: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   },
   actionContainer: {
     flexDirection: "row"

@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   header: {
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.xs,
     marginBottom: SPACE.lg,
     marginLeft: SPACE.lg
   },

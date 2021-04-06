@@ -46,7 +46,7 @@ const style = StyleSheet.create({
     marginRight: SPACE.sm
   },
   text: {
-    paddingRight: SPACE.xxsm
+    paddingRight: SPACE._2xs
   }
 });
 

@@ -107,10 +107,10 @@ const styles = StyleSheet.create({
   dropDown: {
     borderRadius: moderateScale(20),
     height: moderateScale(40),
-    paddingHorizontal: SPACE.xsm
+    paddingHorizontal: SPACE.xs
   },
-  filterText: { fontSize: FONT_SIZE._2xsm },
+  filterText: { fontSize: FONT_SIZE.xs },
   separator: { height: SPACE.md },
   headerContainer: { padding: SPACE.md },
-  headerText: { fontSize: FONT_SIZE._2xsm }
+  headerText: { fontSize: FONT_SIZE.xs }
 });

@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
         ? theme.interface["700"]
         : theme.interface["600"],
       lineHeight: 16,
-      marginTop: SPACE.xxsm
+      marginTop: SPACE._2xs
     };
   },
   separator: {

@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   text: {
     marginTop: SPACE.md,
     textAlign: "center",
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   },
   buttonViewStyle: {
     marginTop: SPACE.md
@@ -161,25 +161,25 @@ const styles = StyleSheet.create({
   learnAboutText: {
     marginTop: SPACE.md,
     textAlign: "center",
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   },
   cardViewMainContainer: {
     padding: SPACE.md
   },
   roommate_heading: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.base
   },
   roommate_text: {
-    marginTop: SPACE.xsm,
-    fontSize: FONT_SIZE.xsm
+    marginTop: SPACE.xs,
+    fontSize: FONT_SIZE.xs
   },
   heading: {
     marginTop: SPACE.lg,
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.base
   },
   textSocialNetworking: {
     marginTop: SPACE.sm,
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.base
   },
   continue: {
     marginTop: SPACE.xl,

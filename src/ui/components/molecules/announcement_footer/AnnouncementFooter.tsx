@@ -122,7 +122,7 @@ const style = StyleSheet.create({
     // marginRight: SPACE.sm
   },
   icon: {
-    marginTop: SPACE.xxsm,
-    marginRight: SPACE.xsm
+    marginTop: SPACE._2xs,
+    marginRight: SPACE.xs
   }
 });

@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
       borderColor: theme.separator
     };
   },
-  searchText: { fontSize: FONT_SIZE._2xsm },
+  searchText: { fontSize: FONT_SIZE.xs },
   list: { flex: 1 },
   breadCrumbs: {},
   messageContainer: {},

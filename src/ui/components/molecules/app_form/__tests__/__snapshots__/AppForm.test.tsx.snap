@@ -63,7 +63,7 @@ exports[`rendering... renders correctly 1`] = `
           "flex": 1,
           "flexDirection": "row",
           "fontFamily": "Inter-Regular",
-          "fontSize": 13,
+          "fontSize": 12,
           "height": 42,
           "justifyContent": "center",
           "paddingLeft": 12,
@@ -165,7 +165,7 @@ exports[`rendering... renders correctly 1`] = `
           "flex": 1,
           "flexDirection": "row",
           "fontFamily": "Inter-Regular",
-          "fontSize": 13,
+          "fontSize": 12,
           "height": 42,
           "justifyContent": "center",
           "paddingLeft": 12,
@@ -228,7 +228,7 @@ exports[`rendering... renders correctly 1`] = `
         "borderRadius": 6,
         "elevation": 1,
         "flexDirection": "row",
-        "height": 40,
+        "height": 60.466019417475735,
         "justifyContent": "space-between",
         "opacity": 1,
         "shadowColor": "#FFFFFF",
@@ -279,7 +279,7 @@ exports[`rendering... renders correctly 1`] = `
                 },
                 Array [
                   Object {
-                    "fontSize": 13,
+                    "fontSize": 12,
                     "overflow": "hidden",
                   },
                   Object {

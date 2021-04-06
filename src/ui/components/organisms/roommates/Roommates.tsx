@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   title: { includeFontPadding: false, fontSize: FONT_SIZE.sm },
   roommateAgreement: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   },
   roommateAgreementView: {
     paddingVertical: SPACE.md

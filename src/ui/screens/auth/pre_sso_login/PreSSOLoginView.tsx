@@ -131,11 +131,11 @@ const styles = StyleSheet.create({
   },
   ssoSecondText: {
     marginTop: SPACE.xl,
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   },
   ssoText: {
     marginTop: SPACE._2xl,
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   },
   loginImage: {
     marginTop: SPACE._2xl

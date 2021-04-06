@@ -164,24 +164,24 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: moderateScale(50),
     height: moderateScale(50),
-    padding: SPACE.xxsm,
+    padding: SPACE._2xs,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: moderateScale(25)
   },
   message: {
-    marginStart: SPACE.xsm,
+    marginStart: SPACE.xs,
     paddingBottom: SPACE.md,
     marginTop: moderateScale(15),
     flex: 1
   },
-  messageText: { fontSize: FONT_SIZE._2xsm },
+  messageText: { fontSize: FONT_SIZE.xs },
   bottomContainer: {
     marginStart: moderateScale(55),
     paddingBottom: SPACE.md
   },
   date: {
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.xs,
     includeFontPadding: false
   },
   verticalLine: {

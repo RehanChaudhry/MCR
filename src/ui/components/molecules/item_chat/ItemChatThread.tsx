@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   messageText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE.xsm,
+      fontSize: FONT_SIZE.xs,
       color: theme.label,
       lineHeight: 16
     };

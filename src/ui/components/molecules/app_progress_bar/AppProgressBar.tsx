@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     fontWeight: "700"
   },
   textStyle: {
-    fontSize: FONT_SIZE._3xm,
+    fontSize: FONT_SIZE.xs,
     fontWeight: "400"
   }
 });

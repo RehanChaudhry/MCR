@@ -113,17 +113,17 @@ const styles = StyleSheet.create({
     marginTop: SPACE.lg,
     marginBottom: SPACE.xl
   },
-  name: { fontFamily: Fonts.bold, fontSize: FONT_SIZE.xsm },
-  message: { fontWeight: "normal", fontSize: FONT_SIZE.xsm },
+  name: { fontFamily: Fonts.bold, fontSize: FONT_SIZE.xs },
+  message: { fontWeight: "normal", fontSize: FONT_SIZE.xs },
   boldText: {
     fontFamily: Fonts.regular,
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   },
   time: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   },
   buttonText: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   },
   viewRequest: {
     flex: 1

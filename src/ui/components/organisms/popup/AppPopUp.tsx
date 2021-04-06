@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     height: 0.5
   },
   spacer: {
-    padding: SPACE.xsm
+    padding: SPACE.xs
   }
 });
 

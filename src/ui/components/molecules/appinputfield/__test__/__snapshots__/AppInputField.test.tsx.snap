@@ -13,7 +13,7 @@ exports[`snapshot testing 1`] = `
         "flex": 1,
         "flexDirection": "row",
         "fontFamily": "Inter-Regular",
-        "fontSize": 13,
+        "fontSize": 12,
         "height": 42,
         "justifyContent": "center",
         "paddingLeft": 12,
