@@ -19,7 +19,7 @@ exports[`snapshot testing 1`] = `
       "borderRadius": 6,
       "elevation": 1,
       "flexDirection": "row",
-      "height": 60.466019417475735,
+      "height": 40,
       "justifyContent": "space-between",
       "opacity": 1,
       "shadowColor": "#FFFFFF",
@@ -38,7 +38,7 @@ exports[`snapshot testing 1`] = `
       Object {
         "alignItems": "center",
         "flexDirection": "row",
-        "padding": 12.093203883495146,
+        "padding": 8,
       }
     }
     testID="button-container"
@@ -70,7 +70,7 @@ exports[`snapshot testing 1`] = `
               },
               Array [
                 Object {
-                  "fontSize": 19.651456310679613,
+                  "fontSize": 13,
                   "overflow": "hidden",
                 },
                 Object {

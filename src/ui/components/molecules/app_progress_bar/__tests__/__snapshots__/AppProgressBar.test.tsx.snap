@@ -81,7 +81,7 @@ exports[`Renders snapshot as expected 1`] = `
             },
             Array [
               Object {
-                "fontSize": 15.116504854368934,
+                "fontSize": 10,
                 "fontWeight": "400",
               },
               undefined,
@@ -108,7 +108,7 @@ exports[`Renders snapshot as expected 1`] = `
             },
             Array [
               Object {
-                "fontSize": 15.116504854368934,
+                "fontSize": 10,
                 "fontWeight": "400",
               },
               Object {

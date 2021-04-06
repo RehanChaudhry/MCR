@@ -93,7 +93,7 @@ exports[`Segmented control tests snapshot 1`] = `
               },
               Array [
                 Object {
-                  "fontSize": 19.651456310679613,
+                  "fontSize": 13,
                 },
                 Array [
                   Object {
@@ -152,7 +152,7 @@ exports[`Segmented control tests snapshot 1`] = `
               },
               Array [
                 Object {
-                  "fontSize": 19.651456310679613,
+                  "fontSize": 13,
                 },
                 Array [
                   Object {
@@ -211,7 +211,7 @@ exports[`Segmented control tests snapshot 1`] = `
               },
               Array [
                 Object {
-                  "fontSize": 19.651456310679613,
+                  "fontSize": 13,
                 },
                 Array [
                   Object {

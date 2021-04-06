@@ -28,7 +28,7 @@ exports[`rendering... renders correctly 1`] = `
             },
             Array [
               Object {
-                "paddingBottom": 9.069902912621359,
+                "paddingBottom": 6,
               },
               Object {
                 "color": "#111827",
@@ -63,11 +63,11 @@ exports[`rendering... renders correctly 1`] = `
           "flex": 1,
           "flexDirection": "row",
           "fontFamily": "Inter-Regular",
-          "fontSize": 19.651456310679613,
+          "fontSize": 13,
           "height": 42,
           "justifyContent": "center",
-          "paddingLeft": 18.139805825242718,
-          "paddingRight": 18.139805825242718,
+          "paddingLeft": 12,
+          "paddingRight": 12,
         },
         undefined,
       ]
@@ -130,7 +130,7 @@ exports[`rendering... renders correctly 1`] = `
             },
             Array [
               Object {
-                "paddingBottom": 9.069902912621359,
+                "paddingBottom": 6,
               },
               Object {
                 "color": "#111827",
@@ -165,11 +165,11 @@ exports[`rendering... renders correctly 1`] = `
           "flex": 1,
           "flexDirection": "row",
           "fontFamily": "Inter-Regular",
-          "fontSize": 19.651456310679613,
+          "fontSize": 13,
           "height": 42,
           "justifyContent": "center",
-          "paddingLeft": 18.139805825242718,
-          "paddingRight": 18.139805825242718,
+          "paddingLeft": 12,
+          "paddingRight": 12,
         },
         undefined,
       ]
@@ -228,7 +228,7 @@ exports[`rendering... renders correctly 1`] = `
         "borderRadius": 6,
         "elevation": 1,
         "flexDirection": "row",
-        "height": 60.466019417475735,
+        "height": 40,
         "justifyContent": "space-between",
         "opacity": 1,
         "shadowColor": "#FFFFFF",
@@ -247,7 +247,7 @@ exports[`rendering... renders correctly 1`] = `
         Object {
           "alignItems": "center",
           "flexDirection": "row",
-          "padding": 12.093203883495146,
+          "padding": 8,
         }
       }
       testID="button-container"
@@ -279,7 +279,7 @@ exports[`rendering... renders correctly 1`] = `
                 },
                 Array [
                   Object {
-                    "fontSize": 19.651456310679613,
+                    "fontSize": 13,
                     "overflow": "hidden",
                   },
                   Object {

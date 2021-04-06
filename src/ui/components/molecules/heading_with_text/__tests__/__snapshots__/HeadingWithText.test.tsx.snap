@@ -17,7 +17,7 @@ exports[`Snapshot testing 1`] = `
           },
           Array [
             Object {
-              "fontSize": 22.674757281553397,
+              "fontSize": 15,
             },
             undefined,
           ],
@@ -43,7 +43,7 @@ exports[`Snapshot testing 1`] = `
           },
           Array [
             Object {
-              "fontSize": 19.651456310679613,
+              "fontSize": 13,
             },
             undefined,
           ],
