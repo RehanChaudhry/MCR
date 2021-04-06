@@ -63,8 +63,12 @@ export const WriteMessage = React.memo<TypingComponentProps>(
           icon={btnImage ?? defaultIcon}
           containerShape={CONTAINER_TYPES.SQUARE}
           onPress={() => {
-            setInitialText("");
-            btnPressCallback(initialText);
+            if (initialText === "") {
+              return;
+            } else {
+              setInitialText("");
+              btnPressCallback(initialText);
+            }
           }}
           containerStyle={styles.imgPaper(themedColors)}
         />

@@ -2,8 +2,8 @@ import Chat from "assets/images/chat.svg";
 import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
 import ChatItem, { SenderType } from "models/ChatItem";
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { ScrollView, StyleSheet } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { ItemChatThread } from "ui/components/molecules/item_chat/ItemChatThread";
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
@@ -20,6 +20,10 @@ export const CommentsView = React.memo<Props>(
   ({ data, sentMessageApi }) => {
     let [comments, setComments] = useState<ChatItem[]>(data);
     const theme = usePreferredTheme();
+    const scrollRef = useRef<ScrollView | null>(null);
+    scrollRef.current?.scrollToEnd({
+      animated: true
+    });
 
     const renderItem = ({ item }: { item: ChatItem }) => {
       AppLog.log("rendering list item : " + JSON.stringify(item));
@@ -40,18 +44,29 @@ export const CommentsView = React.memo<Props>(
       setComments(sentMessageApi(comments, chatMessage));
     }
 
+    useEffect(() => {
+      setTimeout(() => {
+        scrollRef.current?.scrollTo({
+          x: 0,
+          animated: true
+        });
+      }, 100);
+    }, [comments]);
+
     return (
       <Screen style={styles.container}>
-        <FlatListWithPb
-          shouldShowProgressBar={false}
-          data={comments}
-          renderItem={renderItem}
-          showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
-          style={[styles.list]}
-          inverted={true}
-          keyExtractor={(item, index) => index.toString()}
-        />
+        <ScrollView ref={scrollRef}>
+          <FlatListWithPb
+            shouldShowProgressBar={false}
+            data={comments}
+            renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
+            removeClippedSubviews={true}
+            style={[styles.list]}
+            inverted={true}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </ScrollView>
         <WriteMessage
           btnPressCallback={sentMessage}
           appInputPlaceHolder={Strings.chatThreadScreen.typingHint}
