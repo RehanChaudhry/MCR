@@ -55,7 +55,7 @@ exports[`snapshot testing 1`] = `
             Array [
               Object {
                 "fontFamily": "Inter-SemiBold",
-                "fontSize": 18.139805825242718,
+                "fontSize": 12,
                 "marginStart": 5,
               },
               Object {

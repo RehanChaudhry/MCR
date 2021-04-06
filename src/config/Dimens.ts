@@ -47,4 +47,4 @@ export const SPACE = {
   _4xl: moderateScale(48)
 };
 
-export const lineHeight = moderateScale(16);
+export const lineHeight = moderateScale(20);

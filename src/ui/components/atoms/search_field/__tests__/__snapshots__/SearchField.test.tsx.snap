@@ -10,7 +10,7 @@ exports[`Snapshot testing 1`] = `
         "flexDirection": "row",
         "height": 40,
         "justifyContent": "center",
-        "padding": 18.139805825242718,
+        "padding": 12,
         "paddingBottom": 2.5,
         "paddingTop": 2.5,
       },
@@ -34,7 +34,7 @@ exports[`Snapshot testing 1`] = `
           "color": "#666666",
           "flex": 1,
           "fontFamily": "Inter-Regular",
-          "fontSize": 19.651456310679613,
+          "fontSize": 13,
           "padding": 0,
         },
         Object {

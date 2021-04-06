@@ -7,6 +7,7 @@ import { AppSwitch } from "ui/components/atoms/app_switch/AppSwitch";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { RangeSliderWithLabel } from "./RangeSliderWithLabel";
 import Question from "models/Question";
+import { lineHeight, moderateScale } from "config/Dimens";
 
 export interface SliderCallback {
   topRangeSliderResult: number[];
@@ -164,14 +165,15 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
 
 const styles = StyleSheet.create({
   container: {
-    padding: SPACE.md,
+    padding: SPACE.lg,
     borderTopWidth: StyleSheet.hairlineWidth
   },
   title: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: moderateScale(13.0),
+    lineHeight: lineHeight
   },
   label: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: moderateScale(11.0)
   },
   questionLabel: {
     fontWeight: "700",

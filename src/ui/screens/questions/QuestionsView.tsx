@@ -163,11 +163,12 @@ function createListFooter(
             backgroundColor: themedColors.primary
           }
         ]}
+        fontWeight={"semi-bold"}
         textStyle={[styles.saveButton, { color: themedColors.background }]}
         rightIcon={() => (
           <RightArrowCircle
-            width={moderateScale(20)}
-            height={moderateScale(20)}
+            width={moderateScale(13)}
+            height={moderateScale(13)}
             fill={themedColors.background}
           />
         )}
@@ -179,12 +180,11 @@ function createListFooter(
 const styles = StyleSheet.create({
   sectionedList: { padding: SPACE.lg },
   lastBody: {
-    borderBottomStartRadius: 5,
-    borderBottomEndRadius: 5,
-    marginBottom: SPACE.sm
+    borderBottomStartRadius: moderateScale(6),
+    borderBottomEndRadius: moderateScale(6)
   },
   infoText: {
-    fontSize: moderateScale(11),
+    fontSize: moderateScale(13),
     marginBottom: SPACE.lg,
     textAlign: "center",
     lineHeight: lineHeight
@@ -193,8 +193,7 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   footerContainer: {
-    flexDirection: "column",
-    marginTop: SPACE.md
+    flexDirection: "column"
   },
   headerCard: {
     overflow: "hidden",
@@ -206,10 +205,10 @@ const styles = StyleSheet.create({
     ...shadowStyleProps
   },
   infoCardHeading: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: moderateScale(15)
   },
   infoCardText: {
-    fontSize: moderateScale(11.0),
+    fontSize: moderateScale(13.0),
     marginTop: SPACE.sm,
     lineHeight: lineHeight
   },
@@ -218,7 +217,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left"
   },
-  saveButton: { fontWeight: "bold", fontSize: FONT_SIZE.xsm },
+  saveButton: { fontSize: moderateScale(15.0) },
   saveButtonContainer: {},
   buttonView: {
     marginTop: SPACE.md

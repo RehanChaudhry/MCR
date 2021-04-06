@@ -1,11 +1,11 @@
 import ChevronDown from "assets/images/chevron-down.svg";
-import { FONT_SIZE, SPACE } from "config";
+import { SPACE } from "config";
 import { lineHeight, moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import QuestionSection from "models/QuestionSection";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Color, NumberProp } from "react-native-svg";
+import { Color } from "react-native-svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
   AppImageBackground,
@@ -23,12 +23,14 @@ const QuestionHeader: React.FC<Props> = ({
   questionGroup
 }: Props) => {
   const theme = usePreferredTheme();
-  const chevronDownIcon: SvgProp = (
-    color?: Color,
-    width?: NumberProp,
-    height?: NumberProp
-  ) => {
-    return <ChevronDown width={width} height={height} fill={color} />;
+  const chevronDownIcon: SvgProp = (color?: Color) => {
+    return (
+      <ChevronDown
+        width={moderateScale(20)}
+        height={moderateScale(20)}
+        fill={color}
+      />
+    );
   };
   if (isExpanded) {
     return (
@@ -65,7 +67,7 @@ const QuestionHeader: React.FC<Props> = ({
         <AppLabel
           style={styles.title}
           text={questionGroup.title}
-          weight="bold"
+          weight="semi-bold"
         />
 
         <AppImageBackground
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    borderRadius: 5,
+    borderRadius: moderateScale(6),
     paddingHorizontal: SPACE.lg,
     paddingVertical: SPACE.sm,
 
@@ -98,23 +100,22 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     padding: SPACE.lg,
     overflow: "hidden",
-    borderTopStartRadius: 5,
-    borderTopEndRadius: 5,
+    borderTopStartRadius: moderateScale(6),
+    borderTopEndRadius: moderateScale(6),
     borderBottomWidth: StyleSheet.hairlineWidth
 
     // shadow
     // ...shadowStyleProps
   },
-  title: { fontSize: FONT_SIZE.xsm },
+  title: { fontSize: moderateScale(15) },
   description: {
-    fontSize: moderateScale(11.0),
+    fontSize: moderateScale(13.0),
     marginTop: SPACE.sm,
     lineHeight: lineHeight
   },
   arrowContainer: {
-    width: moderateScale(30),
-    height: moderateScale(30),
-    marginRight: moderateScale(5)
+    width: moderateScale(32),
+    height: moderateScale(32)
   }
 });
 

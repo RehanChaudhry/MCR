@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { ImageStyle, StyleProp, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
-import { FONT_SIZE } from "config";
 import { usePreferredTheme } from "hooks";
 import { moderateScale } from "config/Dimens";
 import Thumb from "assets/images/thumb.svg";
@@ -84,7 +83,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
             {...(enableTwoThumbs
               ? {
                   selectedStyle: {
-                    backgroundColor: themedColors.interface[400]
+                    backgroundColor: themedColors.secondaryShade
                   },
                   unselectedStyle: {
                     backgroundColor: themedColors.interface[200]
@@ -153,7 +152,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   label: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: moderateScale(13.0)
   },
   labelRight: {
     alignSelf: "flex-end"
@@ -172,16 +171,16 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: moderateScale(2),
     height: moderateScale(7),
-    left: moderateScale(5),
-    top: "20%",
+    left: moderateScale(2),
+    top: "25%",
     borderRadius: moderateScale(1)
   },
   rightPointer: {
     position: "absolute",
     width: moderateScale(2),
     height: moderateScale(7),
-    right: moderateScale(5),
-    bottom: "20%",
+    right: moderateScale(2),
+    bottom: "25%",
     borderRadius: moderateScale(1)
   }
 });
