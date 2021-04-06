@@ -1,6 +1,6 @@
 import ChevronDown from "assets/images/chevron-down.svg";
 import { FONT_SIZE, SPACE } from "config";
-import { lineHeight, moderateScale } from "config/Dimens";
+import { lineHeight } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import QuestionSection from "models/QuestionSection";
 import React from "react";
@@ -24,13 +24,7 @@ const QuestionHeader: React.FC<Props> = ({
 }: Props) => {
   const theme = usePreferredTheme();
   const chevronDownIcon: SvgProp = (color?: Color) => {
-    return (
-      <ChevronDown
-        width={moderateScale(20)}
-        height={moderateScale(20)}
-        fill={color}
-      />
-    );
+    return <ChevronDown width={20} height={20} fill={color} />;
   };
   if (isExpanded) {
     return (
@@ -90,7 +84,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    borderRadius: moderateScale(6),
+    borderRadius: 6,
     paddingHorizontal: SPACE.lg,
     paddingVertical: SPACE.sm,
 
@@ -100,8 +94,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     padding: SPACE.lg,
     overflow: "hidden",
-    borderTopStartRadius: moderateScale(6),
-    borderTopEndRadius: moderateScale(6),
+    borderTopStartRadius: 6,
+    borderTopEndRadius: 6,
     borderBottomWidth: StyleSheet.hairlineWidth
 
     // shadow
@@ -114,8 +108,8 @@ const styles = StyleSheet.create({
     lineHeight: lineHeight
   },
   arrowContainer: {
-    width: moderateScale(32),
-    height: moderateScale(32)
+    width: 32,
+    height: 32
   }
 });
 

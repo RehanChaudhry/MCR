@@ -78,8 +78,8 @@ export const MatchInfoView: React.FC<Props> = ({
               textStyle={styles.updateText}
               leftIcon={() => (
                 <Profile
-                  width={moderateScale(20)}
-                  height={moderateScale(20)}
+                  width={20}
+                  height={20}
                   fill={themedColors.primary}
                 />
               )}
