@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import { ImageStyle, StyleProp, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import { usePreferredTheme } from "hooks";
-import { moderateScale } from "config/Dimens";
+import { moderateScale, SPACE } from "config/Dimens";
 import Thumb from "assets/images/thumb.svg";
 
 interface RangeSliderWithLabelProps {
@@ -37,14 +37,14 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
   }) => {
     const { themedColors } = usePreferredTheme();
 
-    const customSliderMarker = (markerStyle: StyleProp<ImageStyle>) => {
+    const customSliderMarker = () => {
       return (
         <Thumb
           testID="icon"
-          width={30}
-          height={30}
+          width={moderateScale(24)}
+          height={moderateScale(24)}
           fill={themedColors.secondary}
-          style={markerStyle}
+          style={styles.marker}
         />
       );
     };
@@ -106,11 +106,11 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
               /*AppLog.log(
               "RangeSlider() => customMarkerLeft: " + e.currentValue
             );*/
-              return customSliderMarker(styles.markerLeft);
+              return customSliderMarker();
             }}
             customMarkerRight={(_) => {
               // AppLog.log("RangeSlider() => customMarkerRight: " + e);
-              return customSliderMarker(styles.markerRight);
+              return customSliderMarker();
             }}
             onValuesChangeFinish={(values: number[]) => {
               result(values);
@@ -137,19 +137,13 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
 );
 
 const styles = StyleSheet.create({
-  markerLeft: {
-    width: 30,
-    height: 30,
-    marginTop: 10
-  },
-  markerRight: {
-    width: 30,
-    height: 30,
-    marginTop: 10
+  marker: {
+    marginTop: SPACE.sm,
+    paddingHorizontal: SPACE.sm
   },
   track: {
-    height: 8,
-    borderRadius: 8
+    height: moderateScale(8),
+    borderRadius: moderateScale(4)
   },
   label: {
     fontSize: moderateScale(13.0)
@@ -160,27 +154,28 @@ const styles = StyleSheet.create({
   sliderContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    paddingHorizontal: SPACE.sm
   },
   sliderInnerContainer: {
-    height: 45,
-    paddingVertical: 15,
-    paddingHorizontal: 10
+    height: moderateScale(40),
+    paddingVertical: SPACE.lg,
+    paddingHorizontal: SPACE.sm
   },
   leftPointer: {
     position: "absolute",
     width: moderateScale(2),
-    height: moderateScale(7),
+    height: moderateScale(8),
     left: moderateScale(2),
-    top: "25%",
+    top: SPACE.sm,
     borderRadius: moderateScale(1)
   },
   rightPointer: {
     position: "absolute",
     width: moderateScale(2),
-    height: moderateScale(7),
+    height: moderateScale(8),
     right: moderateScale(2),
-    bottom: "25%",
+    bottom: SPACE.sm,
     borderRadius: moderateScale(1)
   }
 });

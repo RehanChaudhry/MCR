@@ -89,7 +89,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
           styles.container,
           {
             backgroundColor: themedColors.background,
-            borderColor: themedColors.border
+            borderColor: themedColors.interface[300]
           },
           style
         ]}
@@ -101,6 +101,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
           style={[styles.title, styles.questionLabel]}
           text={question.title}
           numberOfLines={0}
+          weight={"bold"}
         />
 
         <RangeSliderWithLabel
@@ -117,17 +118,15 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
 
         <View style={styles.preferenceWrapper}>
           <AppLabel
-            style={[styles.label, styles.questionLabel]}
+            style={[styles.label]}
             text="Comfort Zone"
+            weight={"bold"}
           />
 
           <View style={styles.switchWrapper}>
             <AppLabel
-              style={[
-                styles.label,
-                styles.questionLabel,
-                { marginEnd: SPACE.xsm }
-              ]}
+              style={[styles.label, { marginEnd: SPACE.xsm }]}
+              weight={"bold"}
               text="I have no preference"
             />
 
@@ -173,11 +172,11 @@ const styles = StyleSheet.create({
     lineHeight: lineHeight
   },
   label: {
-    fontSize: moderateScale(11.0)
+    fontSize: moderateScale(11.0),
+    includeFontPadding: false
   },
   questionLabel: {
-    fontWeight: "700",
-    marginBottom: SPACE.md
+    marginBottom: SPACE.lg
   },
   labelRight: {
     alignSelf: "flex-end"
@@ -185,13 +184,12 @@ const styles = StyleSheet.create({
   preferenceWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: SPACE.md,
+    marginVertical: SPACE.lg,
     alignItems: "center"
   },
   switchWrapper: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignContent: "center"
+    alignItems: "center"
   },
   labelXsm: {
     fontSize: FONT_SIZE._3xm
