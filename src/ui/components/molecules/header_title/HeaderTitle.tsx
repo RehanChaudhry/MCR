@@ -1,4 +1,3 @@
-import { FONT_SIZE } from "config";
 import React from "react";
 import {
   StyleSheet,
@@ -6,6 +5,7 @@ import {
   TouchableOpacityProps
 } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { moderateScale } from "config/Dimens";
 
 export interface HeaderTitleProps extends TouchableOpacityProps {
   text: string;
@@ -26,6 +26,6 @@ export const HeaderTitle = React.memo<HeaderTitleProps>(
 
 const style = StyleSheet.create({
   headerTitle: {
-    fontSize: FONT_SIZE.sm
+    fontSize: moderateScale(15.0)
   }
 });
