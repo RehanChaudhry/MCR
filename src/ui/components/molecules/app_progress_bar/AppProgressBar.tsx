@@ -67,7 +67,8 @@ export const AppProgressBar = optimizedMemo<AppProgressBarProps>(
             />
             <AppLabel
               text={progressPercentage + "%"}
-              style={[styles.textStyle, styles.boldText, bottomTextStyle]}
+              weight="semi-bold"
+              style={[styles.textStyle, bottomTextStyle]}
             />
           </View>
         )}
@@ -84,11 +85,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: SPACE.sm
   },
-  boldText: {
-    fontWeight: "700"
-  },
   textStyle: {
-    fontSize: FONT_SIZE.xs,
-    fontWeight: "400"
+    fontSize: FONT_SIZE.xs
   }
 });

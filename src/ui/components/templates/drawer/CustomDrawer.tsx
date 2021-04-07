@@ -23,7 +23,6 @@ import Bell from "assets/images/bell.svg";
 import Clock from "assets/images/clock.svg";
 import Friend from "assets/images/user-group.svg";
 import Settings from "assets/images/settings.svg";
-import { moderateScale } from "config/Dimens";
 import { AppProgressBar } from "ui/components/molecules/app_progress_bar/AppProgressBar";
 import { Divider } from "react-native-elements";
 import Colors from "config/Colors";
@@ -69,8 +68,8 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
 
     return (
       <Icon
-        width={20}
-        height={20}
+        width={22}
+        height={22}
         fill={
           currentItem === name
             ? themedColors.primary
@@ -92,7 +91,11 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
                 source={require("assets/images/d_user_pic1.png")}
               />
               <View style={styles.nameContainer}>
-                <AppLabel text="Zayn Mayes" weight="semi-bold" />
+                <AppLabel
+                  text="Zayn Mayes"
+                  weight="semi-bold"
+                  style={styles.name}
+                />
                 <View style={styles.settingContainer}>
                   <AppLabel text="student" style={styles.userRole} />
 
@@ -102,8 +105,10 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
                       setCurrentItem("Settings");
                     }}>
                     <Settings
-                      width={moderateScale(20)}
-                      height={moderateScale(20)}
+                      width={19}
+                      height={19}
+                      style={styles.settingIcon}
+                      fill={themedColors.interface["600"]}
                     />
                   </TouchableOpacity>
                 </View>
@@ -161,7 +166,7 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
                         <View style={styles.notifyCountBg}>
                           <AppLabel
                             text="3"
-                            weight="semi-bold"
+                            weight="bold"
                             style={styles.notifyText}
                           />
                         </View>
@@ -208,16 +213,19 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
 });
 
 const styles = StyleSheet.create({
+  name: {
+    fontSize: FONT_SIZE.base
+  },
   header: {
-    paddingVertical: SPACE.md,
-    paddingHorizontal: SPACE.md
+    paddingVertical: SPACE.lg,
+    paddingHorizontal: SPACE.lg
   },
   userInfo: {
     flexDirection: "row"
   },
   userImg: {
-    width: moderateScale(50),
-    height: moderateScale(50),
+    width: 45,
+    height: 45,
     borderRadius: 10,
     overflow: "hidden"
   },
@@ -227,15 +235,16 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   userRole: {
-    fontSize: FONT_SIZE.xs,
+    fontSize: FONT_SIZE.sm,
     textTransform: "capitalize"
   },
   settingContainer: {
     flexDirection: "row",
     justifyContent: "space-between"
   },
+  settingIcon: { marginLeft: 15 },
   userProgress: {
-    paddingTop: SPACE.md
+    paddingTop: SPACE.lg
   },
   itemsContainer: {
     paddingVertical: SPACE.md
@@ -253,10 +262,10 @@ const styles = StyleSheet.create({
     routeName: string
   ) => {
     return {
-      marginHorizontal: SPACE.md,
-      paddingVertical: SPACE.md,
+      marginHorizontal: SPACE.lg,
+      paddingVertical: SPACE._2md,
       paddingHorizontal: SPACE.lg,
-      marginBottom: SPACE.sm,
+      marginBottom: SPACE.md,
       flexDirection: "row",
       alignItems: "center",
       backgroundColor:
@@ -276,8 +285,8 @@ const styles = StyleSheet.create({
     routeName: string
   ) => {
     return {
-      paddingStart: SPACE.md,
-      fontSize: FONT_SIZE.xs,
+      paddingStart: SPACE._2md,
+      fontSize: FONT_SIZE.base,
       color:
         currentSelected === routeName
           ? theme.primary
@@ -290,15 +299,15 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   notifyCountBg: {
-    borderRadius: 18 / 2,
+    borderRadius: 24 / 2,
     backgroundColor: Colors.red,
-    width: 18,
-    height: 18,
+    width: 24,
+    height: 24,
     alignItems: "center",
     justifyContent: "center"
   },
   notifyText: {
     color: "#fff",
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
   }
 });
