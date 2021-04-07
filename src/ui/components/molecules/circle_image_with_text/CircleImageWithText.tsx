@@ -45,22 +45,23 @@ export const CircleImageWithText = React.memo<Props>(
                     styles.name,
                     { color: theme.themedColors.primary }
                   ],
-                  weight: "bold"
+                  weight: "bold",
+                  numberOfLines: 0
                 },
                 {
-                  onPress: userNameOnPress,
                   style: [
                     styles.message,
                     { color: theme.themedColors.black }
-                  ]
+                  ],
+                  numberOfLines: 0
                 },
                 {
-                  onPress: userNameOnPress,
                   style: [
                     styles.boldText,
                     { color: theme.themedColors.primary }
                   ],
-                  weight: "semi-bold"
+                  weight: "semi-bold",
+                  numberOfLines: 0
                 }
               ]}
             />
