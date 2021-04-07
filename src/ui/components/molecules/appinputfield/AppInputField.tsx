@@ -95,27 +95,14 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     height: 42,
     borderRadius: 5,
-    borderColor: COLORS.grey3,
     paddingRight: SPACE.md,
     paddingLeft: SPACE.md,
     fontSize: FONT_SIZE.xs,
-    fontFamily: FONTS.regular,
-    borderWidth: StyleSheet.hairlineWidth,
     flex: 1
-
-    // //Its for IOS
-    // shadowColor: COLORS.black,
-    // shadowOffset: { width: 0, height: 1 },
-    // shadowOpacity: 0.1,
-    //
-    // // its for android
-    // elevation: 2,
-    // backgroundColor: "white"
   },
   textInput: {
     fontFamily: FONTS.regular,
     flex: 1,
-    padding: 0,
     color: COLORS.textColor1
   },
   leftIconView: {

@@ -47,18 +47,19 @@ export const WriteMessage = React.memo<TypingComponentProps>(
 
     return (
       <View style={[styles.container(themedColors)]}>
-        <AppInputField
-          multiline={true}
-          placeholderTextColor={themedColors.interface["600"]}
-          placeholder={appInputPlaceHolder}
-          viewStyle={styles.inputField(themedColors)}
-          style={styles.inputFieldText(themedColors)}
-          onChangeText={(text: string) => {
-            setInitialText(text);
-            appInputFieldCallback?.(text);
-          }}
-          valueToShowAtStart={initialText}
-        />
+        <View style={[styles.input, { borderColor: themedColors.border }]}>
+          <AppInputField
+            multiline={true}
+            placeholderTextColor={themedColors.interface["600"]}
+            placeholder={appInputPlaceHolder}
+            onChangeText={(text: string) => {
+              setInitialText(text);
+              appInputFieldCallback?.(text);
+            }}
+            valueToShowAtStart={initialText}
+            style={[styles.inputField, { color: themedColors.label }]}
+          />
+        </View>
 
         <AppImageBackground
           icon={btnImage ?? defaultIcon}
@@ -84,7 +85,8 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       backgroundColor: themedColors.background,
       borderTopWidth: 0.5,
-      borderTopColor: themedColors.interface["300"]
+      borderTopColor: themedColors.interface["300"],
+      alignItems: "center"
     };
   },
   imgPaper: (themedColors: ColorPalette) => {
@@ -92,35 +94,22 @@ const styles = StyleSheet.create({
       marginStart: SPACE.md,
       backgroundColor: themedColors.primaryShade,
       elevation: 0,
-      width: 42,
-      height: 42
+      marginTop: SPACE.xxsm
     };
   },
-  inputField: (themedColors: ColorPalette) => {
-    return {
-      height: 42,
-      borderColor: themedColors.border,
-      //  color: themedColors.interface["600"],
-      fontSize: FONT_SIZE.lg,
-      lineHeight: 20,
-      color: "#b12323",
-
-      //Its for IOS
-      shadowColor: themedColors.transparent,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0,
-
-      // its for android
-      elevation: 0,
-      backgroundColor: themedColors.transparent
-    };
+  input: {
+    flexDirection: "column",
+    borderStyle: "solid",
+    height: 42,
+    borderRadius: 5,
+    paddingRight: SPACE.md,
+    fontSize: FONT_SIZE.xsm,
+    borderWidth: 1,
+    flex: 1,
+    marginTop: SPACE.xsm
   },
-  inputFieldText: (themedColors: ColorPalette) => {
-    return {
-      borderColor: themedColors.border,
-      color: themedColors.interface["600"],
-      fontSize: FONT_SIZE.sm,
-      lineHeight: 20
-    };
+  inputField: {
+    alignSelf: "center",
+    paddingBottom: SPACE.xsm
   }
 });

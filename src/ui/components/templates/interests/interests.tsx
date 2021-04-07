@@ -1,11 +1,11 @@
 import React from "react";
 import { CardView } from "ui/components/atoms/CardView";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
-import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
-import AppFormField from "ui/components/molecules/app_form/AppFormField";
+import { FieldBox } from "ui/components/atoms/FieldBox";
 
 type Props = {
   addInterestsOnPress: () => void;
@@ -28,158 +28,40 @@ export const Interests: React.FC<Props> = ({ addInterestsOnPress }) => {
       </View>
       <View style={[styles.horizontalLine]} />
       <View style={styles.innerCardStyle}>
-        <TouchableWithoutFeedback onPress={addInterestsOnPress}>
-          <AppFormField
-            name={"hobbies"}
-            validationLabelTestID={"hobbiesValidationTestID"}
-            labelProps={{
-              text: STRINGS.profile.dropDownTitle.hobbies,
-              weight: "semi-bold"
-            }}
-            fieldInputProps={{
-              textContentType: "name",
-              keyboardType: "default",
-              returnKeyType: "next",
-              shouldDisable: true,
-              placeholder: STRINGS.profile.dropDownInitialValue.hobbies,
-              autoCapitalize: "none",
-              placeholderTextColor: theme.themedColors.primary,
-              style: { color: theme.themedColors.label },
-              viewStyle: [
-                styles.textFieldStyle,
-                {
-                  backgroundColor: theme.themedColors.background,
-                  borderColor: theme.themedColors.border
-                }
-              ]
-            }}
-            readOnly={true}
-          />
-        </TouchableWithoutFeedback>
-        <View style={styles.spacer} />
-        <AppFormField
-          name={"memberships"}
-          validationLabelTestID={"membershipsValidationTestID"}
-          labelProps={{
-            text: STRINGS.profile.dropDownTitle.memberShip,
-            weight: "semi-bold"
-          }}
-          fieldInputProps={{
-            textContentType: "name",
-            keyboardType: "default",
-            returnKeyType: "next",
-            placeholder: STRINGS.profile.dropDownInitialValue.addOptions,
-            autoCapitalize: "none",
-            placeholderTextColor: theme.themedColors.placeholder,
-            style: { color: theme.themedColors.label },
-            viewStyle: [
-              styles.textFieldStyle,
-              {
-                backgroundColor: theme.themedColors.background,
-                borderColor: theme.themedColors.border
-              }
-            ]
-          }}
+        <FieldBox
+          title={STRINGS.profile.dropDownTitle.hobbies}
+          onPress={addInterestsOnPress}
+          textStyle={{ color: theme.themedColors.placeholder }}
         />
         <View style={styles.spacer} />
-        <AppFormField
-          name={"movies"}
-          validationLabelTestID={"moviesValidationTestID"}
-          labelProps={{
-            text: STRINGS.profile.dropDownTitle.movies,
-            weight: "semi-bold"
-          }}
-          fieldInputProps={{
-            textContentType: "name",
-            keyboardType: "default",
-            returnKeyType: "next",
-            placeholder: STRINGS.profile.dropDownInitialValue.movies,
-            autoCapitalize: "none",
-            placeholderTextColor: theme.themedColors.primary,
-            style: { color: theme.themedColors.label },
-            viewStyle: [
-              styles.textFieldStyle,
-              {
-                backgroundColor: theme.themedColors.background,
-                borderColor: theme.themedColors.border
-              }
-            ]
-          }}
+        <FieldBox
+          title={STRINGS.profile.dropDownTitle.memberShip}
+          onPress={addInterestsOnPress}
+          textStyle={{ color: theme.themedColors.placeholder }}
         />
         <View style={styles.spacer} />
-        <AppFormField
-          name={"music"}
-          validationLabelTestID={"musicValidationTestID"}
-          labelProps={{
-            text: STRINGS.profile.dropDownTitle.music,
-            weight: "semi-bold"
-          }}
-          fieldInputProps={{
-            textContentType: "name",
-            keyboardType: "default",
-            returnKeyType: "next",
-            placeholder: STRINGS.profile.dropDownInitialValue.addOptions,
-            autoCapitalize: "none",
-            placeholderTextColor: theme.themedColors.placeholder,
-            style: { color: theme.themedColors.label },
-            viewStyle: [
-              styles.textFieldStyle,
-              {
-                backgroundColor: theme.themedColors.background,
-                borderColor: theme.themedColors.border
-              }
-            ]
-          }}
+        <FieldBox
+          title={STRINGS.profile.dropDownTitle.movies}
+          onPress={addInterestsOnPress}
+          textStyle={{ color: theme.themedColors.placeholder }}
         />
         <View style={styles.spacer} />
-        <AppFormField
-          name={"books"}
-          validationLabelTestID={"booksValidationTestID"}
-          labelProps={{
-            text: STRINGS.profile.dropDownTitle.books,
-            weight: "semi-bold"
-          }}
-          fieldInputProps={{
-            textContentType: "name",
-            keyboardType: "default",
-            returnKeyType: "next",
-            placeholder: STRINGS.profile.dropDownInitialValue.addOptions,
-            autoCapitalize: "none",
-            placeholderTextColor: theme.themedColors.placeholder,
-            style: { color: theme.themedColors.label },
-            viewStyle: [
-              styles.textFieldStyle,
-              {
-                backgroundColor: theme.themedColors.background,
-                borderColor: theme.themedColors.border
-              }
-            ]
-          }}
+        <FieldBox
+          title={STRINGS.profile.dropDownTitle.music}
+          onPress={addInterestsOnPress}
+          textStyle={{ color: theme.themedColors.placeholder }}
         />
         <View style={styles.spacer} />
-        <AppFormField
-          name={"games"}
-          validationLabelTestID={"gamesValidationTestID"}
-          labelProps={{
-            text: STRINGS.profile.dropDownTitle.games,
-            weight: "semi-bold"
-          }}
-          fieldInputProps={{
-            textContentType: "name",
-            keyboardType: "default",
-            returnKeyType: "next",
-            placeholder: STRINGS.profile.dropDownInitialValue.addOptions,
-            autoCapitalize: "none",
-            placeholderTextColor: theme.themedColors.placeholder,
-            style: { color: theme.themedColors.label },
-            viewStyle: [
-              styles.textFieldStyle,
-              {
-                backgroundColor: theme.themedColors.background,
-                borderColor: theme.themedColors.border
-              }
-            ]
-          }}
+        <FieldBox
+          title={STRINGS.profile.dropDownTitle.books}
+          onPress={addInterestsOnPress}
+          textStyle={{ color: theme.themedColors.placeholder }}
+        />
+        <View style={styles.spacer} />
+        <FieldBox
+          title={STRINGS.profile.dropDownTitle.games}
+          onPress={addInterestsOnPress}
+          textStyle={{ color: theme.themedColors.placeholder }}
         />
       </View>
     </CardView>

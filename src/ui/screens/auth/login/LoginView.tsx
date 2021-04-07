@@ -38,7 +38,7 @@ const validationSchema = Yup.object().shape({
 
 let initialValues: FormikValues = {
   email: "john.doe@gmail.com",
-  password: "123456"
+  password: "Ba1qerti"
 };
 
 export const LoginView = React.memo<Props>(

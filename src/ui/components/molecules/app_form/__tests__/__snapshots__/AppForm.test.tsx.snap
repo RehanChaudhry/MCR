@@ -26,6 +26,9 @@ exports[`rendering... renders correctly 1`] = `
             Object {
               "color": "#111827",
             },
+            Object {
+              "lineHeight": 16,
+            },
             Array [
               Object {
                 "paddingBottom": 6,
@@ -55,14 +58,11 @@ exports[`rendering... renders correctly 1`] = `
     style={
       Array [
         Object {
-          "borderColor": "#CACACA",
           "borderRadius": 5,
           "borderStyle": "solid",
-          "borderWidth": 0.5,
           "color": "#666666",
           "flex": 1,
           "flexDirection": "row",
-          "fontFamily": "Inter-Regular",
           "fontSize": 12,
           "height": 42,
           "justifyContent": "center",
@@ -91,7 +91,6 @@ exports[`rendering... renders correctly 1`] = `
             "color": "#666666",
             "flex": 1,
             "fontFamily": "Inter-Regular",
-            "padding": 0,
           },
           undefined,
         ]
@@ -128,6 +127,9 @@ exports[`rendering... renders correctly 1`] = `
             Object {
               "color": "#111827",
             },
+            Object {
+              "lineHeight": 16,
+            },
             Array [
               Object {
                 "paddingBottom": 6,
@@ -157,14 +159,11 @@ exports[`rendering... renders correctly 1`] = `
     style={
       Array [
         Object {
-          "borderColor": "#CACACA",
           "borderRadius": 5,
           "borderStyle": "solid",
-          "borderWidth": 0.5,
           "color": "#666666",
           "flex": 1,
           "flexDirection": "row",
-          "fontFamily": "Inter-Regular",
           "fontSize": 12,
           "height": 42,
           "justifyContent": "center",
@@ -191,7 +190,6 @@ exports[`rendering... renders correctly 1`] = `
             "color": "#666666",
             "flex": 1,
             "fontFamily": "Inter-Regular",
-            "padding": 0,
           },
           undefined,
         ]
@@ -276,6 +274,9 @@ exports[`rendering... renders correctly 1`] = `
                 },
                 Object {
                   "color": "#111827",
+                },
+                Object {
+                  "lineHeight": 24,
                 },
                 Array [
                   Object {

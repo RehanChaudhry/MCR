@@ -27,6 +27,18 @@ mapsOfSizesAndHeight.set("xl", { size: 20.0, height: 28.0 });
 mapsOfSizesAndHeight.set("_2xl", { size: 24.0, height: 32.0 });
 mapsOfSizesAndHeight.set("_3xl", { size: 30.0, height: 36.0 });
 
+function parseMap(mapWithLabelAsKey: Map<String, SIZE_HEIGHT_DOUBLE>) {
+  let mapWithSizeAsKey = new Map<number, number>();
+  mapWithLabelAsKey.forEach((value) => {
+    mapWithSizeAsKey.set(value.size, value.height);
+  });
+  return mapWithSizeAsKey;
+}
+
+const _mapsOfSizesAndHeightWithSizeKey = new Map(
+  parseMap(mapsOfSizesAndHeight)
+);
+
 export const FONT_SIZE = {
   xs: mapsOfSizesAndHeight.get("xs")?.size,
   sm: mapsOfSizesAndHeight.get("sm")?.size,
@@ -44,7 +56,8 @@ export const FONT_SIZE_LINE_HEIGHT = {
   lg: mapsOfSizesAndHeight.get("lg")?.height,
   xl: mapsOfSizesAndHeight.get("xl")?.height,
   _2xl: mapsOfSizesAndHeight.get("_2xl")?.height,
-  _3xl: mapsOfSizesAndHeight.get("_3xl")?.height
+  _3xl: mapsOfSizesAndHeight.get("_3xl")?.height,
+  ofFontSize: (size: number) => _mapsOfSizesAndHeightWithSizeKey.get(size)
 };
 
 export const MARGIN_SIZE = {
