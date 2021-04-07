@@ -27,8 +27,8 @@ export const ReportContentView = React.memo<Props>(({ closeScreen }) => {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       style={styles.keyboardAvoidingView}>
-      <Screen style={styles.mainContainer}>
-        <ScrollView keyboardShouldPersistTaps={"handled"}>
+      <ScrollView keyboardShouldPersistTaps={"handled"}>
+        <Screen style={styles.mainContainer}>
           <View style={styles.container}>
             <AppLabel
               text={Strings.reportContent.selectProblemToCont}
@@ -122,8 +122,8 @@ export const ReportContentView = React.memo<Props>(({ closeScreen }) => {
               onPress={closeScreen}
             />
           </View>
-        </ScrollView>
-      </Screen>
+        </Screen>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 });
