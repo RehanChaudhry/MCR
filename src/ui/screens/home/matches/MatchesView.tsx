@@ -199,8 +199,8 @@ const styles = StyleSheet.create({
   },
   dialogButtonStyle: {
     textAlign: "center",
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE.base
   },
-  dialogTitleStyle: { fontSize: FONT_SIZE.sm, textAlign: "center" },
-  dialogMessageStyle: { fontSize: FONT_SIZE.xs, textAlign: "center" }
+  dialogTitleStyle: { fontSize: FONT_SIZE.base, textAlign: "center" },
+  dialogMessageStyle: { fontSize: FONT_SIZE.sm, textAlign: "center" }
 });
