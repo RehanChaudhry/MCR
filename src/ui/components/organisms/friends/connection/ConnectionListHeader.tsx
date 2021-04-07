@@ -56,10 +56,11 @@ const styles = StyleSheet.create({
     paddingBottom: SPACE.sm
   },
   text: {
-    marginTop: SPACE.lg
+    marginTop: SPACE.lg,
+    fontSize: FONT_SIZE.sm
   },
   buttonText: {
-    fontSize: FONT_SIZE.xs,
+    fontSize: FONT_SIZE.base,
     paddingLeft: SPACE._2xs
   }
 });
