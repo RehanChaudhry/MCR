@@ -62,8 +62,6 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: SPACE.lg,
-    paddingHorizontal: SPACE.lg,
     flexDirection: "row"
   },
   indicator: {
