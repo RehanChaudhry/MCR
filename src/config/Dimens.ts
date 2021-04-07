@@ -76,5 +76,3 @@ export const SPACE = {
   _3xl: 32,
   _4xl: 48
 };
-
-export const lineHeight = 20;

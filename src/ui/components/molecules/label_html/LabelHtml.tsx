@@ -2,6 +2,7 @@ import React from "react";
 import { StyleProp, TextStyle, ViewStyle } from "react-native";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 import { FONTS } from "config";
+import { usePreferredTheme } from "hooks";
 
 interface Props {
   containerStyle?: StyleProp<ViewStyle>;
@@ -14,6 +15,8 @@ const LabelHtml: React.FC<Props> = ({
   text,
   style
 }: Props) => {
+  const { themedColors } = usePreferredTheme();
+
   let texts: string[] = text.split("<b>");
 
   if (texts.length === 2) {
@@ -23,13 +26,19 @@ const LabelHtml: React.FC<Props> = ({
   const textStyles: StyleProp<TextStyle>[] = [];
   if (texts.length === 3) {
     texts.forEach((_, index) => {
-      let fontWeightStyle: StyleProp<TextStyle>;
+      let textStyle: StyleProp<TextStyle>;
       if (index % 2 !== 0) {
-        fontWeightStyle = { fontFamily: FONTS.semiBold };
+        textStyle = {
+          fontFamily: FONTS.semiBold,
+          color: themedColors.primary
+        };
       } else {
-        fontWeightStyle = { fontFamily: FONTS.regular };
+        textStyle = {
+          fontFamily: FONTS.regular,
+          color: themedColors.interface[600]
+        };
       }
-      textStyles.push([fontWeightStyle, style]);
+      textStyles.push([textStyle, style]);
     });
   }
 

@@ -41,8 +41,8 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
       return (
         <Thumb
           testID="icon"
-          width={24}
-          height={24}
+          width={32}
+          height={32}
           fill={themedColors.secondary}
           style={styles.marker}
         />
@@ -138,7 +138,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
 
 const styles = StyleSheet.create({
   marker: {
-    marginTop: SPACE.sm,
+    marginTop: SPACE._2md,
     paddingHorizontal: SPACE.sm
   },
   track: {
