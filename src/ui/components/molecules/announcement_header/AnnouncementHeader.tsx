@@ -110,7 +110,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
 
 const style = StyleSheet.create({
   mainContainer: {
-    marginTop: SPACE.md
+    marginTop: SPACE.lg
   },
   container: {
     flexDirection: "row",
@@ -132,7 +132,7 @@ const style = StyleSheet.create({
   },
   bottomLine: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    marginTop: SPACE.md
+    marginTop: SPACE.lg
   },
   profileImage: {
     width: 50,

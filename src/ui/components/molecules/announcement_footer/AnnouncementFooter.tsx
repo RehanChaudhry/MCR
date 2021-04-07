@@ -107,7 +107,8 @@ const style = StyleSheet.create({
   leftRightContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    alignSelf: "center"
+    alignSelf: "center",
+    marginTop: SPACE._2md
   },
   leftContainerRightSide: {
     marginLeft: SPACE.sm
@@ -118,7 +119,7 @@ const style = StyleSheet.create({
   bottomBorder: {
     width: "100%",
     height: 0.5,
-    marginVertical: SPACE.md
+    marginTop: SPACE.md
   },
   rightContainerLeftSide: {
     marginRight: SPACE.sm

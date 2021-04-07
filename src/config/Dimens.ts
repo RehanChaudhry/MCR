@@ -34,6 +34,7 @@ export const SPACE = {
   _2xs: 4.0,
   xs: 6.0,
   sm: 8.0,
+  _2md: 10.0,
   md: 12.0,
   lg: 16.0,
   xl: 18.0,

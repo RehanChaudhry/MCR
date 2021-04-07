@@ -77,14 +77,14 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
 const style = StyleSheet.create({
   container: {
     borderRadius: 5,
-    paddingRight: SPACE.md,
-    paddingLeft: SPACE.md,
-    paddingBottom: SPACE.md,
+    paddingRight: SPACE.lg,
+    paddingLeft: SPACE.lg,
+    paddingBottom: SPACE.lg,
     ...shadowStyleProps
   },
   text: {
     lineHeight: 20,
-    paddingTop: SPACE.lg,
+    paddingTop: SPACE.md,
     fontSize: FONT_SIZE.base
   }
 });
