@@ -91,9 +91,14 @@ export const PreSSOLoginView = React.memo<Props>(
             <View style={styles.spannableText}>
               <MultilineSpannableText
                 text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
-                textStyle={[
-                  { fontSize: 14 },
-                  { fontSize: 14, color: theme.themedColors.primary }
+                appLabelProps={[
+                  { style: { fontSize: 14 } },
+                  {
+                    style: {
+                      fontSize: 14,
+                      color: theme.themedColors.primary
+                    }
+                  }
                 ]}
               />
             </View>
