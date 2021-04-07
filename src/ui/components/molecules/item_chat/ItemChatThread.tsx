@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
     top: moderateScale(10)
   },
   imgStyle: {
-    width: moderateScale(45),
-    height: moderateScale(45),
+    width: 32,
+    height: 32,
     resizeMode: "cover",
     borderRadius: 45 / 2
   },
@@ -93,8 +93,7 @@ const styles = StyleSheet.create({
   nameContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    paddingBottom: SPACE.xs
+    alignItems: "center"
   },
   nameText: (theme: ColorPalette) => {
     return {
@@ -107,7 +106,8 @@ const styles = StyleSheet.create({
     return {
       fontSize: FONT_SIZE.sm,
       color: theme.label,
-      lineHeight: 20
+      lineHeight: 20,
+      paddingTop: SPACE.xs
     };
   },
   timeText: (theme: ColorPalette) => {

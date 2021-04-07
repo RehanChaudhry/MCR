@@ -72,8 +72,8 @@ export const CommentsView = React.memo<Props>(
           appInputPlaceHolder={Strings.chatThreadScreen.typingHint}
           btnImage={() => (
             <Chat
-              width={25}
-              height={25}
+              width={24}
+              height={24}
               fill={theme.themedColors.primary}
             />
           )}

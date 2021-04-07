@@ -91,11 +91,14 @@ const styles = StyleSheet.create({
     return {
       marginStart: SPACE.md,
       backgroundColor: themedColors.primaryShade,
-      elevation: 0
+      elevation: 0,
+      width: 42,
+      height: 42
     };
   },
   inputField: (themedColors: ColorPalette) => {
     return {
+      height: 42,
       borderColor: themedColors.border,
       //  color: themedColors.interface["600"],
       fontSize: FONT_SIZE.lg,

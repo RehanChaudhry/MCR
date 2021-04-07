@@ -102,7 +102,7 @@ const style = StyleSheet.create({
     ...shadowStyleProps
   },
   text: {
-    lineHeight: 20,
+    lineHeight: 24,
     paddingTop: SPACE.md,
     fontSize: FONT_SIZE.base
   }
