@@ -61,8 +61,8 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
             <View style={style.rightContainerLeftSide}>
               <View style={style.row}>
                 <Like
-                  width={12}
-                  height={12}
+                  width={10}
+                  height={10}
                   fill={theme.themedColors.primary}
                   style={style.icon}
                 />
