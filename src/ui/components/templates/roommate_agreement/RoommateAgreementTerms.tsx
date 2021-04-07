@@ -56,13 +56,9 @@ const styles = StyleSheet.create({
   buttonView: {
     marginTop: SPACE.md
   },
-  learnMore: {
-    fontSize: FONT_SIZE.xs,
-    fontWeight: "bold",
-    textAlign: "left"
-  },
   switchButton: {
-    paddingBottom: SPACE.lg
+    paddingBottom: SPACE.lg,
+    paddingTop: SPACE.lg
   }
 });
 

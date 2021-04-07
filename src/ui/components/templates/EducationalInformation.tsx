@@ -80,10 +80,10 @@ const styles = StyleSheet.create({
     marginTop: SPACE.lg
   },
   headingStyle: {
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
   },
   textStyle: {
-    marginTop: SPACE.xs
+    marginTop: SPACE.sm
   }
 });
 

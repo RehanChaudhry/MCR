@@ -33,7 +33,7 @@ export const HeadingWithText = optimizedMemoWithStyleProp<Props>(
         <AppLabel
           text={text}
           numberOfLines={0}
-          style={[{ fontSize: FONT_SIZE.xs }, textStyle]}
+          style={[{ fontSize: FONT_SIZE.sm }, textStyle]}
         />
       </View>
     );

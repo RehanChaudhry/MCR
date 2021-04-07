@@ -4,7 +4,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RoommateAgreementStackParamList } from "routes/FriendsStack";
 import { useNavigation } from "@react-navigation/native";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
-import { FONT_SIZE } from "config";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { AppLog } from "utils/Util";
@@ -31,12 +30,7 @@ const RoommateAgreementController: FC<Props> = () => {
 
   navigation.setOptions({
     headerTitleAlign: "center",
-    headerTitle: () => (
-      <HeaderTitle
-        text="Roommate Agreement"
-        labelStyle={{ fontSize: FONT_SIZE.xs }}
-      />
-    ),
+    headerTitle: () => <HeaderTitle text="Roommate Agreement" />,
     headerLeft: () => <Hamburger />,
     headerRight: () => (
       <HeaderRightTextWithIcon
