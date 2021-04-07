@@ -107,7 +107,11 @@ const UpdateProfileController: FC<Props> = () => {
   });
 
   const openAddInterests = () => {
-    upDateNavigation.navigate("AddInterests");
+    if (route.params.isFrom === EScreen.WELCOME) {
+      welcomeNavigation.navigate("AddInterests");
+    } else {
+      upDateNavigation.navigate("AddInterests");
+    }
   };
 
   return (

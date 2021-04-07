@@ -59,7 +59,7 @@ export const AddInterestsView = React.memo<Props>(
     };
 
     return (
-      <Screen style={styles.container}>
+      <Screen style={styles.container} shouldAddBottomInset={false}>
         <View style={styles.contentWrapper}>
           <FlatListWithPb
             shouldShowProgressBar={false}
@@ -94,10 +94,6 @@ const styles = StyleSheet.create({
       backgroundColor: theme.background,
       ...shadowStyleProps
     };
-  },
-  segment: {
-    marginHorizontal: SPACE.md,
-    marginBottom: SPACE.sm
   },
   contentWrapper: {
     flex: 1,
