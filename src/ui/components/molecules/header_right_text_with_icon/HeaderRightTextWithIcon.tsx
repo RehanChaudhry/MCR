@@ -21,7 +21,7 @@ export interface HeaderRightTextWithIconProps
 }
 
 const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
-  ({ text, icon, onPress, textStyle, fontWeight = "semi-bold" }) => {
+  ({ text, icon, onPress, textStyle, fontWeight = "normal" }) => {
     const theme = usePreferredTheme();
 
     return (
