@@ -11,15 +11,14 @@ import {
 import { SvgProp } from "utils/Util";
 import ActivityType from "models/enums/ActivityType";
 import UserAdd from "assets/images/user-add.svg";
-import Comment from "assets/images/chat.svg";
+import Comment from "assets/images/chat-alt.svg";
 import Post from "assets/images/newspaper.svg";
 import RoommateRequest from "assets/images/request_state_icon.svg";
 import RoommateAgreement from "assets/images/clipboard-list.svg";
-import Questionnaire from "assets/images/icon_office_building.svg";
+import Questionnaire from "assets/images/office-building.svg";
 import Profile from "assets/images/settings.svg";
 import Dismissed from "assets/images/folder-remove.svg";
 import Conversation from "assets/images/chat_round.svg";
-import { lineHeight } from "config/Dimens";
 import { Divider } from "react-native-elements";
 import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
 
@@ -92,16 +91,12 @@ const ActivityLogItem = ({ activityLog }: Props) => {
       <View style={styles.endContainer}>
         <LabelHtml
           containerStyle={styles.message}
-          style={[
-            styles.messageText,
-            { color: themedColors.interface[600] }
-          ]}
+          style={styles.messageText}
           text={activityLog.message ?? STRINGS.common.not_found}
         />
         <AppLabel
           style={[styles.date, { color: themedColors.interface[600] }]}
           text={activityLog.getDisplayTime()}
-          numberOfLines={0}
         />
       </View>
     </View>
@@ -111,8 +106,7 @@ const ActivityLogItem = ({ activityLog }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    paddingHorizontal: SPACE.md,
-    height: 70
+    paddingHorizontal: SPACE.md
   },
   startContainer: {},
   imageContainer: {
@@ -123,16 +117,16 @@ const styles = StyleSheet.create({
     borderRadius: 20
   },
   message: {},
-  messageText: { fontSize: FONT_SIZE.sm, lineHeight: lineHeight },
+  messageText: { fontSize: FONT_SIZE.sm },
   endContainer: {
     flex: 1,
     marginStart: SPACE.md,
     paddingTop: SPACE._2xs,
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
+    paddingBottom: 14
   },
   date: {
     fontSize: FONT_SIZE.sm,
-    includeFontPadding: false,
     marginTop: SPACE._2xs
   },
   verticalLine: {

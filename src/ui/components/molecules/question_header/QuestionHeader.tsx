@@ -1,6 +1,5 @@
 import ChevronDown from "assets/images/chevron-down.svg";
 import { FONT_SIZE, SPACE } from "config";
-import { lineHeight } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import QuestionSection from "models/QuestionSection";
 import React from "react";
@@ -104,8 +103,7 @@ const styles = StyleSheet.create({
   title: { fontSize: FONT_SIZE.base },
   description: {
     fontSize: FONT_SIZE.sm,
-    marginTop: SPACE.sm,
-    lineHeight: lineHeight
+    marginTop: SPACE.sm
   },
   arrowContainer: {
     width: 32,
