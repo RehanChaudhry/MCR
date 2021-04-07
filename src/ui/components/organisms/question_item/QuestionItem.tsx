@@ -97,7 +97,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
           setSliderWidth(width - (SPACE.md + SPACE.md + 10));
         }}>
         <AppLabel
-          style={[styles.label, styles.questionLabel]}
+          style={[styles.title, styles.questionLabel]}
           text={question.title}
           numberOfLines={0}
         />
@@ -166,6 +166,9 @@ const styles = StyleSheet.create({
   container: {
     padding: SPACE.md,
     borderTopWidth: StyleSheet.hairlineWidth
+  },
+  title: {
+    fontSize: FONT_SIZE.xsm
   },
   label: {
     fontSize: FONT_SIZE._2xsm

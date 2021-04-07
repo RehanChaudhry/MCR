@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { ImageStyle, StyleProp, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
-import { FONT_SIZE, SPACE } from "config";
+import { FONT_SIZE } from "config";
 import { usePreferredTheme } from "hooks";
 import { moderateScale } from "config/Dimens";
 import Thumb from "assets/images/thumb.svg";
@@ -155,15 +155,8 @@ const styles = StyleSheet.create({
   label: {
     fontSize: FONT_SIZE._2xsm
   },
-  questionLabel: {
-    fontWeight: "700",
-    marginBottom: SPACE.sm
-  },
   labelRight: {
     alignSelf: "flex-end"
-  },
-  labelXsm: {
-    fontSize: FONT_SIZE._3xm
   },
   sliderContainer: {
     flex: 1,

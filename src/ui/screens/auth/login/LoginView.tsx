@@ -14,11 +14,12 @@ import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import * as Yup from "yup";
 import { FormikValues } from "formik";
-import { AppLog } from "utils/Util";
+import { AppLog, loginRegx } from "utils/Util";
 import Screen from "ui/components/atoms/Screen";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
+import Strings from "config/Strings";
 type Props = {
   openUniSelectionScreen: () => void;
   openForgotPasswordScreen?: () => void;
@@ -27,8 +28,12 @@ type Props = {
 };
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email().required("Enter your email address"),
-  password: Yup.string().required("Enter your password")
+  email: Yup.string()
+    .email()
+    .required(Strings.login.enter_valid_email_validation),
+  password: Yup.string()
+    .required("Enter your password")
+    .matches(loginRegx, Strings.login.pass_validation)
 });
 
 let initialValues: FormikValues = {
@@ -77,72 +82,76 @@ export const LoginView = React.memo<Props>(
               initialValues={initialValues}
               onSubmit={onSubmit}
               validationSchema={validationSchema}>
-              <View style={styles.email} />
-              <AppFormField
-                fieldTestID="email"
-                validationLabelTestID={"emailValidationLabel"}
-                name="email"
-                labelProps={{
-                  text: STRINGS.login.email_address,
-                  weight: "semi-bold"
-                }}
-                fieldInputProps={{
-                  textContentType: "emailAddress",
-                  keyboardType: "email-address",
-                  returnKeyType: "next",
-                  placeholder: STRINGS.login.enter_your_email,
-                  autoCapitalize: "none",
-                  placeholderTextColor: theme.themedColors.placeholder,
-                  style: { color: theme.themedColors.label },
-                  viewStyle: [
-                    styles.textFieldStyle,
-                    {
-                      backgroundColor: theme.themedColors.background,
-                      borderColor: theme.themedColors.border
-                    }
-                  ]
-                }}
-              />
+              <View style={styles.email}>
+                <AppFormField
+                  fieldTestID="email"
+                  validationLabelTestID={"emailValidationLabel"}
+                  name="email"
+                  labelProps={{
+                    text: STRINGS.login.email_address,
+                    weight: "semi-bold"
+                  }}
+                  fieldInputProps={{
+                    textContentType: "emailAddress",
+                    keyboardType: "email-address",
+                    returnKeyType: "next",
+                    placeholder: STRINGS.login.enter_your_email,
+                    autoCapitalize: "none",
+                    placeholderTextColor: theme.themedColors.placeholder,
+                    style: { color: theme.themedColors.label },
+                    viewStyle: [
+                      styles.textFieldStyle,
+                      {
+                        backgroundColor: theme.themedColors.background,
+                        borderColor: theme.themedColors.border
+                      }
+                    ]
+                  }}
+                />
+              </View>
 
-              <View style={styles.password} />
-
-              <AppFormField
-                fieldTestID="password"
-                validationLabelTestID={"passwordValidationLabel"}
-                name="password"
-                labelProps={{
-                  text: STRINGS.login.password,
-                  weight: "semi-bold"
-                }}
-                secureTextEntry={true}
-                linkLabelProps={{
-                  text: STRINGS.login.forgot_password
-                }}
-                linkLabelOnPress={openForgotPasswordScreen}
-                fieldInputProps={{
-                  textContentType: "password",
-                  keyboardType: "default",
-                  returnKeyType: "done",
-                  placeholder: STRINGS.login.enter_your_pass,
-                  autoCapitalize: "none",
-                  placeholderTextColor: theme.themedColors.placeholder,
-                  style: [{ color: theme.themedColors.label }],
-                  viewStyle: [
-                    styles.textFieldStyle,
-                    {
-                      backgroundColor: theme.themedColors.background,
-                      borderColor: theme.themedColors.border
-                    }
-                  ]
-                }}
-              />
+              <View style={styles.password}>
+                <AppFormField
+                  fieldTestID="password"
+                  validationLabelTestID={"passwordValidationLabel"}
+                  name="password"
+                  labelProps={{
+                    text: STRINGS.login.password,
+                    weight: "semi-bold"
+                  }}
+                  secureTextEntry={true}
+                  linkLabelProps={{
+                    text: STRINGS.login.forgot_password
+                  }}
+                  linkLabelOnPress={openForgotPasswordScreen}
+                  fieldInputProps={{
+                    textContentType: "password",
+                    keyboardType: "default",
+                    returnKeyType: "done",
+                    placeholder: STRINGS.login.enter_your_pass,
+                    autoCapitalize: "none",
+                    placeholderTextColor: theme.themedColors.placeholder,
+                    style: [{ color: theme.themedColors.label }],
+                    viewStyle: [
+                      styles.textFieldStyle,
+                      {
+                        backgroundColor: theme.themedColors.background,
+                        borderColor: theme.themedColors.border
+                      }
+                    ]
+                  }}
+                />
+              </View>
 
               <View style={styles.buttonViewStyle}>
                 <AppFormFormSubmit
                   text={STRINGS.login.sign_in}
                   buttonType={BUTTON_TYPES.NORMAL}
                   fontWeight={"semi-bold"}
-                  textStyle={{ color: theme.themedColors.background }}
+                  textStyle={[
+                    styles.signInButtonText,
+                    { color: theme.themedColors.background }
+                  ]}
                   buttonStyle={[
                     styles.buttonStyle,
                     { backgroundColor: theme.themedColors.primary }
@@ -155,8 +164,8 @@ export const LoginView = React.memo<Props>(
               <MultilineSpannableText
                 text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
                 textStyle={[
-                  { fontSize: SPACE.md },
-                  { fontSize: SPACE.md, color: theme.themedColors.primary }
+                  { fontSize: 14 },
+                  { fontSize: 14, color: theme.themedColors.primary }
                 ]}
               />
             </View>
@@ -180,29 +189,31 @@ const styles = StyleSheet.create({
     marginTop: SPACE.xl
   },
   logo: {
-    marginTop: SPACE._2xl
+    marginTop: SPACE._3xl
   },
   signInHeading: {
     fontSize: FONT_SIZE._2xl,
-    marginTop: 40
+    marginTop: SPACE._3xl
   },
   email: {
     marginTop: SPACE._2xl
   },
   password: {
-    marginTop: SPACE.md
+    marginTop: SPACE.lg
   },
   textFieldStyle: {
     borderWidth: 1
   },
   buttonViewStyle: {
-    marginTop: SPACE._2xl,
-    marginBottom: SPACE.xl
+    marginTop: SPACE.lg
   },
   buttonStyle: {
     height: 44
   },
   spannableText: {
-    marginTop: SPACE.xl
+    marginTop: SPACE._2xl
+  },
+  signInButtonText: {
+    fontSize: FONT_SIZE.lg
   }
 });

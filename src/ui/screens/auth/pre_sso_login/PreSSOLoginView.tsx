@@ -45,11 +45,20 @@ export const PreSSOLoginView = React.memo<Props>(
           />
 
           <Logo style={styles.logo} />
-          <LoginImage
-            style={styles.loginImage}
-            width={"100%"}
-            height={300}
-          />
+
+          <View
+            style={{
+              aspectRatio: 1.36,
+              width: "100%"
+            }}>
+            <LoginImage
+              width={"100%"}
+              height={"100%"}
+              fill="red"
+              style={styles.loginImage}
+            />
+          </View>
+
           <View style={styles.mainContainer}>
             <HeadingWithText
               headingText={STRINGS.login.signin_to_your_account}
@@ -83,8 +92,8 @@ export const PreSSOLoginView = React.memo<Props>(
               <MultilineSpannableText
                 text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
                 textStyle={[
-                  { fontSize: SPACE.md },
-                  { fontSize: SPACE.md, color: theme.themedColors.primary }
+                  { fontSize: 14 },
+                  { fontSize: 14, color: theme.themedColors.primary }
                 ]}
               />
             </View>
@@ -97,6 +106,7 @@ export const PreSSOLoginView = React.memo<Props>(
 
 const styles = StyleSheet.create({
   mainContainer: {
+    marginTop: SPACE._2xl,
     marginLeft: SPACE.lg,
     marginRight: SPACE.lg
   },
@@ -126,7 +136,7 @@ const styles = StyleSheet.create({
     height: 44
   },
   spannableText: {
-    marginTop: SPACE.xl,
+    marginTop: SPACE._2xl,
     marginBottom: SPACE._2xl
   },
   ssoSecondText: {
