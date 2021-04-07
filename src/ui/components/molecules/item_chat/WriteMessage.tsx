@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
       marginStart: SPACE.md,
       backgroundColor: themedColors.primaryShade,
       elevation: 0,
-      marginTop: SPACE.xxsm
+      marginTop: SPACE._2xs
     };
   },
   input: {
@@ -103,13 +103,13 @@ const styles = StyleSheet.create({
     height: 42,
     borderRadius: 5,
     paddingRight: SPACE.md,
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.xs,
     borderWidth: 1,
     flex: 1,
-    marginTop: SPACE.xsm
+    marginTop: SPACE._2xs
   },
   inputField: {
     alignSelf: "center",
-    paddingBottom: SPACE.xsm
+    paddingBottom: SPACE.xs
   }
 });

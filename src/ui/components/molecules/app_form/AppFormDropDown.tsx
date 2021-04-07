@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.grey3,
     paddingRight: SPACE.md,
     paddingLeft: SPACE.md,
-    fontSize: FONT_SIZE.xs,
+    fontSize: FONT_SIZE.md,
     fontFamily: FONTS.regular,
     borderWidth: StyleSheet.hairlineWidth,
     flex: 1

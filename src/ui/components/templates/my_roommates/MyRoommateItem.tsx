@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACE.sm
   },
   headingTextStyle: {
-    fontSize: FONT_SIZE.lg
+    fontSize: FONT_SIZE.md
   },
   textStyle: {
     paddingTop: SPACE.xs,
