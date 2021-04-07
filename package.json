@@ -1,7 +1,7 @@
 {
   "name": "MyCollegeRoomie",
-  "version": "1.1.4-DEV-INTERNAL",
-  "buildNumber": 6,
+  "version": "1.1.5-DEV",
+  "buildNumber": 7,
   "private": true,
   "scripts": {
     "clean": "yarn run cleanBuildAndroid && yarn run cleanBuildIOS",
