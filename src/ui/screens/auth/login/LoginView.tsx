@@ -54,7 +54,14 @@ export const LoginView = React.memo<Props>(
       openWelcomeScreen();
     };
     return (
-      <Screen>
+      <Screen
+        style={[
+          styles.container,
+          { backgroundColor: theme.themedColors.backgroundSecondary }
+        ]}
+        topSafeAreaAndStatusBarColor={
+          theme.themedColors.backgroundSecondary
+        }>
         <ScrollView>
           <View style={styles.mainContainer}>
             <AppImageBackground
@@ -182,6 +189,10 @@ export const LoginView = React.memo<Props>(
 );
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    flex: 1
+  },
   mainContainer: {
     marginLeft: SPACE.lg,
     marginRight: SPACE.lg

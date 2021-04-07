@@ -56,7 +56,9 @@ const UniSelectionView: FC<Props> = ({
         styles.container,
         { backgroundColor: theme.themedColors.backgroundSecondary }
       ]}
-      topSafeAreaBackgroundColor={theme.themedColors.backgroundSecondary}>
+      topSafeAreaAndStatusBarColor={
+        theme.themedColors.backgroundSecondary
+      }>
       <View style={[styles.logoContainer]}>
         <Image
           style={styles.image}

@@ -29,7 +29,14 @@ export const PreSSOLoginView = React.memo<Props>(
     const theme = usePreferredTheme();
 
     return (
-      <Screen>
+      <Screen
+        style={[
+          styles.container,
+          { backgroundColor: theme.themedColors.backgroundSecondary }
+        ]}
+        topSafeAreaAndStatusBarColor={
+          theme.themedColors.backgroundSecondary
+        }>
         <ScrollView>
           <AppImageBackground
             containerShape={CONTAINER_TYPES.CIRCLE}
@@ -110,6 +117,10 @@ export const PreSSOLoginView = React.memo<Props>(
 );
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    flex: 1
+  },
   mainContainer: {
     marginTop: SPACE._2xl,
     marginLeft: SPACE.lg,
