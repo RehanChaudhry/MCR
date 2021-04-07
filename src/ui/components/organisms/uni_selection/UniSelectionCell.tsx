@@ -26,8 +26,8 @@ const UniSelectionCell: FC<Props> = ({ uni, onSelection }) => {
             text={uni.name}
             style={{
               color: theme.themedColors.label,
-              fontSize: FONT_SIZE.xs,
-              paddingBottom: SPACE.sm
+              fontSize: FONT_SIZE.sm,
+              paddingBottom: SPACE._2xs
             }}
           />
           <AppLabel
@@ -44,7 +44,7 @@ const UniSelectionCell: FC<Props> = ({ uni, onSelection }) => {
               styles.disclosureIndicator,
               { tintColor: theme.themedColors.label }
             ]}
-            source={require("../../../../../assets/images/icon_disclosure.png")}
+            source={require("assets/images/icon_disclosure.png")}
           />
         </View>
       </View>
@@ -54,7 +54,10 @@ const UniSelectionCell: FC<Props> = ({ uni, onSelection }) => {
 
 const styles = StyleSheet.create({
   content: {
-    padding: SPACE.lg,
+    paddingLeft: SPACE.lg,
+    paddingRight: SPACE.lg,
+    paddingTop: SPACE.md,
+    paddingBottom: SPACE.md,
     flexDirection: "row"
   },
   logoContainer: {
@@ -70,8 +73,8 @@ const styles = StyleSheet.create({
     paddingLeft: SPACE.md
   },
   disclosureContainer: {
-    width: 20,
-    height: 20,
+    width: 16,
+    height: 16,
     alignSelf: "flex-start"
   },
   disclosureIndicator: {
