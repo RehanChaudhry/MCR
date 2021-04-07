@@ -14,7 +14,6 @@ import Questionnaire from "assets/images/request_state_icon.svg";
 import MatchingStatus from "assets/images/view_grid_add.svg";
 import MatchingDeadline from "assets/images/calendar.svg";
 import MatchingCriteria from "assets/images/puzzle.svg";
-import { moderateScale } from "config/Dimens";
 import SocialDetailForm from "ui/components/templates/about_me/SocialDetailForm";
 import moment from "moment";
 import UserHeader from "ui/components/organisms/user_header/UserHeader";
@@ -78,8 +77,8 @@ export const MatchInfoView: React.FC<Props> = ({
               textStyle={styles.updateText}
               leftIcon={() => (
                 <Profile
-                  width={20}
-                  height={20}
+                  width={16}
+                  height={16}
                   fill={themedColors.primary}
                 />
               )}
@@ -92,8 +91,8 @@ export const MatchInfoView: React.FC<Props> = ({
               textStyle={styles.updateText}
               leftIcon={() => (
                 <Questionnaire
-                  width={moderateScale(20)}
-                  height={moderateScale(20)}
+                  width={20}
+                  height={20}
                   fill={themedColors.primary}
                 />
               )}
@@ -127,8 +126,8 @@ export const MatchInfoView: React.FC<Props> = ({
             ]}
             icon={() => (
               <MatchingStatus
-                width={moderateScale(20)}
-                height={moderateScale(20)}
+                width={20}
+                height={20}
                 fill={themedColors.interface[600]}
               />
             )}
@@ -152,8 +151,8 @@ export const MatchInfoView: React.FC<Props> = ({
             ]}
             icon={() => (
               <MatchingDeadline
-                width={moderateScale(20)}
-                height={moderateScale(20)}
+                width={20}
+                height={20}
                 fill={themedColors.interface[600]}
               />
             )}
@@ -175,8 +174,8 @@ export const MatchInfoView: React.FC<Props> = ({
             ]}
             icon={() => (
               <Questionnaire
-                width={moderateScale(20)}
-                height={moderateScale(20)}
+                width={20}
+                height={20}
                 fill={themedColors.interface[600]}
               />
             )}
@@ -198,8 +197,8 @@ export const MatchInfoView: React.FC<Props> = ({
             ]}
             icon={() => (
               <MatchingCriteria
-                width={moderateScale(20)}
-                height={moderateScale(20)}
+                width={20}
+                height={20}
                 fill={themedColors.interface[600]}
               />
             )}
@@ -230,9 +229,9 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   container: { paddingBottom: SPACE.md },
   card: {
-    borderRadius: 10,
-    marginHorizontal: SPACE.md,
-    marginTop: SPACE.md,
+    borderRadius: 12,
+    marginHorizontal: SPACE.lg,
+    marginTop: SPACE.lg,
     ...shadowStyleProps
   },
   textStyle: {
@@ -240,38 +239,39 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.xs
   },
   description: {
-    fontSize: FONT_SIZE.xs,
-    marginTop: SPACE.md,
-    marginHorizontal: SPACE.md
+    fontSize: FONT_SIZE.sm,
+    marginHorizontal: SPACE.lg,
+    marginTop: SPACE.lg,
+    lineHeight: 20
   },
   progress: {
-    marginTop: SPACE.md,
+    marginTop: SPACE.lg,
     marginHorizontal: SPACE.md
   },
   infoCardDivider: {
-    marginTop: SPACE.md
+    marginTop: SPACE.lg
   },
   updateContainer: {
     flexDirection: "row"
   },
   updateText: {
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
   },
-  updateButton: { padding: SPACE.md },
-  cardPadding: { padding: SPACE.md },
+  updateButton: { padding: SPACE.lg },
+  cardPadding: { padding: SPACE.lg },
   matchingInfoLabel: {
-    fontSize: FONT_SIZE.xs,
-    paddingHorizontal: SPACE.xs
+    fontSize: FONT_SIZE.sm,
+    paddingHorizontal: SPACE.sm
   },
-  matchingInfoData: { fontSize: FONT_SIZE.xs, marginTop: SPACE.xs },
+  matchingInfoData: { fontSize: FONT_SIZE.sm },
   userHeader: {
-    marginTop: SPACE.md,
-    marginHorizontal: SPACE.md
+    marginHorizontal: SPACE.lg,
+    marginTop: SPACE.lg
   },
-  lastCard: { marginBottom: SPACE.md },
-  heading: { includeFontPadding: false, fontSize: FONT_SIZE.sm },
+  lastCard: { marginBottom: SPACE.lg },
+  heading: { includeFontPadding: false, fontSize: FONT_SIZE.base },
   socialDetailContainer: {
-    paddingTop: SPACE.md
+    paddingTop: SPACE.lg
   },
   bottomPadding: {
     paddingBottom: 0

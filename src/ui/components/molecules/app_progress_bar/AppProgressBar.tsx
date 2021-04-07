@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import * as Progress from "react-native-progress";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { FONT_SIZE } from "config/Dimens";
+import { FONT_SIZE, SPACE } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     flexDirection: "row",
-    paddingTop: 5
+    marginTop: SPACE.sm
   },
   boldText: {
     fontWeight: "700"

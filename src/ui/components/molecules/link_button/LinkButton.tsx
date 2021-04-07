@@ -67,12 +67,12 @@ const style = StyleSheet.create({
     includeFontPadding: false
   },
   leftIcon: {
-    marginLeft: 10,
+    marginLeft: SPACE.sm,
     width: 20,
     height: 20
   },
   rightIcon: {
-    marginRight: 10,
+    marginRight: SPACE.sm,
     width: 20,
     height: 20
   },
