@@ -129,7 +129,7 @@ const style = StyleSheet.create({
     // marginRight: SPACE.sm
   },
   icon: {
-    marginTop: SPACE._2xs,
+    marginTop: 2,
     marginRight: SPACE.xs
   },
   commentLikeCount: {

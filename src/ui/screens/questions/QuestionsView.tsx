@@ -22,7 +22,6 @@ import Screen from "ui/components/atoms/Screen";
 import SectionedList, {
   Section
 } from "ui/components/organisms/sectioned_list/SectionedList";
-import { lineHeight } from "config/Dimens";
 
 type Props = {
   isFrom: EScreen;
@@ -186,8 +185,7 @@ const styles = StyleSheet.create({
   infoText: {
     fontSize: FONT_SIZE.sm,
     marginBottom: SPACE.lg,
-    textAlign: "center",
-    lineHeight: lineHeight
+    textAlign: "center"
   },
   headerContainer: {
     flexDirection: "column"
@@ -209,8 +207,7 @@ const styles = StyleSheet.create({
   },
   infoCardText: {
     fontSize: FONT_SIZE.sm,
-    marginTop: SPACE.sm,
-    lineHeight: lineHeight
+    marginTop: SPACE.sm
   },
   learnMore: {
     fontSize: FONT_SIZE.sm,

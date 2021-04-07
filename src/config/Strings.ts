@@ -314,9 +314,9 @@ export default {
   },
   activity_log: {
     title: "Activity Log",
-    label_recent: "Recent Activities",
-    label_yesterday: "Yesterday",
-    label_older: "Older Activities"
+    label_recent: "RECENT ACTIVITIES",
+    label_yesterday: "YESTERDAY",
+    label_older: "OLDER ACTIVITIES"
   },
 
   reportContent: {

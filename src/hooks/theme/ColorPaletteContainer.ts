@@ -145,14 +145,14 @@ let defaultPalette: ColorPalette = {
   warnShade: "#FFEDD5",
 
   label: "#111827",
-  labelSecondary: grayShades.coolGray[700],
+  labelSecondary: grayShades.coolGray[600],
 
   border: grayShades.coolGray[400],
-  borderSecondary: grayShades.coolGray[700],
+  borderSecondary: grayShades.coolGray[600],
 
   separator: grayShades.coolGray[300],
 
-  placeholder: grayShades.coolGray[600],
+  placeholder: grayShades.coolGray[500],
 
   transparent: "#FF000000"
 };

@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
   },
   inputFieldRow: {
     flex: 1,
-    marginTop: SPACE._2md
+    marginTop: SPACE.xs
   },
   descriptionView: {
     height: 100,

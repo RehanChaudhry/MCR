@@ -7,7 +7,6 @@ import { AppSwitch } from "ui/components/atoms/app_switch/AppSwitch";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { RangeSliderWithLabel } from "./RangeSliderWithLabel";
 import Question from "models/Question";
-import { lineHeight } from "config/Dimens";
 
 export interface SliderCallback {
   topRangeSliderResult: number[];
@@ -168,8 +167,7 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth
   },
   title: {
-    fontSize: FONT_SIZE.sm,
-    lineHeight: lineHeight
+    fontSize: FONT_SIZE.sm
   },
   label: {
     fontSize: FONT_SIZE.xs,

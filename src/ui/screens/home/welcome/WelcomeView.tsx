@@ -8,7 +8,6 @@ import { CardView } from "ui/components/atoms/CardView";
 import Screen from "ui/components/atoms/Screen";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
-import { lineHeight } from "config/Dimens";
 
 type Props = {
   openUpdateProfileScreen: () => void;
@@ -149,7 +148,6 @@ const styles = StyleSheet.create({
   text: {
     marginTop: SPACE.sm,
     textAlign: "center",
-    lineHeight: lineHeight,
     fontSize: FONT_SIZE.sm
   },
   buttonViewStyle: {
@@ -166,8 +164,7 @@ const styles = StyleSheet.create({
   learnAboutText: {
     marginTop: SPACE.md,
     textAlign: "center",
-    fontSize: FONT_SIZE.sm,
-    lineHeight: lineHeight
+    fontSize: FONT_SIZE.sm
   },
   cardViewMainContainer: {
     padding: SPACE.lg
@@ -177,8 +174,7 @@ const styles = StyleSheet.create({
   },
   roommate_text: {
     marginTop: SPACE.sm,
-    fontSize: FONT_SIZE.sm,
-    lineHeight: lineHeight
+    fontSize: FONT_SIZE.sm
   },
   heading: {
     marginTop: SPACE.lg,

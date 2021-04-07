@@ -55,7 +55,9 @@ export const ActivityLogView: React.FC<Props> = ({
   };
 
   return (
-    <Screen style={styles.container}>
+    <Screen
+      style={styles.container}
+      bottomSafeAreaBackgroundColor={themedColors.backgroundSecondary}>
       <View
         style={[
           styles.dropdownContainer,
