@@ -4,6 +4,7 @@ import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
   Image,
+  ImageStyle,
   StyleProp,
   StyleSheet,
   TextStyle,
@@ -31,6 +32,7 @@ export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   titleFontWeight?: Weight;
   rightIcon?: SvgProp;
   onPress?: () => void;
+  leftImageStyle?: StyleProp<ImageStyle>;
 }
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
@@ -46,7 +48,8 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
     shouldHideBottomSeparator = false,
     titleFontWeight = "normal",
     onPress,
-    rightIcon
+    rightIcon,
+    leftImageStyle
   }) => {
     const theme = usePreferredTheme();
 
@@ -55,7 +58,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
         <View style={style.container}>
           <View style={style.leftContainer}>
             <Image
-              style={style.profileImage}
+              style={[style.profileImage, leftImageStyle]}
               source={{ uri: leftImageUrl }}
             />
             <View style={style.titleSubtitle}>
@@ -135,8 +138,8 @@ const style = StyleSheet.create({
     marginTop: SPACE.lg
   },
   profileImage: {
-    width: 50,
-    height: 50,
+    width: 48,
+    height: 48,
     borderRadius: 50
   },
   rightImage: {

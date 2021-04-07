@@ -193,6 +193,7 @@ export const CreatePostView = React.memo<Props>((props) => {
             shouldHideBottomSeparator={true}
             titleFontWeight="bold"
             titleStyle={styles.headerTitleStyle}
+            leftImageStyle={{ width: 32, height: 32 }}
           />
 
           <AppForm
