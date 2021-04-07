@@ -184,7 +184,7 @@ export const CreatePostView = React.memo<Props>((props) => {
     <ScrollView
       style={styles.scrollView}
       keyboardShouldPersistTaps={"handled"}>
-      <Screen style={styles.container}>
+      <Screen style={styles.container} shouldAddBottomInset={false}>
         <View style={styles.cardView}>
           <AnnouncementHeader
             title={Strings.whats_new}
@@ -193,6 +193,7 @@ export const CreatePostView = React.memo<Props>((props) => {
             shouldHideBottomSeparator={true}
             titleFontWeight="bold"
             titleStyle={styles.headerTitleStyle}
+            leftImageStyle={{ width: 32, height: 32 }}
           />
 
           <AppForm
@@ -395,7 +396,7 @@ const styles = StyleSheet.create({
   },
   inputFieldRow: {
     flex: 1,
-    marginTop: SPACE.md
+    marginTop: SPACE._2md
   },
   descriptionView: {
     height: 100,
@@ -425,6 +426,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   headerTitleStyle: {
-    fontSize: FONT_SIZE.lg
+    fontSize: FONT_SIZE.base
   }
 });

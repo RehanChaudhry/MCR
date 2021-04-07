@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   userRole: {
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.xs,
     textTransform: "capitalize"
   },
   settingContainer: {
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
   ) => {
     return {
       paddingStart: SPACE.md,
-      fontSize: FONT_SIZE.xsm,
+      fontSize: FONT_SIZE.xs,
       color:
         currentSelected === routeName
           ? theme.primary
@@ -299,6 +299,6 @@ const styles = StyleSheet.create({
   },
   notifyText: {
     color: "#fff",
-    fontSize: FONT_SIZE._3xm
+    fontSize: FONT_SIZE.xs
   }
 });

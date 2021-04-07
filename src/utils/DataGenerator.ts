@@ -887,7 +887,7 @@ const getChats = (): ChatItem[] => {
   chats.push(
     createChat(
       1,
-      ["Nikki Engelin"],
+      ["Nikky Engelen"],
       false,
       SenderType.STUDENTS,
       1,
@@ -944,8 +944,20 @@ const getChats = (): ChatItem[] => {
     )
   );
 
-  /*  for (let i = 1; i < 15; i++) {
-    if (i === 1) {
+  chats.push(
+    createChat(
+      6,
+      ["Fox Mccloud"],
+      true,
+      SenderType.STUDENTS,
+      1,
+      usersImages[6],
+      "Life gets busy. Just wanted to make sure you got my last.."
+    )
+  );
+
+  for (let i = 1; i < 15; i++) {
+    /* if (i === 1) {
       chats.push(
         createChat(i, ["Nikki Engelin"], false, SenderType.STAFF, i)
       );
@@ -964,13 +976,13 @@ const getChats = (): ChatItem[] => {
             i
           )
         );
-      } else {
-        chats.push(
-          createChat(i, ["John Hopkins"], true, SenderType.STUDENTS, i)
-        );
-      }
-    }
-  }*/
+      } else {*/
+    /* chats.push(
+      createChat(i, ["John Hopkins"], true, SenderType.STUDENTS, i)
+    );*/
+    /*  }
+    }*/
+  }
 
   return chats;
 };

@@ -1,4 +1,5 @@
 import { FONTS } from "config";
+import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
 import React from "react";
 import {
   StyleProp,
@@ -71,6 +72,12 @@ export const AppLabel = optimizedMemo<Props>(
         style={setFontWeightStyle(weight, [
           getTextStyle(),
           { color: theme.themedColors.label },
+          {
+            lineHeight: FONT_SIZE_LINE_HEIGHT.ofFontSize(
+              // @ts-ignore
+              StyleSheet.flatten(style)?.fontSize ?? 12.0
+            )
+          },
           style
         ])}
         numberOfLines={1}
@@ -93,8 +100,7 @@ export const AppLabel = optimizedMemo<Props>(
 
 const styles = StyleSheet.create({
   bold: {
-    fontWeight: "bold",
-    fontFamily: FONTS.regular
+    fontFamily: FONTS.bold
   },
   normal: {
     fontFamily: FONTS.regular

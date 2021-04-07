@@ -16,6 +16,7 @@ import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem, { SenderType } from "models/ChatItem";
 import { moderateScale } from "config/Dimens";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
+import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 
 export interface ItemChatListProps extends ViewStyle {
   onPress: () => void;
@@ -93,6 +94,11 @@ export const ItemChatList = React.memo<ItemChatListProps>(
               ellipsizeMode="tail"
               weight="normal"
             />
+
+            <ListItemSeparator
+              style={styles.separator}
+              shouldNotOptimize={true}
+            />
           </View>
         </View>
       </TouchableOpacity>
@@ -103,34 +109,36 @@ export const ItemChatList = React.memo<ItemChatListProps>(
 const styles = StyleSheet.create({
   container: (shouldShowBorder: boolean, themedColors: ColorPalette) => {
     return {
-      paddingHorizontal: SPACE.md,
+      paddingEnd: SPACE.lg,
+      paddingStart: SPACE.md,
       flexDirection: "row",
       borderStartColor: shouldShowBorder
         ? themedColors.primary
         : themedColors.backgroundSecondary,
-      borderStartWidth: 5
+      borderStartWidth: moderateScale(4),
+      marginTop: SPACE.md
     };
   },
   indicator: {
     position: "absolute",
     start: moderateScale(45),
-    top: moderateScale(10)
+    top: 0,
+    left: 50
   },
   imgStyle: {
     width: moderateScale(45),
     height: moderateScale(45),
     resizeMode: "cover",
-    marginTop: SPACE.md,
     borderRadius: 45 / 2,
     overflow: "hidden"
   },
   textWrapper: (theme: ColorPalette) => {
     return {
-      paddingVertical: SPACE.md,
       marginStart: SPACE.md,
       flexDirection: "column",
       borderBottomColor: theme.interface["300"],
-      flex: 1
+      flex: 1,
+      justifyContent: "space-between"
     };
   },
   nameContainer: {
@@ -144,21 +152,21 @@ const styles = StyleSheet.create({
     isMessageRead: boolean
   ) => {
     return {
-      fontSize: FONT_SIZE.xsm,
+      fontSize: FONT_SIZE.sm,
       color:
         recipientLength > 1 && !isMessageRead
           ? theme.primary
           : theme.label,
-      lineHeight: 25,
+      lineHeight: 20,
       paddingEnd: SPACE.sm,
       flex: 1
     };
   },
   timeText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE._2xsm,
+      fontSize: FONT_SIZE.xs,
       color: theme.interface["700"],
-      lineHeight: 20,
+      lineHeight: 16,
       marginEnd: SPACE.md
     };
   },
@@ -168,13 +176,17 @@ const styles = StyleSheet.create({
     isMessageRead: boolean
   ) => {
     return {
-      fontSize: FONT_SIZE._2xsm,
+      fontSize: FONT_SIZE.xs,
       color: !isMessageRead
         ? theme.label
         : isStaffMessage
         ? theme.interface["700"]
         : theme.interface["600"],
-      lineHeight: 16
+      lineHeight: 16,
+      marginTop: SPACE._2xs
     };
+  },
+  separator: {
+    marginTop: SPACE.md
   }
 });

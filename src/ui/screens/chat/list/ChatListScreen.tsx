@@ -12,7 +12,6 @@ import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
-import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 
 interface ChatListProps {
   onItemClick: (item: ChatItem) => void;
@@ -106,9 +105,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
               pullToRefreshCallback={pullToRefreshCallback}
               onEndReached={onEndReached}
               isAllDataLoaded={isAllDataLoaded}
-              ItemSeparatorComponent={() => (
-                <ListItemSeparator style={styles.separator} />
-              )}
+              contentContainerStyle={{ paddingBottom: SPACE.md }}
             />
           </>
         )}
@@ -139,7 +136,7 @@ const styles = StyleSheet.create({
       borderColor: theme.separator
     };
   },
-  searchText: { fontSize: FONT_SIZE._2xsm },
+  searchText: { fontSize: FONT_SIZE.sm, lineHeight: 20 },
   list: { flex: 1 },
   breadCrumbs: {},
   messageContainer: {},

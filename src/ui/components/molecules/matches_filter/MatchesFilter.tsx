@@ -5,7 +5,6 @@ import SearchField from "ui/components/atoms/search_field/SearchField";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import EGender, { genders } from "models/enums/EGender";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
-import { moderateScale } from "config/Dimens";
 import Selector from "assets/images/selector.svg";
 import { shadowStyleProps } from "utils/Util";
 
@@ -50,7 +49,11 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
         textStyle={styles.genderText}
         shouldShowCustomIcon={true}
         dropDownIcon={() => (
-          <Selector fill={themedColors.interface[500]} />
+          <Selector
+            fill={themedColors.interface[500]}
+            width={20}
+            height={20}
+          />
         )}
         title={genders[0].title}
         items={genders}
@@ -66,29 +69,30 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    padding: SPACE.md,
+    paddingVertical: SPACE.sm,
+    paddingHorizontal: SPACE.md,
     backgroundColor: "yellow",
     ...shadowStyleProps
   },
   search: {
-    borderTopStartRadius: moderateScale(20),
-    borderBottomStartRadius: moderateScale(20),
+    borderTopStartRadius: 21,
+    borderBottomStartRadius: 21,
     borderTopEndRadius: 0,
     borderBottomEndRadius: 0,
-    height: moderateScale(40),
+    height: 42,
     flex: 3,
     borderEndWidth: StyleSheet.hairlineWidth
   },
   dropDown: {
     borderTopStartRadius: 0,
     borderBottomStartRadius: 0,
-    borderTopEndRadius: moderateScale(20),
-    borderBottomEndRadius: moderateScale(20),
-    height: moderateScale(40),
+    borderTopEndRadius: 21,
+    borderBottomEndRadius: 21,
+    height: 42,
     flex: 2
   },
-  searchText: { fontSize: FONT_SIZE._2xsm },
-  genderText: { fontSize: FONT_SIZE._2xsm }
+  searchText: { fontSize: FONT_SIZE.sm },
+  genderText: { fontSize: FONT_SIZE.sm }
 });
 
 export default MatchesFilter;

@@ -8,7 +8,7 @@
     "cleanBuildAndroid": "rm -rf android/app/build && rm -rf android/build && cd android && ./gradlew clean && cd ..",
     "cleanBuildIOS": "rm -rf ios/build",
     "android": "npx react-native run-android --verbose",
-    "ios": "npx react-native run-ios",
+    "ios": "npx react-native run-ios --simulator='iPhone 11 Pro'",
     "start": "npx react-native start",
     "debugApk": "yarn run clean && cd android && ./gradlew assembleDebug && cd ..",
     "releaseApk": "yarn run clean && cd android && ./gradlew assembleRelease && cd ..",

@@ -73,15 +73,15 @@ const styles = StyleSheet.create({
     ...shadowStyleProps
   },
   title: {
-    fontSize: FONT_SIZE.lg,
+    fontSize: FONT_SIZE.base,
     marginBottom: SPACE.sm
   },
   subTitle: {
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.sm,
     marginBottom: SPACE.sm
   },
   buttonTitle: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.sm
   },
   actionContainer: {
     flexDirection: "row"

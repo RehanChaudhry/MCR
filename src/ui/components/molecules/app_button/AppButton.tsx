@@ -15,7 +15,6 @@ import {
 import { AppLabel, Weight } from "ui/components/atoms/app_label/AppLabel";
 import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_memo/optimized_memo";
 import { SvgProp } from "utils/Util";
-import { moderateScale } from "config/Dimens";
 
 export interface AppButtonProps extends TouchableOpacityProps {
   onPress?: () => void;
@@ -165,7 +164,7 @@ const style = StyleSheet.create({
     shadowOpacity: 0.15
   },
   text: {
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.base,
     overflow: "hidden"
   },
   loader: {
@@ -214,7 +213,7 @@ const style = StyleSheet.create({
     alignSelf: "center",
     flexDirection: "row",
     width: "100%",
-    height: moderateScale(40),
+    height: 44,
     justifyContent: "space-between",
     alignItems: "center",
     borderRadius: 6

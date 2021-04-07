@@ -118,7 +118,7 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
       sections={list}
       renderItem={bodyItemView}
       renderSectionHeader={sectionView}
-      renderSectionFooter={() => <View style={{ height: SPACE.md }} />}
+      renderSectionFooter={() => <View style={{ height: SPACE.lg }} />}
       keyExtractor={(item) => item.key()}
       contentContainerStyle={style}
       onScrollToIndexFailed={(info) => {
@@ -131,7 +131,7 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
 };
 
 const styles = StyleSheet.create({
-  sectionedList: { padding: SPACE.sm },
+  sectionedList: { padding: SPACE.lg },
   bodyItem: {
     flexDirection: "column"
   }

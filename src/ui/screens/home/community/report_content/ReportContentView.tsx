@@ -28,14 +28,16 @@ export const ReportContentView = React.memo<Props>(({ closeScreen }) => {
         <AppLabel
           text={Strings.reportContent.reportPostAfterSelectingProb}
           style={[
-            styles.marginTop,
-            { color: theme.themedColors.interface["700"] }
+            styles.marginTopXS,
+            { color: theme.themedColors.interface["700"] },
+            styles.subHeading
           ]}
+          numberOfLines={0}
         />
         <CheckboxWithText
           text={Strings.reportContent.offensiveContent}
           onChange={(value) => AppLog.log(value)}
-          style={styles.marginTop}
+          style={styles.marginTopLg}
         />
         <CheckboxWithText
           text={Strings.reportContent.harassment}
@@ -76,7 +78,7 @@ export const ReportContentView = React.memo<Props>(({ closeScreen }) => {
         <AppLabel
           text={Strings.reportContent.reason}
           weight="semi-bold"
-          style={styles.marginTop}
+          style={[styles.marginTopLg, styles.subHeading]}
         />
         <View style={styles.reasonContainer}>
           <AppInputField
@@ -103,7 +105,7 @@ export const ReportContentView = React.memo<Props>(({ closeScreen }) => {
           text={Strings.reportContent.submitSpamReport}
           buttonStyle={[
             { backgroundColor: theme.themedColors.danger },
-            styles.marginTop
+            styles.marginTopLg
           ]}
           textStyle={{ color: theme.themedColors.background }}
           fontWeight="bold"
@@ -119,25 +121,30 @@ const styles = StyleSheet.create({
     flex: 1
   },
   container: {
-    margin: SPACE.md
+    margin: SPACE.lg
   },
-  marginTop: {
-    marginTop: SPACE.md
+  marginTopXS: {
+    marginTop: SPACE.xs
   },
   inputFieldRow: {
     flex: 1,
-    paddingTop: SPACE.xxsm
+    paddingTop: SPACE._2xs
   },
   descriptionView: {
     height: 100,
-    borderWidth: 1,
-    paddingVertical: SPACE.xsm
+    borderWidth: 1
   },
   reasonContainer: {
     flexDirection: "row",
-    marginTop: SPACE.md
+    marginTop: SPACE.xs
   },
   heading: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.base
+  },
+  subHeading: {
+    fontSize: FONT_SIZE.sm
+  },
+  marginTopLg: {
+    marginTop: SPACE.lg
   }
 });

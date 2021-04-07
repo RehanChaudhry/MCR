@@ -66,8 +66,8 @@ const AboutMe: FC<Props> = () => {
           textStyle={{
             color: theme.themedColors.label,
             borderColor: theme.themedColors.interface["700"],
-            marginHorizontal: SPACE.xsm,
-            fontSize: FONT_SIZE.xsm
+            marginHorizontal: SPACE.xs,
+            fontSize: FONT_SIZE.xs
           }}
           shouldShowError={false}
           //fontWeight={"bold"}
@@ -156,7 +156,7 @@ const AboutMe: FC<Props> = () => {
 const styles = StyleSheet.create({
   innerCardView: {
     marginHorizontal: SPACE.lg,
-    paddingTop: SPACE.xsm
+    paddingTop: SPACE.xs
   },
   cardView: {
     marginHorizontal: SPACE.lg,
@@ -179,8 +179,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACE.lg
   },
   textStyle: {
-    paddingTop: SPACE.xsm,
-    fontSize: FONT_SIZE.xsm
+    paddingTop: SPACE.xs,
+    fontSize: FONT_SIZE.xs
   },
   container: {
     flexDirection: "row",
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     paddingLeft: SPACE.sm
     //alignItems: "flex-start"
   },
-  aboutMe: { fontSize: FONT_SIZE.xsm, paddingBottom: SPACE.sm }
+  aboutMe: { fontSize: FONT_SIZE.xs, paddingBottom: SPACE.sm }
 });
 
 export default AboutMe;

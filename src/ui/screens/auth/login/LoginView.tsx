@@ -38,7 +38,7 @@ const validationSchema = Yup.object().shape({
 
 let initialValues: FormikValues = {
   email: "john.doe@gmail.com",
-  password: "123456"
+  password: "Ba1qerti"
 };
 
 export const LoginView = React.memo<Props>(
@@ -164,8 +164,11 @@ export const LoginView = React.memo<Props>(
               <MultilineSpannableText
                 text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
                 textStyle={[
-                  { fontSize: 14 },
-                  { fontSize: 14, color: theme.themedColors.primary }
+                  { fontSize: FONT_SIZE.sm },
+                  {
+                    fontSize: FONT_SIZE.sm,
+                    color: theme.themedColors.primary
+                  }
                 ]}
               />
             </View>

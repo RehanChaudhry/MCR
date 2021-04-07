@@ -91,9 +91,12 @@ exports[`Segmented control tests snapshot 1`] = `
               Object {
                 "color": "#111827",
               },
+              Object {
+                "lineHeight": 16,
+              },
               Array [
                 Object {
-                  "fontSize": 19.651456310679613,
+                  "fontSize": 12,
                 },
                 Array [
                   Object {
@@ -150,9 +153,12 @@ exports[`Segmented control tests snapshot 1`] = `
               Object {
                 "color": "#111827",
               },
+              Object {
+                "lineHeight": 16,
+              },
               Array [
                 Object {
-                  "fontSize": 19.651456310679613,
+                  "fontSize": 12,
                 },
                 Array [
                   Object {
@@ -209,9 +215,12 @@ exports[`Segmented control tests snapshot 1`] = `
               Object {
                 "color": "#111827",
               },
+              Object {
+                "lineHeight": 16,
+              },
               Array [
                 Object {
-                  "fontSize": 19.651456310679613,
+                  "fontSize": 12,
                 },
                 Array [
                   Object {

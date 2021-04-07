@@ -1,7 +1,6 @@
 import ArrowLeft from "assets/images/left.svg";
 import ArrowRight from "assets/images/right.svg";
 import { SPACE } from "config";
-import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import React, { useRef, useState } from "react";
 import { StyleSheet, TouchableOpacityProps, View } from "react-native";
@@ -154,9 +153,8 @@ const styles = StyleSheet.create({
     height: 15
   },
   image: {
-    borderRadius: 10,
-    width: "85%",
-    marginTop: 5
+    borderRadius: 12,
+    width: "82%"
   },
   sliderBoxContainer: {
     overflow: "visible",
@@ -177,7 +175,7 @@ const styles = StyleSheet.create({
     top: "45%"
   },
   imageArrowContainer: {
-    width: moderateScale(30),
-    height: moderateScale(30)
+    width: 32,
+    height: 32
   }
 });

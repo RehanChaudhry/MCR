@@ -137,6 +137,6 @@ const styles = StyleSheet.create({
     paddingEnd: SPACE.md
   },
   userName: { fontSize: FONT_SIZE.lg, flex: 1 },
-  time: { fontSize: FONT_SIZE._2xsm },
+  time: { fontSize: FONT_SIZE.xs },
   chatImage: { marginRight: SPACE.md }
 });

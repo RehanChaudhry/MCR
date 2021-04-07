@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   header: {
-    padding: SPACE.xxsm
+    padding: SPACE._2xs
   },
   list: {
     width: "100%",

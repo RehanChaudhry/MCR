@@ -89,7 +89,7 @@ export const UploadProfilePhoto = optimizedMemo(() => {
           textStyle={{
             color: theme.themedColors.label,
             borderColor: theme.themedColors.interface["700"],
-            fontSize: FONT_SIZE.xsm
+            fontSize: FONT_SIZE.xs
           }}
           shouldShowError={false}
           fontWeight={"semi-bold"}
@@ -102,7 +102,7 @@ export const UploadProfilePhoto = optimizedMemo(() => {
         style={[
           styles.text,
           {
-            fontSize: FONT_SIZE._2xsm,
+            fontSize: FONT_SIZE.xs,
             color: theme.themedColors.interface["700"]
           }
         ]}

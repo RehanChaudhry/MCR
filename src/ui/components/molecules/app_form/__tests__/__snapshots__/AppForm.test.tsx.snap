@@ -26,9 +26,12 @@ exports[`rendering... renders correctly 1`] = `
             Object {
               "color": "#111827",
             },
+            Object {
+              "lineHeight": 16,
+            },
             Array [
               Object {
-                "paddingBottom": 9.069902912621359,
+                "paddingBottom": 6,
               },
               Object {
                 "color": "#111827",
@@ -60,11 +63,11 @@ exports[`rendering... renders correctly 1`] = `
           "color": "#666666",
           "flex": 1,
           "flexDirection": "row",
-          "fontSize": 19.651456310679613,
+          "fontSize": 12,
           "height": 42,
           "justifyContent": "center",
-          "paddingLeft": 18.139805825242718,
-          "paddingRight": 18.139805825242718,
+          "paddingLeft": 12,
+          "paddingRight": 12,
         },
         undefined,
       ]
@@ -124,9 +127,12 @@ exports[`rendering... renders correctly 1`] = `
             Object {
               "color": "#111827",
             },
+            Object {
+              "lineHeight": 16,
+            },
             Array [
               Object {
-                "paddingBottom": 9.069902912621359,
+                "paddingBottom": 6,
               },
               Object {
                 "color": "#111827",
@@ -158,11 +164,11 @@ exports[`rendering... renders correctly 1`] = `
           "color": "#666666",
           "flex": 1,
           "flexDirection": "row",
-          "fontSize": 19.651456310679613,
+          "fontSize": 12,
           "height": 42,
           "justifyContent": "center",
-          "paddingLeft": 18.139805825242718,
-          "paddingRight": 18.139805825242718,
+          "paddingLeft": 12,
+          "paddingRight": 12,
         },
         undefined,
       ]
@@ -220,7 +226,7 @@ exports[`rendering... renders correctly 1`] = `
         "borderRadius": 6,
         "elevation": 1,
         "flexDirection": "row",
-        "height": 60.466019417475735,
+        "height": 44,
         "justifyContent": "space-between",
         "opacity": 1,
         "shadowColor": "#FFFFFF",
@@ -239,7 +245,7 @@ exports[`rendering... renders correctly 1`] = `
         Object {
           "alignItems": "center",
           "flexDirection": "row",
-          "padding": 12.093203883495146,
+          "padding": 8,
         }
       }
       testID="button-container"
@@ -269,9 +275,12 @@ exports[`rendering... renders correctly 1`] = `
                 Object {
                   "color": "#111827",
                 },
+                Object {
+                  "lineHeight": 24,
+                },
                 Array [
                   Object {
-                    "fontSize": 19.651456310679613,
+                    "fontSize": 16,
                     "overflow": "hidden",
                   },
                   Object {

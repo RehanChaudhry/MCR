@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingRight: SPACE.md,
     paddingLeft: SPACE.md,
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.xs,
     flex: 1
   },
   textInput: {

@@ -58,7 +58,7 @@ const MatchesRoutes = ({ navigation }: any) => {
           headerTitle: () => (
             <HeaderTitle
               text={"Roommate Agreement"}
-              labelStyle={{ fontSize: FONT_SIZE.xsm }}
+              labelStyle={{ fontSize: FONT_SIZE.xs }}
             />
           )
         }}

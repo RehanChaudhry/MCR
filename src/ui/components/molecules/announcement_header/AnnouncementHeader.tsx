@@ -1,9 +1,9 @@
 import { FONT_SIZE, SPACE } from "config";
-import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
   Image,
+  ImageStyle,
   StyleProp,
   StyleSheet,
   TextStyle,
@@ -31,6 +31,7 @@ export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   titleFontWeight?: Weight;
   rightIcon?: SvgProp;
   onPress?: () => void;
+  leftImageStyle?: StyleProp<ImageStyle>;
 }
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
@@ -46,7 +47,8 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
     shouldHideBottomSeparator = false,
     titleFontWeight = "normal",
     onPress,
-    rightIcon
+    rightIcon,
+    leftImageStyle
   }) => {
     const theme = usePreferredTheme();
 
@@ -55,7 +57,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
         <View style={style.container}>
           <View style={style.leftContainer}>
             <Image
-              style={style.profileImage}
+              style={[style.profileImage, leftImageStyle]}
               source={{ uri: leftImageUrl }}
             />
             <View style={style.titleSubtitle}>
@@ -110,7 +112,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
 
 const style = StyleSheet.create({
   mainContainer: {
-    marginTop: SPACE.md
+    marginTop: SPACE.lg
   },
   container: {
     flexDirection: "row",
@@ -121,10 +123,10 @@ const style = StyleSheet.create({
     flexDirection: "row"
   },
   title: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.base
   },
   subTitle: {
-    fontSize: FONT_SIZE._3xm
+    fontSize: FONT_SIZE.xs
   },
   titleSubtitle: {
     marginLeft: SPACE.md,
@@ -132,15 +134,15 @@ const style = StyleSheet.create({
   },
   bottomLine: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    marginTop: SPACE.md
+    marginTop: SPACE.lg
   },
   profileImage: {
-    width: 50,
-    height: 50,
+    width: 48,
+    height: 48,
     borderRadius: 50
   },
   rightImage: {
-    width: moderateScale(35),
-    height: moderateScale(35)
+    width: 36,
+    height: 36
   }
 });

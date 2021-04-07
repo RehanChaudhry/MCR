@@ -80,7 +80,7 @@ export const WriteMessage = React.memo<TypingComponentProps>(
 const styles = StyleSheet.create({
   container: (themedColors: ColorPalette) => {
     return {
-      paddingVertical: SPACE.md,
+      paddingVertical: SPACE.lg,
       paddingHorizontal: SPACE.md,
       flexDirection: "row",
       backgroundColor: themedColors.background,

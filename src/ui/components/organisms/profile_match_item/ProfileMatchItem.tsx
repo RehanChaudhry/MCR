@@ -1,4 +1,4 @@
-import { FONT_SIZE, FONTS, SPACE, STRINGS } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
@@ -92,8 +92,8 @@ const ProfileMatchItem = ({
           icon={() => (
             <ChatRound
               fill={themedColors.interface[800]}
-              width={moderateScale(27)}
-              height={moderateScale(27)}
+              width={moderateScale(24)}
+              height={moderateScale(24)}
             />
           )}
         />
@@ -133,7 +133,7 @@ const ProfileMatchItem = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    borderRadius: 5,
+    borderRadius: 12,
     padding: SPACE.md,
     ...shadowStyleProps
   },
@@ -141,37 +141,41 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   profileImage: {
-    width: moderateScale(64),
-    height: moderateScale(64),
-    borderRadius: moderateScale(32)
+    width: 64,
+    height: 64,
+    borderRadius: 32
   },
   infoTextContainer: {
-    marginStart: SPACE.md,
-    alignItems: "flex-start"
+    marginStart: SPACE.md
   },
-  userName: { fontSize: FONT_SIZE.xsm, includeFontPadding: false },
-  subtitle: { fontSize: FONT_SIZE._3xm },
+  userName: { fontSize: FONT_SIZE.lg, includeFontPadding: false },
+  subtitle: { fontSize: FONT_SIZE.xs, marginTop: SPACE._2xs },
   matchScore: {
-    marginTop: SPACE.md
+    marginTop: SPACE.md,
+    alignSelf: "baseline"
   },
   buttonContainer: {
     flexDirection: "row-reverse",
     marginTop: SPACE.md
   },
   btnActionText: {
-    fontFamily: FONTS.semiBold,
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.sm
   },
   btnAction: {
     alignSelf: "stretch",
+    height: 36,
     flex: 1
   },
-  btnChat: { marginLeft: SPACE.md },
+  btnChat: {
+    marginLeft: SPACE.md,
+    height: 36,
+    width: 36
+  },
   icCross: {
     position: "absolute",
-    top: SPACE.xsm,
-    end: SPACE.xsm,
-    padding: SPACE.xsm
+    top: SPACE._2xs,
+    end: SPACE._2xs,
+    padding: SPACE.xs
   }
 });
 

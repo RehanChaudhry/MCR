@@ -62,8 +62,6 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: SPACE.md,
-    paddingHorizontal: SPACE.md,
     flexDirection: "row"
   },
   indicator: {
@@ -72,8 +70,8 @@ const styles = StyleSheet.create({
     top: moderateScale(10)
   },
   imgStyle: {
-    width: moderateScale(45),
-    height: moderateScale(45),
+    width: 32,
+    height: 32,
     resizeMode: "cover",
     borderRadius: 45 / 2
   },
@@ -83,7 +81,7 @@ const styles = StyleSheet.create({
       marginStart: SPACE.md,
       paddingHorizontal: SPACE.md,
       flexDirection: "column",
-      borderRadius: 10,
+      borderRadius: 12,
       flex: 1,
       backgroundColor: isCurrentUser
         ? theme.background
@@ -93,27 +91,28 @@ const styles = StyleSheet.create({
   nameContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    paddingBottom: SPACE.sm
+    alignItems: "center"
   },
   nameText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE.xsm,
-      color: theme.interface["800"]
+      fontSize: FONT_SIZE.sm,
+      color: theme.interface["800"],
+      lineHeight: 20
     };
   },
   messageText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE._2xsm,
+      fontSize: FONT_SIZE.sm,
       color: theme.label,
-      lineHeight: 16
+      lineHeight: 20,
+      paddingTop: SPACE.xs
     };
   },
   timeText: (theme: ColorPalette) => {
     return {
-      fontSize: FONT_SIZE._2xsm,
+      fontSize: FONT_SIZE.xs,
       color: theme.interface["700"],
-      lineHeight: 20
+      lineHeight: 16
     };
   }
 });

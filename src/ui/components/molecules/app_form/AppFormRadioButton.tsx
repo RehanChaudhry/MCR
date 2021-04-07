@@ -43,6 +43,6 @@ export const AppFormRadioButton: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   label: {
-    paddingBottom: SPACE.xsm
+    paddingBottom: SPACE.xs
   }
 });

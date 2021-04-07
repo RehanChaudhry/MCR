@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.lg
   },
   textStyle: {
-    paddingTop: SPACE.xsm,
-    fontSize: FONT_SIZE._2xsm
+    paddingTop: SPACE.xs,
+    fontSize: FONT_SIZE.xs
   },
 
   horizontalLine: {

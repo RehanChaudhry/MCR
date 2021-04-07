@@ -1,9 +1,10 @@
 import Chat from "assets/images/chat.svg";
+import { SPACE } from "config";
 import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
 import ChatItem, { SenderType } from "models/ChatItem";
 import React, { useEffect, useRef, useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { ItemChatThread } from "ui/components/molecules/item_chat/ItemChatThread";
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
@@ -63,7 +64,11 @@ export const CommentsView = React.memo<Props>(
             showsVerticalScrollIndicator={false}
             removeClippedSubviews={true}
             style={[styles.list]}
+            contentContainerStyle={styles.listContainer}
             inverted={true}
+            ItemSeparatorComponent={() => (
+              <View style={styles.itemSeparator} />
+            )}
             keyExtractor={(item, index) => index.toString()}
           />
         </ScrollView>
@@ -72,8 +77,8 @@ export const CommentsView = React.memo<Props>(
           appInputPlaceHolder={Strings.chatThreadScreen.typingHint}
           btnImage={() => (
             <Chat
-              width={25}
-              height={25}
+              width={24}
+              height={24}
               fill={theme.themedColors.primary}
             />
           )}
@@ -92,5 +97,9 @@ const styles = StyleSheet.create({
   list: {
     flex: 1
   },
-  messageContainer: {}
+  messageContainer: {},
+  listContainer: { padding: SPACE.lg },
+  itemSeparator: {
+    height: SPACE.lg
+  }
 });

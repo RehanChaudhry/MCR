@@ -70,9 +70,9 @@ export const ChatHeader = React.memo<ChatHeaderProps>(
 const styles = StyleSheet.create({
   listHeader: (themedColors: ColorPalette) => {
     return {
-      paddingStart: SPACE.md + 5,
-      paddingVertical: SPACE.sm,
-      fontSize: FONT_SIZE._2xsm,
+      paddingStart: SPACE.lg,
+      paddingTop: SPACE.lg,
+      fontSize: FONT_SIZE.xs,
       color: themedColors.interface["600"]
     };
   }

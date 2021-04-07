@@ -1,6 +1,6 @@
 import Chat from "assets/images/chat.svg";
 import Like from "assets/images/like.svg";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
@@ -61,14 +61,17 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
             <View style={style.rightContainerLeftSide}>
               <View style={style.row}>
                 <Like
-                  width={12}
-                  height={12}
+                  width={10}
+                  height={10}
                   fill={theme.themedColors.primary}
                   style={style.icon}
                 />
                 <AppLabel
                   text={likeCount.toString()}
-                  style={{ color: theme.themedColors.interface["700"] }}
+                  style={[
+                    { color: theme.themedColors.interface["700"] },
+                    style.commentLikeCount
+                  ]}
                 />
               </View>
             </View>
@@ -82,7 +85,10 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
                 />
                 <AppLabel
                   text={commentCount.toString()}
-                  style={{ color: theme.themedColors.interface["700"] }}
+                  style={[
+                    { color: theme.themedColors.interface["700"] },
+                    style.commentLikeCount
+                  ]}
                 />
               </View>
             </View>
@@ -101,7 +107,8 @@ const style = StyleSheet.create({
   leftRightContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    alignSelf: "center"
+    alignSelf: "center",
+    marginTop: SPACE._2md
   },
   leftContainerRightSide: {
     marginLeft: SPACE.sm
@@ -112,7 +119,7 @@ const style = StyleSheet.create({
   bottomBorder: {
     width: "100%",
     height: 0.5,
-    marginVertical: SPACE.md
+    marginTop: SPACE.md
   },
   rightContainerLeftSide: {
     marginRight: SPACE.sm
@@ -122,7 +129,10 @@ const style = StyleSheet.create({
     // marginRight: SPACE.sm
   },
   icon: {
-    marginTop: SPACE.xxsm,
-    marginRight: SPACE.xsm
+    marginTop: SPACE._2xs,
+    marginRight: SPACE.xs
+  },
+  commentLikeCount: {
+    fontSize: FONT_SIZE.xs
   }
 });

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { ItemChatThread } from "ui/components/molecules/item_chat/ItemChatThread";
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
@@ -8,6 +8,7 @@ import { AppLog } from "utils/Util";
 import ChatItem, { SenderType } from "models/ChatItem";
 import DataGenerator from "utils/DataGenerator";
 import Strings from "config/Strings";
+import { SPACE } from "config";
 
 type Props = {
   data: ChatItem[];
@@ -42,6 +43,10 @@ export const ChatThreadScreen = React.memo<Props>(
         <FlatListWithPb
           shouldShowProgressBar={false}
           data={chats}
+          ItemSeparatorComponent={() => (
+            <View style={styles.itemSeparator} />
+          )}
+          contentContainerStyle={styles.listContainer}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
           removeClippedSubviews={true}
@@ -67,5 +72,9 @@ const styles = StyleSheet.create({
   list: {
     flex: 1
   },
-  messageContainer: {}
+  messageContainer: {},
+  listContainer: { padding: SPACE.lg },
+  itemSeparator: {
+    height: SPACE.lg
+  }
 });
