@@ -15,6 +15,7 @@ import { DropdownModal } from "ui/components/organisms/app_dropdown/DropdownModa
 import { usePreferredTheme } from "hooks";
 import { DropDownItem } from "models/DropDownItem";
 import ChevronDown from "assets/images/chevron-down.svg";
+import { SPACE } from "config";
 
 export interface AppDropdownProps {
   title: string;
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: SPACE.md,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
