@@ -8,6 +8,7 @@ import { AppLog } from "utils/Util";
 import ChatItem, { SenderType } from "models/ChatItem";
 import DataGenerator from "utils/DataGenerator";
 import Strings from "config/Strings";
+import { SPACE } from "config";
 
 type Props = {
   data: ChatItem[];
@@ -47,6 +48,7 @@ export const ChatThreadScreen = React.memo<Props>(
           removeClippedSubviews={true}
           style={[styles.list]}
           inverted={true}
+          contentContainerStyle={{ marginTop: SPACE.lg }}
           keyExtractor={(item, index) => index.toString()}
         />
         <WriteMessage

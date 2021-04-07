@@ -69,11 +69,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  listContainer: { padding: SPACE.md },
+  listContainer: { padding: SPACE.lg },
   list: {
     flex: 1
   },
   itemSeparator: {
-    height: SPACE.md
+    height: SPACE.lg
   }
 });

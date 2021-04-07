@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       paddingHorizontal: SPACE.lg,
       marginHorizontal: SPACE.md,
-      marginTop: SPACE.xsm,
-      marginBottom: SPACE.xsm,
+      marginTop: SPACE.xs,
+      marginBottom: SPACE.xs,
       backgroundColor: themedColors.background,
       flexDirection: "row",
       justifyContent: "space-between",
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     };
   },
   txt: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   },
   img: {
     width: moderateScale(35),

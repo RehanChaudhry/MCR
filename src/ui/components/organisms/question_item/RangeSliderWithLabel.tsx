@@ -1,10 +1,9 @@
 import React, { FC } from "react";
-import { ImageStyle, StyleProp, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
-import { FONT_SIZE } from "config";
 import { usePreferredTheme } from "hooks";
-import { moderateScale } from "config/Dimens";
+import { FONT_SIZE, SPACE } from "config/Dimens";
 import Thumb from "assets/images/thumb.svg";
 
 interface RangeSliderWithLabelProps {
@@ -38,14 +37,14 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
   }) => {
     const { themedColors } = usePreferredTheme();
 
-    const customSliderMarker = (markerStyle: StyleProp<ImageStyle>) => {
+    const customSliderMarker = () => {
       return (
         <Thumb
           testID="icon"
-          width={30}
-          height={30}
+          width={24}
+          height={24}
           fill={themedColors.secondary}
-          style={markerStyle}
+          style={styles.marker}
         />
       );
     };
@@ -84,7 +83,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
             {...(enableTwoThumbs
               ? {
                   selectedStyle: {
-                    backgroundColor: themedColors.interface[400]
+                    backgroundColor: themedColors.secondaryShade
                   },
                   unselectedStyle: {
                     backgroundColor: themedColors.interface[200]
@@ -107,11 +106,11 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
               /*AppLog.log(
               "RangeSlider() => customMarkerLeft: " + e.currentValue
             );*/
-              return customSliderMarker(styles.markerLeft);
+              return customSliderMarker();
             }}
             customMarkerRight={(_) => {
               // AppLog.log("RangeSlider() => customMarkerRight: " + e);
-              return customSliderMarker(styles.markerRight);
+              return customSliderMarker();
             }}
             onValuesChangeFinish={(values: number[]) => {
               result(values);
@@ -138,22 +137,16 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
 );
 
 const styles = StyleSheet.create({
-  markerLeft: {
-    width: 30,
-    height: 30,
-    marginTop: 10
-  },
-  markerRight: {
-    width: 30,
-    height: 30,
-    marginTop: 10
+  marker: {
+    marginTop: SPACE.sm,
+    paddingHorizontal: SPACE.sm
   },
   track: {
     height: 8,
-    borderRadius: 8
+    borderRadius: 4
   },
   label: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.sm
   },
   labelRight: {
     alignSelf: "flex-end"
@@ -161,27 +154,28 @@ const styles = StyleSheet.create({
   sliderContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    paddingHorizontal: SPACE.sm
   },
   sliderInnerContainer: {
-    height: 45,
-    paddingVertical: 15,
-    paddingHorizontal: 10
+    height: 40,
+    paddingVertical: SPACE.lg,
+    paddingHorizontal: SPACE.sm
   },
   leftPointer: {
     position: "absolute",
-    width: moderateScale(2),
-    height: moderateScale(7),
-    left: moderateScale(5),
-    top: "20%",
-    borderRadius: moderateScale(1)
+    width: 2,
+    height: 8,
+    left: 2,
+    top: SPACE.sm,
+    borderRadius: 1
   },
   rightPointer: {
     position: "absolute",
-    width: moderateScale(2),
-    height: moderateScale(7),
-    right: moderateScale(5),
-    bottom: "20%",
-    borderRadius: moderateScale(1)
+    width: 2,
+    height: 8,
+    right: 2,
+    bottom: SPACE.sm,
+    borderRadius: 1
   }
 });

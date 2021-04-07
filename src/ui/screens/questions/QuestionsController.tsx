@@ -93,7 +93,6 @@ const QuestionsController: FC<Props> = () => {
       welcomeNavigation.setOptions({
         headerLeft: () => (
           <HeaderLeftTextWithIcon
-            fontWeight={"semi-bold"}
             text={"Back"}
             icon={() => {
               return (
@@ -112,6 +111,7 @@ const QuestionsController: FC<Props> = () => {
         headerRight: () => (
           <HeaderRightTextWithIcon
             text="Skip"
+            fontWeight={"normal"}
             textStyle={{ color: themedColors.interface["700"] }}
             icon={() => {
               return (

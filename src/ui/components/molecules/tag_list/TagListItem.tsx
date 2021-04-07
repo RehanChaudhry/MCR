@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     marginRight: SPACE.sm,
     padding: 8,
     borderRadius: 5,
-    marginBottom: SPACE.xsm
+    marginBottom: SPACE.xs
   },
   text: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   }
 });
 export default TagListItem;

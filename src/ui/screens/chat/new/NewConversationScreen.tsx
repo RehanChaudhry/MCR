@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   textStyle: (theme: ColorPalette) => {
     return {
       color: theme.interface["600"],
-      fontSize: FONT_SIZE.xsm,
+      fontSize: FONT_SIZE.xs,
       paddingHorizontal: SPACE.md,
       paddingBottom: SPACE.lg
     };

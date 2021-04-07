@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.lg
   },
   headingStyle: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   },
   flatList: {
     marginTop: SPACE.lg
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   roommateAgreement: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   }
 });
 

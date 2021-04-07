@@ -425,6 +425,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   headerTitleStyle: {
-    fontSize: FONT_SIZE.lg
+    fontSize: FONT_SIZE.base
   }
 });

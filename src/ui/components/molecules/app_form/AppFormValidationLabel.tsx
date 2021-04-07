@@ -38,7 +38,7 @@ export const AppFormValidationLabel = optimizedMemo<Props>(
 const styles = StyleSheet.create({
   error: {
     color: COLORS.red,
-    fontSize: FONT_SIZE.md,
+    fontSize: FONT_SIZE.base,
     marginTop: 6
   }
 });

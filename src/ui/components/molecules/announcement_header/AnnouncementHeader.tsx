@@ -1,5 +1,4 @@
 import { FONT_SIZE, SPACE } from "config";
-import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
@@ -110,7 +109,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
 
 const style = StyleSheet.create({
   mainContainer: {
-    marginTop: SPACE.md
+    marginTop: SPACE.lg
   },
   container: {
     flexDirection: "row",
@@ -121,10 +120,10 @@ const style = StyleSheet.create({
     flexDirection: "row"
   },
   title: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.base
   },
   subTitle: {
-    fontSize: FONT_SIZE._3xm
+    fontSize: FONT_SIZE.xs
   },
   titleSubtitle: {
     marginLeft: SPACE.md,
@@ -132,7 +131,7 @@ const style = StyleSheet.create({
   },
   bottomLine: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    marginTop: SPACE.md
+    marginTop: SPACE.lg
   },
   profileImage: {
     width: 50,
@@ -140,7 +139,7 @@ const style = StyleSheet.create({
     borderRadius: 50
   },
   rightImage: {
-    width: moderateScale(35),
-    height: moderateScale(35)
+    width: 36,
+    height: 36
   }
 });

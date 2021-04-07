@@ -157,6 +157,6 @@ const styles = StyleSheet.create({
   },
   forgotText: {
     marginTop: SPACE._2xl,
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   }
 });

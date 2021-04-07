@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.grey3,
     paddingRight: SPACE.md,
     paddingLeft: SPACE.md,
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.xs,
     fontFamily: FONTS.regular,
     borderWidth: StyleSheet.hairlineWidth,
     flex: 1

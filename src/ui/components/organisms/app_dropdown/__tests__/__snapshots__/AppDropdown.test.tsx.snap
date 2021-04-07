@@ -333,7 +333,7 @@ exports[`Renders snapshot as expected 1`] = `
             "alignItems": "center",
             "flexDirection": "row",
             "justifyContent": "space-between",
-            "paddingHorizontal": 10,
+            "paddingHorizontal": 12,
             "paddingVertical": 10,
           },
         ]

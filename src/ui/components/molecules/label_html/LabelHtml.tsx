@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleProp, TextStyle, ViewStyle } from "react-native";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
+import { FONTS } from "config";
 
 interface Props {
   containerStyle?: StyleProp<ViewStyle>;
@@ -24,9 +25,9 @@ const LabelHtml: React.FC<Props> = ({
     texts.forEach((_, index) => {
       let fontWeightStyle: StyleProp<TextStyle>;
       if (index % 2 !== 0) {
-        fontWeightStyle = { fontWeight: "bold" };
+        fontWeightStyle = { fontFamily: FONTS.semiBold };
       } else {
-        fontWeightStyle = { fontWeight: "normal" };
+        fontWeightStyle = { fontFamily: FONTS.regular };
       }
       textStyles.push([fontWeightStyle, style]);
     });

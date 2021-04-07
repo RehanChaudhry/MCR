@@ -49,8 +49,8 @@ const SearchField = optimizedMemoWithStyleProp<Props>(
     let _searchIcon = useRef(
       searchIcon ?? (
         <Search
-          width={14}
-          height={14}
+          width={moderateScale(15)}
+          height={moderateScale(15)}
           style={styles.leftIcon}
           testID={"left-icon"}
           fill={iconColor ?? theme.themedColors.interface[600]}
@@ -135,14 +135,14 @@ const styles = StyleSheet.create({
   textInput: {
     fontFamily: FONTS.regular,
     flex: 1,
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.xs,
     padding: 0,
     color: COLORS.textColor1
   },
   textInputSmallFont: {
     fontFamily: FONTS.regular,
     flex: 1,
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.xs,
     padding: 0,
     color: COLORS.textColor1
   }

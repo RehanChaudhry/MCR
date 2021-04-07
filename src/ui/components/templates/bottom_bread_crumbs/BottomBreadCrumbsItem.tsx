@@ -8,7 +8,7 @@ import {
   ViewStyle
 } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { FONT_SIZE } from "config";
+import { FONT_SIZE, moderateScale, SPACE } from "config/Dimens";
 
 type Props = {
   title: string;
@@ -37,22 +37,20 @@ const BottomBreadCrumbsItem: FC<Props> = ({
 };
 const styles = StyleSheet.create({
   mainContainer: {
-    //flexDirection: "row",
     flexWrap: "wrap",
-    height: 36,
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 6,
-    marginRight: 6,
-    paddingLeft: 10,
-    paddingRight: 10,
+    marginTop: moderateScale(10),
+    marginBottom: moderateScale(10),
+    marginLeft: SPACE.xs,
+    marginRight: SPACE.xs,
     borderRadius: 5,
     justifyContent: "center"
   },
   text: {
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.sm,
     fontWeight: "bold",
-    includeFontPadding: false
+    includeFontPadding: false,
+    paddingVertical: moderateScale(8),
+    paddingHorizontal: moderateScale(10)
   }
 });
 export default BottomBreadCrumbsItem;
