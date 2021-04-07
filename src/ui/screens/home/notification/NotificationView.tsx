@@ -168,16 +168,13 @@ const styles = StyleSheet.create({
   dropDownBar: {
     backgroundColor: Colors.white,
     height: 46,
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.4,
     shadowRadius: 3,
     elevation: 4
   },
-  shadow: {
-    overflow: "hidden",
-    paddingBottom: 5
-  },
+
   list: {
     flex: 1
   }

@@ -16,6 +16,7 @@ import { BasicProfile } from "ui/components/templates/basic_profile/BasicProfile
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
+  addInterestOnPress: () => void;
 };
 
 const validationSchema = Yup.object().shape({
@@ -116,7 +117,8 @@ let initialValues: FormikValues = {
 };
 
 export const UpdateProfileView: React.FC<Props> = ({
-  openUpdateQuestionnaireScreen
+  openUpdateQuestionnaireScreen,
+  addInterestOnPress
 }) => {
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
@@ -133,7 +135,7 @@ export const UpdateProfileView: React.FC<Props> = ({
         validationSchema={validationSchema}>
         <BasicProfile />
         <DemoGraphics />
-        <Interests />
+        <Interests addInterestsOnPress={addInterestOnPress} />
         <LivingDetails />
         <VideoIntroduction />
         <View style={styles.buttonViewStyle}>

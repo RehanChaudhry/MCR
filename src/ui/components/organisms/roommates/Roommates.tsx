@@ -52,8 +52,8 @@ const Roommates: React.FC<Props> = ({
         rightIcon={() => (
           <ChatRound
             testID="right-icon"
-            width={23}
-            height={23}
+            width={24}
+            height={24}
             fill={themedColors.interface["700"]}
           />
         )}
@@ -72,8 +72,8 @@ const Roommates: React.FC<Props> = ({
       fontWeight={"semi-bold"}
       leftIcon={() => (
         <AgreementIcon
-          height={22}
-          width={22}
+          height={20}
+          width={20}
           color={themedColors.primary}
         />
       )}
@@ -100,19 +100,19 @@ const Roommates: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 10,
+    borderRadius: 12,
     marginHorizontal: SPACE.md,
     marginTop: SPACE.md,
-    paddingHorizontal: SPACE.md,
-    paddingTop: SPACE.md,
+    paddingHorizontal: SPACE.lg,
+    paddingTop: SPACE.lg,
     ...shadowStyleProps
   },
-  title: { includeFontPadding: false, fontSize: FONT_SIZE.sm },
+  title: { includeFontPadding: false, fontSize: FONT_SIZE.base },
   roommateAgreement: {
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
   },
   roommateAgreementView: {
-    paddingVertical: SPACE.md
+    paddingVertical: SPACE.lg
   }
 });
 

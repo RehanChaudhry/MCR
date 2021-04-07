@@ -1,14 +1,16 @@
 import React from "react";
 import { CardView } from "ui/components/atoms/CardView";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
-import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
 
-export const Interests = optimizedMemo(({}) => {
+type Props = {
+  addInterestsOnPress: () => void;
+};
+export const Interests: React.FC<Props> = ({ addInterestsOnPress }) => {
   const theme = usePreferredTheme();
   return (
     <CardView style={styles.cardStyles}>
@@ -26,30 +28,34 @@ export const Interests = optimizedMemo(({}) => {
       </View>
       <View style={[styles.horizontalLine]} />
       <View style={styles.innerCardStyle}>
-        <AppFormField
-          name={"hobbies"}
-          validationLabelTestID={"hobbiesValidationTestID"}
-          labelProps={{
-            text: STRINGS.profile.dropDownTitle.hobbies,
-            weight: "semi-bold"
-          }}
-          fieldInputProps={{
-            textContentType: "name",
-            keyboardType: "default",
-            returnKeyType: "next",
-            placeholder: STRINGS.profile.dropDownInitialValue.hobbies,
-            autoCapitalize: "none",
-            placeholderTextColor: theme.themedColors.primary,
-            style: { color: theme.themedColors.label },
-            viewStyle: [
-              styles.textFieldStyle,
-              {
-                backgroundColor: theme.themedColors.background,
-                borderColor: theme.themedColors.border
-              }
-            ]
-          }}
-        />
+        <TouchableWithoutFeedback onPress={addInterestsOnPress}>
+          <AppFormField
+            name={"hobbies"}
+            validationLabelTestID={"hobbiesValidationTestID"}
+            labelProps={{
+              text: STRINGS.profile.dropDownTitle.hobbies,
+              weight: "semi-bold"
+            }}
+            fieldInputProps={{
+              textContentType: "name",
+              keyboardType: "default",
+              returnKeyType: "next",
+              shouldDisable: true,
+              placeholder: STRINGS.profile.dropDownInitialValue.hobbies,
+              autoCapitalize: "none",
+              placeholderTextColor: theme.themedColors.primary,
+              style: { color: theme.themedColors.label },
+              viewStyle: [
+                styles.textFieldStyle,
+                {
+                  backgroundColor: theme.themedColors.background,
+                  borderColor: theme.themedColors.border
+                }
+              ]
+            }}
+            readOnly={true}
+          />
+        </TouchableWithoutFeedback>
         <View style={styles.spacer} />
         <AppFormField
           name={"memberships"}
@@ -178,7 +184,7 @@ export const Interests = optimizedMemo(({}) => {
       </View>
     </CardView>
   );
-});
+};
 
 const styles = StyleSheet.create({
   cardStyles: {

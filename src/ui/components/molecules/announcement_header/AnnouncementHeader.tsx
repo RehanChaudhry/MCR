@@ -1,5 +1,4 @@
 import { FONT_SIZE, SPACE } from "config";
-import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
@@ -143,7 +142,7 @@ const style = StyleSheet.create({
     borderRadius: 50
   },
   rightImage: {
-    width: moderateScale(35),
-    height: moderateScale(35)
+    width: 36,
+    height: 36
   }
 });

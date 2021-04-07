@@ -63,7 +63,7 @@ exports[`Renders snapshot as expected 1`] = `
     style={
       Object {
         "flexDirection": "row",
-        "paddingTop": 5,
+        "marginTop": 8,
       }
     }
     testID="bottom-view"
