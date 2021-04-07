@@ -1,7 +1,7 @@
 import { FONT_SIZE, FONTS, SPACE } from "config";
+import { usePreferredTheme } from "hooks";
 import React, { useState } from "react";
 import {
-  Image,
   StyleProp,
   StyleSheet,
   View,
@@ -24,6 +24,7 @@ type Props = OwnProps;
 const CheckboxWithText = optimizedMemo<Props>(
   ({ text, style, onChange }) => {
     const [checked, setChecked] = useState(false);
+    const theme = usePreferredTheme();
     return (
       <View style={[styles.container, style]}>
         <CheckBox
@@ -34,28 +35,9 @@ const CheckboxWithText = optimizedMemo<Props>(
           style={styles.checkBox}
           isChecked={checked}
           rightText={text}
-          checkedImage={
-            <Image
-              source={require("assets/images/selected.png")}
-              style={{ width: 20, height: 20 }}
-            />
-          }
-          unCheckedImage={
-            <Image
-              source={require("assets/images/unselected.png")}
-              style={{ width: 20, height: 20 }}
-            />
-          }
+          checkedCheckBoxColor={theme.themedColors.primary}
+          uncheckedCheckBoxColor={theme.themedColors.interface["400"]}
         />
-        {/*<CheckBox*/}
-        {/*  disabled={false}*/}
-        {/*  value={checked}*/}
-        {/*  onValueChange={(value) => {*/}
-        {/*    setChecked(value);*/}
-        {/*    onChange(value);*/}
-        {/*  }}*/}
-        {/*/>*/}
-        {/*<AppLabel text={text} style={styles.checkboxText} />*/}
       </View>
     );
   }
