@@ -7,7 +7,7 @@ import {
   ViewStyle
 } from "react-native";
 import React from "react";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import NotifyIndic from "assets/images/notification-indicator.svg";
 import NotifyIndicInActive from "assets/images/notification-indicator-inactive.svg";
@@ -109,19 +109,21 @@ export const ItemChatList = React.memo<ItemChatListProps>(
 const styles = StyleSheet.create({
   container: (shouldShowBorder: boolean, themedColors: ColorPalette) => {
     return {
-      paddingHorizontal: SPACE.md,
+      paddingEnd: SPACE.lg,
+      paddingStart: SPACE.md,
       flexDirection: "row",
       borderStartColor: shouldShowBorder
         ? themedColors.primary
         : themedColors.backgroundSecondary,
-      borderStartWidth: 5,
+      borderStartWidth: moderateScale(4),
       marginTop: SPACE.md
     };
   },
   indicator: {
     position: "absolute",
     start: moderateScale(45),
-    top: moderateScale(10)
+    top: 0,
+    left: 50
   },
   imgStyle: {
     width: moderateScale(45),
@@ -150,7 +152,7 @@ const styles = StyleSheet.create({
     isMessageRead: boolean
   ) => {
     return {
-      fontSize: moderateScale(13),
+      fontSize: FONT_SIZE.sm,
       color:
         recipientLength > 1 && !isMessageRead
           ? theme.primary
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
   },
   timeText: (theme: ColorPalette) => {
     return {
-      fontSize: moderateScale(11),
+      fontSize: FONT_SIZE.xs,
       color: theme.interface["700"],
       lineHeight: 16,
       marginEnd: SPACE.md
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
     isMessageRead: boolean
   ) => {
     return {
-      fontSize: moderateScale(11),
+      fontSize: FONT_SIZE.xs,
       color: !isMessageRead
         ? theme.label
         : isStaffMessage

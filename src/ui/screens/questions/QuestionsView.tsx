@@ -22,7 +22,7 @@ import Screen from "ui/components/atoms/Screen";
 import SectionedList, {
   Section
 } from "ui/components/organisms/sectioned_list/SectionedList";
-import { lineHeight, moderateScale } from "config/Dimens";
+import { lineHeight } from "config/Dimens";
 
 type Props = {
   isFrom: EScreen;
@@ -135,8 +135,8 @@ function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
           fontWeight={"bold"}
           rightIcon={() => (
             <RightArrow
-              width={moderateScale(16)}
-              height={moderateScale(16)}
+              width={16}
+              height={16}
               fill={themedColors.primary}
             />
           )}
@@ -167,8 +167,8 @@ function createListFooter(
         textStyle={[styles.saveButton, { color: themedColors.background }]}
         rightIcon={() => (
           <RightArrowCircle
-            width={moderateScale(13)}
-            height={moderateScale(13)}
+            width={13}
+            height={13}
             fill={themedColors.background}
           />
         )}
@@ -180,8 +180,8 @@ function createListFooter(
 const styles = StyleSheet.create({
   sectionedList: { padding: SPACE.lg },
   lastBody: {
-    borderBottomStartRadius: moderateScale(6),
-    borderBottomEndRadius: moderateScale(6)
+    borderBottomStartRadius: 6,
+    borderBottomEndRadius: 6
   },
   infoText: {
     fontSize: FONT_SIZE.sm,

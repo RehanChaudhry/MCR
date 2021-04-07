@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import {
   AppImageBackground,
   CONTAINER_TYPES
@@ -52,6 +52,7 @@ export const WriteMessage = React.memo<TypingComponentProps>(
           placeholderTextColor={themedColors.interface["600"]}
           placeholder={appInputPlaceHolder}
           viewStyle={styles.inputField(themedColors)}
+          style={styles.inputFieldText(themedColors)}
           onChangeText={(text: string) => {
             setInitialText(text);
             appInputFieldCallback?.(text);
@@ -76,7 +77,7 @@ export const WriteMessage = React.memo<TypingComponentProps>(
 const styles = StyleSheet.create({
   container: (themedColors: ColorPalette) => {
     return {
-      paddingVertical: SPACE.md,
+      paddingVertical: SPACE.lg,
       paddingHorizontal: SPACE.md,
       flexDirection: "row",
       backgroundColor: themedColors.background,
@@ -94,7 +95,10 @@ const styles = StyleSheet.create({
   inputField: (themedColors: ColorPalette) => {
     return {
       borderColor: themedColors.border,
-      color: themedColors.interface["600"],
+      //  color: themedColors.interface["600"],
+      fontSize: FONT_SIZE.lg,
+      lineHeight: 20,
+      color: "#b12323",
 
       //Its for IOS
       shadowColor: themedColors.transparent,
@@ -104,6 +108,14 @@ const styles = StyleSheet.create({
       // its for android
       elevation: 0,
       backgroundColor: themedColors.transparent
+    };
+  },
+  inputFieldText: (themedColors: ColorPalette) => {
+    return {
+      borderColor: themedColors.border,
+      color: themedColors.interface["600"],
+      fontSize: FONT_SIZE.sm,
+      lineHeight: 20
     };
   }
 });

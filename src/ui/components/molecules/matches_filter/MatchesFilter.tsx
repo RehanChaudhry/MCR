@@ -5,7 +5,6 @@ import SearchField from "ui/components/atoms/search_field/SearchField";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import EGender, { genders } from "models/enums/EGender";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
-import { moderateScale } from "config/Dimens";
 import Selector from "assets/images/selector.svg";
 import { shadowStyleProps } from "utils/Util";
 
@@ -52,8 +51,8 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
         dropDownIcon={() => (
           <Selector
             fill={themedColors.interface[500]}
-            width={moderateScale(20)}
-            height={moderateScale(20)}
+            width={20}
+            height={20}
           />
         )}
         title={genders[0].title}
@@ -76,20 +75,20 @@ const styles = StyleSheet.create({
     ...shadowStyleProps
   },
   search: {
-    borderTopStartRadius: moderateScale(21),
-    borderBottomStartRadius: moderateScale(21),
+    borderTopStartRadius: 21,
+    borderBottomStartRadius: 21,
     borderTopEndRadius: 0,
     borderBottomEndRadius: 0,
-    height: moderateScale(42),
+    height: 42,
     flex: 3,
     borderEndWidth: StyleSheet.hairlineWidth
   },
   dropDown: {
     borderTopStartRadius: 0,
     borderBottomStartRadius: 0,
-    borderTopEndRadius: moderateScale(21),
-    borderBottomEndRadius: moderateScale(21),
-    height: moderateScale(42),
+    borderTopEndRadius: 21,
+    borderBottomEndRadius: 21,
+    height: 42,
     flex: 2
   },
   searchText: { fontSize: FONT_SIZE.sm },
