@@ -164,8 +164,11 @@ export const LoginView = React.memo<Props>(
               <MultilineSpannableText
                 text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
                 textStyle={[
-                  { fontSize: 14 },
-                  { fontSize: 14, color: theme.themedColors.primary }
+                  { fontSize: FONT_SIZE.sm },
+                  {
+                    fontSize: FONT_SIZE.sm,
+                    color: theme.themedColors.primary
+                  }
                 ]}
               />
             </View>
