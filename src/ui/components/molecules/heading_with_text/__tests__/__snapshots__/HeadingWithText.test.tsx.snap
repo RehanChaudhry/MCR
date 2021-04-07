@@ -15,6 +15,9 @@ exports[`Snapshot testing 1`] = `
           Object {
             "color": "#111827",
           },
+          Object {
+            "lineHeight": 24,
+          },
           Array [
             Object {
               "fontSize": 16,
@@ -40,6 +43,9 @@ exports[`Snapshot testing 1`] = `
           },
           Object {
             "color": "#111827",
+          },
+          Object {
+            "lineHeight": 16,
           },
           Array [
             Object {

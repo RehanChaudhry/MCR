@@ -91,6 +91,9 @@ exports[`Segmented control tests snapshot 1`] = `
               Object {
                 "color": "#111827",
               },
+              Object {
+                "lineHeight": 16,
+              },
               Array [
                 Object {
                   "fontSize": 12,
@@ -150,6 +153,9 @@ exports[`Segmented control tests snapshot 1`] = `
               Object {
                 "color": "#111827",
               },
+              Object {
+                "lineHeight": 16,
+              },
               Array [
                 Object {
                   "fontSize": 12,
@@ -208,6 +214,9 @@ exports[`Segmented control tests snapshot 1`] = `
               },
               Object {
                 "color": "#111827",
+              },
+              Object {
+                "lineHeight": 16,
               },
               Array [
                 Object {

@@ -26,6 +26,9 @@ exports[`rendering... renders correctly 1`] = `
             Object {
               "color": "#111827",
             },
+            Object {
+              "lineHeight": 16,
+            },
             Array [
               Object {
                 "paddingBottom": 6,
@@ -127,6 +130,9 @@ exports[`rendering... renders correctly 1`] = `
             },
             Object {
               "color": "#111827",
+            },
+            Object {
+              "lineHeight": 16,
             },
             Array [
               Object {
@@ -276,6 +282,9 @@ exports[`rendering... renders correctly 1`] = `
                 },
                 Object {
                   "color": "#111827",
+                },
+                Object {
+                  "lineHeight": 24,
                 },
                 Array [
                   Object {
