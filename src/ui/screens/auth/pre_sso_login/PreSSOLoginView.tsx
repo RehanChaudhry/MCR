@@ -123,8 +123,8 @@ const styles = StyleSheet.create({
     marginLeft: SPACE.lg
   },
   signInHeading: {
-    fontSize: FONT_SIZE._2xl,
-    marginTop: SPACE.xl
+    fontSize: FONT_SIZE.xl,
+    marginTop: SPACE._2xl
   },
   email: {
     marginTop: SPACE._2xl
@@ -136,16 +136,15 @@ const styles = StyleSheet.create({
     height: 44
   },
   spannableText: {
-    marginTop: SPACE._2xl,
-    marginBottom: SPACE._2xl
+    marginVertical: SPACE._2xl
   },
   ssoSecondText: {
     marginTop: SPACE.xl,
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
   },
   ssoText: {
     marginTop: SPACE._2xl,
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
   },
   loginImage: {
     marginTop: SPACE._2xl

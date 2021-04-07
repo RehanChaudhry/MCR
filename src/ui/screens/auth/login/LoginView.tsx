@@ -163,11 +163,13 @@ export const LoginView = React.memo<Props>(
             <View style={styles.spannableText}>
               <MultilineSpannableText
                 text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
-                textStyle={[
-                  { fontSize: FONT_SIZE.sm },
+                appLabelProps={[
+                  { style: { fontSize: FONT_SIZE.sm } },
                   {
-                    fontSize: FONT_SIZE.sm,
-                    color: theme.themedColors.primary
+                    style: {
+                      fontSize: FONT_SIZE.sm,
+                      color: theme.themedColors.primary
+                    }
                   }
                 ]}
               />
