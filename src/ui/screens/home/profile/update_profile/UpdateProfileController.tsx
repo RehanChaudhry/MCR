@@ -18,12 +18,20 @@ import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_w
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
+import { AppLog } from "utils/Util";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
   ProfileStackParamList,
   "UpdateProfile"
 >;
+
+type UpdateProfileNavigationProp = StackNavigationProp<
+  UpdateProfileStackParamList,
+  "AddInterests"
+>;
+
+//type actionProp = RouteProp<ProfileStackParamList, "UpdateProfile">;
 
 type UpdateProfileRouteProp = RouteProp<
   UpdateProfileStackParamList,
@@ -36,9 +44,14 @@ type welcomeNavigationProp = StackNavigationProp<
 
 const UpdateProfileController: FC<Props> = () => {
   const navigation = useNavigation<ProfileNavigationProp>();
+  const upDateNavigation = useNavigation<UpdateProfileNavigationProp>();
   const welcomeNavigation = useNavigation<welcomeNavigationProp>();
   const route = useRoute<UpdateProfileRouteProp>();
   const { themedColors } = usePreferredTheme();
+
+  const routeName = useRoute<UpdateProfileRouteProp>();
+
+  AppLog.log("data" + routeName.params.options);
 
   const openQuestionnaireScreen = usePreventDoubleTap(() => {
     welcomeNavigation.navigate("Questionnaire", {
@@ -93,11 +106,16 @@ const UpdateProfileController: FC<Props> = () => {
     }
   });
 
+  const openAddInterests = () => {
+    upDateNavigation.navigate("AddInterests");
+  };
+
   return (
     <>
       {useLazyLoadInterface(
         <UpdateProfileView
           openUpdateQuestionnaireScreen={openQuestionnaireScreen}
+          addInterestOnPress={openAddInterests}
         />
       )}
     </>

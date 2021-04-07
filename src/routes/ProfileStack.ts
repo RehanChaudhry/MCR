@@ -7,7 +7,8 @@ export type ViewProfileStackParamList = {
 export const ViewProfileStack = createStackNavigator<ViewProfileStackParamList>();
 
 export type UpdateProfileStackParamList = {
-  UpdateProfile: { isFrom: EScreen };
+  UpdateProfile: { isFrom: EScreen; options?: string[] };
+  AddInterests: undefined;
 };
 export const UpdateProfileStack = createStackNavigator<UpdateProfileStackParamList>();
 
