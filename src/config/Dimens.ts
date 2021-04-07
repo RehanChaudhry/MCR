@@ -46,7 +46,8 @@ export const FONT_SIZE = {
   lg: mapsOfSizesAndHeight.get("lg")?.size,
   xl: mapsOfSizesAndHeight.get("xl")?.size,
   _2xl: mapsOfSizesAndHeight.get("_2xl")?.size,
-  _3xl: mapsOfSizesAndHeight.get("_3xl")?.size
+  _3xl: mapsOfSizesAndHeight.get("_3xl")?.size,
+  md: mapsOfSizesAndHeight.get("md")?.height
 };
 
 export const FONT_SIZE_LINE_HEIGHT = {

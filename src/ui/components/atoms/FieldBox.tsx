@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { COLORS, FONTS, FONT_SIZE, SPACE } from "config";
+import { COLORS, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import Strings from "config/Strings";
@@ -53,14 +53,11 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     height: 42,
     borderRadius: 5,
-    borderColor: COLORS.grey3,
     paddingRight: SPACE.md,
     paddingLeft: SPACE.md,
-    fontSize: FONT_SIZE.xsm,
-    fontFamily: FONTS.regular,
     borderWidth: 1,
     flex: 1,
-    marginTop: SPACE.xsm
+    marginTop: SPACE.xs
 
     // //Its for IOS
     // shadowColor: COLORS.black,
