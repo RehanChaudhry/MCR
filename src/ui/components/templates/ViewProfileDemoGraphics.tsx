@@ -82,10 +82,10 @@ const styles = StyleSheet.create({
     marginTop: SPACE.lg
   },
   headingStyle: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.base
   },
   textStyle: {
-    marginTop: SPACE.md
+    marginTop: SPACE.sm
   }
 });
 

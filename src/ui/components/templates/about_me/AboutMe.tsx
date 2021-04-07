@@ -94,7 +94,7 @@ const AboutMe: FC<Props> = () => {
           }
           numberOfLines={0}
           style={{
-            fontSize: FONT_SIZE.md,
+            fontSize: FONT_SIZE.sm,
             color: grayShades.warmGray["700"]
           }}
         />

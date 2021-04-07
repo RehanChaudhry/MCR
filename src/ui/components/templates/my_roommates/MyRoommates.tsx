@@ -66,10 +66,10 @@ const styles = StyleSheet.create({
     paddingBottom: SPACE.md
   },
   mainHeading: {
-    fontSize: FONT_SIZE.lg
+    fontSize: FONT_SIZE.base
   },
   headingStyle: {
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
   },
   flatList: {
     marginTop: SPACE.lg
