@@ -68,13 +68,15 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
 
             <View style={styles.spannableText}>
               <MultilineSpannableText
-                textStyle={[
-                  { fontSize: FONT_SIZE.xsm },
+                appLabelProps={[
+                  { style: { fontSize: FONT_SIZE.sm } },
                   {
-                    fontSize: FONT_SIZE.xsm,
-                    color: theme.themedColors.primary
+                    style: {
+                      fontSize: FONT_SIZE.sm,
+                      color: theme.themedColors.primary
+                    }
                   },
-                  { fontSize: FONT_SIZE.xsm }
+                  { style: { fontSize: FONT_SIZE.sm } }
                 ]}
                 text={[
                   STRINGS.forgotPasswordFeedBack.feedBack_one_text,
