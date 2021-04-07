@@ -222,7 +222,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                   styles.descriptionView,
                   {
                     backgroundColor: theme.themedColors.background,
-                    borderColor: theme.themedColors.secondary
+                    borderColor: theme.themedColors.primary
                   }
                 ]
               }}
@@ -396,11 +396,12 @@ const styles = StyleSheet.create({
   },
   inputFieldRow: {
     flex: 1,
-    marginTop: SPACE.xs
+    paddingTop: SPACE.xs
   },
   descriptionView: {
     height: 100,
-    marginTop: SPACE.lg
+    marginTop: SPACE.lg,
+    borderWidth: 1.0
   },
   buttonsContainer: {
     flexDirection: "row",
