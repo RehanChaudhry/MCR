@@ -14,6 +14,11 @@ exports[`Renders snapshot as expected 1`] = `
     ]
   }
   testID="app-switch"
-  thumbOffStyle={Object {}}
+  thumbOnStyle={
+    Object {
+      "marginStart": 5,
+      "padding": 0,
+    }
+  }
 />
 `;
