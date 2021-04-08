@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
   input: {
     flexDirection: "column",
     borderStyle: "solid",
-    height: 40,
     borderRadius: 5,
     fontSize: FONT_SIZE.xs,
     borderWidth: 1,
