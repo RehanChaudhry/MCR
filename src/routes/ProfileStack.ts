@@ -1,5 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import EScreen from "models/enums/EScreen";
+import { ConversationItem } from "models/ConversationItem";
 
 export type ViewProfileStackParamList = {
   ViewProfile: { isFrom: EScreen };
@@ -7,8 +8,12 @@ export type ViewProfileStackParamList = {
 export const ViewProfileStack = createStackNavigator<ViewProfileStackParamList>();
 
 export type UpdateProfileStackParamList = {
-  UpdateProfile: { isFrom: EScreen; options?: string[] };
-  AddInterests: undefined;
+  UpdateProfile: {
+    isFrom: EScreen;
+    options?: string[];
+    list?: ConversationItem[];
+  };
+  AddInterests: { list: ConversationItem[] };
 };
 export const UpdateProfileStack = createStackNavigator<UpdateProfileStackParamList>();
 

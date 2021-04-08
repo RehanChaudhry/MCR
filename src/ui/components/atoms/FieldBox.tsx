@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import {
   StyleProp,
   StyleSheet,
@@ -11,24 +11,75 @@ import { COLORS, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import Strings from "config/Strings";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
+import { UpdateProfileStackParamList } from "routes/ProfileStack";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { WelcomeStackParamList } from "routes/WelcomeStack";
+import EScreen from "models/enums/EScreen";
+import { FormikValues, useFormikContext } from "formik";
+import { AppLog } from "utils/Util";
 
 type Props = {
+  name: string;
   viewStyle?: StyleProp<ViewStyle>;
   title: string;
-  onPress: () => void;
   textStyle: StyleProp<TextStyle>;
 };
+
+type UpdateProfileNavigationProp = StackNavigationProp<
+  UpdateProfileStackParamList,
+  "AddInterests"
+>;
+type welcomeNavigationProp = StackNavigationProp<
+  WelcomeStackParamList,
+  "Questionnaire"
+>;
+type UpdateProfileRouteProp = RouteProp<
+  UpdateProfileStackParamList,
+  "UpdateProfile"
+>;
+
 export const FieldBox: FC<Props> = ({
+  name,
   viewStyle,
   title,
-  onPress,
   textStyle
 }) => {
   const theme = usePreferredTheme();
+  const route = useRoute<UpdateProfileRouteProp>();
+  const updateNavigation = useNavigation<UpdateProfileNavigationProp>();
+  const welcomeNavigation = useNavigation<welcomeNavigationProp>();
+
+  const { values } = useFormikContext<FormikValues>();
+
+  useEffect(() => {
+    AppLog.logForcefully(
+      "in FieldBox#useEffect(): route.params.list: " +
+        JSON.stringify(route.params.list)
+    );
+
+    values[name] = route.params.list;
+  }, [values, name, route.params.list]);
+
   return (
     <View>
-      <AppLabel text={title} weight={"semi_bold"} />
-      <TouchableWithoutFeedback onPress={onPress}>
+      <AppLabel text={title} weight="semi-bold" />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          if (route.params.isFrom === EScreen.WELCOME) {
+            welcomeNavigation.navigate("AddInterests", {
+              list: values[name] ?? []
+            });
+          } else {
+            updateNavigation.navigate("AddInterests", {
+              list: values[name] ?? []
+            });
+          }
+        }}>
         <View
           style={[
             styles.input,

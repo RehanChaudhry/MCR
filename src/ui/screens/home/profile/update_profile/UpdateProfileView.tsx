@@ -14,9 +14,9 @@ import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BasicProfile } from "ui/components/templates/basic_profile/BasicProfile";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { AppLog } from "utils/Util";
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
-  addInterestOnPress: () => void;
 };
 
 const validationSchema = Yup.object().shape({
@@ -81,7 +81,7 @@ const validationSchema = Yup.object().shape({
   //video introduction component
   youtubeVideoUrl: Yup.string().url("Please Provide Valid YouTube URL")
 });
-let initialValues: FormikValues = {
+let initialValues = {
   // basic profile
   firstName: "",
   lastName: "",
@@ -99,12 +99,12 @@ let initialValues: FormikValues = {
   gender: "",
 
   //interests component
-  hobbies: "",
-  memberships: "",
-  movies: "",
-  music: "",
-  books: "",
-  games: "",
+  hobbies: [],
+  memberships: [],
+  movies: [],
+  music: [],
+  books: [],
+  games: [],
 
   //living details component
   programs: "",
@@ -116,26 +116,27 @@ let initialValues: FormikValues = {
   youtubeVideoUrl: ""
 };
 
+export type UpdateProfileFormKeys = typeof initialValues;
+
 export const UpdateProfileView: React.FC<Props> = ({
-  openUpdateQuestionnaireScreen,
-  addInterestOnPress
+  openUpdateQuestionnaireScreen
 }) => {
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
   const onSubmit = (_value: FormikValues) => {
-    initialValues = _value;
+    AppLog.logForcefully("FormikValues: " + JSON.stringify(_value));
     openUpdateQuestionnaireScreen();
   };
   return (
     <KeyboardAwareScrollView keyboardOpeningTime={50} extraHeight={200}>
       <AppForm
         initialValues={initialValues}
-        isInitialValid={false}
+        validateOnMount={false}
         onSubmit={onSubmit}
         validationSchema={validationSchema}>
         <BasicProfile />
         <DemoGraphics />
-        <Interests addInterestsOnPress={addInterestOnPress} />
+        <Interests />
         <LivingDetails />
         <VideoIntroduction />
         <View style={styles.buttonViewStyle}>

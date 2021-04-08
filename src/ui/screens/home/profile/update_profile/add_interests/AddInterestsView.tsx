@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import Screen from "ui/components/atoms/Screen";
 import { AppLog, shadowStyleProps } from "utils/Util";
@@ -15,16 +15,13 @@ import Strings from "config/Strings";
 
 type Props = {
   data: ConversationItem[];
-  removeItem: (
-    items: ConversationItem[],
-    itemToDelete: ConversationItem
-  ) => ConversationItem[];
+  removeItem: (itemToDelete: ConversationItem) => void;
+  addItem: (text: string) => void;
 };
 
 export const AddInterestsView = React.memo<Props>(
-  ({ data, removeItem }) => {
+  ({ data, removeItem, addItem }) => {
     const { themedColors } = usePreferredTheme();
-    let [items, setItems] = useState<ConversationItem[]>(data);
 
     function plusIcon(
       color?: Color,
@@ -42,9 +39,9 @@ export const AddInterestsView = React.memo<Props>(
       );
     }
 
-    function appInputCallback(text: string) {
-      AppLog.log("AppInput field callback " + text);
-    }
+    // function appInputCallback(text: string) {
+    //   AppLog.log("AppInput field callback " + text);
+    // }
 
     const renderItem = ({ item }: { item: ConversationItem }) => {
       AppLog.log("rendering list item : " + JSON.stringify(item));
@@ -52,7 +49,7 @@ export const AddInterestsView = React.memo<Props>(
         <ItemConversation
           item={item}
           onPress={(currentItem: ConversationItem) => {
-            setItems(removeItem(items, currentItem));
+            removeItem(currentItem);
           }}
         />
       );
@@ -63,7 +60,7 @@ export const AddInterestsView = React.memo<Props>(
         <View style={styles.contentWrapper}>
           <FlatListWithPb
             shouldShowProgressBar={false}
-            data={items}
+            data={data}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
             removeClippedSubviews={true}
@@ -74,9 +71,8 @@ export const AddInterestsView = React.memo<Props>(
 
         <WriteMessage
           btnImage={plusIcon}
-          appInputFieldCallback={appInputCallback}
           appInputPlaceHolder={Strings.newConversation.typingHint}
-          btnPressCallback={appInputCallback}
+          btnPressCallback={addItem}
         />
       </Screen>
     );

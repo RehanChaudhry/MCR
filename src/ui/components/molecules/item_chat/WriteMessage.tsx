@@ -14,18 +14,12 @@ import { Color, NumberProp } from "react-native-svg";
 
 export interface TypingComponentProps {
   btnImage?: SvgProp;
-  appInputFieldCallback?: (text: string) => void;
   appInputPlaceHolder: string;
   btnPressCallback: (text: string) => void;
 }
 
 export const WriteMessage = React.memo<TypingComponentProps>(
-  ({
-    btnImage,
-    appInputPlaceHolder,
-    btnPressCallback,
-    appInputFieldCallback
-  }) => {
+  ({ btnImage, appInputPlaceHolder, btnPressCallback }) => {
     const [initialText, setInitialText] = useState<string>("");
     const { themedColors } = usePreferredTheme();
 
@@ -54,7 +48,6 @@ export const WriteMessage = React.memo<TypingComponentProps>(
             placeholder={appInputPlaceHolder}
             onChangeText={(text: string) => {
               setInitialText(text);
-              appInputFieldCallback?.(text);
             }}
             valueToShowAtStart={initialText}
             style={[styles.inputField, { color: themedColors.label }]}

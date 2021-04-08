@@ -26,13 +26,6 @@ type ProfileNavigationProp = StackNavigationProp<
   "UpdateProfile"
 >;
 
-type UpdateProfileNavigationProp = StackNavigationProp<
-  UpdateProfileStackParamList,
-  "AddInterests"
->;
-
-//type actionProp = RouteProp<ProfileStackParamList, "UpdateProfile">;
-
 type UpdateProfileRouteProp = RouteProp<
   UpdateProfileStackParamList,
   "UpdateProfile"
@@ -44,7 +37,6 @@ type welcomeNavigationProp = StackNavigationProp<
 
 const UpdateProfileController: FC<Props> = () => {
   const navigation = useNavigation<ProfileNavigationProp>();
-  const upDateNavigation = useNavigation<UpdateProfileNavigationProp>();
   const welcomeNavigation = useNavigation<welcomeNavigationProp>();
   const route = useRoute<UpdateProfileRouteProp>();
   const { themedColors } = usePreferredTheme();
@@ -106,20 +98,11 @@ const UpdateProfileController: FC<Props> = () => {
     }
   });
 
-  const openAddInterests = () => {
-    if (route.params.isFrom === EScreen.WELCOME) {
-      welcomeNavigation.navigate("AddInterests");
-    } else {
-      upDateNavigation.navigate("AddInterests");
-    }
-  };
-
   return (
     <>
       {useLazyLoadInterface(
         <UpdateProfileView
           openUpdateQuestionnaireScreen={openQuestionnaireScreen}
-          addInterestOnPress={openAddInterests}
         />
       )}
     </>

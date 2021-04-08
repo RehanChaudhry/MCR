@@ -6,12 +6,14 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
 import { FieldBox } from "ui/components/atoms/FieldBox";
+//import { FormikValues, useFormikContext } from "formik";
 
-type Props = {
-  addInterestsOnPress: () => void;
-};
-export const Interests: React.FC<Props> = ({ addInterestsOnPress }) => {
+type Props = {};
+
+export const Interests: React.FC<Props> = ({}) => {
   const theme = usePreferredTheme();
+  //const { values } = useFormikContext<FormikValues>();
+
   return (
     <CardView style={styles.cardStyles}>
       <View style={styles.innerCardStyle}>
@@ -29,40 +31,40 @@ export const Interests: React.FC<Props> = ({ addInterestsOnPress }) => {
       <View style={[styles.horizontalLine]} />
       <View style={styles.innerCardStyle}>
         <FieldBox
+          name="hobbies"
           title={STRINGS.profile.dropDownTitle.hobbies}
-          onPress={addInterestsOnPress}
           textStyle={{ color: theme.themedColors.placeholder }}
         />
         <View style={styles.spacer} />
-        <FieldBox
-          title={STRINGS.profile.dropDownTitle.memberShip}
-          onPress={addInterestsOnPress}
-          textStyle={{ color: theme.themedColors.placeholder }}
-        />
-        <View style={styles.spacer} />
-        <FieldBox
-          title={STRINGS.profile.dropDownTitle.movies}
-          onPress={addInterestsOnPress}
-          textStyle={{ color: theme.themedColors.placeholder }}
-        />
-        <View style={styles.spacer} />
-        <FieldBox
-          title={STRINGS.profile.dropDownTitle.music}
-          onPress={addInterestsOnPress}
-          textStyle={{ color: theme.themedColors.placeholder }}
-        />
-        <View style={styles.spacer} />
-        <FieldBox
-          title={STRINGS.profile.dropDownTitle.books}
-          onPress={addInterestsOnPress}
-          textStyle={{ color: theme.themedColors.placeholder }}
-        />
-        <View style={styles.spacer} />
-        <FieldBox
-          title={STRINGS.profile.dropDownTitle.games}
-          onPress={addInterestsOnPress}
-          textStyle={{ color: theme.themedColors.placeholder }}
-        />
+        {/*<FieldBox*/}
+        {/*  list={values[variableName(initialValues.memberships)]}*/}
+        {/*  title={STRINGS.profile.dropDownTitle.memberShip}*/}
+        {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
+        {/*/>*/}
+        {/*<View style={styles.spacer} />*/}
+        {/*<FieldBox*/}
+        {/*  list={values[variableName(initialValues.movies)]}*/}
+        {/*  title={STRINGS.profile.dropDownTitle.movies}*/}
+        {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
+        {/*/>*/}
+        {/*<View style={styles.spacer} />*/}
+        {/*<FieldBox*/}
+        {/*  list={values[variableName(initialValues.music)]}*/}
+        {/*  title={STRINGS.profile.dropDownTitle.music}*/}
+        {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
+        {/*/>*/}
+        {/*<View style={styles.spacer} />*/}
+        {/*<FieldBox*/}
+        {/*  list={values[variableName(initialValues.books)]}*/}
+        {/*  title={STRINGS.profile.dropDownTitle.books}*/}
+        {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
+        {/*/>*/}
+        {/*<View style={styles.spacer} />*/}
+        {/*<FieldBox*/}
+        {/*  list={values[variableName(initialValues.games)]}*/}
+        {/*  title={STRINGS.profile.dropDownTitle.games}*/}
+        {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
+        {/*/>*/}
       </View>
     </CardView>
   );
