@@ -15,8 +15,12 @@ import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BasicProfile } from "ui/components/templates/basic_profile/BasicProfile";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { AppLog } from "utils/Util";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
+
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
+  infoTextShown: boolean;
 };
 
 const validationSchema = Yup.object().shape({
@@ -119,7 +123,8 @@ let initialValues = {
 export type UpdateProfileFormKeys = typeof initialValues;
 
 export const UpdateProfileView: React.FC<Props> = ({
-  openUpdateQuestionnaireScreen
+  openUpdateQuestionnaireScreen,
+  infoTextShown
 }) => {
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
@@ -127,6 +132,25 @@ export const UpdateProfileView: React.FC<Props> = ({
     AppLog.logForcefully("FormikValues: " + JSON.stringify(_value));
     openUpdateQuestionnaireScreen();
   };
+
+  // const [scrollPosition, setScrollPosition] = useState(0);
+  // let scrollRef: any;
+  // const navigation = useNavigation();
+  // navigation.addListener("focus", () => {
+  //   // To prevent FlatList scrolls to top automatically,
+  //   // we have to delay scroll to the original position
+  //   setTimeout(() => {
+  //     AppLog.logForcefully(
+  //       "scrollRef?.current?.scrollToPosition" +
+  //         JSON.stringify(scrollRef?.current?.scrollToPosition)
+  //     );
+  //     scrollRef?.current?.scrollToPosition(scrollPosition, false);
+  //   }, 500);
+  // });
+  // const handleScroll = (event: any) => {
+  //   setScrollPosition(event.nativeEvent.contentOffset.y);
+  // };
+
   return (
     <KeyboardAwareScrollView keyboardOpeningTime={50} extraHeight={200}>
       <AppForm
@@ -134,6 +158,15 @@ export const UpdateProfileView: React.FC<Props> = ({
         validateOnMount={false}
         onSubmit={onSubmit}
         validationSchema={validationSchema}>
+        {infoTextShown && (
+          <AppLabel
+            text={
+              "This information will be help us to find better roommate match for you."
+            }
+            numberOfLines={0}
+            style={styles.topText}
+          />
+        )}
         <BasicProfile />
         <DemoGraphics />
         <Interests />
@@ -176,5 +209,11 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     textAlign: "center"
+  },
+  topText: {
+    paddingHorizontal: SPACE._2xl,
+    paddingTop: SPACE.md,
+    textAlign: "center",
+    lineHeight: FONT_SIZE_LINE_HEIGHT.sm
   }
 });

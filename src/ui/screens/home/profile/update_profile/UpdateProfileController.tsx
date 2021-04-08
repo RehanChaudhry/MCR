@@ -1,4 +1,4 @@
-import React, { FC, useLayoutEffect } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import { UpdateProfileView } from "ui/screens/home/profile/update_profile/UpdateProfileView";
 import {
   RouteProp,
@@ -43,6 +43,10 @@ const UpdateProfileController: FC<Props> = () => {
 
   const routeName = useRoute<UpdateProfileRouteProp>();
 
+  //for info text shown
+
+  const [infoTextShown, setInfoTextShown] = useState(false);
+
   AppLog.log("data" + routeName.params.options);
 
   const openQuestionnaireScreen = usePreventDoubleTap(() => {
@@ -57,6 +61,7 @@ const UpdateProfileController: FC<Props> = () => {
       headerTitle: () => <HeaderTitle text="Update Profile" />
     });
     if (route.params.isFrom === EScreen.WELCOME) {
+      setInfoTextShown(true);
       navigation.setOptions({
         headerTitleAlign: "center",
         headerTitle: () => <HeaderTitle text="Complete Profile" />,
@@ -96,13 +101,19 @@ const UpdateProfileController: FC<Props> = () => {
         )
       });
     }
-  });
+  }, [
+    navigation,
+    route.params.isFrom,
+    themedColors.interface,
+    openQuestionnaireScreen
+  ]);
 
   return (
     <>
       {useLazyLoadInterface(
         <UpdateProfileView
           openUpdateQuestionnaireScreen={openQuestionnaireScreen}
+          infoTextShown={infoTextShown}
         />
       )}
     </>

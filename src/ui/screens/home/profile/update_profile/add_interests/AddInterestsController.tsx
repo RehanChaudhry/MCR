@@ -34,8 +34,6 @@ export const AddInterestsController: FC<Props> = () => {
   const route = useRoute<AddInterestsRouteProp>();
   const [_list, _setList] = useState([...route.params.list]);
 
-  AppLog.logForcefully("Test List: " + JSON.stringify(_list));
-
   const { themedColors } = usePreferredTheme();
 
   const goBack = () => {
@@ -44,16 +42,13 @@ export const AddInterestsController: FC<Props> = () => {
         JSON.stringify(_list)
     );
     navigation.navigate("UpdateProfile", {
-      isFrom: EScreen.MY_PROFILE,
+      isFrom: EScreen.WELCOME,
       list: _list
     });
   };
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      // headerTitle: () => (
-      //   <HeaderTitle text={Strings.newConversation.title} />
-      // ),
       headerLeft: () => (
         <HeaderLeftTextWithIcon
           text={Strings.newConversation.titleLeft}
@@ -93,7 +88,7 @@ export const AddInterestsController: FC<Props> = () => {
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigation]);
+  }, [navigation, _list]);
 
   const removeItemFromList = (itemToDelete: ConversationItem) => {
     _setList(_list.filter((item) => item.id !== itemToDelete.id));
