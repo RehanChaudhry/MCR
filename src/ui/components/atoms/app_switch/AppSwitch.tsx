@@ -54,9 +54,17 @@ export const AppSwitch = optimizedMemo<AppButtonProps>(
         icon={
           showCustomThumb ? (
             isEnabled ? (
-              <SwitchActive width={20} height={20} />
+              <SwitchActive
+                width={20}
+                height={20}
+                fill={themedColors.primary}
+              />
             ) : (
-              <SwitchInActive width={20} height={20} />
+              <SwitchInActive
+                width={20}
+                height={20}
+                fill={themedColors.interface["400"]}
+              />
             )
           ) : null
         }
