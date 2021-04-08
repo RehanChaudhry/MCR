@@ -58,16 +58,13 @@ exports[`rendering... renders correctly 1`] = `
     style={
       Array [
         Object {
-          "borderRadius": 5,
+          "alignItems": "stretch",
+          "borderRadius": 6,
           "borderStyle": "solid",
           "color": "#666666",
           "flex": 1,
           "flexDirection": "row",
-          "fontSize": 12,
-          "height": 42,
           "justifyContent": "center",
-          "paddingLeft": 12,
-          "paddingRight": 12,
         },
         undefined,
       ]
@@ -91,8 +88,14 @@ exports[`rendering... renders correctly 1`] = `
             "color": "#666666",
             "flex": 1,
             "fontFamily": "Inter-Regular",
+            "fontSize": 14,
+            "paddingBottom": 2,
+            "paddingHorizontal": 11,
+            "paddingTop": 8,
+            "textAlignVertical": "top",
           },
           undefined,
+          Object {},
         ]
       }
       testID="emailField"
@@ -159,16 +162,13 @@ exports[`rendering... renders correctly 1`] = `
     style={
       Array [
         Object {
-          "borderRadius": 5,
+          "alignItems": "stretch",
+          "borderRadius": 6,
           "borderStyle": "solid",
           "color": "#666666",
           "flex": 1,
           "flexDirection": "row",
-          "fontSize": 12,
-          "height": 42,
           "justifyContent": "center",
-          "paddingLeft": 12,
-          "paddingRight": 12,
         },
         undefined,
       ]
@@ -190,8 +190,14 @@ exports[`rendering... renders correctly 1`] = `
             "color": "#666666",
             "flex": 1,
             "fontFamily": "Inter-Regular",
+            "fontSize": 14,
+            "paddingBottom": 2,
+            "paddingHorizontal": 11,
+            "paddingTop": 8,
+            "textAlignVertical": "top",
           },
           undefined,
+          Object {},
         ]
       }
       testID="passwordField"

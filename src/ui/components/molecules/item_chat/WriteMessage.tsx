@@ -100,16 +100,14 @@ const styles = StyleSheet.create({
   input: {
     flexDirection: "column",
     borderStyle: "solid",
-    height: 42,
+    height: 40,
     borderRadius: 5,
-    paddingRight: SPACE.md,
     fontSize: FONT_SIZE.xs,
     borderWidth: 1,
     flex: 1,
     marginTop: SPACE._2xs
   },
   inputField: {
-    alignSelf: "center",
-    paddingBottom: SPACE.xs
+    alignSelf: "center"
   }
 });

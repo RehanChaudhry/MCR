@@ -395,8 +395,7 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   inputFieldRow: {
-    flex: 1,
-    paddingTop: SPACE.xs
+    flex: 1
   },
   descriptionView: {
     height: 100,
