@@ -108,19 +108,19 @@ const styles = StyleSheet.create({
     flex: 1,
     color: COLORS.textColor1,
     textAlignVertical: "top",
-    paddingHorizontal: 11,
+    paddingHorizontal: SPACE.md,
     paddingTop: SPACE.sm,
     paddingBottom: 2
   },
   leftIconView: {
     alignItems: "center",
     justifyContent: "center",
-    paddingStart: 11
+    paddingStart: SPACE.md
   },
   rightIconView: {
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
-    paddingEnd: 11
+    paddingEnd: SPACE.md
   }
 });

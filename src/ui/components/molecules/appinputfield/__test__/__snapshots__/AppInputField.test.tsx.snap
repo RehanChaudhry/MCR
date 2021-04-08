@@ -33,7 +33,7 @@ exports[`snapshot testing 1`] = `
           "fontFamily": "Inter-Regular",
           "fontSize": 14,
           "paddingBottom": 2,
-          "paddingHorizontal": 11,
+          "paddingHorizontal": 12,
           "paddingTop": 8,
           "textAlignVertical": "top",
         },
