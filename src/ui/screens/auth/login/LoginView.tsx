@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     marginTop: SPACE._3xl
   },
   signInHeading: {
-    fontSize: FONT_SIZE._2xl,
+    fontSize: FONT_SIZE.xl,
     marginTop: SPACE._3xl
   },
   email: {
