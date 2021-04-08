@@ -24,7 +24,7 @@ const PreSSOLoginController: FC<Props> = () => {
   const navigationWelcome = useNavigation<WelcomeNavigationProp>();
 
   const goBack = usePreventDoubleTap(() => {
-    navigation.pop();
+    navigation.push("UniSelection");
   });
 
   const openWelcomeScreen = usePreventDoubleTap(() => {

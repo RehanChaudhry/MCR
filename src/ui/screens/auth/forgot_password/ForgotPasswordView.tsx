@@ -30,7 +30,7 @@ const validationSchema = Yup.object().shape({
 });
 
 let initialValues: FormikValues = {
-  email: ""
+  email: "john.doe@gmail.com"
 };
 
 export const ForgotPasswordView = React.memo<Props>(
@@ -105,7 +105,10 @@ export const ForgotPasswordView = React.memo<Props>(
                   text={STRINGS.forgotpassword.reset_password}
                   buttonType={BUTTON_TYPES.NORMAL}
                   fontWeight={"semi-bold"}
-                  textStyle={{ color: theme.themedColors.background }}
+                  textStyle={[
+                    styles.buttonText,
+                    { color: theme.themedColors.background }
+                  ]}
                   buttonStyle={[
                     styles.buttonStyle,
                     { backgroundColor: theme.themedColors.primary }
@@ -136,7 +139,7 @@ const styles = StyleSheet.create({
     marginTop: SPACE._2xl
   },
   forgotPasswordHeading: {
-    fontSize: FONT_SIZE._2xl,
+    fontSize: FONT_SIZE.xl,
     marginTop: SPACE._3xl
   },
   email: {
@@ -157,6 +160,9 @@ const styles = StyleSheet.create({
   },
   forgotText: {
     marginTop: SPACE._2xl,
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
+  },
+  buttonText: {
+    fontSize: FONT_SIZE.base
   }
 });
