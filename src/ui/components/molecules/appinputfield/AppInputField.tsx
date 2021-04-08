@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   ImageStyle,
+  Platform,
   StyleProp,
   StyleSheet,
   TextInput,
@@ -110,7 +111,8 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     paddingHorizontal: SPACE.md,
     paddingTop: SPACE.sm,
-    paddingBottom: 2
+
+    paddingBottom: Platform.OS === "android" ? 2 : SPACE.sm
   },
   leftIconView: {
     alignItems: "center",
