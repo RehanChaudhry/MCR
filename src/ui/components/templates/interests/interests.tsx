@@ -35,33 +35,33 @@ export const Interests: React.FC<Props> = ({}) => {
           title={STRINGS.profile.dropDownTitle.hobbies}
           textStyle={{ color: theme.themedColors.placeholder }}
         />
-        {/*<View style={styles.spacer} />*/}
+        <View style={styles.spacer} />
         {/*<FieldBox*/}
-        {/*  name="memberships"*/}
+        {/*  list={values[variableName(initialValues.memberships)]}*/}
         {/*  title={STRINGS.profile.dropDownTitle.memberShip}*/}
         {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
         {/*/>*/}
         {/*<View style={styles.spacer} />*/}
         {/*<FieldBox*/}
-        {/*  name="movies"*/}
+        {/*  list={values[variableName(initialValues.movies)]}*/}
         {/*  title={STRINGS.profile.dropDownTitle.movies}*/}
         {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
         {/*/>*/}
         {/*<View style={styles.spacer} />*/}
         {/*<FieldBox*/}
-        {/*  name="music"*/}
+        {/*  list={values[variableName(initialValues.music)]}*/}
         {/*  title={STRINGS.profile.dropDownTitle.music}*/}
         {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
         {/*/>*/}
         {/*<View style={styles.spacer} />*/}
         {/*<FieldBox*/}
-        {/*  name="books"*/}
+        {/*  list={values[variableName(initialValues.books)]}*/}
         {/*  title={STRINGS.profile.dropDownTitle.books}*/}
         {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
         {/*/>*/}
         {/*<View style={styles.spacer} />*/}
         {/*<FieldBox*/}
-        {/*  name="games"*/}
+        {/*  list={values[variableName(initialValues.games)]}*/}
         {/*  title={STRINGS.profile.dropDownTitle.games}*/}
         {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
         {/*/>*/}
