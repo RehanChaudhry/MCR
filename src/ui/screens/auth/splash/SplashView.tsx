@@ -106,9 +106,7 @@ export const SplashView = React.memo<Props>(() => {
     return (
       <Screen
         style={styles.container}
-        bottomSafeAreaBackgroundColor={
-          theme.themedColors.backgroundSecondary
-        }>
+        bottomSafeAreaColor={theme.themedColors.backgroundSecondary}>
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}
