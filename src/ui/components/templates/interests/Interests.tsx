@@ -7,12 +7,15 @@ import { SPACE, STRINGS } from "config";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
 import { FieldBox } from "ui/components/atoms/FieldBox";
 //import { FormikValues, useFormikContext } from "formik";
+import ChevronRight from "assets/images/chevron_right.svg";
 
 type Props = {};
 
 export const Interests: React.FC<Props> = ({}) => {
   const theme = usePreferredTheme();
   //const { values } = useFormikContext<FormikValues>();
+
+  const chevronRight = () => <ChevronRight height={20} width={20} />;
 
   return (
     <CardView style={styles.cardStyles}>
@@ -34,36 +37,42 @@ export const Interests: React.FC<Props> = ({}) => {
           name="hobbies"
           title={STRINGS.profile.dropDownTitle.hobbies}
           textStyle={{ color: theme.themedColors.placeholder }}
+          rightIcon={chevronRight}
         />
         <View style={styles.spacer} />
         <FieldBox
           name="memberships"
           title={STRINGS.profile.dropDownTitle.memberShip}
           textStyle={{ color: theme.themedColors.placeholder }}
+          rightIcon={chevronRight}
         />
         <View style={styles.spacer} />
         <FieldBox
           name="movies"
           title={STRINGS.profile.dropDownTitle.movies}
           textStyle={{ color: theme.themedColors.placeholder }}
+          rightIcon={chevronRight}
         />
         <View style={styles.spacer} />
         <FieldBox
           name="music"
           title={STRINGS.profile.dropDownTitle.music}
           textStyle={{ color: theme.themedColors.placeholder }}
+          rightIcon={chevronRight}
         />
         <View style={styles.spacer} />
         <FieldBox
           name="books"
           title={STRINGS.profile.dropDownTitle.books}
           textStyle={{ color: theme.themedColors.placeholder }}
+          rightIcon={chevronRight}
         />
         <View style={styles.spacer} />
         <FieldBox
           name="games"
           title={STRINGS.profile.dropDownTitle.games}
           textStyle={{ color: theme.themedColors.placeholder }}
+          rightIcon={chevronRight}
         />
       </View>
     </CardView>

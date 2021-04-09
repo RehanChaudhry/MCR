@@ -21,12 +21,14 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import EScreen from "models/enums/EScreen";
 import { FormikValues, useFormikContext } from "formik";
+import { SvgProp } from "utils/Util";
 
 type Props = {
   name: string;
   viewStyle?: StyleProp<ViewStyle>;
   title: string;
   textStyle: StyleProp<TextStyle>;
+  rightIcon: SvgProp | undefined;
 };
 
 type UpdateProfileNavigationProp = StackNavigationProp<
@@ -46,7 +48,8 @@ export const FieldBox: FC<Props> = ({
   name,
   viewStyle,
   title,
-  textStyle
+  textStyle,
+  rightIcon
 }) => {
   const theme = usePreferredTheme();
   const route = useRoute<UpdateProfileRouteProp>();
@@ -108,6 +111,9 @@ export const FieldBox: FC<Props> = ({
                 : { color: theme.themedColors.placeholder }
             ]}
           />
+          <View style={styles.subContainer}>
+            {rightIcon?.(theme.themedColors.label, 20, 20)}
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </View>
@@ -116,8 +122,9 @@ export const FieldBox: FC<Props> = ({
 
 const styles = StyleSheet.create({
   input: {
-    flexDirection: "column",
-    justifyContent: "center",
+    flexDirection: "row",
+    //justifyContent: "center",
+    alignItems: "center",
     color: COLORS.textColor1,
     borderStyle: "solid",
     height: 42,
@@ -126,15 +133,11 @@ const styles = StyleSheet.create({
     paddingLeft: SPACE.md,
     borderWidth: 1,
     flex: 1,
-    marginTop: SPACE.xs
-
-    // //Its for IOS
-    // shadowColor: COLORS.black,
-    // shadowOffset: { width: 0, height: 1 },
-    // shadowOpacity: 0.1,
-    //
-    // // its for android
-    // elevation: 2,
-    // backgroundColor: "white"
+    marginTop: SPACE.xs,
+    alignContent: "space-between"
+  },
+  subContainer: {
+    flex: 1,
+    alignItems: "flex-end"
   }
 });
