@@ -11,7 +11,6 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { usePreferredTheme } from "hooks";
 import ChatItem from "models/ChatItem";
-import { moderateScale } from "config/Dimens";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
 export interface ItemChatThreadProps extends ViewStyle {
@@ -64,16 +63,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row"
   },
-  indicator: {
-    position: "absolute",
-    start: moderateScale(45),
-    top: moderateScale(10)
-  },
   imgStyle: {
-    width: 32,
-    height: 32,
+    width: 48,
+    height: 48,
     resizeMode: "cover",
-    borderRadius: 45 / 2
+    borderRadius: 48 / 2
   },
   textWrapper: (theme: ColorPalette, isCurrentUser: boolean) => {
     return {
@@ -96,23 +90,20 @@ const styles = StyleSheet.create({
   nameText: (theme: ColorPalette) => {
     return {
       fontSize: FONT_SIZE.sm,
-      color: theme.interface["800"],
-      lineHeight: 20
+      color: theme.interface["800"]
     };
   },
   messageText: (theme: ColorPalette) => {
     return {
       fontSize: FONT_SIZE.sm,
       color: theme.label,
-      lineHeight: 20,
       paddingTop: SPACE.xs
     };
   },
   timeText: (theme: ColorPalette) => {
     return {
       fontSize: FONT_SIZE.xs,
-      color: theme.interface["700"],
-      lineHeight: 16
+      color: theme.interface["700"]
     };
   }
 });

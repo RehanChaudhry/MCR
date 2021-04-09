@@ -68,20 +68,23 @@ export const AgreementDetailsView = React.memo<Props>(
               style={styles.heading}
             />
 
-            <View style={{ marginTop: SPACE.md }}>
+            <View style={styles.approvalInfo}>
               <LinkButton
                 text={"Approval Status"}
                 fontWeight={"semi-bold"}
                 leftIcon={() => (
                   <Lock
-                    width={20}
-                    height={20}
+                    width={18}
+                    height={18}
                     fill={theme.themedColors.interface["700"]}
                   />
                 )}
-                textStyle={{
-                  color: theme.themedColors.interface["700"]
-                }}
+                textStyle={[
+                  styles.approvalTexts,
+                  {
+                    color: theme.themedColors.interface["700"]
+                  }
+                ]}
               />
 
               <AppLabel text={"Pending"} style={styles.pending} />
@@ -96,20 +99,23 @@ export const AgreementDetailsView = React.memo<Props>(
               />
             </View>
 
-            <View style={{ marginTop: SPACE.md }}>
+            <View style={styles.approvalInfo}>
               <LinkButton
                 text={"Approval Date"}
                 fontWeight={"semi-bold"}
                 leftIcon={() => (
                   <Calender
-                    width={20}
-                    height={20}
+                    width={18}
+                    height={18}
                     fill={theme.themedColors.interface["700"]}
                   />
                 )}
-                textStyle={{
-                  color: theme.themedColors.interface["700"]
-                }}
+                textStyle={[
+                  styles.approvalTexts,
+                  {
+                    color: theme.themedColors.interface["700"]
+                  }
+                ]}
               />
 
               <AppLabel text={"N/A"} style={styles.pending} />
@@ -124,20 +130,23 @@ export const AgreementDetailsView = React.memo<Props>(
               />
             </View>
 
-            <View style={{ marginTop: SPACE.md }}>
+            <View style={styles.approvalInfo}>
               <LinkButton
                 text={"Approved By"}
                 fontWeight={"semi-bold"}
                 leftIcon={() => (
                   <UserGroup
-                    width={20}
-                    height={20}
+                    width={18}
+                    height={18}
                     fill={theme.themedColors.interface["700"]}
                   />
                 )}
-                textStyle={{
-                  color: theme.themedColors.interface["700"]
-                }}
+                textStyle={[
+                  styles.approvalTexts,
+                  {
+                    color: theme.themedColors.interface["700"]
+                  }
+                ]}
               />
 
               <AppLabel text={"N/A"} style={styles.pending} />
@@ -184,28 +193,28 @@ export const AgreementDetailsView = React.memo<Props>(
 const styles = StyleSheet.create({
   itemSeparator: {
     width: "100%",
-    height: 0.5,
-    marginTop: SPACE.sm,
-    marginLeft: SPACE.sm,
-    marginRight: SPACE.sm,
-    marginBottom: SPACE.sm
+    height: 0.5
   },
   itemSeparatorApproval: {
     width: "100%",
     height: 0.5,
-    marginTop: SPACE.md,
-    marginBottom: SPACE.sm
+    marginTop: SPACE.md
   },
-  cardView: { padding: SPACE.md, margin: SPACE.lg },
-  heading: { fontSize: FONT_SIZE.lg },
+  cardView: { padding: SPACE.lg, margin: SPACE.lg },
+  heading: { fontSize: FONT_SIZE.base },
   pending: {
-    marginTop: SPACE.xs
+    marginTop: SPACE.sm
   },
   exportRoommateAgreement: {
-    marginTop: SPACE.sm,
-    marginBottom: SPACE.sm
+    marginVertical: SPACE.sm
   },
   buttonText: {
-    fontSize: FONT_SIZE.lg
+    fontSize: FONT_SIZE.base
+  },
+  approvalInfo: {
+    marginTop: SPACE.lg
+  },
+  approvalTexts: {
+    fontSize: FONT_SIZE.sm
   }
 });

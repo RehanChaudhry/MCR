@@ -29,7 +29,14 @@ export const PreSSOLoginView = React.memo<Props>(
     const theme = usePreferredTheme();
 
     return (
-      <Screen>
+      <Screen
+        style={[
+          styles.container,
+          { backgroundColor: theme.themedColors.backgroundSecondary }
+        ]}
+        topSafeAreaAndStatusBarColor={
+          theme.themedColors.backgroundSecondary
+        }>
         <ScrollView>
           <AppImageBackground
             containerShape={CONTAINER_TYPES.CIRCLE}
@@ -91,9 +98,14 @@ export const PreSSOLoginView = React.memo<Props>(
             <View style={styles.spannableText}>
               <MultilineSpannableText
                 text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
-                textStyle={[
-                  { fontSize: 14 },
-                  { fontSize: 14, color: theme.themedColors.primary }
+                appLabelProps={[
+                  { style: { fontSize: 14 } },
+                  {
+                    style: {
+                      fontSize: 14,
+                      color: theme.themedColors.primary
+                    }
+                  }
                 ]}
               />
             </View>
@@ -105,6 +117,10 @@ export const PreSSOLoginView = React.memo<Props>(
 );
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    flex: 1
+  },
   mainContainer: {
     marginTop: SPACE._2xl,
     marginLeft: SPACE.lg,
@@ -123,8 +139,8 @@ const styles = StyleSheet.create({
     marginLeft: SPACE.lg
   },
   signInHeading: {
-    fontSize: FONT_SIZE._2xl,
-    marginTop: SPACE.xl
+    fontSize: FONT_SIZE.xl,
+    marginTop: SPACE._2xl
   },
   email: {
     marginTop: SPACE._2xl
@@ -136,16 +152,15 @@ const styles = StyleSheet.create({
     height: 44
   },
   spannableText: {
-    marginTop: SPACE._2xl,
-    marginBottom: SPACE._2xl
+    marginVertical: SPACE._2xl
   },
   ssoSecondText: {
     marginTop: SPACE.xl,
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
   },
   ssoText: {
     marginTop: SPACE._2xl,
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
   },
   loginImage: {
     marginTop: SPACE._2xl

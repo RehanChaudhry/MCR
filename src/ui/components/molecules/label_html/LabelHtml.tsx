@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleProp, TextStyle, ViewStyle } from "react-native";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
-import { FONTS } from "config";
 import { usePreferredTheme } from "hooks";
+import { AppLabelProps } from "ui/components/atoms/app_label/AppLabel";
 
 interface Props {
   containerStyle?: StyleProp<ViewStyle>;
@@ -23,28 +23,37 @@ const LabelHtml: React.FC<Props> = ({
     texts = [texts[0], ...texts[1].split("</b>")];
   }
 
-  const textStyles: StyleProp<TextStyle>[] = [];
+  const appLabelProps: AppLabelProps[] = [];
   if (texts.length === 3) {
     texts.forEach((_, index) => {
-      let textStyle: StyleProp<TextStyle>;
+      let appLabelProp: AppLabelProps;
       if (index % 2 !== 0) {
-        textStyle = {
-          fontFamily: FONTS.semiBold,
-          color: themedColors.primary
+        appLabelProp = {
+          style: [
+            {
+              color: themedColors.primary
+            },
+            style
+          ],
+          weight: "semi-bold"
         };
       } else {
-        textStyle = {
-          fontFamily: FONTS.regular,
-          color: themedColors.interface[600]
+        appLabelProp = {
+          style: [
+            {
+              color: themedColors.interface[600]
+            },
+            style
+          ]
         };
       }
-      textStyles.push([textStyle, style]);
+      appLabelProps.push(appLabelProp);
     });
   }
 
   return (
     <MultilineSpannableText
-      textStyle={textStyles}
+      appLabelProps={appLabelProps}
       text={texts}
       containerStyle={containerStyle}
     />

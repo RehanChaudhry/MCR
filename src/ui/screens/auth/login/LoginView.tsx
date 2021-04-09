@@ -54,7 +54,14 @@ export const LoginView = React.memo<Props>(
       openWelcomeScreen();
     };
     return (
-      <Screen>
+      <Screen
+        style={[
+          styles.container,
+          { backgroundColor: theme.themedColors.backgroundSecondary }
+        ]}
+        topSafeAreaAndStatusBarColor={
+          theme.themedColors.backgroundSecondary
+        }>
         <ScrollView>
           <View style={styles.mainContainer}>
             <AppImageBackground
@@ -163,11 +170,13 @@ export const LoginView = React.memo<Props>(
             <View style={styles.spannableText}>
               <MultilineSpannableText
                 text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
-                textStyle={[
-                  { fontSize: FONT_SIZE.sm },
+                appLabelProps={[
+                  { style: { fontSize: FONT_SIZE.sm } },
                   {
-                    fontSize: FONT_SIZE.sm,
-                    color: theme.themedColors.primary
+                    style: {
+                      fontSize: FONT_SIZE.sm,
+                      color: theme.themedColors.primary
+                    }
                   }
                 ]}
               />
@@ -180,6 +189,10 @@ export const LoginView = React.memo<Props>(
 );
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    flex: 1
+  },
   mainContainer: {
     marginLeft: SPACE.lg,
     marginRight: SPACE.lg
@@ -195,7 +208,7 @@ const styles = StyleSheet.create({
     marginTop: SPACE._3xl
   },
   signInHeading: {
-    fontSize: FONT_SIZE._2xl,
+    fontSize: FONT_SIZE.xl,
     marginTop: SPACE._3xl
   },
   email: {

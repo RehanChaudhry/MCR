@@ -85,7 +85,6 @@ exports[`Renders snapshot as expected 1`] = `
             Array [
               Object {
                 "fontSize": 12,
-                "fontWeight": "400",
               },
               undefined,
             ],
@@ -115,16 +114,12 @@ exports[`Renders snapshot as expected 1`] = `
             Array [
               Object {
                 "fontSize": 12,
-                "fontWeight": "400",
-              },
-              Object {
-                "fontWeight": "700",
               },
               undefined,
             ],
           ],
           Object {
-            "fontFamily": "Inter-Regular",
+            "fontFamily": "Inter-SemiBold",
           },
         ]
       }

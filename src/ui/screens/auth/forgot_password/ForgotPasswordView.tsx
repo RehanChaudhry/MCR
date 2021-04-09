@@ -30,7 +30,7 @@ const validationSchema = Yup.object().shape({
 });
 
 let initialValues: FormikValues = {
-  email: ""
+  email: "john.doe@gmail.com"
 };
 
 export const ForgotPasswordView = React.memo<Props>(
@@ -42,7 +42,14 @@ export const ForgotPasswordView = React.memo<Props>(
       openForgotPasswordFeedBackScreen();
     };
     return (
-      <Screen>
+      <Screen
+        style={[
+          styles.container,
+          { backgroundColor: theme.themedColors.backgroundSecondary }
+        ]}
+        topSafeAreaAndStatusBarColor={
+          theme.themedColors.backgroundSecondary
+        }>
         <ScrollView>
           <View style={styles.mainContainer}>
             <AppImageBackground
@@ -105,7 +112,10 @@ export const ForgotPasswordView = React.memo<Props>(
                   text={STRINGS.forgotpassword.reset_password}
                   buttonType={BUTTON_TYPES.NORMAL}
                   fontWeight={"semi-bold"}
-                  textStyle={{ color: theme.themedColors.background }}
+                  textStyle={[
+                    styles.buttonText,
+                    { color: theme.themedColors.background }
+                  ]}
                   buttonStyle={[
                     styles.buttonStyle,
                     { backgroundColor: theme.themedColors.primary }
@@ -121,6 +131,10 @@ export const ForgotPasswordView = React.memo<Props>(
 );
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    flex: 1
+  },
   mainContainer: {
     marginLeft: SPACE.lg,
     marginRight: SPACE.lg
@@ -136,7 +150,7 @@ const styles = StyleSheet.create({
     marginTop: SPACE._2xl
   },
   forgotPasswordHeading: {
-    fontSize: FONT_SIZE._2xl,
+    fontSize: FONT_SIZE.xl,
     marginTop: SPACE._3xl
   },
   email: {
@@ -157,6 +171,9 @@ const styles = StyleSheet.create({
   },
   forgotText: {
     marginTop: SPACE._2xl,
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
+  },
+  buttonText: {
+    fontSize: FONT_SIZE.base
   }
 });

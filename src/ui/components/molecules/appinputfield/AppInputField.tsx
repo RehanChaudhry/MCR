@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   ImageStyle,
+  Platform,
   StyleProp,
   StyleSheet,
   TextInput,
@@ -53,6 +54,8 @@ export const AppInputField = optimizedMemo<Props>(
       setTextInputValue(valueToShowAtStart);
     }, [valueToShowAtStart]);
 
+    const getMultiline = () => (multiline ? styles.multiline : {});
+
     return (
       <View style={[styles.input, viewStyle]}>
         {leftIcon && (
@@ -73,7 +76,7 @@ export const AppInputField = optimizedMemo<Props>(
             setTextInputValue(text);
           }}
           placeholderTextColor={COLORS.placeholderTextColor}
-          style={[styles.textInput, style]}
+          style={[styles.textInput, style, getMultiline()]}
           multiline={multiline}
           {...rest}
         />
@@ -91,34 +94,35 @@ const styles = StyleSheet.create({
   input: {
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "stretch",
     color: COLORS.textColor1,
     borderStyle: "solid",
-    height: 42,
-    borderRadius: 5,
-    paddingRight: SPACE.md,
-    paddingLeft: SPACE.md,
-    fontSize: FONT_SIZE.xs,
+    borderRadius: 6,
     flex: 1
+  },
+  multiline: {
+    paddingBottom: SPACE.sm
   },
   textInput: {
     fontFamily: FONTS.regular,
+    fontSize: FONT_SIZE.sm,
     flex: 1,
-    color: COLORS.textColor1
+    color: COLORS.textColor1,
+    textAlignVertical: "top",
+    paddingHorizontal: SPACE.md,
+    paddingTop: SPACE.sm,
+
+    paddingBottom: Platform.OS === "android" ? 2 : SPACE.sm
   },
   leftIconView: {
-    flexDirection: "row",
-    alignSelf: "flex-start",
     alignItems: "center",
-    alignContent: "center",
-    height: 42,
-    paddingRight: SPACE.md
+    justifyContent: "center",
+    paddingStart: SPACE.md
   },
   rightIconView: {
-    flexDirection: "row",
-    alignSelf: "flex-end",
     alignItems: "center",
-    alignContent: "center",
-    height: 42,
-    paddingLeft: SPACE.md
+    justifyContent: "center",
+    alignSelf: "center",
+    paddingEnd: SPACE.md
   }
 });

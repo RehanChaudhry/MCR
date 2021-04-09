@@ -53,8 +53,8 @@ export const AgreementDetailsListItem = React.memo<Props>(
                 containerShape={CONTAINER_TYPES.SQUARE}
                 icon={() => (
                   <Chat
-                    width={24}
-                    height={24}
+                    width={18}
+                    height={18}
                     fill={theme.themedColors.black}
                   />
                 )}
@@ -65,8 +65,15 @@ export const AgreementDetailsListItem = React.memo<Props>(
             {status === AgreementStatus.DISAGREED && (
               <AppImageBackground
                 containerShape={CONTAINER_TYPES.SQUARE}
-                icon={() => <DisAgreed width={24} height={24} />}
+                icon={() => (
+                  <DisAgreed
+                    width={18}
+                    height={18}
+                    fill={theme.themedColors.danger}
+                  />
+                )}
                 containerStyle={[
+                  styles.containerStyle,
                   { backgroundColor: theme.themedColors.dangerShade }
                 ]}
               />
@@ -77,14 +84,17 @@ export const AgreementDetailsListItem = React.memo<Props>(
                 containerShape={CONTAINER_TYPES.SQUARE}
                 icon={() => (
                   <Thumb
-                    width={24}
-                    height={24}
-                    fill={theme.themedColors.black}
+                    width={20}
+                    height={20}
+                    fill={theme.themedColors.success}
                   />
                 )}
-                containerStyle={{
-                  backgroundColor: theme.themedColors.successShade
-                }}
+                containerStyle={[
+                  styles.containerStyle,
+                  {
+                    backgroundColor: theme.themedColors.successShade
+                  }
+                ]}
               />
             )}
             {status === AgreementStatus.PENDING && (
@@ -92,14 +102,17 @@ export const AgreementDetailsListItem = React.memo<Props>(
                 containerShape={CONTAINER_TYPES.SQUARE}
                 icon={() => (
                   <Clock
-                    width={24}
-                    height={24}
+                    width={20}
+                    height={20}
                     fill={theme.themedColors.warn}
                   />
                 )}
-                containerStyle={{
-                  backgroundColor: theme.themedColors.warnShade
-                }}
+                containerStyle={[
+                  styles.containerStyle,
+                  {
+                    backgroundColor: theme.themedColors.warnShade
+                  }
+                ]}
               />
             )}
           </View>
@@ -112,7 +125,7 @@ export const AgreementDetailsListItem = React.memo<Props>(
 const styles = StyleSheet.create({
   mainContainer: {
     flexDirection: "row",
-    padding: SPACE.sm
+    marginVertical: SPACE.lg
   },
   innerContainerLeft: {
     flexDirection: "row",
@@ -136,7 +149,11 @@ const styles = StyleSheet.create({
     paddingStart: SPACE.md,
     paddingEnd: SPACE.md
   },
-  userName: { fontSize: FONT_SIZE.lg, flex: 1 },
+  userName: { fontSize: FONT_SIZE.base, flex: 1 },
   time: { fontSize: FONT_SIZE.xs },
-  chatImage: { marginRight: SPACE.md }
+  chatImage: { marginRight: SPACE.md, width: 36, height: 36 },
+  containerStyle: {
+    width: 36,
+    height: 36
+  }
 });

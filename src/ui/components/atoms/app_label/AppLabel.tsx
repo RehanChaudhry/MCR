@@ -8,7 +8,6 @@ import {
   TextProps,
   TextStyle
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { usePreferredTheme } from "hooks";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
@@ -67,8 +66,9 @@ export const AppLabel = optimizedMemo<Props>(
       }
     };
 
-    const textJsx = (
+    return (
       <Text
+        onPress={onPress}
         style={setFontWeightStyle(weight, [
           getTextStyle(),
           { color: theme.themedColors.label },
@@ -85,16 +85,6 @@ export const AppLabel = optimizedMemo<Props>(
         {text}
       </Text>
     );
-
-    if (onPress) {
-      return (
-        <TouchableOpacity activeOpacity={0.3} onPress={onPress}>
-          {textJsx}
-        </TouchableOpacity>
-      );
-    } else {
-      return textJsx;
-    }
   }
 );
 

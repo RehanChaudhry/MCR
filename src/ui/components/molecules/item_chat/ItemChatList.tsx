@@ -14,7 +14,6 @@ import NotifyIndicInActive from "assets/images/notification-indicator-inactive.s
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem, { SenderType } from "models/ChatItem";
-import { moderateScale } from "config/Dimens";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 
@@ -50,10 +49,10 @@ export const ItemChatList = React.memo<ItemChatListProps>(
             }}
           />
 
-          <NotifyIndic width={12} height={12} style={styles.indicator} />
+          <NotifyIndic width={10} height={10} style={styles.indicator} />
           <NotifyIndicInActive
-            width={12}
-            height={12}
+            width={10}
+            height={10}
             style={styles.indicator}
           />
 
@@ -115,21 +114,21 @@ const styles = StyleSheet.create({
       borderStartColor: shouldShowBorder
         ? themedColors.primary
         : themedColors.backgroundSecondary,
-      borderStartWidth: moderateScale(4),
+      borderStartWidth: 4,
       marginTop: SPACE.md
     };
   },
   indicator: {
     position: "absolute",
-    start: moderateScale(45),
+    start: 40,
     top: 0,
-    left: 50
+    left: 40
   },
   imgStyle: {
-    width: moderateScale(45),
-    height: moderateScale(45),
+    width: 40,
+    height: 40,
     resizeMode: "cover",
-    borderRadius: 45 / 2,
+    borderRadius: 40 / 2,
     overflow: "hidden"
   },
   textWrapper: (theme: ColorPalette) => {
@@ -157,7 +156,6 @@ const styles = StyleSheet.create({
         recipientLength > 1 && !isMessageRead
           ? theme.primary
           : theme.label,
-      lineHeight: 20,
       paddingEnd: SPACE.sm,
       flex: 1
     };
@@ -166,8 +164,7 @@ const styles = StyleSheet.create({
     return {
       fontSize: FONT_SIZE.xs,
       color: theme.interface["700"],
-      lineHeight: 16,
-      marginEnd: SPACE.md
+      marginEnd: SPACE.lg
     };
   },
   messageText: (
@@ -182,8 +179,8 @@ const styles = StyleSheet.create({
         : isStaffMessage
         ? theme.interface["700"]
         : theme.interface["600"],
-      lineHeight: 16,
-      marginTop: SPACE._2xs
+      marginTop: SPACE._2xs,
+      marginEnd: SPACE.lg
     };
   },
   separator: {

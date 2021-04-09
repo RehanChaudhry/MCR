@@ -55,7 +55,6 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
             <LoginImage
               width={"100%"}
               height={"100%"}
-              fill="red"
               style={styles.loginImage}
             />
           </View>
@@ -68,13 +67,15 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
 
             <View style={styles.spannableText}>
               <MultilineSpannableText
-                textStyle={[
-                  { fontSize: FONT_SIZE.xsm },
+                appLabelProps={[
+                  { style: { fontSize: FONT_SIZE.sm } },
                   {
-                    fontSize: FONT_SIZE.xsm,
-                    color: theme.themedColors.primary
+                    style: {
+                      fontSize: FONT_SIZE.sm,
+                      color: theme.themedColors.primary
+                    }
                   },
-                  { fontSize: FONT_SIZE.xsm }
+                  { style: { fontSize: FONT_SIZE.sm } }
                 ]}
                 text={[
                   STRINGS.forgotPasswordFeedBack.feedBack_one_text,
@@ -169,14 +170,14 @@ const styles = StyleSheet.create({
   },
   fourthText: {
     marginTop: SPACE.xl,
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
   },
   ssoText: {
     marginTop: SPACE._2xl,
     fontSize: FONT_SIZE.xs
   },
   loginImage: {
-    marginTop: SPACE.lg
+    marginTop: SPACE._2xl
   },
   buttonViewStyle: {
     marginTop: SPACE._2xl,

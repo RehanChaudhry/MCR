@@ -1,3 +1,4 @@
+import Env from "envs/env";
 import React, { FC } from "react";
 
 function propsMatcher<PropType>() {
@@ -5,6 +6,7 @@ function propsMatcher<PropType>() {
     return (prevProps: any, nextProps: any) => {
       let keys = Object.keys(nextProps) as Array<Key>;
       if (
+        Env.SHOULD_OPTIMIZED_MEMO_ENABLED &&
         !prevProps.shouldNotOptimize &&
         propsNotToMatch &&
         propsNotToMatch.length > 0

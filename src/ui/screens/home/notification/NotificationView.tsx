@@ -90,11 +90,7 @@ export const NotificationView = React.memo<Props>(
             username={item.name + " "}
             message={item.message}
             onPress={() => AppLog.log("Button pressed")}
-            userNameOnPress={(value, userNameIndex) => {
-              if (userNameIndex === 0) {
-                openMyProfileScreen();
-              }
-            }}
+            userNameOnPress={openMyProfileScreen}
           />
         </View>
       );

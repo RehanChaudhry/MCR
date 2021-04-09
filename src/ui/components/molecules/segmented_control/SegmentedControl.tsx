@@ -12,7 +12,7 @@ import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_me
 import { AppLog } from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { usePreferredTheme } from "hooks";
-import { FONT_SIZE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
 
 export type Choice = { label: string; value: string };
@@ -20,7 +20,6 @@ export type Choice = { label: string; value: string };
 interface Props {
   containerStyle?: StyleProp<ViewStyle>; //please dont pass padding start, end or horizontal because width is used to show selected item
   tabStyle?: StyleProp<ViewStyle>;
-  tabHeight?: number;
   values: Array<Choice>;
   selectedIndex?: number;
   onChange?: (value: Choice, index: number) => void;
@@ -28,14 +27,7 @@ interface Props {
 }
 
 export const SegmentedControl = optimizedMemoWithStyleProp<Props>(
-  ({
-    onChange,
-    selectedIndex = 0,
-    containerStyle,
-    tabHeight = 40,
-    tabStyle,
-    values
-  }) => {
+  ({ onChange, selectedIndex = 0, containerStyle, tabStyle, values }) => {
     AppLog.log("rendering SegmentedControl...");
 
     if (values.length < 2) {
@@ -43,6 +35,7 @@ export const SegmentedControl = optimizedMemoWithStyleProp<Props>(
     }
 
     const theme = usePreferredTheme();
+    let tabHeight = 40;
 
     const [selectedPosition, setSelectedPosition] = useState<number>(
       values.length - 1 >= selectedIndex ? selectedIndex : 0
@@ -97,13 +90,13 @@ export const SegmentedControl = optimizedMemoWithStyleProp<Props>(
         ]}
         onLayout={({
           nativeEvent: {
-            layout: { width }
+            layout: { width, height }
           }
         }) => {
           const newSegmentWidth = values.length
             ? width / values.length
             : 0;
-
+          tabHeight = height;
           AppLog.log("width : " + width);
           if (newSegmentWidth !== segmentWidth) {
             animation.setValue(newSegmentWidth * (selectedIndex || 0));
@@ -135,8 +128,8 @@ export const SegmentedControl = optimizedMemoWithStyleProp<Props>(
                 <TouchableOpacity
                   style={[
                     styles.tabContainer(values.length, index),
-                    tabStyle,
-                    { height: tabHeight }
+                    tabStyle
+                    /*  { height: tabHeight }*/
                   ]}
                   key={value.value}
                   onPress={() => {
@@ -178,7 +171,8 @@ const styles = StyleSheet.create({
     };
   },
   text: {
-    fontSize: FONT_SIZE.xs
+    paddingVertical: SPACE._2xs - 2,
+    fontSize: FONT_SIZE.sm
   },
   selectedOption: {},
   unselectedOption: {},
@@ -192,6 +186,7 @@ const styles = StyleSheet.create({
   tabContainer: (size: number, index: number) => {
     return {
       flex: 1,
+      paddingVertical: SPACE.sm,
       alignContent: "center",
       alignItems: "center",
       justifyContent: "center",

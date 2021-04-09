@@ -50,13 +50,21 @@ export const AppSwitch = optimizedMemo<AppButtonProps>(
         onColor={themedColors.primary}
         offColor={themedColors.interface["300"]}
         onToggle={toggleSwitch}
-        thumbOffStyle={styles.thumb}
+        thumbOnStyle={styles.thumbActive}
         icon={
           showCustomThumb ? (
             isEnabled ? (
-              <SwitchActive width={20} height={20} />
+              <SwitchActive
+                width={20}
+                height={20}
+                fill={themedColors.primary}
+              />
             ) : (
-              <SwitchInActive width={20} height={20} />
+              <SwitchInActive
+                width={20}
+                height={20}
+                fill={themedColors.interface["400"]}
+              />
             )
           ) : null
         }
@@ -69,7 +77,7 @@ export const AppSwitch = optimizedMemo<AppButtonProps>(
 
 const styles = StyleSheet.create({
   switch: {},
-  thumb: {},
+  thumbActive: { padding: 0, marginStart: 5 },
   tinyLogo: {
     width: 20,
     height: 20
