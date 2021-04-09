@@ -169,6 +169,19 @@ const MatchesController: FC<Props> = () => {
   const postFriendRequest = async (userId: number) => {
     // For UI build
     if (true) {
+      setProfileMatches((prevState) => {
+        const requestedUser = prevState?.data.find(
+          (value) => value.userId === userId
+        );
+        if (requestedUser) {
+          requestedUser.isFriendRequested = true;
+        }
+        return {
+          message: prevState?.message ?? "",
+          data: prevState?.data ?? [],
+          pagination: prevState?.pagination
+        };
+      });
       return;
     }
     const {
@@ -205,6 +218,19 @@ const MatchesController: FC<Props> = () => {
   const postMatchDismiss = async (userId: number) => {
     // For UI build
     if (true) {
+      setProfileMatches((prevState) => {
+        const dismissedUserIndex =
+          prevState?.data.findIndex((value) => value.userId === userId) ??
+          -1;
+        if (dismissedUserIndex > -1) {
+          prevState!.data.splice(dismissedUserIndex, 1);
+        }
+        return {
+          message: prevState?.message ?? "",
+          data: prevState?.data ?? [],
+          pagination: prevState?.pagination
+        };
+      });
       return;
     }
     const {
