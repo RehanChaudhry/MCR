@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { DemoGraphics } from "ui/components/templates/demographics/DemoGraphics";
-import { Interests } from "ui/components/templates/interests/interests";
+import { Interests } from "ui/components/templates/interests/Interests";
 import { LivingDetails } from "ui/components/templates/living_details/LivingDetails";
 import { VideoIntroduction } from "ui/components/templates/video_introduction/VideoIntroduction";
 import * as Yup from "yup";

@@ -12,8 +12,9 @@ export type UpdateProfileStackParamList = {
     isFrom: EScreen;
     options?: string[];
     list?: ConversationItem[];
+    listKey?: string;
   };
-  AddInterests: { list: ConversationItem[] };
+  AddInterests: { list: ConversationItem[]; listKey?: string };
 };
 export const UpdateProfileStack = createStackNavigator<UpdateProfileStackParamList>();
 

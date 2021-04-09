@@ -7,8 +7,12 @@ export type WelcomeStackParamList = {
   Questionnaire: { isFrom: EScreen };
   Matches: undefined;
   Auth: undefined;
-  UpdateProfile: { isFrom: EScreen; list?: ConversationItem[] };
-  AddInterests: { list: ConversationItem[] };
+  UpdateProfile: {
+    isFrom: EScreen;
+    list?: ConversationItem[];
+    listKey?: string;
+  };
+  AddInterests: { list: ConversationItem[]; listKey?: string };
 };
 
 export const WelcomeStack = createStackNavigator<WelcomeStackParamList>();

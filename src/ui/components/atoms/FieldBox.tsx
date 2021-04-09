@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   StyleProp,
   StyleSheet,
@@ -21,7 +21,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import EScreen from "models/enums/EScreen";
 import { FormikValues, useFormikContext } from "formik";
-import { AppLog } from "utils/Util";
 
 type Props = {
   name: string;
@@ -55,15 +54,27 @@ export const FieldBox: FC<Props> = ({
   const welcomeNavigation = useNavigation<welcomeNavigationProp>();
 
   const { values } = useFormikContext<FormikValues>();
+  const [optionsText, setOptionsText] = useState(
+    Strings.profile.dropDownInitialValue.addOptions
+  );
+  const [areOptionsAdded, setAreOptionsAdded] = useState(false);
 
   useEffect(() => {
-    AppLog.logForcefully(
-      "in FieldBox#useEffect(): route.params.list: " +
-        JSON.stringify(route.params.list)
-    );
-
-    values[name] = route.params.list;
-  }, [values, name, route.params.list]);
+    if (route.params.listKey === name) {
+      values[name] = route.params.list;
+      if (values[name]?.length > 0) {
+        setOptionsText(
+          `Added ${values[name].length} option${
+            values[name]?.length === 1 ? "" : "s"
+          }`
+        );
+        setAreOptionsAdded(true);
+      } else {
+        setOptionsText(Strings.profile.dropDownInitialValue.addOptions);
+        setAreOptionsAdded(false);
+      }
+    }
+  }, [values, name, route.params.list, route.params.listKey]);
 
   return (
     <View>
@@ -72,11 +83,13 @@ export const FieldBox: FC<Props> = ({
         onPress={() => {
           if (route.params.isFrom === EScreen.WELCOME) {
             welcomeNavigation.navigate("AddInterests", {
-              list: values[name] ?? []
+              list: values[name] ?? [],
+              listKey: name
             });
           } else {
             updateNavigation.navigate("AddInterests", {
-              list: values[name] ?? []
+              list: values[name] ?? [],
+              listKey: name
             });
           }
         }}>
@@ -87,8 +100,13 @@ export const FieldBox: FC<Props> = ({
             { borderColor: theme.themedColors.border }
           ]}>
           <AppLabel
-            text={Strings.profile.dropDownInitialValue.addOptions}
-            style={textStyle}
+            text={optionsText}
+            style={[
+              textStyle,
+              areOptionsAdded
+                ? { color: theme.themedColors.primary }
+                : { color: theme.themedColors.placeholder }
+            ]}
           />
         </View>
       </TouchableWithoutFeedback>

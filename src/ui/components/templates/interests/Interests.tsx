@@ -36,35 +36,35 @@ export const Interests: React.FC<Props> = ({}) => {
           textStyle={{ color: theme.themedColors.placeholder }}
         />
         <View style={styles.spacer} />
-        {/*<FieldBox*/}
-        {/*  list={values[variableName(initialValues.memberships)]}*/}
-        {/*  title={STRINGS.profile.dropDownTitle.memberShip}*/}
-        {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
-        {/*/>*/}
-        {/*<View style={styles.spacer} />*/}
-        {/*<FieldBox*/}
-        {/*  list={values[variableName(initialValues.movies)]}*/}
-        {/*  title={STRINGS.profile.dropDownTitle.movies}*/}
-        {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
-        {/*/>*/}
-        {/*<View style={styles.spacer} />*/}
-        {/*<FieldBox*/}
-        {/*  list={values[variableName(initialValues.music)]}*/}
-        {/*  title={STRINGS.profile.dropDownTitle.music}*/}
-        {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
-        {/*/>*/}
-        {/*<View style={styles.spacer} />*/}
-        {/*<FieldBox*/}
-        {/*  list={values[variableName(initialValues.books)]}*/}
-        {/*  title={STRINGS.profile.dropDownTitle.books}*/}
-        {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
-        {/*/>*/}
-        {/*<View style={styles.spacer} />*/}
-        {/*<FieldBox*/}
-        {/*  list={values[variableName(initialValues.games)]}*/}
-        {/*  title={STRINGS.profile.dropDownTitle.games}*/}
-        {/*  textStyle={{ color: theme.themedColors.placeholder }}*/}
-        {/*/>*/}
+        <FieldBox
+          name="memberships"
+          title={STRINGS.profile.dropDownTitle.memberShip}
+          textStyle={{ color: theme.themedColors.placeholder }}
+        />
+        <View style={styles.spacer} />
+        <FieldBox
+          name="movies"
+          title={STRINGS.profile.dropDownTitle.movies}
+          textStyle={{ color: theme.themedColors.placeholder }}
+        />
+        <View style={styles.spacer} />
+        <FieldBox
+          name="music"
+          title={STRINGS.profile.dropDownTitle.music}
+          textStyle={{ color: theme.themedColors.placeholder }}
+        />
+        <View style={styles.spacer} />
+        <FieldBox
+          name="books"
+          title={STRINGS.profile.dropDownTitle.books}
+          textStyle={{ color: theme.themedColors.placeholder }}
+        />
+        <View style={styles.spacer} />
+        <FieldBox
+          name="games"
+          title={STRINGS.profile.dropDownTitle.games}
+          textStyle={{ color: theme.themedColors.placeholder }}
+        />
       </View>
     </CardView>
   );

@@ -43,7 +43,8 @@ export const AddInterestsController: FC<Props> = () => {
     );
     navigation.navigate("UpdateProfile", {
       isFrom: EScreen.WELCOME,
-      list: _list
+      list: _list,
+      listKey: route.params.listKey
     });
   };
 
