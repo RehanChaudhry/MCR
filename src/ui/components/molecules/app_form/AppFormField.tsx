@@ -1,6 +1,6 @@
 import { FormikValues, useFormikContext } from "formik";
 import { usePreferredTheme } from "hooks";
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import {
   AppLabel,
@@ -53,6 +53,11 @@ const AppFormField = optimizedMemo<Props>(
 
     const theme = usePreferredTheme();
 
+    const _setFieldTouched = useCallback(() => setFieldTouched(name), [
+      setFieldTouched,
+      name
+    ]);
+
     return (
       <>
         {labelProps && (
@@ -80,9 +85,7 @@ const AppFormField = optimizedMemo<Props>(
           testID={fieldTestID}
           value={value ? value : values[name]}
           onChangeText={handleChange(name)}
-          onBlur={() => {
-            setFieldTouched(name);
-          }}
+          onBlur={_setFieldTouched}
           secureTextEntry={secureTextEntry}
           {...fieldInputProps}
         />

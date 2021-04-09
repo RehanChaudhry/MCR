@@ -11,7 +11,7 @@ import {
   ViewStyle
 } from "react-native";
 import { COLORS, FONTS, FONT_SIZE, SPACE } from "config";
-import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface AppInputFieldProps extends TextInputProps {
   style?: StyleProp<TextStyle>;
@@ -32,7 +32,7 @@ export interface AppInputFieldProps extends TextInputProps {
 
 type Props = AppInputFieldProps;
 
-export const AppInputField = optimizedMemo<Props>(
+export const AppInputField = optimizedMemoWithStyleProp<Props>(
   ({
     onChangeText,
     style,
@@ -88,7 +88,7 @@ export const AppInputField = optimizedMemo<Props>(
       </View>
     );
   }
-);
+)(["style", "viewStyle", "iconStyle", "leftIcon", "rightIcon"]);
 
 const styles = StyleSheet.create({
   input: {
@@ -110,9 +110,8 @@ const styles = StyleSheet.create({
     color: COLORS.textColor1,
     textAlignVertical: "top",
     paddingHorizontal: SPACE.md,
-    paddingTop: SPACE.sm,
-
-    paddingBottom: Platform.OS === "android" ? 2 : SPACE.sm
+    paddingTop: SPACE._2md,
+    paddingBottom: Platform.OS === "android" ? 4 : SPACE._2md
   },
   leftIconView: {
     alignItems: "center",
