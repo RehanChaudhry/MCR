@@ -12,7 +12,7 @@ type Props = {
   initialRouteName: "SignUp" | "Login" | "UniSelection";
 };
 
-export const AuthRoutes: FC<Props> = ({ initialRouteName }) => {
+export const AuthRoutes: FC<Props> = ({ initialRouteName = "Login" }) => {
   return (
     <AuthStack.Navigator initialRouteName={initialRouteName}>
       <AuthStack.Screen

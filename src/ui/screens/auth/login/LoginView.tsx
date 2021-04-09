@@ -32,7 +32,7 @@ const validationSchema = Yup.object().shape({
     .email()
     .required(Strings.login.enter_valid_email_validation),
   password: Yup.string()
-    .required("Enter your password")
+    .required("Enter your password.")
     .matches(loginRegx, Strings.login.pass_validation)
 });
 

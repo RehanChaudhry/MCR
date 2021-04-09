@@ -7,6 +7,7 @@ import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_me
 interface OwnProps {
   headingText: string;
   text: string;
+  headingNumberOfLines?: number;
   headingStyle?: StyleProp<TextStyle>;
   textStyle?: StyleProp<TextStyle>;
   headingFontWeight?: Weight;
@@ -21,13 +22,15 @@ export const HeadingWithText = optimizedMemoWithStyleProp<Props>(
     headingText,
     headingStyle,
     textStyle,
-    headingFontWeight = "normal"
+    headingFontWeight = "normal",
+    headingNumberOfLines = 1
   }) => {
     return (
       <View testID={"HEADING_WITH_TEXT"}>
         <AppLabel
           text={headingText}
           weight={headingFontWeight}
+          numberOfLines={headingNumberOfLines}
           style={[{ fontSize: FONT_SIZE.base }, headingStyle]}
         />
         <AppLabel

@@ -6,6 +6,9 @@ export type WelcomeStackParamList = {
   Welcome: undefined;
   Questionnaire: { isFrom: EScreen };
   Matches: undefined;
+  UpdateProfile: { isFrom: EScreen };
+  AddInterests: undefined;
+  Auth: undefined;
   UpdateProfile: { isFrom: EScreen; list?: ConversationItem[] };
   AddInterests: { list: ConversationItem[] };
 };

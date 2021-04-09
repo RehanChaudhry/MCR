@@ -60,6 +60,7 @@ export const WelcomeView = React.memo<Props>(
             <HeadingWithText
               headingText={STRINGS.welcome.learn_about_heading}
               headingFontWeight={"bold"}
+              headingNumberOfLines={0}
               headingStyle={styles.learnAboutHeading}
               text={STRINGS.welcome.learn_about_text}
               textStyle={styles.learnAboutText}

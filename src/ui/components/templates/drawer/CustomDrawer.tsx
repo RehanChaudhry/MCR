@@ -186,7 +186,10 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
       <TouchableNativeFeedback
         onPress={() => {
           setCurrentItem("SignOut");
-          //  navigation.navigate(route.name);
+          navigation.dangerouslyGetParent()?.reset({
+            index: 0,
+            routes: [{ name: "Auth" }]
+          });
         }}
         background={ripple}>
         <View
