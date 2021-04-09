@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
   infoTextContainer: {
     flexDirection: "column",
     justifyContent: "space-evenly",
-    marginStart: SPACE.md
+    marginStart: SPACE.md,
+    flex: 1
   }
 });
 

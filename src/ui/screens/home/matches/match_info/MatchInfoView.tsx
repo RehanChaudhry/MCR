@@ -77,8 +77,8 @@ export const MatchInfoView: React.FC<Props> = ({
               textStyle={styles.updateText}
               leftIcon={() => (
                 <Profile
-                  width={16}
-                  height={16}
+                  width={20}
+                  height={20}
                   fill={themedColors.primary}
                 />
               )}
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
   updateText: {
     fontSize: FONT_SIZE.sm
   },
-  updateButton: { padding: SPACE.lg },
+  updateButton: { paddingVertical: SPACE.lg, paddingStart: SPACE.lg },
   cardPadding: { padding: SPACE.lg },
   matchingInfoLabel: {
     fontSize: FONT_SIZE.sm,
