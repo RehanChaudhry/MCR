@@ -11,9 +11,11 @@ import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import MyRoommateItem from "ui/components/templates/my_roommates/MyRoommateItem";
 
-type Props = {};
+type Props = {
+  openAgreementScreen: () => void;
+};
 
-const MyRoommates: FC<Props> = () => {
+const MyRoommates: FC<Props> = ({ openAgreementScreen }) => {
   const theme = usePreferredTheme();
 
   return (
@@ -49,6 +51,7 @@ const MyRoommates: FC<Props> = () => {
               color={theme.themedColors.primary}
             />
           )}
+          onPress={openAgreementScreen}
         />
       </View>
     </CardView>
