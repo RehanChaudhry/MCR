@@ -57,9 +57,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
     }, []);
 
     const renderItem = ({ item }: { item: ChatItem }) => {
-      AppLog.logForcefully(
-        "rendering list item : " + JSON.stringify(item)
-      );
+      AppLog.log("rendering list item : " + JSON.stringify(item));
       return (
         <>
           <ChatHeader
