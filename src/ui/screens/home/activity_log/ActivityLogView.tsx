@@ -10,6 +10,7 @@ import ActivityLogItem from "ui/components/organisms/activity_log_item/ActivityL
 import { getActivityTypeFilterData } from "models/enums/ActivityType";
 import { ActivityLogSection } from "utils/SectionListHelper";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { shadowStyleProps } from "utils/Util";
 
 type Props = {
   isApiLoading: boolean;
@@ -57,7 +58,7 @@ export const ActivityLogView: React.FC<Props> = ({
   return (
     <Screen
       style={styles.container}
-      bottomSafeAreaBackgroundColor={themedColors.backgroundSecondary}>
+      bottomSafeAreaColor={themedColors.backgroundSecondary}>
       <View
         style={[
           styles.dropdownContainer,
@@ -109,7 +110,8 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   dropdownContainer: {
     paddingHorizontal: SPACE.md,
-    paddingVertical: SPACE.sm
+    paddingVertical: SPACE.sm,
+    ...shadowStyleProps
   },
   activityLogList: { flex: 1 },
   dropDown: {
