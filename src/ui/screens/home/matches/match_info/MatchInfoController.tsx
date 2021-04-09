@@ -66,7 +66,9 @@ const MatchInfoController: FC<Props> = () => {
     // AppLog.log(
     //   "moveToRoommateAgreementScreen(), profile: " + JSON.stringify(profileMatch)
     // );
-    navigation.navigate("RoommateAgreement");
+    navigation.navigate("RoommateAgreement", {
+      isFrom: EScreen.MATCH_INFO
+    });
   };
 
   const moveToUpdateProfileScreen = () => {

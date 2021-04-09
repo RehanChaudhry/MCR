@@ -6,9 +6,10 @@ export type MatchesStackParamList = {
   MatchInfo: undefined;
   Chat: { title: string[] };
   Profile: { isFrom: EScreen };
-  RoommateAgreement: undefined;
+  RoommateAgreement: { isFrom: EScreen };
   UpdateProfile: { isFrom: EScreen };
   Questionnaire: { isFrom: EScreen };
+  AgreementDetails: undefined;
 };
 
 export const MatchesStack = createStackNavigator<MatchesStackParamList>();
