@@ -21,6 +21,7 @@ export interface AppButtonProps extends TouchableOpacityProps {
   text: string;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  textContainerStyle?: StyleProp<ViewStyle>;
   shouldShowProgressBar?: boolean;
   loaderSize?: number;
   loaderColor?: string;
@@ -55,7 +56,8 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
     isDisable = false,
     shouldShowError = false,
     fontWeight = "normal",
-    shouldAlignTextWithLeftIconWithFullWidth = false
+    shouldAlignTextWithLeftIconWithFullWidth = false,
+    textContainerStyle
   }) => {
     const theme = usePreferredTheme();
     const getButtonStyle = () => {
@@ -116,7 +118,8 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
               style.textWithLoader,
               !shouldAlignTextWithLeftIconWithFullWidth
                 ? style.textWithLoaderFlex
-                : undefined
+                : undefined,
+              textContainerStyle
             ]}>
             {!shouldShowProgressBar && (
               <AppLabel

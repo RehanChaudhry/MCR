@@ -54,6 +54,7 @@ exports[`snapshot testing 1`] = `
           Object {
             "flex": 1,
           },
+          undefined,
         ]
       }
     >
