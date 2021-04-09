@@ -10,6 +10,7 @@ import CircularTick from "assets/images/circular_tick.svg";
 import { usePreferredTheme } from "hooks";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { moderateScale } from "config/Dimens";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { AddInterestsView } from "ui/screens/home/profile/update_profile/add_interests/AddInterestsView";
 import { UpdateProfileStackParamList } from "routes/ProfileStack";
 import EScreen from "models/enums/EScreen";
@@ -50,6 +51,10 @@ export const AddInterestsController: FC<Props> = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerTitleAlign: "center",
+      headerTitle: () => (
+        <HeaderTitle text={route.params.title ?? "N/A"} />
+      ),
       headerLeft: () => (
         <HeaderLeftTextWithIcon
           text={Strings.newConversation.titleLeft}

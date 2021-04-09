@@ -14,7 +14,11 @@ export type UpdateProfileStackParamList = {
     list?: ConversationItem[];
     listKey?: string;
   };
-  AddInterests: { list: ConversationItem[]; listKey?: string };
+  AddInterests: {
+    list: ConversationItem[];
+    listKey?: string;
+    title?: string;
+  };
 };
 export const UpdateProfileStack = createStackNavigator<UpdateProfileStackParamList>();
 

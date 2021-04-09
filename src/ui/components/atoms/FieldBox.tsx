@@ -87,12 +87,14 @@ export const FieldBox: FC<Props> = ({
           if (route.params.isFrom === EScreen.WELCOME) {
             welcomeNavigation.navigate("AddInterests", {
               list: values[name] ?? [],
-              listKey: name
+              listKey: name,
+              title: title
             });
           } else {
             updateNavigation.navigate("AddInterests", {
               list: values[name] ?? [],
-              listKey: name
+              listKey: name,
+              title: title
             });
           }
         }}>

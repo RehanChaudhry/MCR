@@ -12,7 +12,11 @@ export type WelcomeStackParamList = {
     list?: ConversationItem[];
     listKey?: string;
   };
-  AddInterests: { list: ConversationItem[]; listKey?: string };
+  AddInterests: {
+    list: ConversationItem[];
+    listKey?: string;
+    title?: string;
+  };
 };
 
 export const WelcomeStack = createStackNavigator<WelcomeStackParamList>();
