@@ -17,6 +17,7 @@ import { FriendsRootStackParamList } from "routes/FriendsRootStack";
 import EScreen from "models/enums/EScreen";
 import { MatchesStackParamList } from "routes/MatchesStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
+import { ProfileRootStackParamList } from "routes/ProfileRootStack";
 
 type Props = {};
 
@@ -40,10 +41,16 @@ type ProfileRootRouteProp = RouteProp<
   "RoommateAgreement"
 >;
 
+type ViewProfileNavigationProp = StackNavigationProp<
+  ProfileRootStackParamList,
+  "Profile"
+>;
+
 const RoommateAgreementController: FC<Props> = () => {
   const navigation = useNavigation<RoommateAgreementNavigationProp>();
   const friendsNavigation = useNavigation<FriendsNavigationProp>();
   const matchesNavigation = useNavigation<MatchesNavigationProp>();
+  const navigationViewProfile = useNavigation<ViewProfileNavigationProp>();
   const route = useRoute<ProfileRootRouteProp>();
   const { themedColors } = usePreferredTheme();
   useLayoutEffect(() => {
@@ -111,7 +118,9 @@ const RoommateAgreementController: FC<Props> = () => {
         headerRight: () => (
           <HeaderRightTextWithIcon
             text={"More"}
-            onPress={() => friendsNavigation.navigate("AgreementDetails")}
+            onPress={() =>
+              navigationViewProfile.navigate("AgreementDetails")
+            }
             icon={(color, width, height) => {
               AppLog.log(color);
               return (
@@ -128,6 +137,7 @@ const RoommateAgreementController: FC<Props> = () => {
     }
   }, [
     navigation,
+    navigationViewProfile,
     friendsNavigation,
     matchesNavigation,
     route.params.isFrom,
