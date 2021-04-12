@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
 import { FONT_SIZE, SPACE } from "config";
 import {
@@ -11,6 +11,7 @@ import { AppLog, SvgProp } from "utils/Util";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { Color, NumberProp } from "react-native-svg";
+import { useHeaderHeight } from "@react-navigation/stack";
 
 export interface TypingComponentProps {
   btnImage?: SvgProp;
@@ -40,32 +41,37 @@ export const WriteMessage = React.memo<TypingComponentProps>(
     };
 
     return (
-      <View style={[styles.container(themedColors)]}>
-        <View style={[styles.input, { borderColor: themedColors.border }]}>
-          <AppInputField
-            multiline={true}
-            placeholderTextColor={themedColors.interface["600"]}
-            placeholder={appInputPlaceHolder}
-            onChangeText={(text: string) => {
-              setInitialText(text);
+      <KeyboardAvoidingView
+        behavior="padding"
+        keyboardVerticalOffset={useHeaderHeight()}>
+        <View style={[styles.container(themedColors)]}>
+          <View
+            style={[styles.input, { borderColor: themedColors.border }]}>
+            <AppInputField
+              multiline={true}
+              placeholderTextColor={themedColors.interface["600"]}
+              placeholder={appInputPlaceHolder}
+              onChangeText={(text: string) => {
+                setInitialText(text);
+              }}
+              valueToShowAtStart={initialText}
+              style={[styles.inputField, { color: themedColors.label }]}
+            />
+          </View>
+
+          <AppImageBackground
+            icon={btnImage ?? defaultIcon}
+            containerShape={CONTAINER_TYPES.SQUARE}
+            onPress={() => {
+              if (initialText !== "") {
+                setInitialText("");
+                btnPressCallback(initialText);
+              }
             }}
-            valueToShowAtStart={initialText}
-            style={[styles.inputField, { color: themedColors.label }]}
+            containerStyle={styles.imgPaper(themedColors)}
           />
         </View>
-
-        <AppImageBackground
-          icon={btnImage ?? defaultIcon}
-          containerShape={CONTAINER_TYPES.SQUARE}
-          onPress={() => {
-            if (initialText !== "") {
-              setInitialText("");
-              btnPressCallback(initialText);
-            }
-          }}
-          containerStyle={styles.imgPaper(themedColors)}
-        />
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 );

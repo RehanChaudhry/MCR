@@ -49,7 +49,6 @@ export const ChatThreadScreen = React.memo<Props>(
           contentContainerStyle={styles.listContainer}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
           style={[styles.list]}
           inverted={true}
           keyExtractor={(item, index) => index.toString()}

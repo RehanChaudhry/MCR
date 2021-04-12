@@ -65,6 +65,7 @@ export const CommunityView = React.memo<Props>(
         {useLazyLoadInterface(
           <>
             <FlatListWithPb
+              removeClippedSubviews={true}
               shouldShowProgressBar={shouldShowProgressBar}
               data={data}
               style={styles.list}

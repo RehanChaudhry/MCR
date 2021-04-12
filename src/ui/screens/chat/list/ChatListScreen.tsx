@@ -93,6 +93,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
         {useLazyLoadInterface(
           <>
             <FlatListWithPb
+              removeClippedSubviews={true}
               shouldShowProgressBar={false}
               data={items}
               renderItem={renderItem}

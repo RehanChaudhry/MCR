@@ -46,6 +46,7 @@ export const AnnouncementView = React.memo<Props>(
       <Screen style={styles.container}>
         {useLazyLoadInterface(
           <FlatListWithPb
+            removeClippedSubviews={true}
             shouldShowProgressBar={shouldShowProgressBar}
             data={data}
             style={styles.list}
