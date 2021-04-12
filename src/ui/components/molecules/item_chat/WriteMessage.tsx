@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  View
+} from "react-native";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
 import { FONT_SIZE, SPACE } from "config";
 import {
@@ -42,7 +47,7 @@ export const WriteMessage = React.memo<TypingComponentProps>(
 
     return (
       <KeyboardAvoidingView
-        behavior="padding"
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
         keyboardVerticalOffset={useHeaderHeight()}>
         <View style={[styles.container(themedColors)]}>
           <View
