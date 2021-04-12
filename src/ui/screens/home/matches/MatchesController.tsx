@@ -1,5 +1,6 @@
 import React, {
   FC,
+  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -29,6 +30,7 @@ import ProfileMatch from "models/ProfileMatch";
 import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import EScreen from "models/enums/EScreen";
+import EGender from "models/enums/EGender";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -99,7 +101,7 @@ const MatchesController: FC<Props> = () => {
     setProfileMatches
   ] = useState<MatchesApiResponseModel>();
 
-  const refreshCallback = async (onComplete?: () => void) => {
+  const refreshCallback = useCallback(async (onComplete?: () => void) => {
     requestModel.current.pageNo = 1;
     setIsAllDataLoaded(false);
     getProfileMatches()
@@ -109,7 +111,24 @@ const MatchesController: FC<Props> = () => {
       .catch((reason) => {
         AppLog.log("refreshCallback > catch(), reason:" + reason);
       });
-  };
+  }, []);
+
+  const onTypeChange = useCallback(
+    (value: MatchesTypeFilter) => {
+      requestModel.current.type = value;
+      refreshCallback();
+    },
+    [refreshCallback]
+  );
+
+  const onFilterChange = useCallback(
+    (keyword?: string, gender?: EGender) => {
+      requestModel.current.keyword = keyword;
+      requestModel.current.gender = gender;
+      refreshCallback();
+    },
+    [refreshCallback]
+  );
 
   const getProfileMatches = async () => {
     if (isFetchingInProgress.current) {
@@ -296,6 +315,8 @@ const MatchesController: FC<Props> = () => {
       error={matchesApi.error}
       filterCounts={filterCounts}
       matches={profileMatches?.data}
+      onTypeChange={onTypeChange}
+      onFilterChange={onFilterChange}
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}

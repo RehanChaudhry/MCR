@@ -6,18 +6,22 @@ import ProfileMatchItem from "ui/components/organisms/profile_match_item/Profile
 import MatchesFilter from "ui/components/molecules/matches_filter/MatchesFilter";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
-import BottomBreadCrumbs, {
-  Item
-} from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
 import { FilterCount } from "models/api_responses/MatchesFilterApiResponseModel";
 import { AppLog, capitalizeWords } from "utils/Util";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 import { usePreferredTheme } from "hooks";
+import OptimizedBottomBreadCrumbs, {
+  OptimizedBBCItem
+} from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
+import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
+import EGender from "models/enums/EGender";
 
 type Props = {
   isLoading: boolean;
   error: string | undefined;
   matches?: ProfileMatch[];
+  onTypeChange: (value: MatchesTypeFilter) => void;
+  onFilterChange: (keyword?: string, gender?: EGender) => void;
   pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
@@ -32,6 +36,8 @@ export const MatchesView: React.FC<Props> = ({
   isLoading,
   error,
   matches,
+  onTypeChange,
+  onFilterChange,
   pullToRefreshCallback,
   onEndReached,
   isAllDataLoaded,
@@ -72,15 +78,13 @@ export const MatchesView: React.FC<Props> = ({
     />
   );
 
-  function getFilterCountData(): Item[] {
+  function getFilterCountData(): OptimizedBBCItem<MatchesTypeFilter>[] {
     return filterCounts.map((value) => {
-      const item: Item = {
+      const item: OptimizedBBCItem<MatchesTypeFilter> = {
         title: capitalizeWords(
           `${value.type.replace("_", " ")} (${value.count})`
         ),
-        onPress: () => {
-          // call callback from controller
-        }
+        value: value.type as MatchesTypeFilter
       };
       return item;
     });
@@ -172,7 +176,7 @@ export const MatchesView: React.FC<Props> = ({
 
   return (
     <Screen style={styles.container}>
-      <MatchesFilter onFilterChange={(_, __) => {}} />
+      <MatchesFilter onFilterChange={onFilterChange} />
       <FlatListWithPb<ProfileMatch>
         style={styles.matchesList}
         shouldShowProgressBar={isLoading}
@@ -191,7 +195,10 @@ export const MatchesView: React.FC<Props> = ({
       />
       {requestDialog()}
       {dismissDialog()}
-      <BottomBreadCrumbs data={getFilterCountData()} />
+      <OptimizedBottomBreadCrumbs<MatchesTypeFilter>
+        data={getFilterCountData()}
+        onPress={onTypeChange}
+      />
     </Screen>
   );
 };
