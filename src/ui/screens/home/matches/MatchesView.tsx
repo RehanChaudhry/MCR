@@ -15,8 +15,10 @@ import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 import { usePreferredTheme } from "hooks";
 
 type Props = {
+  isLoading: boolean;
+  error: string | undefined;
   matches?: ProfileMatch[];
-  pullToRefreshCallback: (onComplete: () => void) => void;
+  pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
   postFriendRequest: (userId: number) => void;
@@ -27,6 +29,8 @@ type Props = {
 };
 
 export const MatchesView: React.FC<Props> = ({
+  isLoading,
+  error,
   matches,
   pullToRefreshCallback,
   onEndReached,
@@ -171,7 +175,7 @@ export const MatchesView: React.FC<Props> = ({
       <MatchesFilter onFilterChange={(_, __) => {}} />
       <FlatListWithPb<ProfileMatch>
         style={styles.matchesList}
-        shouldShowProgressBar={false}
+        shouldShowProgressBar={isLoading}
         data={matches}
         renderItem={renderItem}
         contentContainerStyle={styles.matchesListContainer}
@@ -182,6 +186,8 @@ export const MatchesView: React.FC<Props> = ({
         pullToRefreshCallback={pullToRefreshCallback}
         isAllDataLoaded={isAllDataLoaded}
         keyExtractor={(item) => item.userId.toString()}
+        error={error}
+        retryCallback={pullToRefreshCallback}
       />
       {requestDialog()}
       {dismissDialog()}

@@ -6,9 +6,7 @@ import React, {
   useState
 } from "react";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
-import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
-import { Alert, View } from "react-native";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { Alert } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { AppLog } from "utils/Util";
@@ -101,12 +99,16 @@ const MatchesController: FC<Props> = () => {
     setProfileMatches
   ] = useState<MatchesApiResponseModel>();
 
-  const refreshCallback = async (onComplete: () => void) => {
+  const refreshCallback = async (onComplete?: () => void) => {
     requestModel.current.pageNo = 1;
     setIsAllDataLoaded(false);
-    getProfileMatches().then(() => {
-      onComplete();
-    });
+    getProfileMatches()
+      .then(() => {
+        onComplete?.();
+      })
+      .catch((reason) => {
+        AppLog.log("refreshCallback > catch(), reason:" + reason);
+      });
   };
 
   const getProfileMatches = async () => {
@@ -127,6 +129,7 @@ const MatchesController: FC<Props> = () => {
 
     const {
       hasError,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       errorBody,
       dataBody
     } = await DataGenerator.getProfileMatches(requestModel.current);
@@ -151,7 +154,7 @@ const MatchesController: FC<Props> = () => {
       }));
       requestModel.current.pageNo = dataBody!.pagination?.next ?? 0;
     } else {
-      Alert.alert("Unable to fetch matches", errorBody);
+      // Alert.alert("Unable to fetch matches", errorBody);
     }
 
     isFetchingInProgress.current = false;
@@ -288,29 +291,19 @@ const MatchesController: FC<Props> = () => {
   }, []);
 
   return (
-    <ProgressErrorView
+    <MatchesView
       isLoading={matchesApi.loading}
       error={matchesApi.error}
-      errorView={(message) => {
-        return (
-          <View>
-            <AppLabel text={message} />
-          </View>
-        );
-      }}
-      data={profileMatches?.data}>
-      <MatchesView
-        filterCounts={filterCounts}
-        matches={profileMatches?.data}
-        pullToRefreshCallback={refreshCallback}
-        onEndReached={onEndReached}
-        isAllDataLoaded={isAllDataLoaded}
-        postFriendRequest={postFriendRequest}
-        postMatchDismiss={postMatchDismiss}
-        moveToChatScreen={moveToChatScreen}
-        moveToProfileScreen={moveToProfileScreen}
-      />
-    </ProgressErrorView>
+      filterCounts={filterCounts}
+      matches={profileMatches?.data}
+      pullToRefreshCallback={refreshCallback}
+      onEndReached={onEndReached}
+      isAllDataLoaded={isAllDataLoaded}
+      postFriendRequest={postFriendRequest}
+      postMatchDismiss={postMatchDismiss}
+      moveToChatScreen={moveToChatScreen}
+      moveToProfileScreen={moveToProfileScreen}
+    />
   );
 };
 
