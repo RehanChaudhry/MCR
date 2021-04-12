@@ -1,31 +1,66 @@
-import { Dimensions } from "react-native";
+import { Dimensions, PixelRatio } from "react-native";
 const { width, height } = Dimensions.get("window");
 
 //Guideline sizes are based on standard ~5" screen mobile device
-const guidelineBaseWidth = 350;
-const guidelineBaseHeight = 680;
+const guidelineBaseWidth = 375;
+const guidelineBaseHeight = 812;
 
 const scale = (size: number) =>
   ((width + height) / (guidelineBaseWidth + guidelineBaseHeight)) * size;
 const verticalScale = (size: number) =>
   (height / guidelineBaseHeight) * size;
-const moderateScale = (size: number, factor = 0.5) =>
-  size + (scale(size) - size) * factor;
-const moderateVerticalScale = (size: number, factor = 2) =>
-  size + (verticalScale(size) - size) * factor;
+const moderateScale = (size: number, factor = 2) =>
+  Math.round(
+    PixelRatio.roundToNearestPixel(
+      size * (factor - width / guidelineBaseWidth)
+    )
+  );
+const moderateVerticalScale = (size: number, factor = 2) => {
+  // console.log("Debugging Fonts, RATIO: " + height / guidelineBaseHeight);
+  // console.log(
+  //   "Debugging Fonts, FACTOR: " +
+  //     (height / guidelineBaseHeight < 0.85 ? factor * 0.9375 : factor)
+  // );
+  return PixelRatio.roundToNearestPixel(
+    size *
+      ((height / guidelineBaseHeight < 0.85 ? factor * 0.9375 : factor) -
+        height / guidelineBaseHeight)
+  );
+};
 
 export { scale, verticalScale, moderateVerticalScale, moderateScale };
 
 type SIZE_HEIGHT_DOUBLE = { size: number; height: number };
 
 let mapsOfSizesAndHeight = new Map<String, SIZE_HEIGHT_DOUBLE>();
-mapsOfSizesAndHeight.set("xs", { size: 12.0, height: 16.0 });
-mapsOfSizesAndHeight.set("sm", { size: 14.0, height: 20.0 });
-mapsOfSizesAndHeight.set("base", { size: 16.0, height: 24.0 });
-mapsOfSizesAndHeight.set("lg", { size: 18.0, height: 28.0 });
-mapsOfSizesAndHeight.set("xl", { size: 20.0, height: 28.0 });
-mapsOfSizesAndHeight.set("_2xl", { size: 24.0, height: 32.0 });
-mapsOfSizesAndHeight.set("_3xl", { size: 30.0, height: 36.0 });
+mapsOfSizesAndHeight.set("xs", {
+  size: moderateVerticalScale(12.0),
+  height: moderateVerticalScale(16.0)
+});
+mapsOfSizesAndHeight.set("sm", {
+  size: moderateVerticalScale(14.0),
+  height: moderateVerticalScale(20.0)
+});
+mapsOfSizesAndHeight.set("base", {
+  size: moderateVerticalScale(16.0),
+  height: moderateVerticalScale(24.0)
+});
+mapsOfSizesAndHeight.set("lg", {
+  size: moderateVerticalScale(18.0),
+  height: moderateVerticalScale(28.0)
+});
+mapsOfSizesAndHeight.set("xl", {
+  size: moderateVerticalScale(20.0),
+  height: moderateVerticalScale(28.0)
+});
+mapsOfSizesAndHeight.set("_2xl", {
+  size: moderateVerticalScale(24.0),
+  height: moderateVerticalScale(32.0)
+});
+mapsOfSizesAndHeight.set("_3xl", {
+  size: moderateVerticalScale(30.0),
+  height: moderateVerticalScale(36.0)
+});
 
 function parseMap(mapWithLabelAsKey: Map<String, SIZE_HEIGHT_DOUBLE>) {
   let mapWithSizeAsKey = new Map<number, number>();

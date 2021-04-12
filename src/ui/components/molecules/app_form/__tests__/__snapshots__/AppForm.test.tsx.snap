@@ -27,7 +27,7 @@ exports[`rendering... renders correctly 1`] = `
               "color": "#111827",
             },
             Object {
-              "lineHeight": 16,
+              "lineHeight": undefined,
             },
             Array [
               Object {
@@ -88,7 +88,7 @@ exports[`rendering... renders correctly 1`] = `
             "color": "#666666",
             "flex": 1,
             "fontFamily": "Inter-Regular",
-            "fontSize": 14,
+            "fontSize": 5,
             "paddingBottom": 10,
             "paddingHorizontal": 12,
             "paddingTop": 10,
@@ -131,7 +131,7 @@ exports[`rendering... renders correctly 1`] = `
               "color": "#111827",
             },
             Object {
-              "lineHeight": 16,
+              "lineHeight": undefined,
             },
             Array [
               Object {
@@ -190,7 +190,7 @@ exports[`rendering... renders correctly 1`] = `
             "color": "#666666",
             "flex": 1,
             "fontFamily": "Inter-Regular",
-            "fontSize": 14,
+            "fontSize": 5,
             "paddingBottom": 10,
             "paddingHorizontal": 12,
             "paddingTop": 10,
@@ -283,11 +283,11 @@ exports[`rendering... renders correctly 1`] = `
                   "color": "#111827",
                 },
                 Object {
-                  "lineHeight": 24,
+                  "lineHeight": 8.5,
                 },
                 Array [
                   Object {
-                    "fontSize": 16,
+                    "fontSize": 5.5,
                     "overflow": "hidden",
                   },
                   Object {

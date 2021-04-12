@@ -29,11 +29,11 @@ exports[`snapshot testing 1`] = `
             "color": "#111827",
           },
           Object {
-            "lineHeight": 20,
+            "lineHeight": 7,
           },
           Array [
             Object {
-              "fontSize": 14,
+              "fontSize": 5,
               "paddingLeft": 5,
             },
             undefined,
