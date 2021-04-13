@@ -1,4 +1,4 @@
-import { FONT_SIZE, STRINGS } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
@@ -28,10 +28,16 @@ const ErrorWithRetryView = optimizedMemo<Props>(
       <View testID="error" style={[style, styles.container]}>
         <AppLabel
           text={text}
+          weight={"semi-bold"}
           style={[styles.text, { color: theme.themedColors.label }]}
           {...rest}
         />
         <AppButton
+          buttonStyle={{
+            backgroundColor: theme.themedColors.primary
+          }}
+          textStyle={{ color: theme.themedColors.background }}
+          fontWeight={"semi-bold"}
           text={STRINGS.common.try_again}
           onPress={retryCallback}
           buttonType={BUTTON_TYPES.NORMAL}
@@ -44,10 +50,11 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    padding: SPACE.lg
   },
   text: {
-    fontSize: FONT_SIZE.xs,
+    fontSize: FONT_SIZE.base,
     width: "100%",
     textAlign: "center",
     margin: 20

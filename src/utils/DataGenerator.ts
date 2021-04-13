@@ -568,7 +568,7 @@ const getProfileMatches: (
   errorBody: undefined;
   dataBody: MatchesApiResponseModel;
 }> = async (request: MatchesApiRequestModel) => {
-  AppLog.log("getProfileMatches(), request: " + JSON.stringify(request));
+  // AppLog.log("getProfileMatches(), request: " + JSON.stringify(request));
   const profileMatches: ProfileMatch[] = getProfileMatch(
     request.pageNo * 10
   );
@@ -587,9 +587,9 @@ const getProfileMatches: (
       }
     }
   };
-  AppLog.log(
-    "getProfileMatches(), response: " + JSON.stringify(response.dataBody)
-  );
+  // AppLog.log(
+  //   "getProfileMatches(), response: " + JSON.stringify(response.dataBody)
+  // );
   return response;
 };
 
