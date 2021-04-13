@@ -1,65 +1,61 @@
-import { Dimensions, PixelRatio } from "react-native";
+import { Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
 
-//Guideline sizes are based on standard ~5" screen mobile device
+// Guideline sizes are based on iPhone 11 Pro screen
 const guidelineBaseWidth = 375;
 const guidelineBaseHeight = 812;
 
-const scale = (size: number) =>
-  ((width + height) / (guidelineBaseWidth + guidelineBaseHeight)) * size;
-const verticalScale = (size: number) =>
-  (height / guidelineBaseHeight) * size;
-const moderateScale = (size: number, factor = 2) =>
-  Math.round(
-    PixelRatio.roundToNearestPixel(
-      size * (factor - width / guidelineBaseWidth)
-    )
-  );
-const moderateVerticalScale = (size: number, factor = 2) => {
-  // console.log("Debugging Fonts, RATIO: " + height / guidelineBaseHeight);
-  // console.log(
-  //   "Debugging Fonts, FACTOR: " +
-  //     (height / guidelineBaseHeight < 0.85 ? factor * 0.9375 : factor)
-  // );
-  return PixelRatio.roundToNearestPixel(
-    size *
-      ((height / guidelineBaseHeight < 0.85 ? factor * 0.9375 : factor) -
-        height / guidelineBaseHeight)
-  );
+const scaleWidth = width / guidelineBaseWidth;
+const scaleHeight = height / guidelineBaseHeight;
+const minScale = Math.min(scaleWidth, scaleHeight);
+const threshold = 0.85;
+
+const moderateScale = (size: number) => scaleWithThreshold(size);
+
+const scaleWithThreshold = (size: number) => {
+  let _minScale = minScale;
+  if (minScale < threshold) {
+    _minScale = threshold;
+    size = size + 1;
+  }
+  // console.log("Debugging Fonts, minScale: " + minScale);
+  // console.log("Debugging Fonts, minScaleWithThreshold: " + _minScale);
+
+  return Math.ceil(size * _minScale);
 };
 
-export { scale, verticalScale, moderateVerticalScale, moderateScale };
+export { scaleWithThreshold, moderateScale };
 
 type SIZE_HEIGHT_DOUBLE = { size: number; height: number };
 
 let mapsOfSizesAndHeight = new Map<String, SIZE_HEIGHT_DOUBLE>();
 mapsOfSizesAndHeight.set("xs", {
-  size: moderateVerticalScale(12.0),
-  height: moderateVerticalScale(16.0)
+  size: scaleWithThreshold(13.0),
+  height: scaleWithThreshold(17.0)
 });
 mapsOfSizesAndHeight.set("sm", {
-  size: moderateVerticalScale(14.0),
-  height: moderateVerticalScale(20.0)
+  size: scaleWithThreshold(15.0),
+  height: scaleWithThreshold(21.0)
 });
 mapsOfSizesAndHeight.set("base", {
-  size: moderateVerticalScale(16.0),
-  height: moderateVerticalScale(24.0)
+  size: scaleWithThreshold(17.0),
+  height: scaleWithThreshold(25.0)
 });
 mapsOfSizesAndHeight.set("lg", {
-  size: moderateVerticalScale(18.0),
-  height: moderateVerticalScale(28.0)
+  size: scaleWithThreshold(19.0),
+  height: scaleWithThreshold(29.0)
 });
 mapsOfSizesAndHeight.set("xl", {
-  size: moderateVerticalScale(20.0),
-  height: moderateVerticalScale(28.0)
+  size: scaleWithThreshold(21.0),
+  height: scaleWithThreshold(29.0)
 });
 mapsOfSizesAndHeight.set("_2xl", {
-  size: moderateVerticalScale(24.0),
-  height: moderateVerticalScale(32.0)
+  size: scaleWithThreshold(25.0),
+  height: scaleWithThreshold(33.0)
 });
 mapsOfSizesAndHeight.set("_3xl", {
-  size: moderateVerticalScale(30.0),
-  height: moderateVerticalScale(36.0)
+  size: scaleWithThreshold(31.0),
+  height: scaleWithThreshold(37.0)
 });
 
 function parseMap(mapWithLabelAsKey: Map<String, SIZE_HEIGHT_DOUBLE>) {
