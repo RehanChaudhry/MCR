@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { usePreferredTheme } from "hooks";
 import SearchField from "ui/components/atoms/search_field/SearchField";
@@ -18,6 +18,22 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
   const keyword = useRef<string | undefined>();
   const gender = useRef<EGender>(EGender.ALL);
 
+  const onChangeText = useCallback(
+    (item) => {
+      gender.current = item.id as EGender;
+      onFilterChange(keyword.current, gender.current);
+    },
+    [onFilterChange]
+  );
+
+  const onKeywordChange = useCallback(
+    (textToSearch?: string) => {
+      keyword.current = textToSearch;
+      onFilterChange(keyword.current, gender.current);
+    },
+    [onFilterChange]
+  );
+
   return (
     <View
       style={[
@@ -34,10 +50,7 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
         ]}
         textStyle={styles.searchText}
         placeholder={STRINGS.matches.placeholder_search_keyword}
-        onChangeText={(textToSearch?: string) => {
-          keyword.current = textToSearch;
-          onFilterChange(keyword.current, gender.current);
-        }}
+        onChangeText={onKeywordChange}
         clearIcon={true}
         iconColor={themedColors.interface[500]}
       />
@@ -57,10 +70,7 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
         )}
         title={genders[0].title}
         items={genders}
-        selectedItemCallback={(item) => {
-          gender.current = item.id as EGender;
-          onFilterChange(keyword.current, gender.current);
-        }}
+        selectedItemCallback={onChangeText}
       />
     </View>
   );
