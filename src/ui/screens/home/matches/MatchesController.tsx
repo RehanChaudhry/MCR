@@ -101,36 +101,7 @@ const MatchesController: FC<Props> = () => {
     setProfileMatches
   ] = useState<MatchesApiResponseModel>();
 
-  const refreshCallback = useCallback(async (onComplete?: () => void) => {
-    requestModel.current.pageNo = 1;
-    setIsAllDataLoaded(false);
-    getProfileMatches()
-      .then(() => {
-        onComplete?.();
-      })
-      .catch((reason) => {
-        AppLog.log("refreshCallback > catch(), reason:" + reason);
-      });
-  }, []);
-
-  const onTypeChange = useCallback(
-    (value: MatchesTypeFilter) => {
-      requestModel.current.type = value;
-      refreshCallback();
-    },
-    [refreshCallback]
-  );
-
-  const onFilterChange = useCallback(
-    (keyword?: string, gender?: EGender) => {
-      requestModel.current.keyword = keyword;
-      requestModel.current.gender = gender;
-      refreshCallback();
-    },
-    [refreshCallback]
-  );
-
-  const getProfileMatches = async () => {
+  const getProfileMatches = useCallback(async () => {
     if (isFetchingInProgress.current) {
       return;
     }
@@ -158,9 +129,6 @@ const MatchesController: FC<Props> = () => {
     // ]);
 
     if (!hasError) {
-      if (requestModel.current.pageNo === 1) {
-        setProfileMatches({ message: "", data: [] });
-      }
       setProfileMatches((prevState) => ({
         message: dataBody!.message,
         data: [
@@ -177,7 +145,40 @@ const MatchesController: FC<Props> = () => {
     }
 
     isFetchingInProgress.current = false;
-  };
+  }, []);
+
+  const refreshCallback = useCallback(
+    async (onComplete?: () => void) => {
+      requestModel.current.pageNo = 1;
+      setIsAllDataLoaded(false);
+      getProfileMatches()
+        .then(() => {
+          onComplete?.();
+        })
+        .catch((reason) => {
+          AppLog.log("refreshCallback > catch(), reason:" + reason);
+        });
+    },
+    [getProfileMatches]
+  );
+
+  const onTypeChange = useCallback(
+    (value: MatchesTypeFilter) => {
+      requestModel.current.type = value;
+      refreshCallback();
+    },
+    [refreshCallback]
+  );
+
+  const onFilterChange = useCallback(
+    (keyword?: string, gender?: EGender) => {
+      AppLog.log(keyword);
+      requestModel.current.keyword = keyword;
+      requestModel.current.gender = gender;
+      refreshCallback();
+    },
+    [refreshCallback]
+  );
 
   const onEndReached = () => {
     getProfileMatches();
