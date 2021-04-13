@@ -8,9 +8,6 @@ import ChatApis from "repo/chat/ChatAPis";
 import { AppLog } from "utils/Util";
 import ChatItem from "models/ChatItem";
 import DataGenerator from "utils/DataGenerator";
-import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
-import { View } from "react-native";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { ChatRootStackParamList } from "routes/ChatRootStack";
 
 type ChatRootNavigationProp = StackNavigationProp<ChatRootStackParamList>;
@@ -56,15 +53,15 @@ export const ChatListController: FC<Props> = () => {
   };
 
   const refreshCallback = useCallback(
-    async (onComplete: () => void) => {
+    async (onComplete?: () => void) => {
       /*pageToReload.current = 1;*/
       setTimeout(() => {
         setChats(dummyChats);
-        setIsAllDataLoaded(true);
-        onComplete();
+        setIsAllDataLoaded(false);
+        onComplete?.();
         /* handleLoadChatsApi()
           .then(() => {
-            onComplete();
+            onComplete?.();
           })
           .catch();*/
       }, 2000);
@@ -82,24 +79,14 @@ export const ChatListController: FC<Props> = () => {
   }, [handleLoadChatsApi]);
 
   return (
-    <ProgressErrorView
-      data={chats}
+    <ChatListScreen
       isLoading={loadChatsApi.loading}
       error={loadChatsApi.error}
-      errorView={(message) => {
-        return (
-          <View>
-            <AppLabel text={message} />
-          </View>
-        );
-      }}>
-      <ChatListScreen
-        data={chats}
-        onItemClick={openChatThread}
-        pullToRefreshCallback={refreshCallback}
-        onEndReached={onEndReached}
-        isAllDataLoaded={isAllDataLoaded}
-      />
-    </ProgressErrorView>
+      data={chats}
+      onItemClick={openChatThread}
+      pullToRefreshCallback={refreshCallback}
+      onEndReached={onEndReached}
+      isAllDataLoaded={isAllDataLoaded}
+    />
   );
 };
