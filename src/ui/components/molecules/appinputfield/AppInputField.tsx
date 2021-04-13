@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   ImageStyle,
+  Platform,
   StyleProp,
   StyleSheet,
   TextInput,
@@ -10,7 +11,7 @@ import {
   ViewStyle
 } from "react-native";
 import { COLORS, FONTS, FONT_SIZE, SPACE } from "config";
-import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_memo/optimized_memo";
 
 export interface AppInputFieldProps extends TextInputProps {
   style?: StyleProp<TextStyle>;
@@ -31,7 +32,7 @@ export interface AppInputFieldProps extends TextInputProps {
 
 type Props = AppInputFieldProps;
 
-export const AppInputField = optimizedMemo<Props>(
+export const AppInputField = optimizedMemoWithStyleProp<Props>(
   ({
     onChangeText,
     style,
@@ -53,6 +54,8 @@ export const AppInputField = optimizedMemo<Props>(
       setTextInputValue(valueToShowAtStart);
     }, [valueToShowAtStart]);
 
+    const getMultiline = () => (multiline ? styles.multiline : {});
+
     return (
       <View style={[styles.input, viewStyle]}>
         {leftIcon && (
@@ -73,7 +76,7 @@ export const AppInputField = optimizedMemo<Props>(
             setTextInputValue(text);
           }}
           placeholderTextColor={COLORS.placeholderTextColor}
-          style={[styles.textInput, style]}
+          style={[styles.textInput, style, getMultiline()]}
           multiline={multiline}
           {...rest}
         />
@@ -85,53 +88,40 @@ export const AppInputField = optimizedMemo<Props>(
       </View>
     );
   }
-);
+)(["style", "viewStyle", "iconStyle", "leftIcon", "rightIcon"]);
 
 const styles = StyleSheet.create({
   input: {
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "stretch",
     color: COLORS.textColor1,
     borderStyle: "solid",
-    height: 42,
-    borderRadius: 5,
-    borderColor: COLORS.grey3,
-    paddingRight: SPACE.md,
-    paddingLeft: SPACE.md,
-    fontSize: FONT_SIZE.xsm,
-    fontFamily: FONTS.regular,
-    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 6,
     flex: 1
-
-    // //Its for IOS
-    // shadowColor: COLORS.black,
-    // shadowOffset: { width: 0, height: 1 },
-    // shadowOpacity: 0.1,
-    //
-    // // its for android
-    // elevation: 2,
-    // backgroundColor: "white"
+  },
+  multiline: {
+    paddingBottom: SPACE.sm
   },
   textInput: {
     fontFamily: FONTS.regular,
+    fontSize: FONT_SIZE.sm,
     flex: 1,
-    padding: 0,
-    color: COLORS.textColor1
+    color: COLORS.textColor1,
+    textAlignVertical: "top",
+    paddingHorizontal: SPACE.md,
+    paddingTop: SPACE._2md,
+    paddingBottom: Platform.OS === "android" ? 4 : SPACE._2md
   },
   leftIconView: {
-    flexDirection: "row",
-    alignSelf: "flex-start",
     alignItems: "center",
-    alignContent: "center",
-    height: 42,
-    paddingRight: SPACE.md
+    justifyContent: "center",
+    paddingStart: SPACE.md
   },
   rightIconView: {
-    flexDirection: "row",
-    alignSelf: "flex-end",
     alignItems: "center",
-    alignContent: "center",
-    height: 42,
-    paddingLeft: SPACE.md
+    justifyContent: "center",
+    alignSelf: "center",
+    paddingEnd: SPACE.md
   }
 });

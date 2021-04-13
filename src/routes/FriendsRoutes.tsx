@@ -12,6 +12,7 @@ import {
   MyRoommatesStack,
   RoommateAgreementStack
 } from "./FriendsStack";
+import EScreen from "models/enums/EScreen";
 
 export const FriendsRoutes = () => {
   return (
@@ -75,6 +76,7 @@ const RoommateAgreementRoutes: FC<RoommateAgreementRoutesProps> = () => {
   return (
     <RoommateAgreementStack.Navigator>
       <RoommateAgreementStack.Screen
+        initialParams={{ isFrom: EScreen.HOME }}
         name="RoommateAgreement"
         component={RoommateAgreementController}
       />

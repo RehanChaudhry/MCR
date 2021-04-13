@@ -88,7 +88,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
           styles.container,
           {
             backgroundColor: themedColors.background,
-            borderColor: themedColors.border
+            borderColor: themedColors.interface[300]
           },
           style
         ]}
@@ -100,6 +100,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
           style={[styles.title, styles.questionLabel]}
           text={question.title}
           numberOfLines={0}
+          weight={"bold"}
         />
 
         <RangeSliderWithLabel
@@ -116,17 +117,15 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
 
         <View style={styles.preferenceWrapper}>
           <AppLabel
-            style={[styles.label, styles.questionLabel]}
+            style={[styles.label]}
             text="Comfort Zone"
+            weight={"bold"}
           />
 
           <View style={styles.switchWrapper}>
             <AppLabel
-              style={[
-                styles.label,
-                styles.questionLabel,
-                { marginEnd: SPACE.xsm }
-              ]}
+              style={[styles.label, { marginEnd: SPACE.xs }]}
+              weight={"bold"}
               text="I have no preference"
             />
 
@@ -164,18 +163,18 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
 
 const styles = StyleSheet.create({
   container: {
-    padding: SPACE.md,
+    padding: SPACE.lg,
     borderTopWidth: StyleSheet.hairlineWidth
   },
   title: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.sm
   },
   label: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs,
+    includeFontPadding: false
   },
   questionLabel: {
-    fontWeight: "700",
-    marginBottom: SPACE.md
+    marginBottom: SPACE.lg
   },
   labelRight: {
     alignSelf: "flex-end"
@@ -183,15 +182,14 @@ const styles = StyleSheet.create({
   preferenceWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: SPACE.md,
+    marginVertical: SPACE.lg,
     alignItems: "center"
   },
   switchWrapper: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignContent: "center"
+    alignItems: "center"
   },
   labelXsm: {
-    fontSize: FONT_SIZE._3xm
+    fontSize: FONT_SIZE.xs
   }
 });

@@ -18,6 +18,7 @@ import {
   BUTTON_TYPES
 } from "ui/components/molecules/app_button/AppButton";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
+import { moderateScale } from "config/Dimens";
 
 type Props = {
   openForgotPasswordScreen?: () => void;
@@ -54,7 +55,6 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
             <LoginImage
               width={"100%"}
               height={"100%"}
-              fill="red"
               style={styles.loginImage}
             />
           </View>
@@ -65,21 +65,25 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
               style={styles.signInHeading}
             />
 
-            <MultilineSpannableText
-              textStyle={[
-                { fontSize: FONT_SIZE.xsm },
-                {
-                  fontSize: FONT_SIZE.xsm,
-                  color: theme.themedColors.primary
-                },
-                { fontSize: FONT_SIZE.xsm }
-              ]}
-              text={[
-                STRINGS.forgotPasswordFeedBack.feedBack_one_text,
-                STRINGS.forgotPasswordFeedBack.email,
-                STRINGS.forgotPasswordFeedBack.feedBack_third_text
-              ]}
-            />
+            <View style={styles.spannableText}>
+              <MultilineSpannableText
+                appLabelProps={[
+                  { style: { fontSize: FONT_SIZE.sm } },
+                  {
+                    style: {
+                      fontSize: FONT_SIZE.sm,
+                      color: theme.themedColors.primary
+                    }
+                  },
+                  { style: { fontSize: FONT_SIZE.sm } }
+                ]}
+                text={[
+                  STRINGS.forgotPasswordFeedBack.feedBack_one_text,
+                  STRINGS.forgotPasswordFeedBack.email,
+                  STRINGS.forgotPasswordFeedBack.feedBack_third_text
+                ]}
+              />
+            </View>
 
             <AppLabel
               text={STRINGS.forgotPasswordFeedBack.feedBack_fourth_text}
@@ -93,7 +97,10 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
                 styles.recieveEmail,
                 { backgroundColor: theme.themedColors.primary }
               ]}
-              textStyle={{ color: theme.themedColors.background }}
+              textStyle={[
+                styles.signInText,
+                { color: theme.themedColors.background }
+              ]}
               fontWeight={"semi-bold"}
             />
 
@@ -105,13 +112,16 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
                   backgroundColor: theme.themedColors.background
                 }
               ]}
-              textStyle={{ color: theme.themedColors.interface["700"] }}
+              textStyle={[
+                styles.signInText,
+                { color: theme.themedColors.interface["700"] }
+              ]}
               fontWeight={"semi-bold"}
               buttonType={BUTTON_TYPES.BORDER}
               leftIcon={() => (
                 <LeftArrow
-                  width={16}
-                  height={16}
+                  width={20}
+                  height={20}
                   fill={theme.themedColors.interface["700"]}
                 />
               )}
@@ -144,7 +154,7 @@ const styles = StyleSheet.create({
   },
   signInHeading: {
     fontSize: FONT_SIZE._2xl,
-    marginBottom: SPACE.xl
+    marginTop: SPACE._2xl
   },
   email: {
     marginTop: SPACE._2xl
@@ -156,19 +166,18 @@ const styles = StyleSheet.create({
     marginTop: SPACE._2xl
   },
   spannableText: {
-    marginTop: SPACE.xl,
-    marginBottom: SPACE._2xl
+    marginTop: SPACE._2xl
   },
   fourthText: {
     marginTop: SPACE.xl,
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.sm
   },
   ssoText: {
     marginTop: SPACE._2xl,
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.xs
   },
   loginImage: {
-    marginTop: SPACE.lg
+    marginTop: SPACE._2xl
   },
   buttonViewStyle: {
     marginTop: SPACE._2xl,
@@ -177,5 +186,8 @@ const styles = StyleSheet.create({
   goBackSignIn: {
     marginTop: SPACE.xl,
     marginBottom: SPACE.xl
+  },
+  signInText: {
+    fontSize: moderateScale(15.0)
   }
 });

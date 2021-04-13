@@ -63,7 +63,7 @@ exports[`Renders snapshot as expected 1`] = `
     style={
       Object {
         "flexDirection": "row",
-        "paddingTop": 5,
+        "marginTop": 8,
       }
     }
     testID="bottom-view"
@@ -79,10 +79,12 @@ exports[`Renders snapshot as expected 1`] = `
             Object {
               "color": "#111827",
             },
+            Object {
+              "lineHeight": 5.5,
+            },
             Array [
               Object {
-                "fontSize": 15.116504854368934,
-                "fontWeight": "400",
+                "fontSize": 4.5,
               },
               undefined,
             ],
@@ -106,19 +108,18 @@ exports[`Renders snapshot as expected 1`] = `
             Object {
               "color": "#111827",
             },
+            Object {
+              "lineHeight": 5.5,
+            },
             Array [
               Object {
-                "fontSize": 15.116504854368934,
-                "fontWeight": "400",
-              },
-              Object {
-                "fontWeight": "700",
+                "fontSize": 4.5,
               },
               undefined,
             ],
           ],
           Object {
-            "fontFamily": "Inter-Regular",
+            "fontFamily": "Inter-SemiBold",
           },
         ]
       }

@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  View
+} from "react-native";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import {
   AppImageBackground,
   CONTAINER_TYPES
@@ -11,21 +16,16 @@ import { AppLog, SvgProp } from "utils/Util";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { Color, NumberProp } from "react-native-svg";
+import { useHeaderHeight } from "@react-navigation/stack";
 
 export interface TypingComponentProps {
   btnImage?: SvgProp;
-  appInputFieldCallback?: (text: string) => void;
   appInputPlaceHolder: string;
   btnPressCallback: (text: string) => void;
 }
 
 export const WriteMessage = React.memo<TypingComponentProps>(
-  ({
-    btnImage,
-    appInputPlaceHolder,
-    btnPressCallback,
-    appInputFieldCallback
-  }) => {
+  ({ btnImage, appInputPlaceHolder, btnPressCallback }) => {
     const [initialText, setInitialText] = useState<string>("");
     const { themedColors } = usePreferredTheme();
 
@@ -46,29 +46,37 @@ export const WriteMessage = React.memo<TypingComponentProps>(
     };
 
     return (
-      <View style={[styles.container(themedColors)]}>
-        <AppInputField
-          multiline={true}
-          placeholderTextColor={themedColors.interface["600"]}
-          placeholder={appInputPlaceHolder}
-          viewStyle={styles.inputField(themedColors)}
-          onChangeText={(text: string) => {
-            setInitialText(text);
-            appInputFieldCallback?.(text);
-          }}
-          valueToShowAtStart={initialText}
-        />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        keyboardVerticalOffset={useHeaderHeight()}>
+        <View style={[styles.container(themedColors)]}>
+          <View
+            style={[styles.input, { borderColor: themedColors.border }]}>
+            <AppInputField
+              multiline={true}
+              placeholderTextColor={themedColors.interface["600"]}
+              placeholder={appInputPlaceHolder}
+              onChangeText={(text: string) => {
+                setInitialText(text);
+              }}
+              valueToShowAtStart={initialText}
+              style={[styles.inputField, { color: themedColors.label }]}
+            />
+          </View>
 
-        <AppImageBackground
-          icon={btnImage ?? defaultIcon}
-          containerShape={CONTAINER_TYPES.SQUARE}
-          onPress={() => {
-            setInitialText("");
-            btnPressCallback(initialText);
-          }}
-          containerStyle={styles.imgPaper(themedColors)}
-        />
-      </View>
+          <AppImageBackground
+            icon={btnImage ?? defaultIcon}
+            containerShape={CONTAINER_TYPES.SQUARE}
+            onPress={() => {
+              if (initialText !== "") {
+                setInitialText("");
+                btnPressCallback(initialText);
+              }
+            }}
+            containerStyle={styles.imgPaper(themedColors)}
+          />
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 );
@@ -76,34 +84,33 @@ export const WriteMessage = React.memo<TypingComponentProps>(
 const styles = StyleSheet.create({
   container: (themedColors: ColorPalette) => {
     return {
-      paddingVertical: SPACE.md,
+      paddingVertical: SPACE.lg,
       paddingHorizontal: SPACE.md,
       flexDirection: "row",
       backgroundColor: themedColors.background,
       borderTopWidth: 0.5,
-      borderTopColor: themedColors.interface["300"]
+      borderTopColor: themedColors.interface["300"],
+      alignItems: "center"
     };
   },
   imgPaper: (themedColors: ColorPalette) => {
     return {
       marginStart: SPACE.md,
       backgroundColor: themedColors.primaryShade,
-      elevation: 0
+      elevation: 0,
+      marginTop: SPACE._2xs
     };
   },
-  inputField: (themedColors: ColorPalette) => {
-    return {
-      borderColor: themedColors.border,
-      color: themedColors.interface["600"],
-
-      //Its for IOS
-      shadowColor: themedColors.transparent,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0,
-
-      // its for android
-      elevation: 0,
-      backgroundColor: themedColors.transparent
-    };
+  input: {
+    flexDirection: "column",
+    borderStyle: "solid",
+    borderRadius: 5,
+    fontSize: FONT_SIZE.xs,
+    borderWidth: 1,
+    flex: 1,
+    marginTop: SPACE._2xs
+  },
+  inputField: {
+    alignSelf: "center"
   }
 });

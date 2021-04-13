@@ -1,5 +1,5 @@
 import Close from "assets/images/ic_cross.svg";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
@@ -56,7 +56,8 @@ const style = StyleSheet.create({
     marginLeft: SPACE.sm
   },
   text: {
-    paddingLeft: SPACE.xxsm
+    paddingLeft: SPACE._2xs,
+    fontSize: FONT_SIZE.sm
   }
 });
 

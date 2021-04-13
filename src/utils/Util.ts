@@ -1,6 +1,7 @@
 // A utility class
 
 import { Constants } from "config";
+import Env from "envs/env";
 import { Color, NumberProp } from "react-native-svg";
 import React from "react";
 import { ViewStyle } from "react-native";
@@ -15,8 +16,10 @@ export const AppLog = (function () {
       }
     },
     logForcefully: (message?: any, ...optionalParams: any[]) => {
-      // eslint-disable-next-line no-console
-      console.log(message, ...optionalParams);
+      if (Env.CURRENT !== "PROD") {
+        // eslint-disable-next-line no-console
+        console.log(message, ...optionalParams);
+      }
     },
     warn: (message?: any, ...optionalParams: any[]) => {
       if (Constants.SHOULD_PRINT_LOGS) {
@@ -139,6 +142,10 @@ export const pattern = new RegExp(
 
 export const iframePattern = new RegExp(
   "(?:<iframe[^>]*)(?:(?:\\/>)|(?:>.*?<\\/iframe>))"
+);
+
+export const loginRegx = new RegExp(
+  "(?=.*[0-9])(?=.*[A-Z])[A-Za-z\\d]{8,}$"
 );
 
 export type SvgProp = (

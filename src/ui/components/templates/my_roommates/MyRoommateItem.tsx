@@ -85,11 +85,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACE.sm
   },
   headingTextStyle: {
-    fontSize: FONT_SIZE.lg
+    fontSize: FONT_SIZE.sm
   },
   textStyle: {
-    paddingTop: SPACE.xsm,
-    fontSize: FONT_SIZE._2xsm
+    paddingTop: SPACE.xs,
+    fontSize: FONT_SIZE.xs
   },
 
   horizontalLine: {

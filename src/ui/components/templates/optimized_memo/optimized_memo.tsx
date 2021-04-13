@@ -1,10 +1,13 @@
+import Env from "envs/env";
 import React, { FC } from "react";
+import { AppLog } from "utils/Util";
 
 function propsMatcher<PropType>() {
   function of<Key extends keyof PropType>(propsNotToMatch?: Array<Key>) {
     return (prevProps: any, nextProps: any) => {
       let keys = Object.keys(nextProps) as Array<Key>;
       if (
+        Env.SHOULD_OPTIMIZED_MEMO_ENABLED &&
         !prevProps.shouldNotOptimize &&
         propsNotToMatch &&
         propsNotToMatch.length > 0
@@ -14,13 +17,26 @@ function propsMatcher<PropType>() {
         );
       }
 
+      let changedProp;
       let hasAllPropsMatched = true;
       for (let keyValue = 0; keyValue < keys.length; keyValue++) {
         hasAllPropsMatched =
           prevProps[keys[keyValue]] === nextProps[keys[keyValue]];
         if (!hasAllPropsMatched) {
+          changedProp = keys[keyValue];
           break;
         }
+      }
+
+      if (nextProps.logKey) {
+        AppLog.logForcefully(
+          `LogKey: ${
+            nextProps.logKey
+          } \n\nKeys To Matched: ${JSON.stringify(
+            keys
+          )} \n\nProp That Changed: ${changedProp} 
+          \n\nRe-Render: ${!hasAllPropsMatched}`
+        );
       }
 
       return hasAllPropsMatched;

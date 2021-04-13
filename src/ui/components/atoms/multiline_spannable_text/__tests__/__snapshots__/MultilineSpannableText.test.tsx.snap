@@ -6,19 +6,25 @@ exports[`Snapshot testing 1`] = `
 >
   <Text>
     <Text
-      accessible={true}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
+      numberOfLines={1}
       style={
         Array [
+          Array [
+            Object {
+              "fontFamily": "Inter-Regular",
+            },
+            Object {
+              "color": "#111827",
+            },
+            Object {
+              "lineHeight": undefined,
+            },
+            Object {
+              "fontWeight": "normal",
+            },
+          ],
           Object {
-            "fontWeight": "normal",
+            "fontFamily": "Inter-Regular",
           },
         ]
       }
@@ -26,19 +32,25 @@ exports[`Snapshot testing 1`] = `
       Male
     </Text>
     <Text
-      accessible={true}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
+      numberOfLines={1}
       style={
         Array [
+          Array [
+            Object {
+              "fontFamily": "Inter-Regular",
+            },
+            Object {
+              "color": "#111827",
+            },
+            Object {
+              "lineHeight": undefined,
+            },
+            Object {
+              "fontWeight": "bold",
+            },
+          ],
           Object {
-            "fontWeight": "bold",
+            "fontFamily": "Inter-Regular",
           },
         ]
       }
@@ -46,19 +58,25 @@ exports[`Snapshot testing 1`] = `
       Female
     </Text>
     <Text
-      accessible={true}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
+      numberOfLines={1}
       style={
         Array [
+          Array [
+            Object {
+              "fontFamily": "Inter-Regular",
+            },
+            Object {
+              "color": "#111827",
+            },
+            Object {
+              "lineHeight": undefined,
+            },
+            Object {
+              "fontWeight": "normal",
+            },
+          ],
           Object {
-            "fontWeight": "normal",
+            "fontFamily": "Inter-Regular",
           },
         ]
       }

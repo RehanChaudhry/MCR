@@ -1,4 +1,4 @@
-import React, { FC, useLayoutEffect } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import { UpdateProfileView } from "ui/screens/home/profile/update_profile/UpdateProfileView";
 import {
   RouteProp,
@@ -18,6 +18,7 @@ import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_w
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
+import { AppLog } from "utils/Util";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -40,6 +41,14 @@ const UpdateProfileController: FC<Props> = () => {
   const route = useRoute<UpdateProfileRouteProp>();
   const { themedColors } = usePreferredTheme();
 
+  const routeName = useRoute<UpdateProfileRouteProp>();
+
+  //for info text shown
+
+  const [infoTextShown, setInfoTextShown] = useState(false);
+
+  AppLog.log("data" + routeName.params.options);
+
   const openQuestionnaireScreen = usePreventDoubleTap(() => {
     welcomeNavigation.navigate("Questionnaire", {
       isFrom: EScreen.WELCOME
@@ -52,6 +61,7 @@ const UpdateProfileController: FC<Props> = () => {
       headerTitle: () => <HeaderTitle text="Update Profile" />
     });
     if (route.params.isFrom === EScreen.WELCOME) {
+      setInfoTextShown(true);
       navigation.setOptions({
         headerTitleAlign: "center",
         headerTitle: () => <HeaderTitle text="Complete Profile" />,
@@ -91,13 +101,19 @@ const UpdateProfileController: FC<Props> = () => {
         )
       });
     }
-  });
+  }, [
+    navigation,
+    route.params.isFrom,
+    themedColors.interface,
+    openQuestionnaireScreen
+  ]);
 
   return (
     <>
       {useLazyLoadInterface(
         <UpdateProfileView
           openUpdateQuestionnaireScreen={openQuestionnaireScreen}
+          infoTextShown={infoTextShown}
         />
       )}
     </>

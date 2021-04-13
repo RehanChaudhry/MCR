@@ -1,4 +1,3 @@
-import { COLORS } from "config";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
@@ -15,8 +14,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 interface OwnProps extends ViewProps {
   // default false
   shouldKeyboardDismissOnTouch?: boolean;
-  topSafeAreaBackgroundColor?: string; //default is theme.themedColor.background
-  bottomSafeAreaBackgroundColor?: string; //default is theme.themedColor.background
+  topSafeAreaAndStatusBarColor?: string; //default is theme.themedColor.background
+  bottomSafeAreaColor?: string; //default is theme.themedColor.background
   contentViewBackgroundColor?: string; //default is theme.themedColor.backgroundSecondary
 
   shouldAddBottomInset?: boolean;
@@ -27,8 +26,8 @@ type Props = OwnProps;
 const Screen: React.FC<Props> = ({
   shouldKeyboardDismissOnTouch = false,
   style,
-  topSafeAreaBackgroundColor,
-  bottomSafeAreaBackgroundColor,
+  topSafeAreaAndStatusBarColor,
+  bottomSafeAreaColor,
   contentViewBackgroundColor,
   shouldAddBottomInset = true,
   children,
@@ -53,22 +52,23 @@ const Screen: React.FC<Props> = ({
       style={[
         styles.container,
         {
-          backgroundColor: topSafeAreaBackgroundColor
-            ? topSafeAreaBackgroundColor
-            : theme.themedColors.background
+          backgroundColor:
+            topSafeAreaAndStatusBarColor ?? theme.themedColors.background
         }
       ]}>
       <SafeAreaView
         style={[
           styles.container,
           {
-            backgroundColor: contentViewBackgroundColor
-              ? contentViewBackgroundColor
-              : theme.themedColors.backgroundSecondary
+            backgroundColor:
+              contentViewBackgroundColor ??
+              theme.themedColors.backgroundSecondary
           }
         ]}>
         <StatusBar
-          backgroundColor={COLORS.backgroundColor}
+          backgroundColor={
+            topSafeAreaAndStatusBarColor ?? theme.themedColors.background
+          }
           barStyle="dark-content"
         />
         {view}
@@ -78,9 +78,8 @@ const Screen: React.FC<Props> = ({
           style={[
             {
               height: safeAreaInset.bottom,
-              backgroundColor: bottomSafeAreaBackgroundColor
-                ? bottomSafeAreaBackgroundColor
-                : theme.themedColors.background
+              backgroundColor:
+                bottomSafeAreaColor ?? theme.themedColors.background
             },
             styles.bottomSafeArea
           ]}

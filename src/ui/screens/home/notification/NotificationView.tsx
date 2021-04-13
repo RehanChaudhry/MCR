@@ -3,10 +3,9 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
 import { NotificationData } from "models/api_responses/NotificationsResponseModel";
-import { AppLog } from "utils/Util";
+import { AppLog, shadowStyleProps } from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config/Dimens";
-import Colors from "config/Colors";
 import Selector from "assets/images/selector.svg";
 import { usePreferredTheme } from "hooks";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
@@ -40,7 +39,7 @@ export const NotificationView = React.memo<Props>(
           style={[
             styles.header,
             style,
-            { color: theme.themedColors.interface["700"] }
+            { color: theme.themedColors.interface["600"] }
           ]}
           weight={"semi-bold"}
         />
@@ -90,11 +89,7 @@ export const NotificationView = React.memo<Props>(
             username={item.name + " "}
             message={item.message}
             onPress={() => AppLog.log("Button pressed")}
-            userNameOnPress={(value, userNameIndex) => {
-              if (userNameIndex === 0) {
-                openMyProfileScreen();
-              }
-            }}
+            userNameOnPress={openMyProfileScreen}
           />
         </View>
       );
@@ -102,9 +97,14 @@ export const NotificationView = React.memo<Props>(
 
     return (
       <Screen style={styles.container}>
-        <View style={styles.dropDownBar}>
+        <View
+          style={[
+            styles.dropDownBar,
+            { backgroundColor: theme.themedColors.background }
+          ]}>
           <AppDropdown
             items={[
+              { id: "-1", title: "Filter by notification type" },
               { id: "0", title: "View Friend Request" },
               { id: "1", title: "View Profile" },
               { id: "2", title: "View Roommate Request" },
@@ -114,7 +114,7 @@ export const NotificationView = React.memo<Props>(
               { id: "6", title: "View Roommate Request" }
             ]}
             title={"Filter by notification type"}
-            textStyle={{ color: theme.themedColors.black }}
+            textStyle={styles.filterText}
             dropDownIcon={() => (
               <Selector
                 width={20}
@@ -153,31 +153,22 @@ const styles = StyleSheet.create({
     flex: 1
   },
   header: {
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.xs,
     marginBottom: SPACE.lg,
     marginLeft: SPACE.lg
   },
   mainContanier: { marginTop: SPACE.lg },
   dropDown: {
-    marginLeft: SPACE.md,
-    marginRight: SPACE.md,
-    borderRadius: 50,
-    borderColor: undefined,
-    borderWidth: undefined
+    borderRadius: 21,
+    height: 42,
+    paddingHorizontal: SPACE.xs
   },
   dropDownBar: {
-    backgroundColor: Colors.white,
-    height: 46,
-    shadowColor: "#000",
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 3,
-    elevation: 4
+    paddingHorizontal: SPACE.md,
+    paddingVertical: SPACE.sm,
+    ...shadowStyleProps
   },
-  shadow: {
-    overflow: "hidden",
-    paddingBottom: 5
-  },
+  filterText: { fontSize: FONT_SIZE.sm },
   list: {
     flex: 1
   }

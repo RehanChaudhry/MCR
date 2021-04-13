@@ -66,20 +66,24 @@ const AboutMe: FC<Props> = () => {
           textStyle={{
             color: theme.themedColors.label,
             borderColor: theme.themedColors.interface["700"],
-            marginHorizontal: SPACE.xsm,
-            fontSize: FONT_SIZE.xsm
+            marginHorizontal: SPACE.xs,
+            fontSize: FONT_SIZE.md
           }}
           shouldShowError={false}
           //fontWeight={"bold"}
           leftIcon={watchVideo}
           shouldAlignTextWithLeftIconWithFullWidth={true}
+          fontWeight={"semi_bold"}
         />
 
         <AppLabel
           text={Strings.profile.formTitle.aboutMe}
           style={[
             styles.aboutMe,
-            { color: theme.themedColors.labelSecondary }
+            {
+              color: theme.themedColors.labelSecondary,
+              fontSize: FONT_SIZE.md
+            }
           ]}
           weight={"semi-bold"}
         />
@@ -89,6 +93,10 @@ const AboutMe: FC<Props> = () => {
             "I am a Interior Architecture major who also likes to play the bass guitar. I always clean up after myself and I like having a quiet environment but I'm down to do fun stuff as well! I am kind of introverted but once we get to know each other, I’ll be your best friend."
           }
           numberOfLines={0}
+          style={{
+            fontSize: FONT_SIZE.sm,
+            color: grayShades.warmGray["700"]
+          }}
         />
       </View>
       <View style={styles.horizontalLine} />
@@ -156,7 +164,7 @@ const AboutMe: FC<Props> = () => {
 const styles = StyleSheet.create({
   innerCardView: {
     marginHorizontal: SPACE.lg,
-    paddingTop: SPACE.xsm
+    paddingTop: SPACE.xs
   },
   cardView: {
     marginHorizontal: SPACE.lg,
@@ -179,8 +187,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACE.lg
   },
   textStyle: {
-    paddingTop: SPACE.xsm,
-    fontSize: FONT_SIZE.xsm
+    paddingTop: SPACE.xs,
+    fontSize: FONT_SIZE.md
   },
   container: {
     flexDirection: "row",
@@ -194,7 +202,7 @@ const styles = StyleSheet.create({
     paddingLeft: SPACE.sm
     //alignItems: "flex-start"
   },
-  aboutMe: { fontSize: FONT_SIZE.xsm, paddingBottom: SPACE.sm }
+  aboutMe: { fontSize: FONT_SIZE.xs, paddingBottom: SPACE.sm }
 });
 
 export default AboutMe;

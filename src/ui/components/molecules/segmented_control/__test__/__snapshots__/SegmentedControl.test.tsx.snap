@@ -73,9 +73,9 @@ exports[`Segmented control tests snapshot 1`] = `
           "borderTopRightRadius": 0,
           "borderWidth": 0.5,
           "flex": 1,
-          "height": 40,
           "justifyContent": "center",
           "opacity": 1,
+          "paddingVertical": 8,
         }
       }
     >
@@ -91,9 +91,13 @@ exports[`Segmented control tests snapshot 1`] = `
               Object {
                 "color": "#111827",
               },
+              Object {
+                "lineHeight": 7,
+              },
               Array [
                 Object {
-                  "fontSize": 19.651456310679613,
+                  "fontSize": 5,
+                  "paddingVertical": 2,
                 },
                 Array [
                   Object {
@@ -132,9 +136,9 @@ exports[`Segmented control tests snapshot 1`] = `
           "borderTopRightRadius": 0,
           "borderWidth": 0.5,
           "flex": 1,
-          "height": 40,
           "justifyContent": "center",
           "opacity": 1,
+          "paddingVertical": 8,
         }
       }
     >
@@ -150,9 +154,13 @@ exports[`Segmented control tests snapshot 1`] = `
               Object {
                 "color": "#111827",
               },
+              Object {
+                "lineHeight": 7,
+              },
               Array [
                 Object {
-                  "fontSize": 19.651456310679613,
+                  "fontSize": 5,
+                  "paddingVertical": 2,
                 },
                 Array [
                   Object {
@@ -191,9 +199,9 @@ exports[`Segmented control tests snapshot 1`] = `
           "borderTopRightRadius": 5,
           "borderWidth": 0.5,
           "flex": 1,
-          "height": 40,
           "justifyContent": "center",
           "opacity": 1,
+          "paddingVertical": 8,
         }
       }
     >
@@ -209,9 +217,13 @@ exports[`Segmented control tests snapshot 1`] = `
               Object {
                 "color": "#111827",
               },
+              Object {
+                "lineHeight": 7,
+              },
               Array [
                 Object {
-                  "fontSize": 19.651456310679613,
+                  "fontSize": 5,
+                  "paddingVertical": 2,
                 },
                 Array [
                   Object {

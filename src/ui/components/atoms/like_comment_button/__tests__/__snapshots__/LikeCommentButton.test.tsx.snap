@@ -52,10 +52,13 @@ exports[`snapshot testing 1`] = `
             Object {
               "color": "#111827",
             },
+            Object {
+              "lineHeight": 5.5,
+            },
             Array [
               Object {
                 "fontFamily": "Inter-SemiBold",
-                "fontSize": 18.139805825242718,
+                "fontSize": 4.5,
                 "marginStart": 5,
               },
               Object {

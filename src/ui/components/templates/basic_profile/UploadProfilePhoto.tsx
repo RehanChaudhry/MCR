@@ -16,6 +16,7 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 import { AppLog } from "utils/Util";
 import * as ImagePicker from "react-native-image-picker";
 import { ImagePickerResponse } from "react-native-image-picker";
+import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
 
 export const UploadProfilePhoto = optimizedMemo(() => {
   const theme = usePreferredTheme();
@@ -89,7 +90,7 @@ export const UploadProfilePhoto = optimizedMemo(() => {
           textStyle={{
             color: theme.themedColors.label,
             borderColor: theme.themedColors.interface["700"],
-            fontSize: FONT_SIZE.xsm
+            fontSize: FONT_SIZE.md
           }}
           shouldShowError={false}
           fontWeight={"semi-bold"}
@@ -102,8 +103,9 @@ export const UploadProfilePhoto = optimizedMemo(() => {
         style={[
           styles.text,
           {
-            fontSize: FONT_SIZE._2xsm,
-            color: theme.themedColors.interface["700"]
+            fontSize: FONT_SIZE.md,
+            color: theme.themedColors.interface["700"],
+            lineHeight: FONT_SIZE_LINE_HEIGHT.sm
           }
         ]}
       />

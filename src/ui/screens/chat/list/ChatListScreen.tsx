@@ -9,7 +9,6 @@ import ChatItem from "models/ChatItem";
 import { ChatHeader } from "ui/components/molecules/item_chat/ChatHeader";
 import SearchField from "ui/components/atoms/search_field/SearchField";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
-import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 
@@ -58,9 +57,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
     }, []);
 
     const renderItem = ({ item }: { item: ChatItem }) => {
-      AppLog.logForcefully(
-        "rendering list item : " + JSON.stringify(item)
-      );
+      AppLog.log("rendering list item : " + JSON.stringify(item));
       return (
         <>
           <ChatHeader
@@ -96,6 +93,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
         {useLazyLoadInterface(
           <>
             <FlatListWithPb
+              removeClippedSubviews={true}
               shouldShowProgressBar={false}
               data={items}
               renderItem={renderItem}
@@ -106,9 +104,6 @@ export const ChatListScreen = React.memo<ChatListProps>(
               onEndReached={onEndReached}
               isAllDataLoaded={isAllDataLoaded}
               contentContainerStyle={{ paddingBottom: SPACE.md }}
-              /*ItemSeparatorComponent={() => (
-                <ListItemSeparator style={styles.separator} />
-              )}*/
             />
           </>
         )}
@@ -133,18 +128,18 @@ const styles = StyleSheet.create({
   },
   search: (theme: ColorPalette) => {
     return {
-      borderRadius: moderateScale(20),
-      borderEndWidth: StyleSheet.hairlineWidth,
+      height: 42,
+      borderRadius: 21,
       backgroundColor: theme.interface[100],
       borderColor: theme.separator
     };
   },
-  searchText: { fontSize: FONT_SIZE._2xsm },
+  searchText: { fontSize: FONT_SIZE.sm },
   list: { flex: 1 },
   breadCrumbs: {},
   messageContainer: {},
   separator: {
-    marginLeft: moderateScale(75),
+    marginLeft: 75,
     marginRight: SPACE.lg
   }
 });

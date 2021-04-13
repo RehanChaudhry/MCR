@@ -1,4 +1,3 @@
-import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import React from "react";
 import {
@@ -9,8 +8,8 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import { SvgProp } from "utils/Util";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { SvgProp } from "utils/Util";
 
 export interface AppImageBackgroundProps extends TouchableOpacityProps {
   containerStyle?: StyleProp<ViewStyle>;
@@ -59,8 +58,8 @@ export const AppImageBackground = optimizedMemo<AppImageBackgroundProps>(
 
 const style = StyleSheet.create({
   container: {
-    width: moderateScale(40),
-    height: moderateScale(40),
+    width: 40,
+    height: 40,
     alignItems: "center",
     justifyContent: "center"
     // elevation: 3,

@@ -36,6 +36,7 @@ const ConnectionListHeader: FC<Props> = ({
           }
         ]}
         buttonType={BUTTON_TYPES.BORDER}
+        textContainerStyle={styles.buttonTextContainer}
         leftIcon={icon}
         onPress={onPressAction}
       />
@@ -56,12 +57,14 @@ const styles = StyleSheet.create({
     paddingBottom: SPACE.sm
   },
   text: {
-    marginTop: SPACE.lg
+    marginTop: SPACE.lg,
+    fontSize: FONT_SIZE.sm
   },
   buttonText: {
-    fontSize: FONT_SIZE.xsm,
-    paddingLeft: SPACE.xxsm
-  }
+    fontSize: FONT_SIZE.base,
+    paddingLeft: SPACE._2xs
+  },
+  buttonTextContainer: { flex: 1, justifyContent: "flex-start" }
 });
 
 export default ConnectionListHeader;

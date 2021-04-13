@@ -51,18 +51,14 @@ const styles = StyleSheet.create({
     color: grayShades.coolGray["600"]
   },
   headingStyle: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.base
   },
   buttonView: {
     marginTop: SPACE.md
   },
-  learnMore: {
-    fontSize: FONT_SIZE._2xsm,
-    fontWeight: "bold",
-    textAlign: "left"
-  },
   switchButton: {
-    paddingBottom: SPACE.lg
+    paddingBottom: SPACE.lg,
+    paddingTop: SPACE.lg
   }
 });
 

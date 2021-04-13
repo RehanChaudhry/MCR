@@ -7,14 +7,13 @@ import {
   ViewStyle
 } from "react-native";
 import React from "react";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import NotifyIndic from "assets/images/notification-indicator.svg";
 import NotifyIndicInActive from "assets/images/notification-indicator-inactive.svg";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem, { SenderType } from "models/ChatItem";
-import { moderateScale } from "config/Dimens";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 
@@ -50,10 +49,10 @@ export const ItemChatList = React.memo<ItemChatListProps>(
             }}
           />
 
-          <NotifyIndic width={12} height={12} style={styles.indicator} />
+          <NotifyIndic width={10} height={10} style={styles.indicator} />
           <NotifyIndicInActive
-            width={12}
-            height={12}
+            width={10}
+            height={10}
             style={styles.indicator}
           />
 
@@ -109,25 +108,27 @@ export const ItemChatList = React.memo<ItemChatListProps>(
 const styles = StyleSheet.create({
   container: (shouldShowBorder: boolean, themedColors: ColorPalette) => {
     return {
-      paddingHorizontal: SPACE.md,
+      paddingEnd: SPACE.lg,
+      paddingStart: SPACE.md,
       flexDirection: "row",
       borderStartColor: shouldShowBorder
         ? themedColors.primary
         : themedColors.backgroundSecondary,
-      borderStartWidth: 5,
+      borderStartWidth: 4,
       marginTop: SPACE.md
     };
   },
   indicator: {
     position: "absolute",
-    start: moderateScale(45),
-    top: moderateScale(10)
+    start: 40,
+    top: 0,
+    left: 40
   },
   imgStyle: {
-    width: moderateScale(45),
-    height: moderateScale(45),
+    width: 40,
+    height: 40,
     resizeMode: "cover",
-    borderRadius: 45 / 2,
+    borderRadius: 40 / 2,
     overflow: "hidden"
   },
   textWrapper: (theme: ColorPalette) => {
@@ -150,22 +151,20 @@ const styles = StyleSheet.create({
     isMessageRead: boolean
   ) => {
     return {
-      fontSize: moderateScale(13),
+      fontSize: FONT_SIZE.sm,
       color:
         recipientLength > 1 && !isMessageRead
           ? theme.primary
           : theme.label,
-      lineHeight: 20,
       paddingEnd: SPACE.sm,
       flex: 1
     };
   },
   timeText: (theme: ColorPalette) => {
     return {
-      fontSize: moderateScale(11),
+      fontSize: FONT_SIZE.xs,
       color: theme.interface["700"],
-      lineHeight: 16,
-      marginEnd: SPACE.md
+      marginEnd: SPACE.lg
     };
   },
   messageText: (
@@ -174,14 +173,14 @@ const styles = StyleSheet.create({
     isMessageRead: boolean
   ) => {
     return {
-      fontSize: moderateScale(11),
+      fontSize: FONT_SIZE.xs,
       color: !isMessageRead
         ? theme.label
         : isStaffMessage
         ? theme.interface["700"]
         : theme.interface["600"],
-      lineHeight: 16,
-      marginTop: SPACE.xxsm
+      marginTop: SPACE._2xs,
+      marginEnd: SPACE.lg
     };
   },
   separator: {

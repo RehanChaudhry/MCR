@@ -5,7 +5,7 @@ export interface AppFormProps {
   children?: React.ReactNode;
   initialValues: FormikValues;
   onSubmit: (values: FormikValues) => void;
-  isInitialValid?: boolean;
+  validateOnMount?: boolean;
   validationSchema: FormikValues;
 }
 
@@ -15,14 +15,14 @@ const AppForm: React.FC<Props> = ({
   initialValues,
   onSubmit,
   validationSchema,
-  isInitialValid,
+  validateOnMount,
   children
 }) => {
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
-      isInitialValid={isInitialValid}
+      validateOnMount={validateOnMount}
       validationSchema={validationSchema}>
       {() => <>{children}</>}
     </Formik>

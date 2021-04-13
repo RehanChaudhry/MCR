@@ -184,7 +184,7 @@ export const CreatePostView = React.memo<Props>((props) => {
     <ScrollView
       style={styles.scrollView}
       keyboardShouldPersistTaps={"handled"}>
-      <Screen style={styles.container}>
+      <Screen style={styles.container} shouldAddBottomInset={false}>
         <View style={styles.cardView}>
           <AnnouncementHeader
             title={Strings.whats_new}
@@ -193,6 +193,7 @@ export const CreatePostView = React.memo<Props>((props) => {
             shouldHideBottomSeparator={true}
             titleFontWeight="bold"
             titleStyle={styles.headerTitleStyle}
+            leftImageStyle={{ width: 32, height: 32 }}
           />
 
           <AppForm
@@ -226,44 +227,49 @@ export const CreatePostView = React.memo<Props>((props) => {
                 ]
               }}
             />
-            <View style={styles.buttonsContainer}>
-              <PhotosButton
-                isSelected={postType === POST_TYPES.PHOTOS}
-                onPress={() => {
-                  setPostType(POST_TYPES.PHOTOS);
-                  AppLog.logForcefully("postType: " + postType);
-                  openImageGallery();
-                }}
-              />
-              <View style={{ marginRight: SPACE.md }} />
-              <LinkButton
-                isSelected={postType === POST_TYPES.LINK}
-                onPress={() => {
-                  setImages([]);
-                  setPostType(POST_TYPES.LINK);
-                  AppLog.logForcefully("postType: " + postType);
-                }}
-              />
-              <View style={{ marginRight: SPACE.md }} />
-              <EmbedButton
-                isSelected={postType === POST_TYPES.EMBED}
-                onPress={() => {
-                  setImages([]);
-                  setPostType(POST_TYPES.EMBED);
-                  AppLog.logForcefully("postType: " + postType);
-                }}
-              />
-              <View style={{ marginRight: SPACE.md }} />
-              <TouchableOpacity
-                onPress={() => SimpleToast.show("Clicked on info icon.")}>
-                <InfoCircle
-                  width={23}
-                  height={23}
-                  fill={theme.themedColors.interface["500"]}
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}>
+              <View style={styles.buttonsContainer}>
+                <PhotosButton
+                  isSelected={postType === POST_TYPES.PHOTOS}
+                  onPress={() => {
+                    setPostType(POST_TYPES.PHOTOS);
+                    AppLog.logForcefully("postType: " + postType);
+                    openImageGallery();
+                  }}
                 />
-              </TouchableOpacity>
-            </View>
-
+                <View style={{ marginRight: SPACE.md }} />
+                <LinkButton
+                  isSelected={postType === POST_TYPES.LINK}
+                  onPress={() => {
+                    setImages([]);
+                    setPostType(POST_TYPES.LINK);
+                    AppLog.logForcefully("postType: " + postType);
+                  }}
+                />
+                <View style={{ marginRight: SPACE.md }} />
+                <EmbedButton
+                  isSelected={postType === POST_TYPES.EMBED}
+                  onPress={() => {
+                    setImages([]);
+                    setPostType(POST_TYPES.EMBED);
+                    AppLog.logForcefully("postType: " + postType);
+                  }}
+                />
+                <View style={{ marginRight: SPACE.md }} />
+                <TouchableOpacity
+                  onPress={() =>
+                    SimpleToast.show("Clicked on info icon.")
+                  }>
+                  <InfoCircle
+                    width={23}
+                    height={23}
+                    fill={theme.themedColors.interface["500"]}
+                  />
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
             {postType !== POST_TYPES.NONE && (
               <>
                 {postType === POST_TYPES.PHOTOS && images.length > 0 && (
@@ -394,12 +400,12 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   inputFieldRow: {
-    flex: 1,
-    marginTop: SPACE.md
+    flex: 1
   },
   descriptionView: {
     height: 100,
-    marginTop: SPACE.lg
+    marginTop: SPACE.lg,
+    borderWidth: 1.0
   },
   buttonsContainer: {
     flexDirection: "row",
@@ -425,6 +431,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   headerTitleStyle: {
-    fontSize: FONT_SIZE.lg
+    fontSize: FONT_SIZE.base
   }
 });

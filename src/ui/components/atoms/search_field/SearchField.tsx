@@ -1,5 +1,4 @@
 import { COLORS, FONTS, FONT_SIZE, SPACE } from "config";
-import { moderateScale } from "config/Dimens";
 import useEffectWithSkipFirstTime from "hooks/useEffectWithSkipFirstTime";
 import React, { useRef, useState } from "react";
 import { usePreferredTheme } from "hooks";
@@ -49,8 +48,6 @@ const SearchField = optimizedMemoWithStyleProp<Props>(
     let _searchIcon = useRef(
       searchIcon ?? (
         <Search
-          width={14}
-          height={14}
           style={styles.leftIcon}
           testID={"left-icon"}
           fill={iconColor ?? theme.themedColors.interface[600]}
@@ -114,19 +111,18 @@ const SearchField = optimizedMemoWithStyleProp<Props>(
 
 const styles = StyleSheet.create({
   container: {
-    height: 40,
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "center",
-    padding: SPACE.md,
-    paddingTop: 2.5,
-    paddingBottom: 2.5,
+    paddingTop: SPACE.md - 1,
+    paddingBottom: SPACE.md - 1,
+    paddingLeft: SPACE.md,
+    paddingRight: SPACE.md,
     borderRadius: 10
   },
   leftIcon: {
-    width: moderateScale(12),
     aspectRatio: 1,
-    marginRight: 8
+    marginRight: SPACE._2md
   },
   rightIcon: {
     aspectRatio: 1,
@@ -135,14 +131,14 @@ const styles = StyleSheet.create({
   textInput: {
     fontFamily: FONTS.regular,
     flex: 1,
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.sm,
     padding: 0,
     color: COLORS.textColor1
   },
   textInputSmallFont: {
     fontFamily: FONTS.regular,
     flex: 1,
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.xs,
     padding: 0,
     color: COLORS.textColor1
   }

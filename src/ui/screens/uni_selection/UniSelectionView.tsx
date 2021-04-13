@@ -56,7 +56,9 @@ const UniSelectionView: FC<Props> = ({
         styles.container,
         { backgroundColor: theme.themedColors.backgroundSecondary }
       ]}
-      topSafeAreaBackgroundColor={theme.themedColors.backgroundSecondary}>
+      topSafeAreaAndStatusBarColor={
+        theme.themedColors.backgroundSecondary
+      }>
       <View style={[styles.logoContainer]}>
         <Image
           style={styles.image}
@@ -97,6 +99,7 @@ const UniSelectionView: FC<Props> = ({
             }}
             style={styles.listStyle}
             showsVerticalScrollIndicator={false}
+            ListHeaderComponent={() => <View style={styles.listHeader} />}
             ItemSeparatorComponent={() => (
               <ListItemSeparator
                 style={[
@@ -119,8 +122,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0
   },
@@ -136,6 +139,9 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 1
+  },
+  listHeader: {
+    paddingTop: SPACE.md
   },
   listStyle: {
     flex: 1

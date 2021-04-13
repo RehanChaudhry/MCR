@@ -7,7 +7,11 @@ test("check render properly", () => {
   const { getByTestId } = render(
     <MultilineSpannableText
       text={["Male", "Female", "Others"]}
-      textStyle={[styles.firstText, styles.email, styles.thirdText]}
+      appLabelProps={[
+        { style: styles.firstText },
+        { style: styles.email },
+        { style: styles.thirdText }
+      ]}
     />
   );
   const spannableText = getByTestId("SPANNABLE_TEXT");
@@ -18,7 +22,11 @@ test("Snapshot testing", () => {
   const rendered = render(
     <MultilineSpannableText
       text={["Male", "Female", "Others"]}
-      textStyle={[styles.firstText, styles.email, styles.thirdText]}
+      appLabelProps={[
+        { style: styles.firstText },
+        { style: styles.email },
+        { style: styles.thirdText }
+      ]}
     />
   ).toJSON();
   expect(rendered).toMatchSnapshot();
@@ -29,8 +37,11 @@ test("check spannable text on Press", () => {
   const { getByText } = render(
     <MultilineSpannableText
       text={["Male", "Female", "Others"]}
-      textStyle={[styles.firstText, styles.email, styles.thirdText]}
-      onPress={onPress}
+      appLabelProps={[
+        { style: styles.firstText, onPress: () => onPress("Male", 0) },
+        { style: styles.email, onPress: () => onPress("Female", 1) },
+        { style: styles.thirdText, onPress: () => onPress("Others", 2) }
+      ]}
     />
   );
   const spannableText = getByText("Female");

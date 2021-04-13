@@ -12,7 +12,6 @@ import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
-import { moderateScale } from "config/Dimens";
 import { ConversationItem } from "models/ConversationItem";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
@@ -36,8 +35,8 @@ export const ItemConversation = optimizedMemo<ItemConversationProps>(
       return (
         <Trash
           testID="icon"
-          width={25}
-          height={25}
+          width={18}
+          height={18}
           fill={themedColors.primary}
         />
       );
@@ -63,11 +62,11 @@ const styles = StyleSheet.create({
   card: (themedColors: ColorPalette) => {
     return {
       paddingVertical: SPACE.sm,
-      borderRadius: 5,
+      borderRadius: 6,
       paddingHorizontal: SPACE.lg,
-      marginHorizontal: SPACE.md,
-      marginTop: SPACE.xsm,
-      marginBottom: SPACE.xsm,
+      marginHorizontal: SPACE.lg,
+      marginTop: SPACE.md,
+      marginBottom: SPACE.xs,
       backgroundColor: themedColors.background,
       flexDirection: "row",
       justifyContent: "space-between",
@@ -75,10 +74,10 @@ const styles = StyleSheet.create({
     };
   },
   txt: {
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.sm
   },
   img: {
-    width: moderateScale(35),
-    height: moderateScale(35)
+    width: 32,
+    height: 32
   }
 });

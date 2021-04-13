@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { COLORS, FONT_SIZE } from "config";
+import { COLORS, FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
@@ -38,7 +38,7 @@ export const AppFormValidationLabel = optimizedMemo<Props>(
 const styles = StyleSheet.create({
   error: {
     color: COLORS.red,
-    fontSize: FONT_SIZE.md,
-    marginTop: 6
+    fontSize: FONT_SIZE.sm,
+    marginTop: SPACE.xs
   }
 });

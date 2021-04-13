@@ -17,7 +17,7 @@ type Props = {
   onPress: () => void;
   imageUrl: string;
   boldText: string;
-  userNameOnPress?: (value: string, userNameindex: number) => void;
+  userNameOnPress?: () => void;
 };
 
 export const CircleImageWithText = React.memo<Props>(
@@ -36,19 +36,35 @@ export const CircleImageWithText = React.memo<Props>(
         <CircleImageBorder imageUrl={imageUrl} />
         <View style={styles.viewRequest}>
           <View style={styles.circleWithText}>
-            <View>
-              <MultilineSpannableText
-                text={[username, message, boldText]}
-                textStyle={[
-                  [styles.name, { color: theme.themedColors.primary }],
-                  [styles.message, { color: theme.themedColors.black }],
-                  [styles.boldText, { color: theme.themedColors.primary }]
-                ]}
-                onPress={(value: string, index) => {
-                  userNameOnPress?.(value, index);
-                }}
-              />
-            </View>
+            <MultilineSpannableText
+              text={[username, message, boldText]}
+              appLabelProps={[
+                {
+                  onPress: userNameOnPress,
+                  style: [
+                    styles.name,
+                    { color: theme.themedColors.primary }
+                  ],
+                  weight: "bold",
+                  numberOfLines: 0
+                },
+                {
+                  style: [
+                    styles.message,
+                    { color: theme.themedColors.black }
+                  ],
+                  numberOfLines: 0
+                },
+                {
+                  style: [
+                    styles.boldText,
+                    { color: theme.themedColors.primary }
+                  ],
+                  weight: "semi-bold",
+                  numberOfLines: 0
+                }
+              ]}
+            />
           </View>
           <View style={styles.requestButtonWithText}>
             <AppLabel
@@ -97,7 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: SPACE.sm
+    marginTop: SPACE._2xs
   },
   buttonStyle: {
     width: "40%",
@@ -110,20 +126,20 @@ const styles = StyleSheet.create({
     height: 0.5,
     width: "100%",
     alignSelf: "flex-end",
-    marginTop: SPACE.lg,
-    marginBottom: SPACE.xl
+    marginTop: SPACE.md,
+    marginBottom: SPACE.lg
   },
-  name: { fontFamily: Fonts.bold, fontSize: FONT_SIZE.xsm },
-  message: { fontWeight: "normal", fontSize: FONT_SIZE.xsm },
+  name: { fontFamily: Fonts.bold, fontSize: FONT_SIZE.sm },
+  message: { fontSize: FONT_SIZE.sm },
   boldText: {
     fontFamily: Fonts.regular,
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.sm
   },
   time: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   },
   buttonText: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   },
   viewRequest: {
     flex: 1

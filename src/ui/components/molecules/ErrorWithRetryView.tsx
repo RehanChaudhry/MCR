@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   text: {
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.xs,
     width: "100%",
     textAlign: "center",
     margin: 20

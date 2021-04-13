@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import EScreen from "models/enums/EScreen";
 
 export type MyFriendsStackParamList = {
   MyFriends: undefined;
@@ -11,7 +12,7 @@ export type MyRoomMatesStackParamList = {
 export const MyRoommatesStack = createStackNavigator<MyRoomMatesStackParamList>();
 
 export type RoommateAgreementStackParamList = {
-  RoommateAgreement: undefined;
+  RoommateAgreement: { isFrom: EScreen };
 };
 export const RoommateAgreementStack = createStackNavigator<RoommateAgreementStackParamList>();
 

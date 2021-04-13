@@ -41,7 +41,10 @@ export const WelcomeView = React.memo<Props>(
                 buttonStyle={{
                   backgroundColor: theme.themedColors.primary
                 }}
-                textStyle={{ color: theme.themedColors.background }}
+                textStyle={[
+                  styles.buttonText,
+                  { color: theme.themedColors.background }
+                ]}
                 fontWeight={"semi-bold"}
                 leftIcon={() => (
                   <Play
@@ -57,6 +60,7 @@ export const WelcomeView = React.memo<Props>(
             <HeadingWithText
               headingText={STRINGS.welcome.learn_about_heading}
               headingFontWeight={"bold"}
+              headingNumberOfLines={0}
               headingStyle={styles.learnAboutHeading}
               text={STRINGS.welcome.learn_about_text}
               textStyle={styles.learnAboutText}
@@ -139,55 +143,57 @@ export const WelcomeView = React.memo<Props>(
 const styles = StyleSheet.create({
   mainContainer: { marginTop: SPACE.lg, marginHorizontal: SPACE.lg },
   welcomeHeading: {
-    fontSize: FONT_SIZE._2xl,
+    fontSize: FONT_SIZE.xl,
     alignSelf: "center"
   },
   text: {
-    marginTop: SPACE.md,
+    marginTop: SPACE.sm,
     textAlign: "center",
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.sm
   },
   buttonViewStyle: {
-    marginTop: SPACE.md
+    marginTop: SPACE.lg
   },
   cardView: {
     marginTop: SPACE.lg
   },
   learnAboutHeading: {
-    fontSize: FONT_SIZE.xl,
-    marginTop: SPACE.lg,
+    fontSize: FONT_SIZE.lg,
+    marginTop: SPACE._2xl,
     textAlign: "center"
   },
   learnAboutText: {
     marginTop: SPACE.md,
     textAlign: "center",
-    fontSize: FONT_SIZE.xsm
+    fontSize: FONT_SIZE.sm
   },
   cardViewMainContainer: {
-    padding: SPACE.md
+    padding: SPACE.lg
   },
   roommate_heading: {
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.base
   },
   roommate_text: {
-    marginTop: SPACE.xsm,
-    fontSize: FONT_SIZE.xsm
+    marginTop: SPACE.sm,
+    fontSize: FONT_SIZE.sm
   },
   heading: {
     marginTop: SPACE.lg,
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.base
   },
   textSocialNetworking: {
     marginTop: SPACE.sm,
-    fontSize: FONT_SIZE.md
+    fontSize: FONT_SIZE.base
   },
   continue: {
-    marginTop: SPACE.xl,
-    marginBottom: SPACE.xl
+    marginVertical: SPACE.lg
   },
   image: {
     width: "100%",
     height: 200,
     marginTop: SPACE.lg
+  },
+  buttonText: {
+    fontSize: FONT_SIZE.lg
   }
 });

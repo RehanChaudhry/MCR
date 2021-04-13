@@ -7,9 +7,13 @@ import EducationalInformation from "ui/components/templates/EducationalInformati
 import MyRoommates from "ui/components/templates/my_roommates/MyRoommates";
 import Screen from "ui/components/atoms/Screen";
 
-type Props = {};
+type Props = {
+  openRoommateAgreementScreen: () => void;
+};
 
-export const ViewProfileView: React.FC<Props> = () => {
+export const ViewProfileView: React.FC<Props> = ({
+  openRoommateAgreementScreen
+}) => {
   return (
     <Screen shouldAddBottomInset={false}>
       <ScrollView>
@@ -18,7 +22,7 @@ export const ViewProfileView: React.FC<Props> = () => {
           <ViewProfileDemoGraphics />
           <InterestsTagsList />
           <EducationalInformation />
-          <MyRoommates />
+          <MyRoommates openAgreementScreen={openRoommateAgreementScreen} />
         </View>
       </ScrollView>
     </Screen>

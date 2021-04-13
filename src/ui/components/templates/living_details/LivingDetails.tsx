@@ -26,7 +26,7 @@ export const LivingDetails = optimizedMemo(({}) => {
         <AppLabel
           text={STRINGS.profile.livingDetails.heading}
           weight={"semi-bold"}
-          style={[styles.headingStyle, { fontSize: FONT_SIZE.md }]}
+          style={[styles.headingStyle, { fontSize: FONT_SIZE.base }]}
         />
       </View>
       <View style={[styles.horizontalLine]} />

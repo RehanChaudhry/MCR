@@ -65,6 +65,7 @@ export const CommunityView = React.memo<Props>(
         {useLazyLoadInterface(
           <>
             <FlatListWithPb
+              removeClippedSubviews={true}
               shouldShowProgressBar={shouldShowProgressBar}
               data={data}
               style={styles.list}
@@ -90,11 +91,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  listContainer: { padding: SPACE.md },
+  listContainer: { padding: SPACE.lg },
   list: {
     flex: 1
   },
   itemSeparator: {
-    height: SPACE.md
+    height: SPACE.lg
   }
 });

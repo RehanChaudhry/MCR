@@ -1,5 +1,5 @@
-import CheckBox from "@react-native-community/checkbox";
 import { FONT_SIZE, FONTS, SPACE } from "config";
+import { usePreferredTheme } from "hooks";
 import React, { useState } from "react";
 import {
   StyleProp,
@@ -8,7 +8,7 @@ import {
   ViewProps,
   ViewStyle
 } from "react-native";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import CheckBox from "react-native-check-box";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
 interface OwnProps extends ViewProps {
@@ -24,17 +24,20 @@ type Props = OwnProps;
 const CheckboxWithText = optimizedMemo<Props>(
   ({ text, style, onChange }) => {
     const [checked, setChecked] = useState(false);
+    const theme = usePreferredTheme();
     return (
       <View style={[styles.container, style]}>
         <CheckBox
-          disabled={false}
-          value={checked}
-          onValueChange={(value) => {
-            setChecked(value);
-            onChange(value);
+          onClick={() => {
+            setChecked(!checked);
+            onChange(!checked);
           }}
+          style={styles.checkBox}
+          isChecked={checked}
+          rightText={text}
+          checkedCheckBoxColor={theme.themedColors.primary}
+          uncheckedCheckBoxColor={theme.themedColors.interface["400"]}
         />
-        <AppLabel text={text} style={styles.checkboxText} />
       </View>
     );
   }
@@ -57,6 +60,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center"
+  },
+  checkBox: {
+    flex: 1,
+    paddingBottom: SPACE._2md
   }
 });
 

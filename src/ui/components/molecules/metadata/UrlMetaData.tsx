@@ -40,11 +40,11 @@ const styles = StyleSheet.create({
     marginTop: SPACE.md
   },
   title: {
-    fontSize: FONT_SIZE._2xsm
+    fontSize: FONT_SIZE.xs
   },
   description: {
     paddingTop: 5,
-    fontSize: FONT_SIZE._2xsm,
+    fontSize: FONT_SIZE.xs,
     fontWeight: "700"
   },
   containerStyle: {

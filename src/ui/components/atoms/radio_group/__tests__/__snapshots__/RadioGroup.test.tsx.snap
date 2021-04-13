@@ -98,6 +98,9 @@ exports[`Snapshot testing 1`] = `
               "color": "#111827",
             },
             Object {
+              "lineHeight": undefined,
+            },
+            Object {
               "fontSize": 14,
               "marginLeft": 10,
               "marginRight": 16,
@@ -191,6 +194,9 @@ exports[`Snapshot testing 1`] = `
               "color": "#111827",
             },
             Object {
+              "lineHeight": undefined,
+            },
+            Object {
               "fontSize": 14,
               "marginLeft": 10,
               "marginRight": 16,
@@ -282,6 +288,9 @@ exports[`Snapshot testing 1`] = `
             },
             Object {
               "color": "#111827",
+            },
+            Object {
+              "lineHeight": undefined,
             },
             Object {
               "fontSize": 14,

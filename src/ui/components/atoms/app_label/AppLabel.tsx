@@ -1,4 +1,5 @@
 import { FONTS } from "config";
+import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
 import React from "react";
 import {
   StyleProp,
@@ -7,7 +8,6 @@ import {
   TextProps,
   TextStyle
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { usePreferredTheme } from "hooks";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
@@ -66,11 +66,18 @@ export const AppLabel = optimizedMemo<Props>(
       }
     };
 
-    const textJsx = (
+    return (
       <Text
+        onPress={onPress}
         style={setFontWeightStyle(weight, [
           getTextStyle(),
           { color: theme.themedColors.label },
+          {
+            lineHeight: FONT_SIZE_LINE_HEIGHT.ofFontSize(
+              // @ts-ignore
+              StyleSheet.flatten(style)?.fontSize ?? 12.0
+            )
+          },
           style
         ])}
         numberOfLines={1}
@@ -78,23 +85,12 @@ export const AppLabel = optimizedMemo<Props>(
         {text}
       </Text>
     );
-
-    if (onPress) {
-      return (
-        <TouchableOpacity activeOpacity={0.3} onPress={onPress}>
-          {textJsx}
-        </TouchableOpacity>
-      );
-    } else {
-      return textJsx;
-    }
   }
 );
 
 const styles = StyleSheet.create({
   bold: {
-    fontWeight: "bold",
-    fontFamily: FONTS.regular
+    fontFamily: FONTS.bold
   },
   normal: {
     fontFamily: FONTS.regular

@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
   },
   FlatList: {
     paddingHorizontal: SPACE.sm,
-    paddingVertical: SPACE.sm,
     backgroundColor: "#FFFFFF"
   },
   horizontalLine: {

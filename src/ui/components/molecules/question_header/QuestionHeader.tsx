@@ -1,11 +1,10 @@
 import ChevronDown from "assets/images/chevron-down.svg";
 import { FONT_SIZE, SPACE } from "config";
-import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import QuestionSection from "models/QuestionSection";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Color, NumberProp } from "react-native-svg";
+import { Color } from "react-native-svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
   AppImageBackground,
@@ -23,12 +22,8 @@ const QuestionHeader: React.FC<Props> = ({
   questionGroup
 }: Props) => {
   const theme = usePreferredTheme();
-  const chevronDownIcon: SvgProp = (
-    color?: Color,
-    width?: NumberProp,
-    height?: NumberProp
-  ) => {
-    return <ChevronDown width={width} height={height} fill={color} />;
+  const chevronDownIcon: SvgProp = (color?: Color) => {
+    return <ChevronDown width={20} height={20} fill={color} />;
   };
   if (isExpanded) {
     return (
@@ -37,13 +32,13 @@ const QuestionHeader: React.FC<Props> = ({
           styles.expandedContainer,
           {
             backgroundColor: theme.themedColors.background,
-            borderColor: theme.themedColors.separator
+            borderColor: theme.themedColors.interface[300]
           }
         ]}>
         <AppLabel
           style={styles.title}
           text={questionGroup.title}
-          weight="bold"
+          weight="semi-bold"
         />
         <AppLabel
           style={[
@@ -51,7 +46,7 @@ const QuestionHeader: React.FC<Props> = ({
             { color: theme.themedColors.interface[600] }
           ]}
           text={questionGroup.description}
-          numberOfLines={5}
+          numberOfLines={0}
         />
       </View>
     );
@@ -65,7 +60,7 @@ const QuestionHeader: React.FC<Props> = ({
         <AppLabel
           style={styles.title}
           text={questionGroup.title}
-          weight="bold"
+          weight="semi-bold"
         />
 
         <AppImageBackground
@@ -88,28 +83,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    borderRadius: 5,
-    padding: SPACE.xsm,
+    borderRadius: 6,
+    paddingHorizontal: SPACE.lg,
+    paddingVertical: SPACE.sm,
 
     ...shadowStyleProps
   },
   expandedContainer: {
     flexDirection: "column",
-    padding: SPACE.xsm,
+    padding: SPACE.lg,
     overflow: "hidden",
-    borderTopStartRadius: 5,
-    borderTopEndRadius: 5,
+    borderTopStartRadius: 6,
+    borderTopEndRadius: 6,
     borderBottomWidth: StyleSheet.hairlineWidth
 
     // shadow
     // ...shadowStyleProps
   },
-  title: { fontSize: FONT_SIZE.sm, padding: SPACE.xsm },
-  description: { fontSize: FONT_SIZE._2xsm, padding: SPACE.xsm },
+  title: { fontSize: FONT_SIZE.base },
+  description: {
+    fontSize: FONT_SIZE.sm,
+    marginTop: SPACE.sm
+  },
   arrowContainer: {
-    width: moderateScale(30),
-    height: moderateScale(30),
-    marginRight: moderateScale(5)
+    width: 32,
+    height: 32
   }
 });
 

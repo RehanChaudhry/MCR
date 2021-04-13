@@ -7,7 +7,7 @@ import {
   ViewStyle
 } from "react-native";
 import { usePreferredTheme } from "hooks";
-import { FONT_SIZE, moderateScale, SPACE } from "config/Dimens";
+import { FONT_SIZE, SPACE } from "config/Dimens";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 
 interface Props {
@@ -47,16 +47,17 @@ const UserHeader: React.FC<Props> = ({
 const styles = StyleSheet.create({
   container: { flexDirection: "row" },
   profileImage: {
-    width: moderateScale(64),
-    height: moderateScale(64),
-    borderRadius: moderateScale(32)
+    width: 64,
+    height: 64,
+    borderRadius: 32
   },
-  userName: { fontSize: FONT_SIZE.xsm, includeFontPadding: false },
-  subtitle: { fontSize: FONT_SIZE._2xsm, marginTop: SPACE.xsm },
+  userName: { fontSize: FONT_SIZE.base, includeFontPadding: false },
+  subtitle: { fontSize: FONT_SIZE.sm },
   infoTextContainer: {
     flexDirection: "column",
-    justifyContent: "center",
-    marginStart: SPACE.md
+    justifyContent: "space-evenly",
+    marginStart: SPACE.md,
+    flex: 1
   }
 });
 

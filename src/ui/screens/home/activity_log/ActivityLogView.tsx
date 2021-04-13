@@ -5,12 +5,12 @@ import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import ActivityLog from "models/ActivityLog";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
-import { moderateScale } from "config/Dimens";
 import Selector from "assets/images/selector.svg";
 import ActivityLogItem from "ui/components/organisms/activity_log_item/ActivityLogItem";
 import { getActivityTypeFilterData } from "models/enums/ActivityType";
 import { ActivityLogSection } from "utils/SectionListHelper";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { shadowStyleProps } from "utils/Util";
 
 type Props = {
   isApiLoading: boolean;
@@ -56,7 +56,9 @@ export const ActivityLogView: React.FC<Props> = ({
   };
 
   return (
-    <Screen style={styles.container}>
+    <Screen
+      style={styles.container}
+      bottomSafeAreaColor={themedColors.backgroundSecondary}>
       <View
         style={[
           styles.dropdownContainer,
@@ -70,7 +72,11 @@ export const ActivityLogView: React.FC<Props> = ({
           textStyle={styles.filterText}
           shouldShowCustomIcon={true}
           dropDownIcon={() => (
-            <Selector fill={themedColors.interface[500]} />
+            <Selector
+              fill={themedColors.interface[500]}
+              width={20}
+              height={20}
+            />
           )}
           title={getActivityTypeFilterData()[0].title}
           items={getActivityTypeFilterData()}
@@ -102,15 +108,19 @@ export const ActivityLogView: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  dropdownContainer: { padding: SPACE.md },
+  dropdownContainer: {
+    paddingHorizontal: SPACE.md,
+    paddingVertical: SPACE.sm,
+    ...shadowStyleProps
+  },
   activityLogList: { flex: 1 },
   dropDown: {
-    borderRadius: moderateScale(20),
-    height: moderateScale(40),
-    paddingHorizontal: SPACE.xsm
+    borderRadius: 21,
+    height: 42,
+    paddingHorizontal: SPACE.xs
   },
-  filterText: { fontSize: FONT_SIZE._2xsm },
+  filterText: { fontSize: FONT_SIZE.sm },
   separator: { height: SPACE.md },
-  headerContainer: { padding: SPACE.md },
-  headerText: { fontSize: FONT_SIZE._2xsm }
+  headerContainer: { padding: SPACE.lg },
+  headerText: { fontSize: FONT_SIZE.xs }
 });

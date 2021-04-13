@@ -6,6 +6,8 @@ import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { STRINGS } from "config";
 import { HomeRoutes } from "routes/HomeRoutes";
 import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
+import { AddInterestsController } from "ui/screens/home/profile/update_profile/add_interests/AddInterestsController";
+import { AuthRoutes } from "routes/AuthRoutes";
 
 export const WelcomeRoutes: FC = () => {
   return (
@@ -25,11 +27,21 @@ export const WelcomeRoutes: FC = () => {
           )
         }}
       />
-
       <WelcomeStack.Screen
         name="Matches"
         component={HomeRoutes}
         options={{ headerShown: false }}
+      />
+      <WelcomeStack.Screen
+        name="AddInterests"
+        component={AddInterestsController}
+      />
+      <WelcomeStack.Screen
+        name="Auth"
+        component={AuthRoutes}
+        options={{
+          headerShown: false
+        }}
       />
     </WelcomeStack.Navigator>
   );

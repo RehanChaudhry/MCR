@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { ItemChatThread } from "ui/components/molecules/item_chat/ItemChatThread";
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
@@ -8,6 +8,7 @@ import { AppLog } from "utils/Util";
 import ChatItem, { SenderType } from "models/ChatItem";
 import DataGenerator from "utils/DataGenerator";
 import Strings from "config/Strings";
+import { SPACE } from "config";
 
 type Props = {
   data: ChatItem[];
@@ -26,11 +27,11 @@ export const ChatThreadScreen = React.memo<Props>(
     function sentMessage(text: string) {
       let chatMessage = DataGenerator.createChat(
         1009,
-        ["Nikki Engelin"],
+        ["Phoenix Walker"],
         false,
         SenderType.STUDENTS,
-        1,
-        require("assets/images/d_user_pic.png"),
+        2,
+        "https://vrs.amsi.org.au/wp-content/uploads/sites/78/2017/12/tobinsouth_vrs_2017-18.jpeg",
         text
       );
 
@@ -42,9 +43,12 @@ export const ChatThreadScreen = React.memo<Props>(
         <FlatListWithPb
           shouldShowProgressBar={false}
           data={chats}
+          ItemSeparatorComponent={() => (
+            <View style={styles.itemSeparator} />
+          )}
+          contentContainerStyle={styles.listContainer}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
-          removeClippedSubviews={true}
           style={[styles.list]}
           inverted={true}
           keyExtractor={(item, index) => index.toString()}
@@ -67,5 +71,9 @@ const styles = StyleSheet.create({
   list: {
     flex: 1
   },
-  messageContainer: {}
+  messageContainer: {},
+  listContainer: { padding: SPACE.lg },
+  itemSeparator: {
+    height: SPACE.lg
+  }
 });

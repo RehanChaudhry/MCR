@@ -22,7 +22,6 @@ import Screen from "ui/components/atoms/Screen";
 import SectionedList, {
   Section
 } from "ui/components/organisms/sectioned_list/SectionedList";
-import { moderateScale } from "config/Dimens";
 
 type Props = {
   isFrom: EScreen;
@@ -121,18 +120,22 @@ function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
         <HeadingWithText
           headingText={STRINGS.questionnaire.how_it_works}
           headingStyle={styles.infoCardHeading}
-          headingFontWeight="bold"
+          headingFontWeight="semi-bold"
           text={STRINGS.questionnaire.how_it_works_detail}
-          textStyle={styles.infoCardText}
+          textStyle={[
+            styles.infoCardText,
+            { color: themedColors.interface[600] }
+          ]}
         />
         <LinkButton
           viewStyle={styles.buttonView}
           textStyle={styles.learnMore}
           text={STRINGS.questionnaire.learn_more}
+          fontWeight={"bold"}
           rightIcon={() => (
             <RightArrow
-              width={moderateScale(16)}
-              height={moderateScale(16)}
+              width={16}
+              height={16}
               fill={themedColors.primary}
             />
           )}
@@ -159,11 +162,12 @@ function createListFooter(
             backgroundColor: themedColors.primary
           }
         ]}
+        fontWeight={"semi-bold"}
         textStyle={[styles.saveButton, { color: themedColors.background }]}
         rightIcon={() => (
           <RightArrowCircle
-            width={moderateScale(20)}
-            height={moderateScale(20)}
+            width={13}
+            height={13}
             fill={themedColors.background}
           />
         )}
@@ -173,48 +177,45 @@ function createListFooter(
 }
 
 const styles = StyleSheet.create({
-  sectionedList: { padding: SPACE.md },
+  sectionedList: { padding: SPACE.lg },
   lastBody: {
-    borderBottomStartRadius: 5,
-    borderBottomEndRadius: 5,
-    marginBottom: SPACE.sm
+    borderBottomStartRadius: 6,
+    borderBottomEndRadius: 6
   },
   infoText: {
-    fontSize: FONT_SIZE._2xsm,
-    marginBottom: SPACE.md,
+    fontSize: FONT_SIZE.sm,
+    marginBottom: SPACE.lg,
     textAlign: "center"
   },
   headerContainer: {
     flexDirection: "column"
   },
   footerContainer: {
-    flexDirection: "column",
-    marginTop: SPACE.md
+    flexDirection: "column"
   },
   headerCard: {
     overflow: "hidden",
     borderRadius: 10,
-    marginBottom: SPACE.sm,
-    padding: SPACE.md,
+    marginBottom: SPACE.lg,
+    padding: SPACE.lg,
 
     // shadow
     ...shadowStyleProps
   },
   infoCardHeading: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE.base
   },
   infoCardText: {
-    fontSize: FONT_SIZE.xsm,
+    fontSize: FONT_SIZE.sm,
     marginTop: SPACE.sm
   },
   learnMore: {
-    fontSize: FONT_SIZE.xsm,
-    fontWeight: "bold",
+    fontSize: FONT_SIZE.sm,
     textAlign: "left"
   },
-  saveButton: { fontWeight: "bold", fontSize: FONT_SIZE.xsm },
+  saveButton: { fontSize: FONT_SIZE.base },
   saveButtonContainer: {},
   buttonView: {
-    marginTop: SPACE.md
+    marginTop: SPACE.lg
   }
 });

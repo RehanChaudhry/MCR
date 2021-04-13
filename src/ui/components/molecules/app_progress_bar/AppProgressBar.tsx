@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import * as Progress from "react-native-progress";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { FONT_SIZE } from "config/Dimens";
+import { FONT_SIZE, SPACE } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
@@ -67,7 +67,8 @@ export const AppProgressBar = optimizedMemo<AppProgressBarProps>(
             />
             <AppLabel
               text={progressPercentage + "%"}
-              style={[styles.textStyle, styles.boldText, bottomTextStyle]}
+              weight="semi-bold"
+              style={[styles.textStyle, bottomTextStyle]}
             />
           </View>
         )}
@@ -82,13 +83,9 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     flexDirection: "row",
-    paddingTop: 5
-  },
-  boldText: {
-    fontWeight: "700"
+    marginTop: SPACE.sm
   },
   textStyle: {
-    fontSize: FONT_SIZE._3xm,
-    fontWeight: "400"
+    fontSize: FONT_SIZE.xs
   }
 });

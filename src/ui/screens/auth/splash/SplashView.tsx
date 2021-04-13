@@ -17,6 +17,7 @@ import { AuthRoutes, HomeRoutes } from "routes";
 import { AppLog, shadowStyleProps } from "utils/Util";
 import VersionCheck from "react-native-version-check";
 import Screen from "ui/components/atoms/Screen";
+import { usePreferredTheme } from "hooks";
 
 interface Props {}
 
@@ -99,9 +100,13 @@ export const SplashView = React.memo<Props>(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const theme = usePreferredTheme();
+
   if (!isReady) {
     return (
-      <Screen style={styles.container}>
+      <Screen
+        style={styles.container}
+        bottomSafeAreaColor={theme.themedColors.backgroundSecondary}>
         <View style={styles.imageContainer}>
           <Image
             style={styles.image}

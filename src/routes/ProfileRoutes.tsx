@@ -12,6 +12,7 @@ import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { STRINGS } from "config";
 import EScreen from "models/enums/EScreen";
+import { AddInterestsController } from "ui/screens/home/profile/update_profile/add_interests/AddInterestsController";
 
 export const ProfileRoutes = () => {
   return (
@@ -54,6 +55,12 @@ const UpdateProfileRoutes: FC<UpdateProfileRoutesProps> = () => {
         name="UpdateProfile"
         initialParams={{ isFrom: EScreen.HOME }}
         component={UpdateProfileController}
+        options={{ title: "Update Profile" }}
+      />
+      <UpdateProfileStack.Screen
+        name="AddInterests"
+        //initialParams={{ isFrom: EScreen.HOME }}
+        component={AddInterestsController}
         options={{ title: "Update Profile" }}
       />
     </UpdateProfileStack.Navigator>

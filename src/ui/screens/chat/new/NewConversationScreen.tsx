@@ -93,6 +93,7 @@ export const NewConversationScreen = React.memo<Props>(
             showsVerticalScrollIndicator={false}
             removeClippedSubviews={true}
             style={[styles.list]}
+            contentContainerStyle={{ paddingBottom: SPACE.lg }}
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
@@ -131,9 +132,8 @@ const styles = StyleSheet.create({
   textStyle: (theme: ColorPalette) => {
     return {
       color: theme.interface["600"],
-      fontSize: FONT_SIZE.xsm,
-      paddingHorizontal: SPACE.md,
-      paddingBottom: SPACE.lg
+      fontSize: FONT_SIZE.sm,
+      paddingHorizontal: SPACE.lg
     };
   },
   list: {
