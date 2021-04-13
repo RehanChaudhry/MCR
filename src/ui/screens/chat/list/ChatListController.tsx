@@ -73,7 +73,7 @@ export const ChatListController: FC<Props> = () => {
   );
 
   const onEndReached = useCallback(() => {
-    AppLog.logForcefully("onEndReached()=> ");
+    AppLog.log("onEndReached()=> ");
     //  handleLoadChatsApi().then().catch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleLoadChatsApi]);
