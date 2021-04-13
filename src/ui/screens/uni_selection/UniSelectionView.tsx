@@ -1,7 +1,7 @@
 import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import React, { FC, useState } from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet } from "react-native";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
@@ -10,6 +10,7 @@ import Search from "assets/images/search_icon.svg";
 import { Uni } from "models/api_responses/UniSelectionResponseModel";
 import Screen from "ui/components/atoms/Screen";
 import { CardView } from "ui/components/atoms/CardView";
+import Logo from "assets/images/mcr_logo.svg";
 
 type Props = {
   unis: Uni[];
@@ -60,10 +61,7 @@ const UniSelectionView: FC<Props> = ({
         theme.themedColors.backgroundSecondary
       }>
       <View style={[styles.logoContainer]}>
-        <Image
-          style={styles.image}
-          source={require("assets/images/splash.gif")}
-        />
+        <Logo width={260} height={87} />
       </View>
       <CardView
         style={[
