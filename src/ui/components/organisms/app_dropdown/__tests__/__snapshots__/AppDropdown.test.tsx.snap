@@ -129,7 +129,7 @@ exports[`Renders snapshot as expected 1`] = `
                               "color": "#111827",
                             },
                             Object {
-                              "lineHeight": 16,
+                              "lineHeight": undefined,
                             },
                             Array [
                               Object {
@@ -181,7 +181,7 @@ exports[`Renders snapshot as expected 1`] = `
                               "color": "#111827",
                             },
                             Object {
-                              "lineHeight": 16,
+                              "lineHeight": undefined,
                             },
                             Array [
                               Object {
@@ -233,7 +233,7 @@ exports[`Renders snapshot as expected 1`] = `
                               "color": "#111827",
                             },
                             Object {
-                              "lineHeight": 16,
+                              "lineHeight": undefined,
                             },
                             Array [
                               Object {
@@ -360,7 +360,7 @@ exports[`Renders snapshot as expected 1`] = `
                 "color": "#111827",
               },
               Object {
-                "lineHeight": 16,
+                "lineHeight": undefined,
               },
               Array [
                 Object {
