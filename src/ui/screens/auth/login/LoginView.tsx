@@ -1,3 +1,4 @@
+import { SignInApiRequestModel } from "models/api_requests/SignInApiRequestModel";
 import React from "react";
 import {
   AppImageBackground,
@@ -23,7 +24,7 @@ import Strings from "config/Strings";
 type Props = {
   openUniSelectionScreen: () => void;
   openForgotPasswordScreen?: () => void;
-  openWelcomeScreen: () => void;
+  onLogin: (request: SignInApiRequestModel) => void;
   shouldShowProgressBar?: boolean;
 };
 
@@ -37,21 +38,21 @@ const validationSchema = Yup.object().shape({
 });
 
 let initialValues: FormikValues = {
-  email: "john.doe@gmail.com",
-  password: "Ba1qerti"
+  email: "rafay@cygnismedia.com",
+  password: "Mycollegeroomie1234"
 };
 
 export const LoginView = React.memo<Props>(
-  ({
-    openForgotPasswordScreen,
-    openWelcomeScreen,
-    openUniSelectionScreen
-  }) => {
+  ({ openForgotPasswordScreen, onLogin, openUniSelectionScreen }) => {
     const theme = usePreferredTheme();
     const onSubmit = (_value: FormikValues) => {
-      initialValues = _value;
       AppLog.log("form values" + initialValues);
-      openWelcomeScreen();
+      onLogin({
+        email: _value.email,
+        password: _value.password,
+        remember: 1,
+        roleTitle: "Student"
+      });
     };
     return (
       <Screen
