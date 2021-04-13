@@ -80,11 +80,11 @@ exports[`Renders snapshot as expected 1`] = `
               "color": "#111827",
             },
             Object {
-              "lineHeight": 5.5,
+              "lineHeight": 28,
             },
             Array [
               Object {
-                "fontSize": 4.5,
+                "fontSize": 22,
               },
               undefined,
             ],
@@ -109,11 +109,11 @@ exports[`Renders snapshot as expected 1`] = `
               "color": "#111827",
             },
             Object {
-              "lineHeight": 5.5,
+              "lineHeight": 28,
             },
             Array [
               Object {
-                "fontSize": 4.5,
+                "fontSize": 22,
               },
               undefined,
             ],
