@@ -26,6 +26,14 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
     [onFilterChange]
   );
 
+  const onKeywordChange = useCallback(
+    (textToSearch?: string) => {
+      keyword.current = textToSearch;
+      onFilterChange(keyword.current, gender.current);
+    },
+    [onFilterChange]
+  );
+
   return (
     <View
       style={[
@@ -42,10 +50,7 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
         ]}
         textStyle={styles.searchText}
         placeholder={STRINGS.matches.placeholder_search_keyword}
-        onChangeText={(textToSearch?: string) => {
-          keyword.current = textToSearch;
-          onFilterChange(keyword.current, gender.current);
-        }}
+        onChangeText={onKeywordChange}
         clearIcon={true}
         iconColor={themedColors.interface[500]}
       />

@@ -11,12 +11,6 @@ import NoHeader from "ui/components/headers/NoHeader";
 import { LoginView } from "ui/screens/auth/login/LoginView";
 import { useApi } from "repo/Client";
 import { AppLog } from "utils/Util";
-import { WelcomeStackParamList } from "routes/WelcomeStack";
-
-type WelcomeNavigationProp = StackNavigationProp<
-  WelcomeStackParamList,
-  "Welcome"
->;
 
 type LoginNavigationProp = StackNavigationProp<
   AuthStackParamList,
@@ -30,7 +24,6 @@ const LoginController: FC<Props> = () => {
   const auth = useAuth();
 
   const navigation = useNavigation<LoginNavigationProp>();
-  const navigationWelcome = useNavigation<WelcomeNavigationProp>();
 
   // Add no toolbar
   useLayoutEffect(() => {
@@ -47,12 +40,6 @@ const LoginController: FC<Props> = () => {
 
   const openForgotPasswordScreen = usePreventDoubleTap(() => {
     navigation.navigate("ForgotPassword");
-  });
-  const openWelcomeScreen = usePreventDoubleTap(() => {
-    navigationWelcome.reset({
-      index: 0,
-      routes: [{ name: "Welcome" }]
-    });
   });
 
   const handleSignIn = usePreventDoubleTap(async () => {
@@ -71,13 +58,14 @@ const LoginController: FC<Props> = () => {
     }
   });
 
-  AppLog.log(handleSignIn);
-
   return (
     <LoginView
       shouldShowProgressBar={signInApi.loading}
       openForgotPasswordScreen={openForgotPasswordScreen}
-      openWelcomeScreen={openWelcomeScreen}
+      onLogin={(_requestModel) => {
+        requestModel.current = _requestModel;
+        handleSignIn();
+      }}
       openUniSelectionScreen={openUniSelectionScreen}
     />
   );

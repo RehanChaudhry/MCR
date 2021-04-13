@@ -65,14 +65,14 @@ export const WriteMessage = React.memo<TypingComponentProps>(
           </View>
 
           <AppImageBackground
-            icon={btnImage ?? defaultIcon}
-            containerShape={CONTAINER_TYPES.SQUARE}
             onPress={() => {
               if (initialText !== "") {
                 setInitialText("");
                 btnPressCallback(initialText);
               }
             }}
+            icon={btnImage ?? defaultIcon}
+            containerShape={CONTAINER_TYPES.SQUARE}
             containerStyle={styles.imgPaper(themedColors)}
           />
         </View>

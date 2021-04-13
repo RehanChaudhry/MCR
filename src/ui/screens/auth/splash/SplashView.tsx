@@ -7,17 +7,18 @@ import {
   ActivityIndicator,
   Alert,
   BackHandler,
-  Image,
   Linking,
   StyleSheet,
   View
 } from "react-native";
 import AuthStorage from "repo/auth/AuthStorage";
-import { AuthRoutes, HomeRoutes } from "routes";
+import { AuthRoutes } from "routes";
+import { WelcomeRoutes } from "routes/WelcomeRoutes";
 import { AppLog, shadowStyleProps } from "utils/Util";
 import VersionCheck from "react-native-version-check";
 import Screen from "ui/components/atoms/Screen";
 import { usePreferredTheme } from "hooks";
+import Logo from "assets/images/mcr_logo.svg";
 
 interface Props {}
 
@@ -108,10 +109,7 @@ export const SplashView = React.memo<Props>(() => {
         style={styles.container}
         bottomSafeAreaColor={theme.themedColors.backgroundSecondary}>
         <View style={styles.imageContainer}>
-          <Image
-            style={styles.image}
-            source={require("assets/images/splash.gif")}
-          />
+          <Logo width={260} height={87} />
         </View>
         <View style={styles.bottomContainer}>
           <View style={styles.loaderContainer}>
@@ -125,10 +123,9 @@ export const SplashView = React.memo<Props>(() => {
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <NavigationContainer>
-        {/*<HomeRoutes />*/}
         {AppLog.log("User exists: " + (user !== undefined))}
         {user !== undefined ? (
-          <HomeRoutes />
+          <WelcomeRoutes />
         ) : (
           <AuthRoutes initialRouteName={"UniSelection"} />
         )}
