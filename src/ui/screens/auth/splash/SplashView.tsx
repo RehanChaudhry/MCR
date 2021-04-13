@@ -13,7 +13,8 @@ import {
   View
 } from "react-native";
 import AuthStorage from "repo/auth/AuthStorage";
-import { AuthRoutes, HomeRoutes } from "routes";
+import { AuthRoutes } from "routes";
+import { WelcomeRoutes } from "routes/WelcomeRoutes";
 import { AppLog, shadowStyleProps } from "utils/Util";
 import VersionCheck from "react-native-version-check";
 import Screen from "ui/components/atoms/Screen";
@@ -125,10 +126,9 @@ export const SplashView = React.memo<Props>(() => {
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <NavigationContainer>
-        {/*<HomeRoutes />*/}
         {AppLog.log("User exists: " + (user !== undefined))}
         {user !== undefined ? (
-          <HomeRoutes />
+          <WelcomeRoutes />
         ) : (
           <AuthRoutes initialRouteName={"UniSelection"} />
         )}
