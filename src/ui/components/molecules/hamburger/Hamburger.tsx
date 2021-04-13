@@ -28,7 +28,8 @@ const Hamburger: FC<Props> = () => {
 
 const styles = StyleSheet.create({
   icon: {
-    marginLeft: SPACE.md
+    paddingHorizontal: SPACE.md,
+    paddingVertical: SPACE.md
   }
 });
 
