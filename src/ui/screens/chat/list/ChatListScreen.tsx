@@ -15,14 +15,18 @@ import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 interface ChatListProps {
   onItemClick: (item: ChatItem) => void;
   data: ChatItem[];
-  pullToRefreshCallback: (onComplete: () => void) => void;
+  pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
+  isLoading: boolean;
+  error: string | undefined;
 }
 
 let lastHeaderTitle = "";
 export const ChatListScreen = React.memo<ChatListProps>(
   ({
+    isLoading,
+    error,
     data,
     onItemClick,
     pullToRefreshCallback,
@@ -30,21 +34,14 @@ export const ChatListScreen = React.memo<ChatListProps>(
     isAllDataLoaded
   }) => {
     AppLog.log("Rendering chat screen...");
-
     const { themedColors } = usePreferredTheme();
     let [items, setItems] = useState<ChatItem[]>(data);
 
     const performSearch = (textToSearch: string) =>
       items.filter((obj: ChatItem) => {
-        return Object.values(obj).some((v) => {
-          AppLog.logForcefully("condition coming " + v);
-          AppLog.logForcefully(
-            `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
-          );
-          return `${v}`
-            .toLowerCase()
-            .includes(`${textToSearch}`.toLowerCase());
-        });
+        return Object.values(obj).some((v) =>
+          `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
+        );
       });
 
     const handleClick = useCallback((textToSearch?: string) => {
@@ -94,12 +91,14 @@ export const ChatListScreen = React.memo<ChatListProps>(
           <>
             <FlatListWithPb
               removeClippedSubviews={true}
-              shouldShowProgressBar={false}
-              data={items}
+              shouldShowProgressBar={isLoading}
+              error={error}
+              data={data}
               renderItem={renderItem}
               keyExtractor={(item) => item.id.toString()}
               showsVerticalScrollIndicator={false}
               style={styles.list}
+              retryCallback={pullToRefreshCallback}
               pullToRefreshCallback={pullToRefreshCallback}
               onEndReached={onEndReached}
               isAllDataLoaded={isAllDataLoaded}
