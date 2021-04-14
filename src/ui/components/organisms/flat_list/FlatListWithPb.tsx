@@ -120,7 +120,12 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
       {shouldShowProgressBar && data === undefined && (
         <ActivityIndicator
           testID="initial-loader"
-          style={styles.initialPb}
+          size="large"
+          color={theme.themedColors.primary}
+          style={[
+            styles.initialPb,
+            { backgroundColor: theme.themedColors.backgroundSecondary }
+          ]}
         />
       )}
 
