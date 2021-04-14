@@ -30,7 +30,6 @@ import {
 import { QuestionsView } from "ui/screens/questions/QuestionsView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import DataGenerator from "utils/DataGenerator";
 import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import { UpdateQuestionnaireStackParamList } from "routes/ProfileStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
@@ -68,8 +67,6 @@ type ProfileRouteProp = RouteProp<
 >;
 
 type Props = {};
-
-const questionSections = DataGenerator.getQuestionSections();
 
 const QuestionsController: FC<Props> = () => {
   AppLog.log("Opening QuestionsController");
@@ -162,7 +159,7 @@ const QuestionsController: FC<Props> = () => {
 
   const [questions, setQuestions] = useState<
     Section<QuestionSection, Question>[]
-  >(toSections(questionSections));
+  >([]);
 
   const questionApi = useApi<any, QuestionsResponseModel>(
     ProfileApis.questions
@@ -207,6 +204,13 @@ const QuestionsController: FC<Props> = () => {
     }
   });
 
+  const submitAnswersCallback = useCallback(() => {
+    requestModel.current = {
+      answers: toAnswersRequest(questions)
+    };
+    handleSubmitAnswers();
+  }, [handleSubmitAnswers, questions]);
+
   return (
     <>
       {useLazyLoadInterface(
@@ -223,12 +227,7 @@ const QuestionsController: FC<Props> = () => {
           data={questions}>
           <QuestionsView
             isFrom={route.params.isFrom}
-            submitAnswers={() => {
-              requestModel.current = {
-                answers: toAnswersRequest(questions)
-              };
-              handleSubmitAnswers();
-            }}
+            submitAnswers={submitAnswersCallback}
             questions={questions}
             submitAnswersLoading={answerApi.loading}
           />

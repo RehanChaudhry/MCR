@@ -43,9 +43,15 @@ export const toAnswersRequest = (
   const answers: Answer[] = [];
   sections?.forEach((value) => {
     value.data.forEach((value1) => {
-      if (value1.answer) {
-        answers.push(value1.answer);
-      }
+      answers.push(
+        value1.answer ?? {
+          questionId: value1.id,
+          minPreference: 3,
+          maxPreference: 7,
+          noPreference: false,
+          answer: 5
+        }
+      );
     });
   });
   return answers;
