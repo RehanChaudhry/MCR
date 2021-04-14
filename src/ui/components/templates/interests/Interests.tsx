@@ -5,9 +5,9 @@ import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
-import { FieldBox } from "ui/components/atoms/FieldBox";
 //import { FormikValues, useFormikContext } from "formik";
 import ChevronRight from "assets/images/chevron_right.svg";
+import { FieldBox } from "ui/components/atoms/FieldBox";
 
 type Props = {};
 

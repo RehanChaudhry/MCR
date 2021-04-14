@@ -12,6 +12,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { usePreferredTheme } from "hooks";
 import { DropDownItem } from "models/DropDownItem";
+import { FONT_SIZE } from "config";
 
 export interface DropDownModalProps {
   isVisible: boolean;
@@ -146,7 +147,8 @@ const styles = StyleSheet.create({
   },
   flatList: {},
   flatListItem: {
-    paddingVertical: 8,
-    alignSelf: "center"
+    paddingVertical: 10,
+    alignSelf: "center",
+    fontSize: FONT_SIZE.lg
   }
 });

@@ -22,6 +22,7 @@ import {
 import Colors from "config/Colors";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
 import Strings from "config/Strings";
+import { AppLog } from "utils/Util";
 
 type Props = {};
 
@@ -117,7 +118,19 @@ const AboutMe: FC<Props> = () => {
           title={"twitter.com/zanemayes"}
           headingStyle={{ color: grayShades.warmGray["700"] }}
           onPress={() => {
-            Alert.alert("Twitter profile link is pressed");
+            //Alert.alert("Twitter profile link is pressed");
+            //Linking.openURL("twitter://timeline");
+            const twitterUrlScheme = `twitter://user?screen_name=zain123`;
+
+            Linking.canOpenURL(twitterUrlScheme)
+              .then((supported) =>
+                Linking.openURL(
+                  supported
+                    ? twitterUrlScheme
+                    : `https://www.twitter.com/zain123`
+                )
+              )
+              .catch((err) => AppLog.log("An error occurred", err));
           }}
         />
         <SocialDetailForm
@@ -144,7 +157,8 @@ const AboutMe: FC<Props> = () => {
           title={"instagram.com/zanemayes"}
           headingStyle={{ color: grayShades.warmGray["700"] }}
           onPress={() => {
-            Alert.alert("Instagram profile link is pressed");
+            //Alert.alert("Instagram profile link is pressed");
+            Linking.openURL("instagram://user?username=apple");
           }}
         />
         <SocialDetailForm
