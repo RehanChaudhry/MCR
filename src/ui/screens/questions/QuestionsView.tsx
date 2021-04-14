@@ -80,10 +80,11 @@ function bodyView(
       style={style}
       callback={(result: SliderCallback) => {
         bodyItem.answer = {
+          questionId: bodyItem.id,
           answer: result.topRangeSliderResult[0],
           maxPreference: result.bottomRangeSliderResult[1],
           minPreference: result.bottomRangeSliderResult[0],
-          noPreference: !result.isPreferenceActive
+          noPreference: result.isPreferenceActive
         };
       }}
       preferenceInitialValue={bodyItem.answer?.noPreference === false}

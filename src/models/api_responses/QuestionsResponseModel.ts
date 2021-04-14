@@ -10,26 +10,26 @@ export type QuestionsResponseModel = {
   data: SectionResponse[];
 };
 
-export type SectionResponse = {
-  section: BaseQuestionSection;
+export type SectionResponse = BaseQuestionSection & {
   questions: BaseQuestion[];
 };
 
 export const toSections = (response: SectionResponse[]) => {
   const sections: Section<QuestionSection, Question>[] = [];
   response.forEach((value) => {
+    const { questions, ...sectionData } = value;
     const section: Section<QuestionSection, Question> = {
       header: {
-        ...value.section,
-        key: () => `Header${value.section.id}`
+        ...sectionData,
+        key: () => `Header${value.id}`
       },
       data: []
     };
 
-    value.questions.forEach((value1) => {
+    questions.forEach((value1) => {
       section.data.push({
         ...value1,
-        key: () => `Header${value.section.id}|Body${value1.id}`
+        key: () => `Header${value.id}|Body${value1.id}`
       });
     });
     sections.push(section);
@@ -43,7 +43,9 @@ export const toAnswersRequest = (
   const answers: Answer[] = [];
   sections?.forEach((value) => {
     value.data.forEach((value1) => {
-      answers.push(value1.answer!);
+      if (value1.answer) {
+        answers.push(value1.answer);
+      }
     });
   });
   return answers;

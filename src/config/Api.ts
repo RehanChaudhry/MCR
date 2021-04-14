@@ -20,7 +20,7 @@ export default {
   UNIS: "unis",
 
   // Profile
-  GET_QUESTIONS: "questions/",
+  GET_QUESTIONS: "question/",
   POST_ANSWERS: "answer/",
   GET_ACTIVITY_LOGS: "activity-logs/",
 

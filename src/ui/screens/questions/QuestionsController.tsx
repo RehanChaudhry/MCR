@@ -1,6 +1,7 @@
 import React, {
   FC,
   useCallback,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState
@@ -171,12 +172,11 @@ const QuestionsController: FC<Props> = () => {
     ProfileApis.answers
   );
 
-  // useEffect(() => {
-  //   handleGetQuestionsApi();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    handleGetQuestionsApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleGetQuestionsApi = async (onComplete?: () => void) => {
     const { hasError, dataBody, errorBody } = await questionApi.request(
       []
@@ -192,13 +192,6 @@ const QuestionsController: FC<Props> = () => {
   };
 
   const handleSubmitAnswers = usePreventDoubleTap(async () => {
-    // For UI build
-    if (true) {
-      if (route.params.isFrom === EScreen.WELCOME) {
-        moveToHomeScreen();
-      }
-      return;
-    }
     if (requestModel.current === undefined) {
       return;
     }
@@ -232,7 +225,7 @@ const QuestionsController: FC<Props> = () => {
             isFrom={route.params.isFrom}
             submitAnswers={() => {
               requestModel.current = {
-                data: toAnswersRequest(questions)
+                answers: toAnswersRequest(questions)
               };
               handleSubmitAnswers();
             }}
