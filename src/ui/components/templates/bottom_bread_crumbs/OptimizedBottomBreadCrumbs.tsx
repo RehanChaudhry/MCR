@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import BottomBreadCrumbsItem from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbsItem";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE } from "config";
+import OptimizedBottomBreadCrumbsItem from "./OptimizedBottomBreadCrumbsItem";
 
 export type OptimizedBBCItem<T> = {
   title: string;
@@ -28,7 +28,7 @@ function OptimizedBottomBreadCrumbs<T>({ data, onPress }: Props<T>) {
         ? theme.themedColors.primary
         : theme.themedColors.label;
     return (
-      <BottomBreadCrumbsItem
+      <OptimizedBottomBreadCrumbsItem
         title={item.title}
         onPress={() => {
           setSelectedId(item.title);
@@ -44,21 +44,21 @@ function OptimizedBottomBreadCrumbs<T>({ data, onPress }: Props<T>) {
     <View
       style={[
         styles.root,
-        { backgroundColor: theme.themedColors.background }
+        {
+          backgroundColor: theme.themedColors.background,
+          borderColor: theme.themedColors.separator
+        }
       ]}>
-      <View
-        style={[
-          styles.horizontalLine,
-          { backgroundColor: theme.themedColors.separator }
-        ]}
-      />
       <FlatList
         data={data}
         keyExtractor={(item, index) => item.title + index}
         renderItem={renderItem}
         horizontal={true}
-        style={styles.flatList}
+        contentContainerStyle={styles.flatList}
         showsHorizontalScrollIndicator={false}
+        ItemSeparatorComponent={() => (
+          <View style={styles.itemSeparator} />
+        )}
       />
     </View>
   );
@@ -67,15 +67,15 @@ function OptimizedBottomBreadCrumbs<T>({ data, onPress }: Props<T>) {
 const styles = StyleSheet.create({
   root: {
     flexDirection: "column",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    borderWidth: StyleSheet.hairlineWidth
   },
   flatList: {
-    paddingHorizontal: SPACE.sm,
+    paddingHorizontal: SPACE.md,
+    paddingVertical: SPACE._2md,
     backgroundColor: "#FFFFFF"
   },
-  horizontalLine: {
-    height: 1
-  }
+  itemSeparator: { width: SPACE._2md }
 });
 
 export default OptimizedBottomBreadCrumbs;

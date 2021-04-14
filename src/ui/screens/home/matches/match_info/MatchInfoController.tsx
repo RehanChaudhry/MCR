@@ -9,7 +9,7 @@ import { MatchesStackParamList } from "routes/MatchesStack";
 import { MatchInfoView } from "ui/screens/home/matches/match_info/MatchInfoView";
 import DataGenerator from "utils/DataGenerator";
 import MatchInfo from "models/MatchInfo";
-import { SPACE, STRINGS } from "config";
+import { STRINGS } from "config";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import ProfileMatch from "models/ProfileMatch";
 import EScreen from "models/enums/EScreen";
@@ -36,10 +36,7 @@ const MatchInfoController: FC<Props> = () => {
             navigation.pop();
           }}
         />
-      ),
-      headerLeftContainerStyle: {
-        padding: SPACE.md
-      }
+      )
     });
   }, [navigation]);
 
