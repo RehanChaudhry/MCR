@@ -33,6 +33,9 @@ export default {
   //community
   GET_COMMUNITY: "community/",
   CREATE_POST: "createPost/",
+  GET_ANNOUNCEMENT: "post",
+  LIKE_DISLIKE: "post/like",
+
   //chat
   GET_CHATS: "chats",
 

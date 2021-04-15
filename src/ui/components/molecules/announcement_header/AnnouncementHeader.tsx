@@ -31,7 +31,7 @@ export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   titleFontWeight?: Weight;
   rightIcon?: SvgProp;
   onPress?: () => void;
-  leftImageStyle?: StyleProp<ImageStyle>;
+  leftImageStyle?: StyleProp<ImageStyle> | undefined;
 }
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
@@ -60,6 +60,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
               style={[style.profileImage, leftImageStyle]}
               source={{ uri: leftImageUrl }}
             />
+
             <View style={style.titleSubtitle}>
               <AppLabel
                 text={title}
