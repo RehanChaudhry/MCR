@@ -14,7 +14,7 @@ import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type Props = {
   openMyProfileScreen: () => void;
-  notifications: NotificationData[];
+  notifications: NotificationData[] | undefined;
 };
 
 export const NotificationView = React.memo<Props>(
@@ -75,7 +75,7 @@ export const NotificationView = React.memo<Props>(
       item,
       index
     }: {
-      item: NotificationData;
+      item: NotificationData | undefined;
       index: number;
     }) => {
       return (
@@ -83,11 +83,11 @@ export const NotificationView = React.memo<Props>(
           {getSortedItems(getHours(notifications[index].date))}
           <CircleImageWithText
             key={index}
-            type={item.type}
-            boldText={item.boldText}
-            imageUrl={item.profileUrl}
-            username={item.name + " "}
-            message={item.message}
+            type={item?.type}
+            boldText={item?.boldText}
+            imageUrl={item?.profileUrl}
+            username={item?.name + " "}
+            message={item?.message}
             onPress={() => AppLog.log("Button pressed")}
             userNameOnPress={openMyProfileScreen}
           />

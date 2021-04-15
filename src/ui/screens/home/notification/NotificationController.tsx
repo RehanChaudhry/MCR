@@ -1,12 +1,14 @@
-import React, { FC, useLayoutEffect, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState
+} from "react";
 import { NotificationView } from "ui/screens/home/notification/NotificationView";
-import DataGenerator from "utils/DataGenerator";
 import { useApi } from "repo/Client";
 import ProfileApis from "repo/auth/ProfileApis";
-import {
-  NotificationData,
-  NotificationsResponseModel
-} from "models/api_responses/NotificationsResponseModel";
+import { NotificationsResponseModel } from "models/api_responses/NotificationsResponseModel";
 import { AppLog } from "utils/Util";
 import { View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
@@ -29,11 +31,11 @@ type Props = {};
 
 const NotificationController: FC<Props> = () => {
   const navigation = useNavigation<NotificationNavigationProp>();
-  const notify = DataGenerator.getNotifications();
 
-  const [notifications, setNotifications] = useState<
-    Array<NotificationData>
-  >(notify.data);
+  const [
+    notifications,
+    setNotifications
+  ] = useState<NotificationsResponseModel>();
 
   const notificationApi = useApi<any, NotificationsResponseModel>(
     ProfileApis.getNotifications
@@ -52,24 +54,28 @@ const NotificationController: FC<Props> = () => {
     });
   }, [navigation]);
 
-  const handleGetNotificationApi = async (onComplete?: () => void) => {
-    const {
-      hasError,
-      dataBody,
-      errorBody
-    } = await notificationApi.request([]);
-    if (hasError || dataBody === undefined) {
-      // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.log("Unable to find questions " + errorBody);
-      return;
-    } else {
-      setNotifications(dataBody.data);
-      onComplete?.();
-    }
-  };
+  const handleGetNotificationApi = useCallback(
+    async (onComplete?: () => void) => {
+      const {
+        hasError,
+        dataBody,
+        errorBody
+      } = await notificationApi.request([]);
+      if (hasError || dataBody === undefined) {
+        // Alert.alert("Unable to find questions " + errorBody);
+        AppLog.log("Unable to find questions " + errorBody);
+        return;
+      } else {
+        setNotifications(dataBody);
+        onComplete?.();
+      }
+    },
+    [notificationApi]
+  );
 
-  AppLog.log(handleGetNotificationApi);
-  AppLog.log(notifications);
+  useEffect(() => {
+    handleGetNotificationApi();
+  });
 
   return (
     <ProgressErrorView
@@ -84,7 +90,7 @@ const NotificationController: FC<Props> = () => {
       }}
       data={notifications}>
       <NotificationView
-        notifications={notifications}
+        notifications={notifications?.data}
         openMyProfileScreen={openMyProfileScreen}
       />
     </ProgressErrorView>

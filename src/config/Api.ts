@@ -13,7 +13,7 @@ export default {
   FORGOT_PASS_URL: "password/request/",
   RESET_PASS_URL: "password/set/",
   UPDATE_PROFILE_URL: "profile",
-  NOTIFICATION_URL: "notifications",
+  NOTIFICATION_URL: "notification",
   AGREEMENT_DETAILS: "agreement_details",
 
   //Get universities
