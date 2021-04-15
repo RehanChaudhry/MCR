@@ -40,10 +40,6 @@ export const QuestionsView = ({
 
   const listHeader = useRef(createListHeader(isFrom, themedColors));
 
-  const listFooter = useRef(
-    createListFooter(submitAnswersLoading, submitAnswers, themedColors)
-  );
-
   return (
     <Screen shouldAddBottomInset={false}>
       <SectionedList<QuestionSection, Question>
@@ -53,7 +49,11 @@ export const QuestionsView = ({
         isCollapsable={true}
         headerView={headerView}
         bodyView={bodyView}
-        listFooterComponent={listFooter.current}
+        listFooterComponent={createListFooter(
+          submitAnswersLoading,
+          submitAnswers,
+          themedColors
+        )}
       />
     </Screen>
   );
@@ -87,7 +87,7 @@ function bodyView(
           noPreference: result.isPreferenceActive
         };
       }}
-      preferenceInitialValue={bodyItem.answer?.noPreference === false}
+      preferenceInitialValue={bodyItem.answer?.noPreference === true}
     />
   );
 }
@@ -165,6 +165,7 @@ function createListFooter(
         ]}
         fontWeight={"semi-bold"}
         textStyle={[styles.saveButton, { color: themedColors.background }]}
+        loaderColor={themedColors.background}
         rightIcon={() => (
           <RightArrowCircle
             width={13}

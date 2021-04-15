@@ -200,7 +200,9 @@ const QuestionsController: FC<Props> = () => {
       Alert.alert("Unable to Submit answers.", errorBody);
       return;
     } else {
-      // answers submitted. Proceed to next screen
+      if (route.params.isFrom === EScreen.WELCOME) {
+        moveToHomeScreen();
+      }
     }
   });
 
