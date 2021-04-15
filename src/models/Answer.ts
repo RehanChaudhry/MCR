@@ -1,7 +1,7 @@
 export type Answer = {
   questionId: number;
   answer: number;
-  noPreference: boolean;
+  noPreference: number;
   minPreference: number;
   maxPreference: number;
 };

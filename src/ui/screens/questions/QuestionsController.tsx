@@ -25,10 +25,7 @@ import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseMo
 import ProfileApis from "repo/auth/ProfileApis";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { Alert, View } from "react-native";
-import {
-  QuestionsResponseModel,
-  toSections
-} from "models/api_responses/QuestionsResponseModel";
+import QuestionsResponseModel from "models/api_responses/QuestionsResponseModel";
 import { QuestionsView } from "ui/screens/questions/QuestionsView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
@@ -44,7 +41,7 @@ import RightArrow from "assets/images/right.svg";
 import LeftArrow from "assets/images/left.svg";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { HomeDrawerParamList } from "routes";
-import useLazyLoadInterface from "hooks/useLazyLoadInterface";
+import { GetAnswersResponseModel } from "models/api_responses/GetAnswersResponseModel";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -80,6 +77,8 @@ const QuestionsController: FC<Props> = () => {
   const welcomeNavigation = useNavigation<WelcomeNavigationProp>();
   const profileNavigation = useNavigation<ProfileNavigationProp>();
   const matchesNavigation = useNavigation<MatchesNavigationProp>();
+
+  const isQuestionAnswersFetched = useRef<boolean>(false);
 
   const moveToHomeScreen = useCallback(() => {
     homeNavigation.reset({
@@ -167,11 +166,16 @@ const QuestionsController: FC<Props> = () => {
     ProfileApis.questions
   );
 
+  const getAnswersApi = useApi<any, GetAnswersResponseModel>(
+    ProfileApis.getAnswers
+  );
+
   const answerApi = useApi<AnswerApiRequestModel, AnswerApiResponseModel>(
     ProfileApis.answers
   );
 
   useEffect(() => {
+    isQuestionAnswersFetched.current = false;
     handleGetQuestionsApi();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -185,7 +189,28 @@ const QuestionsController: FC<Props> = () => {
       AppLog.log("Unable to find questions " + errorBody);
       return;
     } else {
-      setQuestions(toSections(dataBody.data));
+      await handleGetAnswersApi(
+        new QuestionsResponseModel(dataBody.message, dataBody.data)
+      );
+      onComplete?.();
+    }
+  };
+
+  const handleGetAnswersApi = async (
+    questionsApiResponse?: QuestionsResponseModel,
+    onComplete?: () => void
+  ) => {
+    const { hasError, dataBody, errorBody } = await getAnswersApi.request(
+      []
+    );
+    if (hasError || dataBody === undefined) {
+      // Alert.alert("Unable to find questions " + errorBody);
+      AppLog.log("Unable to find answers " + errorBody);
+      return;
+    } else {
+      questionsApiResponse?.assignAnswers(dataBody.data);
+      isQuestionAnswersFetched.current = true;
+      setQuestions(questionsApiResponse?.toSections() ?? []);
       onComplete?.();
     }
   };
@@ -216,28 +241,24 @@ const QuestionsController: FC<Props> = () => {
   }, [handleSubmitAnswers, questions]);
 
   return (
-    <>
-      {useLazyLoadInterface(
-        <ProgressErrorView
-          isLoading={questionApi.loading}
-          error={questionApi.error}
-          errorView={(message) => {
-            return (
-              <View>
-                <AppLabel text={message} />
-              </View>
-            );
-          }}
-          data={questions}>
-          <QuestionsView
-            isFrom={route.params.isFrom}
-            submitAnswers={submitAnswersCallback}
-            questions={questions}
-            submitAnswersLoading={answerApi.loading}
-          />
-        </ProgressErrorView>
-      )}
-    </>
+    <ProgressErrorView
+      isLoading={!isQuestionAnswersFetched.current}
+      error={questionApi.error || getAnswersApi.error}
+      errorView={(message) => {
+        return (
+          <View>
+            <AppLabel text={message} />
+          </View>
+        );
+      }}
+      data={questions}>
+      <QuestionsView
+        isFrom={route.params.isFrom}
+        submitAnswers={submitAnswersCallback}
+        questions={questions}
+        submitAnswersLoading={answerApi.loading}
+      />
+    </ProgressErrorView>
   );
 };
 

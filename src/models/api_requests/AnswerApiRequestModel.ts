@@ -16,9 +16,9 @@ export const toAnswersRequest = (
       answers.push(
         value1.answer ?? {
           questionId: value1.id,
-          minPreference: 3,
+          minPreference: 4,
           maxPreference: 7,
-          noPreference: false,
+          noPreference: 0,
           answer: 5
         }
       );

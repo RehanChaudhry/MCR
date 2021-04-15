@@ -17,7 +17,7 @@ import {
   QuestionItem,
   SliderCallback
 } from "ui/components/organisms/question_item/QuestionItem";
-import { shadowStyleProps } from "utils/Util";
+import { AppLog, shadowStyleProps } from "utils/Util";
 import Screen from "ui/components/atoms/Screen";
 import SectionedList, {
   Section
@@ -36,6 +36,7 @@ export const QuestionsView = ({
   submitAnswersLoading,
   submitAnswers
 }: Props) => {
+  AppLog.log("rendering QuestionsView");
   const { themedColors } = usePreferredTheme();
 
   const listHeader = useRef(createListHeader(isFrom, themedColors));
@@ -74,7 +75,7 @@ function bodyView(
       question={bodyItem}
       initialValuesTopSlider={[bodyItem.answer?.answer ?? 5]}
       initialValuesBottomSlider={[
-        bodyItem.answer?.minPreference ?? 3,
+        bodyItem.answer?.minPreference ?? 4,
         bodyItem.answer?.maxPreference ?? 7
       ]}
       style={style}
@@ -84,10 +85,10 @@ function bodyView(
           answer: result.topRangeSliderResult[0],
           maxPreference: result.bottomRangeSliderResult[1],
           minPreference: result.bottomRangeSliderResult[0],
-          noPreference: result.isPreferenceActive
+          noPreference: result.isPreferenceActive ? 1 : 0
         };
       }}
-      preferenceInitialValue={bodyItem.answer?.noPreference === true}
+      preferenceInitialValue={bodyItem.answer?.noPreference === 1}
     />
   );
 }
