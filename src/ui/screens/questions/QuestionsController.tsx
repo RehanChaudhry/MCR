@@ -17,14 +17,16 @@ import {
   useRoute
 } from "@react-navigation/native";
 import { useApi } from "repo/Client";
-import { AnswerApiRequestModel } from "models/api_requests/AnswerApiRequestModel";
+import {
+  AnswerApiRequestModel,
+  toAnswersRequest
+} from "models/api_requests/AnswerApiRequestModel";
 import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseModel";
 import ProfileApis from "repo/auth/ProfileApis";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { Alert, View } from "react-native";
 import {
   QuestionsResponseModel,
-  toAnswersRequest,
   toSections
 } from "models/api_responses/QuestionsResponseModel";
 import { QuestionsView } from "ui/screens/questions/QuestionsView";

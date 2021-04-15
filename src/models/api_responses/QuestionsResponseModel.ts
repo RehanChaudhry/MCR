@@ -3,7 +3,6 @@ import QuestionSection, {
 } from "models/QuestionSection";
 import Question, { BaseQuestion } from "models/Question";
 import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
-import { Answer } from "models/Answer";
 
 export type QuestionsResponseModel = {
   message: string;
@@ -35,24 +34,4 @@ export const toSections = (response: SectionResponse[]) => {
     sections.push(section);
   });
   return sections;
-};
-
-export const toAnswersRequest = (
-  sections: Section<QuestionSection, Question>[] | undefined
-) => {
-  const answers: Answer[] = [];
-  sections?.forEach((value) => {
-    value.data.forEach((value1) => {
-      answers.push(
-        value1.answer ?? {
-          questionId: value1.id,
-          minPreference: 3,
-          maxPreference: 7,
-          noPreference: false,
-          answer: 5
-        }
-      );
-    });
-  });
-  return answers;
 };
