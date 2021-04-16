@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useAuth, usePreventDoubleTap } from "hooks";
 import { SignInApiRequestModel } from "models/api_requests/SignInApiRequestModel";
+import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
 import { SignInApiResponseModel } from "models/api_responses/SignInApiResponseModel";
 import React, { FC, useLayoutEffect, useRef } from "react";
 import { Alert } from "react-native";
@@ -34,6 +35,10 @@ const LoginController: FC<Props> = () => {
     AuthApis.signIn
   );
 
+  const fetchProfileApi = useApi<string, FetchMyProfileResponseModel>(
+    AuthApis.fetchMyProfile
+  );
+
   const openUniSelectionScreen = usePreventDoubleTap(() => {
     navigation.push("UniSelection");
   });
@@ -47,14 +52,32 @@ const LoginController: FC<Props> = () => {
       return;
     }
     AppLog.log("handleSignIn: ");
+
+    // authenticate user
     const { hasError, errorBody, dataBody } = await signInApi.request([
       requestModel.current
     ]);
-    if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to Sign In", errorBody);
+
+    // fetch user profile dataP
+    const {
+      hasError: hasErrorProfile,
+      errorBody: errorBodyProfile,
+      dataBody: dataBodyProfile
+    } = await fetchProfileApi.request([dataBody?.data?.accessToken ?? ""]);
+
+    if (
+      hasError ||
+      hasErrorProfile ||
+      dataBody === undefined ||
+      dataBodyProfile === undefined
+    ) {
+      Alert.alert("Unable to Sign In", errorBody ?? errorBodyProfile);
       return;
     } else {
-      await auth.logIn(dataBody);
+      await auth.saveUser({
+        authentication: dataBody.data,
+        profile: dataBodyProfile.data
+      });
     }
   });
 
