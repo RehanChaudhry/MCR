@@ -50,6 +50,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
     textStyle,
     shouldShowProgressBar = false,
     loaderSize = 15,
+    loaderColor,
     leftIcon,
     rightIcon,
     buttonType = BUTTON_TYPES.NORMAL,
@@ -137,7 +138,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
                 testID="loader"
                 style={[style.loader]}
                 size={loaderSize}
-                color={theme.themedColors.label}
+                color={loaderColor ?? theme.themedColors.label}
               />
             )}
           </View>

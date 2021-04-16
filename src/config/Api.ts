@@ -20,7 +20,8 @@ export default {
   UNIS: "unis",
 
   // Profile
-  GET_QUESTIONS: "questions/",
+  GET_QUESTIONS: "question/",
+  GET_ANSWERS: "answer/",
   POST_ANSWERS: "answer/",
   GET_ACTIVITY_LOGS: "activity-logs/",
 
@@ -36,7 +37,9 @@ export default {
   //chat
   GET_CHATS: "chats",
 
-  MY_FRIENDS: "myfriends",
+  //relations
+  RELATION: "relation",
+  // MY_FRIENDS: "myfriends",
   MY_ROOMMATES: "myroommates",
   DISMISSED_OR_BLOCKED: "dismissedorblocked",
   FRIEND_REQUESTS: "friendrequests",

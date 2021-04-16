@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Pressable,
   SectionList,
@@ -51,8 +51,11 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
 }: Props<ItemT, ItemU>) => {
   // AppLog.log("rendering _SectionedList");
   const [selectedIndex, setSelectedIndex] = useState<number>(
-    selectedIndexProp ?? (list.length > 0 ? 0 : -1)
+    selectedIndexProp ?? -1
   );
+  useEffect(() => {
+    setSelectedIndex(selectedIndexProp ?? (list.length > 0 ? 0 : -1));
+  }, [selectedIndexProp, list]);
 
   const sectionList = useRef<SectionList<any, any> | null>(null);
 

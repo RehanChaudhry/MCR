@@ -12,7 +12,7 @@ import { DrawerContentComponentProps } from "@react-navigation/drawer";
 import SignOut from "assets/images/sign_out.svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import Matches from "assets/images/matches.svg";
 import NewPaper from "assets/images/newspaper.svg";
@@ -41,6 +41,7 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
   const ripple = TouchableNativeFeedback.Ripple("#adacac", false);
   const { themedColors } = usePreferredTheme();
   const { state, navigation } = props;
+  const auth = useAuth();
 
   type ItemType<T> = {
     [K in keyof T]: {
@@ -186,10 +187,7 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
       <TouchableNativeFeedback
         onPress={() => {
           setCurrentItem("SignOut");
-          navigation.dangerouslyGetParent()?.reset({
-            index: 0,
-            routes: [{ name: "Auth" }]
-          });
+          auth.logOut();
         }}
         background={ripple}>
         <View
