@@ -89,8 +89,8 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           communityItem.photos.length > 0 && (
             <ImagesSlideShow images={communityItem.photos} />
           )}
-        {communityItem.metaDataUrl != null && true && (
-          <UrlMetaData url={communityItem.metaDataUrl} />
+        {communityItem.embed != null && true && (
+          <UrlMetaData url={communityItem.embed} />
         )}
         <AnnouncementFooter
           commentCount={communityItem.commentsCount}

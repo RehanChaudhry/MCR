@@ -9,8 +9,8 @@ export interface CommunityAnnouncement {
   type: string;
   content: string;
   link: null | string;
-  photos: null;
-  embed: null;
+  photos: PostedByProfilePicture[] | null;
+  embed: string;
   postedBy: number;
   postedByFirstName: string;
   postedByLastName: string;

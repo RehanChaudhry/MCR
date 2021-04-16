@@ -11,9 +11,10 @@ import {
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import { AppLog, SvgProp } from "utils/Util";
+import { PostedByProfilePicture } from "models/api_responses/CommunityAnnouncementResponseModel";
 
 export interface ImageSlideShowProps extends TouchableOpacityProps {
-  images: string[];
+  images: PostedByProfilePicture[];
 }
 
 export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
@@ -87,6 +88,22 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
       );
     };
 
+    AppLog.logForcefully(
+      "images  without reduce" + JSON.stringify(images)
+    );
+
+    AppLog.logForcefully(
+      "images  " +
+        JSON.stringify(
+          images.reduce(
+            (imageUrl: string[], item) => (
+              item.fileURL !== undefined && imageUrl.push(item.fileURL),
+              imageUrl
+            ),
+            []
+          )
+        )
+    );
     const rightImage = () => {
       return (
         <AppImageBackground
@@ -112,7 +129,13 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
         <View style={styles.sliderBoxContainer}>
           <SliderBox
             ref={arrowButton}
-            images={images}
+            images={images.reduce(
+              (imageUrl: string[], item) => (
+                item.fileURL !== undefined && imageUrl.push(item.fileURL),
+                imageUrl
+              ),
+              []
+            )}
             imageLoadingColor={theme.themedColors.primary}
             dotColor={theme.themedColors.primary}
             inactiveDotColor={theme.themedColors.interface["700"]}
