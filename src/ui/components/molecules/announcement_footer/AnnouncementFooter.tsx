@@ -1,7 +1,7 @@
 import Chat from "assets/images/chat.svg";
 import Like from "assets/images/like.svg";
 import { FONT_SIZE, SPACE } from "config";
-import { useAuth, usePreferredTheme } from "hooks";
+import { usePreferredTheme } from "hooks";
 import React, { useState } from "react";
 import {
   ImageStyle,
@@ -15,7 +15,6 @@ import {
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { CommentButton } from "ui/components/atoms/compact_buttons/CommentButton";
 import { LikeButton } from "ui/components/atoms/compact_buttons/LikeButton";
-import { AppLog } from "utils/Util";
 import { IsLikedByMe } from "models/api_responses/CommunityAnnouncementResponseModel";
 
 export interface AnnouncementFooterProps extends TouchableOpacityProps {
@@ -31,7 +30,7 @@ export interface AnnouncementFooterProps extends TouchableOpacityProps {
   leftContainerLeftButtonStyle?: StyleProp<ViewStyle>;
   leftContainerRightButtonStyle?: StyleProp<ViewStyle>;
   openCommentsScreen?: () => void | undefined;
-  likedBy: IsLikedByMe[];
+  likedBy: IsLikedByMe[] | undefined;
   likeDislikeAPi: (postId: number) => Promise<boolean>;
   postId: number;
 }
@@ -47,13 +46,14 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
     postId
   }) => {
     const theme = usePreferredTheme();
-    const { user } = useAuth();
-    AppLog.logForcefully("user in footer " + JSON.stringify(user));
+
     let [
       showShowLikeButtonSelected,
       _showShowLikeButtonSelected
     ] = useState<boolean>(
-      likedBy.length > 0 && likedBy[0].action === "liked"
+      likedBy !== undefined &&
+        likedBy.length > 0 &&
+        likedBy[0].action === "liked"
     );
     return (
       <View>

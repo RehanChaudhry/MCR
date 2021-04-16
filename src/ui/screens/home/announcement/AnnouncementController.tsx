@@ -36,7 +36,6 @@ const AnnouncementController: FC<Props> = () => {
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
     false
   );
-  const pageToReload = useRef<number>(1);
   const isFetchingInProgress = useRef(false);
   const [announcements, _announcements] = useState<
     CommunityAnnouncement[]
@@ -46,14 +45,14 @@ const AnnouncementController: FC<Props> = () => {
 
   useEffect(() => {
     return navigation.addListener("blur", () => {
-      AppLog.logForcefully("announcements screen is blur");
+      AppLog.log("announcements screen is blur");
       setShouldPlayVideo(false);
     });
   }, [navigation]);
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
-      AppLog.logForcefully("announcements screen is focus");
+      AppLog.log("announcements screen is focus");
       setShouldPlayVideo(true);
     });
   }, [navigation]);
@@ -70,7 +69,7 @@ const AnnouncementController: FC<Props> = () => {
 
   const requestModel = useRef<AnnouncementRequestModel>({
     paginate: true,
-    page: pageToReload.current,
+    page: 1,
     limit: 10,
     type: "announcements"
   });
@@ -78,7 +77,7 @@ const AnnouncementController: FC<Props> = () => {
   const getAnnouncementsApi = useApi<
     AnnouncementRequestModel,
     CommunityAnnouncementResponseModel
-  >(CommunityAnnouncementApis.getAnnouncements);
+  >(CommunityAnnouncementApis.getCommunityAnnouncements);
 
   const likeDislikeApi = useApi<number, LikeDislikeResponseModel>(
     CommunityAnnouncementApis.likeDislike
@@ -148,19 +147,19 @@ const AnnouncementController: FC<Props> = () => {
   };
 
   const onEndReached = useCallback(async () => {
-    requestModel.current.page = 1;
+    requestModel.current.page = requestModel.current.page!! + 1;
     await fetchAnnouncements();
   }, [fetchAnnouncements]);
 
   const refreshCallback = useCallback(
     async (onComplete?: () => void) => {
-      pageToReload.current = 1;
+      requestModel.current.page = 1;
       fetchAnnouncements().then(() => {
         onComplete?.();
       });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pageToReload]
+    []
   );
 
   const openCommentsScreen = () => {

@@ -30,10 +30,9 @@ export default {
   DISMISS_MATCH: "dismiss-match",
   GET_MATCHES_FILTER_COUNT: "matches-count",
 
-  //community
-  GET_COMMUNITY: "community/",
+  //community, announcements
   CREATE_POST: "createPost/",
-  GET_ANNOUNCEMENT: "post",
+  GET_COMMUNITY_ANNOUNCEMENT: "post",
   LIKE_DISLIKE: "post/like",
 
   //chat

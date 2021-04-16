@@ -6,12 +6,6 @@ import { apiClient } from "repo/Client";
 import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
 import { LikeDislikeResponseModel } from "models/api_responses/LikeDislikeResponseModel";
 
-function getCommunity() {
-  return apiClient.get<CommunityAnnouncementResponseModel>(
-    API.GET_COMMUNITY
-  );
-}
-
 function createPost(requestModel: CreatePostApiRequestModel) {
   return apiClient.post<SignInApiResponseModel>(
     API.CREATE_POST,
@@ -19,10 +13,14 @@ function createPost(requestModel: CreatePostApiRequestModel) {
   );
 }
 
-function getAnnouncements(requestModel: AnnouncementRequestModel) {
+function getCommunityAnnouncements(
+  requestModel: AnnouncementRequestModel
+) {
   return apiClient.get<CommunityAnnouncementResponseModel>(
-    API.GET_ANNOUNCEMENT,
-    JSON.stringify(requestModel)
+    API.GET_COMMUNITY_ANNOUNCEMENT,
+    {
+      ...requestModel
+    }
   );
 }
 
@@ -33,8 +31,7 @@ function likeDislike(postId: number) {
 }
 
 export default {
-  getCommunity,
   createPost,
-  getAnnouncements,
+  getCommunityAnnouncements,
   likeDislike
 };

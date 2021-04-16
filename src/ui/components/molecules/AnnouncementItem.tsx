@@ -73,7 +73,7 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
         {announcementItem.photos != null &&
           true &&
           announcementItem.photos.length > 0 && (
-            <ImagesSlideShow images={announcementItem.images} />
+            <ImagesSlideShow images={announcementItem.photos} />
           )}
         {announcementItem.metaDataUrl != null && true && (
           <UrlMetaData url={announcementItem.metaDataUrl} />
