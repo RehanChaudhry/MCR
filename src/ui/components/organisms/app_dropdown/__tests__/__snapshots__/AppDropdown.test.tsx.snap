@@ -264,17 +264,7 @@ exports[`Renders snapshot as expected 1`] = `
                 </View>
                 <View
                   onLayout={[Function]}
-                >
-                  <View
-                    style={
-                      Object {
-                        "flexDirection": "column",
-                        "height": 30,
-                        "justifyContent": "center",
-                      }
-                    }
-                  />
-                </View>
+                />
               </View>
             </RCTScrollView>
           </View>

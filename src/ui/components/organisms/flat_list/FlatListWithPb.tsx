@@ -79,11 +79,12 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
   const footerWrapper = React.memo<Props<any>>(() => {
     return (
       <>
-        <View style={styles.loadMore}>
-          {!isAllDataLoaded &&
-            shouldShowProgressBar &&
-            data !== undefined && <AppLoadMore testID="loader" />}
-        </View>
+        {!isAllDataLoaded && shouldShowProgressBar && data !== undefined && (
+          <View style={styles.loadMore}>
+            <AppLoadMore testID="loader" />
+          </View>
+        )}
+        {ItemSeparatorHeaderAndFooterComponent}
       </>
     );
   });
