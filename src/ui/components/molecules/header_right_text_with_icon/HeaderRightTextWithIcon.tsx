@@ -45,7 +45,9 @@ const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
 
 const style = StyleSheet.create({
   container: {
-    marginRight: SPACE.sm
+    marginRight: SPACE.sm,
+    height: "100%",
+    justifyContent: "center"
   },
   text: {
     paddingRight: SPACE._2xs,

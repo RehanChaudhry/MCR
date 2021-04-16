@@ -14,6 +14,7 @@ type NavigationDrawerProp = DrawerNavigationProp<HomeDrawerParamList>;
 const Hamburger: FC<Props> = () => {
   const theme = usePreferredTheme();
   const navigationDrawer = useNavigation<NavigationDrawerProp>();
+
   return (
     <Pressable
       style={styles.icon}
@@ -28,6 +29,8 @@ const Hamburger: FC<Props> = () => {
 
 const styles = StyleSheet.create({
   icon: {
+    height: "100%",
+    justifyContent: "center",
     paddingHorizontal: SPACE.md,
     paddingVertical: SPACE.md
   }
