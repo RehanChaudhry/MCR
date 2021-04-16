@@ -22,7 +22,7 @@ export default {
   // Profile
   GET_QUESTIONS: "questions/",
   POST_ANSWERS: "answer/",
-  GET_ACTIVITY_LOGS: "activity-logs/",
+  GET_ACTIVITY_LOGS: "log",
 
   // matches
   GET_MATCHES: "matches",

@@ -11,6 +11,7 @@ import { getActivityTypeFilterData } from "models/enums/ActivityType";
 import { ActivityLogSection } from "utils/SectionListHelper";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { shadowStyleProps } from "utils/Util";
+import { DropDownItem } from "models/DropDownItem";
 
 type Props = {
   isApiLoading: boolean;
@@ -18,6 +19,7 @@ type Props = {
   pullToRefreshCallback: (onComplete: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
+  selectedItem: (item: DropDownItem) => void;
 };
 
 export const ActivityLogView: React.FC<Props> = ({
@@ -25,7 +27,8 @@ export const ActivityLogView: React.FC<Props> = ({
   activityLogs,
   pullToRefreshCallback,
   onEndReached,
-  isAllDataLoaded
+  isAllDataLoaded,
+  selectedItem
 }: Props) => {
   const { themedColors } = usePreferredTheme();
   const [isRefreshing, setRefreshing] = useState<boolean>(false);
@@ -80,7 +83,9 @@ export const ActivityLogView: React.FC<Props> = ({
           )}
           title={getActivityTypeFilterData()[0].title}
           items={getActivityTypeFilterData()}
-          selectedItemCallback={(_) => {}}
+          selectedItemCallback={(item) => {
+            selectedItem(item);
+          }}
         />
       </View>
       {!isApiLoading && activityLogs && (

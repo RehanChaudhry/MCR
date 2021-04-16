@@ -1,9 +1,14 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import { Alert } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { AppLog } from "utils/Util";
-import DataGenerator from "utils/DataGenerator";
 import { useApi } from "repo/Client";
 import { ActivityLogStackParamList } from "routes/ActivityLogStack";
 import ProfileApis from "repo/auth/ProfileApis";
@@ -11,6 +16,7 @@ import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiReques
 import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
 import { ActivityLogView } from "ui/screens/home/activity_log/ActivityLogView";
 import { toSectionList } from "utils/SectionListHelper";
+import { DropDownItem } from "models/DropDownItem";
 
 type ActivityLogNavigationProp = StackNavigationProp<
   ActivityLogStackParamList,
@@ -24,6 +30,7 @@ const ActivityLogController: FC<Props> = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigation = useNavigation<ActivityLogNavigationProp>();
+  const [searchByKeyword, setSearchByKeyword] = useState<DropDownItem>();
 
   // Activity Log API
   const activityLogApi = useApi<
@@ -32,9 +39,15 @@ const ActivityLogController: FC<Props> = () => {
   >(ProfileApis.activityLogs);
 
   const requestModel = useRef<ActivityLogApiRequestModel>({
-    limit: 10,
-    pageNo: 1,
-    type: undefined
+    paginate: true,
+    page: 1,
+    limit: 1,
+    keyword: searchByKeyword?.title,
+    userType: "Student",
+    actionType: "new-student",
+    startDate: "2018-11-26",
+    endDate: "2021-07-26",
+    attributes: "id,userId,createdAt,data"
   });
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const isFetchingInProgress = useRef(false);
@@ -44,7 +57,7 @@ const ActivityLogController: FC<Props> = () => {
   ] = useState<ActivityLogsResponseModel>();
 
   const refreshCallback = async (onComplete: () => void) => {
-    requestModel.current.pageNo = 1;
+    requestModel.current.page = 1;
     setIsAllDataLoaded(false);
     getActivityLogs().then(() => {
       onComplete();
@@ -56,7 +69,7 @@ const ActivityLogController: FC<Props> = () => {
       return;
     }
     isFetchingInProgress.current = true;
-    if (requestModel.current.pageNo === 0) {
+    if (requestModel.current.page === 0) {
       isFetchingInProgress.current = false;
       setIsAllDataLoaded(true);
       return;
@@ -71,29 +84,30 @@ const ActivityLogController: FC<Props> = () => {
       hasError,
       errorBody,
       dataBody
-    } = await DataGenerator.getActivityLogs(requestModel.current);
+    } = await activityLogApi.request([requestModel.current]);
 
     // const { hasError, errorBody, dataBody } = await activityLogApi.request([
     //   requestModel.current
     // ]);
 
     if (!hasError) {
-      if (requestModel.current.pageNo === 1) {
+      if (requestModel.current.page === 1) {
         setActivityLogs({ message: "", data: [] });
       }
       setActivityLogs((prevState) => ({
         message: dataBody!.message,
         data: [
-          ...(prevState === undefined || requestModel.current.pageNo === 1
+          ...(prevState === undefined || requestModel.current.page === 1
             ? []
             : prevState.data),
           ...dataBody!.data
         ],
         pagination: dataBody!.pagination
       }));
-      requestModel.current.pageNo = dataBody!.pagination?.next ?? 0;
+      requestModel.current.page = dataBody!.pagination?.next ?? 0;
     } else {
       Alert.alert("Unable to fetch matches", errorBody);
+      AppLog.log("Actitivy Logs" + activityLogs);
     }
 
     isFetchingInProgress.current = false;
@@ -102,13 +116,18 @@ const ActivityLogController: FC<Props> = () => {
   const onEndReached = () => {
     // getActivityLogs();
   };
+  const searchText = useCallback((textToSearch: DropDownItem) => {
+    AppLog.log("Searching: " + textToSearch);
+    setSearchByKeyword(textToSearch);
+  }, []);
 
   useEffect(() => {
     getActivityLogs();
-  }, []);
+  });
 
   return (
     <ActivityLogView
+      selectedItem={searchText}
       isApiLoading={activityLogApi.loading}
       activityLogs={toSectionList(activityLogs?.data ?? [])}
       pullToRefreshCallback={refreshCallback}

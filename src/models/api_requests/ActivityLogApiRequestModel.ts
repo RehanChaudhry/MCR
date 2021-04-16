@@ -1,9 +1,13 @@
-import ActivityType from "models/enums/ActivityType";
-
 type ActivityLogApiRequestModel = {
-  pageNo: number;
+  paginate: boolean;
+  page: number;
   limit?: number;
-  type?: ActivityType;
+  keyword: string | undefined;
+  userType: string;
+  actionType: string;
+  startDate: string;
+  endDate: string;
+  attributes: string;
 };
 
 export default ActivityLogApiRequestModel;
