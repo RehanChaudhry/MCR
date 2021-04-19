@@ -2,7 +2,7 @@ export type FilterCount = {
   type: string;
 };
 
-enum FeedsTypeFilter {
+export enum FeedsTypeFilter {
   MOST_RECENT = "Most Recent",
   MOST_POPULAR = "Most Popular",
   FRIENDS_ONLY = "Friends Only",
