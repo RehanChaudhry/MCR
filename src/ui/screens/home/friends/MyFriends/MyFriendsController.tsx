@@ -2,17 +2,18 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { FONT_SIZE } from "config";
 import { usePreferredTheme } from "hooks";
+import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
 import {
   MyFriend,
   MyFriendsResponseModel,
-  ROOMMATE_REQUEST_STATE
+  RELATION_REQUEST_STATUS
 } from "models/api_responses/MyFriendsResponseModel";
-import React, { FC, useState } from "react";
+import RelationFilterType from "models/enums/RelationFilterType";
+import React, { FC, useEffect, useState } from "react";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
 import { FriendsRootStackParamList } from "routes/FriendsRootStack";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
-import DataGenerator from "utils/DataGenerator";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "../connect_requests/ConnectRequestsController";
 import MyFriendsView from "./MyFriendsView";
@@ -36,32 +37,47 @@ const MyFriendsController: FC<Props> = () => {
     setShowRemoveFriendAlert
   ] = useState<boolean>(false);
 
+  const [
+    relationRequestModel,
+    setRelationRequestModel
+  ] = useState<RelationApiRequestModel>({
+    type: RelationFilterType.FRIENDS,
+    page: 1,
+    paginate: true
+  });
+
   const theme = usePreferredTheme();
 
   const navigation = useNavigation<FriendsNavigationProp>();
 
-  const [myFriends, setMyFriends] = useState<Array<MyFriend>>(
-    DataGenerator.getMyFriends().data
-  );
+  const [myFriends, setMyFriends] = useState<Array<MyFriend>>([]);
 
-  const myFriendsApi = useApi<any, MyFriendsResponseModel>(
-    FriendsApis.getMyFriends
-  );
+  const myFriendsApi = useApi<
+    RelationApiRequestModel,
+    MyFriendsResponseModel
+  >(FriendsApis.getMyFriends);
 
   const handleMyFriendsResponse = async (onComplete?: () => void) => {
-    const { hasError, dataBody, errorBody } = await myFriendsApi.request(
-      []
-    );
+    const { hasError, dataBody, errorBody } = await myFriendsApi.request([
+      relationRequestModel
+    ]);
     if (hasError || dataBody === undefined) {
       AppLog.log("Unable to find unis " + errorBody);
       return;
     } else {
-      setMyFriends(dataBody.data);
+      setMyFriends(dataBody.data.users);
+      setRelationRequestModel({
+        ...relationRequestModel,
+        page: relationRequestModel.page + 1
+      });
       onComplete?.();
     }
   };
 
-  AppLog.log("handlemyfriendresponse: ", handleMyFriendsResponse);
+  useEffect(() => {
+    handleMyFriendsResponse();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onPressReceivedFriendRequests = () => {
     navigation.navigate("ConnectRequests", {
@@ -169,12 +185,13 @@ const MyFriendsController: FC<Props> = () => {
     <>
       <MyFriendsView
         data={myFriends}
+        isLoading={myFriendsApi.loading}
         onPressAction={(item: MyFriend) => {
-          if (item.requestState === ROOMMATE_REQUEST_STATE.NONE) {
-            setShowRequestAlert(true);
-          } else if (
-            item.requestState === ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE
-          ) {
+          if (item.criteria.eligible) {
+            if (item.status === RELATION_REQUEST_STATUS.ACCEPTED) {
+              setShowRequestAlert(true);
+            }
+          } else {
             setShowNotEligibleAlert(true);
           }
         }}
