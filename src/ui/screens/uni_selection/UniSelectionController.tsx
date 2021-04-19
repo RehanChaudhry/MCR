@@ -29,13 +29,13 @@ const UniSelectionController: FC<Props> = () => {
     UniSelectionApis.getUnis
   );
 
-  const openLoginScreen = usePreventDoubleTap(() => {
+  const openLoginScreen = () => {
     navigation.navigate("Login");
-  });
+  };
 
-  const openSSOScreen = usePreventDoubleTap(() => {
+  const openSSOScreen = () => {
     navigation.navigate("SSO_Login");
-  });
+  };
 
   const handleGetUnisApi = async (onComplete?: () => void) => {
     const { hasError, dataBody, errorBody } = await unisApi.request([]);
@@ -50,7 +50,7 @@ const UniSelectionController: FC<Props> = () => {
 
   const theme = usePreferredTheme();
 
-  const uniDidSelect = (item: Uni) => {
+  const uniDidSelect = usePreventDoubleTap((item: Uni) => {
     requestAnimationFrame(() => {
       AppLog.log("selected item: ", item);
       theme.saveCustomPalette({
@@ -66,7 +66,7 @@ const UniSelectionController: FC<Props> = () => {
         openSSOScreen();
       }
     });
-  };
+  });
 
   // Add no toolbar
   useLayoutEffect(() => {

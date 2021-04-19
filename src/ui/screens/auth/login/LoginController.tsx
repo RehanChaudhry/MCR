@@ -41,7 +41,7 @@ const LoginController: FC<Props> = () => {
   const [shouldShowPb, setShouldShowPb] = useState(false);
 
   const openUniSelectionScreen = usePreventDoubleTap(() => {
-    navigation.push("UniSelection");
+    navigation.goBack();
   });
 
   const openForgotPasswordScreen = usePreventDoubleTap(() => {
