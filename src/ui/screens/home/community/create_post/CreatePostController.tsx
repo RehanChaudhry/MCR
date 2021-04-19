@@ -13,7 +13,6 @@ import { CommunityStackParamList } from "routes/CommunityStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { CreatePostView } from "ui/screens/home/community/create_post/CreatePostView";
-import { AppLog } from "utils/Util";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
