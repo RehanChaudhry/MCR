@@ -7,10 +7,6 @@ import { BaseQuestion } from "models/Question";
 import moment from "moment";
 import { AppLog } from "utils/Util";
 import ProfileMatch from "models/ProfileMatch";
-import {
-  defaultPaletteCopy,
-  grayShades
-} from "hooks/theme/ColorPaletteContainer";
 import MatchesApiRequestModel from "models/api_requests/MatchesApiRequestModel";
 import MatchesApiResponseModel from "models/api_responses/MatchesApiResponseModel";
 import {
@@ -195,50 +191,43 @@ const getUnis = () => {
     data: [
       {
         id: "1",
-        name: "Ohio University",
-        location: "Athens, Ohio",
-        logo: "",
-        colorPalette: defaultPaletteCopy,
-        sso_login: false,
-        imageLink:
-          "https://yt3.ggpht.com/ytc/AAUvwnjmlVPI8r5Lma1NPOaQU4z4UamGlStIKerg5g_b4g=s88-c-k-c0x00ffffff-no-rj"
+        title: "Ohio University",
+        timezone: "Athens, Ohio",
+        mainLogo: {
+          fileURL: "",
+          originalName: ""
+        },
+        ssoMethod: "shiboleth"
       },
       {
         id: "2",
-        name: "Boise State University",
-        location: "Boise, Idaho",
-        logo: "",
-        colorPalette: {
-          ...defaultPaletteCopy,
-          primary: "#0033a0",
-          primaryShade: "#DBEAFE",
-          secondary: "#AB3607",
-          secondaryShade: "#EBA184",
-          interface: grayShades.gray
+        title: "Boise State University",
+        timezone: "Boise, Idaho",
+        mainLogo: {
+          fileURL: "",
+          originalName: ""
         },
-        sso_login: true,
-        imageLink:
-          "https://www.bestcollegesonline.org/wp-content/uploads/2018/06/Boise-State-University-Top-30-Most-Affordable-Online-Nurse-Practitioner-Degree-Programs-2018.png"
+        ssoMethod: "off"
       },
       {
         id: "3",
-        name: "Florida International University",
-        location: "Miami, Florida",
-        logo: "",
-        colorPalette: defaultPaletteCopy,
-        sso_login: false,
-        imageLink:
-          "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Florida_Internation_University_seal.svg/1920px-Florida_Internation_University_seal.svg.png"
+        title: "Florida International University",
+        timezone: "Miami, Florida",
+        mainLogo: {
+          fileURL: "",
+          originalName: ""
+        },
+        ssoMethod: "CAS"
       },
       {
         id: "4",
-        name: "Oregon State University",
-        location: "Corvillas, Oregon",
-        logo: "",
-        colorPalette: defaultPaletteCopy,
-        sso_login: true,
-        imageLink:
-          "https://scontent.fkhi10-1.fna.fbcdn.net/v/t1.18169-9/17992269_10155524054093287_8433506851861131962_n.png?_nc_cat=104&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=Pt9G3kMpEMUAX_cq_hK&_nc_oc=AQnFOoKTpjcnImOp6mluKgLfP4PPRTzjry4Yax0x5xaJgLGuymFLfbttRQShhbiHCks&_nc_ht=scontent.fkhi10-1.fna&oh=9238a3e3b73553a4a877fb732826f463&oe=608C8EF8"
+        title: "Oregon State University",
+        timezone: "Corvillas, Oregon",
+        mainLogo: {
+          fileURL: "",
+          originalName: ""
+        },
+        ssoMethod: "off"
       }
     ]
   };

@@ -18,7 +18,7 @@ export default {
   AGREEMENT_DETAILS: "agreement_details",
 
   //Get universities
-  UNIS: "unis",
+  UNIS: "university",
 
   // Profile
   GET_QUESTIONS: "question/",
