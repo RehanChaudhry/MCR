@@ -4,13 +4,13 @@ import { useAuth, usePreventDoubleTap } from "hooks";
 import { SignInApiRequestModel } from "models/api_requests/SignInApiRequestModel";
 import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
 import { SignInApiResponseModel } from "models/api_responses/SignInApiResponseModel";
-import React, { FC, useLayoutEffect, useRef } from "react";
+import React, { FC, useLayoutEffect, useRef, useState } from "react";
 import { Alert } from "react-native";
 import AuthApis from "repo/auth/AuthApis";
+import { useApi } from "repo/Client";
 import { AuthStackParamList } from "routes";
 import NoHeader from "ui/components/headers/NoHeader";
 import { LoginView } from "ui/screens/auth/login/LoginView";
-import { useApi } from "repo/Client";
 import { AppLog } from "utils/Util";
 
 type LoginNavigationProp = StackNavigationProp<
@@ -39,6 +39,8 @@ const LoginController: FC<Props> = () => {
     AuthApis.fetchMyProfile
   );
 
+  const [shouldShowPb, setShouldShowPb] = useState(false);
+
   const openUniSelectionScreen = usePreventDoubleTap(() => {
     navigation.push("UniSelection");
   });
@@ -52,6 +54,8 @@ const LoginController: FC<Props> = () => {
       return;
     }
     AppLog.log("handleSignIn: ");
+
+    setShouldShowPb(true);
 
     // authenticate user
     const { hasError, errorBody, dataBody } = await signInApi.request([
@@ -72,6 +76,7 @@ const LoginController: FC<Props> = () => {
       dataBodyProfile === undefined
     ) {
       Alert.alert("Unable to Sign In", errorBody ?? errorBodyProfile);
+      setShouldShowPb(false);
       return;
     } else {
       await auth.saveUser({
@@ -83,7 +88,7 @@ const LoginController: FC<Props> = () => {
 
   return (
     <LoginView
-      shouldShowProgressBar={signInApi.loading}
+      shouldShowProgressBar={shouldShowPb}
       openForgotPasswordScreen={openForgotPasswordScreen}
       onLogin={(_requestModel) => {
         requestModel.current = _requestModel;
