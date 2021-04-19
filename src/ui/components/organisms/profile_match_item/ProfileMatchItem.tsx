@@ -3,7 +3,7 @@ import { usePreferredTheme } from "hooks";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { shadowStyleProps } from "utils/Util";
-import ProfileMatch from "models/ProfileMatch";
+import RelationModel from "models/RelationModel";
 import { moderateScale } from "config/Dimens";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import MatchScore from "ui/components/molecules/match_score/MatchScore";
@@ -17,11 +17,11 @@ import ChatRound from "assets/images/chat_round.svg";
 import Cross from "assets/images/ic_cross.svg";
 
 interface Props {
-  profileMatch: ProfileMatch;
+  profileMatch: RelationModel;
   onFriendRequestClicked: (userId: number) => void;
   onCrossClicked: (userId: number) => void;
-  onChatButtonClicked: (profileMatch: ProfileMatch) => void;
-  onImageClicked: (profileMatch: ProfileMatch) => void;
+  onChatButtonClicked: (profileMatch: RelationModel) => void;
+  onImageClicked: (profileMatch: RelationModel) => void;
 }
 
 const ProfileMatchItem = ({

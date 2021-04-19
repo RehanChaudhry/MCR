@@ -1,25 +1,26 @@
 import React, { useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
-import ProfileMatch from "models/ProfileMatch";
+import RelationModel from "models/RelationModel";
 import ProfileMatchItem from "ui/components/organisms/profile_match_item/ProfileMatchItem";
 import MatchesFilter from "ui/components/molecules/matches_filter/MatchesFilter";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
-import { FilterCount } from "models/api_responses/MatchesFilterApiResponseModel";
 import { AppLog, capitalizeWords } from "utils/Util";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 import { usePreferredTheme } from "hooks";
 import OptimizedBottomBreadCrumbs, {
   OptimizedBBCItem
 } from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
-import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
+import MatchesTypeFilter, {
+  getMatchesTypeFilterData
+} from "models/enums/MatchesTypeFilter";
 import EGender from "models/enums/EGender";
 
 type Props = {
   isLoading: boolean;
   error: string | undefined;
-  matches?: ProfileMatch[];
+  matches?: RelationModel[];
   onTypeChange: (value: MatchesTypeFilter) => void;
   onFilterChange: (keyword?: string, gender?: EGender) => void;
   pullToRefreshCallback: (onComplete?: () => void) => void;
@@ -27,9 +28,9 @@ type Props = {
   isAllDataLoaded: boolean;
   postFriendRequest: (userId: number) => void;
   postMatchDismiss: (userId: number) => void;
-  filterCounts: FilterCount[];
-  moveToChatScreen: (profileMatch: ProfileMatch) => void;
-  moveToProfileScreen: (profileMatch: ProfileMatch) => void;
+  selectedTotalCount: number;
+  moveToChatScreen: (profileMatch: RelationModel) => void;
+  moveToProfileScreen: (profileMatch: RelationModel) => void;
 };
 
 export const MatchesView: React.FC<Props> = ({
@@ -43,11 +44,15 @@ export const MatchesView: React.FC<Props> = ({
   isAllDataLoaded,
   postFriendRequest,
   postMatchDismiss,
-  filterCounts,
+  selectedTotalCount,
   moveToChatScreen,
   moveToProfileScreen
 }: Props) => {
   const { themedColors } = usePreferredTheme();
+
+  const [filterType, setFilterType] = useState<MatchesTypeFilter>(
+    MatchesTypeFilter.MATCHES
+  );
 
   const [
     isRequestDialogVisible,
@@ -59,9 +64,9 @@ export const MatchesView: React.FC<Props> = ({
     setDismissDialogVisible
   ] = useState<boolean>(false);
 
-  const profileMatch = useRef<ProfileMatch>();
+  const profileMatch = useRef<RelationModel>();
 
-  const renderItem = ({ item }: { item: ProfileMatch }) => (
+  const renderItem = ({ item }: { item: RelationModel }) => (
     <ProfileMatchItem
       profileMatch={item}
       onFriendRequestClicked={() => {
@@ -78,11 +83,14 @@ export const MatchesView: React.FC<Props> = ({
     />
   );
 
-  function getFilterCountData(): OptimizedBBCItem<MatchesTypeFilter>[] {
-    return filterCounts.map((value) => {
+  function filter(): OptimizedBBCItem<MatchesTypeFilter>[] {
+    return getMatchesTypeFilterData().map((value) => {
       const item: OptimizedBBCItem<MatchesTypeFilter> = {
         title: capitalizeWords(
-          `${value.type.replace("_", " ")} (${value.count})`
+          `${value.type.replace("_", " ")} ` +
+            (filterType === value.type
+              ? "(" + selectedTotalCount + ")"
+              : "")
         ),
         value: value.type as MatchesTypeFilter
       };
@@ -177,7 +185,7 @@ export const MatchesView: React.FC<Props> = ({
   return (
     <Screen style={styles.container}>
       <MatchesFilter onFilterChange={onFilterChange} />
-      <FlatListWithPb<ProfileMatch>
+      <FlatListWithPb<RelationModel>
         style={styles.matchesList}
         shouldShowProgressBar={isLoading}
         data={matches}
@@ -196,8 +204,11 @@ export const MatchesView: React.FC<Props> = ({
       {requestDialog()}
       {dismissDialog()}
       <OptimizedBottomBreadCrumbs<MatchesTypeFilter>
-        data={getFilterCountData()}
-        onPress={onTypeChange}
+        data={filter()}
+        onPress={(value) => {
+          setFilterType(value);
+          onTypeChange(value);
+        }}
       />
     </Screen>
   );

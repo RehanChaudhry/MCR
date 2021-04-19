@@ -1,6 +1,6 @@
 import ProfileMatchType from "models/enums/ProfileMatchType";
 
-export class ProfileMatch {
+export class RelationModel {
   userId: number = 0;
   userName?: string;
   profilePicture?: string;
@@ -52,4 +52,4 @@ export class ProfileMatch {
   }
 }
 
-export default ProfileMatch;
+export default RelationModel;

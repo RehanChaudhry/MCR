@@ -1,4 +1,4 @@
-import ProfileMatch from "models/ProfileMatch";
+import RelationModel from "models/RelationModel";
 
 type MatchInfo = {
   id: number;
@@ -15,7 +15,7 @@ type MatchInfo = {
     gender?: string;
     majors?: string;
   };
-  roommates?: ProfileMatch[];
+  roommates?: RelationModel[];
 };
 
 export default MatchInfo;
