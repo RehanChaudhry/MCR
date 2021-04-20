@@ -209,8 +209,10 @@ export const MatchesView: React.FC<Props> = ({
       <OptimizedBottomBreadCrumbs<MatchesTypeFilter>
         data={filter()}
         onPress={(value) => {
-          setFilterType(value!);
-          onTypeChange(value);
+          if (filterType !== value!) {
+            setFilterType(value!);
+            onTypeChange(value);
+          }
         }}
       />
     </Screen>

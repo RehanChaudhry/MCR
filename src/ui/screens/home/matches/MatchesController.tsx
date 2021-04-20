@@ -147,6 +147,8 @@ const MatchesController: FC<Props> = () => {
 
   const onTypeChange = useCallback(
     (value?: MatchesTypeFilter) => {
+      setProfileMatches(undefined);
+      setTotalCount(0);
       requestModel.current.filterBy =
         value !== MatchesTypeFilter.MATCHES ? value : undefined;
       refreshCallback();
