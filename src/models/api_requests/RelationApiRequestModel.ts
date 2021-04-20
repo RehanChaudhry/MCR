@@ -4,6 +4,7 @@ import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
 export type RelationApiRequestModel = {
   type: string;
   page: number;
+  limit: number;
   paginate: boolean;
   keyword?: string;
   gender?: EGender;

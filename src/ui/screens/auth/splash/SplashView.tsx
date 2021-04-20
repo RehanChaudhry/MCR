@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { COLORS, Constants, SPACE } from "config";
 import { AuthContext } from "hooks/useAuth";
 import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
+import { Uni } from "models/api_responses/UniSelectionResponseModel";
 import { UserModel } from "models/api_responses/UserModel";
 import React, { useEffect, useState } from "react";
 import {
@@ -83,6 +84,7 @@ function showForcedUpdateDialog(storeUrl: string) {
 export const SplashView = React.memo<Props>(() => {
   AppLog.log("Rendering SplashView...");
   const [user, setUser] = useState<UserModel>();
+  const [uni, setUni] = useState<Uni>();
   const [isReady, setIsReady] = useState(false);
   //const initialRouteNameRef = useRef<"SignUp" | "Login">("Login");
 
@@ -107,6 +109,11 @@ export const SplashView = React.memo<Props>(() => {
     }
   };
 
+  async function restoreUni() {
+    const _uni = await AuthStorage.getUni();
+    setUni(_uni);
+  }
+
   async function fetchUserProfile(_user: UserModel) {
     AppLog.logForcefully("Fetching user profile...");
     const {
@@ -117,12 +124,16 @@ export const SplashView = React.memo<Props>(() => {
 
     if (!hasError && dataBody) {
       let updatedUser = await auth.saveProfile(dataBody.data, _user);
+      await restoreUni();
       setUser(updatedUser);
     } else {
       AppLog.logForcefully(
         "Error fetching updated profile: " + JSON.stringify(errorBody)
       );
+
+      // let the user continue if we have a previously fetched profile
       if (_user?.profile) {
+        await restoreUni();
         setUser(_user);
       } else {
         auth.logOut();
@@ -171,7 +182,7 @@ export const SplashView = React.memo<Props>(() => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, uni, setUni }}>
       <NavigationContainer>
         {AppLog.log("User exists: " + (user !== undefined))}
         {AppLog.log("User is logged in: " + isLoggedIn(user))}

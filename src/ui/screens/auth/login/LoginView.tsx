@@ -1,3 +1,4 @@
+import { moderateScale } from "config/Dimens";
 import { SignInApiRequestModel } from "models/api_requests/SignInApiRequestModel";
 import React from "react";
 import {
@@ -5,11 +6,10 @@ import {
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import ArrowLeft from "assets/images/arrow_left.svg";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import Colors from "config/Colors";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
-import Logo from "assets/images/logo.svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
@@ -50,6 +50,8 @@ export const LoginView = React.memo<Props>(
     shouldShowProgressBar
   }) => {
     const theme = usePreferredTheme();
+    let auth = useAuth();
+
     const onSubmit = (_value: FormikValues) => {
       AppLog.log("form values" + initialValues);
       onLogin({
@@ -83,7 +85,13 @@ export const LoginView = React.memo<Props>(
               onPress={openUniSelectionScreen}
             />
 
-            <Logo style={styles.logo} />
+            <Image
+              source={{
+                uri: auth?.uni?.mainLogo?.fileURL
+              }}
+              resizeMode="stretch"
+              style={styles.logo}
+            />
 
             <AppLabel
               text={STRINGS.login.signin_to_your_account}
@@ -208,10 +216,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     elevation: 2,
     width: 32,
-    height: 32,
-    marginTop: SPACE.xl
+    height: 32
   },
   logo: {
+    width: moderateScale(200),
+    height: moderateScale(53),
     marginTop: SPACE._3xl
   },
   signInHeading: {

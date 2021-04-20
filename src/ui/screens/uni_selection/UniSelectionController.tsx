@@ -1,18 +1,18 @@
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useAuth, usePreferredTheme, usePreventDoubleTap } from "hooks";
+import { computeShades } from "hooks/theme/ColorPaletteContainer";
 import {
   Uni,
   UniSelectionResponseModel
 } from "models/api_responses/UniSelectionResponseModel";
-import React, { FC, useLayoutEffect, useState } from "react";
+import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import { useApi } from "repo/Client";
-import DataGenerator from "utils/DataGenerator";
-import UniSelectionView from "./UniSelectionView";
-import UniSelectionApis from "../../../repo/auth/UniSelectionApis";
-import { AppLog } from "utils/Util";
-import { usePreferredTheme, usePreventDoubleTap } from "hooks";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthStackParamList } from "routes";
 import NoHeader from "ui/components/headers/NoHeader";
+import { AppLog } from "utils/Util";
+import UniSelectionApis from "../../../repo/auth/UniSelectionApis";
+import UniSelectionView from "./UniSelectionView";
 
 type Props = {};
 
@@ -23,21 +23,21 @@ type LoginNavigationProp = StackNavigationProp<
 
 const UniSelectionController: FC<Props> = () => {
   const navigation = useNavigation<LoginNavigationProp>();
-  const [unis, setUnis] = useState<Array<Uni>>(
-    DataGenerator.getUnis().data
-  );
-
+  const [unis, setUnis] = useState<Array<Uni>>();
+  let auth = useAuth();
   const unisApi = useApi<any, UniSelectionResponseModel>(
     UniSelectionApis.getUnis
   );
 
-  const openLoginScreen = usePreventDoubleTap(() => {
+  const openLoginScreen = async (item: Uni) => {
+    await auth.saveUni(item);
     navigation.navigate("Login");
-  });
+  };
 
-  const openSSOScreen = usePreventDoubleTap(() => {
+  const openSSOScreen = async (item: Uni) => {
+    await auth.saveUni(item);
     navigation.navigate("SSO_Login");
-  });
+  };
 
   const handleGetUnisApi = async (onComplete?: () => void) => {
     const { hasError, dataBody, errorBody } = await unisApi.request([]);
@@ -52,22 +52,33 @@ const UniSelectionController: FC<Props> = () => {
 
   const theme = usePreferredTheme();
 
-  const uniDidSelect = (item: Uni) => {
-    AppLog.log("selected item: ", item);
-    theme.saveCustomPalette(item.colorPalette);
-    if (item.sso_login === true) {
-      openSSOScreen();
-    } else {
-      openLoginScreen();
-    }
-  };
+  const uniDidSelect = usePreventDoubleTap((item: Uni) => {
+    requestAnimationFrame(() => {
+      AppLog.log("selected item: ", item);
+      theme.saveCustomPalette({
+        interface: computeShades(item.interfaceColor),
+        primaryShade: item.primaryColorLight,
+        primary: item.primaryColorDark,
+        secondaryShade: item.secondaryColorLight,
+        secondary: item.secondaryColorDark
+      });
+      if (item.ssoMethod === "off") {
+        openLoginScreen(item);
+      } else {
+        openSSOScreen(item);
+      }
+    });
+  });
 
   // Add no toolbar
   useLayoutEffect(() => {
     navigation.setOptions(NoHeader.create());
   }, [navigation]);
 
-  AppLog.log("handle getuni api: ", handleGetUnisApi);
+  useEffect(() => {
+    handleGetUnisApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <UniSelectionView

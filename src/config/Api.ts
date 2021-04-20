@@ -18,7 +18,7 @@ export default {
   AGREEMENT_DETAILS: "agreement_details",
 
   //Get universities
-  UNIS: "unis",
+  UNIS: "university",
 
   // Profile
   GET_QUESTIONS: "question/",
@@ -33,7 +33,7 @@ export default {
   GET_MATCHES_FILTER_COUNT: "matches-count",
 
   //community, announcements
-  CREATE_POST: "createPost/",
+  CREATE_POST: "post",
   GET_COMMUNITY_ANNOUNCEMENT: "post",
   LIKE_DISLIKE: "post/like",
 

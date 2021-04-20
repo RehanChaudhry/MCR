@@ -5,14 +5,12 @@ import {
 } from "ui/components/atoms/image_background/AppImageBackground";
 import ArrowLeft from "assets/images/arrow_left.svg";
 import LeftArrow from "assets/images/arrow_left.svg";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import Colors from "config/Colors";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
-import Logo from "assets/images/logo.svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Screen from "ui/components/atoms/Screen";
-import LoginImage from "assets/images/forgot_pic.svg";
 import {
   AppButton,
   BUTTON_TYPES
@@ -29,6 +27,7 @@ type Props = {
 export const ForgotPasswordFeedBackView = React.memo<Props>(
   ({ openForgotPasswordScreen, openSignInScreen }) => {
     const theme = usePreferredTheme();
+    const auth = useAuth();
 
     return (
       <Screen>
@@ -46,18 +45,20 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
             onPress={openForgotPasswordScreen}
           />
 
-          <Logo style={styles.logo} />
-          <View
-            style={{
-              aspectRatio: 1.39,
-              width: "100%"
-            }}>
-            <LoginImage
-              width={"100%"}
-              height={"100%"}
-              style={styles.loginImage}
-            />
-          </View>
+          <Image
+            source={{
+              uri: auth?.uni?.mainLogo?.fileURL
+            }}
+            resizeMode="stretch"
+            style={styles.logo}
+          />
+
+          <Image
+            source={require("assets/images/forgot_pic.png")}
+            resizeMode="cover"
+            style={styles.loginImage}
+          />
+
           <View style={styles.mainContainer}>
             <AppLabel
               text={STRINGS.forgotPasswordFeedBack.check_your_inbox}
@@ -145,10 +146,11 @@ const styles = StyleSheet.create({
     elevation: 2,
     width: 32,
     height: 32,
-    marginTop: SPACE.xl,
     marginLeft: SPACE.lg
   },
   logo: {
+    width: moderateScale(200),
+    height: moderateScale(53),
     marginTop: SPACE._2xl,
     marginLeft: SPACE.lg
   },

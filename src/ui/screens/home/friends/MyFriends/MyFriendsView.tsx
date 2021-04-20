@@ -14,8 +14,12 @@ import ConnectionItem, {
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
 
 type Props = {
-  data: MyFriend[];
+  data?: MyFriend[];
   isLoading: boolean;
+  canLoadMore: boolean;
+  error?: string;
+  onPullToRefresh: (onComplete?: () => void) => void;
+  onEndReached: () => void;
   onPressChat: (item: MyFriend) => void;
   onPressAction: (item: MyFriend) => void;
   onPressCross: (item: MyFriend) => void;
@@ -81,6 +85,10 @@ const listItem = (
 const MyFriendsView: FC<Props> = ({
   data,
   isLoading,
+  canLoadMore,
+  error,
+  onPullToRefresh,
+  onEndReached,
   onPressAction,
   onPressChat,
   onPressCross,
@@ -93,6 +101,10 @@ const MyFriendsView: FC<Props> = ({
         keyExtractor={(item) => item.id.toString()}
         style={styles.list}
         shouldShowProgressBar={isLoading}
+        isAllDataLoaded={!canLoadMore}
+        onEndReached={onEndReached}
+        pullToRefreshCallback={onPullToRefresh}
+        error={error}
         ListHeaderComponent={() => (
           <ConnectionListHeader
             title="Received 2 new friend requests"
