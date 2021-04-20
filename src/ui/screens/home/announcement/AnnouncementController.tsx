@@ -38,8 +38,8 @@ const AnnouncementController: FC<Props> = () => {
   );
   const isFetchingInProgress = useRef(false);
   const [announcements, _announcements] = useState<
-    CommunityAnnouncement[]
-  >([]);
+    CommunityAnnouncement[] | undefined
+  >(undefined);
   const navigation = useNavigation<AnnouncementNavigationProp>();
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
 
@@ -123,7 +123,9 @@ const AnnouncementController: FC<Props> = () => {
       );
 
       requestModel.current.page =
-        announcements.length / requestModel.current.limit + 1;
+        announcements !== undefined
+          ? announcements.length / requestModel.current.limit + 1
+          : 1;
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,7 +161,7 @@ const AnnouncementController: FC<Props> = () => {
           onComplete?.();
         })
         .catch(() => {
-          onComplete();
+          onComplete?.();
         });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
