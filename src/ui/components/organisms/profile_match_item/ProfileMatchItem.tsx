@@ -33,6 +33,8 @@ const ProfileMatchItem = ({
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
+  const _profileMatch = new RelationModel(profileMatch);
+
   return (
     <View
       style={[
@@ -42,18 +44,18 @@ const ProfileMatchItem = ({
       <View style={styles.infoContainer}>
         <Pressable
           onPress={() => {
-            onImageClicked(profileMatch);
+            onImageClicked(_profileMatch);
           }}>
           <Image
             style={styles.profileImage}
-            source={{ uri: profileMatch.user?.profilePicture?.fileURL }}
+            source={{ uri: _profileMatch.user?.profilePicture?.fileURL }}
           />
         </Pressable>
         <View style={styles.infoTextContainer}>
           <AppLabel
             style={styles.userName}
             text={
-              profileMatch.user?.getFullName() ?? STRINGS.common.not_found
+              _profileMatch.user?.getFullName() ?? STRINGS.common.not_found
             }
           />
           <AppLabel
@@ -62,14 +64,15 @@ const ProfileMatchItem = ({
               { color: themedColors.interface[600] }
             ]}
             text={`${
-              profileMatch.user?.matchGroupName ?? STRINGS.common.not_found
-            }, ${profileMatch.user?.major ?? STRINGS.common.not_found}`}
+              _profileMatch.user?.matchGroupName ??
+              STRINGS.common.not_found
+            }, ${_profileMatch.user?.major ?? STRINGS.common.not_found}`}
           />
           <MatchScore
             style={styles.matchScore}
             matchScore={
-              profileMatch.matchScore
-                ? `${profileMatch.matchScore}%`
+              _profileMatch.matchScore
+                ? `${_profileMatch.matchScore}%`
                 : STRINGS.common.not_found
             }
           />
@@ -78,7 +81,7 @@ const ProfileMatchItem = ({
       <Pressable
         style={styles.icCross}
         onPress={() => {
-          onCrossClicked(profileMatch.matchingUserId);
+          onCrossClicked(_profileMatch.matchingUserId);
         }}>
         <Cross
           fill={themedColors.interface[400]}
@@ -89,7 +92,7 @@ const ProfileMatchItem = ({
       <View style={styles.buttonContainer}>
         <AppImageBackground
           onPress={() => {
-            onChatButtonClicked(profileMatch);
+            onChatButtonClicked(_profileMatch);
           }}
           containerStyle={styles.btnChat}
           containerShape={CONTAINER_TYPES.SQUARE}
@@ -101,29 +104,29 @@ const ProfileMatchItem = ({
             />
           )}
         />
-        {profileMatch.getType() === ProfileMatchType.NOT_FRIEND && (
+        {_profileMatch.getType() === ProfileMatchType.NOT_FRIEND && (
           <AppButton
             /*isDisable={profileMatch.isFriendRequested}*/
             onPress={() => {
               if (false /*!profileMatch.isFriendRequested*/) {
-                onFriendRequestClicked(profileMatch.matchingUserId);
+                onFriendRequestClicked(_profileMatch.matchingUserId);
               }
             }}
             fontWeight={"semi-bold"}
             textStyle={[
               styles.btnActionText,
-              false /*!profileMatch.isFriendRequested*/
+              false /*!_profileMatch.isFriendRequested*/
                 ? { color: themedColors.interface[500] }
                 : { color: themedColors.primary }
             ]}
             buttonStyle={[
               styles.btnAction,
-              false /*!profileMatch.isFriendRequested*/
+              false /*!_profileMatch.isFriendRequested*/
                 ? { backgroundColor: themedColors.interface[200] }
                 : { backgroundColor: themedColors.primaryShade }
             ]}
             text={
-              false /*!profileMatch.isFriendRequested*/
+              false /*!_profileMatch.isFriendRequested*/
                 ? STRINGS.matches.label_pending_request
                 : STRINGS.matches.action_add_friend
             }

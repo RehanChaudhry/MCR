@@ -92,9 +92,7 @@ const MatchesController: FC<Props> = () => {
   });
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const isFetchingInProgress = useRef(false);
-  const [profileMatches, setProfileMatches] = useState<RelationModel[]>(
-    []
-  );
+  const [profileMatches, setProfileMatches] = useState<RelationModel[]>();
   const [totalCount, setTotalCount] = useState<number>(0);
 
   const getProfileMatches = useCallback(async () => {
@@ -112,7 +110,6 @@ const MatchesController: FC<Props> = () => {
     if (hasError || dataBody === undefined) {
       Alert.alert("Unable to fetch matches", errorBody);
     } else {
-      AppLog.log(JSON.stringify(dataBody));
       setProfileMatches((prevState) => [
         ...(prevState === undefined || requestModel.current.page === 1
           ? []
@@ -130,27 +127,26 @@ const MatchesController: FC<Props> = () => {
     isFetchingInProgress.current = false;
   }, [relationsApi]);
 
-  const refreshCallback = useCallback(
-    (onComplete?: () => void) => {
-      if (isFetchingInProgress.current) {
-        return;
-      }
-      requestModel.current.page = 1;
-      setIsAllDataLoaded(false);
-      getProfileMatches()
-        .then(() => {
-          onComplete?.();
-        })
-        .catch((reason) => {
-          AppLog.log("refreshCallback > catch(), reason:" + reason);
-        });
-    },
-    [getProfileMatches]
-  );
+  const refreshCallback = useCallback((onComplete?: () => void) => {
+    if (isFetchingInProgress.current) {
+      return;
+    }
+    requestModel.current.page = 1;
+    setIsAllDataLoaded(false);
+    getProfileMatches()
+      .then(() => {
+        onComplete?.();
+      })
+      .catch((reason) => {
+        AppLog.log("refreshCallback > catch(), reason:" + reason);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onTypeChange = useCallback(
-    (value: MatchesTypeFilter) => {
-      requestModel.current.type = value;
+    (value?: MatchesTypeFilter) => {
+      requestModel.current.filterBy =
+        value !== MatchesTypeFilter.MATCHES ? value : undefined;
       refreshCallback();
     },
     [refreshCallback]

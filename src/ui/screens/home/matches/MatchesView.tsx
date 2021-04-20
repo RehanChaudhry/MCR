@@ -21,7 +21,7 @@ type Props = {
   isLoading: boolean;
   error: string | undefined;
   matches?: RelationModel[];
-  onTypeChange: (value: MatchesTypeFilter) => void;
+  onTypeChange: (value?: MatchesTypeFilter) => void;
   onFilterChange: (keyword?: string, gender?: EGender) => void;
   pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
@@ -87,9 +87,9 @@ export const MatchesView: React.FC<Props> = ({
     return getMatchesTypeFilterData().map((value) => {
       const item: OptimizedBBCItem<MatchesTypeFilter> = {
         title: capitalizeWords(
-          `${value.type.replace("_", " ")} ` +
-            (filterType === value.type
-              ? "(" + selectedTotalCount + ")"
+          `${value.type.replace("_", " ")}` +
+            (filterType === value.type && selectedTotalCount > 0
+              ? " (" + selectedTotalCount + ")"
               : "")
         ),
         value: value.type as MatchesTypeFilter
@@ -206,7 +206,7 @@ export const MatchesView: React.FC<Props> = ({
       <OptimizedBottomBreadCrumbs<MatchesTypeFilter>
         data={filter()}
         onPress={(value) => {
-          setFilterType(value);
+          setFilterType(value!);
           onTypeChange(value);
         }}
       />

@@ -6,7 +6,7 @@ import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestM
 
 function relations(request: RelationApiRequestModel) {
   return apiClient.get<RelationApiResponseModel>(API.RELATION, {
-    request
+    ...request
   });
 }
 
