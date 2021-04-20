@@ -46,7 +46,6 @@ const MatchesController: FC<Props> = () => {
           text={"More"}
           onPress={() => navigation.navigate("MatchInfo")}
           icon={(color, width, height) => {
-            AppLog.log(color);
             return (
               <InfoCircle
                 width={width}
@@ -96,6 +95,9 @@ const MatchesController: FC<Props> = () => {
   const [totalCount, setTotalCount] = useState<number>(0);
 
   const getProfileMatches = useCallback(async () => {
+    if (isFetchingInProgress.current) {
+      return;
+    }
     isFetchingInProgress.current = true;
 
     // AppLog.log(
@@ -154,7 +156,7 @@ const MatchesController: FC<Props> = () => {
 
   const onFilterChange = useCallback(
     (keyword?: string, gender?: EGender) => {
-      AppLog.log(keyword);
+      // AppLog.log(keyword);
       requestModel.current.keyword = keyword;
       requestModel.current.gender = gender;
       refreshCallback();
@@ -180,7 +182,7 @@ const MatchesController: FC<Props> = () => {
 
     if (!hasError) {
       setProfileMatches((prevState) => {
-        const requestedUser = prevState.find(
+        const requestedUser = prevState?.find(
           (value) => value.matchingUserId === userId
         );
         if (requestedUser) {

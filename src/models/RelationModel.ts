@@ -9,7 +9,7 @@ class RelationUser {
   major?: string;
 
   getFullName(): string {
-    return `${this.firstName} ${this.lastName}`;
+    return `${this.firstName} ${this.lastName ?? ""}`;
   }
 }
 

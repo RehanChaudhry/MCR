@@ -66,22 +66,25 @@ export const MatchesView: React.FC<Props> = ({
 
   const profileMatch = useRef<RelationModel>();
 
-  const renderItem = ({ item }: { item: RelationModel }) => (
-    <ProfileMatchItem
-      profileMatch={item}
-      onFriendRequestClicked={() => {
-        profileMatch.current = item;
-        setRequestDialogVisible(true);
-      }}
-      onCrossClicked={() => {
-        AppLog.log("onCrossClicked()");
-        profileMatch.current = item;
-        setDismissDialogVisible(true);
-      }}
-      onChatButtonClicked={moveToChatScreen}
-      onImageClicked={moveToProfileScreen}
-    />
-  );
+  const renderItem = ({ item }: { item: RelationModel }) => {
+    const _item = new RelationModel(item);
+    return (
+      <ProfileMatchItem
+        profileMatch={_item}
+        onFriendRequestClicked={() => {
+          profileMatch.current = _item;
+          setRequestDialogVisible(true);
+        }}
+        onCrossClicked={() => {
+          AppLog.log("onCrossClicked()");
+          profileMatch.current = _item;
+          setDismissDialogVisible(true);
+        }}
+        onChatButtonClicked={moveToChatScreen}
+        onImageClicked={moveToProfileScreen}
+      />
+    );
+  };
 
   function filter(): OptimizedBBCItem<MatchesTypeFilter>[] {
     return getMatchesTypeFilterData().map((value) => {
