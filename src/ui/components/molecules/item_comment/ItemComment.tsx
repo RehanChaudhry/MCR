@@ -31,15 +31,18 @@ export const ItemComment = React.memo<ItemCommentProps>(
         <Image
           style={styles.imgStyle}
           source={{
-            uri: item.user.profilePicture.fileURL
+            uri: item.user?.profilePicture?.fileURL
           }}
         />
 
-        <View style={styles.textWrapper(themedColors, item.userId === 1)}>
+        <View style={styles.textWrapper(themedColors)}>
           <View style={styles.nameContainer}>
             <AppLabel
-              style={styles.nameText(themedColors)}
-              text={item.user.firstName + " " + item.user.lastName}
+              style={styles.nameText(
+                themedColors,
+                item.shouldRetry !== undefined ? item.shouldRetry : false
+              )}
+              text={item.user?.firstName + " " + item.user?.lastName}
               weight="semi-bold"
             />
             <AppLabel
@@ -71,7 +74,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     borderRadius: 48 / 2
   },
-  textWrapper: (theme: ColorPalette, isCurrentUser: boolean) => {
+  textWrapper: (theme: ColorPalette) => {
     return {
       paddingVertical: SPACE.md,
       marginStart: SPACE.md,
@@ -79,9 +82,7 @@ const styles = StyleSheet.create({
       flexDirection: "column",
       borderRadius: 12,
       flex: 1,
-      backgroundColor: isCurrentUser
-        ? theme.background
-        : theme.primaryShade
+      backgroundColor: theme.background
     };
   },
   nameContainer: {
@@ -89,10 +90,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center"
   },
-  nameText: (theme: ColorPalette) => {
+  nameText: (theme: ColorPalette, retry: boolean) => {
     return {
       fontSize: FONT_SIZE.sm,
-      color: theme.interface["800"]
+      color: retry ? theme.interface["800"] : "#d21818"
     };
   },
   messageText: (theme: ColorPalette) => {

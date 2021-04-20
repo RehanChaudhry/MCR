@@ -6,7 +6,7 @@ import {
 import { StackNavigationProp } from "@react-navigation/stack";
 import Close from "assets/images/close.svg";
 import Strings from "config/Strings";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import React, {
   FC,
   useCallback,
@@ -25,7 +25,8 @@ import CommentsRequestModel from "models/api_requests/CommentsRequestModel";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import {
   Comment,
-  CommentsResponseModel
+  CommentsResponseModel,
+  User
 } from "models/api_responses/CommentsResponseModel";
 import PostCommentApiRequestModel from "models/api_requests/PostCommentApiRequestModel";
 import PostCommentApiResponseModel from "models/api_responses/PostCommentApiResponseModel";
@@ -50,6 +51,7 @@ export const CommentsController: FC<Props> = (Props) => {
   const [comments, _comments] = useState<Comment[] | undefined>(undefined);
   const { params }: any = useRoute<typeof Props.route>();
   const { themedColors } = usePreferredTheme();
+  let { user } = useAuth();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -154,16 +156,47 @@ export const CommentsController: FC<Props> = (Props) => {
   );
 
   function postCommentApi(comment: string) {
+    let newList: Comment[] = [];
+
     handlePostCommentApi({
       postId: params.postId,
       comment: comment
     })
       .then((result) => {
+        if (comments) {
+          setTimeout(() => {
+            let items = [];
+            items.push(...newList);
+            items[0].createdAt = new Date();
+            items[0].user.lastName = "Asad";
+            items[0].isLoading = false;
+            items[0].shouldRetry = true;
+            _comments(items);
+
+            AppLog.log(" items[0]" + JSON.stringify(items[0]));
+          }, 10000);
+        }
         AppLog.log("postComment()=> Success " + JSON.stringify(result));
       })
       .catch((error) => {
         AppLog.log("postComment()=> Failure " + JSON.stringify(error));
       });
+
+    let newComment: Comment = {
+      postId: params.postId,
+      comment: comment,
+      userId: user?.profile?.id ?? 0,
+      user: user?.profile as User,
+      id: 0,
+      createdAt: new Date()
+    };
+
+    newList.push(newComment);
+    if (comment !== undefined) {
+      newList.push(...comments!!);
+    }
+
+    _comments(newList);
   }
 
   const onEndReached = useCallback(async () => {

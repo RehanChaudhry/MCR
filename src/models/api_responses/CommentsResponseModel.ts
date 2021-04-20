@@ -9,8 +9,12 @@ export interface Comment {
   postId: number;
   comment: string;
   createdAt: Date;
-  deletedAt: null;
+  deletedAt?: null;
   user: User;
+
+  //for manual handle new comment
+  isLoading?: boolean;
+  shouldRetry?: boolean;
 }
 
 export interface User {
