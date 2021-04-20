@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { StackScreenProps } from "@react-navigation/stack";
 import { useAuth, usePreventDoubleTap } from "hooks";
 import { SignInApiRequestModel } from "models/api_requests/SignInApiRequestModel";
 import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
@@ -13,7 +13,7 @@ import NoHeader from "ui/components/headers/NoHeader";
 import { LoginView } from "ui/screens/auth/login/LoginView";
 import { AppLog } from "utils/Util";
 
-type LoginNavigationProp = StackNavigationProp<
+export type LoginScreenAuthStackScreenProps = StackScreenProps<
   AuthStackParamList,
   "Login"
 >;
@@ -23,7 +23,9 @@ type Props = {};
 const LoginController: FC<Props> = () => {
   const auth = useAuth();
 
-  const navigation = useNavigation<LoginNavigationProp>();
+  const navigation = useNavigation<
+    LoginScreenAuthStackScreenProps["navigation"]
+  >();
 
   // Add no toolbar
   useLayoutEffect(() => {
