@@ -154,9 +154,13 @@ const AnnouncementController: FC<Props> = () => {
   const refreshCallback = useCallback(
     async (onComplete?: () => void) => {
       requestModel.current.page = 1;
-      fetchAnnouncements().then(() => {
-        onComplete?.();
-      });
+      fetchAnnouncements()
+        .then(() => {
+          onComplete?.();
+        })
+        .catch(() => {
+          onComplete();
+        });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []

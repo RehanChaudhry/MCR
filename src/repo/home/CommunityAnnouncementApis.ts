@@ -7,6 +7,8 @@ import { LikeDislikeResponseModel } from "models/api_responses/LikeDislikeRespon
 import CreatePostApiResponseModel from "models/api_responses/CreatePostApiResponseModel";
 import CommentsRequestModel from "models/api_requests/CommentsRequestModel";
 import { CommentsResponseModel } from "models/api_responses/CommentsResponseModel";
+import PostCommentApiResponseModel from "models/api_responses/PostCommentApiResponseModel";
+import PostCommentApiRequestModel from "models/api_requests/PostCommentApiRequestModel";
 
 function getCommunityAnnouncements(
   requestModel: AnnouncementRequestModel
@@ -20,7 +22,7 @@ function getCommunityAnnouncements(
 }
 
 function getComments(requestModel: CommentsRequestModel) {
-  return apiClient.get<CommentsResponseModel>(API.GET_COMMENTS, {
+  return apiClient.get<CommentsResponseModel>(API.COMMENT, {
     ...requestModel
   });
 }
@@ -38,9 +40,14 @@ function createPost(request: CreatePostApiRequestModel) {
   );
 }
 
+function postComment(request: PostCommentApiRequestModel) {
+  return apiClient.post<PostCommentApiResponseModel>(API.COMMENT, request);
+}
+
 export default {
   createPost,
   getCommunityAnnouncements,
   likeDislike,
-  getComments
+  getComments,
+  postComment
 };

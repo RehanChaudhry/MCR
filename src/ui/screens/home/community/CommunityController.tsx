@@ -171,9 +171,13 @@ const CommunityController: FC<Props> = () => {
   const refreshCallback = useCallback(
     async (onComplete: () => void) => {
       requestModel.current.page = 1;
-      fetchCommunities().then(() => {
-        onComplete();
-      });
+      fetchCommunities()
+        .then(() => {
+          onComplete();
+        })
+        .catch(() => {
+          onComplete();
+        });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []

@@ -7,7 +7,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import Close from "assets/images/close.svg";
 import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
-import ChatItem from "models/ChatItem";
 import React, {
   FC,
   useCallback,
@@ -16,13 +15,10 @@ import React, {
   useRef,
   useState
 } from "react";
-import { View } from "react-native";
 import { useApi } from "repo/Client";
 import { CommunityStackParamList } from "routes/CommunityStack";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
-import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { CommentsView } from "ui/screens/home/comments/CommentsView";
 import { AppLog } from "utils/Util";
 import CommentsRequestModel from "models/api_requests/CommentsRequestModel";
@@ -31,6 +27,8 @@ import {
   Comment,
   CommentsResponseModel
 } from "models/api_responses/CommentsResponseModel";
+import PostCommentApiRequestModel from "models/api_requests/PostCommentApiRequestModel";
+import PostCommentApiResponseModel from "models/api_responses/PostCommentApiResponseModel";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
@@ -49,7 +47,7 @@ export const CommentsController: FC<Props> = (Props) => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
   const isFetchingInProgress = useRef(false);
-  const [comments, _comments] = useState<Comment[]>([]);
+  const [comments, _comments] = useState<Comment[] | undefined>(undefined);
   const { params }: any = useRoute<typeof Props.route>();
   const { themedColors } = usePreferredTheme();
 
@@ -76,12 +74,17 @@ export const CommentsController: FC<Props> = (Props) => {
     paginate: true,
     page: 1,
     limit: 10,
-    postId: params?.postId
+    postId: /* params?.postId*/ 20
   });
 
   const getComments = useApi<CommentsRequestModel, CommentsResponseModel>(
     CommunityAnnouncementApis.getComments
   );
+
+  const postComment = useApi<
+    PostCommentApiRequestModel,
+    PostCommentApiResponseModel
+  >(CommunityAnnouncementApis.postComment);
 
   const handleGetCommentsApi = useCallback(async () => {
     if (isFetchingInProgress.current) {
@@ -92,7 +95,7 @@ export const CommentsController: FC<Props> = (Props) => {
     setShouldShowProgressBar(true);
 
     const { hasError, dataBody, errorBody } = await getComments.request([
-      requestModel
+      requestModel.current
     ]);
 
     setShouldShowProgressBar(false);
@@ -121,47 +124,68 @@ export const CommentsController: FC<Props> = (Props) => {
       );
     }
 
-    /*AppLog.logForcefully("Find chats" + errorBody);
-      setComments(dataBody.data);
-      onComplete?.();*/
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onEndReached = useCallback(async () => {
-    requestModel.current.page = requestModel.current.page!! + 1;
-    await handleGetCommentsApi();
-  }, [handleGetCommentsApi]);
+  const handlePostCommentApi = useCallback(
+    async (request: PostCommentApiRequestModel) => {
+      if (isFetchingInProgress.current) {
+        return;
+      }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const refreshCallback = useCallback(
-    async (onComplete: () => void) => {
-      requestModel.current.page = 1;
-      handleGetCommentsApi().then(() => {
-        onComplete();
-      });
+      isFetchingInProgress.current = true;
+      setShouldShowProgressBar(true);
+
+      const { hasError, dataBody, errorBody } = await postComment.request([
+        request
+      ]);
+
+      setShouldShowProgressBar(false);
+      isFetchingInProgress.current = false;
+
+      if (hasError || dataBody === undefined) {
+        return errorBody;
+      } else {
+        return dataBody;
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
-  const sentMessage = (message: ChatItem) => {
-    AppLog.log("message to sent : " + JSON.stringify(message));
-  };
-
-  function updateCommentsList(
-    oldList: ChatItem[],
-    message: ChatItem
-  ): ChatItem[] {
-    sentMessage(message);
-
-    let newList: ChatItem[] = [];
-
-    newList.push(...oldList);
-    newList.push(message);
-
-    return newList;
+  function postCommentApi(comment: string) {
+    handlePostCommentApi({
+      postId: params.postId,
+      comment: comment
+    })
+      .then((result) => {
+        AppLog.log("postComment()=> Success " + JSON.stringify(result));
+      })
+      .catch((error) => {
+        AppLog.log("postComment()=> Failure " + JSON.stringify(error));
+      });
   }
+
+  const onEndReached = useCallback(async () => {
+    AppLog.logForcefully("onEndReached");
+    requestModel.current.page = requestModel.current.page!! + 1;
+    await handleGetCommentsApi();
+  }, [handleGetCommentsApi]);
+
+  const refreshCallback = useCallback(
+    async (onComplete: () => void) => {
+      requestModel.current.page = 1;
+      handleGetCommentsApi()
+        .then(() => {
+          onComplete();
+        })
+        .catch(() => {
+          onComplete();
+        });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   useEffect(() => {
     handleGetCommentsApi().then().catch();
@@ -169,25 +193,14 @@ export const CommentsController: FC<Props> = (Props) => {
   }, []);
 
   return (
-    <ProgressErrorView
+    <CommentsView
       data={comments}
-      isLoading={getComments.loading}
+      sentMessageApi={postCommentApi}
+      shouldShowProgressBar={shouldShowProgressBar}
+      onEndReached={onEndReached}
+      isAllDataLoaded={isAllDataLoaded}
       error={getComments.error}
-      errorView={(message) => {
-        return (
-          <View>
-            <AppLabel text={message} />
-          </View>
-        );
-      }}>
-      <CommentsView
-        data={comments}
-        sentMessageApi={updateCommentsList}
-        shouldShowProgressBar={shouldShowProgressBar}
-        onEndReached={onEndReached}
-        isAllDataLoaded={isAllDataLoaded}
-        error={getComments.error}
-      />
-    </ProgressErrorView>
+      pullToRefreshCallback={refreshCallback}
+    />
   );
 };
