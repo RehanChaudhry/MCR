@@ -1,4 +1,4 @@
-import ActivityLog from "models/ActivityLog";
+import ActivityLog from "models/api_responses/ActivityLogsResponseModel";
 import { STRINGS } from "config";
 
 export interface ActivityLogSection {

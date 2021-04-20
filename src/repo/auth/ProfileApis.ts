@@ -32,14 +32,9 @@ function answers(requestModel: AnswerApiRequestModel) {
 function activityLogs(requestModel: ActivityLogApiRequestModel) {
   return apiClient.get<ActivityLogsResponseModel>(API.GET_ACTIVITY_LOGS, {
     paginate: requestModel.paginate,
-    page: requestModel.page,
-    limit: requestModel.limit,
-    keyword: requestModel.keyword,
     userType: requestModel.userType,
-    actionType: requestModel.actionType,
     startDate: requestModel.startDate,
-    endDate: requestModel.endDate,
-    attributes: requestModel.attributes
+    endDate: requestModel.endDate
   });
 }
 

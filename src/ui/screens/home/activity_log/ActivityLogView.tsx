@@ -3,7 +3,7 @@ import { SectionList, StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import ActivityLog from "models/ActivityLog";
+import ActivityLog from "models/api_responses/ActivityLogsResponseModel";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import Selector from "assets/images/selector.svg";
 import ActivityLogItem from "ui/components/organisms/activity_log_item/ActivityLogItem";
@@ -103,7 +103,7 @@ export const ActivityLogView: React.FC<Props> = ({
             });
           }}
           refreshing={isRefreshing}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item, index) => item.data[index].id.toString()}
           stickySectionHeadersEnabled={true}
         />
       )}

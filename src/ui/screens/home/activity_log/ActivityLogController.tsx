@@ -40,14 +40,9 @@ const ActivityLogController: FC<Props> = () => {
 
   const requestModel = useRef<ActivityLogApiRequestModel>({
     paginate: true,
-    page: 1,
-    limit: 1,
-    keyword: searchByKeyword?.title,
     userType: "Student",
-    actionType: "new-student",
     startDate: "2018-11-26",
-    endDate: "2021-07-26",
-    attributes: "id,userId,createdAt,data"
+    endDate: "2021-07-26"
   });
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const isFetchingInProgress = useRef(false);
@@ -102,9 +97,9 @@ const ActivityLogController: FC<Props> = () => {
             : prevState.data),
           ...dataBody!.data
         ],
-        pagination: dataBody!.pagination
+        pagination: 10
       }));
-      requestModel.current.page = dataBody!.pagination?.next ?? 0;
+      //requestModel.current.page = dataBody!.pagination?.next ?? 0;
     } else {
       Alert.alert("Unable to fetch matches", errorBody);
       AppLog.log("Actitivy Logs" + activityLogs);
@@ -116,10 +111,14 @@ const ActivityLogController: FC<Props> = () => {
   const onEndReached = () => {
     // getActivityLogs();
   };
-  const searchText = useCallback((textToSearch: DropDownItem) => {
-    AppLog.log("Searching: " + textToSearch);
-    setSearchByKeyword(textToSearch);
-  }, []);
+  const searchText = useCallback(
+    (textToSearch: DropDownItem) => {
+      AppLog.log("Searching: " + textToSearch);
+      setSearchByKeyword(textToSearch);
+      AppLog.log(searchByKeyword);
+    },
+    [searchByKeyword]
+  );
 
   useEffect(() => {
     getActivityLogs();
