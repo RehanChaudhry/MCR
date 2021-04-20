@@ -1,0 +1,58 @@
+{
+  "duration": 357,
+  "problem": "CLIENT_ERROR",
+  "originalError": {
+    "message": "Request failed with status code 401",
+    "name": "Error",
+    "stack": "createError@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:118375:26\nsettle@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:118365:25\nhandleLoad@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:118265:15\ndispatchEvent@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:32386:31\nsetReadyState@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:31544:27\n__didCompleteResponse@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:31375:29\nemit@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:7202:42\n__callFunction@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2813:36\nhttp://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2545:31\n__guard@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2767:15\ncallFunctionReturnFlushedQueue@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2544:21\ncallFunctionReturnFlushedQueue@[native code]",
+    "config": {
+      "url": "user/me",
+      "method": "get",
+      "headers": { "Accept": "application/json" },
+      "params": {},
+      "baseURL": "https://mcr-dev.cygnis.dev/api/",
+      "transformRequest": [null],
+      "transformResponse": [null],
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "maxBodyLength": -1
+    }
+  },
+  "ok": false,
+  "status": 401,
+  "headers": {
+    "www-authenticate": "Bearer realm=\"Users\"",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-xss-protection": "1; mode=block",
+    "cf-request-id": "097b1b334e000018fca4835000000001",
+    "cf-cache-status": "DYNAMIC",
+    "date": "Fri, 16 Apr 2021 07:08:06 GMT",
+    "x-powered-by": "Express",
+    "cf-ray": "640b94987d8518fc-SIN",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=m%2FLT1LUuJV3HXk0%2B53AXLtTkjzvEvNttwcmSiZigBp0yHB4h94smxItWaNnxadUgOglTcbg%2F7m3%2FKDuE38Foi6uA%2F78vZS0Lisj0W8L3lEbtl9s%3D\"}],\"max_age\":604800,\"group\":\"cf-nel\"}",
+    "server": "cloudflare",
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "x-content-type-options": "nosniff",
+    "vary": "Origin",
+    "x-frame-options": "SAMEORIGIN"
+  },
+  "config": {
+    "url": "user/me",
+    "method": "get",
+    "headers": { "Accept": "application/json" },
+    "params": {},
+    "baseURL": "https://mcr-dev.cygnis.dev/api/",
+    "transformRequest": [null],
+    "transformResponse": [null],
+    "timeout": 0,
+    "xsrfCookieName": "XSRF-TOKEN",
+    "xsrfHeaderName": "X-XSRF-TOKEN",
+    "maxContentLength": -1,
+    "maxBodyLength": -1
+  },
+  "data": "Unauthorized"
+}

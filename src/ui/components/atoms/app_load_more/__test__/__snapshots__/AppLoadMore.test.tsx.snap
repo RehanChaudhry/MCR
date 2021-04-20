@@ -11,41 +11,51 @@ exports[`snapshot testing 1`] = `
     }
   }
 >
-  <ActivityIndicator
-    animating={true}
-    color="#111827"
-    hidesWhenStopped={true}
-    size={25}
-  />
-  <Text
-    numberOfLines={3}
+  <View
     style={
-      Array [
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "paddingVertical": 10,
+      }
+    }
+  >
+    <ActivityIndicator
+      animating={true}
+      color="#111827"
+      hidesWhenStopped={true}
+      size="small"
+    />
+    <Text
+      numberOfLines={3}
+      style={
         Array [
+          Array [
+            Object {
+              "fontFamily": "Inter-Regular",
+            },
+            Object {
+              "color": "#111827",
+            },
+            Object {
+              "lineHeight": 35,
+            },
+            Array [
+              Object {
+                "fontSize": 25,
+                "paddingLeft": 5,
+              },
+              undefined,
+            ],
+          ],
           Object {
             "fontFamily": "Inter-Regular",
           },
-          Object {
-            "color": "#111827",
-          },
-          Object {
-            "lineHeight": 35,
-          },
-          Array [
-            Object {
-              "fontSize": 25,
-              "paddingLeft": 5,
-            },
-            undefined,
-          ],
-        ],
-        Object {
-          "fontFamily": "Inter-Regular",
-        },
-      ]
-    }
-  >
-    Loading, please wait
-  </Text>
+        ]
+      }
+    >
+      Loading, please wait
+    </Text>
+  </View>
 </View>
 `;

@@ -14,7 +14,7 @@ import { FONT_SIZE } from "config";
 
 export interface AppLoadMoreProps extends TouchableOpacityProps {
   text?: string;
-  loaderSize?: number;
+  loaderSize?: number | "small" | "large";
   textStyle?: StyleProp<TextStyle>;
   shouldShowLoadMore?: boolean;
   shouldNotOptimize?: boolean;
@@ -22,7 +22,7 @@ export interface AppLoadMoreProps extends TouchableOpacityProps {
 
 export const AppLoadMore = optimizedMemo<AppLoadMoreProps>(
   ({
-    loaderSize = 25,
+    loaderSize = "small",
     text = "Loading, please wait",
     textStyle,
     shouldShowLoadMore = true
@@ -30,7 +30,7 @@ export const AppLoadMore = optimizedMemo<AppLoadMoreProps>(
     const theme = usePreferredTheme();
     const view = () => {
       return (
-        <>
+        <View style={style.row}>
           <ActivityIndicator
             size={loaderSize}
             color={theme.themedColors.label}
@@ -40,7 +40,7 @@ export const AppLoadMore = optimizedMemo<AppLoadMoreProps>(
             style={[style.textStyle, textStyle]}
             numberOfLines={3}
           />
-        </>
+        </View>
       );
     };
     return (
@@ -57,6 +57,11 @@ const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row"
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingVertical: 10
   },
   textStyle: {
     paddingLeft: 5,

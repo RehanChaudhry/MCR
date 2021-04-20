@@ -76,6 +76,19 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
     return (data?.length ?? 0) > 0;
   }
 
+  const footerWrapper = React.memo<Props<any>>(() => {
+    return (
+      <>
+        {!isAllDataLoaded && shouldShowProgressBar && data !== undefined && (
+          <View style={styles.loadMore}>
+            <AppLoadMore testID="loader" />
+          </View>
+        )}
+        {ItemSeparatorHeaderAndFooterComponent}
+      </>
+    );
+  });
+
   function getNormalView() {
     if (shouldShowError()) {
       return getErrorView();
@@ -93,7 +106,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
           onEndReached={isAllDataLoaded ? undefined : onEndReached}
           ItemSeparatorComponent={ItemSeparatorHeaderAndFooterComponent}
           ListHeaderComponent={ItemSeparatorHeaderAndFooterComponent}
-          ListFooterComponent={ItemSeparatorHeaderAndFooterComponent}
+          ListFooterComponent={footerWrapper}
           {...rest}
         />
       );
@@ -108,10 +121,6 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
           />
         </View>
       );
-    }
-
-    if (!isAllDataLoaded && shouldShowProgressBar && data !== undefined) {
-      return <AppLoadMore testID="loader" />;
     }
   }
 
@@ -163,5 +172,10 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center"
+  },
+  loadMore: {
+    height: 30,
+    justifyContent: "center",
+    flexDirection: "column"
   }
 });

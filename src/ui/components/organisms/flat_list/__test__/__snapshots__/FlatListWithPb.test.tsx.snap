@@ -10,6 +10,13 @@ exports[`snapshot 1`] = `
   }
 >
   <RCTScrollView
+    ListFooterComponent={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "compare": null,
+        "type": [Function],
+      }
+    }
     data={
       Array [
         Object {
@@ -128,6 +135,9 @@ exports[`snapshot 1`] = `
           </Text>
         </View>
       </View>
+      <View
+        onLayout={[Function]}
+      />
     </View>
   </RCTScrollView>
 </View>

@@ -13,16 +13,24 @@ import { AnnouncementHeader } from "ui/components/molecules/announcement_header/
 import { ImagesSlideShow } from "ui/components/molecules/image_slide_show/ImagesSlideShow";
 import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
 import { shadowStyleProps } from "utils/Util";
+import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
 export interface AnnouncementItemProps extends TouchableOpacityProps {
   announcementItem: CommunityAnnouncement;
   openCommentsScreen?: () => void | undefined;
   shouldPlayVideo: boolean;
+  likeDislikeAPi: (postId: number) => Promise<boolean>;
 }
 
 export const AnnouncementItem = React.memo<AnnouncementItemProps>(
-  ({ announcementItem, openCommentsScreen, shouldPlayVideo }) => {
+  ({
+    announcementItem,
+    openCommentsScreen,
+    shouldPlayVideo,
+    likeDislikeAPi
+  }) => {
     const theme = usePreferredTheme();
+
     return (
       <View
         style={[
@@ -30,44 +38,52 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
           { backgroundColor: theme.themedColors.background }
         ]}>
         <AnnouncementHeader
-          title={announcementItem.name}
-          subTitle={announcementItem.time}
-          leftImageUrl={announcementItem.profileImageUrl}
+          title={
+            announcementItem.postedByFirstName +
+            " " +
+            announcementItem.postedByLastName
+          }
+          subTitle={new PrettyTimeFormat().getPrettyTime(
+            (announcementItem.updatedAt as unknown) as string
+          )}
+          leftImageUrl={announcementItem.postedByProfilePicture.fileURL}
           shouldShowRightImage={false}
         />
-        {announcementItem.text != null && true && (
+        {announcementItem.content != null && true && (
           <AppLabel
-            text={announcementItem.text}
+            text={announcementItem.content}
             style={[{ color: theme.themedColors.label }, style.text]}
             numberOfLines={0}
           />
         )}
-        {announcementItem.link != null && true && (
+        {announcementItem.link != null && (
           <WebViewComponent
             url={announcementItem.link}
             urlType={URL_TYPES.LINK}
             shouldPlayVideo={shouldPlayVideo}
           />
         )}
-        {announcementItem.embeddedUrl != null && true && (
+        {announcementItem.embed != null && (
           <WebViewComponent
-            url={announcementItem.embeddedUrl}
+            url={announcementItem.embed!!}
             urlType={URL_TYPES.EMBEDDED}
             shouldPlayVideo={shouldPlayVideo}
           />
         )}
-        {announcementItem.images != null &&
-          true &&
-          announcementItem.images.length > 0 && (
-            <ImagesSlideShow images={announcementItem.images} />
+        {announcementItem.photos !== null &&
+          announcementItem.photos.length > 0 && (
+            <ImagesSlideShow images={announcementItem.photos} />
           )}
-        {announcementItem.metaDataUrl != null && true && (
-          <UrlMetaData url={announcementItem.metaDataUrl} />
+        {announcementItem.embed != null && (
+          <UrlMetaData url={announcementItem.embed} />
         )}
         <AnnouncementFooter
-          commentCount={announcementItem.commentCount}
-          likeCount={announcementItem.likeCount}
+          commentCount={announcementItem.commentsCount}
+          likeCount={announcementItem.likesCount}
           openCommentsScreen={openCommentsScreen}
+          likedBy={announcementItem.isLikedByMe}
+          likeDislikeAPi={likeDislikeAPi}
+          postId={announcementItem.id}
         />
       </View>
     );

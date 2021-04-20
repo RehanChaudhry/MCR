@@ -2,7 +2,7 @@ import Chat from "assets/images/chat.svg";
 import Like from "assets/images/like.svg";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import React from "react";
+import React, { useState } from "react";
 import {
   ImageStyle,
   StyleProp,
@@ -15,6 +15,7 @@ import {
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { CommentButton } from "ui/components/atoms/compact_buttons/CommentButton";
 import { LikeButton } from "ui/components/atoms/compact_buttons/LikeButton";
+import { IsLikedByMe } from "models/api_responses/CommunityAnnouncementResponseModel";
 
 export interface AnnouncementFooterProps extends TouchableOpacityProps {
   commentCount: number;
@@ -29,16 +30,31 @@ export interface AnnouncementFooterProps extends TouchableOpacityProps {
   leftContainerLeftButtonStyle?: StyleProp<ViewStyle>;
   leftContainerRightButtonStyle?: StyleProp<ViewStyle>;
   openCommentsScreen?: () => void | undefined;
+  likedBy: IsLikedByMe[] | undefined;
+  likeDislikeAPi: (postId: number) => Promise<boolean>;
+  postId: number;
 }
 
 export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
   ({
-    likeCount = 3,
-    commentCount = 5,
+    likeCount = 0,
+    commentCount = 0,
     bottomLineStyle,
-    openCommentsScreen
+    openCommentsScreen,
+    likedBy,
+    likeDislikeAPi,
+    postId
   }) => {
     const theme = usePreferredTheme();
+
+    let [
+      showShowLikeButtonSelected,
+      _showShowLikeButtonSelected
+    ] = useState<boolean>(
+      likedBy !== undefined &&
+        likedBy.length > 0 &&
+        likedBy[0].action === "liked"
+    );
     return (
       <View>
         <View
@@ -51,7 +67,14 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
         <View style={style.container}>
           <View style={style.leftRightContainer}>
             <View>
-              <LikeButton shouldSelected={false} />
+              <LikeButton
+                shouldSelected={showShowLikeButtonSelected}
+                onValueChanged={(isLiked: boolean) => {
+                  likeDislikeAPi(postId).then((result) => {
+                    _showShowLikeButtonSelected(!result ?? !isLiked);
+                  });
+                }}
+              />
             </View>
             <View style={style.leftContainerRightSide}>
               <CommentButton onPress={openCommentsScreen} />

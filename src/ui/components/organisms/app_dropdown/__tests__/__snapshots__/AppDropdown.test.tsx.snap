@@ -58,6 +58,13 @@ exports[`Renders snapshot as expected 1`] = `
             style={Object {}}
           >
             <RCTScrollView
+              ListFooterComponent={
+                Object {
+                  "$$typeof": Symbol(react.memo),
+                  "compare": null,
+                  "type": [Function],
+                }
+              }
               data={
                 Array [
                   Object {
@@ -258,6 +265,9 @@ exports[`Renders snapshot as expected 1`] = `
                     </Text>
                   </View>
                 </View>
+                <View
+                  onLayout={[Function]}
+                />
               </View>
             </RCTScrollView>
           </View>
