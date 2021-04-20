@@ -5,6 +5,8 @@ import { SignInApiResponseModel } from "models/api_responses/SignInApiResponseMo
 import { apiClient } from "repo/Client";
 import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
 import { LikeDislikeResponseModel } from "models/api_responses/LikeDislikeResponseModel";
+import CommentsRequestModel from "models/api_requests/CommentsRequestModel";
+import { CommentsResponseModel } from "models/api_responses/CommentsResponseModel";
 
 function createPost(requestModel: CreatePostApiRequestModel) {
   return apiClient.post<SignInApiResponseModel>(
@@ -24,6 +26,12 @@ function getCommunityAnnouncements(
   );
 }
 
+function getComments(requestModel: CommentsRequestModel) {
+  return apiClient.get<CommentsResponseModel>(API.GET_COMMENTS, {
+    ...requestModel
+  });
+}
+
 function likeDislike(postId: number) {
   return apiClient.put<LikeDislikeResponseModel>(
     API.LIKE_DISLIKE + "/" + postId
@@ -33,5 +41,6 @@ function likeDislike(postId: number) {
 export default {
   createPost,
   getCommunityAnnouncements,
-  likeDislike
+  likeDislike,
+  getComments
 };

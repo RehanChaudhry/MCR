@@ -18,7 +18,7 @@ type Props = {
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete: () => void) => void;
   feedsFilterData: FilterCount[];
-  openCommentsScreen?: () => void | undefined;
+  openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
   openReportContentScreen?: () => void | undefined;
   error: string | undefined;

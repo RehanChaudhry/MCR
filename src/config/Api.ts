@@ -35,6 +35,7 @@ export default {
   CREATE_POST: "createPost/",
   GET_COMMUNITY_ANNOUNCEMENT: "post",
   LIKE_DISLIKE: "post/like",
+  GET_COMMENTS: "comment",
 
   //chat
   GET_CHATS: "chats",

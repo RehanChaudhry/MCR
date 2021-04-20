@@ -16,6 +16,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { CommentButton } from "ui/components/atoms/compact_buttons/CommentButton";
 import { LikeButton } from "ui/components/atoms/compact_buttons/LikeButton";
 import { IsLikedByMe } from "models/api_responses/CommunityAnnouncementResponseModel";
+import { AppLog } from "utils/Util";
 
 export interface AnnouncementFooterProps extends TouchableOpacityProps {
   commentCount: number;
@@ -29,7 +30,7 @@ export interface AnnouncementFooterProps extends TouchableOpacityProps {
 
   leftContainerLeftButtonStyle?: StyleProp<ViewStyle>;
   leftContainerRightButtonStyle?: StyleProp<ViewStyle>;
-  openCommentsScreen?: () => void | undefined;
+  openCommentsScreen?: (postId: number) => void | undefined;
   likedBy: IsLikedByMe[] | undefined;
   likeDislikeAPi: (postId: number) => Promise<boolean>;
   postId: number;
@@ -77,7 +78,12 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
               />
             </View>
             <View style={style.leftContainerRightSide}>
-              <CommentButton onPress={openCommentsScreen} />
+              <CommentButton
+                onPress={() => {
+                  AppLog.logForcefully("comment Button called");
+                  openCommentsScreen?.(postId);
+                }}
+              />
             </View>
           </View>
           <View style={style.leftRightContainer}>

@@ -162,8 +162,8 @@ const AnnouncementController: FC<Props> = () => {
     []
   );
 
-  const openCommentsScreen = () => {
-    navigation.navigate("Comments");
+  const openCommentsScreen = (postId: number) => {
+    navigation.navigate("Comments", { postId: postId });
   };
 
   useEffect(() => {
