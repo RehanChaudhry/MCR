@@ -43,6 +43,7 @@ const MyFriendsController: FC<Props> = () => {
   ] = useState<RelationApiRequestModel>({
     type: RelationFilterType.FRIENDS,
     page: 1,
+    limit: 2,
     paginate: true
   });
 
@@ -50,32 +51,92 @@ const MyFriendsController: FC<Props> = () => {
 
   const navigation = useNavigation<FriendsNavigationProp>();
 
-  const [myFriends, setMyFriends] = useState<Array<MyFriend>>([]);
+  const [myFriends, setMyFriends] = useState<Array<MyFriend>>();
+  const [canLoadMore, setCanLoadMore] = useState<boolean>(false);
+  const [isLoadingMyFriends, setLoadingMyFriends] = useState<boolean>(
+    false
+  );
+  const [, setIsRefreshing] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
 
   const myFriendsApi = useApi<
     RelationApiRequestModel,
     MyFriendsResponseModel
   >(FriendsApis.getMyFriends);
 
-  const handleMyFriendsResponse = async (onComplete?: () => void) => {
+  useEffect(() => {
+    setLoadingMyFriends(myFriendsApi.loading);
+  }, [myFriendsApi.loading]);
+
+  const handleMyFriendsResponse = async (
+    isRefreshing: boolean,
+    requestModel: RelationApiRequestModel,
+    onComplete?: () => void
+  ) => {
     const { hasError, dataBody, errorBody } = await myFriendsApi.request([
-      relationRequestModel
+      requestModel
     ]);
     if (hasError || dataBody === undefined) {
-      AppLog.log("Unable to find unis " + errorBody);
+      setErrorMessage(errorBody);
       return;
     } else {
-      setMyFriends(dataBody.data.users);
+      setErrorMessage(undefined);
+      if (isRefreshing) {
+        setMyFriends([...dataBody.data]);
+      } else {
+        setMyFriends([...(myFriends ?? []), ...dataBody.data]);
+      }
+
       setRelationRequestModel({
-        ...relationRequestModel,
-        page: relationRequestModel.page + 1
+        ...requestModel,
+        page: requestModel.page + 1
       });
+      setCanLoadMore(
+        dataBody.data && dataBody.data.length >= requestModel.limit
+      );
       onComplete?.();
     }
+
+    setIsRefreshing(false);
   };
 
+  const onEndReached = () => {
+    if (myFriendsApi.loading || !canLoadMore) {
+      return;
+    }
+
+    handleMyFriendsResponse(false, relationRequestModel);
+  };
+
+  const onPullToRefresh = (onComplete?: () => void) => {
+    if (isLoadingMyFriends) {
+    }
+
+    const myFriendRequestModel: RelationApiRequestModel = {
+      ...relationRequestModel,
+      page: 1
+    };
+
+    const refreshing: boolean = true;
+
+    setRelationRequestModel(myFriendRequestModel);
+    setIsRefreshing(refreshing);
+
+    handleMyFriendsResponse(refreshing, myFriendRequestModel, () => {
+      onComplete?.();
+    });
+  };
+
+  // useEffect(() => {
+  //   if (isRefreshing) {
+  //     handleMyFriendsResponse(() => {
+  //       onComplete?.();
+  //     });
+  //   }
+  // }, [isRefreshing]);
+
   useEffect(() => {
-    handleMyFriendsResponse();
+    handleMyFriendsResponse(false, relationRequestModel);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -185,7 +246,11 @@ const MyFriendsController: FC<Props> = () => {
     <>
       <MyFriendsView
         data={myFriends}
-        isLoading={myFriendsApi.loading}
+        isLoading={isLoadingMyFriends}
+        canLoadMore={canLoadMore}
+        error={errorMessage}
+        onEndReached={onEndReached}
+        onPullToRefresh={onPullToRefresh}
         onPressAction={(item: MyFriend) => {
           if (item.criteria.eligible) {
             if (item.status === RELATION_REQUEST_STATUS.ACCEPTED) {
