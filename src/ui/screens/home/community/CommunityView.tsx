@@ -23,6 +23,7 @@ type Props = {
   openReportContentScreen?: () => void | undefined;
   error: string | undefined;
   likeDislikeAPi: (postId: number) => Promise<boolean>;
+  filterDataBy: (type: string) => void;
 };
 
 export const CommunityView = React.memo<Props>(
@@ -37,7 +38,8 @@ export const CommunityView = React.memo<Props>(
     shouldPlayVideo,
     openReportContentScreen,
     error,
-    likeDislikeAPi
+    likeDislikeAPi,
+    filterDataBy
   }) => {
     const keyExtractor = useCallback(
       (item: CommunityAnnouncement) => item.id.toString(),
@@ -65,7 +67,9 @@ export const CommunityView = React.memo<Props>(
       return feedsFilterData.map((value) => {
         const item: Item = {
           title: value.type,
-          onPress: () => {}
+          onPress: () => {
+            filterDataBy(value.type);
+          }
         };
         return item;
       });

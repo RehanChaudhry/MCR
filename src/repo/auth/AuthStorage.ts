@@ -1,10 +1,10 @@
-import { SignInApiResponseModel } from "models/api_responses/SignInApiResponseModel";
+import { UserModel } from "models/api_responses/UserModel";
 import { AppLog } from "utils/Util";
 import * as Keychain from "react-native-keychain";
 
 const key = "user_data";
 
-const storeUser = async (user: SignInApiResponseModel) => {
+const storeUser = async (user: UserModel) => {
   try {
     await Keychain.setGenericPassword(key, JSON.stringify(user));
   } catch (error) {
@@ -16,7 +16,7 @@ const getUser = async () => {
   try {
     const userAsString = await Keychain.getGenericPassword();
     if (typeof userAsString !== "boolean") {
-      return JSON.parse(userAsString.password) as SignInApiResponseModel;
+      return JSON.parse(userAsString.password) as UserModel;
     }
   } catch (error) {
     AppLog.warn("Error getting the user", error);
@@ -26,7 +26,7 @@ const getUser = async () => {
 const getUserToken = async () => {
   try {
     const user = await getUser();
-    const userToken = user?.data?.accessToken;
+    const userToken = user?.authentication?.accessToken;
     if (userToken === undefined) {
       throw Error("Unable to fetch user token from AsyncStorage");
     }

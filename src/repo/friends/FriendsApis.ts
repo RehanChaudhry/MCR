@@ -7,10 +7,9 @@ import { RoommateRequestsResponseModel } from "models/api_responses/RoommateRequ
 import { apiClient } from "repo/Client";
 
 function getMyFriends(request: RelationApiRequestModel) {
-  return apiClient.get<MyFriendsResponseModel>(
-    API.RELATION,
-    JSON.stringify(request)
-  );
+  return apiClient.get<MyFriendsResponseModel>(API.RELATION, {
+    ...request
+  });
 }
 
 function getMyRoommates() {

@@ -10,6 +10,7 @@ export default {
   BASE_URL: Env.BASE_URL,
   API_URL: "api/",
   LOGIN_URL: "auth/login",
+  FETCH_MY_PROFILE_URL: "user/me",
   FORGOT_PASS_URL: "password/request/",
   RESET_PASS_URL: "password/set/",
   UPDATE_PROFILE_URL: "profile",
@@ -17,7 +18,7 @@ export default {
   AGREEMENT_DETAILS: "agreement_details",
 
   //Get universities
-  UNIS: "unis",
+  UNIS: "university",
 
   // Profile
   GET_QUESTIONS: "question/",
@@ -32,7 +33,7 @@ export default {
   GET_MATCHES_FILTER_COUNT: "matches-count",
 
   //community, announcements
-  CREATE_POST: "createPost/",
+  CREATE_POST: "post",
   GET_COMMUNITY_ANNOUNCEMENT: "post",
   LIKE_DISLIKE: "post/like",
   GET_COMMENTS: "comment",

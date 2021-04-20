@@ -2,7 +2,7 @@ import UserGroupIcon from "assets/images/icon_user_group.svg";
 import { usePreferredTheme } from "hooks";
 import {
   MyFriend,
-  ROOMMATE_REQUEST_STATE
+  RELATION_REQUEST_STATUS
 } from "models/api_responses/MyFriendsResponseModel";
 import React, { FC } from "react";
 import { StyleSheet } from "react-native";
@@ -15,6 +15,7 @@ import ConnectionListHeader from "ui/components/organisms/friends/connection/Con
 
 type Props = {
   data: MyFriend[];
+  isLoading: boolean;
   onPressChat: (item: MyFriend) => void;
   onPressAction: (item: MyFriend) => void;
   onPressCross: (item: MyFriend) => void;
@@ -28,32 +29,36 @@ const listItem = (
   onPressCross: (item: MyFriend) => void
 ) => {
   const actionButtonTitle: () => string = () => {
-    switch (item.requestState) {
-      case ROOMMATE_REQUEST_STATE.NONE:
-        return "Roommate Request";
-      case ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE:
-        return "Not Eligible";
-      case ROOMMATE_REQUEST_STATE.REQUEST_SENT:
+    if (item.criteria.eligible) {
+      if (item.status === RELATION_REQUEST_STATUS.PENDING) {
         return "Pending Request";
+      } else if (item.status === RELATION_REQUEST_STATUS.ACCEPTED) {
+        return "Roommate Request";
+      } else {
+        return "Unknown";
+      }
+    } else {
+      return "Not Eligible";
     }
   };
 
   const actionButtonState: () => CONNECTION_ACTION_STATE = () => {
-    switch (item.requestState) {
-      case ROOMMATE_REQUEST_STATE.NONE:
-        return CONNECTION_ACTION_STATE.NORMAL;
-      case ROOMMATE_REQUEST_STATE.NOT_ELIGIBLE:
-        return CONNECTION_ACTION_STATE.DANGER;
-      case ROOMMATE_REQUEST_STATE.REQUEST_SENT:
+    if (item.criteria.eligible) {
+      if (item.status === RELATION_REQUEST_STATUS.PENDING) {
         return CONNECTION_ACTION_STATE.READONLY;
+      } else {
+        return CONNECTION_ACTION_STATE.NORMAL;
+      }
+    } else {
+      return CONNECTION_ACTION_STATE.DANGER;
     }
   };
 
   return (
     <ConnectionItem
-      title={item.title}
-      subtitle={item.subtitle}
-      profileImage={item.profileImage}
+      title={item.friend.firstName + " " + item.friend.lastName}
+      subtitle={item.friend.matchGroupName}
+      profileImage={item.friend.profilePicture.fileURL}
       actionButtonTitle={actionButtonTitle()}
       actionButtonState={actionButtonState()}
       shouldShowTopActionable={true}
@@ -75,6 +80,7 @@ const listItem = (
 
 const MyFriendsView: FC<Props> = ({
   data,
+  isLoading,
   onPressAction,
   onPressChat,
   onPressCross,
@@ -84,8 +90,9 @@ const MyFriendsView: FC<Props> = ({
   return (
     <Screen shouldAddBottomInset={false}>
       <FlatListWithPb
+        keyExtractor={(item) => item.id.toString()}
         style={styles.list}
-        shouldShowProgressBar={false}
+        shouldShowProgressBar={isLoading}
         ListHeaderComponent={() => (
           <ConnectionListHeader
             title="Received 2 new friend requests"

@@ -7,7 +7,9 @@ import {
   CommunityAnnouncement,
   CommunityAnnouncementResponseModel
 } from "models/api_responses/CommunityAnnouncementResponseModel";
-import { getFeedsTypeFilterData } from "models/enums/FeedsTypeFilter";
+import FeedsTypeFilter, {
+  getFeedsTypeFilterData
+} from "models/enums/FeedsTypeFilter";
 import React, {
   FC,
   useCallback,
@@ -39,9 +41,9 @@ const CommunityController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
   const isFetchingInProgress = useRef(false);
-  const [communities, _communities] = useState<CommunityAnnouncement[]>(
-    []
-  );
+  const [communities, _communities] = useState<
+    CommunityAnnouncement[] | undefined
+  >(undefined);
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   const navigation = useNavigation<CommunityNavigationProp>();
   const theme = usePreferredTheme();
@@ -87,9 +89,10 @@ const CommunityController: FC<Props> = () => {
 
   const requestModel = useRef<AnnouncementRequestModel>({
     paginate: true,
-    page: 2,
-    limit: 100,
-    type: "feed"
+    page: 1,
+    limit: 10,
+    type: "feed",
+    filterBy: "recent"
   });
 
   const getCommunitiesApi = useApi<
@@ -176,6 +179,32 @@ const CommunityController: FC<Props> = () => {
     []
   );
 
+  const filterDataBy = (type: string) => {
+    switch (type) {
+      case FeedsTypeFilter.MOST_RECENT: {
+        requestModel.current.filterBy = "recent";
+        break;
+      }
+      case FeedsTypeFilter.MOST_POPULAR: {
+        requestModel.current.filterBy = "popular";
+        break;
+      }
+      case FeedsTypeFilter.FRIENDS_ONLY: {
+        requestModel.current.filterBy = "friend";
+        break;
+      }
+      default: {
+        requestModel.current.filterBy = "own";
+        break;
+      }
+    }
+
+    _communities(undefined);
+    setIsAllDataLoaded(false);
+    requestModel.current.page = 1;
+    fetchCommunities();
+  };
+
   const getFeedsFilterList = () => {
     return getFeedsTypeFilterData();
   };
@@ -205,6 +234,7 @@ const CommunityController: FC<Props> = () => {
       shouldPlayVideo={shouldPlayVideo}
       openReportContentScreen={openReportContentScreen}
       likeDislikeAPi={likeDislikeApiCall}
+      filterDataBy={filterDataBy}
     />
   );
 };

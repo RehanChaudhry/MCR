@@ -82,6 +82,29 @@ export const grayShades: GrayShades = {
   }
 };
 
+/**
+ * This function returns the Shade specified by the color.
+ * In case where no existing shades found matching the color it will return
+ * the default shade i.e. grayShades.gray
+ * */
+export function computeShades(
+  color: string,
+  defaultShade: Shades = grayShades.gray
+): Shades {
+  let shadeEntries = Object.entries(grayShades);
+  for (let i = 0; i < shadeEntries.length; i++) {
+    let shade = shadeEntries[i][0];
+    let shadeColors = Object.values(shadeEntries[i][1]);
+    for (let j = 0; j < shadeColors.length; j++) {
+      if (shadeColors[j] === color) {
+        // @ts-ignore
+        return grayShades[shade];
+      }
+    }
+  }
+  return defaultShade;
+}
+
 export type ColorPalette = {
   black: string;
   background: string;
@@ -178,8 +201,4 @@ export const colorPaletteContainer: ColorPaletteContainer = {
   dark: (customThemePalette: Partial<ColorPalette>) => {
     return mergeDefaultPaletteWith(darkPalette, customThemePalette);
   }
-};
-
-export const defaultPaletteCopy = {
-  ...defaultPalette
 };

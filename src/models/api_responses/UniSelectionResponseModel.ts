@@ -7,11 +7,36 @@ export type UniSelectionResponseModel = {
 
 export type Uni = {
   id: string;
-  name: string;
-  location: string;
-  logo: string;
-  sso_login: boolean;
-  imageLink: string;
+  title: string;
+  websiteURL: string;
+  subdomain: string;
+  status: string;
+  timezone: string;
+  mainLogo: {
+    fileURL: string;
+    originalName: string;
+  };
+  navLogo: {
+    fileURL: string;
+    originalName: string;
+  };
+  profilePicture: {
+    fileURL: string;
+    originalName: string;
+  };
+  images: {
+    fileURL: string;
+    originalName: string;
+  }[];
+  ssoMethod: string;
+
+  interfaceColor: string;
+  isPrimaryCustom: number;
+  isSecondaryCustom: number;
+  primaryColorDark: string;
+  primaryColorLight: string;
+  secondaryColorDark: string;
+  secondaryColorLight: string;
 
   colorPalette: ColorPalette;
 };

@@ -43,7 +43,12 @@ let initialValues: FormikValues = {
 };
 
 export const LoginView = React.memo<Props>(
-  ({ openForgotPasswordScreen, onLogin, openUniSelectionScreen }) => {
+  ({
+    openForgotPasswordScreen,
+    onLogin,
+    openUniSelectionScreen,
+    shouldShowProgressBar
+  }) => {
     const theme = usePreferredTheme();
     const onSubmit = (_value: FormikValues) => {
       AppLog.log("form values" + initialValues);
@@ -156,6 +161,7 @@ export const LoginView = React.memo<Props>(
                   text={STRINGS.login.sign_in}
                   buttonType={BUTTON_TYPES.NORMAL}
                   fontWeight={"semi-bold"}
+                  shouldShowProgressBar={shouldShowProgressBar}
                   textStyle={[
                     styles.signInButtonText,
                     { color: theme.themedColors.background }
