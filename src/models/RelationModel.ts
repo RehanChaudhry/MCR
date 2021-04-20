@@ -1,54 +1,34 @@
 import ProfileMatchType from "models/enums/ProfileMatchType";
+import FilePath from "models/FilePath";
+
+class RelationUser {
+  firstName?: string;
+  lastName?: string;
+  profilePicture?: FilePath;
+  matchGroupName?: string;
+  major?: string;
+
+  getFullName(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
+}
 
 export class RelationModel {
-  userId: number = 0;
-  userName?: string;
-  profilePicture?: string;
-  classLevel?: string;
-  major?: string;
+  id!: number;
+  matchingUserId: number = 0;
   matchScore?: number;
-  status?: string;
-  isFriend?: boolean = false;
-  isRoommate?: boolean = false;
-  isFriendRequested?: boolean = false;
+  user?: RelationUser;
   createdAt: string = "";
+  updatedAt: string = "";
+  relation?: any;
 
-  constructor(
-    userId: number,
-    userName: string,
-    profilePicture: string,
-    classLevel: string,
-    major: string,
-    matchScore: number,
-    status: string,
-    isFriend: boolean,
-    isRoommate: boolean,
-    isFriendRequested: boolean,
-    createdAt: string
-  ) {
-    this.userId = userId;
-    this.userName = userName;
-    this.profilePicture = profilePicture;
-    this.classLevel = classLevel;
-    this.major = major;
-    this.matchScore = matchScore;
-    this.status = status;
-    this.isFriend = isFriend;
-    this.isRoommate = isRoommate;
-    this.isFriendRequested = isFriendRequested;
-    this.createdAt = createdAt;
+  constructor(relationModel: RelationModel) {
+    Object.assign(this, relationModel);
+    this.user = Object.assign(new RelationUser(), this.user);
   }
 
   getType(): ProfileMatchType {
-    if (this.isRoommate) {
-      return ProfileMatchType.ROOMMATE;
-    } else if (this.isFriend) {
-      return ProfileMatchType.FRIEND;
-    } else if (this.createdAt === "new" /* condition as on server*/) {
-      return ProfileMatchType.NEW;
-    } else {
-      return ProfileMatchType.NOT_FRIEND;
-    }
+    return ProfileMatchType.NOT_FRIEND;
   }
 }
 

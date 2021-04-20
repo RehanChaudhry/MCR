@@ -3,12 +3,10 @@ import { UniSelectionResponseModel } from "models/api_responses/UniSelectionResp
 import ChatItem, { SenderType } from "models/ChatItem";
 import moment from "moment";
 import { AppLog } from "utils/Util";
-import RelationModel from "models/RelationModel";
 import {
   defaultPaletteCopy,
   grayShades
 } from "hooks/theme/ColorPaletteContainer";
-import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
 import MatchInfo from "models/MatchInfo";
 import { MyRoommatesResponseModel } from "models/api_responses/MyRoommatesResponseModel";
 import { DismissedOrBlockedResponseModel } from "models/api_responses/DismissedOrBlockedResponseModel";
@@ -20,7 +18,6 @@ import ActivityType from "models/enums/ActivityType";
 import ActivityLog from "models/ActivityLog";
 import AgreementStatus from "models/enums/AgreementStatusType";
 import { AgreementDetailsResponseModel } from "models/api_responses/AgreementDetailsResponseModel";
-import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
 
 const getNotifications = () => {
   const date = new Date();
@@ -310,118 +307,6 @@ const getFriendRequests = () => {
       }
     ]
   };
-  return response;
-};
-
-const getProfileMatch = (tens: number) => {
-  const profileMatches: RelationModel[] = [];
-  profileMatches.push(
-    new RelationModel(
-      tens + 1,
-      "Phoenix Walker",
-      "https://publichealth.uga.edu/wp-content/uploads/2020/01/Thomas-Cameron_Student_Profile.jpg",
-      "Freshman",
-      "History",
-      95,
-      "active",
-      false,
-      false,
-      Math.random() < 0.5,
-      "2021-03-15T07:18:24.000Z"
-    )
-  );
-  profileMatches.push(
-    new RelationModel(
-      tens + 2,
-      "Jasmine Lambert",
-      "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
-      "Freshman",
-      "History",
-      32,
-      "active",
-      false,
-      false,
-      Math.random() < 0.5,
-      "2021-03-15T07:18:24.000Z"
-    )
-  );
-  profileMatches.push(
-    new RelationModel(
-      tens + 3,
-      "Sarah Steiner",
-      "https://oregonctso.org/Websites/oregoncte/images/BlogFeaturedImages/decaheadshot.jpg",
-      "Freshman",
-      "History",
-      67,
-      "active",
-      false,
-      false,
-      Math.random() < 0.5,
-      "2021-03-15T07:18:24.000Z"
-    )
-  );
-  profileMatches.push(
-    new RelationModel(
-      tens + 4,
-      "Case Wolf",
-      "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
-      "Freshman",
-      "History",
-      89,
-      "active",
-      false,
-      false,
-      Math.random() < 0.5,
-      "2021-03-15T07:18:24.000Z"
-    )
-  );
-  profileMatches.push(
-    new RelationModel(
-      tens + 5,
-      "Alden Chaney",
-      "https://news.umanitoba.ca/wp-content/uploads/2019/03/IMG_9991-1200x800.jpg",
-      "Freshman",
-      "History",
-      23,
-      "active",
-      false,
-      false,
-      Math.random() < 0.5,
-      "2021-03-15T07:18:24.000Z"
-    )
-  );
-  return profileMatches;
-};
-
-const getProfileMatches: (
-  request: RelationApiRequestModel
-) => Promise<{
-  hasError: boolean;
-  errorBody: undefined;
-  dataBody: RelationApiResponseModel;
-}> = async (request: RelationApiRequestModel) => {
-  // AppLog.log("getProfileMatches(), request: " + JSON.stringify(request));
-  const profileMatches: RelationModel[] = getProfileMatch(
-    request.page * 10
-  );
-  const response = {
-    hasError: false,
-    errorBody: undefined,
-    dataBody: {
-      message: "Success",
-      data: profileMatches,
-      pagination: {
-        total: 15,
-        current: request.page,
-        first: profileMatches[0].userId,
-        last: profileMatches[profileMatches.length - 1].userId,
-        next: request.page + 1 <= 3 ? request.page + 1 : 0
-      }
-    }
-  };
-  // AppLog.log(
-  //   "getProfileMatches(), response: " + JSON.stringify(response.dataBody)
-  // );
   return response;
 };
 
@@ -753,25 +638,10 @@ const getMatchInfo = () => {
       gender: "Male or female",
       majors: "Fine Arts Community"
     },
-    roommates: [getRoommate(0), getRoommate(1)]
+    roommates: []
   };
   return matchInfo;
 };
-
-const getRoommate = (id: number) =>
-  new RelationModel(
-    id,
-    "Phoenix Walker",
-    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-    "Freshman",
-    "History",
-    95,
-    "active",
-    true,
-    true,
-    true,
-    "2021-03-15T07:18:24.000Z"
-  );
 
 const createComments = (): ChatItem[] => {
   const comments: ChatItem[] = [];
@@ -884,8 +754,6 @@ export default {
   getNotifications,
   createChatThread,
   createChat,
-  getProfileMatch,
-  getProfileMatches,
   getUnis,
   getMatchInfo,
   getMyRoommates,

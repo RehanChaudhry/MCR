@@ -5,10 +5,9 @@ import RelationApiResponseModel from "models/api_responses/RelationApiResponseMo
 import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
 
 function relations(request: RelationApiRequestModel) {
-  return apiClient.get<RelationApiResponseModel>(
-    API.RELATION,
-    JSON.stringify(request)
-  );
+  return apiClient.get<RelationApiResponseModel>(API.RELATION, {
+    request
+  });
 }
 
 function friendRequest(userId: number) {

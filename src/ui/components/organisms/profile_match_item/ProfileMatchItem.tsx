@@ -46,20 +46,24 @@ const ProfileMatchItem = ({
           }}>
           <Image
             style={styles.profileImage}
-            source={{ uri: profileMatch.profilePicture }}
+            source={{ uri: profileMatch.user?.profilePicture?.fileURL }}
           />
         </Pressable>
         <View style={styles.infoTextContainer}>
           <AppLabel
             style={styles.userName}
-            text={profileMatch.userName ?? STRINGS.common.not_found}
+            text={
+              profileMatch.user?.getFullName() ?? STRINGS.common.not_found
+            }
           />
           <AppLabel
             style={[
               styles.subtitle,
               { color: themedColors.interface[600] }
             ]}
-            text={`${profileMatch.classLevel}, ${profileMatch.major}`}
+            text={`${
+              profileMatch.user?.matchGroupName ?? STRINGS.common.not_found
+            }, ${profileMatch.user?.major ?? STRINGS.common.not_found}`}
           />
           <MatchScore
             style={styles.matchScore}
@@ -74,7 +78,7 @@ const ProfileMatchItem = ({
       <Pressable
         style={styles.icCross}
         onPress={() => {
-          onCrossClicked(profileMatch.userId);
+          onCrossClicked(profileMatch.matchingUserId);
         }}>
         <Cross
           fill={themedColors.interface[400]}
@@ -99,27 +103,27 @@ const ProfileMatchItem = ({
         />
         {profileMatch.getType() === ProfileMatchType.NOT_FRIEND && (
           <AppButton
-            isDisable={profileMatch.isFriendRequested}
+            /*isDisable={profileMatch.isFriendRequested}*/
             onPress={() => {
-              if (!profileMatch.isFriendRequested) {
-                onFriendRequestClicked(profileMatch.userId);
+              if (false /*!profileMatch.isFriendRequested*/) {
+                onFriendRequestClicked(profileMatch.matchingUserId);
               }
             }}
             fontWeight={"semi-bold"}
             textStyle={[
               styles.btnActionText,
-              profileMatch.isFriendRequested
+              false /*!profileMatch.isFriendRequested*/
                 ? { color: themedColors.interface[500] }
                 : { color: themedColors.primary }
             ]}
             buttonStyle={[
               styles.btnAction,
-              profileMatch.isFriendRequested
+              false /*!profileMatch.isFriendRequested*/
                 ? { backgroundColor: themedColors.interface[200] }
                 : { backgroundColor: themedColors.primaryShade }
             ]}
             text={
-              profileMatch.isFriendRequested
+              false /*!profileMatch.isFriendRequested*/
                 ? STRINGS.matches.label_pending_request
                 : STRINGS.matches.action_add_friend
             }

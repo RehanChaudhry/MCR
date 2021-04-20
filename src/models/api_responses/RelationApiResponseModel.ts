@@ -2,7 +2,7 @@ import RelationModel from "models/RelationModel";
 
 type RelationApiResponseModel = {
   message: string;
-  data: RelationModel[];
+  data?: RelationModel[];
   count?: number;
 };
 

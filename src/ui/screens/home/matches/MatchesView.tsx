@@ -104,13 +104,13 @@ export const MatchesView: React.FC<Props> = ({
       title={STRINGS.dialogs.friend_request.title}
       titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
       messageStyle={{ style: styles.dialogMessageStyle }}
-      message={`Are you sure you want to send friend request to ${profileMatch.current?.userName}?`}
+      message={`Are you sure you want to send friend request to ${profileMatch.current?.user?.getFullName()}?`}
       actions={[
         {
           title: STRINGS.dialogs.friend_request.success,
           onPress: () => {
             setRequestDialogVisible(false);
-            postFriendRequest(profileMatch.current!.userId);
+            postFriendRequest(profileMatch.current!.matchingUserId);
             profileMatch.current = undefined;
           },
           style: {
@@ -140,13 +140,13 @@ export const MatchesView: React.FC<Props> = ({
       title={STRINGS.dialogs.dismiss_block.title}
       titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
       messageStyle={{ style: styles.dialogMessageStyle }}
-      message={`Do you want to add ${profileMatch.current?.userName} in your dismissed list or blocked list?`}
+      message={`Do you want to add ${profileMatch.current?.user?.getFullName()} in your dismissed list or blocked list?`}
       actions={[
         {
           title: STRINGS.dialogs.dismiss_block.dismiss,
           onPress: () => {
             setDismissDialogVisible(false);
-            postMatchDismiss(profileMatch.current!.userId);
+            postMatchDismiss(profileMatch.current!.matchingUserId);
             profileMatch.current = undefined;
           },
           style: {
@@ -158,7 +158,7 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.dismiss_block.block,
           onPress: () => {
             setDismissDialogVisible(false);
-            postMatchDismiss(profileMatch.current!.userId);
+            postMatchDismiss(profileMatch.current!.matchingUserId);
             profileMatch.current = undefined;
           },
           style: {
@@ -197,7 +197,7 @@ export const MatchesView: React.FC<Props> = ({
         onEndReached={onEndReached}
         pullToRefreshCallback={pullToRefreshCallback}
         isAllDataLoaded={isAllDataLoaded}
-        keyExtractor={(item) => item.userId.toString()}
+        keyExtractor={(item) => item.matchingUserId.toString()}
         error={error}
         retryCallback={pullToRefreshCallback}
       />
