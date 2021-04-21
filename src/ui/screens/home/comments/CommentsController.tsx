@@ -158,6 +158,11 @@ export const CommentsController: FC<Props> = (Props) => {
   function postCommentApi(comment: string) {
     let newList: Comment[] = [];
 
+    let commentId =
+      comments !== undefined && comments.length > 0
+        ? comments[0].id + 1
+        : 1;
+
     handlePostCommentApi({
       postId: params.postId,
       comment: comment
@@ -168,7 +173,7 @@ export const CommentsController: FC<Props> = (Props) => {
             let items = [
               {
                 ...newList[0],
-                isError: true,
+                isError: false,
                 isLoading: false
               },
               ...newList.slice(1)
@@ -182,6 +187,16 @@ export const CommentsController: FC<Props> = (Props) => {
       })
       .catch((error) => {
         AppLog.log("postComment()=> Failure " + JSON.stringify(error));
+
+        let items = [
+          {
+            ...newList[0],
+            isError: true,
+            isLoading: false
+          },
+          ...newList.slice(1)
+        ];
+        _comments(items);
       });
 
     let newComment: Comment = {
@@ -189,7 +204,7 @@ export const CommentsController: FC<Props> = (Props) => {
       comment: comment,
       userId: user?.profile?.id ?? 0,
       user: user?.profile as User,
-      id: 5456,
+      id: commentId,
       createdAt: new Date(),
       isLoading: true,
       isError: false

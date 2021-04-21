@@ -5,7 +5,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
@@ -23,11 +23,23 @@ export interface ItemCommentProps extends ViewStyle {
 export const ItemComment = React.memo<ItemCommentProps>(
   ({ style, item }) => {
     const { themedColors } = usePreferredTheme();
-
-    AppLog.logForcefully("in ItemComment: " + JSON.stringify(item));
-    let prettyTime = new PrettyTimeFormat().getPrettyTime(
-      (item.createdAt as unknown) as string
+    const DateFormatter = new PrettyTimeFormat();
+    const [prettyTime, setPrettyTime] = useState<string>(
+      DateFormatter.getPrettyTime((item.createdAt as unknown) as string)
     );
+
+    useEffect(() => {
+      let id = setTimeout(() => {
+        setPrettyTime(
+          DateFormatter.getPrettyTime(
+            (item.createdAt as unknown) as string
+          )
+        );
+      }, 10000);
+      return () => {
+        clearTimeout(id);
+      };
+    });
 
     return (
       <View style={[styles.container, style]}>

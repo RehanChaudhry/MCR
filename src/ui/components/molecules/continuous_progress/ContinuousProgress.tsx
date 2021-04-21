@@ -17,7 +17,7 @@ export interface ContinuousProgressProps {
   isLoading: boolean | undefined;
   isError: boolean | undefined;
   retryCallback: () => void;
-  size: number;
+  size?: number;
 }
 
 const values = [{ index: 0 }, { index: 1 }, { index: 2 }];

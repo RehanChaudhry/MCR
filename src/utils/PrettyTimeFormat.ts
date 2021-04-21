@@ -1,5 +1,6 @@
 import moment from "moment";
 import prettyMilliseconds from "pretty-ms";
+import { AppLog } from "utils/Util";
 
 export class PrettyTimeFormat {
   minutesAgoText: string = "";
@@ -26,9 +27,9 @@ export class PrettyTimeFormat {
     let millis = new Date().getTime() - moment(date).valueOf();
     let prettyTime = prettyMilliseconds(millis, { compact: compact });
 
-    // AppLog.log(
-    //   "pretty date is : " + prettyTime + " and original date is : " + date
-    // );
+    AppLog.log(
+      "pretty date is : " + prettyTime + " and original date is : " + date
+    );
 
     if (prettyTime[prettyTime.length - 1] === "y") {
       prettyTime = prettyTime.replace(/.$/, this.yearsAgoText);
@@ -38,6 +39,8 @@ export class PrettyTimeFormat {
       prettyTime = prettyTime.replace(/.$/, this.hoursAgoText);
     } else if (prettyTime[prettyTime.length - 1] === "m") {
       prettyTime = prettyTime.replace(/.$/, this.minutesAgoText);
+    } else if (prettyTime.slice(-2) === "ms") {
+      prettyTime = "Just Now";
     } else if (prettyTime[prettyTime.length - 1] === "s") {
       prettyTime = prettyTime.replace(/.$/, this.secondsAgoText);
     }
