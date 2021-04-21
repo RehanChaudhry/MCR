@@ -76,7 +76,7 @@ export const CommentsController: FC<Props> = (Props) => {
     paginate: true,
     page: 1,
     limit: 10,
-    postId: /* params?.postId*/ 20
+    postId: params?.postId
   });
 
   const getComments = useApi<CommentsRequestModel, CommentsResponseModel>(
