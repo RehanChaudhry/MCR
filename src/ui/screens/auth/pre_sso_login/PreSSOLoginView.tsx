@@ -1,17 +1,18 @@
-import { moderateScale } from "config/Dimens";
 import React from "react";
 import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import ArrowLeft from "assets/images/arrow_left.svg";
-import { useAuth, usePreferredTheme } from "hooks";
+import { usePreferredTheme } from "hooks";
 import Colors from "config/Colors";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Screen from "ui/components/atoms/Screen";
 import Lock from "assets/images/lock-closed.svg";
+import { UniImage } from "ui/components/atoms/UniImage";
+import { UniLogo } from "ui/components/atoms/UniLogo";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
@@ -26,7 +27,6 @@ type Props = {
 export const PreSSOLoginView = React.memo<Props>(
   ({ goBack, openWelcomeScreen }) => {
     const theme = usePreferredTheme();
-    let auth = useAuth();
 
     return (
       <Screen
@@ -50,19 +50,10 @@ export const PreSSOLoginView = React.memo<Props>(
             containerStyle={styles.leftArrow}
             onPress={goBack}
           />
-          <Image
-            source={{
-              uri: auth?.uni?.mainLogo?.fileURL
-            }}
-            resizeMode="stretch"
-            style={styles.logo}
-          />
 
-          <Image
-            source={require("assets/images/pre_sso_login.png")}
-            resizeMode="cover"
-            style={styles.loginImage}
-          />
+          <UniLogo style={styles.logo} />
+
+          <UniImage />
 
           <View style={styles.mainContainer}>
             <HeadingWithText
@@ -130,12 +121,6 @@ const styles = StyleSheet.create({
     height: 32,
     marginLeft: SPACE.lg
   },
-  logo: {
-    width: moderateScale(200),
-    height: moderateScale(53),
-    marginTop: SPACE._2xl,
-    marginLeft: SPACE.lg
-  },
   signInHeading: {
     fontSize: FONT_SIZE.xl,
     marginTop: SPACE._2xl
@@ -150,7 +135,7 @@ const styles = StyleSheet.create({
     height: 44
   },
   spannableText: {
-    marginVertical: SPACE._2xl
+    marginVertical: SPACE.xl
   },
   ssoSecondText: {
     marginTop: SPACE.xl,
@@ -160,11 +145,10 @@ const styles = StyleSheet.create({
     marginTop: SPACE.xl,
     fontSize: FONT_SIZE.sm
   },
-  loginImage: {
+  buttonViewStyle: {
     marginTop: SPACE._2xl
   },
-  buttonViewStyle: {
-    marginTop: SPACE._2xl,
-    marginBottom: SPACE.xl
+  logo: {
+    marginLeft: SPACE.lg
   }
 });

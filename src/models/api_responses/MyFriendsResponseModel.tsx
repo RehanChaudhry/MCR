@@ -1,8 +1,6 @@
 export type MyFriendsResponseModel = {
   message: string;
-  data: {
-    users: MyFriend[];
-  };
+  data: MyFriend[];
 };
 
 export enum RELATION_REQUEST_STATUS {

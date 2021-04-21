@@ -5,12 +5,14 @@ import {
 } from "ui/components/atoms/image_background/AppImageBackground";
 import ArrowLeft from "assets/images/arrow_left.svg";
 import LeftArrow from "assets/images/arrow_left.svg";
-import { useAuth, usePreferredTheme } from "hooks";
+import { usePreferredTheme } from "hooks";
 import Colors from "config/Colors";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Screen from "ui/components/atoms/Screen";
+import { UniImage } from "ui/components/atoms/UniImage";
+import { UniLogo } from "ui/components/atoms/UniLogo";
 import {
   AppButton,
   BUTTON_TYPES
@@ -27,7 +29,6 @@ type Props = {
 export const ForgotPasswordFeedBackView = React.memo<Props>(
   ({ openForgotPasswordScreen, openSignInScreen }) => {
     const theme = usePreferredTheme();
-    const auth = useAuth();
 
     return (
       <Screen>
@@ -45,19 +46,9 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
             onPress={openForgotPasswordScreen}
           />
 
-          <Image
-            source={{
-              uri: auth?.uni?.mainLogo?.fileURL
-            }}
-            resizeMode="stretch"
-            style={styles.logo}
-          />
+          <UniLogo style={styles.logo} />
 
-          <Image
-            source={require("assets/images/forgot_pic.png")}
-            resizeMode="cover"
-            style={styles.loginImage}
-          />
+          <UniImage />
 
           <View style={styles.mainContainer}>
             <AppLabel
@@ -148,12 +139,6 @@ const styles = StyleSheet.create({
     height: 32,
     marginLeft: SPACE.lg
   },
-  logo: {
-    width: moderateScale(200),
-    height: moderateScale(53),
-    marginTop: SPACE._2xl,
-    marginLeft: SPACE.lg
-  },
   signInHeading: {
     fontSize: FONT_SIZE._2xl,
     marginTop: SPACE._2xl
@@ -178,9 +163,6 @@ const styles = StyleSheet.create({
     marginTop: SPACE._2xl,
     fontSize: FONT_SIZE.xs
   },
-  loginImage: {
-    marginTop: SPACE._2xl
-  },
   buttonViewStyle: {
     marginTop: SPACE._2xl,
     marginBottom: SPACE.xl
@@ -191,5 +173,8 @@ const styles = StyleSheet.create({
   },
   signInText: {
     fontSize: moderateScale(15.0)
+  },
+  logo: {
+    marginLeft: SPACE.lg
   }
 });

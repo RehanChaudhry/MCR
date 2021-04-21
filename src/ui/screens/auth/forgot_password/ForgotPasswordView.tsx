@@ -1,14 +1,14 @@
-import { moderateScale } from "config/Dimens";
 import React from "react";
 import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import ArrowLeft from "assets/images/arrow_left.svg";
-import { useAuth, usePreferredTheme } from "hooks";
+import { usePreferredTheme } from "hooks";
 import Colors from "config/Colors";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
+import { UniLogo } from "ui/components/atoms/UniLogo";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import * as Yup from "yup";
@@ -36,7 +36,6 @@ let initialValues: FormikValues = {
 export const ForgotPasswordView = React.memo<Props>(
   ({ openForgotPasswordFeedBackScreen, openSignInScreen }) => {
     const theme = usePreferredTheme();
-    const auth = useAuth();
 
     const onSubmit = (_value: FormikValues) => {
       initialValues = _value;
@@ -67,13 +66,7 @@ export const ForgotPasswordView = React.memo<Props>(
               onPress={openSignInScreen}
             />
 
-            <Image
-              source={{
-                uri: auth?.uni?.mainLogo?.fileURL
-              }}
-              resizeMode="stretch"
-              style={styles.logo}
-            />
+            <UniLogo />
 
             <HeadingWithText
               headingText={STRINGS.forgotpassword.forgot_your_password}
@@ -152,11 +145,6 @@ const styles = StyleSheet.create({
     elevation: 2,
     width: 32,
     height: 32
-  },
-  logo: {
-    width: moderateScale(200),
-    height: moderateScale(53),
-    marginTop: SPACE._2xl
   },
   forgotPasswordHeading: {
     fontSize: FONT_SIZE.xl,

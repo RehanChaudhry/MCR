@@ -1,4 +1,3 @@
-import { moderateScale } from "config/Dimens";
 import { SignInApiRequestModel } from "models/api_requests/SignInApiRequestModel";
 import React from "react";
 import {
@@ -6,11 +5,12 @@ import {
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import ArrowLeft from "assets/images/arrow_left.svg";
-import { useAuth, usePreferredTheme } from "hooks";
+import { usePreferredTheme } from "hooks";
 import Colors from "config/Colors";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { UniLogo } from "ui/components/atoms/UniLogo";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import * as Yup from "yup";
@@ -38,7 +38,7 @@ const validationSchema = Yup.object().shape({
 });
 
 let initialValues: FormikValues = {
-  email: "csakins4z@theglobeandmail.com",
+  email: "cloughnanb@typepad.com",
   password: "Mycollegeroomie1234"
 };
 
@@ -50,7 +50,6 @@ export const LoginView = React.memo<Props>(
     shouldShowProgressBar
   }) => {
     const theme = usePreferredTheme();
-    let auth = useAuth();
 
     const onSubmit = (_value: FormikValues) => {
       AppLog.log("form values" + initialValues);
@@ -85,13 +84,7 @@ export const LoginView = React.memo<Props>(
               onPress={openUniSelectionScreen}
             />
 
-            <Image
-              source={{
-                uri: auth?.uni?.mainLogo?.fileURL
-              }}
-              resizeMode="stretch"
-              style={styles.logo}
-            />
+            <UniLogo />
 
             <AppLabel
               text={STRINGS.login.signin_to_your_account}
@@ -217,11 +210,6 @@ const styles = StyleSheet.create({
     elevation: 2,
     width: 32,
     height: 32
-  },
-  logo: {
-    width: moderateScale(200),
-    height: moderateScale(53),
-    marginTop: SPACE._3xl
   },
   signInHeading: {
     fontSize: FONT_SIZE.xl,
