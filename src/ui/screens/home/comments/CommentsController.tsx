@@ -165,16 +165,18 @@ export const CommentsController: FC<Props> = (Props) => {
       .then((result) => {
         if (comments) {
           setTimeout(() => {
-            let items = [];
-            items.push(...newList);
-            items[0].createdAt = new Date();
-            items[0].user.lastName = "Asad";
-            items[0].isLoading = false;
-            items[0].shouldRetry = true;
+            let items = [
+              {
+                ...newList[0],
+                isError: true,
+                isLoading: false
+              },
+              ...newList.slice(1)
+            ];
             _comments(items);
 
-            AppLog.log(" items[0]" + JSON.stringify(items[0]));
-          }, 10000);
+            AppLog.log("Items: " + JSON.stringify(items));
+          }, 5000);
         }
         AppLog.log("postComment()=> Success " + JSON.stringify(result));
       })
@@ -187,8 +189,10 @@ export const CommentsController: FC<Props> = (Props) => {
       comment: comment,
       userId: user?.profile?.id ?? 0,
       user: user?.profile as User,
-      id: 0,
-      createdAt: new Date()
+      id: 5456,
+      createdAt: new Date(),
+      isLoading: true,
+      isError: false
     };
 
     newList.push(newComment);

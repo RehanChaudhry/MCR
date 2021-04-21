@@ -14,7 +14,7 @@ export interface Comment {
 
   //for manual handle new comment
   isLoading?: boolean;
-  shouldRetry?: boolean;
+  isError?: boolean;
 }
 
 export interface User {

@@ -12,6 +12,8 @@ import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { usePreferredTheme } from "hooks";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import { Comment } from "models/api_responses/CommentsResponseModel";
+import { AppLog } from "utils/Util";
+import { ContinuousProgress } from "ui/components/molecules/continuous_progress/ContinuousProgress";
 
 export interface ItemCommentProps extends ViewStyle {
   item: Comment;
@@ -22,6 +24,7 @@ export const ItemComment = React.memo<ItemCommentProps>(
   ({ style, item }) => {
     const { themedColors } = usePreferredTheme();
 
+    AppLog.logForcefully("in ItemComment: " + JSON.stringify(item));
     let prettyTime = new PrettyTimeFormat().getPrettyTime(
       (item.createdAt as unknown) as string
     );
@@ -38,10 +41,8 @@ export const ItemComment = React.memo<ItemCommentProps>(
         <View style={styles.textWrapper(themedColors)}>
           <View style={styles.nameContainer}>
             <AppLabel
-              style={styles.nameText(
-                themedColors,
-                item.shouldRetry !== undefined ? item.shouldRetry : false
-              )}
+              style={styles.nameText(themedColors)}
+              shouldNotOptimize={true}
               text={item.user?.firstName + " " + item.user?.lastName}
               weight="semi-bold"
             />
@@ -58,6 +59,17 @@ export const ItemComment = React.memo<ItemCommentProps>(
             ellipsizeMode="tail"
             weight="normal"
           />
+
+          <View
+            style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+            <ContinuousProgress
+              isLoading={item.isLoading}
+              isError={item.isError}
+              retryCallback={() => {
+                AppLog.logForcefully("retry callback");
+              }}
+            />
+          </View>
         </View>
       </View>
     );
@@ -90,10 +102,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center"
   },
-  nameText: (theme: ColorPalette, retry: boolean) => {
+  nameText: (theme: ColorPalette) => {
     return {
       fontSize: FONT_SIZE.sm,
-      color: retry ? theme.interface["800"] : "#d21818"
+      color: theme.interface["800"]
     };
   },
   messageText: (theme: ColorPalette) => {

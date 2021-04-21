@@ -7,7 +7,6 @@ import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import { AppLog } from "utils/Util";
 import { Comment } from "models/api_responses/CommentsResponseModel";
 import { ItemComment } from "ui/components/molecules/item_comment/ItemComment";
 
@@ -34,7 +33,7 @@ export const CommentsView = React.memo<Props>(
     const theme = usePreferredTheme();
 
     const renderItem = ({ item }: { item: Comment }) => {
-      AppLog.log("rendering list item : " + JSON.stringify(item));
+      //  AppLog.log("rendering list item : " + JSON.stringify(item));
       return <ItemComment item={item} />;
     };
 
@@ -50,7 +49,7 @@ export const CommentsView = React.memo<Props>(
           data={data}
           style={[styles.list]}
           renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           error={error}
           contentContainerStyle={styles.listContainer}
