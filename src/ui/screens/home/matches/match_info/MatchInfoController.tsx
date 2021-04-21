@@ -13,6 +13,7 @@ import { STRINGS } from "config";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import RelationModel from "models/RelationModel";
 import EScreen from "models/enums/EScreen";
+import { useAuth } from "hooks";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -40,6 +41,8 @@ const MatchInfoController: FC<Props> = () => {
     });
   }, [navigation]);
 
+  const { user } = useAuth();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [matchInfo, setMatchInfo] = useState<MatchInfo>(matchInfoData);
 
@@ -48,7 +51,7 @@ const MatchInfoController: FC<Props> = () => {
     //   "moveToChatScreen(), profile: " + JSON.stringify(profileMatch)
     // );
     navigation.navigate("Chat", {
-      title: [profileMatch.userName ?? STRINGS.common.not_found]
+      title: [profileMatch.user?.getFullName() ?? STRINGS.common.not_found]
     });
   };
 
@@ -95,6 +98,7 @@ const MatchInfoController: FC<Props> = () => {
       }}
       data={matchInfo}>
       <MatchInfoView
+        userProfile={user?.profile!}
         matchInfo={matchInfo}
         moveToChatScreen={moveToChatScreen}
         moveToProfileScreen={moveToProfileScreen}

@@ -66,7 +66,7 @@ export const AppProgressBar = optimizedMemo<AppProgressBarProps>(
               style={[styles.textStyle, bottomTextStyle]}
             />
             <AppLabel
-              text={progressPercentage + "%"}
+              text={Math.round(progressPercentage) + "%"}
               weight="semi-bold"
               style={[styles.textStyle, bottomTextStyle]}
             />

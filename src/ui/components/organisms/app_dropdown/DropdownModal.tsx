@@ -21,7 +21,7 @@ export interface DropDownModalProps {
   selectedItemCallback: (item: DropDownItem) => void;
   dropDownBgColor?: string;
   dialogCloseIconStyle?: StyleProp<ImageStyle>;
-  selectedItemId: string;
+  selectedItemPosition: number;
 }
 
 export const DropdownModal = React.memo<DropDownModalProps>(
@@ -32,26 +32,32 @@ export const DropdownModal = React.memo<DropDownModalProps>(
     selectedItemCallback,
     dropDownBgColor = null,
     dialogCloseIconStyle,
-    selectedItemId
+    selectedItemPosition
   }) => {
     const { themedColors } = usePreferredTheme();
 
-    const getItemColor = (id: string): string => {
-      if (selectedItemId === id) {
+    const getItemColor = (position: number): string => {
+      if (selectedItemPosition === position) {
         return themedColors.primary;
       } else {
         return themedColors.label;
       }
     };
 
-    const renderItem = ({ item }: { item: DropDownItem }) => {
+    const renderItem = ({
+      item,
+      index
+    }: {
+      item: DropDownItem;
+      index: number;
+    }) => {
       return (
         <Pressable
           testID="dropdown-item-click"
           onPress={() => selectedItemCallback(item)}>
           <AppLabel
             text={item.title}
-            style={[styles.flatListItem, { color: getItemColor(item.id) }]}
+            style={[styles.flatListItem, { color: getItemColor(index) }]}
           />
         </Pressable>
       );

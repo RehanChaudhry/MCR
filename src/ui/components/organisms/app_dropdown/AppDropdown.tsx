@@ -61,13 +61,16 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
       setModalVisible(false);
     }
 
-    const [selectedItemId, setSelectedItemId] = useState<string>("none");
+    const [
+      selectedItemPosition,
+      setSelectedItemPosition
+    ] = useState<number>(-1);
     const selectedItem = (item: DropDownItem | any) => {
       AppLog.log("selectedItem " + item.title);
       setModalVisible(false);
       setSelectedItemText(item.title);
       selectedItemCallback(item);
-      setSelectedItemId(item.id);
+      setSelectedItemPosition(item.id);
     };
     AppLog.logForcefully("condition check" + selectedItemText === title);
     return (
@@ -88,7 +91,7 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
           selectedItemCallback={selectedItem}
           dropDownBgColor={dialogBgColor}
           dialogCloseIconStyle={dialogCloseIconStyle}
-          selectedItemId={selectedItemId}
+          selectedItemPosition={selectedItemPosition}
         />
 
         <Pressable
