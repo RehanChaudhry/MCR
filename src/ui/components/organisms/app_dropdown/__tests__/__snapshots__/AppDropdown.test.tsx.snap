@@ -136,12 +136,12 @@ exports[`Renders snapshot as expected 1`] = `
                               "color": "#111827",
                             },
                             Object {
-                              "lineHeight": 10,
+                              "lineHeight": 48,
                             },
                             Array [
                               Object {
                                 "alignSelf": "center",
-                                "fontSize": 6.5,
+                                "fontSize": 32,
                                 "paddingVertical": 10,
                               },
                               Object {
@@ -189,12 +189,12 @@ exports[`Renders snapshot as expected 1`] = `
                               "color": "#111827",
                             },
                             Object {
-                              "lineHeight": 10,
+                              "lineHeight": 48,
                             },
                             Array [
                               Object {
                                 "alignSelf": "center",
-                                "fontSize": 6.5,
+                                "fontSize": 32,
                                 "paddingVertical": 10,
                               },
                               Object {
@@ -242,12 +242,12 @@ exports[`Renders snapshot as expected 1`] = `
                               "color": "#111827",
                             },
                             Object {
-                              "lineHeight": 10,
+                              "lineHeight": 48,
                             },
                             Array [
                               Object {
                                 "alignSelf": "center",
-                                "fontSize": 6.5,
+                                "fontSize": 32,
                                 "paddingVertical": 10,
                               },
                               Object {

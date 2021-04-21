@@ -1,3 +1,5 @@
+import { Sections } from "models/ViewProfileSections";
+
 export type FetchMyProfileResponseModel = {
   message: string;
   data: Profile;
@@ -33,4 +35,5 @@ export type Profile = {
   isFlagged: number;
   createdAt: string;
   updatedAt: string;
+  sections: Sections[];
 };
