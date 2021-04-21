@@ -16,7 +16,7 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
   const { themedColors } = usePreferredTheme();
 
   const keyword = useRef<string | undefined>();
-  const gender = useRef<EGender>(EGender.ALL);
+  const gender = useRef<EGender>();
 
   const onChangeText = useCallback(
     (item) => {

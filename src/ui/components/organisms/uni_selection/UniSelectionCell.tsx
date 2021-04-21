@@ -20,7 +20,7 @@ const UniSelectionCell: FC<Props> = ({ uni, onSelection }) => {
       <View style={styles.imageCircle}>
         <Image
           style={styles.image}
-          source={{ uri: uni.images[0].fileURL }}
+          source={{ uri: uni.profilePicture.fileURL }}
         />
       </View>
       <View style={styles.contentContainer}>

@@ -1,5 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import {
+  StackNavigationProp,
+  StackScreenProps
+} from "@react-navigation/stack";
 import React, { FC, useLayoutEffect } from "react";
 import { AuthStackParamList } from "routes";
 import NoHeader from "ui/components/headers/NoHeader";
@@ -9,19 +12,21 @@ import { WelcomeStackParamList } from "routes/WelcomeStack";
 
 type Props = {};
 
-type LoginNavigationProp = StackNavigationProp<
+export type PreSSOScreenAuthStackScreenProps = StackScreenProps<
   AuthStackParamList,
-  "Login"
+  "SSO_Login"
 >;
 
-type WelcomeNavigationProp = StackNavigationProp<
+type PreSSOScreenWelcomeStackNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
   "Welcome"
 >;
 
 const PreSSOLoginController: FC<Props> = () => {
-  const navigation = useNavigation<LoginNavigationProp>();
-  const navigationWelcome = useNavigation<WelcomeNavigationProp>();
+  const navigation = useNavigation<
+    PreSSOScreenAuthStackScreenProps["navigation"]
+  >();
+  const navigationWelcome = useNavigation<PreSSOScreenWelcomeStackNavigationProp>();
 
   const goBack = usePreventDoubleTap(() => {
     navigation.goBack();

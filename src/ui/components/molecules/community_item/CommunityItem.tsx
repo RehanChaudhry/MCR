@@ -18,7 +18,7 @@ import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
 export interface CommunityItemProps extends TouchableOpacityProps {
   communityItem: CommunityAnnouncement;
-  openCommentsScreen?: () => void | undefined;
+  openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
   openReportContentScreen?: () => void | undefined;
   likeDislikeAPi: (postId: number) => Promise<boolean>;

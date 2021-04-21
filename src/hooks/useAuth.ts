@@ -1,5 +1,6 @@
 import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 import { Authentication } from "models/api_responses/SignInApiResponseModel";
+import { Uni } from "models/api_responses/UniSelectionResponseModel";
 import { UserModel } from "models/api_responses/UserModel";
 import React, { useContext } from "react";
 import AuthStorage from "repo/auth/AuthStorage";
@@ -8,14 +9,25 @@ import { resetApiClient } from "repo/Client";
 type AuthProviderModel = {
   user?: UserModel;
   setUser: (user: UserModel | undefined) => void;
+  uni?: Uni;
+  setUni: (uni: Uni | undefined) => void;
 };
 
 export const AuthContext = React.createContext<AuthProviderModel>({
-  setUser: () => {}
+  setUser: () => {},
+  setUni: () => {}
 });
 
 export default () => {
-  const { user, setUser } = useContext<AuthProviderModel>(AuthContext);
+  const { user, setUser, uni, setUni } = useContext<AuthProviderModel>(
+    AuthContext
+  );
+
+  const saveUni = async (model: Uni) => {
+    await AuthStorage.storeUni(model);
+    setUni(model);
+    return model;
+  };
 
   const saveUser = async (model: UserModel) => {
     await AuthStorage.storeUser(model);
@@ -61,5 +73,5 @@ export default () => {
     AuthStorage.removeUser(() => resetApiClient());
   };
 
-  return { user, saveUser, saveToken, saveProfile, logOut };
+  return { user, uni, saveUser, saveUni, saveToken, saveProfile, logOut };
 };

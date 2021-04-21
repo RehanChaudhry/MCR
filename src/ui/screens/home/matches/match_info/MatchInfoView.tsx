@@ -18,12 +18,12 @@ import SocialDetailForm from "ui/components/templates/about_me/SocialDetailForm"
 import moment from "moment";
 import UserHeader from "ui/components/organisms/user_header/UserHeader";
 import Roommates from "ui/components/organisms/roommates/Roommates";
-import ProfileMatch from "models/ProfileMatch";
+import RelationModel from "models/RelationModel";
 
 type Props = {
   matchInfo: MatchInfo;
-  moveToChatScreen: (profileMatch: ProfileMatch) => void;
-  moveToProfileScreen: (profileMatch: ProfileMatch) => void;
+  moveToChatScreen: (profileMatch: RelationModel) => void;
+  moveToProfileScreen: (profileMatch: RelationModel) => void;
   moveToRoommateAgreementScreen: () => void;
   moveToUpdateProfileScreen: () => void;
   moveToQuestionnaireScreen: () => void;
