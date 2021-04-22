@@ -6,6 +6,7 @@ import ViewProfileDemoGraphics from "ui/components/templates/ViewProfileDemoGrap
 import EducationalInformation from "ui/components/templates/EducationalInformation";
 import MyRoommates from "ui/components/templates/my_roommates/MyRoommates";
 import Screen from "ui/components/atoms/Screen";
+//import { useAuth } from "hooks";
 
 type Props = {
   openRoommateAgreementScreen: () => void;
@@ -14,6 +15,7 @@ type Props = {
 export const ViewProfileView: React.FC<Props> = ({
   openRoommateAgreementScreen
 }) => {
+  //const { user } = useAuth();
   return (
     <Screen shouldAddBottomInset={false}>
       <ScrollView>

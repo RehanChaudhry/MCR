@@ -19,13 +19,14 @@ import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseMode
 import { MatchesStackParamList } from "routes/MatchesStack";
 import InfoCircle from "assets/images/info_circle.svg";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
-import RelationModel from "models/RelationModel";
+import RelationModel, { Status } from "models/RelationModel";
 import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import EScreen from "models/enums/EScreen";
 import EGender from "models/enums/EGender";
 import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
 import RelationFilterType from "models/enums/RelationFilterType";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -87,6 +88,7 @@ const MatchesController: FC<Props> = () => {
     keyword: "",
     paginate: true,
     page: 1,
+    limit: 10,
     filterBy: MatchesTypeFilter.MATCHES
   });
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
@@ -188,8 +190,11 @@ const MatchesController: FC<Props> = () => {
           (value) => value.matchingUserId === userId
         );
         if (requestedUser) {
-          // todo: set request sent here
-          // requestedUser.isFriendRequested = true;
+          requestedUser.relation = {
+            isFriend: EIntBoolean.FALSE,
+            isRoommate: EIntBoolean.FALSE,
+            status: Status.PENDING
+          };
         }
         return prevState;
       });

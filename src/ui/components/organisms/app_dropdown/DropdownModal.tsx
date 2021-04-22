@@ -12,6 +12,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { usePreferredTheme } from "hooks";
 import { DropDownItem } from "models/DropDownItem";
+import { FONT_SIZE } from "config";
 
 export interface DropDownModalProps {
   isVisible: boolean;
@@ -20,7 +21,7 @@ export interface DropDownModalProps {
   selectedItemCallback: (item: DropDownItem) => void;
   dropDownBgColor?: string;
   dialogCloseIconStyle?: StyleProp<ImageStyle>;
-  selectedItemId: string;
+  selectedItemPosition: number;
 }
 
 export const DropdownModal = React.memo<DropDownModalProps>(
@@ -31,26 +32,32 @@ export const DropdownModal = React.memo<DropDownModalProps>(
     selectedItemCallback,
     dropDownBgColor = null,
     dialogCloseIconStyle,
-    selectedItemId
+    selectedItemPosition
   }) => {
     const { themedColors } = usePreferredTheme();
 
-    const getItemColor = (id: string): string => {
-      if (selectedItemId === id) {
+    const getItemColor = (position: number): string => {
+      if (selectedItemPosition === position) {
         return themedColors.primary;
       } else {
         return themedColors.label;
       }
     };
 
-    const renderItem = ({ item }: { item: DropDownItem }) => {
+    const renderItem = ({
+      item,
+      index
+    }: {
+      item: DropDownItem;
+      index: number;
+    }) => {
       return (
         <Pressable
           testID="dropdown-item-click"
           onPress={() => selectedItemCallback(item)}>
           <AppLabel
             text={item.title}
-            style={[styles.flatListItem, { color: getItemColor(item.id) }]}
+            style={[styles.flatListItem, { color: getItemColor(index) }]}
           />
         </Pressable>
       );
@@ -146,7 +153,8 @@ const styles = StyleSheet.create({
   },
   flatList: {},
   flatListItem: {
-    paddingVertical: 8,
-    alignSelf: "center"
+    paddingVertical: 10,
+    alignSelf: "center",
+    fontSize: FONT_SIZE.lg
   }
 });

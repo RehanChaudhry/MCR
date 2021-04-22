@@ -7,7 +7,7 @@ import RelationModel from "models/RelationModel";
 import { moderateScale } from "config/Dimens";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import MatchScore from "ui/components/molecules/match_score/MatchScore";
-import ProfileMatchType from "models/enums/ProfileMatchType";
+import RelationType from "models/enums/RelationType";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import {
   AppImageBackground,
@@ -101,32 +101,36 @@ const ProfileMatchItem = ({
             />
           )}
         />
-        {profileMatch.getType() === ProfileMatchType.NOT_FRIEND && (
+        {profileMatch.getType() === RelationType.NOT_FRIEND && (
           <AppButton
-            /*isDisable={profileMatch.isFriendRequested}*/
             onPress={() => {
-              if (false /*!profileMatch.isFriendRequested*/) {
-                onFriendRequestClicked(profileMatch.matchingUserId);
-              }
+              onFriendRequestClicked(profileMatch.matchingUserId);
             }}
             fontWeight={"semi-bold"}
             textStyle={[
               styles.btnActionText,
-              false /*!profileMatch.isFriendRequested*/
-                ? { color: themedColors.interface[500] }
-                : { color: themedColors.primary }
+              { color: themedColors.primary }
             ]}
             buttonStyle={[
               styles.btnAction,
-              false /*!profileMatch.isFriendRequested*/
-                ? { backgroundColor: themedColors.interface[200] }
-                : { backgroundColor: themedColors.primaryShade }
+              { backgroundColor: themedColors.primaryShade }
             ]}
-            text={
-              false /*!profileMatch.isFriendRequested*/
-                ? STRINGS.matches.label_pending_request
-                : STRINGS.matches.action_add_friend
-            }
+            text={STRINGS.matches.action_add_friend}
+          />
+        )}
+        {profileMatch.getType() === RelationType.FRIEND_REQUESTED && (
+          <AppButton
+            isDisable={true}
+            fontWeight={"semi-bold"}
+            textStyle={[
+              styles.btnActionText,
+              { color: themedColors.interface[500] }
+            ]}
+            buttonStyle={[
+              styles.btnAction,
+              { backgroundColor: themedColors.interface[200] }
+            ]}
+            text={STRINGS.matches.label_pending_request}
           />
         )}
       </View>
