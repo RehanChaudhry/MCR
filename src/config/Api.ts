@@ -25,6 +25,7 @@ export default {
   GET_ANSWERS: "answer/",
   POST_ANSWERS: "answer/",
   GET_ACTIVITY_LOGS: "activity-logs/",
+  UPDATE_PROFILE: "user/",
 
   // matches
   GET_MATCHES: "matches",

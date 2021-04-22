@@ -14,13 +14,14 @@ import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BasicProfile } from "ui/components/templates/basic_profile/BasicProfile";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { AppLog } from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
+import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
   infoTextShown: boolean;
+  handleUpdateProfile: (values: UpdateProfileRequestModel) => void;
 };
 
 const validationSchema = Yup.object().shape({
@@ -120,17 +121,53 @@ let initialValues = {
   youtubeVideoUrl: ""
 };
 
-export type UpdateProfileFormKeys = typeof initialValues;
+//export type UpdateProfileFormKeys = typeof initialValues;
 
 export const UpdateProfileView: React.FC<Props> = ({
   openUpdateQuestionnaireScreen,
-  infoTextShown
+  infoTextShown,
+  handleUpdateProfile
 }) => {
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
   const onSubmit = (_value: FormikValues) => {
-    AppLog.logForcefully("FormikValues: " + JSON.stringify(_value));
     openUpdateQuestionnaireScreen();
+    let communities = _value.community.split(",");
+    handleUpdateProfile({
+      profilePicture: {
+        originalName: "",
+        fileURL: ""
+      },
+      firstName: _value.firstName,
+      lastName: _value.lastName,
+      aboutMe: _value.aboutMe,
+      socialProfiles: {
+        facebook: _value.faceBookProfile,
+        twitter: _value.twitterProfile,
+        linkedin: _value.linkedInProfile,
+        instagram: _value.instagramProfile,
+        snapchat: _value.snapChatProfile,
+        tiktok: _value.tikTokProfile
+      },
+      gender: _value.gender.title,
+      dateOfBirth: "1999-06-27",
+      homeTown: _value.homeTown,
+      smokingHabbits: _value.Never,
+      intendedMajor: _value.intendedMajor,
+      intrests: _value.hobbies,
+      memberships: _value.memberships,
+      shows: _value.movies,
+      music: _value.music,
+      books: _value.books,
+      games: _value.games,
+      studentId: 18288910,
+      program: _value.programs,
+      communities: communities,
+      building: _value.building,
+      room: _value.room,
+      videoURL: _value.youtubeVideoUrl,
+      sendEmail: true
+    });
   };
 
   // const [scrollPosition, setScrollPosition] = useState(0);

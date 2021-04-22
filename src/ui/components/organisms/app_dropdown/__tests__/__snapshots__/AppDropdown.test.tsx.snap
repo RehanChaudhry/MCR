@@ -136,12 +136,13 @@ exports[`Renders snapshot as expected 1`] = `
                               "color": "#111827",
                             },
                             Object {
-                              "lineHeight": undefined,
+                              "lineHeight": 48,
                             },
                             Array [
                               Object {
                                 "alignSelf": "center",
-                                "paddingVertical": 8,
+                                "fontSize": 32,
+                                "paddingVertical": 10,
                               },
                               Object {
                                 "color": "#111827",
@@ -188,12 +189,13 @@ exports[`Renders snapshot as expected 1`] = `
                               "color": "#111827",
                             },
                             Object {
-                              "lineHeight": undefined,
+                              "lineHeight": 48,
                             },
                             Array [
                               Object {
                                 "alignSelf": "center",
-                                "paddingVertical": 8,
+                                "fontSize": 32,
+                                "paddingVertical": 10,
                               },
                               Object {
                                 "color": "#111827",
@@ -240,12 +242,13 @@ exports[`Renders snapshot as expected 1`] = `
                               "color": "#111827",
                             },
                             Object {
-                              "lineHeight": undefined,
+                              "lineHeight": 48,
                             },
                             Array [
                               Object {
                                 "alignSelf": "center",
-                                "paddingVertical": 8,
+                                "fontSize": 32,
+                                "paddingVertical": 10,
                               },
                               Object {
                                 "color": "#111827",
