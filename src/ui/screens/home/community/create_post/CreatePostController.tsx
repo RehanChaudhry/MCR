@@ -3,7 +3,9 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import Strings from "config/Strings";
 import { FormikValues } from "formik";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
-import CreatePostApiRequestModel from "models/api_requests/CreatePostApiRequestModel";
+import CreatePostApiRequestModel, {
+  Photo
+} from "models/api_requests/CreatePostApiRequestModel";
 import { CreatePostApiResponseModel } from "models/api_responses/CreatePostApiResponseModel";
 import React, { FC, useLayoutEffect, useRef } from "react";
 import { Alert } from "react-native";
@@ -13,6 +15,8 @@ import { CommunityStackParamList } from "routes/CommunityStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { CreatePostView } from "ui/screens/home/community/create_post/CreatePostView";
+import { AppLog } from "utils/Util";
+import { ImagePickerResponse } from "react-native-image-picker";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
@@ -43,7 +47,8 @@ const CreatePostController: FC<Props> = () => {
 
   const requestModel = useRef<CreatePostApiRequestModel>({
     type: "feed",
-    content: ""
+    content: "",
+    everyone: true
   });
 
   const createPostApi = useApi<
@@ -71,11 +76,23 @@ const CreatePostController: FC<Props> = () => {
 
   const onSubmit = (values: FormikValues) => {
     requestModel.current.content = values.message;
-    requestModel.current.link = values.link;
-    requestModel.current.photos = values.images;
-    requestModel.current.embed = values.embed;
+    requestModel.current.link =
+      values.link !== "" ? values.link : undefined;
+    requestModel.current.embed =
+      values.embed !== "" ? values.embed : undefined;
+    requestModel.current.photos = values.images.reduce(
+      (newImage: Photo[], image: ImagePickerResponse) => (
+        newImage.push({
+          fileURL: image.uri,
+          originalName: image.fileName
+        } as Photo),
+        newImage
+      ),
+      []
+    );
 
-    handleCreatePost;
+    AppLog.logForcefully("request : " + JSON.stringify(values.images));
+    handleCreatePost();
   };
 
   const closeScreen = usePreventDoubleTap(() => {
