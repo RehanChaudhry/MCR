@@ -9,7 +9,12 @@ export type RoommateData = {
   inputType: string;
   label: string;
   placeholder: string;
-  options: [];
+  options: [
+    {
+      text: string;
+      value: string;
+    }
+  ];
   order: number;
   isRequired: number;
   isDefault: number;

@@ -181,7 +181,8 @@ const RoommateAgreementController: FC<Props> = () => {
       setRoommateData(dataBody);
       AppLog.log("roomateData: " + JSON.stringify(dataBody.data));
     }
-  }, [roommateApi]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     roommateAgreementApi();

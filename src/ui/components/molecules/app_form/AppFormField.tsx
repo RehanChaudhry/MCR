@@ -11,9 +11,9 @@ import {
   AppInputFieldProps
 } from "../appinputfield/AppInputField";
 import { AppFormValidationLabel } from "./AppFormValidationLabel";
-import { FONT_SIZE, SPACE } from "../../../../config";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { FONT_SIZE, SPACE } from "config";
 
 export interface AppFormFieldProps {
   fieldTestID?: string;
