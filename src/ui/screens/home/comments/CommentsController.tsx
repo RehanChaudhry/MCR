@@ -152,65 +152,53 @@ export const CommentsController: FC<Props> = (Props) => {
       setShouldShowProgressBar(false);
       isFetchingInProgress.current = false;
 
-      if (hasError || dataBody === undefined) {
-        return errorBody;
-      } else {
-        return dataBody;
-      }
+      return { hasError, dataBody, errorBody };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
-  const retry = (postId: number, _comments?: Comment[]) => {
-    AppLog.logForcefully(
-      "*************************************************************"
-    );
-    AppLog.logForcefully(
-      "postId : " + postId + " comments " + JSON.stringify(_comments)
-    );
-    AppLog.logForcefully(
-      "*************************************************************"
-    );
-
-    /* handlePostCommentApi({
+  const retry = (postId: number) => {
+    handlePostCommentApi({
       postId: params.postId,
       comment: comments
-        ?.filter((item) => item.id === postId - 1)[0]
+        ?.filter((item) => item.id === postId)[0]
         .id.toString()!!
     })
       .then((result) => {
-        if (comments) {
-          setTimeout(() => {
-            let items = [
-              {
-                ...comments[0],
-                isError: true,
-                isLoading: false,
-                retry: retry
-              },
-              ...comments.slice(1)
-            ];
-            setComments(items);
-            setComments((state) => state);
-          }, 5000);
+        const findIndex: number | undefined = comments?.findIndex(
+          (item) => item.id === postId
+        );
+
+        if (findIndex !== undefined && findIndex >= 0) {
+          let items = [];
+          comments?.splice(findIndex, 1, {
+            ...comments!![findIndex],
+            isError: result?.hasError,
+            isLoading: false
+          });
+          items = [...comments!!];
+          setComments(items);
         }
-        AppLog.log("postComment()=> Success " + JSON.stringify(result));
       })
       .catch((error) => {
         AppLog.log("postComment()=> Failure " + JSON.stringify(error));
 
-        let items = [
-          {
-            ...comments!![0],
+        const findIndex: number | undefined = comments?.findIndex(
+          (item) => item.id === postId
+        );
+
+        if (findIndex !== undefined && findIndex >= 0) {
+          let items = [];
+          comments?.splice(findIndex, 1, {
+            ...comments!![findIndex],
             isError: true,
             isLoading: false
-          },
-          ...comments!!.slice(1)
-        ];
-        setComments(items);
-        setComments((state) => state);
-      });*/
+          });
+          items = [...comments!!];
+          setComments(items);
+        }
+      });
   };
 
   function postCommentApi(comment: string) {
@@ -243,67 +231,51 @@ export const CommentsController: FC<Props> = (Props) => {
 
     setComments(newList);
 
-    setTimeout(() => {
-      function _retry(postId: number) {
-        retry(postId, items);
-      }
-
-      let items = [
-        {
-          ...newList[0],
-          isError: true,
-          isLoading: false,
-          retry: _retry
-        },
-        ...newList.slice(1)
-      ];
-
-      items.forEach((value) => {
-        if (value.isError) {
-          value.retry = _retry;
-        }
-      });
-
-      setComments(items);
-    }, 5000);
-
-    /* handlePostCommentApi({
+    handlePostCommentApi({
       postId: params.postId,
       comment: comment
     })
       .then((result) => {
-        if (comments) {
-          /!*  setTimeout(() => {
-            AppLog.log(
-              "postComment()=> Success " + JSON.stringify(result)
-            );
+        const findIndex: number | undefined = comments?.findIndex(
+          (item) => item.id === commentId
+        );
 
-            let items = [
-              {
-                ...newList[0],
-                isError: true,
-                isLoading: false,
-                retry: retry
-              },
-              ...newList.slice(1)
-            ];
-            updateComments(items);
-          }, 5000);*!/
+        AppLog.logForcefully("items before" + JSON.stringify(findIndex));
+        if (findIndex !== undefined && findIndex >= 0) {
+          let items = [];
+          comments?.splice(findIndex, 1, {
+            ...comments!![findIndex],
+            isError: result?.hasError,
+            isLoading: false
+          });
+          items = [...comments!!];
+          setComments(items);
+
+          AppLog.logForcefully("items" + JSON.stringify(items));
         }
       })
       .catch((error) => {
-        AppLog.log("postComment()=> Failure " + JSON.stringify(error));
+        AppLog.logForcefully(
+          "postComment()=> Failure " + JSON.stringify(error)
+        );
 
-        /!*   let items = [
-          {
-            ...newList[0],
+        const findIndex: number | undefined = comments?.findIndex(
+          (item) => item.id === commentId
+        );
+
+        if (findIndex !== undefined && findIndex >= 0) {
+          let items = [];
+          comments?.splice(findIndex, 1, {
+            ...comments!![findIndex],
             isError: true,
             isLoading: false
-          },
-          ...newList.slice(1)
-        ];
-        updateComments(items);*!/
-      });*/
+          });
+          items = [...comments!!];
+          setComments(items);
+
+          AppLog.logForcefully("items" + JSON.stringify(items));
+        }
+      });
   }
 
   const onEndReached = useCallback(async () => {
@@ -340,6 +312,7 @@ export const CommentsController: FC<Props> = (Props) => {
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
       error={getComments.error}
+      retry={retry}
       pullToRefreshCallback={refreshCallback}
     />
   );

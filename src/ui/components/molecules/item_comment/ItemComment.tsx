@@ -17,10 +17,11 @@ import { ContinuousProgress } from "ui/components/molecules/continuous_progress/
 export interface ItemCommentProps extends ViewStyle {
   item: Comment;
   style?: StyleProp<ViewStyle>;
+  retry: (postId: number) => void;
 }
 
 export const ItemComment = React.memo<ItemCommentProps>(
-  ({ style, item }) => {
+  ({ style, item, retry }) => {
     const { themedColors } = usePreferredTheme();
     const DateFormatter = new PrettyTimeFormat();
     const [prettyTime, setPrettyTime] = useState<string>(
@@ -77,7 +78,8 @@ export const ItemComment = React.memo<ItemCommentProps>(
               isLoading={item.isLoading}
               isError={item.isError}
               retryCallback={() => {
-                item.retry?.(item.id!!);
+                /*item.retry?.(item.id!!);*/
+                retry(item.id);
               }}
             />
           </View>

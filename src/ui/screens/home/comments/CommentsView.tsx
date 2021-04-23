@@ -18,6 +18,7 @@ type Props = {
   onEndReached: () => void;
   isAllDataLoaded: boolean;
   error: string | undefined;
+  retry: (postId: number) => void;
   pullToRefreshCallback: (onComplete: () => void) => void;
 };
 
@@ -28,6 +29,7 @@ export const CommentsView = React.memo<Props>(
     shouldShowProgressBar,
     onEndReached,
     error,
+    retry,
     isAllDataLoaded,
     pullToRefreshCallback
   }) => {
@@ -35,7 +37,7 @@ export const CommentsView = React.memo<Props>(
 
     const renderItem = ({ item }: { item: Comment }) => {
       AppLog.logForcefully("Rendering item " + item.id);
-      return <ItemComment item={item} />;
+      return <ItemComment item={item} retry={retry} />;
     };
 
     function sentMessage(text: string) {
