@@ -236,22 +236,22 @@ export const CommentsController: FC<Props> = (Props) => {
       comment: comment
     })
       .then((result) => {
-        const findIndex: number | undefined = comments?.findIndex(
+        const findIndex: number | undefined = newList?.findIndex(
           (item) => item.id === commentId
         );
 
         AppLog.logForcefully("items before" + JSON.stringify(findIndex));
         if (findIndex !== undefined && findIndex >= 0) {
           let items = [];
-          comments?.splice(findIndex, 1, {
-            ...comments!![findIndex],
+          newList?.splice(findIndex, 1, {
+            ...newList!![findIndex],
             isError: result?.hasError,
             isLoading: false
           });
-          items = [...comments!!];
+          items = [...newList!!];
           setComments(items);
 
-          AppLog.logForcefully("items" + JSON.stringify(items));
+          AppLog.logForcefully("items" + JSON.stringify(comments));
         }
       })
       .catch((error) => {
@@ -265,15 +265,15 @@ export const CommentsController: FC<Props> = (Props) => {
 
         if (findIndex !== undefined && findIndex >= 0) {
           let items = [];
-          comments?.splice(findIndex, 1, {
-            ...comments!![findIndex],
+          newList?.splice(findIndex, 1, {
+            ...newList!![findIndex],
             isError: true,
             isLoading: false
           });
-          items = [...comments!!];
+          items = [...newList!!];
           setComments(items);
 
-          AppLog.logForcefully("items" + JSON.stringify(items));
+          AppLog.logForcefully("items" + JSON.stringify(commentId));
         }
       });
   }
