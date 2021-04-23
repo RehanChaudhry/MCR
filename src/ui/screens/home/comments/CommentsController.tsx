@@ -48,10 +48,17 @@ export const CommentsController: FC<Props> = (Props) => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
   const isFetchingInProgress = useRef(false);
-  const [comments, _comments] = useState<Comment[] | undefined>(undefined);
+  const [comments, setComments] = useState<Comment[] | undefined>([]);
   const { params }: any = useRoute<typeof Props.route>();
   const { themedColors } = usePreferredTheme();
   let { user } = useAuth();
+
+  AppLog.logForcefully("rendering comments controller");
+
+  useEffect(() => {
+    AppLog.logForcefully("comments state changes");
+    AppLog.logForcefully("newComment " + JSON.stringify(comments));
+  }, [comments]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -109,10 +116,10 @@ export const CommentsController: FC<Props> = (Props) => {
     } else {
       // to handle pull to refresh
       if (requestModel.current.page === 1) {
-        _comments([]);
+        setComments([]);
       }
 
-      _comments((prevState) => {
+      setComments((prevState) => {
         return [
           ...(prevState === undefined || requestModel.current.page === 1
             ? []
@@ -155,32 +162,37 @@ export const CommentsController: FC<Props> = (Props) => {
     []
   );
 
-  function postCommentApi(comment: string) {
-    let newList: Comment[] = [];
+  const retry = (postId: number, _comments?: Comment[]) => {
+    AppLog.logForcefully(
+      "*************************************************************"
+    );
+    AppLog.logForcefully(
+      "postId : " + postId + " comments " + JSON.stringify(_comments)
+    );
+    AppLog.logForcefully(
+      "*************************************************************"
+    );
 
-    let commentId =
-      comments !== undefined && comments.length > 0
-        ? comments[0].id + 1
-        : 1;
-
-    handlePostCommentApi({
+    /* handlePostCommentApi({
       postId: params.postId,
-      comment: comment
+      comment: comments
+        ?.filter((item) => item.id === postId - 1)[0]
+        .id.toString()!!
     })
       .then((result) => {
         if (comments) {
           setTimeout(() => {
             let items = [
               {
-                ...newList[0],
-                isError: false,
-                isLoading: false
+                ...comments[0],
+                isError: true,
+                isLoading: false,
+                retry: retry
               },
-              ...newList.slice(1)
+              ...comments.slice(1)
             ];
-            _comments(items);
-
-            AppLog.log("Items: " + JSON.stringify(items));
+            setComments(items);
+            setComments((state) => state);
           }, 5000);
         }
         AppLog.log("postComment()=> Success " + JSON.stringify(result));
@@ -190,20 +202,34 @@ export const CommentsController: FC<Props> = (Props) => {
 
         let items = [
           {
-            ...newList[0],
+            ...comments!![0],
             isError: true,
             isLoading: false
           },
-          ...newList.slice(1)
+          ...comments!!.slice(1)
         ];
-        _comments(items);
-      });
+        setComments(items);
+        setComments((state) => state);
+      });*/
+  };
+
+  function postCommentApi(comment: string) {
+    let newList: Comment[] = [];
+
+    let commentId =
+      comments !== undefined && comments.length > 0
+        ? comments[0].id + 1
+        : 1;
 
     let newComment: Comment = {
       postId: params.postId,
       comment: comment,
       userId: user?.profile?.id ?? 0,
-      user: user?.profile as User,
+      user: {
+        profilePicture: user?.profile?.profilePicture,
+        firstName: user?.profile?.firstName,
+        lastName: user?.profile?.lastName
+      } as User,
       id: commentId,
       createdAt: new Date(),
       isLoading: true,
@@ -211,11 +237,73 @@ export const CommentsController: FC<Props> = (Props) => {
     };
 
     newList.push(newComment);
-    if (comment !== undefined) {
+    if (comments !== undefined) {
       newList.push(...comments!!);
     }
 
-    _comments(newList);
+    setComments(newList);
+
+    setTimeout(() => {
+      function _retry(postId: number) {
+        retry(postId, items);
+      }
+
+      let items = [
+        {
+          ...newList[0],
+          isError: true,
+          isLoading: false,
+          retry: _retry
+        },
+        ...newList.slice(1)
+      ];
+
+      items.forEach((value) => {
+        if (value.isError) {
+          value.retry = _retry;
+        }
+      });
+
+      setComments(items);
+    }, 5000);
+
+    /* handlePostCommentApi({
+      postId: params.postId,
+      comment: comment
+    })
+      .then((result) => {
+        if (comments) {
+          /!*  setTimeout(() => {
+            AppLog.log(
+              "postComment()=> Success " + JSON.stringify(result)
+            );
+
+            let items = [
+              {
+                ...newList[0],
+                isError: true,
+                isLoading: false,
+                retry: retry
+              },
+              ...newList.slice(1)
+            ];
+            updateComments(items);
+          }, 5000);*!/
+        }
+      })
+      .catch((error) => {
+        AppLog.log("postComment()=> Failure " + JSON.stringify(error));
+
+        /!*   let items = [
+          {
+            ...newList[0],
+            isError: true,
+            isLoading: false
+          },
+          ...newList.slice(1)
+        ];
+        updateComments(items);*!/
+      });*/
   }
 
   const onEndReached = useCallback(async () => {

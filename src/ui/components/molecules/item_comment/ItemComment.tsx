@@ -12,7 +12,6 @@ import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { usePreferredTheme } from "hooks";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import { Comment } from "models/api_responses/CommentsResponseModel";
-import { AppLog } from "utils/Util";
 import { ContinuousProgress } from "ui/components/molecules/continuous_progress/ContinuousProgress";
 
 export interface ItemCommentProps extends ViewStyle {
@@ -78,7 +77,7 @@ export const ItemComment = React.memo<ItemCommentProps>(
               isLoading={item.isLoading}
               isError={item.isError}
               retryCallback={() => {
-                AppLog.logForcefully("retry callback");
+                item.retry?.(item.id!!);
               }}
             />
           </View>
