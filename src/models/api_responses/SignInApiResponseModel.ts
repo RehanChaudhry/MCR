@@ -6,4 +6,5 @@ export type SignInApiResponseModel = {
 export type Authentication = {
   accessToken: string;
   refreshToken: string;
+  expiresIn: string;
 };
