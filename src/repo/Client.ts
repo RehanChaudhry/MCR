@@ -74,8 +74,6 @@ export const useApi = <
       () => response?.config?.url + ": " + JSON.stringify(response)
     );
 
-    setLoading(false);
-
     if (!response?.ok) {
       // move user to login screen if the token has expired
       let errorBody: string;
@@ -89,15 +87,29 @@ export const useApi = <
           "An unexpected error occurred.";
       }
 
-      setError(errorBody);
-      return { hasError: true, errorBody };
+      try {
+        return { hasError: true, errorBody };
+      } finally {
+        setError(errorBody);
+        setLoading(false);
+      }
     } else {
       let dataBody = response.data;
       if (dataBody === undefined) {
-        return { hasError: true, errorBody: "Empty data" };
+        try {
+          return { hasError: true, errorBody: "Empty data" };
+        } finally {
+          setError("Empty data");
+          setLoading(false);
+        }
       }
-      setData(dataBody);
-      return { hasError: false, dataBody };
+
+      try {
+        return { hasError: false, dataBody };
+      } finally {
+        setData(dataBody);
+        setLoading(false);
+      }
     }
   };
 
