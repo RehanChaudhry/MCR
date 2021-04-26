@@ -1,6 +1,9 @@
 import { useRef } from "react";
 
-export default (callback: any, timeBlocked = 1000): (() => void) => {
+export default (
+  callback: any,
+  timeBlocked = 1000
+): ((...args: any[]) => void) => {
   const isBlockedRef = useRef(false);
   const unblockTimeout = useRef<any>();
 

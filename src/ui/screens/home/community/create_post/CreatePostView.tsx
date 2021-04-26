@@ -5,7 +5,7 @@ import PlusCircle from "assets/images/plus_circle.svg";
 import { COLORS, FONT_SIZE, SPACE, STRINGS } from "config";
 import Strings from "config/Strings";
 import { FormikValues } from "formik";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import React, { useCallback, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -46,13 +46,6 @@ const validationSchema = Yup.object().shape({
   )
 });
 
-// type CreatePostFormValues = {
-//   message: string;
-//   link?: string;
-//   embed?: string;
-//   images?: string[];
-// };
-
 export enum POST_TYPES {
   PHOTOS = "photos",
   LINK = "link",
@@ -66,20 +59,19 @@ export const CreatePostView = React.memo<Props>((props) => {
   const [postType, setPostType] = useState<POST_TYPES>(POST_TYPES.NONE);
 
   let initialValues: FormikValues = {
-    message: "",
-    link: "",
-    embed: "",
+    message: String,
+    link: String,
+    embed: String,
     images: []
   };
 
-  AppLog.logForcefully(
-    "create post view message: " + JSON.stringify(initialValues)
-  );
+  initialValues.link = "";
+  initialValues.embed = "";
 
   const onSubmit = (_value: FormikValues) => {
     initialValues = _value;
-    AppLog.log("form values" + JSON.stringify(initialValues));
-    props.createPost(_value);
+    initialValues.images = images;
+    props.createPost(initialValues);
   };
 
   const linkIcon = () => {
@@ -100,6 +92,7 @@ export const CreatePostView = React.memo<Props>((props) => {
       />
     );
   };
+
   const listItem = useCallback(
     ({ item }: { item: ImagePickerResponse }) => (
       <ImageWithCross
@@ -144,7 +137,6 @@ export const CreatePostView = React.memo<Props>((props) => {
                 response
               ];
             });
-            AppLog.logForcefully("images length" + images.length);
           }
         }
       );
@@ -178,8 +170,6 @@ export const CreatePostView = React.memo<Props>((props) => {
     );
   };
 
-  const dummyProfileImageUrl =
-    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
   return (
     <ScrollView
       style={styles.scrollView}
@@ -188,7 +178,7 @@ export const CreatePostView = React.memo<Props>((props) => {
         <View style={styles.cardView}>
           <AnnouncementHeader
             title={Strings.whats_new}
-            leftImageUrl={dummyProfileImageUrl}
+            leftImageUrl={useAuth().user?.profile?.profilePicture.fileURL}
             shouldHideSubTitle={true}
             shouldHideBottomSeparator={true}
             titleFontWeight="bold"
@@ -234,16 +224,17 @@ export const CreatePostView = React.memo<Props>((props) => {
                 <PhotosButton
                   isSelected={postType === POST_TYPES.PHOTOS}
                   onPress={() => {
+                    AppLog.logForcefully(
+                      "new images length" + images.length
+                    );
                     setPostType(POST_TYPES.PHOTOS);
-                    AppLog.logForcefully("postType: " + postType);
-                    openImageGallery();
+                    images.length === 0 && openImageGallery();
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
                 <LinkButton
                   isSelected={postType === POST_TYPES.LINK}
                   onPress={() => {
-                    setImages([]);
                     setPostType(POST_TYPES.LINK);
                     AppLog.logForcefully("postType: " + postType);
                   }}
@@ -252,7 +243,6 @@ export const CreatePostView = React.memo<Props>((props) => {
                 <EmbedButton
                   isSelected={postType === POST_TYPES.EMBED}
                   onPress={() => {
-                    setImages([]);
                     setPostType(POST_TYPES.EMBED);
                     AppLog.logForcefully("postType: " + postType);
                   }}
@@ -294,6 +284,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                     fieldTestID="link"
                     validationLabelTestID={"linkValidationLabel"}
                     name="link"
+                    value={initialValues.link}
                     fieldInputProps={{
                       leftIcon: linkIcon,
                       keyboardType: "default",
@@ -318,12 +309,14 @@ export const CreatePostView = React.memo<Props>((props) => {
                     fieldTestID="embed"
                     validationLabelTestID={"embedValidationLabel"}
                     name="embed"
+                    value={initialValues.embed}
                     fieldInputProps={{
                       leftIcon: embedIcon,
                       keyboardType: "default",
                       returnKeyType: "next",
                       placeholder: STRINGS.createPost.placeholder.embed,
                       autoCapitalize: "none",
+                      valueToShowAtStart: initialValues.embed,
                       placeholderTextColor: theme.themedColors.placeholder,
                       style: [{ color: theme.themedColors.label }],
                       viewStyle: [

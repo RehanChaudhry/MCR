@@ -1,0 +1,31 @@
+{
+  "profilePicture": { "originalName": "", "fileURL": "" },
+  "firstName": "Muhammad ",
+  "lastName": "Noman",
+  "aboutMe": "Iam 26 years old and I I’m a student of Computer science",
+  "socialProfiles": {
+    "facebook": "https://noman.facebook.com",
+    "twitter": "https://noman.facebook.com",
+    "linkedin": "https://noman.facebook.com",
+    "instagram": "https://noman.facebook.com",
+    "snapchat": "https://noman.facebook.com",
+    "tiktok": "https://noman.facebook.com"
+  },
+  "dateOfBirth": "1999-06-27",
+  "homeTown": "asdfasdf",
+  "intendedMajor": "asdfasdf",
+  "intrests": [],
+  "memberships": [],
+  "shows": [],
+  "music": [],
+  "books": [],
+  "games": [],
+  "studentId": 18288910,
+  "program": "Computer Science",
+  "communities": [],
+  "building": "101 Building 2nd floor",
+  "room": "A-102",
+  "videoURL": "https://YouTube.com",
+  "sendEmail": true,
+  "id": 1
+}

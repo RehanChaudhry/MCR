@@ -1,7 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Strings from "config/Strings";
-import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
+import {
+  CommunityAnnouncement,
+  CommunityAnnouncementResponseModel
+} from "models/api_responses/CommunityAnnouncementResponseModel";
 import React, {
   FC,
   useCallback,
@@ -14,8 +17,12 @@ import { AnnouncementStackParamList } from "routes/AnnouncementStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { AnnouncementView } from "ui/screens/home/announcement/AnnouncementView";
-import DataGenerator from "utils/DataGenerator";
 import { AppLog } from "utils/Util";
+import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
+import { useApi } from "repo/Client";
+import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
+import { Alert } from "react-native";
+import { LikeDislikeResponseModel } from "models/api_responses/LikeDislikeResponseModel";
 
 type AnnouncementNavigationProp = StackNavigationProp<
   AnnouncementStackParamList,
@@ -29,13 +36,26 @@ const AnnouncementController: FC<Props> = () => {
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
     false
   );
-  const pageToReload = useRef<number>(1);
   const isFetchingInProgress = useRef(false);
-  const [announcement, setAnnouncements] = useState<
+  const [announcements, _announcements] = useState<
     CommunityAnnouncement[] | undefined
-  >(DataGenerator.getAnnouncementList(pageToReload.current));
+  >(undefined);
   const navigation = useNavigation<AnnouncementNavigationProp>();
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
+
+  useEffect(() => {
+    return navigation.addListener("blur", () => {
+      AppLog.log("announcements screen is blur");
+      setShouldPlayVideo(false);
+    });
+  }, [navigation]);
+
+  useEffect(() => {
+    return navigation.addListener("focus", () => {
+      AppLog.log("announcements screen is focus");
+      setShouldPlayVideo(true);
+    });
+  }, [navigation]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -47,95 +67,127 @@ const AnnouncementController: FC<Props> = () => {
     });
   }, [navigation]);
 
+  const requestModel = useRef<AnnouncementRequestModel>({
+    paginate: true,
+    page: 1,
+    limit: 10,
+    type: "announcements"
+  });
+
+  const getAnnouncementsApi = useApi<
+    AnnouncementRequestModel,
+    CommunityAnnouncementResponseModel
+  >(CommunityAnnouncementApis.getCommunityAnnouncements);
+
+  const likeDislikeApi = useApi<number, LikeDislikeResponseModel>(
+    CommunityAnnouncementApis.likeDislike
+  );
+
   const fetchAnnouncements = useCallback(async () => {
     if (isFetchingInProgress.current) {
       return;
     }
+
     isFetchingInProgress.current = true;
-    const currentPageToReload = pageToReload.current;
-    if (currentPageToReload === 0) {
-      isFetchingInProgress.current = false;
-      setIsAllDataLoaded(true);
-      return;
-    }
     setShouldShowProgressBar(true);
-    const announcementsData = DataGenerator.getAnnouncementList(
-      pageToReload.current
-    );
+
+    const {
+      hasError,
+      errorBody,
+      dataBody
+    } = await getAnnouncementsApi.request([requestModel.current]);
+
     setShouldShowProgressBar(false);
-    if (pageToReload.current < 3) {
-      pageToReload.current = pageToReload.current + 1;
+
+    isFetchingInProgress.current = false;
+    if (hasError || dataBody === undefined) {
+      Alert.alert("Unable to Sign In", errorBody);
+      return;
     } else {
-      pageToReload.current = 0;
+      // to handle pull to refresh
+      if (requestModel.current.page === 1) {
+        _announcements([]);
+      }
+
+      _announcements((prevState) => {
+        return [
+          ...(prevState === undefined || requestModel.current.page === 1
+            ? []
+            : prevState),
+          ...dataBody.data
+        ];
+      });
+
+      setIsAllDataLoaded(
+        dataBody.data.length < requestModel.current.limit
+      );
+
+      requestModel.current.page =
+        announcements !== undefined
+          ? announcements.length / requestModel.current.limit + 1
+          : 1;
     }
 
-    // Make list empty first
-    if (currentPageToReload === 1) {
-      setAnnouncements([]);
-    }
-    setAnnouncements((prevState) => {
-      return [
-        ...(prevState === undefined || currentPageToReload === 1
-          ? []
-          : prevState),
-        ...announcementsData
-      ];
-    });
-    isFetchingInProgress.current = false;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onEndReached = useCallback(() => {
-    fetchAnnouncements();
+  const likeDislikeApiCall = async (postId: number): Promise<boolean> => {
+    AppLog.logForcefully("like dislike api : " + postId);
+
+    const {
+      hasError,
+      errorBody,
+      dataBody
+    } = await likeDislikeApi.request([postId]);
+
+    if (hasError || dataBody === undefined) {
+      Alert.alert("Unable to Sign In", errorBody);
+      return false; //return to announcements footer
+    } else {
+      return true; //return to announcements footer
+    }
+  };
+
+  const onEndReached = useCallback(async () => {
+    requestModel.current.page = requestModel.current.page!! + 1;
+    await fetchAnnouncements();
   }, [fetchAnnouncements]);
 
   const refreshCallback = useCallback(
-    async (onComplete: () => void) => {
-      pageToReload.current = 1;
-      fetchAnnouncements().then(() => {
-        onComplete();
-      });
+    async (onComplete?: () => void) => {
+      requestModel.current.page = 1;
+      fetchAnnouncements()
+        .then(() => {
+          onComplete?.();
+        })
+        .catch(() => {
+          onComplete?.();
+        });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pageToReload]
+    []
   );
 
-  useEffect(() => {
-    setTimeout(() => {
-      fetchAnnouncements();
-    }, 1000);
-  }, [fetchAnnouncements]);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
-      AppLog.logForcefully("announcement screen is blur");
-      setShouldPlayVideo(false);
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      AppLog.logForcefully("announcement screen is focus");
-      setShouldPlayVideo(true);
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-
-  const openCommentsScreen = () => {
-    navigation.navigate("Comments");
+  const openCommentsScreen = (postId: number) => {
+    navigation.navigate("Comments", { postId: postId });
   };
+
+  useEffect(() => {
+    fetchAnnouncements().then().catch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <AnnouncementView
-      data={announcement}
+      data={announcements}
       shouldShowProgressBar={shouldShowProgressBar}
       onEndReached={onEndReached}
+      error={getAnnouncementsApi.error}
       isAllDataLoaded={isAllDataLoaded}
       pullToRefreshCallback={refreshCallback}
       openCommentsScreen={openCommentsScreen}
       shouldPlayVideo={shouldPlayVideo}
+      likeDislikeAPi={likeDislikeApiCall}
     />
   );
 };

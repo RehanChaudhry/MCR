@@ -9,10 +9,10 @@ import { usePreferredTheme } from "hooks";
 import Colors from "config/Colors";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
-import Logo from "assets/images/logo.svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Screen from "ui/components/atoms/Screen";
-import LoginImage from "assets/images/forgot_pic.svg";
+import { UniImage } from "ui/components/atoms/UniImage";
+import { UniLogo } from "ui/components/atoms/UniLogo";
 import {
   AppButton,
   BUTTON_TYPES
@@ -46,18 +46,10 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
             onPress={openForgotPasswordScreen}
           />
 
-          <Logo style={styles.logo} />
-          <View
-            style={{
-              aspectRatio: 1.39,
-              width: "100%"
-            }}>
-            <LoginImage
-              width={"100%"}
-              height={"100%"}
-              style={styles.loginImage}
-            />
-          </View>
+          <UniLogo style={styles.logo} />
+
+          <UniImage />
+
           <View style={styles.mainContainer}>
             <AppLabel
               text={STRINGS.forgotPasswordFeedBack.check_your_inbox}
@@ -145,11 +137,6 @@ const styles = StyleSheet.create({
     elevation: 2,
     width: 32,
     height: 32,
-    marginTop: SPACE.xl,
-    marginLeft: SPACE.lg
-  },
-  logo: {
-    marginTop: SPACE._2xl,
     marginLeft: SPACE.lg
   },
   signInHeading: {
@@ -176,9 +163,6 @@ const styles = StyleSheet.create({
     marginTop: SPACE._2xl,
     fontSize: FONT_SIZE.xs
   },
-  loginImage: {
-    marginTop: SPACE._2xl
-  },
   buttonViewStyle: {
     marginTop: SPACE._2xl,
     marginBottom: SPACE.xl
@@ -189,5 +173,8 @@ const styles = StyleSheet.create({
   },
   signInText: {
     fontSize: moderateScale(15.0)
+  },
+  logo: {
+    marginLeft: SPACE.lg
   }
 });

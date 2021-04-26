@@ -18,9 +18,12 @@ type Props = {
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete: () => void) => void;
   feedsFilterData: FilterCount[];
-  openCommentsScreen?: () => void | undefined;
+  openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
   openReportContentScreen?: () => void | undefined;
+  error: string | undefined;
+  likeDislikeAPi: (postId: number) => Promise<boolean>;
+  filterDataBy: (type: string) => void;
 };
 
 export const CommunityView = React.memo<Props>(
@@ -33,7 +36,10 @@ export const CommunityView = React.memo<Props>(
     feedsFilterData,
     openCommentsScreen,
     shouldPlayVideo,
-    openReportContentScreen
+    openReportContentScreen,
+    error,
+    likeDislikeAPi,
+    filterDataBy
   }) => {
     const keyExtractor = useCallback(
       (item: CommunityAnnouncement) => item.id.toString(),
@@ -47,15 +53,23 @@ export const CommunityView = React.memo<Props>(
           openCommentsScreen={openCommentsScreen}
           shouldPlayVideo={shouldPlayVideo}
           openReportContentScreen={openReportContentScreen}
+          likeDislikeAPi={likeDislikeAPi}
         />
       ),
-      [openCommentsScreen, shouldPlayVideo, openReportContentScreen]
+      [
+        likeDislikeAPi,
+        openCommentsScreen,
+        shouldPlayVideo,
+        openReportContentScreen
+      ]
     );
     function getFeedsFilterData(): Item[] {
       return feedsFilterData.map((value) => {
         const item: Item = {
           title: value.type,
-          onPress: () => {}
+          onPress: () => {
+            filterDataBy(value.type);
+          }
         };
         return item;
       });
@@ -71,6 +85,7 @@ export const CommunityView = React.memo<Props>(
               style={styles.list}
               renderItem={listItem}
               keyExtractor={keyExtractor}
+              error={error}
               contentContainerStyle={styles.listContainer}
               ItemSeparatorComponent={() => (
                 <View style={styles.itemSeparator} />

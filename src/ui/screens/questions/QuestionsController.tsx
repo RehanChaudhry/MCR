@@ -1,6 +1,7 @@
 import React, {
   FC,
   useCallback,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState
@@ -16,20 +17,18 @@ import {
   useRoute
 } from "@react-navigation/native";
 import { useApi } from "repo/Client";
-import { AnswerApiRequestModel } from "models/api_requests/AnswerApiRequestModel";
+import {
+  AnswerApiRequestModel,
+  toAnswersRequest
+} from "models/api_requests/AnswerApiRequestModel";
 import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseModel";
 import ProfileApis from "repo/auth/ProfileApis";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { Alert, View } from "react-native";
-import {
-  QuestionsResponseModel,
-  toAnswersRequest,
-  toSections
-} from "models/api_responses/QuestionsResponseModel";
+import QuestionsResponseModel from "models/api_responses/QuestionsResponseModel";
 import { QuestionsView } from "ui/screens/questions/QuestionsView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import DataGenerator from "utils/DataGenerator";
 import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import { UpdateQuestionnaireStackParamList } from "routes/ProfileStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
@@ -42,7 +41,7 @@ import RightArrow from "assets/images/right.svg";
 import LeftArrow from "assets/images/left.svg";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { HomeDrawerParamList } from "routes";
-import useLazyLoadInterface from "hooks/useLazyLoadInterface";
+import { GetAnswersResponseModel } from "models/api_responses/GetAnswersResponseModel";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -68,8 +67,6 @@ type ProfileRouteProp = RouteProp<
 
 type Props = {};
 
-const questionSections = DataGenerator.getQuestionSections();
-
 const QuestionsController: FC<Props> = () => {
   AppLog.log("Opening QuestionsController");
 
@@ -80,6 +77,8 @@ const QuestionsController: FC<Props> = () => {
   const welcomeNavigation = useNavigation<WelcomeNavigationProp>();
   const profileNavigation = useNavigation<ProfileNavigationProp>();
   const matchesNavigation = useNavigation<MatchesNavigationProp>();
+
+  const isQuestionAnswersFetched = useRef<boolean>(false);
 
   const moveToHomeScreen = useCallback(() => {
     homeNavigation.reset({
@@ -161,22 +160,26 @@ const QuestionsController: FC<Props> = () => {
 
   const [questions, setQuestions] = useState<
     Section<QuestionSection, Question>[]
-  >(toSections(questionSections));
+  >([]);
 
   const questionApi = useApi<any, QuestionsResponseModel>(
     ProfileApis.questions
+  );
+
+  const getAnswersApi = useApi<any, GetAnswersResponseModel>(
+    ProfileApis.getAnswers
   );
 
   const answerApi = useApi<AnswerApiRequestModel, AnswerApiResponseModel>(
     ProfileApis.answers
   );
 
-  // useEffect(() => {
-  //   handleGetQuestionsApi();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    isQuestionAnswersFetched.current = false;
+    handleGetQuestionsApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleGetQuestionsApi = async (onComplete?: () => void) => {
     const { hasError, dataBody, errorBody } = await questionApi.request(
       []
@@ -186,19 +189,33 @@ const QuestionsController: FC<Props> = () => {
       AppLog.log("Unable to find questions " + errorBody);
       return;
     } else {
-      setQuestions(toSections(dataBody.data));
+      await handleGetAnswersApi(
+        new QuestionsResponseModel(dataBody.message, dataBody.data)
+      );
+      onComplete?.();
+    }
+  };
+
+  const handleGetAnswersApi = async (
+    questionsApiResponse?: QuestionsResponseModel,
+    onComplete?: () => void
+  ) => {
+    const { hasError, dataBody, errorBody } = await getAnswersApi.request(
+      []
+    );
+    if (hasError || dataBody === undefined) {
+      // Alert.alert("Unable to find questions " + errorBody);
+      AppLog.log("Unable to find answers " + errorBody);
+      return;
+    } else {
+      questionsApiResponse?.assignAnswers(dataBody.data);
+      isQuestionAnswersFetched.current = true;
+      setQuestions(questionsApiResponse?.toSections() ?? []);
       onComplete?.();
     }
   };
 
   const handleSubmitAnswers = usePreventDoubleTap(async () => {
-    // For UI build
-    if (true) {
-      if (route.params.isFrom === EScreen.WELCOME) {
-        moveToHomeScreen();
-      }
-      return;
-    }
     if (requestModel.current === undefined) {
       return;
     }
@@ -210,38 +227,38 @@ const QuestionsController: FC<Props> = () => {
       Alert.alert("Unable to Submit answers.", errorBody);
       return;
     } else {
-      // answers submitted. Proceed to next screen
+      if (route.params.isFrom === EScreen.WELCOME) {
+        moveToHomeScreen();
+      }
     }
   });
 
+  const submitAnswersCallback = useCallback(() => {
+    requestModel.current = {
+      answers: toAnswersRequest(questions)
+    };
+    handleSubmitAnswers();
+  }, [handleSubmitAnswers, questions]);
+
   return (
-    <>
-      {useLazyLoadInterface(
-        <ProgressErrorView
-          isLoading={questionApi.loading}
-          error={questionApi.error}
-          errorView={(message) => {
-            return (
-              <View>
-                <AppLabel text={message} />
-              </View>
-            );
-          }}
-          data={questions}>
-          <QuestionsView
-            isFrom={route.params.isFrom}
-            submitAnswers={() => {
-              requestModel.current = {
-                data: toAnswersRequest(questions)
-              };
-              handleSubmitAnswers();
-            }}
-            questions={questions}
-            submitAnswersLoading={answerApi.loading}
-          />
-        </ProgressErrorView>
-      )}
-    </>
+    <ProgressErrorView
+      isLoading={!isQuestionAnswersFetched.current}
+      error={questionApi.error || getAnswersApi.error}
+      errorView={(message) => {
+        return (
+          <View>
+            <AppLabel text={message} />
+          </View>
+        );
+      }}
+      data={questions}>
+      <QuestionsView
+        isFrom={route.params.isFrom}
+        submitAnswers={submitAnswersCallback}
+        questions={questions}
+        submitAnswersLoading={answerApi.loading}
+      />
+    </ProgressErrorView>
   );
 };
 

@@ -3,11 +3,11 @@ import { usePreferredTheme } from "hooks";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { shadowStyleProps } from "utils/Util";
-import ProfileMatch from "models/ProfileMatch";
+import RelationModel from "models/RelationModel";
 import { moderateScale } from "config/Dimens";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import MatchScore from "ui/components/molecules/match_score/MatchScore";
-import ProfileMatchType from "models/enums/ProfileMatchType";
+import RelationType from "models/enums/RelationType";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import {
   AppImageBackground,
@@ -17,11 +17,11 @@ import ChatRound from "assets/images/chat_round.svg";
 import Cross from "assets/images/ic_cross.svg";
 
 interface Props {
-  profileMatch: ProfileMatch;
+  profileMatch: RelationModel;
   onFriendRequestClicked: (userId: number) => void;
   onCrossClicked: (userId: number) => void;
-  onChatButtonClicked: (profileMatch: ProfileMatch) => void;
-  onImageClicked: (profileMatch: ProfileMatch) => void;
+  onChatButtonClicked: (profileMatch: RelationModel) => void;
+  onImageClicked: (profileMatch: RelationModel) => void;
 }
 
 const ProfileMatchItem = ({
@@ -46,20 +46,24 @@ const ProfileMatchItem = ({
           }}>
           <Image
             style={styles.profileImage}
-            source={{ uri: profileMatch.profilePicture }}
+            source={{ uri: profileMatch.user?.profilePicture?.fileURL }}
           />
         </Pressable>
         <View style={styles.infoTextContainer}>
           <AppLabel
             style={styles.userName}
-            text={profileMatch.userName ?? STRINGS.common.not_found}
+            text={
+              profileMatch.user?.getFullName() ?? STRINGS.common.not_found
+            }
           />
           <AppLabel
             style={[
               styles.subtitle,
               { color: themedColors.interface[600] }
             ]}
-            text={`${profileMatch.classLevel}, ${profileMatch.major}`}
+            text={`${
+              profileMatch.user?.matchGroupName ?? STRINGS.common.not_found
+            }, ${profileMatch.user?.major ?? STRINGS.common.not_found}`}
           />
           <MatchScore
             style={styles.matchScore}
@@ -74,7 +78,7 @@ const ProfileMatchItem = ({
       <Pressable
         style={styles.icCross}
         onPress={() => {
-          onCrossClicked(profileMatch.userId);
+          onCrossClicked(profileMatch.matchingUserId);
         }}>
         <Cross
           fill={themedColors.interface[400]}
@@ -97,32 +101,36 @@ const ProfileMatchItem = ({
             />
           )}
         />
-        {profileMatch.getType() === ProfileMatchType.NOT_FRIEND && (
+        {profileMatch.getType() === RelationType.NOT_FRIEND && (
           <AppButton
-            isDisable={profileMatch.isFriendRequested}
             onPress={() => {
-              if (!profileMatch.isFriendRequested) {
-                onFriendRequestClicked(profileMatch.userId);
-              }
+              onFriendRequestClicked(profileMatch.matchingUserId);
             }}
             fontWeight={"semi-bold"}
             textStyle={[
               styles.btnActionText,
-              profileMatch.isFriendRequested
-                ? { color: themedColors.interface[500] }
-                : { color: themedColors.primary }
+              { color: themedColors.primary }
             ]}
             buttonStyle={[
               styles.btnAction,
-              profileMatch.isFriendRequested
-                ? { backgroundColor: themedColors.interface[200] }
-                : { backgroundColor: themedColors.primaryShade }
+              { backgroundColor: themedColors.primaryShade }
             ]}
-            text={
-              profileMatch.isFriendRequested
-                ? STRINGS.matches.label_pending_request
-                : STRINGS.matches.action_add_friend
-            }
+            text={STRINGS.matches.action_add_friend}
+          />
+        )}
+        {profileMatch.getType() === RelationType.FRIEND_REQUESTED && (
+          <AppButton
+            isDisable={true}
+            fontWeight={"semi-bold"}
+            textStyle={[
+              styles.btnActionText,
+              { color: themedColors.interface[500] }
+            ]}
+            buttonStyle={[
+              styles.btnAction,
+              { backgroundColor: themedColors.interface[200] }
+            ]}
+            text={STRINGS.matches.label_pending_request}
           />
         )}
       </View>

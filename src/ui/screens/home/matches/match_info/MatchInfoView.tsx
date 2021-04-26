@@ -9,7 +9,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppProgressBar } from "ui/components/molecules/app_progress_bar/AppProgressBar";
 import { Divider } from "react-native-elements";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
-import Profile from "assets/images/nav_profile.svg";
+import ProfileIcon from "assets/images/nav_profile.svg";
 import Questionnaire from "assets/images/request_state_icon.svg";
 import MatchingStatus from "assets/images/view_grid_add.svg";
 import MatchingDeadline from "assets/images/calendar.svg";
@@ -18,18 +18,21 @@ import SocialDetailForm from "ui/components/templates/about_me/SocialDetailForm"
 import moment from "moment";
 import UserHeader from "ui/components/organisms/user_header/UserHeader";
 import Roommates from "ui/components/organisms/roommates/Roommates";
-import ProfileMatch from "models/ProfileMatch";
+import RelationModel from "models/RelationModel";
+import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 
 type Props = {
+  userProfile: Profile;
   matchInfo: MatchInfo;
-  moveToChatScreen: (profileMatch: ProfileMatch) => void;
-  moveToProfileScreen: (profileMatch: ProfileMatch) => void;
+  moveToChatScreen: (profileMatch: RelationModel) => void;
+  moveToProfileScreen: (profileMatch: RelationModel) => void;
   moveToRoommateAgreementScreen: () => void;
   moveToUpdateProfileScreen: () => void;
   moveToQuestionnaireScreen: () => void;
 };
 
 export const MatchInfoView: React.FC<Props> = ({
+  userProfile,
   matchInfo,
   moveToChatScreen,
   moveToRoommateAgreementScreen,
@@ -44,24 +47,33 @@ export const MatchInfoView: React.FC<Props> = ({
         <View
           style={[
             styles.card,
+            styles.firstCard,
             { backgroundColor: themedColors.background }
           ]}>
           <UserHeader
             style={styles.userHeader}
-            name={matchInfo.name ?? STRINGS.common.not_found}
-            image={matchInfo.profilePicture ?? ""}
+            name={`${userProfile.firstName ?? STRINGS.common.not_found} ${
+              userProfile.lastName ?? STRINGS.common.not_found
+            }`}
+            image={userProfile.profilePicture.fileURL ?? ""}
             subtitle={`${
-              matchInfo.classLevel ?? STRINGS.common.not_found
-            }, ${matchInfo.major ?? STRINGS.common.not_found}`}
+              userProfile.matchGroupName ?? STRINGS.common.not_found
+            }, ${userProfile.major ?? STRINGS.common.not_found}`}
           />
           <AppLabel
             style={styles.description}
-            text={matchInfo.shortIntro ?? STRINGS.common.not_found}
+            text={
+              "<Required in 'user/me' API>" ?? STRINGS.common.not_found
+            }
             numberOfLines={0}
           />
           <AppProgressBar
             style={styles.progress}
-            progressPercentage={matchInfo.profileCompletePercentage ?? 0}
+            progressPercentage={
+              (userProfile.totalQuestionsAnswered /
+                userProfile.totalQuestions) *
+                100 ?? 0
+            }
             filledColor={themedColors.secondary}
             bottomTextStyle={{ color: themedColors.interface[600] }}
           />
@@ -76,7 +88,7 @@ export const MatchInfoView: React.FC<Props> = ({
               viewStyle={styles.updateButton}
               textStyle={styles.updateText}
               leftIcon={() => (
-                <Profile
+                <ProfileIcon
                   width={20}
                   height={20}
                   fill={themedColors.primary}
@@ -214,7 +226,7 @@ export const MatchInfoView: React.FC<Props> = ({
         </View>
         {matchInfo.roommates && matchInfo.roommates.length > 0 && (
           <Roommates
-            style={[styles.card, styles.lastCard]}
+            style={styles.card}
             roommates={matchInfo.roommates}
             onChatClicked={moveToChatScreen}
             onRoommateAgreementClicked={moveToRoommateAgreementScreen}
@@ -227,11 +239,11 @@ export const MatchInfoView: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
-  container: { paddingBottom: SPACE.md },
+  container: {},
   card: {
     borderRadius: 12,
     marginHorizontal: SPACE.lg,
-    marginTop: SPACE.lg,
+    marginBottom: SPACE.lg,
     ...shadowStyleProps
   },
   textStyle: {
@@ -268,7 +280,7 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACE.lg,
     marginTop: SPACE.lg
   },
-  lastCard: { marginBottom: SPACE.lg },
+  firstCard: { marginTop: SPACE.lg },
   heading: { includeFontPadding: false, fontSize: FONT_SIZE.base },
   socialDetailContainer: {
     paddingTop: SPACE.lg

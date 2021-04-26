@@ -2,7 +2,7 @@ import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { Uni } from "models/api_responses/UniSelectionResponseModel";
 import React, { FC } from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 
@@ -18,12 +18,15 @@ const UniSelectionCell: FC<Props> = ({ uni, onSelection }) => {
       style={styles.content}
       onPress={() => onSelection(uni)}>
       <View style={styles.imageCircle}>
-        <Image style={styles.image} source={{ uri: uni.imageLink }} />
+        <Image
+          style={styles.image}
+          source={{ uri: uni.profilePicture.fileURL }}
+        />
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.textContainer}>
           <AppLabel
-            text={uni.name}
+            text={uni.title}
             style={{
               color: theme.themedColors.label,
               fontSize: FONT_SIZE.sm,
@@ -31,7 +34,7 @@ const UniSelectionCell: FC<Props> = ({ uni, onSelection }) => {
             }}
           />
           <AppLabel
-            text={uni.location}
+            text={uni.timezone}
             style={{
               color: theme.themedColors.labelSecondary,
               fontSize: FONT_SIZE.xs

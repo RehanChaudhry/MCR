@@ -12,9 +12,11 @@ type Props = {
   shouldShowProgressBar: boolean;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
-  pullToRefreshCallback: (onComplete: () => void) => void;
-  openCommentsScreen?: () => void | undefined;
+  pullToRefreshCallback: (onComplete?: () => void) => void;
+  openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
+  likeDislikeAPi: (postId: number) => Promise<boolean>;
+  error: string | undefined;
 };
 
 export const AnnouncementView = React.memo<Props>(
@@ -25,7 +27,9 @@ export const AnnouncementView = React.memo<Props>(
     isAllDataLoaded,
     pullToRefreshCallback,
     openCommentsScreen,
-    shouldPlayVideo
+    shouldPlayVideo,
+    likeDislikeAPi,
+    error
   }) => {
     const keyExtractor = useCallback(
       (item: CommunityAnnouncement) => item.id.toString(),
@@ -38,9 +42,10 @@ export const AnnouncementView = React.memo<Props>(
           announcementItem={item}
           openCommentsScreen={openCommentsScreen}
           shouldPlayVideo={shouldPlayVideo}
+          likeDislikeAPi={likeDislikeAPi}
         />
       ),
-      [openCommentsScreen, shouldPlayVideo]
+      [likeDislikeAPi, openCommentsScreen, shouldPlayVideo]
     );
     return (
       <Screen style={styles.container}>
@@ -54,11 +59,13 @@ export const AnnouncementView = React.memo<Props>(
             ItemSeparatorComponent={() => (
               <View style={styles.itemSeparator} />
             )}
+            error={error}
             renderItem={listItem}
             keyExtractor={keyExtractor}
             onEndReached={onEndReached}
             isAllDataLoaded={isAllDataLoaded}
             pullToRefreshCallback={pullToRefreshCallback}
+            retryCallback={pullToRefreshCallback}
           />
         )}
       </Screen>

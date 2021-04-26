@@ -8,11 +8,11 @@ import { usePreferredTheme } from "hooks";
 import Colors from "config/Colors";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
-import Logo from "assets/images/logo.svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Screen from "ui/components/atoms/Screen";
-import LoginImage from "assets/images/sso_login_pic.svg";
 import Lock from "assets/images/lock-closed.svg";
+import { UniImage } from "ui/components/atoms/UniImage";
+import { UniLogo } from "ui/components/atoms/UniLogo";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
@@ -51,20 +51,9 @@ export const PreSSOLoginView = React.memo<Props>(
             onPress={goBack}
           />
 
-          <Logo style={styles.logo} />
+          <UniLogo style={styles.logo} />
 
-          <View
-            style={{
-              aspectRatio: 1.36,
-              width: "100%"
-            }}>
-            <LoginImage
-              width={"100%"}
-              height={"100%"}
-              fill="red"
-              style={styles.loginImage}
-            />
-          </View>
+          <UniImage />
 
           <View style={styles.mainContainer}>
             <HeadingWithText
@@ -122,7 +111,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   mainContainer: {
-    marginTop: SPACE._2xl,
     marginLeft: SPACE.lg,
     marginRight: SPACE.lg
   },
@@ -131,11 +119,6 @@ const styles = StyleSheet.create({
     elevation: 2,
     width: 32,
     height: 32,
-    marginTop: SPACE.xl,
-    marginLeft: SPACE.lg
-  },
-  logo: {
-    marginTop: SPACE._2xl,
     marginLeft: SPACE.lg
   },
   signInHeading: {
@@ -152,21 +135,20 @@ const styles = StyleSheet.create({
     height: 44
   },
   spannableText: {
-    marginVertical: SPACE._2xl
+    marginVertical: SPACE.xl
   },
   ssoSecondText: {
     marginTop: SPACE.xl,
     fontSize: FONT_SIZE.sm
   },
   ssoText: {
-    marginTop: SPACE._2xl,
+    marginTop: SPACE.xl,
     fontSize: FONT_SIZE.sm
   },
-  loginImage: {
+  buttonViewStyle: {
     marginTop: SPACE._2xl
   },
-  buttonViewStyle: {
-    marginTop: SPACE._2xl,
-    marginBottom: SPACE.xl
+  logo: {
+    marginLeft: SPACE.lg
   }
 });

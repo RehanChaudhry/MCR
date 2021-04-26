@@ -14,12 +14,14 @@ import { AnnouncementHeader } from "ui/components/molecules/announcement_header/
 import { ImagesSlideShow } from "ui/components/molecules/image_slide_show/ImagesSlideShow";
 import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
 import { shadowStyleProps, SvgProp } from "utils/Util";
+import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
 export interface CommunityItemProps extends TouchableOpacityProps {
   communityItem: CommunityAnnouncement;
-  openCommentsScreen?: () => void | undefined;
+  openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
   openReportContentScreen?: () => void | undefined;
+  likeDislikeAPi: (postId: number) => Promise<boolean>;
 }
 
 export const CommunityItem = React.memo<CommunityItemProps>(
@@ -27,7 +29,8 @@ export const CommunityItem = React.memo<CommunityItemProps>(
     communityItem,
     openCommentsScreen,
     shouldPlayVideo,
-    openReportContentScreen
+    openReportContentScreen,
+    likeDislikeAPi
   }) => {
     const theme = usePreferredTheme();
     const rightImage: SvgProp = () => {
@@ -47,16 +50,22 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           { backgroundColor: theme.themedColors.background }
         ]}>
         <AnnouncementHeader
-          title={communityItem.name}
-          subTitle={communityItem.time}
-          leftImageUrl={communityItem.profileImageUrl}
+          title={
+            communityItem.postedByFirstName +
+            " " +
+            communityItem.postedByLastName
+          }
+          subTitle={new PrettyTimeFormat().getPrettyTime(
+            (communityItem.updatedAt as unknown) as string
+          )}
+          leftImageUrl={communityItem.postedByProfilePicture.fileURL}
           shouldShowRightImage={true}
           rightIcon={rightImage}
           onPress={openReportContentScreen}
         />
-        {communityItem.text != null && true && (
+        {communityItem.content != null && true && (
           <AppLabel
-            text={communityItem.text}
+            text={communityItem.content}
             style={[{ color: theme.themedColors.label }, style.text]}
             numberOfLines={0}
           />
@@ -68,25 +77,28 @@ export const CommunityItem = React.memo<CommunityItemProps>(
             shouldPlayVideo={shouldPlayVideo}
           />
         )}
-        {communityItem.embeddedUrl != null && true && (
+        {communityItem.embed != null && true && (
           <WebViewComponent
-            url={communityItem.embeddedUrl}
+            url={communityItem.embed}
             urlType={URL_TYPES.EMBEDDED}
             shouldPlayVideo={shouldPlayVideo}
           />
         )}
-        {communityItem.images != null &&
+        {communityItem.photos != null &&
           true &&
-          communityItem.images.length > 0 && (
-            <ImagesSlideShow images={communityItem.images} />
+          communityItem.photos.length > 0 && (
+            <ImagesSlideShow images={communityItem.photos} />
           )}
-        {communityItem.metaDataUrl != null && true && (
-          <UrlMetaData url={communityItem.metaDataUrl} />
+        {communityItem.embed != null && true && (
+          <UrlMetaData url={communityItem.embed} />
         )}
         <AnnouncementFooter
-          commentCount={communityItem.commentCount}
-          likeCount={communityItem.likeCount}
+          commentCount={communityItem.commentsCount}
+          likeCount={communityItem.likesCount}
           openCommentsScreen={openCommentsScreen}
+          likedBy={communityItem.isLikedByMe}
+          likeDislikeAPi={likeDislikeAPi}
+          postId={communityItem.id}
         />
       </View>
     );

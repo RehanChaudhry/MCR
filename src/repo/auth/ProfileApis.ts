@@ -2,14 +2,19 @@ import { API } from "config";
 import { apiClient } from "repo/Client";
 import { AnswerApiRequestModel } from "models/api_requests/AnswerApiRequestModel";
 import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseModel";
-import { QuestionsResponseModel } from "models/api_responses/QuestionsResponseModel";
+import QuestionsResponseModel from "models/api_responses/QuestionsResponseModel";
 import { NotificationsResponseModel } from "models/api_responses/NotificationsResponseModel";
 import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiRequestModel";
 import { AgreementDetailsResponseModel } from "models/api_responses/AgreementDetailsResponseModel";
 import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
+import { GetAnswersResponseModel } from "models/api_responses/GetAnswersResponseModel";
 
 function questions() {
   return apiClient.get<QuestionsResponseModel>(API.GET_QUESTIONS);
+}
+
+function getAnswers() {
+  return apiClient.get<GetAnswersResponseModel>(API.GET_ANSWERS);
 }
 
 function getNotifications() {
@@ -40,6 +45,7 @@ function activityLogs(requestModel: ActivityLogApiRequestModel) {
 
 export default {
   questions,
+  getAnswers,
   answers,
   getNotifications,
   activityLogs,

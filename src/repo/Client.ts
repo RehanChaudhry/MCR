@@ -12,16 +12,17 @@ export const apiClient = create({
 
 resetApiClient();
 
-export function resetApiClient(providedAuthToken?: string) {
+export async function resetApiClient(providedAuthToken?: string) {
+  const authToken =
+    providedAuthToken ?? (await AuthStorage.getUserToken());
+
+  AppLog.log("Resetting Authorization Token: " + authToken);
+  // clear all transforms
+  apiClient.asyncRequestTransforms.length = 0;
+  // add new transform
   apiClient.addAsyncRequestTransform(async (request) => {
     request.headers.accept = "application/json";
-
-    const authToken =
-      providedAuthToken ?? (await AuthStorage.getUserToken());
-    if (__DEV__) {
-      AppLog.logForcefully("Authorization Token: " + authToken);
-    }
-
+    AppLog.logForcefully("Authorization Token: " + authToken);
     if (authToken === undefined) {
       return;
     }
@@ -57,12 +58,10 @@ export const useApi = <
     setLoading(true);
     setError(undefined);
 
-    if (__DEV__) {
-      AppLog.logForcefully("Request Body:");
-      AppLog.logForcefully(args);
-    }
+    AppLog.logForcefully("Request Body:");
+    AppLog.logForcefully(args);
 
-    let response;
+    let response: any;
     try {
       response = await apiFunc(...args);
     } catch (e) {
@@ -70,12 +69,10 @@ export const useApi = <
       AppLog.bug(e);
     }
 
-    if (__DEV__) {
-      AppLog.logForcefully("Response Body:");
-      AppLog.logForcefully(
-        response?.config?.url + ": " + JSON.stringify(response)
-      );
-    }
+    AppLog.logForcefully("Response Body:");
+    AppLog.logForcefullyForComplexMessages(
+      () => response?.config?.url + ": " + JSON.stringify(response)
+    );
 
     setLoading(false);
 

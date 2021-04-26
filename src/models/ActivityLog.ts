@@ -5,7 +5,7 @@ class ActivityLog {
   id!: number;
   type?: ActivityType;
   message?: string;
-  date?: Date;
+  createdAt?: Date;
 
   constructor(
     id: number,
@@ -16,15 +16,19 @@ class ActivityLog {
     this.id = id;
     this.type = type;
     this.message = message;
-    this.date = date;
+    this.createdAt = date;
   }
 
   getHoursDiff(): number {
-    return DateUtils.diffInHours(this.date ?? new Date());
+    return DateUtils.diffInHours(this.createdAt ?? new Date());
   }
 
   getDisplayTime(): string {
-    return timeAgo(this.date ?? new Date(), "day", "MMM DD, YYYY hh:mm A");
+    return timeAgo(
+      this.createdAt ?? new Date(),
+      "day",
+      "MMM DD, YYYY hh:mm A"
+    );
   }
 }
 

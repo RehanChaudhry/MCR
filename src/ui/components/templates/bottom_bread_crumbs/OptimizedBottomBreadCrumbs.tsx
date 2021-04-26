@@ -6,32 +6,38 @@ import OptimizedBottomBreadCrumbsItem from "./OptimizedBottomBreadCrumbsItem";
 
 export type OptimizedBBCItem<T> = {
   title: string;
-  value: T;
+  value?: T;
 };
 
 type Props<T> = {
   data: OptimizedBBCItem<T>[];
-  onPress?: (value: T) => void;
+  onPress?: (value?: T) => void;
 };
 
 function OptimizedBottomBreadCrumbs<T>({ data, onPress }: Props<T>) {
   const theme = usePreferredTheme();
-  const [selectedId, setSelectedId] = useState(data[0].title);
+  const [selectedPosition, setSelectedPosition] = useState(0);
 
-  const renderItem = ({ item }: { item: OptimizedBBCItem<T> }) => {
+  const renderItem = ({
+    item,
+    index
+  }: {
+    item: OptimizedBBCItem<T>;
+    index: number;
+  }) => {
     const backgroundColor =
-      item.title === selectedId
+      index === selectedPosition
         ? theme.themedColors.primaryShade
         : theme.themedColors.interface[100];
     const textColor =
-      item.title === selectedId
+      index === selectedPosition
         ? theme.themedColors.primary
         : theme.themedColors.label;
     return (
       <OptimizedBottomBreadCrumbsItem
         title={item.title}
         onPress={() => {
-          setSelectedId(item.title);
+          setSelectedPosition(index);
           onPress?.(item.value);
         }}
         style={{ backgroundColor }}

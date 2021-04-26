@@ -10,6 +10,7 @@ export default {
   BASE_URL: Env.BASE_URL,
   API_URL: "api/",
   LOGIN_URL: "auth/login",
+  FETCH_MY_PROFILE_URL: "user/me",
   FORGOT_PASS_URL: "password/request/",
   RESET_PASS_URL: "password/set/",
   UPDATE_PROFILE_URL: "profile",
@@ -17,12 +18,14 @@ export default {
   AGREEMENT_DETAILS: "agreement_details",
 
   //Get universities
-  UNIS: "unis",
+  UNIS: "university",
 
   // Profile
-  GET_QUESTIONS: "questions/",
+  GET_QUESTIONS: "question/",
+  GET_ANSWERS: "answer/",
   POST_ANSWERS: "answer/",
   GET_ACTIVITY_LOGS: "log",
+  UPDATE_PROFILE: "user/",
 
   // matches
   GET_MATCHES: "matches",
@@ -30,13 +33,18 @@ export default {
   DISMISS_MATCH: "dismiss-match",
   GET_MATCHES_FILTER_COUNT: "matches-count",
 
-  //community
-  GET_COMMUNITY: "community/",
-  CREATE_POST: "createPost/",
+  //community, announcements
+  CREATE_POST: "post",
+  GET_COMMUNITY_ANNOUNCEMENT: "post",
+  LIKE_DISLIKE: "post/like",
+  COMMENT: "comment",
+
   //chat
   GET_CHATS: "chats",
 
-  MY_FRIENDS: "myfriends",
+  //relations
+  RELATION: "relation",
+  // MY_FRIENDS: "myfriends",
   MY_ROOMMATES: "myroommates",
   DISMISSED_OR_BLOCKED: "dismissedorblocked",
   FRIEND_REQUESTS: "friendrequests",

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   ColorPalette,
   colorPaletteContainer
 } from "hooks/theme/ColorPaletteContainer";
+import React, { useState } from "react";
 import { useColorScheme } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AppLog } from "utils/Util";
 
 export enum AppColorScheme {
