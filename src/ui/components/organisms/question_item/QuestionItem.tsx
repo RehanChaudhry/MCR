@@ -125,7 +125,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
           <View style={styles.switchWrapper}>
             <AppLabel
               style={[styles.label, { marginEnd: SPACE.xs }]}
-              weight={"bold"}
+              weight={"semi-bold"}
               text="I have no preference"
             />
 
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth
   },
   title: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE.sm!! + 0.5
   },
   label: {
     fontSize: FONT_SIZE.xs,
