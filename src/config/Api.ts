@@ -25,7 +25,7 @@ export default {
   GET_ANSWERS: "answer/",
   POST_ANSWERS: "answer/",
   GET_ACTIVITY_LOGS: "activity-logs/",
-  UPDATE_PROFILE: "user/",
+  UPDATE_PROFILE: "user",
 
   // matches
   GET_MATCHES: "matches",
@@ -40,7 +40,7 @@ export default {
   COMMENT: "comment",
 
   //chat
-  GET_CHATS: "chats",
+  CONVERSATION: "conversation/",
 
   //relations
   RELATION: "relation",

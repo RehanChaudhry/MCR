@@ -4,7 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { ChatsResponseModel } from "models/api_responses/ChatsResponseModel";
 import { useApi } from "repo/Client";
-import ChatApis from "repo/chat/ChatAPis";
+import ChatApis from "repo/chat/ChatApis";
 import { AppLog } from "utils/Util";
 import ChatItem from "models/ChatItem";
 import DataGenerator from "utils/DataGenerator";

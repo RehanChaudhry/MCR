@@ -12,12 +12,12 @@ import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
-import { ConversationItem } from "models/ConversationItem";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { User } from "models/api_responses/ConversationSuggestionsResponseModel";
 
 export interface ItemConversationProps extends ViewStyle {
-  onPress: (item: ConversationItem) => void;
-  item: ConversationItem;
+  onPress: (item: User) => void;
+  item: User;
   style?: StyleProp<ViewStyle>;
   shouldNotOptimize?: boolean;
 }
@@ -44,7 +44,10 @@ export const ItemConversation = optimizedMemo<ItemConversationProps>(
 
     return (
       <CardView style={styles.card(themedColors)}>
-        <AppLabel text={item.name} style={styles.txt} />
+        <AppLabel
+          text={item.firstName + "" + item.lastName}
+          style={styles.txt}
+        />
 
         <AppImageBackground
           icon={defaultIcon}
