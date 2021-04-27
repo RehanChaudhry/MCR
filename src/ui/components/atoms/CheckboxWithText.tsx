@@ -15,7 +15,7 @@ interface OwnProps extends ViewProps {
   text: string;
   isBold?: boolean;
   style?: StyleProp<ViewStyle>;
-  onChange: (checked: boolean) => void;
+  onChange: (checked: boolean, text?: string) => void;
   shouldNotOptimize?: boolean;
 }
 
@@ -30,7 +30,7 @@ const CheckboxWithText = optimizedMemo<Props>(
         <CheckBox
           onClick={() => {
             setChecked(!checked);
-            onChange(!checked);
+            onChange(!checked, text);
           }}
           style={styles.checkBox}
           isChecked={checked}

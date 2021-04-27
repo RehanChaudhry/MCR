@@ -22,10 +22,17 @@ export enum Status {
   REJECTED = "rejected"
 }
 
+export enum InEligibilityReason {}
+
 type Relation = {
   status: Status;
   isRoommate: EIntBoolean;
   isFriend: EIntBoolean;
+};
+
+type Criteria = {
+  eligible: boolean;
+  reason: InEligibilityReason;
 };
 
 export class RelationModel {
@@ -36,6 +43,7 @@ export class RelationModel {
   createdAt: string = "";
   updatedAt: string = "";
   relation?: Relation;
+  criteria?: Criteria;
 
   constructor(relationModel: RelationModel) {
     Object.assign(this, relationModel);
@@ -46,6 +54,11 @@ export class RelationModel {
     if (this.relation !== null) {
       if (this.relation?.isRoommate === EIntBoolean.TRUE) {
         return RelationType.ROOMMATE;
+      } else if (
+        this.criteria !== null &&
+        this.criteria?.eligible === false
+      ) {
+        return RelationType.NOT_ELIGIBLE;
       } else if (
         this.relation?.isFriend === EIntBoolean.TRUE &&
         this.relation?.status === Status.ACCEPTED

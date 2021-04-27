@@ -3,11 +3,12 @@ import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestM
 import { DismissedOrBlockedResponseModel } from "models/api_responses/DismissedOrBlockedResponseModel";
 import { FriendRequestsResponseModel } from "models/api_responses/FriendRequestsResponseModel";
 import { MyFriendsResponseModel } from "models/api_responses/MyFriendsResponseModel";
+import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
 import { RoommateRequestsResponseModel } from "models/api_responses/RoommateRequestsResponseModel";
 import { apiClient } from "repo/Client";
 
 function getMyFriends(request: RelationApiRequestModel) {
-  return apiClient.get<MyFriendsResponseModel>(API.RELATION, {
+  return apiClient.get<RelationApiResponseModel>(API.RELATION, {
     ...request
   });
 }

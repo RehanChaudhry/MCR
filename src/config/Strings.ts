@@ -209,6 +209,7 @@ export default {
     titleRight: "Done",
     title: "New Conversation",
     typingHint: "Start typing student name",
+    typingHintStaff: "Start typing staff name",
     createGroupText: "You can create a group of upto 5 people.",
     segmentValues: [
       { label: "Student", value: "Student" },
@@ -340,5 +341,6 @@ export default {
   },
   roommateAgreementdetails: {
     export_agreement: "Export Roommate Agreement"
-  }
+  },
+  somethingWentWrong: "Something went wrong!"
 };

@@ -10,7 +10,7 @@ import DataGenerator from "utils/DataGenerator";
 import ChatItem from "models/ChatItem";
 import { useApi } from "repo/Client";
 import { ChatsResponseModel } from "models/api_responses/ChatsResponseModel";
-import ChatApis from "repo/chat/ChatAPis";
+import ChatApis from "repo/chat/ChatApis";
 import { AppLog } from "utils/Util";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";

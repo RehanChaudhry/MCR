@@ -16,6 +16,7 @@ export default {
   UPDATE_PROFILE_URL: "profile",
   NOTIFICATION_URL: "notifications",
   AGREEMENT_DETAILS: "agreement_details",
+  ROOMATE_AGREEMENT_FIELDS: "agreement-field",
 
   //Get universities
   UNIS: "university",
@@ -25,7 +26,7 @@ export default {
   GET_ANSWERS: "answer/",
   POST_ANSWERS: "answer/",
   GET_ACTIVITY_LOGS: "activity-logs/",
-  UPDATE_PROFILE: "user/",
+  UPDATE_PROFILE: "user",
 
   // matches
   GET_MATCHES: "matches",
@@ -40,7 +41,7 @@ export default {
   COMMENT: "comment",
 
   //chat
-  GET_CHATS: "chats",
+  CONVERSATION: "conversation/",
 
   //relations
   RELATION: "relation",

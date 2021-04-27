@@ -21,11 +21,19 @@ import { useHeaderHeight } from "@react-navigation/stack";
 export interface TypingComponentProps {
   btnImage?: SvgProp;
   appInputPlaceHolder: string;
+  appInputFieldCallback?: (text: string) => void;
   btnPressCallback: (text: string) => void;
+  showIcon?: boolean;
 }
 
 export const WriteMessage = React.memo<TypingComponentProps>(
-  ({ btnImage, appInputPlaceHolder, btnPressCallback }) => {
+  ({
+    btnImage,
+    appInputPlaceHolder,
+    appInputFieldCallback,
+    btnPressCallback,
+    showIcon = true
+  }) => {
     const [initialText, setInitialText] = useState<string>("");
     const { themedColors } = usePreferredTheme();
 
@@ -58,23 +66,26 @@ export const WriteMessage = React.memo<TypingComponentProps>(
               placeholder={appInputPlaceHolder}
               onChangeText={(text: string) => {
                 setInitialText(text);
+                appInputFieldCallback?.(text);
               }}
               valueToShowAtStart={initialText}
               style={[styles.inputField, { color: themedColors.label }]}
             />
           </View>
 
-          <AppImageBackground
-            onPress={() => {
-              if (initialText !== "") {
-                setInitialText("");
-                btnPressCallback(initialText);
-              }
-            }}
-            icon={btnImage ?? defaultIcon}
-            containerShape={CONTAINER_TYPES.SQUARE}
-            containerStyle={styles.imgPaper(themedColors)}
-          />
+          {showIcon && (
+            <AppImageBackground
+              onPress={() => {
+                if (initialText !== "") {
+                  setInitialText("");
+                  btnPressCallback(initialText);
+                }
+              }}
+              icon={btnImage ?? defaultIcon}
+              containerShape={CONTAINER_TYPES.SQUARE}
+              containerStyle={styles.imgPaper(themedColors)}
+            />
+          )}
         </View>
       </KeyboardAvoidingView>
     );
@@ -108,6 +119,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.xs,
     borderWidth: 1,
     flex: 1,
+    height: 40,
     marginTop: SPACE._2xs
   },
   inputField: {
