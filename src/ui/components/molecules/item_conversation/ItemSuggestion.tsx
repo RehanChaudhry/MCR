@@ -26,7 +26,10 @@ export const ItemSuggestion = optimizedMemo<ItemConversationProps>(
         onPress={() => {
           onPress(item);
         }}>
-        <Image style={styles.img} source={item.profilePicture?.fileURL} />
+        <Image
+          style={styles.img}
+          source={{ uri: item.profilePicture?.fileURL }}
+        />
         <AppLabel
           text={item.firstName + " " + item?.lastName}
           style={styles.txt}

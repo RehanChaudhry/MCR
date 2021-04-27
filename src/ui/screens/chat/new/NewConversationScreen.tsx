@@ -42,8 +42,6 @@ export const NewConversationScreen = React.memo<Props>(
       Strings.newConversation.typingHint
     );
 
-    /*    let [items, setItems] = useState<User[]>(data);*/
-
     function plusIcon(
       color?: Color,
       width?: NumberProp,
