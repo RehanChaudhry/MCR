@@ -45,7 +45,7 @@ export const ItemConversation = optimizedMemo<ItemConversationProps>(
     return (
       <CardView style={styles.card(themedColors)}>
         <AppLabel
-          text={item.firstName + "" + item.lastName}
+          text={item.firstName + " " + item.lastName}
           style={styles.txt}
         />
 

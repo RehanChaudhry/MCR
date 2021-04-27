@@ -27,6 +27,7 @@ import { AppLog } from "utils/Util";
 import { ConversationSuggestionsRequestModel } from "models/api_requests/ConversationSuggestionsRequestModel";
 import { CreateConversationRequestModel } from "models/api_requests/CreateConversationRequestModel";
 import SimpleToast from "react-native-simple-toast";
+
 type ConversationNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
   "NewConversation"
@@ -178,12 +179,21 @@ export const NewConversationController: FC<Props> = () => {
     conversationType.current = type;
     setNewConversation([]);
   };
+
   const addItem = (item: User) => {
-    if (usersIds.current.length <= 6) {
+    if (
+      newConversations === undefined ||
+      (newConversations!!.filter(
+        (_item) => _item.id.toString() === item.id.toString()
+      ).length < 1 &&
+        newConversations.length < 5)
+    ) {
       usersIds.current.push(item.id);
       setNewConversation((prevState) => {
         return [...(prevState === undefined ? [] : prevState), item];
       });
+    } else {
+      SimpleToast.show("Item already added or limit reached");
     }
   };
 
