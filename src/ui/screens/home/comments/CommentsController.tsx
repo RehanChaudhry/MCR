@@ -48,7 +48,9 @@ export const CommentsController: FC<Props> = (Props) => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
   const isFetchingInProgress = useRef(false);
-  const [comments, setComments] = useState<Comment[] | undefined>([]);
+  const [comments, setComments] = useState<Comment[] | undefined>(
+    undefined
+  );
   const { params }: any = useRoute<typeof Props.route>();
   const { themedColors } = usePreferredTheme();
   let { user } = useAuth();

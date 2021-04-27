@@ -44,7 +44,7 @@ export const NewConversationController: FC<Props> = () => {
   const { themedColors } = usePreferredTheme();
   const [newConversations, setNewConversation] = useState<
     User[] | undefined
-  >([]);
+  >(undefined);
 
   const goBack = () => {
     const users: string[] = newConversations!!.reduce(
