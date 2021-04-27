@@ -61,6 +61,12 @@ const LoginController: FC<Props> = () => {
         apiRequestModel
       ]);
 
+      if (hasError || dataBody === undefined) {
+        Alert.alert("Unable to Sign In", errorBody);
+        setShouldShowPb(false);
+        return;
+      }
+
       // fetch user profile dataP
       const {
         hasError: hasErrorProfile,
@@ -70,15 +76,12 @@ const LoginController: FC<Props> = () => {
         dataBody?.data?.accessToken ?? ""
       ]);
 
-      if (
-        hasError ||
-        hasErrorProfile ||
-        dataBody === undefined ||
-        dataBodyProfile === undefined
-      ) {
-        Alert.alert("Unable to Sign In", errorBody ?? errorBodyProfile);
+      if (hasErrorProfile || dataBodyProfile === undefined) {
+        Alert.alert(
+          "Unable to Sign In",
+          "Couldn't fetch user information.\n" + errorBodyProfile
+        );
         setShouldShowPb(false);
-        return;
       } else {
         await auth.saveUser({
           authentication: dataBody.data,
