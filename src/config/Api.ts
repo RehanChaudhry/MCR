@@ -16,6 +16,7 @@ export default {
   UPDATE_PROFILE_URL: "profile",
   NOTIFICATION_URL: "notifications",
   AGREEMENT_DETAILS: "agreement_details",
+  ROOMATE_AGREEMENT_FIELDS: "agreement-field",
 
   //Get universities
   UNIS: "university",

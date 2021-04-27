@@ -48,11 +48,13 @@ const getUser = async () => {
 const getUserToken = async () => {
   try {
     const user = await getUser();
-    const userToken = user?.authentication?.accessToken;
-    if (userToken === undefined) {
+    const accessToken = user?.authentication?.accessToken;
+    const refreshToken = user?.authentication?.refreshToken;
+    const expiresIn = user?.authentication?.expiresIn;
+    if (!accessToken || !refreshToken || !expiresIn) {
       throw Error("Unable to fetch user token from AsyncStorage");
     }
-    return userToken;
+    return { accessToken, refreshToken, expiresIn };
   } catch (error) {
     AppLog.log("Error getting the user: ", error);
   }
