@@ -3,10 +3,8 @@ import React, { useState } from "react";
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import Screen from "ui/components/atoms/Screen";
 import { AppLog, shadowStyleProps } from "utils/Util";
-import { Color, NumberProp } from "react-native-svg";
-import Plus from "assets/images/plus.svg";
 import { usePreferredTheme } from "hooks";
-import { FONT_SIZE, moderateScale, SPACE } from "config/Dimens";
+import { FONT_SIZE, SPACE } from "config/Dimens";
 import {
   Choice,
   SegmentedControl
@@ -26,6 +24,8 @@ type Props = {
   suggestionsList: User[] | undefined;
   addItem: (item: User) => void;
   setConversationType: (currentSegment: number) => void;
+  showProgressbar: boolean;
+  clearInputField: boolean;
 };
 
 export const NewConversationScreen = React.memo<Props>(
@@ -35,28 +35,14 @@ export const NewConversationScreen = React.memo<Props>(
     setConversationType,
     addItem,
     suggestions,
-    suggestionsList
+    suggestionsList,
+    showProgressbar,
+    clearInputField
   }) => {
     const { themedColors } = usePreferredTheme();
     const [placeHolderText, setPlaceHolderText] = useState<string>(
       Strings.newConversation.typingHint
     );
-
-    function plusIcon(
-      color?: Color,
-      width?: NumberProp,
-      height?: NumberProp
-    ) {
-      AppLog.log("color : " + color + " " + width + " " + height); //just to avoid warning
-      return (
-        <Plus
-          testID="icon"
-          width={moderateScale(12)}
-          height={moderateScale(12)}
-          fill={themedColors.primary}
-        />
-      );
-    }
 
     function appInputCallback(text: string) {
       AppLog.logForcefully("callback");
@@ -135,16 +121,17 @@ export const NewConversationScreen = React.memo<Props>(
               removeClippedSubviews={true}
               style={[styles.suggestionList(themedColors)]}
               keyExtractor={(item) => item.id.toString()}
+              keyboardShouldPersistTaps="always"
             />
           </View>
         )}
 
         <WriteMessage
-          btnImage={plusIcon}
           appInputFieldCallback={appInputCallback}
           appInputPlaceHolder={placeHolderText}
-          btnPressCallback={appInputCallback}
           showIcon={false}
+          showProgressbar={showProgressbar}
+          clearInputField={clearInputField}
         />
       </Screen>
     );
@@ -169,7 +156,7 @@ const styles = StyleSheet.create({
   },
   contentWrapper: {
     flex: 1,
-    paddingVertical: SPACE.lg
+    marginTop: SPACE.lg
   },
   textStyle: (theme: ColorPalette) => {
     return {

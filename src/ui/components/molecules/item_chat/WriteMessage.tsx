@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
@@ -22,8 +23,10 @@ export interface TypingComponentProps {
   btnImage?: SvgProp;
   appInputPlaceHolder: string;
   appInputFieldCallback?: (text: string) => void;
-  btnPressCallback: (text: string) => void;
+  btnPressCallback?: (text: string) => void;
   showIcon?: boolean;
+  showProgressbar?: boolean;
+  clearInputField?: boolean;
 }
 
 export const WriteMessage = React.memo<TypingComponentProps>(
@@ -32,10 +35,18 @@ export const WriteMessage = React.memo<TypingComponentProps>(
     appInputPlaceHolder,
     appInputFieldCallback,
     btnPressCallback,
-    showIcon = true
+    showIcon = true,
+    showProgressbar = false,
+    clearInputField = false
   }) => {
     const [initialText, setInitialText] = useState<string>("");
     const { themedColors } = usePreferredTheme();
+
+    useEffect(() => {
+      if (clearInputField) {
+        setInitialText("");
+      }
+    }, [clearInputField]);
 
     const defaultIcon: SvgProp = (
       color?: Color,
@@ -69,8 +80,20 @@ export const WriteMessage = React.memo<TypingComponentProps>(
                 appInputFieldCallback?.(text);
               }}
               valueToShowAtStart={initialText}
-              style={[styles.inputField, { color: themedColors.label }]}
+              style={[
+                styles.inputField(showProgressbar),
+                { color: themedColors.label }
+              ]}
             />
+
+            {showProgressbar && (
+              <ActivityIndicator
+                testID="initial-loader"
+                size="small"
+                color={themedColors.primary}
+                style={[styles.initialPb]}
+              />
+            )}
           </View>
 
           {showIcon && (
@@ -78,7 +101,7 @@ export const WriteMessage = React.memo<TypingComponentProps>(
               onPress={() => {
                 if (initialText !== "") {
                   setInitialText("");
-                  btnPressCallback(initialText);
+                  btnPressCallback?.(initialText);
                 }
               }}
               icon={btnImage ?? defaultIcon}
@@ -122,7 +145,18 @@ const styles = StyleSheet.create({
     height: 40,
     marginTop: SPACE._2xs
   },
-  inputField: {
-    alignSelf: "center"
+  inputField: (showProgressbar: boolean) => {
+    return {
+      alignSelf: "center",
+      paddingEnd: showProgressbar ? 40 / 2 + SPACE.md : 0
+    };
+  },
+  initialPb: {
+    width: 40 / 2,
+    height: 40 / 2,
+    alignSelf: "flex-end",
+    paddingVertical: 40 / 2,
+    right: SPACE.md,
+    position: "absolute"
   }
 });

@@ -46,6 +46,8 @@ export const NewConversationController: FC<Props> = () => {
   const [newConversations, setNewConversation] = useState<
     User[] | undefined
   >(undefined);
+  const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
+  const [clearInputField, setClearInputField] = useState<boolean>(false);
 
   const goBack = () => {
     const users: string[] = newConversations!!.reduce(
@@ -135,6 +137,7 @@ export const NewConversationController: FC<Props> = () => {
   >(ChatApis.getSuggestions);
 
   const handleGetSuggestionApi = async (keyword: string) => {
+    setShowProgressbar(true);
     const { hasError, dataBody, errorBody } = await getSuggestions.request(
       [
         {
@@ -143,7 +146,7 @@ export const NewConversationController: FC<Props> = () => {
         }
       ]
     );
-
+    setShowProgressbar(false);
     if (hasError || dataBody === undefined) {
       AppLog.logForcefully("Unable to find suggestions " + errorBody);
       return;
@@ -171,13 +174,22 @@ export const NewConversationController: FC<Props> = () => {
     );
   };
 
+  // eslint-disable-next-line no-undef
+  let timeOutId: NodeJS.Timeout;
   const typeAHead = (keyword: string = "") => {
-    keyword !== "" ? handleGetSuggestionApi(keyword) : setSuggestions([]);
+    setClearInputField(false);
+    clearTimeout(timeOutId);
+    timeOutId = setTimeout(() => {
+      keyword !== ""
+        ? handleGetSuggestionApi(keyword)
+        : setSuggestions([]);
+    }, 500);
   };
 
   const setConversationType = (type: number) => {
     conversationType.current = type;
     setNewConversation([]);
+    setClearInputField(true);
   };
 
   const addItem = (item: User) => {
@@ -192,6 +204,7 @@ export const NewConversationController: FC<Props> = () => {
       setNewConversation((prevState) => {
         return [...(prevState === undefined ? [] : prevState), item];
       });
+      setClearInputField(true);
     } else {
       SimpleToast.show("Item already added or limit reached");
     }
@@ -209,6 +222,8 @@ export const NewConversationController: FC<Props> = () => {
       suggestionsList={suggestions}
       addItem={addItem}
       setConversationType={setConversationType}
+      showProgressbar={showProgressbar}
+      clearInputField={clearInputField}
     />
   );
 };
