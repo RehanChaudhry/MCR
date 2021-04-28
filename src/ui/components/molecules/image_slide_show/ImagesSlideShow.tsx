@@ -88,22 +88,6 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
       );
     };
 
-    AppLog.logForcefully(
-      "images  without reduce" + JSON.stringify(images)
-    );
-
-    AppLog.logForcefully(
-      "images  " +
-        JSON.stringify(
-          images.reduce(
-            (imageUrl: string[], item) => (
-              item.fileURL !== undefined && imageUrl.push(item.fileURL),
-              imageUrl
-            ),
-            []
-          )
-        )
-    );
     const rightImage = () => {
       return (
         <AppImageBackground
@@ -172,7 +156,7 @@ const styles = StyleSheet.create({
   paginationColor: {
     borderRadius: 30,
     marginBottom: 10,
-    width: "25%",
+    paddingHorizontal: 0,
     height: 15
   },
   image: {

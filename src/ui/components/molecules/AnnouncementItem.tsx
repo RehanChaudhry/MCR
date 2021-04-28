@@ -57,11 +57,7 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
           />
         )}
         {announcementItem.link != null && (
-          <WebViewComponent
-            url={announcementItem.link}
-            urlType={URL_TYPES.LINK}
-            shouldPlayVideo={shouldPlayVideo}
-          />
+          <UrlMetaData url={announcementItem.link} />
         )}
         {announcementItem.embed != null && (
           <WebViewComponent
@@ -74,9 +70,7 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
           announcementItem.photos.length > 0 && (
             <ImagesSlideShow images={announcementItem.photos} />
           )}
-        {announcementItem.embed != null && (
-          <UrlMetaData url={announcementItem.embed} />
-        )}
+
         <AnnouncementFooter
           commentCount={announcementItem.commentsCount}
           likeCount={announcementItem.likesCount}
