@@ -114,15 +114,23 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
     [isCollapsable, list, selectedIndex, headerView]
   );
 
+  const sectionFooter = useCallback(
+    () => <View style={{ height: SPACE.lg }} />,
+    []
+  );
+
+  const keyExtractor = useCallback((item) => item.key(), []);
+
   return (
     <SectionList
+      removeClippedSubviews={true}
       ListHeaderComponent={listHeaderComponent}
       ref={sectionList}
       sections={list}
       renderItem={bodyItemView}
       renderSectionHeader={sectionView}
-      renderSectionFooter={() => <View style={{ height: SPACE.lg }} />}
-      keyExtractor={(item) => item.key()}
+      renderSectionFooter={sectionFooter}
+      keyExtractor={keyExtractor}
       contentContainerStyle={style}
       onScrollToIndexFailed={(info) => {
         AppLog.log("Failed to scroll to " + info.index);
