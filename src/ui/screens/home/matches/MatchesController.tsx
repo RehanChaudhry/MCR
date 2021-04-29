@@ -186,15 +186,13 @@ const MatchesController: FC<Props> = () => {
 
     if (!hasError) {
       setProfileMatches((prevState) => {
-        const requestedUser = prevState?.find(
+        let requestedUser = prevState?.find(
           (value) => value.matchingUserId === userId
         );
         if (requestedUser) {
-          requestedUser.relation = {
-            isFriend: EIntBoolean.FALSE,
-            isRoommate: EIntBoolean.FALSE,
-            status: Status.PENDING
-          };
+          requestedUser.isFriend = EIntBoolean.FALSE;
+          requestedUser.isRoommate = EIntBoolean.FALSE;
+          requestedUser.status = Status.PENDING;
         }
         return prevState;
       });

@@ -61,9 +61,7 @@ const ProfileMatchItem = ({
               styles.subtitle,
               { color: themedColors.interface[600] }
             ]}
-            text={`${
-              profileMatch.user?.matchGroupName ?? STRINGS.common.not_found
-            }, ${profileMatch.user?.major ?? STRINGS.common.not_found}`}
+            text={profileMatch.user?.getSubtitle()}
           />
           <MatchScore
             style={styles.matchScore}
@@ -154,7 +152,8 @@ const styles = StyleSheet.create({
     borderRadius: 32
   },
   infoTextContainer: {
-    marginStart: SPACE.md
+    marginStart: SPACE.md,
+    flex: 1
   },
   userName: { fontSize: FONT_SIZE.lg, includeFontPadding: false },
   subtitle: { fontSize: FONT_SIZE.xs, marginTop: SPACE._2xs },
