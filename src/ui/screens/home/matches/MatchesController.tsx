@@ -19,14 +19,13 @@ import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseMode
 import { MatchesStackParamList } from "routes/MatchesStack";
 import InfoCircle from "assets/images/info_circle.svg";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
-import RelationModel, { Status } from "models/RelationModel";
+import RelationModel from "models/RelationModel";
 import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import EScreen from "models/enums/EScreen";
 import EGender from "models/enums/EGender";
 import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
 import RelationFilterType from "models/enums/RelationFilterType";
-import EIntBoolean from "models/enums/EIntBoolean";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -174,7 +173,7 @@ const MatchesController: FC<Props> = () => {
 
   // Friend Request API
   const friendRequestApi = useApi<number, ApiSuccessResponseModel>(
-    RelationApis.friendRequest
+    RelationApis.postRelation
   );
 
   const postFriendRequest = async (userId: number) => {
@@ -186,13 +185,14 @@ const MatchesController: FC<Props> = () => {
 
     if (!hasError) {
       setProfileMatches((prevState) => {
-        let requestedUser = prevState?.find(
-          (value) => value.matchingUserId === userId
-        );
-        if (requestedUser) {
-          requestedUser.isFriend = EIntBoolean.FALSE;
-          requestedUser.isRoommate = EIntBoolean.FALSE;
-          requestedUser.status = Status.PENDING;
+        let requestedUserPosition =
+          prevState?.findIndex(
+            (value) => value.matchingUserId === userId
+          ) ?? -1;
+        if (requestedUserPosition !== -1) {
+          prevState![requestedUserPosition] = new RelationModel(
+            prevState![requestedUserPosition]
+          );
         }
         return prevState;
       });

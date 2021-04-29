@@ -2,7 +2,7 @@ import RelationType from "models/enums/RelationType";
 import FilePath from "models/FilePath";
 import EIntBoolean from "models/enums/EIntBoolean";
 
-class RelationUser {
+export class RelationUser {
   firstName?: string;
   lastName?: string;
   profilePicture?: FilePath;
