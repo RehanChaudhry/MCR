@@ -37,8 +37,14 @@ const MyFriendsController: FC<Props> = () => {
   const [isLoadingMyFriends, setLoadingMyFriends] = useState<boolean>(
     false
   );
+
   const [, setIsRefreshing] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
+
+  const [friendsCount, setFriendsCount] = useState<number>(0);
+  const [pendingFriendsCount, setPendingFriendsCount] = useState<number>(
+    0
+  );
 
   const myFriendsApi = useApi<
     RelationApiRequestModel,
@@ -70,11 +76,17 @@ const MyFriendsController: FC<Props> = () => {
         setMyFriends([...(myFriends ?? []), ...data]);
       }
 
+      if (requestModel.page == 1) {
+        setFriendsCount(dataBody.count ?? 0);
+        setPendingFriendsCount(dataBody.pendingCount ?? 0);
+      }
+
       setRelationRequestModel({
         ...requestModel,
         page: requestModel.page + 1
       });
       setCanLoadMore(data.length >= requestModel.limit);
+
       onComplete?.();
     }
 
@@ -108,14 +120,6 @@ const MyFriendsController: FC<Props> = () => {
     });
   };
 
-  // useEffect(() => {
-  //   if (isRefreshing) {
-  //     handleMyFriendsResponse(() => {
-  //       onComplete?.();
-  //     });
-  //   }
-  // }, [isRefreshing]);
-
   useEffect(() => {
     handleMyFriendsResponse(false, relationRequestModel);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -131,6 +135,8 @@ const MyFriendsController: FC<Props> = () => {
   return (
     <>
       <MyFriendsView
+        friendsCount={friendsCount}
+        pendingFriendsCount={pendingFriendsCount}
         data={myFriends}
         isLoading={isLoadingMyFriends}
         canLoadMore={canLoadMore}

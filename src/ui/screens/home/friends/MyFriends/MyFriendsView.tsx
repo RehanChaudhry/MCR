@@ -14,6 +14,8 @@ import ConnectionListHeader from "ui/components/organisms/friends/connection/Con
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 
 type Props = {
+  friendsCount: number;
+  pendingFriendsCount: number;
   data?: RelationModel[];
   isLoading: boolean;
   canLoadMore: boolean;
@@ -78,6 +80,8 @@ const listItem = (
 };
 
 const MyFriendsView: FC<Props> = ({
+  friendsCount,
+  pendingFriendsCount,
   data,
   isLoading,
   canLoadMore,
@@ -212,6 +216,19 @@ const MyFriendsView: FC<Props> = ({
     setShowRemoveFriendAlert(true);
   };
 
+  const headerDetails: () => string = () => {
+    const friendLabel: string = friendsCount > 1 ? "friends" : "friend";
+    let details = `You have currently ${friendsCount} ` + friendLabel;
+
+    if (pendingFriendsCount > 0) {
+      details +=
+        ` and received ${pendingFriendsCount} friend ` +
+        (pendingFriendsCount > 1 ? "requests." : "request.");
+    }
+
+    return details;
+  };
+
   return (
     <>
       <Screen shouldAddBottomInset={false}>
@@ -225,10 +242,11 @@ const MyFriendsView: FC<Props> = ({
           error={error}
           ListHeaderComponent={() => (
             <ConnectionListHeader
-              title="Received 2 new friend requests"
-              detail={
-                "You have currently 7 friends and received 2 new friend requests."
+              title={
+                `Received ${pendingFriendsCount} new friend ` +
+                (pendingFriendsCount > 1 ? "requests" : "request")
               }
+              detail={headerDetails()}
               icon={() => (
                 <UserGroupIcon
                   fill={theme.themedColors.labelSecondary}
