@@ -37,7 +37,7 @@ const AnnouncementController: FC<Props> = () => {
     false
   );
   const isFetchingInProgress = useRef(false);
-  const [announcements, _announcements] = useState<
+  const [announcements, setAnnouncements] = useState<
     CommunityAnnouncement[] | undefined
   >(undefined);
   const navigation = useNavigation<AnnouncementNavigationProp>();
@@ -101,15 +101,15 @@ const AnnouncementController: FC<Props> = () => {
 
     isFetchingInProgress.current = false;
     if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to Sign In", errorBody);
+      Alert.alert("Unable to fetch announcements", errorBody);
       return;
     } else {
       // to handle pull to refresh
       if (requestModel.current.page === 1) {
-        _announcements([]);
+        setAnnouncements([]);
       }
 
-      _announcements((prevState) => {
+      setAnnouncements((prevState) => {
         return [
           ...(prevState === undefined || requestModel.current.page === 1
             ? []
@@ -119,34 +119,35 @@ const AnnouncementController: FC<Props> = () => {
       });
 
       setIsAllDataLoaded(
-        dataBody.data.length < requestModel.current.limit
+        dataBody.pagination.current === dataBody.pagination.last
       );
 
-      requestModel.current.page =
-        announcements !== undefined
-          ? announcements.length / requestModel.current.limit + 1
-          : 1;
+      requestModel.current.page = dataBody.pagination.next;
     }
+  }, [getAnnouncementsApi]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const likeDislikeApiCall = useCallback(
+    async (postId: number) => {
+      AppLog.logForcefully("like dislike api : " + postId);
 
-  const likeDislikeApiCall = async (postId: number): Promise<boolean> => {
-    AppLog.logForcefully("like dislike api : " + postId);
+      const {
+        hasError,
+        errorBody,
+        dataBody
+      } = await likeDislikeApi.request([postId]);
 
-    const {
-      hasError,
-      errorBody,
-      dataBody
-    } = await likeDislikeApi.request([postId]);
-
-    if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to Sign In", errorBody);
-      return false; //return to announcements footer
-    } else {
-      return true; //return to announcements footer
-    }
-  };
+      if (hasError || dataBody === undefined) {
+        Alert.alert(
+          "Unable to perform action",
+          "Please try again later\n" + errorBody
+        );
+        return false;
+      } else {
+        return true;
+      }
+    },
+    [likeDislikeApi]
+  );
 
   const onEndReached = useCallback(async () => {
     requestModel.current.page = requestModel.current.page!! + 1;
@@ -164,18 +165,19 @@ const AnnouncementController: FC<Props> = () => {
           onComplete?.();
         });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [fetchAnnouncements]
   );
 
-  const openCommentsScreen = (postId: number) => {
-    navigation.navigate("Comments", { postId: postId });
-  };
+  const openCommentsScreen = useCallback(
+    (postId: number) => {
+      navigation.navigate("Comments", { postId: postId });
+    },
+    [navigation]
+  );
 
   useEffect(() => {
     fetchAnnouncements().then().catch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchAnnouncements]);
 
   return (
     <AnnouncementView

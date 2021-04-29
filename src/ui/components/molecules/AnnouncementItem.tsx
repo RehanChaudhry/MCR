@@ -31,6 +31,24 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
   }) => {
     const theme = usePreferredTheme();
 
+    function showAttachedItemsIfAny() {
+      if (announcementItem.link) {
+        return <UrlMetaData url={announcementItem.link} />;
+      } else if (announcementItem.embed) {
+        return (
+          <WebViewComponent
+            url={announcementItem.embed}
+            urlType={URL_TYPES.EMBEDDED}
+            shouldPlayVideo={shouldPlayVideo}
+          />
+        );
+      } else if (announcementItem.photos) {
+        return <ImagesSlideShow images={announcementItem.photos} />;
+      } else if (announcementItem.link) {
+        return <UrlMetaData url={announcementItem.link} />;
+      }
+    }
+
     return (
       <View
         style={[
@@ -49,34 +67,14 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
           leftImageUrl={announcementItem.postedByProfilePicture.fileURL}
           shouldShowRightImage={false}
         />
-        {announcementItem.content != null && true && (
+        {announcementItem.content && (
           <AppLabel
             text={announcementItem.content}
             style={[{ color: theme.themedColors.label }, style.text]}
             numberOfLines={0}
           />
         )}
-        {announcementItem.link != null && (
-          <WebViewComponent
-            url={announcementItem.link}
-            urlType={URL_TYPES.LINK}
-            shouldPlayVideo={shouldPlayVideo}
-          />
-        )}
-        {announcementItem.embed != null && (
-          <WebViewComponent
-            url={announcementItem.embed!!}
-            urlType={URL_TYPES.EMBEDDED}
-            shouldPlayVideo={shouldPlayVideo}
-          />
-        )}
-        {announcementItem.photos !== null &&
-          announcementItem.photos.length > 0 && (
-            <ImagesSlideShow images={announcementItem.photos} />
-          )}
-        {announcementItem.embed != null && (
-          <UrlMetaData url={announcementItem.embed} />
-        )}
+        {showAttachedItemsIfAny()}
         <AnnouncementFooter
           commentCount={announcementItem.commentsCount}
           likeCount={announcementItem.likesCount}

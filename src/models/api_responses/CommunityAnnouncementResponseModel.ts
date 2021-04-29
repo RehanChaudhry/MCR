@@ -1,6 +1,9 @@
+import { Pagination } from "models/Pagination";
+
 export interface CommunityAnnouncementResponseModel {
   message: string;
   data: CommunityAnnouncement[];
+  pagination: Pagination;
 }
 
 export interface CommunityAnnouncement {
