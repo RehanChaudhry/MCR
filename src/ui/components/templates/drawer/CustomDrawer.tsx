@@ -89,16 +89,25 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
             <View style={styles.userInfo}>
               <Image
                 style={styles.userImg}
-                source={require("assets/images/d_user_pic1.png")}
+                source={{
+                  uri: auth.user?.profile?.profilePicture.fileURL
+                }}
               />
               <View style={styles.nameContainer}>
                 <AppLabel
-                  text="Zayn Mayes"
+                  text={
+                    auth.user?.profile?.firstName +
+                    " " +
+                    auth.user?.profile?.lastName
+                  }
                   weight="semi-bold"
                   style={styles.name}
                 />
                 <View style={styles.settingContainer}>
-                  <AppLabel text="student" style={styles.userRole} />
+                  <AppLabel
+                    text={auth.user?.profile?.roleTitle}
+                    style={styles.userRole}
+                  />
 
                   <TouchableOpacity
                     onPress={() => {
@@ -116,7 +125,11 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
               </View>
             </View>
             <AppProgressBar
-              progressPercentage={65}
+              progressPercentage={
+                (auth.user?.profile?.totalQuestionsAnswered!! /
+                  auth.user?.profile?.totalQuestions!!) *
+                100
+              }
               style={styles.userProgress}
             />
           </View>

@@ -15,6 +15,7 @@ export interface Comment {
   //for manual handle new comment
   isLoading?: boolean;
   isError?: boolean;
+  retry?: (postId: number) => void;
 }
 
 export interface User {

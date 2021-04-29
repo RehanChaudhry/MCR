@@ -7,7 +7,7 @@ import CreatePostApiRequestModel, {
   Photo
 } from "models/api_requests/CreatePostApiRequestModel";
 import { CreatePostApiResponseModel } from "models/api_responses/CreatePostApiResponseModel";
-import React, { FC, useLayoutEffect, useRef } from "react";
+import React, { FC, useLayoutEffect, useRef, useState } from "react";
 import { Alert } from "react-native";
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
@@ -28,6 +28,7 @@ type Props = {};
 const CreatePostController: FC<Props> = () => {
   const navigation = useNavigation<CommunityNavigationProp>();
   const theme = usePreferredTheme();
+  const [showProgressBar, setShowProgressBar] = useState<boolean>(false);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -61,10 +62,13 @@ const CreatePostController: FC<Props> = () => {
     if (requestModel.current === undefined) {
       return;
     }
+    setShowProgressBar(true);
 
     const { hasError, errorBody, dataBody } = await createPostApi.request([
       requestModel.current
     ]);
+
+    setShowProgressBar(false);
 
     if (hasError || dataBody === undefined) {
       Alert.alert("Unable to create post", errorBody);
@@ -91,7 +95,9 @@ const CreatePostController: FC<Props> = () => {
       []
     );
 
-    AppLog.logForcefully("request : " + JSON.stringify(values.images));
+    AppLog.logForcefully(
+      "create post request : " + JSON.stringify(values.images)
+    );
     handleCreatePost();
   };
 
@@ -99,7 +105,12 @@ const CreatePostController: FC<Props> = () => {
     navigation.goBack();
   });
 
-  return <CreatePostView createPost={onSubmit} />;
+  return (
+    <CreatePostView
+      createPost={onSubmit}
+      shouldShowProgressBar={showProgressBar}
+    />
+  );
 };
 
 export default CreatePostController;

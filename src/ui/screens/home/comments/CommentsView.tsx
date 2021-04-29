@@ -9,6 +9,7 @@ import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { Comment } from "models/api_responses/CommentsResponseModel";
 import { ItemComment } from "ui/components/molecules/item_comment/ItemComment";
+import { AppLog } from "utils/Util";
 
 type Props = {
   data: Comment[] | undefined;
@@ -17,6 +18,7 @@ type Props = {
   onEndReached: () => void;
   isAllDataLoaded: boolean;
   error: string | undefined;
+  retry: (postId: number) => void;
   pullToRefreshCallback: (onComplete: () => void) => void;
 };
 
@@ -27,14 +29,15 @@ export const CommentsView = React.memo<Props>(
     shouldShowProgressBar,
     onEndReached,
     error,
+    retry,
     isAllDataLoaded,
     pullToRefreshCallback
   }) => {
     const theme = usePreferredTheme();
 
     const renderItem = ({ item }: { item: Comment }) => {
-      //  AppLog.log("rendering list item : " + JSON.stringify(item));
-      return <ItemComment item={item} />;
+      AppLog.logForcefully("Rendering item " + item.id);
+      return <ItemComment item={item} retry={retry} />;
     };
 
     function sentMessage(text: string) {

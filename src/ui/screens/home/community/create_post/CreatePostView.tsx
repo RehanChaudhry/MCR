@@ -345,6 +345,7 @@ export const CreatePostView = React.memo<Props>((props) => {
               }}
               textStyle={{ color: theme.themedColors.background }}
               fontWeight="bold"
+              shouldShowProgressBar={props.shouldShowProgressBar}
             />
           </AppForm>
         </View>
