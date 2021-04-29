@@ -1,5 +1,5 @@
-import ActivityLog from "models/api_responses/ActivityLogsResponseModel";
 import { STRINGS } from "config";
+import ActivityLog from "models/ActivityLog";
 
 export interface ActivityLogSection {
   title: string;
@@ -12,7 +12,8 @@ export const toSectionList = (activityLogs: ActivityLog[]) => {
     yesterday: ActivityLog[] = [],
     older: ActivityLog[] = [];
 
-  activityLogs.forEach((value) => {
+  activityLogs.forEach((_value) => {
+    const value = new ActivityLog(_value);
     const diffInHours = value.getHoursDiff();
     if (diffInHours > 48) {
       older.push(value);

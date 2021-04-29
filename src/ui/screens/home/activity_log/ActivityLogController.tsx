@@ -39,10 +39,7 @@ const ActivityLogController: FC<Props> = () => {
   >(ProfileApis.activityLogs);
 
   const requestModel = useRef<ActivityLogApiRequestModel>({
-    paginate: true,
-    userType: "Student",
-    startDate: "2018-11-26",
-    endDate: "2021-07-26"
+    paginate: true
   });
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const isFetchingInProgress = useRef(false);
@@ -59,7 +56,7 @@ const ActivityLogController: FC<Props> = () => {
     });
   };
 
-  const getActivityLogs = async () => {
+  const getActivityLogs = useCallback(async () => {
     if (isFetchingInProgress.current) {
       return;
     }
@@ -106,7 +103,7 @@ const ActivityLogController: FC<Props> = () => {
     }
 
     isFetchingInProgress.current = false;
-  };
+  }, [activityLogs, activityLogApi]);
 
   const onEndReached = () => {
     // getActivityLogs();

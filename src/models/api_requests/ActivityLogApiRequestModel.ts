@@ -5,8 +5,6 @@ type ActivityLogApiRequestModel = {
   keyword?: string | undefined;
   userType?: string;
   actionType?: string;
-  startDate?: string;
-  endDate?: string;
   attributes?: string;
 };
 

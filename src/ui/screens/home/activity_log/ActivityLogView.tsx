@@ -3,7 +3,6 @@ import { SectionList, StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import ActivityLog from "models/api_responses/ActivityLogsResponseModel";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import Selector from "assets/images/selector.svg";
 import ActivityLogItem from "ui/components/organisms/activity_log_item/ActivityLogItem";
@@ -12,6 +11,7 @@ import { ActivityLogSection } from "utils/SectionListHelper";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { shadowStyleProps } from "utils/Util";
 import { DropDownItem } from "models/DropDownItem";
+import ActivityLog from "models/ActivityLog";
 
 type Props = {
   isApiLoading: boolean;
@@ -34,7 +34,7 @@ export const ActivityLogView: React.FC<Props> = ({
   const [isRefreshing, setRefreshing] = useState<boolean>(false);
 
   const renderItem = ({ item }: { item: ActivityLog }) => (
-    <ActivityLogItem activityLog={item} />
+    <ActivityLogItem activityLog={new ActivityLog(item)} />
   );
 
   const headerView = ({ section }: { section: ActivityLogSection }) => {
@@ -103,7 +103,7 @@ export const ActivityLogView: React.FC<Props> = ({
             });
           }}
           refreshing={isRefreshing}
-          keyExtractor={(item, index) => item.data[index].id.toString()}
+          keyExtractor={(item) => item.id.toString()}
           stickySectionHeadersEnabled={true}
         />
       )}

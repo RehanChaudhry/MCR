@@ -3,24 +3,17 @@ import { usePreferredTheme } from "hooks";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import ActivityLog from "models/ActivityLog";
 import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
-import { SvgProp } from "utils/Util";
-import ActivityType from "models/enums/ActivityType";
-import UserAdd from "assets/images/user-add.svg";
-import Comment from "assets/images/chat-alt.svg";
-import Post from "assets/images/newspaper.svg";
-import RoommateRequest from "assets/images/request_state_icon.svg";
-import RoommateAgreement from "assets/images/clipboard-list.svg";
 import Questionnaire from "assets/images/office-building.svg";
-import Profile from "assets/images/settings.svg";
-import Dismissed from "assets/images/folder-remove.svg";
-import Conversation from "assets/images/chat_round.svg";
 import { Divider } from "react-native-elements";
 import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
+import ActivityLog from "models/ActivityLog";
+import ActivityLogType from "models/enums/ActivityLogType";
+import Actions from "models/enums/ActivityLogAction";
+import { AppLog } from "utils/Util";
 
 interface Props {
   activityLog: ActivityLog;
@@ -28,38 +21,57 @@ interface Props {
 
 const ActivityLogItem = ({ activityLog }: Props) => {
   const { themedColors } = usePreferredTheme();
+  AppLog.log("message: " + activityLog.getMessage());
   // AppLog.log(
   //   "rendering ProfileMatchItem, item: " + JSON.stringify(profileMatch)
   // );
 
-  const icon: SvgProp = () => {
-    switch (activityLog.type) {
-      case ActivityType.ALL:
-        return <Profile width={20} fill={themedColors.background} />;
-      case ActivityType.ADDED_TO_DISMISSED:
-        return <Dismissed width={20} fill={themedColors.background} />;
-      case ActivityType.CREATED_CONVERSATION:
-        return <Conversation width={20} fill={themedColors.background} />;
-      case ActivityType.CREATED_POST:
-        return <Post width={20} fill={themedColors.background} />;
-      case ActivityType.ROOMMATE_REQUEST_SENT:
-        return (
-          <RoommateRequest width={20} fill={themedColors.background} />
-        );
-      case ActivityType.UPDATED_QUESTIONNAIRE:
+  // const icon: SvgProp = () => {
+  //   switch (activityLog.type) {
+  //     // case ActivityType.ALL:
+  //     //   return <Profile width={20} fill={themedColors.background} />;
+  //     case ActivityType.ADDED_TO_DISMISSED:
+  //       return <Dismissed width={20} fill={themedColors.background} />;
+  //     case ActivityType.CREATED_CONVERSATION:
+  //       return <Conversation width={20} fill={themedColors.background} />;
+  //     case ActivityType.CREATED_POST:
+  //       return <Post width={20} fill={themedColors.background} />;
+  //     case ActivityType.ROOMMATE_REQUEST_SENT:
+  //       return (
+  //         <RoommateRequest width={20} fill={themedColors.background} />
+  //       );
+  //     case ActivityType.UPDATED_QUESTIONNAIRE:
+  //       return <Questionnaire width={20} fill={themedColors.background} />;
+  //     case ActivityType.UPDATED_PROFILE:
+  //       return <Profile width={20} fill={themedColors.background} />;
+  //     case ActivityType.UPDATED_AGREEMENT:
+  //       return (
+  //         <RoommateAgreement width={20} fill={themedColors.background} />
+  //       );
+  //     case ActivityType.COMMENT:
+  //       return <Comment width={20} fill={themedColors.background} />;
+  //     case ActivityType.FRIEND_REQUEST_SENT:
+  //       return <UserAdd width={20} fill={themedColors.background} />;
+  //     default:
+  //       return <Profile width={20} fill={themedColors.background} />;
+  //   }
+  // };
+
+  const icon: any = () => {
+    if (activityLog.type != null) {
+      if (
+        activityLog.type === ActivityLogType.FRIEND_REQUEST &&
+        activityLog.action === Actions.SENT
+      ) {
         return <Questionnaire width={20} fill={themedColors.background} />;
-      case ActivityType.UPDATED_PROFILE:
-        return <Profile width={20} fill={themedColors.background} />;
-      case ActivityType.UPDATED_AGREEMENT:
-        return (
-          <RoommateAgreement width={20} fill={themedColors.background} />
-        );
-      case ActivityType.COMMENT:
-        return <Comment width={20} fill={themedColors.background} />;
-      case ActivityType.FRIEND_REQUEST_SENT:
-        return <UserAdd width={20} fill={themedColors.background} />;
-      default:
-        return <Profile width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type === ActivityLogType.FRIEND_REQUEST &&
+        activityLog.action === Actions.REJECTED
+      ) {
+        return <Questionnaire width={20} fill={themedColors.background} />;
+      }
+    } else {
+      return null;
     }
   };
 
@@ -92,7 +104,7 @@ const ActivityLogItem = ({ activityLog }: Props) => {
         <LabelHtml
           containerStyle={styles.message}
           style={styles.messageText}
-          text={activityLog.message ?? STRINGS.common.not_found}
+          text={activityLog.getMessage() ?? STRINGS.common.not_found}
         />
         <AppLabel
           style={[styles.date, { color: themedColors.interface[600] }]}
