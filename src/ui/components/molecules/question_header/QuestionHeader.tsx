@@ -80,6 +80,7 @@ const QuestionHeader: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   collapseContainer: {
+    alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
     borderRadius: 6,
@@ -89,8 +90,7 @@ const styles = StyleSheet.create({
   },
   expandedContainer: {
     flexDirection: "column",
-    paddingHorizontal: SPACE.lg,
-    paddingVertical: SPACE.sm,
+    padding: SPACE.lg,
     borderTopStartRadius: 6,
     borderTopEndRadius: 6,
     borderBottomWidth: StyleSheet.hairlineWidth,
