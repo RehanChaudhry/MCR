@@ -1,5 +1,6 @@
 import React, {
   FC,
+  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -50,21 +51,60 @@ export const NewConversationController: FC<Props> = () => {
   const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
   const [clearInputField, setClearInputField] = useState<boolean>(false);
 
-  const openChatThreadScreen = (conversationId: number) => {
-    const users: string[] = newConversations!!.reduce(
-      (newArray: string[], item) => (
-        newArray.push(item.firstName + " " + item.lastName), newArray
-      ),
-      []
+  const openChatThreadScreen = useCallback(
+    (conversationId: number) => {
+      const users: string[] = newConversations!!.reduce(
+        (newArray: string[], item) => (
+          newArray.push(item.firstName + " " + item.lastName), newArray
+        ),
+        []
+      );
+      navigation.goBack();
+      navigation.navigate("ChatThread", {
+        title: users,
+        conversationId: conversationId
+      });
+    },
+    [navigation, newConversations]
+  );
+
+  const getSuggestions = useApi<
+    ConversationSuggestionsRequestModel,
+    ConversationSuggestionsResponseModel
+  >(ChatApis.getSuggestions);
+
+  const handleGetSuggestionApi = async (keyword: string) => {
+    setShowProgressbar(true);
+    const { hasError, dataBody, errorBody } = await getSuggestions.request(
+      [
+        {
+          keyword: keyword,
+          roleTitle: conversationType.current === 0 ? "Student" : "Staff"
+        }
+      ]
     );
-    navigation.goBack();
-    navigation.navigate("ChatThread", {
-      title: users,
-      conversationId: conversationId
-    });
+    setShowProgressbar(false);
+    if (hasError || dataBody === undefined) {
+      AppLog.log("Unable to find suggestions " + errorBody);
+      return;
+    } else {
+      setSuggestions(dataBody.data);
+    }
   };
 
-  const headerRightClick = () => {
+  const createConversationAPi = useApi<
+    CreateConversationRequestModel,
+    CreateConversationResponseModel
+  >(ChatApis.createConversations);
+
+  const handleCreateConversationApi = useCallback(async () => {
+    const { hasError, dataBody, errorBody } = await createConversationAPi // @ts-ignore
+      .request([{ userIds: usersIds.current }]);
+
+    return { hasError, dataBody, errorBody };
+  }, [createConversationAPi]);
+
+  const headerRightClick = useCallback(() => {
     AppLog.logForcefully("dats  : " + JSON.stringify(newConversations));
     if (newConversations !== undefined && newConversations.length > 0) {
       handleCreateConversationApi()
@@ -78,15 +118,17 @@ export const NewConversationController: FC<Props> = () => {
           }
         })
         .catch((error) => {
-          AppLog.logForcefully(
-            "CreateConversationApi() => catch =>" + JSON.stringify(error)
-          );
+          SimpleToast.show(error ?? Strings.somethingWentWrong);
         });
     } else {
-      AppLog.logForcefully("CreateConversationApi() => failed ");
-      //  navigation.goBack();
+      navigation.goBack();
     }
-  };
+  }, [
+    navigation,
+    openChatThreadScreen,
+    newConversations,
+    handleCreateConversationApi
+  ]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -129,44 +171,7 @@ export const NewConversationController: FC<Props> = () => {
         shadowColor: "#00000000"
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigation]);
-
-  const getSuggestions = useApi<
-    ConversationSuggestionsRequestModel,
-    ConversationSuggestionsResponseModel
-  >(ChatApis.getSuggestions);
-
-  const handleGetSuggestionApi = async (keyword: string) => {
-    setShowProgressbar(true);
-    const { hasError, dataBody, errorBody } = await getSuggestions.request(
-      [
-        {
-          keyword: keyword,
-          roleTitle: conversationType.current === 0 ? "Student" : "Staff"
-        }
-      ]
-    );
-    setShowProgressbar(false);
-    if (hasError || dataBody === undefined) {
-      AppLog.log("Unable to find suggestions " + errorBody);
-      return;
-    } else {
-      setSuggestions(dataBody.data);
-    }
-  };
-
-  const createConversationAPi = useApi<
-    CreateConversationRequestModel,
-    CreateConversationResponseModel
-  >(ChatApis.createConversations);
-
-  const handleCreateConversationApi = async () => {
-    const { hasError, dataBody, errorBody } = await createConversationAPi // @ts-ignore
-      .request([{ userIds: usersIds.current }]);
-
-    return { hasError, dataBody, errorBody };
-  };
+  }, [navigation, headerRightClick, themedColors.primary]);
 
   const removeItemFromList = (itemToDelete: User) => {
     setNewConversation(
