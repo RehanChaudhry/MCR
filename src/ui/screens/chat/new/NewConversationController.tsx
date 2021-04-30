@@ -27,6 +27,7 @@ import { AppLog } from "utils/Util";
 import { ConversationSuggestionsRequestModel } from "models/api_requests/ConversationSuggestionsRequestModel";
 import { CreateConversationRequestModel } from "models/api_requests/CreateConversationRequestModel";
 import SimpleToast from "react-native-simple-toast";
+import { CreateConversationResponseModel } from "models/api_responses/CreateConversationResponseModel";
 
 type ConversationNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -49,7 +50,7 @@ export const NewConversationController: FC<Props> = () => {
   const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
   const [clearInputField, setClearInputField] = useState<boolean>(false);
 
-  const goBack = () => {
+  const openChatThreadScreen = (conversationId: number) => {
     const users: string[] = newConversations!!.reduce(
       (newArray: string[], item) => (
         newArray.push(item.firstName + " " + item.lastName), newArray
@@ -57,7 +58,34 @@ export const NewConversationController: FC<Props> = () => {
       []
     );
     navigation.goBack();
-    navigation.navigate("ChatThread", { title: users });
+    navigation.navigate("ChatThread", {
+      title: users,
+      conversationId: conversationId
+    });
+  };
+
+  const headerRightClick = () => {
+    AppLog.logForcefully("dats  : " + JSON.stringify(newConversations));
+    if (newConversations !== undefined && newConversations.length > 0) {
+      handleCreateConversationApi()
+        .then((result) => {
+          if (result.hasError && result.dataBody !== undefined) {
+            SimpleToast.show(
+              result.errorBody ?? Strings.somethingWentWrong
+            );
+          } else {
+            openChatThreadScreen(result.dataBody!!.data.id);
+          }
+        })
+        .catch((error) => {
+          AppLog.logForcefully(
+            "CreateConversationApi() => catch =>" + JSON.stringify(error)
+          );
+        });
+    } else {
+      AppLog.logForcefully("CreateConversationApi() => failed ");
+      //  navigation.goBack();
+    }
   };
 
   useLayoutEffect(() => {
@@ -84,34 +112,7 @@ export const NewConversationController: FC<Props> = () => {
       headerRight: () => (
         <HeaderRightTextWithIcon
           text={Strings.newConversation.titleRight}
-          onPress={() => {
-            if (
-              newConversations !== undefined &&
-              newConversations.length > 0
-            ) {
-              handleCreateConversationApi()
-                .then((result) => {
-                  AppLog.logForcefully(
-                    "CreateConversationApi() => " + JSON.stringify(result)
-                  );
-                  if (result.hasError) {
-                    SimpleToast.show(
-                      result.errorBody ?? Strings.somethingWentWrong
-                    );
-                  } else {
-                    goBack();
-                  }
-                })
-                .catch((error) => {
-                  AppLog.logForcefully(
-                    "CreateConversationApi() => catch =>" +
-                      JSON.stringify(error)
-                  );
-                });
-            } else {
-              navigation.goBack();
-            }
-          }}
+          onPress={headerRightClick}
           icon={() => (
             <CircularTick
               testID="icon"
@@ -148,17 +149,16 @@ export const NewConversationController: FC<Props> = () => {
     );
     setShowProgressbar(false);
     if (hasError || dataBody === undefined) {
-      AppLog.logForcefully("Unable to find suggestions " + errorBody);
+      AppLog.log("Unable to find suggestions " + errorBody);
       return;
     } else {
-      AppLog.logForcefully("suggestions " + dataBody.data);
       setSuggestions(dataBody.data);
     }
   };
 
   const createConversationAPi = useApi<
     CreateConversationRequestModel,
-    ConversationSuggestionsResponseModel
+    CreateConversationResponseModel
   >(ChatApis.createConversations);
 
   const handleCreateConversationApi = async () => {

@@ -47,8 +47,10 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
   const myNavigation = useNavigation<typeof navigation>();
   const { params }: any = useRoute<typeof route>();
   const [chats, setChats] = useState<ChatItem[]>(dummyChats);
-
+  const conversationId: number = params.conversationId;
   const { themedColors } = usePreferredTheme();
+
+  AppLog.log("remove warning " + conversationId);
 
   const getTitle = (): string => {
     const title = params?.title ?? "N/A";
