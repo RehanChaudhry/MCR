@@ -19,35 +19,32 @@ export interface AnnouncementItemProps extends TouchableOpacityProps {
   announcementItem: CommunityAnnouncement;
   openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
-  likeDislikeAPi: (postId: number) => Promise<boolean>;
+}
+
+function showAttachedItemsIfAny(
+  item: CommunityAnnouncement,
+  shouldPlayVideo: boolean
+) {
+  if (item.link) {
+    return <UrlMetaData url={item.link} />;
+  } else if (item.embed) {
+    return (
+      <WebViewComponent
+        url={item.embed}
+        urlType={URL_TYPES.EMBEDDED}
+        shouldPlayVideo={shouldPlayVideo}
+      />
+    );
+  } else if (item.photos) {
+    return <ImagesSlideShow images={item.photos} />;
+  } else if (item.link) {
+    return <UrlMetaData url={item.link} />;
+  }
 }
 
 export const AnnouncementItem = React.memo<AnnouncementItemProps>(
-  ({
-    announcementItem,
-    openCommentsScreen,
-    shouldPlayVideo,
-    likeDislikeAPi
-  }) => {
+  ({ announcementItem, openCommentsScreen, shouldPlayVideo }) => {
     const theme = usePreferredTheme();
-
-    function showAttachedItemsIfAny() {
-      if (announcementItem.link) {
-        return <UrlMetaData url={announcementItem.link} />;
-      } else if (announcementItem.embed) {
-        return (
-          <WebViewComponent
-            url={announcementItem.embed}
-            urlType={URL_TYPES.EMBEDDED}
-            shouldPlayVideo={shouldPlayVideo}
-          />
-        );
-      } else if (announcementItem.photos) {
-        return <ImagesSlideShow images={announcementItem.photos} />;
-      } else if (announcementItem.link) {
-        return <UrlMetaData url={announcementItem.link} />;
-      }
-    }
 
     return (
       <View
@@ -74,13 +71,12 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
             numberOfLines={0}
           />
         )}
-        {showAttachedItemsIfAny()}
+        {showAttachedItemsIfAny(announcementItem, shouldPlayVideo)}
         <AnnouncementFooter
           commentCount={announcementItem.commentsCount}
           likeCount={announcementItem.likesCount}
           openCommentsScreen={openCommentsScreen}
-          likedBy={announcementItem.isLikedByMe}
-          likeDislikeAPi={likeDislikeAPi}
+          isLikedByMe={announcementItem.isLikedByMe}
           postId={announcementItem.id}
         />
       </View>

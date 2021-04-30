@@ -22,7 +22,6 @@ import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestMod
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { Alert } from "react-native";
-import { LikeDislikeResponseModel } from "models/api_responses/LikeDislikeResponseModel";
 
 type AnnouncementNavigationProp = StackNavigationProp<
   AnnouncementStackParamList,
@@ -79,10 +78,6 @@ const AnnouncementController: FC<Props> = () => {
     CommunityAnnouncementResponseModel
   >(CommunityAnnouncementApis.getCommunityAnnouncements);
 
-  const likeDislikeApi = useApi<number, LikeDislikeResponseModel>(
-    CommunityAnnouncementApis.likeDislike
-  );
-
   const fetchAnnouncements = useCallback(async () => {
     if (isFetchingInProgress.current) {
       return;
@@ -97,18 +92,12 @@ const AnnouncementController: FC<Props> = () => {
       dataBody
     } = await getAnnouncementsApi.request([requestModel.current]);
 
-    setShouldShowProgressBar(false);
-
     isFetchingInProgress.current = false;
     if (hasError || dataBody === undefined) {
       Alert.alert("Unable to fetch announcements", errorBody);
+      setShouldShowProgressBar(false);
       return;
     } else {
-      // to handle pull to refresh
-      if (requestModel.current.page === 1) {
-        setAnnouncements([]);
-      }
-
       setAnnouncements((prevState) => {
         return [
           ...(prevState === undefined || requestModel.current.page === 1
@@ -119,35 +108,13 @@ const AnnouncementController: FC<Props> = () => {
       });
 
       setIsAllDataLoaded(
-        dataBody.pagination.current === dataBody.pagination.last
+        dataBody.data.length < requestModel.current.limit
       );
 
-      requestModel.current.page = dataBody.pagination.next;
+      requestModel.current.page = (requestModel?.current?.page ?? 0) + 1;
+      setShouldShowProgressBar(false);
     }
   }, [getAnnouncementsApi]);
-
-  const likeDislikeApiCall = useCallback(
-    async (postId: number) => {
-      AppLog.logForcefully("like dislike api : " + postId);
-
-      const {
-        hasError,
-        errorBody,
-        dataBody
-      } = await likeDislikeApi.request([postId]);
-
-      if (hasError || dataBody === undefined) {
-        Alert.alert(
-          "Unable to perform action",
-          "Please try again later\n" + errorBody
-        );
-        return false;
-      } else {
-        return true;
-      }
-    },
-    [likeDislikeApi]
-  );
 
   const onEndReached = useCallback(async () => {
     requestModel.current.page = requestModel.current.page!! + 1;
@@ -189,7 +156,6 @@ const AnnouncementController: FC<Props> = () => {
       pullToRefreshCallback={refreshCallback}
       openCommentsScreen={openCommentsScreen}
       shouldPlayVideo={shouldPlayVideo}
-      likeDislikeAPi={likeDislikeApiCall}
     />
   );
 };

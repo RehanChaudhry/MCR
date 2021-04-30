@@ -1,18 +1,18 @@
 {
-  "duration": 347,
+  "duration": 436,
   "problem": null,
   "originalError": null,
   "ok": true,
   "status": 200,
   "headers": {
     "content-type": "application/json; charset=utf-8",
-    "report-to": "{\"max_age\":604800,\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=ZrhN2mEPZ1Yj7l4s8tU%2FIcTceHpf%2BbpYRY2QPHw850aIH0lXhgpzyD6uJi5486TkmbXpyH%2Fg0ah2gh3lwG7JJeTvjiklugqyJrFMhQrXWhLJSKM%3D\"}],\"group\":\"cf-nel\"}",
+    "report-to": "{\"max_age\":604800,\"group\":\"cf-nel\",\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=EBsvRNOpxLCS%2F8azsEo0ztMJe9bmB3S4VmnR4yGG5B5OCKULwB7QDUzXX4uKb3UTYpzdHO8j2vX2JVFJ4GvFJJnOEHEe3wkN07Xzh4IlDhEzGDY%3D\"}]}",
     "x-frame-options": "SAMEORIGIN",
-    "cf-request-id": "09bd9bd79f00000a4852b7b000000001",
+    "cf-request-id": "09c312cffa00001ac4debb6000000001",
     "cf-cache-status": "DYNAMIC",
     "x-powered-by": "Express",
-    "date": "Thu, 29 Apr 2021 05:03:32 GMT",
-    "cf-ray": "6475fc05ca4c0a48-KIX",
+    "date": "Fri, 30 Apr 2021 06:31:35 GMT",
+    "cf-ray": "647eba5ffd1f1ac4-SIN",
     "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
     "x-xss-protection": "1; mode=block",
     "content-encoding": "br",
@@ -21,8 +21,8 @@
     "strict-transport-security": "max-age=0; includeSubDomains",
     "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
     "x-content-type-options": "nosniff",
-    "etag": "W/\"3061-WNVvhGHReshZRRlQHj6GJy2zBYg\"",
-    "vary": "Origin"
+    "etag": "W/\"305c-NKjMmmdCl966rsEayTi1tau7NpA\"",
+    "vary": "Accept-Encoding, Origin"
   },
   "config": {
     "url": "post",
@@ -50,7 +50,7 @@
     "message": "Success.",
     "data": [
       {
-        "popularityScore": 0,
+        "popularityScore": 1,
         "id": 527,
         "type": "announcement",
         "content": "ALERT: Ohio University’s Athens Campus will be closed until 7 a.m. on Tuesday, February 16, 2021 due to a Level Three Snow Emergency in Athens County. This means that all area roadways are closed to non-emergency personnel, and individuals are not permitted to travel unless absolutely necessary.",
@@ -85,7 +85,7 @@
           "fileURL": "https://randomuser.me/api/portraits/men/53.jpg",
           "originalName": "53.jpg"
         },
-        "likesCount": 0,
+        "likesCount": 1,
         "commentsCount": 0,
         "isFlagged": null,
         "everyone": 1,
@@ -93,13 +93,13 @@
         "specificMatchGroup": 0,
         "specificGender": 0,
         "createdAt": "2021-04-28T04:59:17.000Z",
-        "updatedAt": "2021-04-28T04:59:17.000Z",
+        "updatedAt": "2021-04-30T06:31:00.000Z",
         "deletedAt": null,
         "postFilter": { "filterType": "everyone", "filterId": null },
-        "isLikedByMe": false
+        "isLikedByMe": true
       },
       {
-        "popularityScore": 0,
+        "popularityScore": 1,
         "id": 526,
         "type": "announcement",
         "content": "Vaccines are one way to stop COVID-19, but Dr. Jennifer Hines, a professor in the Department of Chemistry and Biochemistry, has discovered another- by disrupting the virus’s RNA and ability to reproduce.",
@@ -134,7 +134,7 @@
           "fileURL": "https://randomuser.me/api/portraits/men/53.jpg",
           "originalName": "53.jpg"
         },
-        "likesCount": 0,
+        "likesCount": 1,
         "commentsCount": 0,
         "isFlagged": null,
         "everyone": 1,
@@ -142,10 +142,10 @@
         "specificMatchGroup": 0,
         "specificGender": 0,
         "createdAt": "2021-04-28T04:59:06.000Z",
-        "updatedAt": "2021-04-28T04:59:06.000Z",
+        "updatedAt": "2021-04-30T06:27:31.000Z",
         "deletedAt": null,
         "postFilter": { "filterType": "everyone", "filterId": null },
-        "isLikedByMe": false
+        "isLikedByMe": true
       },
       {
         "popularityScore": 0,
@@ -372,7 +372,7 @@
         "isLikedByMe": false
       },
       {
-        "popularityScore": 52,
+        "popularityScore": 53,
         "id": 519,
         "type": "announcement",
         "content": "Other Freshmen 12",
@@ -386,7 +386,7 @@
           "fileURL": "https://randomuser.me/api/portraits/women/69.jpg",
           "originalName": "69.jpg"
         },
-        "likesCount": 51,
+        "likesCount": 52,
         "commentsCount": 1,
         "isFlagged": null,
         "everyone": 0,
@@ -394,13 +394,13 @@
         "specificMatchGroup": 1,
         "specificGender": 0,
         "createdAt": "2021-04-26T03:04:46.000Z",
-        "updatedAt": "2021-04-26T03:04:46.000Z",
+        "updatedAt": "2021-04-29T09:52:14.000Z",
         "deletedAt": null,
         "postFilter": { "filterType": "match-group", "filterId": 3 },
-        "isLikedByMe": false
+        "isLikedByMe": true
       },
       {
-        "popularityScore": 29,
+        "popularityScore": 30,
         "id": 518,
         "type": "announcement",
         "content": "Female Sophomore 15",
@@ -414,7 +414,7 @@
           "fileURL": "https://randomuser.me/api/portraits/women/23.jpg",
           "originalName": "23.jpg"
         },
-        "likesCount": 29,
+        "likesCount": 30,
         "commentsCount": 0,
         "isFlagged": null,
         "everyone": 1,
@@ -422,13 +422,13 @@
         "specificMatchGroup": 0,
         "specificGender": 0,
         "createdAt": "2021-04-26T03:04:46.000Z",
-        "updatedAt": "2021-04-26T03:04:46.000Z",
+        "updatedAt": "2021-04-29T09:52:13.000Z",
         "deletedAt": null,
         "postFilter": { "filterType": "everyone", "filterId": null },
-        "isLikedByMe": false
+        "isLikedByMe": true
       },
       {
-        "popularityScore": 66,
+        "popularityScore": 67,
         "id": 517,
         "type": "announcement",
         "content": "Male 13",
@@ -442,7 +442,7 @@
           "fileURL": "https://randomuser.me/api/portraits/women/9.jpg",
           "originalName": "9.jpg"
         },
-        "likesCount": 66,
+        "likesCount": 67,
         "commentsCount": 0,
         "isFlagged": null,
         "everyone": 1,
@@ -450,10 +450,10 @@
         "specificMatchGroup": 0,
         "specificGender": 0,
         "createdAt": "2021-04-26T03:04:46.000Z",
-        "updatedAt": "2021-04-26T03:04:46.000Z",
+        "updatedAt": "2021-04-29T09:52:11.000Z",
         "deletedAt": null,
         "postFilter": { "filterType": "everyone", "filterId": null },
-        "isLikedByMe": false
+        "isLikedByMe": true
       }
     ]
   }
