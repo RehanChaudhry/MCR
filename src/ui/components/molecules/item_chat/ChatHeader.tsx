@@ -4,7 +4,7 @@ import { FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
-import ChatItem, { SenderType } from "models/ChatItem";
+import { SenderType } from "models/ChatItem";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
 
 export interface ChatHeaderProps {

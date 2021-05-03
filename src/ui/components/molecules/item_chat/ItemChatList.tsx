@@ -16,10 +16,7 @@ import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { SenderType } from "models/ChatItem";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
-import {
-  Conversation,
-  ConversationWrapper
-} from "models/api_responses/ChatsResponseModel";
+import { Conversation } from "models/api_responses/ChatsResponseModel";
 import { AppLog } from "utils/Util";
 import { User } from "models/User";
 

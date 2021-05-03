@@ -1,21 +1,16 @@
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { StyleSheet, View } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, shadowStyleProps } from "utils/Util";
 import { ItemChatList } from "ui/components/molecules/item_chat/ItemChatList";
-import ChatItem from "models/ChatItem";
 import { ChatHeader } from "ui/components/molecules/item_chat/ChatHeader";
 import SearchField from "ui/components/atoms/search_field/SearchField";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
-import {
-  Conversation,
-  ConversationWrapper
-} from "models/api_responses/ChatsResponseModel";
-import { ConversationItem } from "models/ConversationItem";
+import { Conversation } from "models/api_responses/ChatsResponseModel";
 
 interface ChatListProps {
   onItemClick: (item: Conversation) => void;
