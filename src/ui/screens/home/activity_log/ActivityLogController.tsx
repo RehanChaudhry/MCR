@@ -119,7 +119,8 @@ const ActivityLogController: FC<Props> = () => {
 
   useEffect(() => {
     getActivityLogs();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ActivityLogView
