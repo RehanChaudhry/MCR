@@ -2,7 +2,8 @@ import Chat from "assets/images/chat.svg";
 import Like from "assets/images/like.svg";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import React, { useState } from "react";
+import { LikeDislikeResponseModel } from "models/api_responses/LikeDislikeResponseModel";
+import React, { useCallback, useState } from "react";
 import {
   ImageStyle,
   StyleProp,
@@ -12,10 +13,12 @@ import {
   View,
   ViewStyle
 } from "react-native";
+import SimpleToast from "react-native-simple-toast";
+import { useApi } from "repo/Client";
+import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { CommentButton } from "ui/components/atoms/compact_buttons/CommentButton";
 import { LikeButton } from "ui/components/atoms/compact_buttons/LikeButton";
-import { IsLikedByMe } from "models/api_responses/CommunityAnnouncementResponseModel";
 import { AppLog } from "utils/Util";
 
 export interface AnnouncementFooterProps extends TouchableOpacityProps {
@@ -31,8 +34,7 @@ export interface AnnouncementFooterProps extends TouchableOpacityProps {
   leftContainerLeftButtonStyle?: StyleProp<ViewStyle>;
   leftContainerRightButtonStyle?: StyleProp<ViewStyle>;
   openCommentsScreen?: (postId: number) => void | undefined;
-  likedBy: IsLikedByMe[] | undefined;
-  likeDislikeAPi: (postId: number) => Promise<boolean>;
+  isLikedByMe: boolean;
   postId: number;
 }
 
@@ -42,20 +44,40 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
     commentCount = 0,
     bottomLineStyle,
     openCommentsScreen,
-    likedBy,
-    likeDislikeAPi,
+    isLikedByMe,
     postId
   }) => {
     const theme = usePreferredTheme();
 
-    let [
-      showShowLikeButtonSelected,
-      _showShowLikeButtonSelected
-    ] = useState<boolean>(
-      likedBy !== undefined &&
-        likedBy.length > 0 &&
-        likedBy[0].action === "liked"
+    let [isLikeButtonSelected, setLikeButtonSelected] = useState<boolean>(
+      isLikedByMe
     );
+
+    const toggleLikedStateApi = useApi<number, LikeDislikeResponseModel>(
+      CommunityAnnouncementApis.likeDislike
+    );
+
+    const toggleLikedState = useCallback(
+      async (_postId: number) => {
+        AppLog.logForcefully("like dislike api : " + _postId);
+
+        const { hasError, dataBody } = await toggleLikedStateApi.request([
+          _postId
+        ]);
+
+        if (hasError || dataBody === undefined) {
+          SimpleToast.show(
+            "Unable to perform action. Please try again later",
+            SimpleToast.SHORT
+          );
+          return false;
+        } else {
+          return true;
+        }
+      },
+      [toggleLikedStateApi]
+    );
+
     return (
       <View>
         <View
@@ -69,10 +91,10 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
           <View style={style.leftRightContainer}>
             <View>
               <LikeButton
-                shouldSelected={showShowLikeButtonSelected}
+                shouldSelected={isLikeButtonSelected}
                 onValueChanged={(isLiked: boolean) => {
-                  likeDislikeAPi(postId).then((result) => {
-                    _showShowLikeButtonSelected(!result ?? !isLiked);
+                  toggleLikedState(postId).then((result) => {
+                    setLikeButtonSelected(!result ?? !isLiked);
                   });
                 }}
               />

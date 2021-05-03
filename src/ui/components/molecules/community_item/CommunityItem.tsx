@@ -2,7 +2,7 @@ import Shield from "assets/images/shield.svg";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, TouchableOpacityProps, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
@@ -21,7 +21,33 @@ export interface CommunityItemProps extends TouchableOpacityProps {
   openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
   openReportContentScreen?: () => void | undefined;
-  likeDislikeAPi: (postId: number) => Promise<boolean>;
+}
+
+function showAttachedItemsIfAny(
+  item: CommunityAnnouncement,
+  shouldPlayVideo: boolean
+) {
+  if (item.link) {
+    return (
+      <WebViewComponent
+        url={item.link}
+        urlType={URL_TYPES.LINK}
+        shouldPlayVideo={shouldPlayVideo}
+      />
+    );
+  } else if (item.embed) {
+    return (
+      <WebViewComponent
+        url={item.embed}
+        urlType={URL_TYPES.EMBEDDED}
+        shouldPlayVideo={shouldPlayVideo}
+      />
+    );
+  } else if (item.photos) {
+    return <ImagesSlideShow images={item.photos} />;
+  } else if (item.link) {
+    return <UrlMetaData url={item.link} />;
+  }
 }
 
 export const CommunityItem = React.memo<CommunityItemProps>(
@@ -29,11 +55,11 @@ export const CommunityItem = React.memo<CommunityItemProps>(
     communityItem,
     openCommentsScreen,
     shouldPlayVideo,
-    openReportContentScreen,
-    likeDislikeAPi
+    openReportContentScreen
   }) => {
     const theme = usePreferredTheme();
-    const rightImage: SvgProp = () => {
+
+    const rightImage: SvgProp = useCallback(() => {
       return (
         <Shield
           testID="right-icon"
@@ -42,7 +68,8 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           fill={theme.themedColors.interface["700"]}
         />
       );
-    };
+    }, [theme.themedColors]);
+
     return (
       <View
         style={[
@@ -63,6 +90,7 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           rightIcon={rightImage}
           onPress={openReportContentScreen}
         />
+
         {communityItem.content != null && true && (
           <AppLabel
             text={communityItem.content}
@@ -70,34 +98,14 @@ export const CommunityItem = React.memo<CommunityItemProps>(
             numberOfLines={0}
           />
         )}
-        {communityItem.link != null && true && (
-          <WebViewComponent
-            url={communityItem.link}
-            urlType={URL_TYPES.LINK}
-            shouldPlayVideo={shouldPlayVideo}
-          />
-        )}
-        {communityItem.embed != null && true && (
-          <WebViewComponent
-            url={communityItem.embed}
-            urlType={URL_TYPES.EMBEDDED}
-            shouldPlayVideo={shouldPlayVideo}
-          />
-        )}
-        {communityItem.photos != null &&
-          true &&
-          communityItem.photos.length > 0 && (
-            <ImagesSlideShow images={communityItem.photos} />
-          )}
-        {communityItem.embed != null && true && (
-          <UrlMetaData url={communityItem.embed} />
-        )}
+
+        {showAttachedItemsIfAny(communityItem, shouldPlayVideo)}
+
         <AnnouncementFooter
           commentCount={communityItem.commentsCount}
           likeCount={communityItem.likesCount}
           openCommentsScreen={openCommentsScreen}
-          likedBy={communityItem.isLikedByMe}
-          likeDislikeAPi={likeDislikeAPi}
+          isLikedByMe={communityItem.isLikedByMe}
           postId={communityItem.id}
         />
       </View>

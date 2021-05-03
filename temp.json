@@ -1,31 +1,460 @@
 {
-  "profilePicture": { "originalName": "", "fileURL": "" },
-  "firstName": "Muhammad ",
-  "lastName": "Noman",
-  "aboutMe": "Iam 26 years old and I I’m a student of Computer science",
-  "socialProfiles": {
-    "facebook": "https://noman.facebook.com",
-    "twitter": "https://noman.facebook.com",
-    "linkedin": "https://noman.facebook.com",
-    "instagram": "https://noman.facebook.com",
-    "snapchat": "https://noman.facebook.com",
-    "tiktok": "https://noman.facebook.com"
+  "duration": 436,
+  "problem": null,
+  "originalError": null,
+  "ok": true,
+  "status": 200,
+  "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "report-to": "{\"max_age\":604800,\"group\":\"cf-nel\",\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=EBsvRNOpxLCS%2F8azsEo0ztMJe9bmB3S4VmnR4yGG5B5OCKULwB7QDUzXX4uKb3UTYpzdHO8j2vX2JVFJ4GvFJJnOEHEe3wkN07Xzh4IlDhEzGDY%3D\"}]}",
+    "x-frame-options": "SAMEORIGIN",
+    "cf-request-id": "09c312cffa00001ac4debb6000000001",
+    "cf-cache-status": "DYNAMIC",
+    "x-powered-by": "Express",
+    "date": "Fri, 30 Apr 2021 06:31:35 GMT",
+    "cf-ray": "647eba5ffd1f1ac4-SIN",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-xss-protection": "1; mode=block",
+    "content-encoding": "br",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "x-content-type-options": "nosniff",
+    "etag": "W/\"305c-NKjMmmdCl966rsEayTi1tau7NpA\"",
+    "vary": "Accept-Encoding, Origin"
   },
-  "dateOfBirth": "1999-06-27",
-  "homeTown": "asdfasdf",
-  "intendedMajor": "asdfasdf",
-  "intrests": [],
-  "memberships": [],
-  "shows": [],
-  "music": [],
-  "books": [],
-  "games": [],
-  "studentId": 18288910,
-  "program": "Computer Science",
-  "communities": [],
-  "building": "101 Building 2nd floor",
-  "room": "A-102",
-  "videoURL": "https://YouTube.com",
-  "sendEmail": true,
-  "id": 1
+  "config": {
+    "url": "post",
+    "method": "get",
+    "headers": {
+      "Accept": "application/json",
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjYsInVzZXJJZCI6MjA2LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MTk0OTU5MzYsImV4cCI6MTYyMjA4NzkzNn0.BW9ipIC-oMupTBS6tnk44sIQl_gQBKK9UV3RFyZoxYY"
+    },
+    "params": {
+      "paginate": true,
+      "page": 1,
+      "limit": 10,
+      "type": "announcements"
+    },
+    "baseURL": "https://mcr-dev.cygnis.dev/api/",
+    "transformRequest": [null],
+    "transformResponse": [null],
+    "timeout": 0,
+    "xsrfCookieName": "XSRF-TOKEN",
+    "xsrfHeaderName": "X-XSRF-TOKEN",
+    "maxContentLength": -1,
+    "maxBodyLength": -1
+  },
+  "data": {
+    "message": "Success.",
+    "data": [
+      {
+        "popularityScore": 1,
+        "id": 527,
+        "type": "announcement",
+        "content": "ALERT: Ohio University’s Athens Campus will be closed until 7 a.m. on Tuesday, February 16, 2021 due to a Level Three Snow Emergency in Athens County. This means that all area roadways are closed to non-emergency personnel, and individuals are not permitted to travel unless absolutely necessary.",
+        "link": "https://www.figma.com",
+        "photos": [
+          {
+            "fileURL": "https://img.dummyapi.io/test-post123.jpg",
+            "originalName": "test-post123.jpg"
+          },
+          {
+            "fileURL": "https://commons.wikimedia.org/wiki/File:Sunflower_from_Silesia2.jpg",
+            "originalName": "Sunflower_from_Silesia2.jpg"
+          },
+          {
+            "fileURL": "https://hunyadi.info.hu/levente/images/stories/boxplus/image1.jpg",
+            "originalName": "image1.jpg"
+          },
+          {
+            "fileURL": "https://onlinejpgtools.com/images/examples-onlinejpgtools/butterfly.jpg",
+            "originalName": "butterfly.jpg"
+          },
+          {
+            "fileURL": "https://onlinejpgtools.com/images/examples-onlinejpgtools/cloud-ice-cream.jpg",
+            "originalName": "cloud-ice-cream.jpg"
+          }
+        ],
+        "embed": "<iframe width='560' height='315' src='https://www.youtube.com/embed/hU_ixEy2iEo' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
+        "postedBy": 7008,
+        "postedByFirstName": "Mahwish",
+        "postedByLastName": "Admin",
+        "postedByProfilePicture": {
+          "fileURL": "https://randomuser.me/api/portraits/men/53.jpg",
+          "originalName": "53.jpg"
+        },
+        "likesCount": 1,
+        "commentsCount": 0,
+        "isFlagged": null,
+        "everyone": 1,
+        "specificFloorPlan": 0,
+        "specificMatchGroup": 0,
+        "specificGender": 0,
+        "createdAt": "2021-04-28T04:59:17.000Z",
+        "updatedAt": "2021-04-30T06:31:00.000Z",
+        "deletedAt": null,
+        "postFilter": { "filterType": "everyone", "filterId": null },
+        "isLikedByMe": true
+      },
+      {
+        "popularityScore": 1,
+        "id": 526,
+        "type": "announcement",
+        "content": "Vaccines are one way to stop COVID-19, but Dr. Jennifer Hines, a professor in the Department of Chemistry and Biochemistry, has discovered another- by disrupting the virus’s RNA and ability to reproduce.",
+        "link": "https://www.figma.com",
+        "photos": [
+          {
+            "fileURL": "https://img.dummyapi.io/test-post123.jpg",
+            "originalName": "test-post123.jpg"
+          },
+          {
+            "fileURL": "https://commons.wikimedia.org/wiki/File:Sunflower_from_Silesia2.jpg",
+            "originalName": "Sunflower_from_Silesia2.jpg"
+          },
+          {
+            "fileURL": "https://hunyadi.info.hu/levente/images/stories/boxplus/image1.jpg",
+            "originalName": "image1.jpg"
+          },
+          {
+            "fileURL": "https://onlinejpgtools.com/images/examples-onlinejpgtools/butterfly.jpg",
+            "originalName": "butterfly.jpg"
+          },
+          {
+            "fileURL": "https://onlinejpgtools.com/images/examples-onlinejpgtools/cloud-ice-cream.jpg",
+            "originalName": "cloud-ice-cream.jpg"
+          }
+        ],
+        "embed": "<iframe width='560' height='315' src='https://www.youtube.com/embed/hU_ixEy2iEo' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
+        "postedBy": 7008,
+        "postedByFirstName": "Mahwish",
+        "postedByLastName": "Admin",
+        "postedByProfilePicture": {
+          "fileURL": "https://randomuser.me/api/portraits/men/53.jpg",
+          "originalName": "53.jpg"
+        },
+        "likesCount": 1,
+        "commentsCount": 0,
+        "isFlagged": null,
+        "everyone": 1,
+        "specificFloorPlan": 0,
+        "specificMatchGroup": 0,
+        "specificGender": 0,
+        "createdAt": "2021-04-28T04:59:06.000Z",
+        "updatedAt": "2021-04-30T06:27:31.000Z",
+        "deletedAt": null,
+        "postFilter": { "filterType": "everyone", "filterId": null },
+        "isLikedByMe": true
+      },
+      {
+        "popularityScore": 0,
+        "id": 525,
+        "type": "announcement",
+        "content": "Ohio University takes all allegations of sexual misconduct seriously and investigates these matters thoroughly. The personal safety and welfare of our students and the campus community are our top priorities, and equitable measures are taken to ensure any and all complaints are handled appropriately.",
+        "link": "https://www.figma.com",
+        "photos": [
+          {
+            "fileURL": "https://img.dummyapi.io/test-post123.jpg",
+            "originalName": "test-post123.jpg"
+          },
+          {
+            "fileURL": "https://commons.wikimedia.org/wiki/File:Sunflower_from_Silesia2.jpg",
+            "originalName": "Sunflower_from_Silesia2.jpg"
+          },
+          {
+            "fileURL": "https://hunyadi.info.hu/levente/images/stories/boxplus/image1.jpg",
+            "originalName": "image1.jpg"
+          },
+          {
+            "fileURL": "https://onlinejpgtools.com/images/examples-onlinejpgtools/butterfly.jpg",
+            "originalName": "butterfly.jpg"
+          },
+          {
+            "fileURL": "https://onlinejpgtools.com/images/examples-onlinejpgtools/cloud-ice-cream.jpg",
+            "originalName": "cloud-ice-cream.jpg"
+          }
+        ],
+        "embed": "<iframe width='560' height='315' src='https://www.youtube.com/embed/hU_ixEy2iEo' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
+        "postedBy": 7008,
+        "postedByFirstName": "Mahwish",
+        "postedByLastName": "Admin",
+        "postedByProfilePicture": {
+          "fileURL": "https://randomuser.me/api/portraits/men/53.jpg",
+          "originalName": "53.jpg"
+        },
+        "likesCount": 0,
+        "commentsCount": 0,
+        "isFlagged": null,
+        "everyone": 1,
+        "specificFloorPlan": 0,
+        "specificMatchGroup": 0,
+        "specificGender": 0,
+        "createdAt": "2021-04-28T04:58:54.000Z",
+        "updatedAt": "2021-04-28T04:58:54.000Z",
+        "deletedAt": null,
+        "postFilter": { "filterType": "everyone", "filterId": null },
+        "isLikedByMe": false
+      },
+      {
+        "popularityScore": 0,
+        "id": 524,
+        "type": "announcement",
+        "content": "Bobcats on the Athens campus… Stay tuned to our social media channels to see how you can get a #ForeverOHIO t-shirt next week 💚 👀",
+        "link": "https://www.figma.com",
+        "photos": [
+          {
+            "fileURL": "https://img.dummyapi.io/test-post123.jpg",
+            "originalName": "test-post123.jpg"
+          },
+          {
+            "fileURL": "https://commons.wikimedia.org/wiki/File:Sunflower_from_Silesia2.jpg",
+            "originalName": "Sunflower_from_Silesia2.jpg"
+          },
+          {
+            "fileURL": "https://hunyadi.info.hu/levente/images/stories/boxplus/image1.jpg",
+            "originalName": "image1.jpg"
+          },
+          {
+            "fileURL": "https://onlinejpgtools.com/images/examples-onlinejpgtools/butterfly.jpg",
+            "originalName": "butterfly.jpg"
+          },
+          {
+            "fileURL": "https://onlinejpgtools.com/images/examples-onlinejpgtools/cloud-ice-cream.jpg",
+            "originalName": "cloud-ice-cream.jpg"
+          }
+        ],
+        "embed": "<iframe width='560' height='315' src='https://www.youtube.com/embed/hU_ixEy2iEo' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
+        "postedBy": 7008,
+        "postedByFirstName": "Mahwish",
+        "postedByLastName": "Admin",
+        "postedByProfilePicture": {
+          "fileURL": "https://randomuser.me/api/portraits/men/53.jpg",
+          "originalName": "53.jpg"
+        },
+        "likesCount": 0,
+        "commentsCount": 0,
+        "isFlagged": null,
+        "everyone": 1,
+        "specificFloorPlan": 0,
+        "specificMatchGroup": 0,
+        "specificGender": 0,
+        "createdAt": "2021-04-28T04:58:34.000Z",
+        "updatedAt": "2021-04-28T04:58:34.000Z",
+        "deletedAt": null,
+        "postFilter": { "filterType": "everyone", "filterId": null },
+        "isLikedByMe": false
+      },
+      {
+        "popularityScore": 0,
+        "id": 523,
+        "type": "announcement",
+        "content": "A surprising way that OHIO is monitoring COVID-19 trends is by analyzing campus wastewater 😷 One of the real advantages of looking for COVID-19 this way is that people shed the virus before they express symptoms and if people are asymptomatic, they will also shed the virus without knowing they’re infected,” said Dr. Guy Riefler, who is leading the project along with Dr. Karen Coschigano.",
+        "link": "https://www.figma.com",
+        "photos": [
+          {
+            "fileURL": "https://img.dummyapi.io/test-post123.jpg",
+            "originalName": "test-post123.jpg"
+          },
+          {
+            "fileURL": "https://commons.wikimedia.org/wiki/File:Sunflower_from_Silesia2.jpg",
+            "originalName": "Sunflower_from_Silesia2.jpg"
+          },
+          {
+            "fileURL": "https://hunyadi.info.hu/levente/images/stories/boxplus/image1.jpg",
+            "originalName": "image1.jpg"
+          },
+          {
+            "fileURL": "https://onlinejpgtools.com/images/examples-onlinejpgtools/butterfly.jpg",
+            "originalName": "butterfly.jpg"
+          },
+          {
+            "fileURL": "https://onlinejpgtools.com/images/examples-onlinejpgtools/cloud-ice-cream.jpg",
+            "originalName": "cloud-ice-cream.jpg"
+          }
+        ],
+        "embed": "<iframe width='560' height='315' src='https://www.youtube.com/embed/hU_ixEy2iEo' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
+        "postedBy": 7008,
+        "postedByFirstName": "Mahwish",
+        "postedByLastName": "Admin",
+        "postedByProfilePicture": {
+          "fileURL": "https://randomuser.me/api/portraits/men/53.jpg",
+          "originalName": "53.jpg"
+        },
+        "likesCount": 0,
+        "commentsCount": 0,
+        "isFlagged": null,
+        "everyone": 1,
+        "specificFloorPlan": 0,
+        "specificMatchGroup": 0,
+        "specificGender": 0,
+        "createdAt": "2021-04-28T04:57:57.000Z",
+        "updatedAt": "2021-04-28T04:57:57.000Z",
+        "deletedAt": null,
+        "postFilter": { "filterType": "everyone", "filterId": null },
+        "isLikedByMe": false
+      },
+      {
+        "popularityScore": 0,
+        "id": 522,
+        "type": "announcement",
+        "content": "A surprising way that OHIO is monitoring COVID-19 trends is by analyzing",
+        "link": "https://www.figma.com",
+        "photos": [
+          {
+            "fileURL": "https://img.dummyapi.io/test-post123.jpg",
+            "originalName": "test-post123.jpg"
+          },
+          {
+            "fileURL": "https://commons.wikimedia.org/wiki/File:Sunflower_from_Silesia2.jpg",
+            "originalName": "Sunflower_from_Silesia2.jpg"
+          },
+          {
+            "fileURL": "https://hunyadi.info.hu/levente/images/stories/boxplus/image1.jpg",
+            "originalName": "image1.jpg"
+          },
+          {
+            "fileURL": "https://onlinejpgtools.com/images/examples-onlinejpgtools/butterfly.jpg",
+            "originalName": "butterfly.jpg"
+          },
+          {
+            "fileURL": "https://onlinejpgtools.com/images/examples-onlinejpgtools/cloud-ice-cream.jpg",
+            "originalName": "cloud-ice-cream.jpg"
+          }
+        ],
+        "embed": "<iframe width='560' height='315' src='https://www.youtube.com/embed/hU_ixEy2iEo' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>",
+        "postedBy": 7008,
+        "postedByFirstName": "Mahwish",
+        "postedByLastName": "Admin",
+        "postedByProfilePicture": {
+          "fileURL": "https://randomuser.me/api/portraits/men/53.jpg",
+          "originalName": "53.jpg"
+        },
+        "likesCount": 0,
+        "commentsCount": 0,
+        "isFlagged": null,
+        "everyone": 1,
+        "specificFloorPlan": 0,
+        "specificMatchGroup": 0,
+        "specificGender": 0,
+        "createdAt": "2021-04-28T04:57:25.000Z",
+        "updatedAt": "2021-04-28T04:57:25.000Z",
+        "deletedAt": null,
+        "postFilter": { "filterType": "everyone", "filterId": null },
+        "isLikedByMe": false
+      },
+      {
+        "popularityScore": 3,
+        "id": 520,
+        "type": "announcement",
+        "content": "10 11 12",
+        "link": "https://asd.scd",
+        "photos": null,
+        "embed": null,
+        "postedBy": 4,
+        "postedByFirstName": "Sancho",
+        "postedByLastName": "Worstall",
+        "postedByProfilePicture": {
+          "fileURL": "https://randomuser.me/api/portraits/men/85.jpg",
+          "originalName": "85.jpg"
+        },
+        "likesCount": 2,
+        "commentsCount": 1,
+        "isFlagged": null,
+        "everyone": 0,
+        "specificFloorPlan": 0,
+        "specificMatchGroup": 0,
+        "specificGender": 0,
+        "createdAt": "2021-04-26T03:04:46.000Z",
+        "updatedAt": "2021-04-27T06:34:42.000Z",
+        "deletedAt": null,
+        "postFilter": { "filterType": "everyone", "filterId": 3 },
+        "isLikedByMe": false
+      },
+      {
+        "popularityScore": 53,
+        "id": 519,
+        "type": "announcement",
+        "content": "Other Freshmen 12",
+        "link": "https://asd.scd",
+        "photos": null,
+        "embed": null,
+        "postedBy": 11,
+        "postedByFirstName": "Coletta",
+        "postedByLastName": "Sex",
+        "postedByProfilePicture": {
+          "fileURL": "https://randomuser.me/api/portraits/women/69.jpg",
+          "originalName": "69.jpg"
+        },
+        "likesCount": 52,
+        "commentsCount": 1,
+        "isFlagged": null,
+        "everyone": 0,
+        "specificFloorPlan": 0,
+        "specificMatchGroup": 1,
+        "specificGender": 0,
+        "createdAt": "2021-04-26T03:04:46.000Z",
+        "updatedAt": "2021-04-29T09:52:14.000Z",
+        "deletedAt": null,
+        "postFilter": { "filterType": "match-group", "filterId": 3 },
+        "isLikedByMe": true
+      },
+      {
+        "popularityScore": 30,
+        "id": 518,
+        "type": "announcement",
+        "content": "Female Sophomore 15",
+        "link": "https://asd.scd",
+        "photos": null,
+        "embed": null,
+        "postedBy": 8,
+        "postedByFirstName": "Daisi",
+        "postedByLastName": "Posen",
+        "postedByProfilePicture": {
+          "fileURL": "https://randomuser.me/api/portraits/women/23.jpg",
+          "originalName": "23.jpg"
+        },
+        "likesCount": 30,
+        "commentsCount": 0,
+        "isFlagged": null,
+        "everyone": 1,
+        "specificFloorPlan": 0,
+        "specificMatchGroup": 0,
+        "specificGender": 0,
+        "createdAt": "2021-04-26T03:04:46.000Z",
+        "updatedAt": "2021-04-29T09:52:13.000Z",
+        "deletedAt": null,
+        "postFilter": { "filterType": "everyone", "filterId": null },
+        "isLikedByMe": true
+      },
+      {
+        "popularityScore": 67,
+        "id": 517,
+        "type": "announcement",
+        "content": "Male 13",
+        "link": "https://asd.scd",
+        "photos": null,
+        "embed": null,
+        "postedBy": 12,
+        "postedByFirstName": "Bridgette",
+        "postedByLastName": "Tumioto",
+        "postedByProfilePicture": {
+          "fileURL": "https://randomuser.me/api/portraits/women/9.jpg",
+          "originalName": "9.jpg"
+        },
+        "likesCount": 67,
+        "commentsCount": 0,
+        "isFlagged": null,
+        "everyone": 1,
+        "specificFloorPlan": 0,
+        "specificMatchGroup": 0,
+        "specificGender": 0,
+        "createdAt": "2021-04-26T03:04:46.000Z",
+        "updatedAt": "2021-04-29T09:52:11.000Z",
+        "deletedAt": null,
+        "postFilter": { "filterType": "everyone", "filterId": null },
+        "isLikedByMe": true
+      }
+    ]
+  }
 }

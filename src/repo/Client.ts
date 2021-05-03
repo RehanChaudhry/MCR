@@ -1,7 +1,7 @@
 import { ApiResponse, create } from "apisauce";
 import { API } from "config";
 import { ApiErrorResponseModel } from "models/api_responses/ApiErrorResponseModel";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAuth } from "hooks";
 import { AppLog } from "utils/Util";
 import { extractAndRefreshTokenIfExpire } from "./auth/RefreshTokenHelper";
@@ -115,7 +115,9 @@ export const useApi = <
     }
   };
 
-  return { data, error, loading, request };
+  const result = useRef({ data, error, loading, request });
+
+  return result.current;
 };
 
 export default { apiClient, useApi };

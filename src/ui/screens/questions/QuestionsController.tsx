@@ -1,3 +1,4 @@
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import React, {
   FC,
   useCallback,
@@ -252,12 +253,16 @@ const QuestionsController: FC<Props> = () => {
         );
       }}
       data={questions}>
-      <QuestionsView
-        isFrom={route.params.isFrom}
-        submitAnswers={submitAnswersCallback}
-        questions={questions}
-        submitAnswersLoading={answerApi.loading}
-      />
+      {useLazyLoadInterface(
+        <QuestionsView
+          isFrom={route.params.isFrom}
+          submitAnswers={submitAnswersCallback}
+          questions={questions}
+          submitAnswersLoading={answerApi.loading}
+        />,
+        null,
+        1000
+      )}
     </ProgressErrorView>
   );
 };
