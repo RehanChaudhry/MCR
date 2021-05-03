@@ -1,4 +1,4 @@
-import { RoommateData } from "models/api_responses/RoommateAgreementResponseModel";
+import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
 import React from "react";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { DynamicAppFormField } from "ui/components/templates/roommate_agreement/DynamicAppFormField";
@@ -6,7 +6,7 @@ import { AppLog } from "utils/Util";
 import { CheckBoxGroup } from "ui/components/atoms/checkbox_group/CheckBoxGroup";
 
 type CustomFormFieldProps = {
-  listData: RoommateData;
+  listData: FormInputFieldData;
 };
 
 export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
@@ -19,8 +19,9 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
       case "textarea":
         return (
           <DynamicAppFormField
-            label={listData.label}
-            placeHolder={listData.placeholder}
+            label={listData?.label}
+            placeHolder={listData?.placeholder}
+            name={listData?.id.toString()}
           />
         );
       case "dropdown":
