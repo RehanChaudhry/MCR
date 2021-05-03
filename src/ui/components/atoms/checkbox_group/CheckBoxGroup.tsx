@@ -3,7 +3,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import CheckboxWithText from "ui/components/atoms/CheckboxWithText";
 import { AppLog } from "utils/Util";
 import React from "react";
-import { RoommateData } from "models/api_responses/RoommateAgreementResponseModel";
+import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
 import {
   AppLabel,
   AppLabelProps
@@ -12,7 +12,7 @@ import { SPACE } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 
 type Props = {
-  listData: RoommateData;
+  listData: FormInputFieldData;
   style?: StyleProp<ViewStyle>;
   labelProps?: AppLabelProps;
   onChange: (checked: boolean) => void;

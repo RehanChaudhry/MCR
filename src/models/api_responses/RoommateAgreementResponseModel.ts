@@ -1,26 +1,31 @@
 export type RoommateAgreementResponseModel = {
   message: string;
-  data: RoommateData[];
+  data: FormInputFieldData[];
 };
 
-export type RoommateData = {
+export type FormInputFieldData = {
   id: number;
-  matchGroupId: null;
-  inputType: string;
-  label: string;
-  placeholder: string;
-  options: [
-    {
-      text: string;
-      value: string;
-    }
-  ];
-  order: number;
-  isRequired: number;
-  isDefault: number;
-  content: null;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: null;
+  matchGroupId?: null;
+  inputType?: string;
+  label?: string;
+  placeholder?: string;
+  options?: optionsData[];
+  order?: number;
+  isRequired?: number;
+  isDefault?: number;
+  content?: null;
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: null;
+  userMeta?: userMetaData[];
+};
+
+export type optionsData = {
+  text: string;
+  value: string;
+};
+
+export type userMetaData = {
+  value: string;
 };

@@ -8,7 +8,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { RoommateData } from "models/api_responses/RoommateAgreementResponseModel";
+import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
 import { AppFormDropDown } from "ui/components/molecules/app_form/AppFormDropDown";
 import { CardView } from "ui/components/atoms/CardView";
 import { SectionComponent } from "ui/components/organisms/section_component/SectionComponent";
@@ -17,7 +17,7 @@ import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import { AppLog } from "utils/Util";
 
 type Props = {
-  roommateData: RoommateData[] | undefined;
+  roommateData: FormInputFieldData[] | undefined;
 };
 
 const validationSchema = Yup.object().shape({
