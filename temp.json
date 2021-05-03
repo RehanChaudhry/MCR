@@ -1,31 +1,62 @@
 {
-  "profilePicture": { "originalName": "", "fileURL": "" },
-  "firstName": "Muhammad ",
-  "lastName": "Noman",
-  "aboutMe": "Iam 26 years old and I I’m a student of Computer science",
-  "socialProfiles": {
-    "facebook": "https://noman.facebook.com",
-    "twitter": "https://noman.facebook.com",
-    "linkedin": "https://noman.facebook.com",
-    "instagram": "https://noman.facebook.com",
-    "snapchat": "https://noman.facebook.com",
-    "tiktok": "https://noman.facebook.com"
-  },
-  "dateOfBirth": "1999-06-27",
-  "homeTown": "asdfasdf",
-  "intendedMajor": "asdfasdf",
-  "intrests": [],
-  "memberships": [],
-  "shows": [],
-  "music": [],
-  "books": [],
-  "games": [],
-  "studentId": 18288910,
-  "program": "Computer Science",
-  "communities": [],
-  "building": "101 Building 2nd floor",
-  "room": "A-102",
-  "videoURL": "https://YouTube.com",
-  "sendEmail": true,
-  "id": 1
+  "title": "Basic Profile",
+  "description": "This information will be displayed publicly so be careful what you share.",
+  "formInputs": [
+    {
+      "id": 0,
+      "label": "First Name",
+      "inputType": "textarea",
+      "userMeta": [],
+      "placeHolder": "Enter Your First Name"
+    },
+    {
+      "id": 1,
+      "label": "Last Name",
+      "inputType": "textfield",
+      "userMeta": [],
+      "placeHolder": "Enter Your Last Name"
+    },
+    {
+      "id": 2,
+      "label": "About Me",
+      "inputType": "textfield",
+      "userMeta": [],
+      "placeHolder": "Brief description for your profile."
+    },
+    {
+      "id": 3,
+      "label": "Facebook Profile",
+      "inputType": "textfield",
+      "userMeta": [],
+      "placeHolder": "facebook.com/"
+    },
+    {
+      "id": 4,
+      "label": "Twitter Profile",
+      "inputType": "textfield",
+      "userMeta": [],
+      "placeHolder": "twitter.com/"
+    },
+    {
+      "id": 5,
+      "label": "LinkedIn Profile",
+      "inputType": "textfield",
+      "userMeta": [],
+      "placeHolder": "linkedin.com/"
+    },
+    {
+      "id": 6,
+      "label": "SnapChat Profile",
+      "inputType": "textfield",
+      "userMeta": [],
+      "placeHolder": "snapchat.com/"
+    },
+    {
+      "id": 7,
+      "label": "TikTok Profile",
+      "inputType": "textfield",
+      "userMeta": [],
+      "placeHolder": "tiktok.com/"
+    }
+  ]
 }

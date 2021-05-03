@@ -1,9 +1,5 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { DemoGraphics } from "ui/components/templates/demographics/DemoGraphics";
-import { Interests } from "ui/components/templates/interests/Interests";
-import { LivingDetails } from "ui/components/templates/living_details/LivingDetails";
-import { VideoIntroduction } from "ui/components/templates/video_introduction/VideoIntroduction";
 import * as Yup from "yup";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import { FormikValues } from "formik";
@@ -12,11 +8,12 @@ import { SPACE, STRINGS } from "config";
 import RightArrow from "assets/images/arrow_circle_right.svg";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
-import { BasicProfile } from "ui/components/templates/basic_profile/BasicProfile";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
 import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
+import { SectionComponent } from "ui/components/organisms/section_component/SectionComponent";
+import { Sections } from "models/FormInput";
 
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
@@ -204,11 +201,13 @@ export const UpdateProfileView: React.FC<Props> = ({
             style={styles.topText}
           />
         )}
-        <BasicProfile />
-        <DemoGraphics />
-        <Interests />
-        <LivingDetails />
-        <VideoIntroduction />
+        {/*<BasicProfile />*/}
+        {/*<DemoGraphics />*/}
+        {/*<Interests />*/}
+        {/*<LivingDetails />*/}
+        {/*<VideoIntroduction />*/}
+
+        <SectionComponent listData={Sections[0].formInput} />
         <View style={styles.buttonViewStyle}>
           <AppFormFormSubmit
             text={STRINGS.profile.buttonText.saveAndContinue}
