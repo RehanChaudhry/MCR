@@ -5,16 +5,17 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import ChatItem, { SenderType } from "models/ChatItem";
+import { Conversation } from "models/api_responses/ChatsResponseModel";
 
 export interface ChatHeaderProps {
-  chatItem: ChatItem;
+  chatItem: Conversation;
   lastHeaderTitle: string;
   onHeaderCreated: (title: string) => void;
 }
 
 const createHeader = (
   theme: ColorPalette,
-  item: ChatItem,
+  item: Conversation,
   lastHeaderTitle: string,
   callback: any
 ) => {
@@ -28,22 +29,22 @@ const createHeader = (
     );
   };
 
-  if (!item.isMessageRead && lastHeaderTitle !== SenderType.NEW_MESSAGES) {
+  if (!item.isRead && lastHeaderTitle !== SenderType.NEW_MESSAGES) {
     lastHeaderTitle = SenderType.NEW_MESSAGES;
     callback(lastHeaderTitle);
     return label(lastHeaderTitle);
   } else if (
-    item.type === SenderType.STAFF &&
+    item.userType === SenderType.STAFF &&
     lastHeaderTitle !== SenderType.STAFF &&
-    item.isMessageRead
+    item.isRead
   ) {
     lastHeaderTitle = SenderType.STAFF;
     callback(lastHeaderTitle);
     return label(lastHeaderTitle);
   } else if (
-    item.type === SenderType.STUDENTS &&
+    item.userType === SenderType.STUDENTS &&
     lastHeaderTitle !== SenderType.STUDENTS &&
-    item.isMessageRead
+    item.isRead
   ) {
     lastHeaderTitle = SenderType.STUDENTS;
     callback(lastHeaderTitle);

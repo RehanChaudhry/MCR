@@ -47,4 +47,11 @@ export class PrettyTimeFormat {
 
     return prettyTime;
   }
+
+  isOneDayAgo(date: string, compact: boolean = true): boolean {
+    let millis = new Date().getTime() - moment(date).valueOf();
+    let prettyTime = prettyMilliseconds(millis, { compact: compact });
+
+    return prettyTime[prettyTime.length - 1] === "d";
+  }
 }

@@ -11,10 +11,15 @@ import SearchField from "ui/components/atoms/search_field/SearchField";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
+import {
+  Conversation,
+  ConversationWrapper
+} from "models/api_responses/ChatsResponseModel";
+import { ConversationItem } from "models/ConversationItem";
 
 interface ChatListProps {
-  onItemClick: (item: ChatItem) => void;
-  data: ChatItem[];
+  onItemClick: (item: Conversation) => void;
+  data: Conversation[] | undefined;
   pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
@@ -35,10 +40,10 @@ export const ChatListScreen = React.memo<ChatListProps>(
   }) => {
     AppLog.log("Rendering chat screen...");
     const { themedColors } = usePreferredTheme();
-    let [items, setItems] = useState<ChatItem[]>(data);
+    //  let [items, setItems] = useState<Conversation[] | undefined>(data);
 
     const performSearch = (textToSearch: string) =>
-      items.filter((obj: ChatItem) => {
+      data!!.filter((obj: Conversation) => {
         return Object.values(obj).some((v) =>
           `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
         );
@@ -47,13 +52,13 @@ export const ChatListScreen = React.memo<ChatListProps>(
     const handleClick = useCallback((textToSearch?: string) => {
       lastHeaderTitle = "";
 
-      textToSearch !== "" && textToSearch !== undefined
+      /* textToSearch !== "" && textToSearch !== undefined
         ? setItems(performSearch(textToSearch))
-        : setItems(data);
+        : setItems(data);*/
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const renderItem = ({ item }: { item: ChatItem }) => {
+    const renderItem = ({ item }: { item: Conversation }) => {
       AppLog.log("rendering list item : " + JSON.stringify(item));
       return (
         <>
@@ -65,7 +70,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
             }}
           />
           <ItemChatList
-            item={item}
+            item={new Conversation(item)}
             onPress={() => {
               onItemClick(item);
             }}

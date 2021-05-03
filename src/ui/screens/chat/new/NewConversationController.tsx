@@ -19,16 +19,14 @@ import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_w
 import { moderateScale } from "config/Dimens";
 import { ChatRootStackParamList } from "routes/ChatRootStack";
 import { useApi } from "repo/Client";
-import {
-  ConversationSuggestionsResponseModel,
-  User
-} from "models/api_responses/ConversationSuggestionsResponseModel";
+import { ConversationSuggestionsResponseModel } from "models/api_responses/ConversationSuggestionsResponseModel";
 import ChatApis from "repo/chat/ChatApis";
 import { AppLog } from "utils/Util";
 import { ConversationSuggestionsRequestModel } from "models/api_requests/ConversationSuggestionsRequestModel";
 import { CreateConversationRequestModel } from "models/api_requests/CreateConversationRequestModel";
 import SimpleToast from "react-native-simple-toast";
 import { CreateConversationResponseModel } from "models/api_responses/CreateConversationResponseModel";
+import { User } from "models/User";
 
 type ConversationNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
