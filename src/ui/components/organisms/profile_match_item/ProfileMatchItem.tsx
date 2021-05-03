@@ -18,6 +18,7 @@ import Cross from "assets/images/ic_cross.svg";
 
 interface Props {
   profileMatch: RelationModel;
+  isFriendRequestApiLoading: boolean;
   onFriendRequestClicked: (userId: number) => void;
   onCrossClicked: (userId: number) => void;
   onChatButtonClicked: (profileMatch: RelationModel) => void;
@@ -26,6 +27,7 @@ interface Props {
 
 const ProfileMatchItem = ({
   profileMatch,
+  isFriendRequestApiLoading,
   onFriendRequestClicked,
   onCrossClicked,
   onChatButtonClicked,
@@ -101,6 +103,7 @@ const ProfileMatchItem = ({
         />
         {profileMatch.getType() === RelationType.NOT_FRIEND && (
           <AppButton
+            shouldShowProgressBar={isFriendRequestApiLoading}
             onPress={() => {
               onFriendRequestClicked(profileMatch.matchingUserId);
             }}

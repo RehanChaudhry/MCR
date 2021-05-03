@@ -19,13 +19,14 @@ import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseMode
 import { MatchesStackParamList } from "routes/MatchesStack";
 import InfoCircle from "assets/images/info_circle.svg";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
-import RelationModel from "models/RelationModel";
+import RelationModel, { Status } from "models/RelationModel";
 import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import EScreen from "models/enums/EScreen";
 import EGender from "models/enums/EGender";
 import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
 import RelationFilterType from "models/enums/RelationFilterType";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -176,31 +177,38 @@ const MatchesController: FC<Props> = () => {
     RelationApis.postRelation
   );
 
-  const postFriendRequest = async (userId: number) => {
-    const {
-      hasError,
-      errorBody,
-      dataBody
-    } = await friendRequestApi.request([userId]);
+  const postFriendRequest = useCallback(
+    async (userId: number) => {
+      const {
+        hasError,
+        errorBody,
+        dataBody
+      } = await friendRequestApi.request([userId]);
 
-    if (!hasError) {
-      setProfileMatches((prevState) => {
-        let requestedUserPosition =
-          prevState?.findIndex(
-            (value) => value.matchingUserId === userId
-          ) ?? -1;
-        if (requestedUserPosition !== -1) {
-          prevState![requestedUserPosition] = new RelationModel(
-            prevState![requestedUserPosition]
-          );
-        }
-        return prevState;
-      });
-      Alert.alert("Fried Request Sent", dataBody!.message);
-    } else {
-      Alert.alert("Unable to send friend request", errorBody);
-    }
-  };
+      if (!hasError) {
+        setProfileMatches((prevState) => {
+          let requestedUserPosition =
+            prevState?.findIndex(
+              (value) => value.matchingUserId === userId
+            ) ?? -1;
+          if (requestedUserPosition !== -1) {
+            const updatedUser = new RelationModel(
+              prevState![requestedUserPosition]
+            );
+            updatedUser.isFriend = EIntBoolean.FALSE;
+            updatedUser.isRoommate = EIntBoolean.FALSE;
+            updatedUser.status = Status.PENDING;
+            prevState![requestedUserPosition] = updatedUser;
+          }
+          return Object.assign([], prevState);
+        });
+        Alert.alert("Fried Request Sent", dataBody!.message);
+      } else {
+        Alert.alert("Unable to send friend request", errorBody);
+      }
+    },
+    [friendRequestApi]
+  );
 
   // Match Dismiss API
   const matchDismissApi = useApi<number, ApiSuccessResponseModel>(
@@ -247,6 +255,7 @@ const MatchesController: FC<Props> = () => {
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
+      isFriendRequestApiLoading={friendRequestApi.loading}
       postFriendRequest={postFriendRequest}
       postMatchDismiss={postMatchDismiss}
       moveToChatScreen={moveToChatScreen}
