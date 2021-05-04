@@ -42,6 +42,8 @@ export default {
 
   //chat
   CONVERSATION: "conversation/",
+  //message
+  MESSAGE: "message/",
 
   //relations
   RELATION: "relation",

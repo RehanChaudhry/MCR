@@ -15,7 +15,10 @@ import { ChatRootStackParamList } from "routes/ChatRootStack";
 import ChatResponseModel, {
   Conversation
 } from "models/api_responses/ChatsResponseModel";
-import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
+import ChatRequestModel, {
+  ESortBy,
+  ESortOrder
+} from "models/api_requests/chatRequestModel";
 
 type ChatRootNavigationProp = StackNavigationProp<ChatRootStackParamList>;
 
@@ -32,26 +35,31 @@ export const ChatListController: FC<Props> = () => {
     undefined
   );
 
-  const loadChatsApi = useApi<any, ChatResponseModel>(ChatApis.getChats);
+  const loadChatsApi = useApi<ChatRequestModel, ChatResponseModel>(
+    ChatApis.getChats
+  );
 
-  const requestModel = useRef<AnnouncementRequestModel>({
+  const requestModel = useRef<ChatRequestModel>({
     paginate: true,
     page: 1,
-    limit: 10
+    limit: 10,
+    orderBy: ESortBy.UPDATED_AT,
+    order: ESortOrder.DSC
   });
 
   const handleLoadChatsApi = useCallback(async () => {
     setShouldShowProgressBar(true);
     isFetchingInProgress.current = true;
 
-    const { hasError, dataBody, errorBody } = await loadChatsApi.request(
-      []
-    );
+    const { hasError, dataBody, errorBody } = await loadChatsApi.request([
+      requestModel.current
+    ]);
 
-    setShouldShowProgressBar(false);
-    isFetchingInProgress.current = true;
-
-    if (hasError || dataBody === undefined) {
+    if (
+      hasError ||
+      dataBody === undefined ||
+      dataBody.data === undefined
+    ) {
       AppLog.log("Unable to find chats " + errorBody);
       return;
     } else {
@@ -64,17 +72,16 @@ export const ChatListController: FC<Props> = () => {
         ];
       });
 
-      /*  setIsAllDataLoaded(
-        dataBody.pagination.current === dataBody.pagination.last
-      );*/
+      setIsAllDataLoaded(
+        dataBody.data!!.length < requestModel.current.limit
+      );
+
+      requestModel.current.page = (requestModel?.current?.page ?? 0) + 1;
+
+      isFetchingInProgress.current = false;
+      setShouldShowProgressBar(false);
     }
   }, [loadChatsApi]);
-
-  /* useEffect(() => {
-    AppLog.logForcefully("inside useEffect()");
-    handleLoadChatsApi();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);*/
 
   const openChatThread = (item: Conversation) => {
     navigation.navigate("ChatThread", {
@@ -90,42 +97,48 @@ export const ChatListController: FC<Props> = () => {
 
   const refreshCallback = useCallback(
     async (onComplete?: () => void) => {
-      /*pageToReload.current = 1;*/
-      setTimeout(() => {
-        // setChats(dummyChats);
-        setIsAllDataLoaded(false);
-        onComplete?.();
-        /* handleLoadChatsApi()
-          .then(() => {
-            onComplete?.();
-          })
-          .catch();*/
-      }, 2000);
+      requestModel.current.page = 1;
+      onComplete?.();
+      handleLoadChatsApi()
+        .then(() => {
+          onComplete?.();
+        })
+        .catch(() => {
+          onComplete?.();
+        });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      /*pageToReload*/
-    ]
+    [handleLoadChatsApi]
   );
 
-  const onEndReached = useCallback(() => {
-    AppLog.log("onEndReached()=> ");
-    //  handleLoadChatsApi().then().catch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onEndReached = useCallback(async () => {
+    requestModel.current.page = requestModel.current.page!! + 1;
+    await handleLoadChatsApi();
   }, [handleLoadChatsApi]);
 
   useEffect(() => {
-    handleLoadChatsApi();
+    handleLoadChatsApi().then().catch();
   }, [handleLoadChatsApi]);
+
+  function performSearch(textToSearch: string) {
+    setChats(
+      chats!!.filter((obj: Conversation) => {
+        return Object.values(obj).some((v) =>
+          `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
+        );
+      })
+    );
+  }
+
   return (
     <ChatListScreen
-      isLoading={loadChatsApi.loading}
+      shouldShowProgressBar={shouldShowProgressBar}
       error={loadChatsApi.error}
+      isAllDataLoaded={isAllDataLoaded}
       data={chats}
       onItemClick={openChatThread}
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
-      isAllDataLoaded={isAllDataLoaded}
+      performSearch={performSearch}
     />
   );
 };

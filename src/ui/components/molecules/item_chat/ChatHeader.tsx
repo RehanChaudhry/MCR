@@ -6,6 +6,7 @@ import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { SenderType } from "models/ChatItem";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
+import { AppLog } from "utils/Util";
 
 export interface ChatHeaderProps {
   chatItem: Conversation;
@@ -29,24 +30,28 @@ const createHeader = (
     );
   };
 
-  if (!item.isRead && lastHeaderTitle !== SenderType.NEW_MESSAGES) {
+  AppLog.logForcefully("isMessageRead " + item.id + item.isMessageRead());
+  if (
+    !item.isMessageRead() &&
+    lastHeaderTitle !== SenderType.NEW_MESSAGES
+  ) {
     lastHeaderTitle = SenderType.NEW_MESSAGES;
     callback(lastHeaderTitle);
     return label(lastHeaderTitle);
   } else if (
     item.userType === SenderType.STAFF &&
     lastHeaderTitle !== SenderType.STAFF &&
-    item.isRead
+    item.isMessageRead()
   ) {
-    lastHeaderTitle = SenderType.STAFF;
+    lastHeaderTitle = /*SenderType.STAFF*/ "STAFF";
     callback(lastHeaderTitle);
     return label(lastHeaderTitle);
   } else if (
     item.userType === SenderType.STUDENTS &&
-    lastHeaderTitle !== SenderType.STUDENTS &&
-    item.isRead
+    lastHeaderTitle !== "STUDENTS" &&
+    item.isMessageRead()
   ) {
-    lastHeaderTitle = SenderType.STUDENTS;
+    lastHeaderTitle = /*SenderType.STUDENTS*/ "STUDENTS";
     callback(lastHeaderTitle);
     return label(lastHeaderTitle);
   }

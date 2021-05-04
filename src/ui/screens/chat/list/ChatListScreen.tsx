@@ -17,51 +17,57 @@ interface ChatListProps {
   data: Conversation[] | undefined;
   pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
+  shouldShowProgressBar: boolean;
   isAllDataLoaded: boolean;
-  isLoading: boolean;
   error: string | undefined;
+  performSearch: (keyword: string) => void;
 }
 
 let lastHeaderTitle = "";
 export const ChatListScreen = React.memo<ChatListProps>(
   ({
-    isLoading,
     error,
     data,
     onItemClick,
+    shouldShowProgressBar,
     pullToRefreshCallback,
     onEndReached,
-    isAllDataLoaded
+    isAllDataLoaded,
+    performSearch
   }) => {
     AppLog.log("Rendering chat screen...");
     const { themedColors } = usePreferredTheme();
-    //  let [items, setItems] = useState<Conversation[] | undefined>(data);
 
-    const performSearch = (textToSearch: string) =>
-      data!!.filter((obj: Conversation) => {
-        return Object.values(obj).some((v) =>
-          `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
-        );
-      });
+    const handleClick = useCallback(
+      (textToSearch?: string) => {
+        lastHeaderTitle = "";
 
-    const handleClick = useCallback((textToSearch?: string) => {
-      lastHeaderTitle = "";
+        textToSearch !== "" &&
+          textToSearch !== undefined &&
+          performSearch(textToSearch);
+      },
+      [performSearch]
+    );
 
-      /* textToSearch !== "" && textToSearch !== undefined
-        ? setItems(performSearch(textToSearch))
-        : setItems(data);*/
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const renderItem = ({ item }: { item: Conversation }) => {
+    const renderItem = ({
+      item,
+      index
+    }: {
+      item: Conversation;
+      index: number;
+    }) => {
       AppLog.log("rendering list item : " + JSON.stringify(item));
+      if (index === 0) {
+        lastHeaderTitle = "";
+      }
       return (
         <>
           <ChatHeader
-            chatItem={item}
+            chatItem={new Conversation(item)}
             lastHeaderTitle={lastHeaderTitle}
             onHeaderCreated={(title: string) => {
               lastHeaderTitle = title;
+              AppLog.logForcefully("lastHeaderTitle " + lastHeaderTitle);
             }}
           />
           <ItemChatList
@@ -91,7 +97,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
           <>
             <FlatListWithPb
               removeClippedSubviews={true}
-              shouldShowProgressBar={isLoading}
+              shouldShowProgressBar={shouldShowProgressBar}
               error={error}
               data={data}
               renderItem={renderItem}

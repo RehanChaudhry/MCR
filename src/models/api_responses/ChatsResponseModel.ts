@@ -1,5 +1,6 @@
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import { User } from "models/User";
+import Message from "models/Message";
 
 export class Conversation {
   id!: number;
@@ -9,7 +10,7 @@ export class Conversation {
   createdAt!: Date;
   updatedAt!: Date;
   conversationUsers!: User[];
-  message!: any[];
+  message!: Message[];
   isRead!: boolean;
 
   constructor(activityLog: Conversation) {
@@ -19,9 +20,10 @@ export class Conversation {
 
   isMessageRead = () => {
     let prettyDateTime = new PrettyTimeFormat();
-    this.isRead = prettyDateTime.isOneDayAgo(
+    /* this.isRead = prettyDateTime.isOneDayAgo(
       this.lastMessagedAt.toString()
-    );
+    );*/
+    return prettyDateTime.isOneDayAgo(this.lastMessagedAt.toString());
   };
 }
 

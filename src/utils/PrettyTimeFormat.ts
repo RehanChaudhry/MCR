@@ -1,6 +1,5 @@
 import moment from "moment";
 import prettyMilliseconds from "pretty-ms";
-import { AppLog } from "utils/Util";
 
 export class PrettyTimeFormat {
   minutesAgoText: string = "";
@@ -27,9 +26,9 @@ export class PrettyTimeFormat {
     let millis = new Date().getTime() - moment(date).valueOf();
     let prettyTime = prettyMilliseconds(millis, { compact: compact });
 
-    AppLog.log(
+    /* AppLog.log(
       "pretty date is : " + prettyTime + " and original date is : " + date
-    );
+    );*/
 
     if (prettyTime[prettyTime.length - 1] === "y") {
       prettyTime = prettyTime.replace(/.$/, this.yearsAgoText);
@@ -51,7 +50,6 @@ export class PrettyTimeFormat {
   isOneDayAgo(date: string, compact: boolean = true): boolean {
     let millis = new Date().getTime() - moment(date).valueOf();
     let prettyTime = prettyMilliseconds(millis, { compact: compact });
-
     return prettyTime[prettyTime.length - 1] === "d";
   }
 }

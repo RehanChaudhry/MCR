@@ -9,35 +9,42 @@ import React from "react";
 import { FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
-import { usePreferredTheme } from "hooks";
-import ChatItem from "models/ChatItem";
+import { useAuth, usePreferredTheme } from "hooks";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
+import Message from "models/Message";
 
 export interface ItemChatThreadProps extends ViewStyle {
-  item: ChatItem;
+  item: Message | undefined;
   style?: StyleProp<ViewStyle>;
 }
 
 export const ItemChatThread = React.memo<ItemChatThreadProps>(
   ({ style, item }) => {
     const { themedColors } = usePreferredTheme();
+    const currentUser = useAuth();
 
-    let prettyTime = new PrettyTimeFormat().getPrettyTime(item.createdAt);
+    let prettyTime = new PrettyTimeFormat().getPrettyTime(
+      item!!.createdAt
+    );
 
     return (
       <View style={[styles.container, style]}>
         <Image
           style={styles.imgStyle}
           source={{
-            uri: item.image
+            uri: item?.profilePicture.fileURL
           }}
         />
 
-        <View style={styles.textWrapper(themedColors, item.userId === 1)}>
+        <View
+          style={styles.textWrapper(
+            themedColors,
+            item?.id === currentUser.user?.profile?.id
+          )}>
           <View style={styles.nameContainer}>
             <AppLabel
               style={styles.nameText(themedColors)}
-              text={item.name[0]}
+              text={item?.firstName + " " + item?.lastName}
               weight="semi-bold"
             />
             <AppLabel
@@ -48,7 +55,7 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
           </View>
           <AppLabel
             style={styles.messageText(themedColors)}
-            text={item.message}
+            text={item?.text}
             numberOfLines={0}
             ellipsizeMode="tail"
             weight="normal"

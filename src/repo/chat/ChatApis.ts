@@ -1,21 +1,17 @@
 import { apiClient } from "repo/Client";
 import { API } from "config";
-import { ChatsResponseModel } from "models/api_responses/ChatsResponseModel";
 import { ConversationSuggestionsResponseModel } from "models/api_responses/ConversationSuggestionsResponseModel";
 import { ConversationSuggestionsRequestModel } from "models/api_requests/ConversationSuggestionsRequestModel";
 import { CreateConversationRequestModel } from "models/api_requests/CreateConversationRequestModel";
 import { CreateConversationResponseModel } from "models/api_responses/CreateConversationResponseModel";
+import ChatRequestModel from "models/api_requests/chatRequestModel";
+import ChatResponseModel from "models/api_responses/ChatsResponseModel";
+import MessagesResponseModel from "models/api_responses/MessagesResponseModel";
 
-function getChats() {
-  return apiClient.get<ChatsResponseModel>(
-    API.CONVERSATION,
-    JSON.stringify("")
-  );
-
-  /*return apiClient.get<ConversationSuggestionsResponseModel>(
-      API.CONVERSATION,
-      { keyword: keyword }
-  );*/
+function getChats(request: ChatRequestModel) {
+  return apiClient.get<ChatResponseModel>(API.CONVERSATION, {
+    ...request
+  });
 }
 
 function getSuggestions(request: ConversationSuggestionsRequestModel) {
@@ -32,8 +28,20 @@ function createConversations(request: CreateConversationRequestModel) {
   );
 }
 
+function sentMessage(request: Object) {
+  return apiClient.post<ChatResponseModel>(API.MESSAGE, request);
+}
+
+function getMessages(request: Object) {
+  return apiClient.get<MessagesResponseModel>(API.MESSAGE, {
+    ...request
+  });
+}
+
 export default {
   getChats: getChats,
   getSuggestions: getSuggestions,
-  createConversations: createConversations
+  createConversations: createConversations,
+  sentMessage: sentMessage,
+  getMessages: getMessages
 };

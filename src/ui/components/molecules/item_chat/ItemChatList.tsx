@@ -95,7 +95,9 @@ export const ItemChatList = React.memo<ItemChatListProps>(
                 item.userType === SenderType.STAFF,
                 item.isRead
               )}
-              text={item.message[0]}
+              text={
+                item.message[0] !== undefined ? item.message[0].text : ""
+              }
               numberOfLines={2}
               ellipsizeMode="tail"
               weight="normal"
