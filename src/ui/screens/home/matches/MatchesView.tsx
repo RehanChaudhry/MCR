@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import RelationModel from "models/RelationModel";
@@ -26,6 +26,7 @@ type Props = {
   pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
+  isFriendRequestApiLoading: boolean;
   postFriendRequest: (userId: number) => void;
   postMatchDismiss: (userId: number) => void;
   selectedTotalCount: number;
@@ -42,6 +43,7 @@ export const MatchesView: React.FC<Props> = ({
   pullToRefreshCallback,
   onEndReached,
   isAllDataLoaded,
+  isFriendRequestApiLoading,
   postFriendRequest,
   postMatchDismiss,
   selectedTotalCount,
@@ -66,25 +68,33 @@ export const MatchesView: React.FC<Props> = ({
 
   const profileMatch = useRef<RelationModel>();
 
-  const renderItem = ({ item }: { item: RelationModel }) => {
-    const _item = new RelationModel(item);
-    return (
-      <ProfileMatchItem
-        profileMatch={_item}
-        onFriendRequestClicked={() => {
-          profileMatch.current = _item;
-          setRequestDialogVisible(true);
-        }}
-        onCrossClicked={() => {
-          AppLog.log("onCrossClicked()");
-          profileMatch.current = _item;
-          setDismissDialogVisible(true);
-        }}
-        onChatButtonClicked={moveToChatScreen}
-        onImageClicked={moveToProfileScreen}
-      />
-    );
-  };
+  const renderItem = useCallback(
+    ({ item }: { item: RelationModel }) => {
+      const _item = new RelationModel(item);
+      return (
+        <ProfileMatchItem
+          profileMatch={_item}
+          isFriendRequestApiLoading={
+            profileMatch.current?.matchingUserId === _item.matchingUserId
+              ? isFriendRequestApiLoading
+              : false
+          }
+          onFriendRequestClicked={() => {
+            profileMatch.current = _item;
+            setRequestDialogVisible(true);
+          }}
+          onCrossClicked={() => {
+            AppLog.log("onCrossClicked()");
+            profileMatch.current = _item;
+            setDismissDialogVisible(true);
+          }}
+          onChatButtonClicked={moveToChatScreen}
+          onImageClicked={moveToProfileScreen}
+        />
+      );
+    },
+    [moveToProfileScreen, moveToChatScreen, isFriendRequestApiLoading]
+  );
 
   function filter(): OptimizedBBCItem<MatchesTypeFilter>[] {
     return getMatchesTypeFilterData().map((value) => {
@@ -114,7 +124,6 @@ export const MatchesView: React.FC<Props> = ({
           onPress: () => {
             setRequestDialogVisible(false);
             postFriendRequest(profileMatch.current!.matchingUserId);
-            profileMatch.current = undefined;
           },
           style: {
             weight: "semi-bold",
@@ -150,7 +159,6 @@ export const MatchesView: React.FC<Props> = ({
           onPress: () => {
             setDismissDialogVisible(false);
             postMatchDismiss(profileMatch.current!.matchingUserId);
-            profileMatch.current = undefined;
           },
           style: {
             weight: "semi-bold",
@@ -203,6 +211,7 @@ export const MatchesView: React.FC<Props> = ({
         keyExtractor={(item) => item.matchingUserId.toString()}
         error={error}
         retryCallback={pullToRefreshCallback}
+        extraData={isFriendRequestApiLoading}
       />
       {requestDialog()}
       {dismissDialog()}

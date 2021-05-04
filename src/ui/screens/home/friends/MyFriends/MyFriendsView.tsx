@@ -56,9 +56,9 @@ const listItem = (
   return (
     <ConnectionItem
       title={_item.user?.getFullName() ?? ""}
-      subtitle={`${
-        _item.user?.matchGroupName ?? STRINGS.common.not_found
-      }, ${_item.user?.major ?? STRINGS.common.not_found}`}
+      subtitle={`${_item.user?.hometown ?? STRINGS.common.not_found}, ${
+        _item.user?.major ?? STRINGS.common.not_found
+      }`}
       profileImage={_item.user?.profilePicture?.fileURL ?? ""}
       actionButtonTitle={actionButtonTitle()}
       actionButtonState={actionButtonState()}

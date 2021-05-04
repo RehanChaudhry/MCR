@@ -1,9 +1,6 @@
-import { Pagination } from "models/Pagination";
-
 export interface CommunityAnnouncementResponseModel {
   message: string;
   data: CommunityAnnouncement[];
-  pagination: Pagination;
 }
 
 export interface CommunityAnnouncement {
@@ -29,7 +26,7 @@ export interface CommunityAnnouncement {
   updatedAt: Date;
   deletedAt: null;
   postFilter: PostFilter;
-  isLikedByMe: IsLikedByMe[] | undefined;
+  isLikedByMe: boolean;
 }
 
 export interface PostFilter {
