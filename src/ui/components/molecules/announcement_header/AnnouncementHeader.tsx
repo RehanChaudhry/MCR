@@ -30,8 +30,9 @@ export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   shouldHideBottomSeparator?: boolean;
   titleFontWeight?: Weight;
   rightIcon?: SvgProp;
-  onPress?: () => void;
+  onClickedReportContentButton?: (postId: number) => void | undefined;
   leftImageStyle?: StyleProp<ImageStyle> | undefined;
+  postId?: number;
 }
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
@@ -46,9 +47,10 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
     shouldHideSubTitle = false,
     shouldHideBottomSeparator = false,
     titleFontWeight = "normal",
-    onPress,
+    onClickedReportContentButton,
     rightIcon,
-    leftImageStyle
+    leftImageStyle,
+    postId
   }) => {
     const theme = usePreferredTheme();
 
@@ -93,7 +95,9 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
                 },
                 style.rightImage
               ]}
-              onPress={onPress}
+              onPress={() => {
+                onClickedReportContentButton?.(postId ?? 0);
+              }}
             />
           )}
         </View>

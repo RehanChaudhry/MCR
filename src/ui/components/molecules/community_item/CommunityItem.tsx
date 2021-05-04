@@ -20,7 +20,7 @@ export interface CommunityItemProps extends TouchableOpacityProps {
   communityItem: CommunityAnnouncement;
   openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
-  openReportContentScreen?: () => void | undefined;
+  openReportContentScreen?: (postId: number) => void;
 }
 
 function showAttachedItemsIfAny(
@@ -88,7 +88,8 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           leftImageUrl={communityItem.postedByProfilePicture.fileURL}
           shouldShowRightImage={true}
           rightIcon={rightImage}
-          onPress={openReportContentScreen}
+          onClickedReportContentButton={openReportContentScreen}
+          postId={communityItem.id}
         />
 
         {communityItem.content != null && true && (
