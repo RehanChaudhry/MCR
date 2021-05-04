@@ -3,7 +3,7 @@ import Strings from "config/Strings";
 import { FormikValues } from "formik";
 import { usePreferredTheme } from "hooks";
 import ReportContentApiRequestModel from "models/api_requests/ReportContentApiRequestModel";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import SimpleToast from "react-native-simple-toast";
@@ -24,11 +24,7 @@ type Props = {
   communityId: number;
 };
 
-const validationSchema = Yup.object().shape({
-  reason: Yup.string().required(
-    Strings.reportContent.enter_reason_validation
-  )
-});
+const validationSchema = Yup.object().shape({});
 
 let initialValues: FormikValues = {
   reason: ""
@@ -37,15 +33,14 @@ let initialValues: FormikValues = {
 export const ReportContentView = React.memo<Props>(
   ({ onPostReportContent, shouldShowProgressBar, communityId }) => {
     const theme = usePreferredTheme();
-    let problems: string[] = [];
+    const [prob, setProb] = useState<string[]>([]);
     const onSubmit = (_value: FormikValues) => {
-      if (problems.length < 1) {
+      if (prob.length < 1) {
         SimpleToast.show("Please select at least one problem");
       } else {
         AppLog.log("form values" + initialValues);
-        const unique = new Set(problems);
+        const unique = new Set(prob);
         const uniqueArray = [...unique]; // array
-        AppLog.log("unique: " + uniqueArray);
         onPostReportContent({
           reason: _value.reason,
           referenceId: communityId,
@@ -53,6 +48,10 @@ export const ReportContentView = React.memo<Props>(
           type: "post"
         });
       }
+    };
+
+    const updateState = (checkedValue: string) => {
+      setProb((prevState) => [...prevState, checkedValue]);
     };
 
     return (
@@ -81,8 +80,7 @@ export const ReportContentView = React.memo<Props>(
                 text={Strings.reportContent.offensiveContent}
                 onChange={(value) => {
                   if (value) {
-                    problems.push(Strings.reportContent.offensiveContent);
-                    AppLog.log(problems);
+                    updateState(Strings.reportContent.offensiveContent);
                   }
                 }}
                 style={styles.marginTopLg}
@@ -91,8 +89,7 @@ export const ReportContentView = React.memo<Props>(
                 text={Strings.reportContent.harassment}
                 onChange={(value) => {
                   if (value) {
-                    problems.push(Strings.reportContent.harassment);
-                    AppLog.log(problems);
+                    updateState(Strings.reportContent.harassment);
                   }
                 }}
               />
@@ -100,8 +97,7 @@ export const ReportContentView = React.memo<Props>(
                 text={Strings.reportContent.bullying}
                 onChange={(value) => {
                   if (value) {
-                    problems.push(Strings.reportContent.bullying);
-                    AppLog.log(problems);
+                    updateState(Strings.reportContent.bullying);
                   }
                 }}
               />
@@ -109,8 +105,7 @@ export const ReportContentView = React.memo<Props>(
                 text={Strings.reportContent.spam}
                 onChange={(value) => {
                   if (value) {
-                    problems.push(Strings.reportContent.spam);
-                    AppLog.log(problems);
+                    updateState(Strings.reportContent.spam);
                   }
                 }}
               />
@@ -118,8 +113,7 @@ export const ReportContentView = React.memo<Props>(
                 text={Strings.reportContent.violence}
                 onChange={(value) => {
                   if (value) {
-                    problems.push(Strings.reportContent.violence);
-                    AppLog.log(problems);
+                    updateState(Strings.reportContent.violence);
                   }
                 }}
               />
@@ -127,8 +121,7 @@ export const ReportContentView = React.memo<Props>(
                 text={Strings.reportContent.concerningContent}
                 onChange={(value) => {
                   if (value) {
-                    problems.push(Strings.reportContent.concerningContent);
-                    AppLog.log(problems);
+                    updateState(Strings.reportContent.concerningContent);
                   }
                 }}
               />
@@ -136,8 +129,7 @@ export const ReportContentView = React.memo<Props>(
                 text={Strings.reportContent.nudity}
                 onChange={(value) => {
                   if (value) {
-                    problems.push(Strings.reportContent.nudity);
-                    AppLog.log(problems);
+                    updateState(Strings.reportContent.nudity);
                   }
                 }}
               />
@@ -145,8 +137,7 @@ export const ReportContentView = React.memo<Props>(
                 text={Strings.reportContent.threats}
                 onChange={(value) => {
                   if (value) {
-                    problems.push(Strings.reportContent.threats);
-                    AppLog.log(problems);
+                    updateState(Strings.reportContent.threats);
                   }
                 }}
               />
@@ -154,8 +145,7 @@ export const ReportContentView = React.memo<Props>(
                 text={Strings.reportContent.hateSpeech}
                 onChange={(value) => {
                   if (value) {
-                    problems.push(Strings.reportContent.hateSpeech);
-                    AppLog.log(problems);
+                    updateState(Strings.reportContent.hateSpeech);
                   }
                 }}
               />
@@ -163,8 +153,7 @@ export const ReportContentView = React.memo<Props>(
                 text={Strings.reportContent.somethingElse}
                 onChange={(value) => {
                   if (value) {
-                    problems.push(Strings.reportContent.somethingElse);
-                    AppLog.log(problems);
+                    updateState(Strings.reportContent.somethingElse);
                   }
                 }}
               />
