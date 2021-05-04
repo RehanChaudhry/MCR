@@ -337,7 +337,8 @@ export default {
     somethingElse: "Something else",
     reason: "Reason",
     reasonPlaceholder: "Let us know why you think this is inappropriate",
-    submitSpamReport: "Submit Spam Report"
+    submitSpamReport: "Submit Spam Report",
+    enter_reason_validation: "Please enter a reason."
   },
   roommateAgreementdetails: {
     export_agreement: "Export Roommate Agreement"

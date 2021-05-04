@@ -20,7 +20,7 @@ type Props = {
   feedsFilterData: FilterCount[];
   openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
-  openReportContentScreen?: () => void | undefined;
+  openReportContentScreen?: (postId: number) => void;
   error: string | undefined;
   filterDataBy: (type: string) => void;
 };

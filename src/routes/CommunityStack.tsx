@@ -4,7 +4,7 @@ export type CommunityStackParamList = {
   Community: undefined;
   CreatePost: undefined;
   Comments: { postId: number };
-  ReportContent: undefined;
+  ReportContent: { postId: number };
 };
 
 export const CommunityStack = createStackNavigator<CommunityStackParamList>();

@@ -37,6 +37,7 @@ export default {
   GET_COMMUNITY_ANNOUNCEMENT: "post",
   LIKE_DISLIKE: "post/like",
   COMMENT: "comment",
+  REPORT_CONTENT: "spam",
 
   //chat
   CONVERSATION: "conversation/",

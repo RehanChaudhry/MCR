@@ -1,6 +1,8 @@
 import { API } from "config";
 import CreatePostApiRequestModel from "models/api_requests/CreatePostApiRequestModel";
+import ReportContentApiRequestModel from "models/api_requests/ReportContentApiRequestModel";
 import { CommunityAnnouncementResponseModel } from "models/api_responses/CommunityAnnouncementResponseModel";
+import ReportContentApiResponseModel from "models/api_responses/ReportContentApiResponseModel";
 import { apiClient } from "repo/Client";
 import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
 import { LikeDislikeResponseModel } from "models/api_responses/LikeDislikeResponseModel";
@@ -44,10 +46,18 @@ function postComment(request: PostCommentApiRequestModel) {
   return apiClient.post<PostCommentApiResponseModel>(API.COMMENT, request);
 }
 
+function postReportContent(request: ReportContentApiRequestModel) {
+  return apiClient.post<ReportContentApiResponseModel>(
+    API.REPORT_CONTENT,
+    request
+  );
+}
+
 export default {
   createPost,
   getCommunityAnnouncements,
   likeDislike,
   getComments,
-  postComment
+  postComment,
+  postReportContent
 };

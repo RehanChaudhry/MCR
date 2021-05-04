@@ -190,8 +190,8 @@ const CommunityController: FC<Props> = () => {
     navigation.navigate("Comments", { postId: postId });
   };
 
-  const openReportContentScreen = () => {
-    navigation.navigate("ReportContent");
+  const openReportContentScreen = (postId: number) => {
+    navigation.navigate("ReportContent", { postId: postId });
   };
 
   useEffect(() => {
