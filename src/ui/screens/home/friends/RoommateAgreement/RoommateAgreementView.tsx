@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import Screen from "ui/components/atoms/Screen";
 import RoommateAgreementTerms from "ui/components/templates/roommate_agreement/RoommateAgreementTerms";
 import AppForm from "ui/components/molecules/app_form/AppForm";
-import * as Yup from "yup";
 import { FormikValues } from "formik";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SPACE, STRINGS } from "config";
@@ -15,30 +14,40 @@ import { SectionComponent } from "ui/components/organisms/section_component/Sect
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import { AppLog } from "utils/Util";
+import { createYupSchema } from "utils/YupSchemaCreator";
+import * as Yup from "yup";
 
 type Props = {
   roommateData: FormInputFieldData[] | undefined;
 };
 
-const validationSchema = Yup.object().shape({
-  frustrated: Yup.object().required("Select one option"),
-  upset: Yup.string()
-    .required("This field is required")
-    .min(1, "should be atleast 1 characters")
-    .max(50, "should be less than 50 characters")
-});
-let initialValues: FormikValues = {
-  frustrated: "",
-  upset: ""
-};
+// const validationSchema = Yup.object().shape({
+//   frustrated: Yup.object().required("Select one option"),
+//   upset: Yup.string()
+//     .required("This field is required")
+//     .min(1, "should be atleast 1 characters")
+//     .max(50, "should be less than 50 characters")
+// });
 
-const onSubmit = (_value: FormikValues) => {
-  initialValues = _value;
-  AppLog.log("Button Pressed");
-};
+// let initialValues: FormikValues = {
+//   frustrated: "",
+//   upset: ""
+// };
 
 const RoommateAgreementView: FC<Props> = ({ roommateData }) => {
   const theme = usePreferredTheme();
+
+  const yepSchema = roommateData?.reduce(createYupSchema, {});
+  const validateSchema = Yup.object().shape(yepSchema);
+  let initialValues = {};
+  roommateData?.forEach((item) => {
+    // @ts-ignore
+    initialValues[item.id] = "";
+  });
+  const onSubmit = (_value: FormikValues) => {
+    initialValues = _value;
+    AppLog.log("Button Pressed");
+  };
   return (
     <Screen shouldAddBottomInset={false}>
       <ScrollView>
@@ -57,7 +66,7 @@ const RoommateAgreementView: FC<Props> = ({ roommateData }) => {
             <AppForm
               initialValues={initialValues}
               onSubmit={onSubmit}
-              validationSchema={validationSchema}>
+              validationSchema={validateSchema}>
               <AppFormDropDown
                 name="frustrated"
                 validationLabelTestID={"frustratedValidationTestID"}
@@ -144,7 +153,8 @@ const styles = StyleSheet.create({
   },
   cardView: {
     marginHorizontal: SPACE.lg,
-    marginTop: SPACE.lg
+    marginTop: SPACE.lg,
+    marginBottom: SPACE.lg
   }
 });
 
