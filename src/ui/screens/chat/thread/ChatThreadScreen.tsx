@@ -1,48 +1,43 @@
 import { StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { ItemChatThread } from "ui/components/molecules/item_chat/ItemChatThread";
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog } from "utils/Util";
-import ChatItem, { SenderType } from "models/ChatItem";
-import DataGenerator from "utils/DataGenerator";
 import Strings from "config/Strings";
 import { SPACE } from "config";
+import Message from "models/Message";
 
 type Props = {
-  data: ChatItem[];
-  sentMessageApi: (list: ChatItem[], message: ChatItem) => ChatItem[];
+  data: Message[] | undefined;
+  sentMessageApi: (text: string) => void;
+  shouldShowProgressBar: boolean;
+  isAllDataLoaded: boolean;
+  error: string | undefined;
 };
 
 export const ChatThreadScreen = React.memo<Props>(
-  ({ data, sentMessageApi }) => {
-    let [chats, setChats] = useState<ChatItem[]>(data);
-
-    const renderItem = ({ item }: { item: ChatItem }) => {
+  ({
+    data,
+    sentMessageApi,
+    shouldShowProgressBar,
+    isAllDataLoaded,
+    error
+  }) => {
+    const renderItem = ({ item }: { item: Message | undefined }) => {
       AppLog.log("rendering list item : " + JSON.stringify(item));
       return <ItemChatThread item={item} />;
     };
 
     function sentMessage(text: string) {
-      let chatMessage = DataGenerator.createChat(
-        1009,
-        ["Phoenix Walker"],
-        false,
-        SenderType.STUDENTS,
-        2,
-        "https://vrs.amsi.org.au/wp-content/uploads/sites/78/2017/12/tobinsouth_vrs_2017-18.jpeg",
-        text
-      );
-
-      setChats(sentMessageApi(chats, chatMessage));
+      sentMessageApi(text);
     }
 
     return (
       <Screen style={styles.container}>
         <FlatListWithPb
-          shouldShowProgressBar={false}
-          data={chats}
+          data={data}
           ItemSeparatorComponent={() => (
             <View style={styles.itemSeparator} />
           )}
@@ -51,6 +46,9 @@ export const ChatThreadScreen = React.memo<Props>(
           showsVerticalScrollIndicator={false}
           style={[styles.list]}
           inverted={true}
+          shouldShowProgressBar={shouldShowProgressBar}
+          error={error}
+          isAllDataLoaded={isAllDataLoaded}
           keyExtractor={(item, index) => index.toString()}
         />
         <WriteMessage
