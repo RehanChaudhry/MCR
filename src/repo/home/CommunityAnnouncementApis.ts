@@ -5,6 +5,10 @@ import { apiClient } from "repo/Client";
 import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
 import { LikeDislikeResponseModel } from "models/api_responses/LikeDislikeResponseModel";
 import CreatePostApiResponseModel from "models/api_responses/CreatePostApiResponseModel";
+import CommentsRequestModel from "models/api_requests/CommentsRequestModel";
+import { CommentsResponseModel } from "models/api_responses/CommentsResponseModel";
+import PostCommentApiResponseModel from "models/api_responses/PostCommentApiResponseModel";
+import PostCommentApiRequestModel from "models/api_requests/PostCommentApiRequestModel";
 
 function getCommunityAnnouncements(
   requestModel: AnnouncementRequestModel
@@ -15,6 +19,12 @@ function getCommunityAnnouncements(
       ...requestModel
     }
   );
+}
+
+function getComments(requestModel: CommentsRequestModel) {
+  return apiClient.get<CommentsResponseModel>(API.COMMENT, {
+    ...requestModel
+  });
 }
 
 function likeDislike(postId: number) {
@@ -30,8 +40,14 @@ function createPost(request: CreatePostApiRequestModel) {
   );
 }
 
+function postComment(request: PostCommentApiRequestModel) {
+  return apiClient.post<PostCommentApiResponseModel>(API.COMMENT, request);
+}
+
 export default {
   createPost,
   getCommunityAnnouncements,
-  likeDislike
+  likeDislike,
+  getComments,
+  postComment
 };

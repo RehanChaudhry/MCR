@@ -14,6 +14,7 @@ import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_wit
 import { NotificationParamList } from "routes/NotificationParams";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { ProfileRootStackParamList } from "routes/ProfileRootStack";
+import { useAuth } from "hooks";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -79,11 +80,15 @@ const ViewProfileController: FC<Props> = () => {
     navigationNotification
   ]);
 
+  //for the user profile data
+  const { user } = useAuth();
+
   return (
     <>
       {useLazyLoadInterface(
         <ViewProfileView
           openRoommateAgreementScreen={openRoommateAgreementScreen}
+          user={user}
         />
       )}
     </>

@@ -18,8 +18,8 @@ import ChevronDown from "assets/images/chevron-down.svg";
 import { SPACE } from "config";
 
 export interface AppDropdownProps {
-  title: string;
-  items: DropDownItem[];
+  title?: string;
+  items: DropDownItem[] | undefined;
   selectedItemCallback: (item: DropDownItem) => void;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -45,9 +45,9 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
     shouldShowCustomIcon = false
   }) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    const [selectedItemText, setSelectedItemText] = useState<string>(
-      title
-    );
+    const [selectedItemText, setSelectedItemText] = useState<
+      string | undefined
+    >(title);
 
     const { themedColors } = usePreferredTheme();
 
@@ -61,13 +61,16 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
       setModalVisible(false);
     }
 
-    const [selectedItemId, setSelectedItemId] = useState<string>("none");
+    const [
+      selectedItemPosition,
+      setSelectedItemPosition
+    ] = useState<number>(-1);
     const selectedItem = (item: DropDownItem | any) => {
       AppLog.log("selectedItem " + item.title);
       setModalVisible(false);
       setSelectedItemText(item.title);
       selectedItemCallback(item);
-      setSelectedItemId(item.id);
+      setSelectedItemPosition(item.id);
     };
     AppLog.logForcefully("condition check" + selectedItemText === title);
     return (
@@ -88,7 +91,7 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
           selectedItemCallback={selectedItem}
           dropDownBgColor={dialogBgColor}
           dialogCloseIconStyle={dialogCloseIconStyle}
-          selectedItemId={selectedItemId}
+          selectedItemPosition={selectedItemPosition}
         />
 
         <Pressable

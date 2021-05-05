@@ -11,8 +11,9 @@ import DataGenerator from "utils/DataGenerator";
 import MatchInfo from "models/MatchInfo";
 import { STRINGS } from "config";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import ProfileMatch from "models/ProfileMatch";
+import RelationModel from "models/RelationModel";
 import EScreen from "models/enums/EScreen";
+import { useAuth } from "hooks";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -40,19 +41,21 @@ const MatchInfoController: FC<Props> = () => {
     });
   }, [navigation]);
 
+  const { user } = useAuth();
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [matchInfo, setMatchInfo] = useState<MatchInfo>(matchInfoData);
 
-  const moveToChatScreen = (profileMatch: ProfileMatch) => {
+  const moveToChatScreen = (profileMatch: RelationModel) => {
     // AppLog.log(
     //   "moveToChatScreen(), profile: " + JSON.stringify(profileMatch)
     // );
     navigation.navigate("Chat", {
-      title: [profileMatch.userName ?? STRINGS.common.not_found]
+      title: [profileMatch.user?.getFullName() ?? STRINGS.common.not_found]
     });
   };
 
-  const moveToProfileScreen = (profileMatch: ProfileMatch) => {
+  const moveToProfileScreen = (profileMatch: RelationModel) => {
     AppLog.log(
       "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
     );
@@ -95,6 +98,7 @@ const MatchInfoController: FC<Props> = () => {
       }}
       data={matchInfo}>
       <MatchInfoView
+        userProfile={user?.profile!}
         matchInfo={matchInfo}
         moveToChatScreen={moveToChatScreen}
         moveToProfileScreen={moveToProfileScreen}

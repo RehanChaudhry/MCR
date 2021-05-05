@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { StackScreenProps } from "@react-navigation/stack";
 import { useAuth, usePreventDoubleTap } from "hooks";
 import { SignInApiRequestModel } from "models/api_requests/SignInApiRequestModel";
 import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
@@ -13,7 +13,7 @@ import NoHeader from "ui/components/headers/NoHeader";
 import { LoginView } from "ui/screens/auth/login/LoginView";
 import { AppLog } from "utils/Util";
 
-type LoginNavigationProp = StackNavigationProp<
+export type LoginScreenAuthStackScreenProps = StackScreenProps<
   AuthStackParamList,
   "Login"
 >;
@@ -23,7 +23,9 @@ type Props = {};
 const LoginController: FC<Props> = () => {
   const auth = useAuth();
 
-  const navigation = useNavigation<LoginNavigationProp>();
+  const navigation = useNavigation<
+    LoginScreenAuthStackScreenProps["navigation"]
+  >();
 
   // Add no toolbar
   useLayoutEffect(() => {
@@ -41,7 +43,7 @@ const LoginController: FC<Props> = () => {
   const [shouldShowPb, setShouldShowPb] = useState(false);
 
   const openUniSelectionScreen = usePreventDoubleTap(() => {
-    navigation.push("UniSelection");
+    navigation.goBack();
   });
 
   const openForgotPasswordScreen = usePreventDoubleTap(() => {
@@ -59,6 +61,12 @@ const LoginController: FC<Props> = () => {
         apiRequestModel
       ]);
 
+      if (hasError || dataBody === undefined) {
+        Alert.alert("Unable to Sign In", errorBody);
+        setShouldShowPb(false);
+        return;
+      }
+
       // fetch user profile dataP
       const {
         hasError: hasErrorProfile,
@@ -68,15 +76,12 @@ const LoginController: FC<Props> = () => {
         dataBody?.data?.accessToken ?? ""
       ]);
 
-      if (
-        hasError ||
-        hasErrorProfile ||
-        dataBody === undefined ||
-        dataBodyProfile === undefined
-      ) {
-        Alert.alert("Unable to Sign In", errorBody ?? errorBodyProfile);
+      if (hasErrorProfile || dataBodyProfile === undefined) {
+        Alert.alert(
+          "Unable to Sign In",
+          "Couldn't fetch user information.\n" + errorBodyProfile
+        );
         setShouldShowPb(false);
-        return;
       } else {
         await auth.saveUser({
           authentication: dataBody.data,

@@ -9,7 +9,7 @@ export type FormInputFieldData = {
   inputType?: string;
   label?: string;
   placeholder?: string;
-  options?: optionsData[];
+  options?: optionsData[] | undefined;
   order?: number;
   isRequired?: number;
   isDefault?: number;
@@ -22,10 +22,10 @@ export type FormInputFieldData = {
 };
 
 export type optionsData = {
-  text: string;
+  id: number;
   value: string;
 };
 
 export type userMetaData = {
-  value: string;
+  value?: string;
 };

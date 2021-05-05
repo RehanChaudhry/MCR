@@ -13,7 +13,7 @@ type Props = {
   onEndReached: () => void;
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete?: () => void) => void;
-  openCommentsScreen?: () => void | undefined;
+  openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
   likeDislikeAPi: (postId: number) => Promise<boolean>;
   error: string | undefined;

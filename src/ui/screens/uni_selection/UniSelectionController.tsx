@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { usePreferredTheme, usePreventDoubleTap } from "hooks";
+import { useAuth, usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { computeShades } from "hooks/theme/ColorPaletteContainer";
 import {
   Uni,
@@ -24,18 +24,20 @@ type LoginNavigationProp = StackNavigationProp<
 const UniSelectionController: FC<Props> = () => {
   const navigation = useNavigation<LoginNavigationProp>();
   const [unis, setUnis] = useState<Array<Uni>>();
-
+  let auth = useAuth();
   const unisApi = useApi<any, UniSelectionResponseModel>(
     UniSelectionApis.getUnis
   );
 
-  const openLoginScreen = usePreventDoubleTap(() => {
+  const openLoginScreen = async (item: Uni) => {
+    await auth.saveUni(item);
     navigation.navigate("Login");
-  });
+  };
 
-  const openSSOScreen = usePreventDoubleTap(() => {
+  const openSSOScreen = async (item: Uni) => {
+    await auth.saveUni(item);
     navigation.navigate("SSO_Login");
-  });
+  };
 
   const handleGetUnisApi = async (onComplete?: () => void) => {
     const { hasError, dataBody, errorBody } = await unisApi.request([]);
@@ -50,7 +52,7 @@ const UniSelectionController: FC<Props> = () => {
 
   const theme = usePreferredTheme();
 
-  const uniDidSelect = (item: Uni) => {
+  const uniDidSelect = usePreventDoubleTap((item: Uni) => {
     requestAnimationFrame(() => {
       AppLog.log("selected item: ", item);
       theme.saveCustomPalette({
@@ -61,12 +63,12 @@ const UniSelectionController: FC<Props> = () => {
         secondary: item.secondaryColorDark
       });
       if (item.ssoMethod === "off") {
-        openLoginScreen();
+        openLoginScreen(item);
       } else {
-        openSSOScreen();
+        openSSOScreen(item);
       }
     });
-  };
+  });
 
   // Add no toolbar
   useLayoutEffect(() => {

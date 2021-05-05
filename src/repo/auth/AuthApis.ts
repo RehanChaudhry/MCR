@@ -8,6 +8,8 @@ import { apiClient, resetApiClient } from "repo/Client";
 import { UpdateAccountPasswordApiRequestModel } from "models/api_requests/UpdateAccountPasswordApiRequestModel";
 import { UpdateAccountPasswordApiResponseModel } from "models/api_responses/UpdateAccountPasswordApiResponseModel";
 import { CreatePasswordApiRequestModel } from "models/api_requests/CreatePasswordApiRequestModel";
+import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
+import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
 
 function signIn(requestModel: SignInApiRequestModel) {
   return apiClient.post<SignInApiResponseModel>(
@@ -50,10 +52,18 @@ function updateAccountPassword(
   );
 }
 
+function updateProfile(requestModel: UpdateProfileRequestModel) {
+  return apiClient.put<UpdateProfileResponseModel>(
+    API.UPDATE_PROFILE + "/" + requestModel.id,
+    JSON.stringify(requestModel)
+  );
+}
+
 export default {
   signIn,
   fetchMyProfile,
   forgotPassword,
   createOrResetPassword,
-  updateAccountPassword
+  updateAccountPassword,
+  updateProfile
 };

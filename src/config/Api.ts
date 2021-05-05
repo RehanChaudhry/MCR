@@ -10,7 +10,7 @@ export default {
   BASE_URL: Env.BASE_URL,
   API_URL: "api/",
   LOGIN_URL: "auth/login",
-  FETCH_MY_PROFILE_URL: "user/me",
+  FETCH_MY_PROFILE_URL: "user/me?meta=true",
   FORGOT_PASS_URL: "password/request/",
   RESET_PASS_URL: "password/set/",
   UPDATE_PROFILE_URL: "profile",
@@ -26,6 +26,7 @@ export default {
   GET_ANSWERS: "answer/",
   POST_ANSWERS: "answer/",
   GET_ACTIVITY_LOGS: "activity-logs/",
+  UPDATE_PROFILE: "user",
 
   // matches
   GET_MATCHES: "matches",
@@ -37,9 +38,10 @@ export default {
   CREATE_POST: "post",
   GET_COMMUNITY_ANNOUNCEMENT: "post",
   LIKE_DISLIKE: "post/like",
+  COMMENT: "comment",
 
   //chat
-  GET_CHATS: "chats",
+  CONVERSATION: "conversation/",
 
   //relations
   RELATION: "relation",

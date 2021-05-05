@@ -1,4 +1,7 @@
-import { FilterCount } from "models/api_responses/MatchesFilterApiResponseModel";
+export type FilterCount = {
+  type: string;
+  count: number;
+};
 
 enum MatchesTypeFilter {
   MATCHES = "matches",
@@ -11,19 +14,19 @@ export const getMatchesTypeFilterData = () => {
   const filterCounts: FilterCount[] = [];
   filterCounts.push({
     type: MatchesTypeFilter.MATCHES,
-    count: 14
+    count: 0
   });
   filterCounts.push({
     type: MatchesTypeFilter.FRIENDS,
-    count: 28
+    count: 0
   });
   filterCounts.push({
     type: MatchesTypeFilter.NEW,
-    count: 18
+    count: 0
   });
   filterCounts.push({
     type: MatchesTypeFilter.RECENTLY_VIEWED,
-    count: 2
+    count: 0
   });
   return filterCounts;
 };

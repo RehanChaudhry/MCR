@@ -39,7 +39,6 @@ type Props = {};
 
 const CommunityController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
   const isFetchingInProgress = useRef(false);
   const [communities, _communities] = useState<
@@ -120,7 +119,6 @@ const CommunityController: FC<Props> = () => {
     } = await getCommunitiesApi.request([requestModel.current]);
 
     setShouldShowProgressBar(false);
-
     isFetchingInProgress.current = false;
     if (hasError || dataBody === undefined) {
       Alert.alert("Unable to Sign In", errorBody);
@@ -173,9 +171,13 @@ const CommunityController: FC<Props> = () => {
   const refreshCallback = useCallback(
     async (onComplete: () => void) => {
       requestModel.current.page = 1;
-      fetchCommunities().then(() => {
-        onComplete();
-      });
+      fetchCommunities()
+        .then(() => {
+          onComplete();
+        })
+        .catch(() => {
+          onComplete();
+        });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -211,8 +213,8 @@ const CommunityController: FC<Props> = () => {
     return getFeedsTypeFilterData();
   };
 
-  const openCommentsScreen = () => {
-    navigation.navigate("Comments");
+  const openCommentsScreen = (postId: number) => {
+    navigation.navigate("Comments", { postId: postId });
   };
 
   const openReportContentScreen = () => {

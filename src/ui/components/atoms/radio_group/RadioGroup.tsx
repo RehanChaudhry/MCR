@@ -12,7 +12,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 
-export type Choice = { id: number; label: string };
+export type Choice = { id: number; value: string };
 type Props = {
   style?: StyleProp<ViewStyle>;
   values: Array<Choice>;
@@ -68,7 +68,7 @@ export const RadioGroup = optimizedMemo<Props>(
       <View
         style={[style, getDirection(), styles.radioButtonWrapper]}
         testID={"RADIO_GROUP"}>
-        {values.map((item, index) => (
+        {values?.map((item, index) => (
           <View
             style={[
               styles.radioButtonContainer,
@@ -76,7 +76,7 @@ export const RadioGroup = optimizedMemo<Props>(
                 width: Dimensions.get("window").width / (itemsInRow - 10)
               }
             ]}
-            key={item.label}>
+            key={item.value}>
             <TouchableOpacity
               testID={"RADIO_GROUP_BUTTON"}
               style={[
@@ -97,7 +97,7 @@ export const RadioGroup = optimizedMemo<Props>(
             <TouchableWithoutFeedback
               testID="RADIO_GROUP_LABEL"
               onPress={() => buttonPressed(index)}>
-              <AppLabel style={styles.radioButtonText} text={item.label} />
+              <AppLabel style={styles.radioButtonText} text={item.value} />
             </TouchableWithoutFeedback>
           </View>
         ))}

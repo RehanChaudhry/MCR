@@ -38,8 +38,8 @@ const AnnouncementController: FC<Props> = () => {
   );
   const isFetchingInProgress = useRef(false);
   const [announcements, _announcements] = useState<
-    CommunityAnnouncement[]
-  >([]);
+    CommunityAnnouncement[] | undefined
+  >(undefined);
   const navigation = useNavigation<AnnouncementNavigationProp>();
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
 
@@ -123,7 +123,9 @@ const AnnouncementController: FC<Props> = () => {
       );
 
       requestModel.current.page =
-        announcements.length / requestModel.current.limit + 1;
+        announcements !== undefined
+          ? announcements.length / requestModel.current.limit + 1
+          : 1;
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,16 +156,20 @@ const AnnouncementController: FC<Props> = () => {
   const refreshCallback = useCallback(
     async (onComplete?: () => void) => {
       requestModel.current.page = 1;
-      fetchAnnouncements().then(() => {
-        onComplete?.();
-      });
+      fetchAnnouncements()
+        .then(() => {
+          onComplete?.();
+        })
+        .catch(() => {
+          onComplete?.();
+        });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
-  const openCommentsScreen = () => {
-    navigation.navigate("Comments");
+  const openCommentsScreen = (postId: number) => {
+    navigation.navigate("Comments", { postId: postId });
   };
 
   useEffect(() => {

@@ -19,6 +19,12 @@ import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { AppLog } from "utils/Util";
+import { Alert } from "react-native";
+import { useApi } from "repo/Client";
+import AuthApis from "repo/auth/AuthApis";
+import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
+import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
+import SimpleToast from "react-native-simple-toast";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -46,6 +52,13 @@ const UpdateProfileController: FC<Props> = () => {
   //for info text shown
 
   const [infoTextShown, setInfoTextShown] = useState(false);
+
+  //update profile api integration
+
+  const updateProfileApi = useApi<
+    UpdateProfileRequestModel,
+    UpdateProfileResponseModel
+  >(AuthApis.updateProfile);
 
   AppLog.log("data" + routeName.params.options);
 
@@ -108,12 +121,37 @@ const UpdateProfileController: FC<Props> = () => {
     openQuestionnaireScreen
   ]);
 
+  const handleUpdateProfile = usePreventDoubleTap(
+    async (apiRequestModel: UpdateProfileRequestModel) => {
+      AppLog.log("handleSignIn: ");
+
+      //setShouldShowPb(true);
+
+      // authenticate user
+      const {
+        hasError,
+        errorBody,
+        dataBody
+      } = await updateProfileApi.request([apiRequestModel]);
+
+      if (hasError || dataBody === undefined) {
+        Alert.alert("Unable to Sign In", errorBody);
+        return;
+      } else {
+        SimpleToast.show(dataBody.message);
+      }
+    }
+  );
+
   return (
     <>
       {useLazyLoadInterface(
         <UpdateProfileView
           openUpdateQuestionnaireScreen={openQuestionnaireScreen}
           infoTextShown={infoTextShown}
+          handleUpdateProfile={(_requestModel) => {
+            (_requestModel.id = 1), handleUpdateProfile(_requestModel);
+          }}
         />
       )}
     </>

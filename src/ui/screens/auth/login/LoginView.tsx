@@ -9,8 +9,8 @@ import { usePreferredTheme } from "hooks";
 import Colors from "config/Colors";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
-import Logo from "assets/images/logo.svg";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import { UniLogo } from "ui/components/atoms/UniLogo";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import * as Yup from "yup";
@@ -50,6 +50,7 @@ export const LoginView = React.memo<Props>(
     shouldShowProgressBar
   }) => {
     const theme = usePreferredTheme();
+
     const onSubmit = (_value: FormikValues) => {
       AppLog.log("form values" + initialValues);
       onLogin({
@@ -83,7 +84,7 @@ export const LoginView = React.memo<Props>(
               onPress={openUniSelectionScreen}
             />
 
-            <Logo style={styles.logo} />
+            <UniLogo />
 
             <AppLabel
               text={STRINGS.login.signin_to_your_account}
@@ -208,11 +209,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     elevation: 2,
     width: 32,
-    height: 32,
-    marginTop: SPACE.xl
-  },
-  logo: {
-    marginTop: SPACE._3xl
+    height: 32
   },
   signInHeading: {
     fontSize: FONT_SIZE.xl,

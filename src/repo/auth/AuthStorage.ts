@@ -1,8 +1,30 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Uni } from "models/api_responses/UniSelectionResponseModel";
 import { UserModel } from "models/api_responses/UserModel";
 import { AppLog } from "utils/Util";
 import * as Keychain from "react-native-keychain";
 
 const key = "user_data";
+const uniKey = "uni_data";
+
+const storeUni = async (uni: Uni) => {
+  try {
+    await AsyncStorage.setItem(uniKey, JSON.stringify(uni));
+  } catch (error) {
+    AppLog.log("Error storing the uni", error);
+  }
+};
+
+const getUni = async () => {
+  try {
+    const uniAsString = await AsyncStorage.getItem(uniKey);
+    if (uniAsString) {
+      return JSON.parse(uniAsString) as Uni;
+    }
+  } catch (error) {
+    AppLog.warn("Error getting the uni", error);
+  }
+};
 
 const storeUser = async (user: UserModel) => {
   try {
@@ -26,11 +48,13 @@ const getUser = async () => {
 const getUserToken = async () => {
   try {
     const user = await getUser();
-    const userToken = user?.authentication?.accessToken;
-    if (userToken === undefined) {
+    const accessToken = user?.authentication?.accessToken;
+    const refreshToken = user?.authentication?.refreshToken;
+    const expiresIn = user?.authentication?.expiresIn;
+    if (!accessToken || !refreshToken || !expiresIn) {
       throw Error("Unable to fetch user token from AsyncStorage");
     }
-    return userToken;
+    return { accessToken, refreshToken, expiresIn };
   } catch (error) {
     AppLog.log("Error getting the user: ", error);
   }
@@ -45,4 +69,11 @@ const removeUser = async (callback?: () => void) => {
   }
 };
 
-export default { storeUser, getUser, removeUser, getUserToken };
+export default {
+  storeUser,
+  getUser,
+  removeUser,
+  getUserToken,
+  storeUni,
+  getUni
+};

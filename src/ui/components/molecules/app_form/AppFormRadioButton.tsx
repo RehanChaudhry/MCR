@@ -28,12 +28,12 @@ export const AppFormRadioButton: React.FC<Props> = ({
     <View>
       {labelProps && (
         <AppLabel
-          style={[styles.label, { color: theme.themedColors.label }]}
+          style={[styles.value, { color: theme.themedColors.label }]}
           {...labelProps}
         />
       )}
       <RadioGroup
-        values={radioData}
+        values={radioData!}
         direction={direction}
         itemsInRow={3}
       />
@@ -42,7 +42,7 @@ export const AppFormRadioButton: React.FC<Props> = ({
 };
 
 const styles = StyleSheet.create({
-  label: {
+  value: {
     paddingBottom: SPACE.xs
   }
 });

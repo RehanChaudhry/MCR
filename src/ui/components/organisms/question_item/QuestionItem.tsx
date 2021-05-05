@@ -5,6 +5,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config";
 import { AppSwitch } from "ui/components/atoms/app_switch/AppSwitch";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { shadowStyleProps } from "utils/Util";
 import { RangeSliderWithLabel } from "./RangeSliderWithLabel";
 import Question from "models/Question";
 
@@ -125,7 +126,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
           <View style={styles.switchWrapper}>
             <AppLabel
               style={[styles.label, { marginEnd: SPACE.xs }]}
-              weight={"bold"}
+              weight={"semi-bold"}
               text="I have no preference"
             />
 
@@ -164,10 +165,11 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
 const styles = StyleSheet.create({
   container: {
     padding: SPACE.lg,
-    borderTopWidth: StyleSheet.hairlineWidth
+    borderTopWidth: StyleSheet.hairlineWidth,
+    ...shadowStyleProps
   },
   title: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE.sm!! + 0.5
   },
   label: {
     fontSize: FONT_SIZE.xs,

@@ -3,10 +3,8 @@ import React, { useState } from "react";
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import Screen from "ui/components/atoms/Screen";
 import { AppLog, shadowStyleProps } from "utils/Util";
-import { Color, NumberProp } from "react-native-svg";
-import Plus from "assets/images/plus.svg";
 import { usePreferredTheme } from "hooks";
-import { FONT_SIZE, moderateScale, SPACE } from "config/Dimens";
+import { FONT_SIZE, SPACE } from "config/Dimens";
 import {
   Choice,
   SegmentedControl
@@ -15,49 +13,59 @@ import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { ItemConversation } from "ui/components/molecules/item_conversation/ItemConversation";
-import { ConversationItem } from "models/ConversationItem";
 import Strings from "config/Strings";
+import { User } from "models/api_responses/ConversationSuggestionsResponseModel";
+import { ItemSuggestion } from "ui/components/molecules/item_conversation/ItemSuggestion";
 
 type Props = {
-  data: ConversationItem[];
-  removeItem: (
-    items: ConversationItem[],
-    itemToDelete: ConversationItem
-  ) => ConversationItem[];
+  data: User[] | undefined;
+  removeItem: (itemToDelete: User) => void;
+  suggestions: (keyword: string) => void;
+  suggestionsList: User[] | undefined;
+  addItem: (item: User) => void;
+  setConversationType: (currentSegment: number) => void;
+  showProgressbar: boolean;
+  clearInputField: boolean;
 };
 
 export const NewConversationScreen = React.memo<Props>(
-  ({ data, removeItem }) => {
+  ({
+    data,
+    removeItem,
+    setConversationType,
+    addItem,
+    suggestions,
+    suggestionsList,
+    showProgressbar,
+    clearInputField
+  }) => {
     const { themedColors } = usePreferredTheme();
-    let [items, setItems] = useState<ConversationItem[]>(data);
-
-    function plusIcon(
-      color?: Color,
-      width?: NumberProp,
-      height?: NumberProp
-    ) {
-      AppLog.log("color : " + color + " " + width + " " + height); //just to avoid warning
-      return (
-        <Plus
-          testID="icon"
-          width={moderateScale(12)}
-          height={moderateScale(12)}
-          fill={themedColors.primary}
-        />
-      );
-    }
+    const [placeHolderText, setPlaceHolderText] = useState<string>(
+      Strings.newConversation.typingHint
+    );
 
     function appInputCallback(text: string) {
-      AppLog.log("AppInput field callback " + text);
+      AppLog.logForcefully("callback");
+      suggestions(text);
     }
 
-    const renderItem = ({ item }: { item: ConversationItem }) => {
-      AppLog.log("rendering list item : " + JSON.stringify(item));
+    const renderItem = ({ item }: { item: User }) => {
       return (
         <ItemConversation
           item={item}
-          onPress={(currentItem: ConversationItem) => {
-            setItems(removeItem(items, currentItem));
+          onPress={(_item: User) => {
+            removeItem(_item);
+          }}
+        />
+      );
+    };
+
+    const renderSuggestionItems = ({ item }: { item: User }) => {
+      return (
+        <ItemSuggestion
+          item={item}
+          onPress={(currentItem: User) => {
+            addItem(currentItem);
           }}
         />
       );
@@ -74,7 +82,12 @@ export const NewConversationScreen = React.memo<Props>(
               AppLog.log(
                 "segment value : " + value + " and index is : " + index
               );
-              //  setItems([]);
+              setConversationType(index);
+              index === 0
+                ? setPlaceHolderText(Strings.newConversation.typingHint)
+                : setPlaceHolderText(
+                    Strings.newConversation.typingHintStaff
+                  );
             }}
           />
         </View>
@@ -88,21 +101,37 @@ export const NewConversationScreen = React.memo<Props>(
 
           <FlatListWithPb
             shouldShowProgressBar={false}
-            data={items}
+            data={data}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
             removeClippedSubviews={true}
             style={[styles.list]}
             contentContainerStyle={{ paddingBottom: SPACE.lg }}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item) => item.id.toString()}
           />
         </View>
 
+        {suggestionsList !== undefined && suggestionsList.length > 0 && (
+          <View style={styles.suggestContainer}>
+            <FlatListWithPb
+              shouldShowProgressBar={false}
+              data={suggestionsList}
+              renderItem={renderSuggestionItems}
+              showsVerticalScrollIndicator={false}
+              removeClippedSubviews={true}
+              style={[styles.suggestionList(themedColors)]}
+              keyExtractor={(item) => item.id.toString()}
+              keyboardShouldPersistTaps="always"
+            />
+          </View>
+        )}
+
         <WriteMessage
-          btnImage={plusIcon}
           appInputFieldCallback={appInputCallback}
-          appInputPlaceHolder={Strings.newConversation.typingHint}
-          btnPressCallback={appInputCallback}
+          appInputPlaceHolder={placeHolderText}
+          showIcon={false}
+          showProgressbar={showProgressbar}
+          clearInputField={clearInputField}
         />
       </Screen>
     );
@@ -127,7 +156,7 @@ const styles = StyleSheet.create({
   },
   contentWrapper: {
     flex: 1,
-    paddingVertical: SPACE.lg
+    marginTop: SPACE.lg
   },
   textStyle: (theme: ColorPalette) => {
     return {
@@ -138,5 +167,19 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1
+  },
+  suggestContainer: {
+    position: "absolute",
+    height: 200,
+    bottom: 75,
+    width: "100%",
+    backgroundColor: "#00000000",
+    flexDirection: "column",
+    justifyContent: "flex-end"
+  },
+  suggestionList: (theme: ColorPalette) => {
+    return {
+      backgroundColor: theme.background
+    };
   }
 });

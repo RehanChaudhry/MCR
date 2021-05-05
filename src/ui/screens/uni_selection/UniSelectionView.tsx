@@ -92,6 +92,7 @@ const UniSelectionView: FC<Props> = ({
             error={isError}
             shouldShowProgressBar={isLoading}
             data={filteredData}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => {
               return listItem(item, didSelectItem);
             }}
