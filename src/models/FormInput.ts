@@ -6,56 +6,56 @@ export const Sections = [
     formInputs: [
       {
         id: 0,
-        value: "First Name",
+        label: "First Name",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "Enter Your First Name"
       },
       {
         id: 1,
-        value: "Last Name",
+        label: "Last Name",
         inputType: "textfield",
         userMeta: [],
         placeHolder: "Enter Your Last Name"
       },
       {
         id: 2,
-        value: "About Me",
+        label: "About Me",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "Brief description for your profile."
       },
       {
         id: 3,
-        value: "Facebook Profile",
+        label: "Facebook Profile",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "facebook.com/"
       },
       {
         id: 4,
-        value: "Twitter Profile",
+        label: "Twitter Profile",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "twitter.com/"
       },
       {
         id: 5,
-        value: "LinkedIn Profile",
+        label: "LinkedIn Profile",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "linkedin.com/"
       },
       {
         id: 6,
-        value: "SnapChat Profile",
+        label: "SnapChat Profile",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "snapchat.com/"
       },
       {
         id: 7,
-        value: "TikTok Profile",
+        label: "TikTok Profile",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "tiktok.com/"
@@ -68,7 +68,7 @@ export const Sections = [
     formInputs: [
       {
         id: 8,
-        value: "Gender",
+        label: "Gender",
         inputType: "dropdown",
         options: [
           {
@@ -88,7 +88,7 @@ export const Sections = [
       },
       {
         id: 9,
-        value: "Smoking habits",
+        label: "Smoking habits",
         inputType: "radio",
         options: [
           {
@@ -107,14 +107,14 @@ export const Sections = [
       },
       {
         id: 10,
-        value: "Hometown",
+        label: "Hometown",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "Enter your hometown"
       },
       {
         id: 11,
-        value: "Intended Major",
+        label: "Intended Major",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "Enter your intended major"
@@ -127,7 +127,7 @@ export const Sections = [
     formInputs: [
       {
         id: 12,
-        value: "Hobbies & interests",
+        label: "Hobbies & interests",
         inputType: "multiselect",
         options: [
           {
@@ -158,7 +158,7 @@ export const Sections = [
       },
       {
         id: 13,
-        value: "Club & Memberships",
+        label: "Club & Memberships",
         inputType: "multiselect",
         options: [
           {
@@ -177,7 +177,7 @@ export const Sections = [
       },
       {
         id: 14,
-        value: "Favorite movies & TV shows",
+        label: "Favorite movies & TV shows",
         inputType: "multiselect",
         options: [
           {
@@ -196,7 +196,7 @@ export const Sections = [
       },
       {
         id: 15,
-        value: "Music",
+        label: "Music",
         inputType: "multiselect",
         options: [
           {
@@ -215,7 +215,7 @@ export const Sections = [
       },
       {
         id: 16,
-        value: "Books",
+        label: "Books",
         inputType: "multiselect",
         options: [
           {
@@ -234,7 +234,7 @@ export const Sections = [
       },
       {
         id: 17,
-        value: "Games",
+        label: "Games",
         inputType: "multiselect",
         options: [
           {
@@ -260,7 +260,7 @@ export const Sections = [
     formInputs: [
       {
         id: 18,
-        value: "Student ID",
+        label: "Student ID",
         inputType: "textarea",
         userMeta: [
           {
@@ -270,28 +270,28 @@ export const Sections = [
       },
       {
         id: 19,
-        value: "Programs",
+        label: "Programs",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "Enter your educational program"
       },
       {
         id: 20,
-        value: "Community",
+        label: "Community",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "Start typing seprated by comma"
       },
       {
         id: 21,
-        value: "Building",
+        label: "Building",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "Enter your building information"
       },
       {
         id: 22,
-        value: "Room",
+        label: "Room",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "Enter your room number"
@@ -305,7 +305,7 @@ export const Sections = [
     formInputs: [
       {
         id: 23,
-        value: "YouTube Video URL",
+        label: "YouTube Video URL",
         inputType: "textarea",
         userMeta: [],
         placeHolder: "youtube.com/"
