@@ -154,9 +154,7 @@ exports[`Renders snapshot as expected 1`] = `
                           },
                         ]
                       }
-                    >
-                      Male
-                    </Text>
+                    />
                   </View>
                 </View>
                 <View
@@ -207,9 +205,7 @@ exports[`Renders snapshot as expected 1`] = `
                           },
                         ]
                       }
-                    >
-                      Female
-                    </Text>
+                    />
                   </View>
                 </View>
                 <View
@@ -260,9 +256,7 @@ exports[`Renders snapshot as expected 1`] = `
                           },
                         ]
                       }
-                    >
-                      Other
-                    </Text>
+                    />
                   </View>
                 </View>
                 <View

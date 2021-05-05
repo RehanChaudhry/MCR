@@ -6,9 +6,9 @@ test("check label match to the provided", () => {
   const { getByTestId } = render(
     <RadioGroup
       values={[
-        { id: 1, label: "Male" },
-        { id: 2, label: "Female" },
-        { id: 3, label: "Others" }
+        { id: 1, value: "Male" },
+        { id: 2, value: "Female" },
+        { id: 3, value: "Others" }
       ]}
       direction={DIRECTION_TYPE.HORIZONTAL}
     />
@@ -22,9 +22,9 @@ test("check radio button on Press", () => {
   const { getByText } = render(
     <RadioGroup
       values={[
-        { id: 1, label: "Male" },
-        { id: 2, label: "Female" },
-        { id: 3, label: "Others" }
+        { id: 1, value: "Male" },
+        { id: 2, value: "Female" },
+        { id: 3, value: "Others" }
       ]}
       direction={DIRECTION_TYPE.HORIZONTAL}
       byDefaultSelected={1}
@@ -34,7 +34,7 @@ test("check radio button on Press", () => {
   const radioButton = getByText("Male");
   fireEvent.press(radioButton);
   expect(onPress).toBeCalledTimes(1);
-  expect(onPress).toBeCalledWith({ id: 1, label: "Male" }, 0);
+  expect(onPress).toBeCalledWith({ id: 1, value: "Male" }, 0);
 });
 
 test("check radio button label on Press", () => {
@@ -42,9 +42,9 @@ test("check radio button label on Press", () => {
   const { getByText } = render(
     <RadioGroup
       values={[
-        { id: 1, label: "Male" },
-        { id: 2, label: "Female" },
-        { id: 3, label: "Others" }
+        { id: 1, value: "Male" },
+        { id: 2, value: "Female" },
+        { id: 3, value: "Others" }
       ]}
       direction={DIRECTION_TYPE.HORIZONTAL}
       byDefaultSelected={2}
@@ -54,16 +54,16 @@ test("check radio button label on Press", () => {
   const radioButton = getByText("Female");
   fireEvent.press(radioButton);
   expect(onPress).toBeCalledTimes(1);
-  expect(onPress).toBeCalledWith({ id: 2, label: "Female" }, 1);
+  expect(onPress).toBeCalledWith({ id: 2, value: "Female" }, 1);
 });
 
 it("Snapshot testing", () => {
   const rendered = render(
     <RadioGroup
       values={[
-        { id: 1, label: "Male" },
-        { id: 2, label: "Female" },
-        { id: 3, label: "Others" }
+        { id: 1, value: "Male" },
+        { id: 2, value: "Female" },
+        { id: 3, value: "Others" }
       ]}
       direction={DIRECTION_TYPE.HORIZONTAL}
     />

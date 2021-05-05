@@ -28,9 +28,9 @@ export const CheckBoxGroup = optimizedMemo<Props>(
           style={[styles.label, { color: theme.themedColors.label }]}
           {...labelProps}
         />
-        {listData.options.map((item) => (
+        {listData?.options?.map((item) => (
           <CheckboxWithText
-            text={item.text}
+            text={item.value}
             onChange={(value, text) => AppLog.log(value + "  " + text)}
           />
         ))}

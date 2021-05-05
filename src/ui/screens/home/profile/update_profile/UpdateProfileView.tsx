@@ -12,8 +12,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
 import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
-import { SectionComponent } from "ui/components/organisms/section_component/SectionComponent";
 import { Sections } from "models/FormInput";
+import { DynamicCardView } from "ui/components/templates/dynamic_card_view/DynamicCardView";
 
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
@@ -207,7 +207,7 @@ export const UpdateProfileView: React.FC<Props> = ({
         {/*<LivingDetails />*/}
         {/*<VideoIntroduction />*/}
 
-        <SectionComponent listData={Sections[0].formInput} />
+        <DynamicCardView sectionsData={Sections} />
         <View style={styles.buttonViewStyle}>
           <AppFormFormSubmit
             text={STRINGS.profile.buttonText.saveAndContinue}

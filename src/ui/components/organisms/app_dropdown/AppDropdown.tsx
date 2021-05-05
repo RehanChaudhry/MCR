@@ -18,8 +18,8 @@ import ChevronDown from "assets/images/chevron-down.svg";
 import { SPACE } from "config";
 
 export interface AppDropdownProps {
-  title: string;
-  items: DropDownItem[];
+  title?: string;
+  items: DropDownItem[] | undefined;
   selectedItemCallback: (item: DropDownItem) => void;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -45,9 +45,9 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
     shouldShowCustomIcon = false
   }) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
-    const [selectedItemText, setSelectedItemText] = useState<string>(
-      title
-    );
+    const [selectedItemText, setSelectedItemText] = useState<
+      string | undefined
+    >(title);
 
     const { themedColors } = usePreferredTheme();
 
