@@ -7,7 +7,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import ReportContentApiRequestModel from "models/api_requests/ReportContentApiRequestModel";
 import ReportContentApiResponseModel from "models/api_responses/ReportContentApiResponseModel";
-import React, { FC, useLayoutEffect } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import { Alert } from "react-native";
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
@@ -33,6 +33,7 @@ const ReportContentController: FC<Props> = () => {
   const navigation = useNavigation<CommunityNavigationProp>();
   const theme = usePreferredTheme();
   const route = useRoute<ReportContentRoute>();
+  const [pb, setPb] = useState(false);
 
   AppLog.log("communityid: " + route.params.postId);
 
@@ -61,6 +62,7 @@ const ReportContentController: FC<Props> = () => {
 
   const handleReportContent = usePreventDoubleTap(
     async (apiRequestModel: ReportContentApiRequestModel) => {
+      setPb(true);
       const {
         hasError,
         errorBody,
@@ -68,9 +70,11 @@ const ReportContentController: FC<Props> = () => {
       } = await reportContentApi.request([apiRequestModel]);
 
       if (hasError || dataBody === undefined) {
+        setPb(false);
         Alert.alert("Unable to post report content", errorBody);
         return;
       } else {
+        setPb(false);
         AppLog.log(dataBody.message);
         closeScreen();
       }
@@ -82,7 +86,7 @@ const ReportContentController: FC<Props> = () => {
       communityId={route.params.postId}
       closeScreen={closeScreen}
       onPostReportContent={handleReportContent}
-      shouldShowProgressBar={reportContentApi.loading}
+      shouldShowProgressBar={pb}
     />
   );
 };
