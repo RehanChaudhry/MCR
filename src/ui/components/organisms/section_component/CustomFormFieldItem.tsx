@@ -26,7 +26,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
       case "textarea":
         return (
           <DynamicAppFormField
-            label={listData?.value}
+            label={listData?.label}
             placeHolder={listData?.placeholder}
             name={listData?.id.toString()}
           />
@@ -37,7 +37,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
             name="gender"
             validationLabelTestID={"genderValidationTestID"}
             labelProps={{
-              text: listData.value,
+              text: listData.label,
               weight: "semi-bold"
             }}
             appDropDownProps={{
@@ -59,7 +59,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
           <CheckBoxGroup
             listData={listData}
             labelProps={{
-              text: listData.value,
+              text: listData.label,
               weight: "semi-bold",
               numberOfLines: 0
             }}
@@ -70,7 +70,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
         return (
           <AppFormRadioButton
             labelProps={{
-              text: listData.value,
+              text: listData.label,
               weight: "semi-bold"
             }}
             radioData={listData.options!}
