@@ -17,7 +17,6 @@ import { SenderType } from "models/ChatItem";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
-import { AppLog } from "utils/Util";
 import { User } from "models/User";
 
 export interface ItemChatListProps extends ViewStyle {
@@ -29,8 +28,6 @@ export interface ItemChatListProps extends ViewStyle {
 export const ItemChatList = React.memo<ItemChatListProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
-
-    AppLog.log("item : " + JSON.stringify(item));
 
     let prettyTime = new PrettyTimeFormat(
       "m ago",

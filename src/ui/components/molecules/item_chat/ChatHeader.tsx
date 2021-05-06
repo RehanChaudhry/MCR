@@ -6,7 +6,6 @@ import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { SenderType } from "models/ChatItem";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
-import { AppLog } from "utils/Util";
 
 export interface ChatHeaderProps {
   chatItem: Conversation;
@@ -30,7 +29,6 @@ const createHeader = (
     );
   };
 
-  AppLog.logForcefully("isMessageRead " + item.id + item.isMessageRead());
   if (
     !item.isMessageRead() &&
     lastHeaderTitle !== SenderType.NEW_MESSAGES
