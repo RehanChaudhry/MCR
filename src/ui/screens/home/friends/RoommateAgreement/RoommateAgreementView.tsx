@@ -8,7 +8,6 @@ import { SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
-import { AppFormDropDown } from "ui/components/molecules/app_form/AppFormDropDown";
 import { CardView } from "ui/components/atoms/CardView";
 import { SectionComponent } from "ui/components/organisms/section_component/SectionComponent";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
@@ -28,7 +27,7 @@ type Props = {
 //     .min(1, "should be atleast 1 characters")
 //     .max(50, "should be less than 50 characters")
 // });
-
+//
 // let initialValues: FormikValues = {
 //   frustrated: "",
 //   upset: ""
@@ -36,9 +35,10 @@ type Props = {
 
 const RoommateAgreementView: FC<Props> = ({ roommateData }) => {
   const theme = usePreferredTheme();
-
-  const yepSchema = roommateData?.reduce(createYupSchema, {});
-  const validateSchema = Yup.object().shape(yepSchema);
+  const yepSchema =
+    roommateData !== undefined
+      ? createYupSchema(roommateData!!)
+      : Yup.string().notRequired();
   let initialValues = {};
   roommateData?.forEach((item) => {
     // @ts-ignore
@@ -66,32 +66,7 @@ const RoommateAgreementView: FC<Props> = ({ roommateData }) => {
             <AppForm
               initialValues={initialValues}
               onSubmit={onSubmit}
-              validationSchema={validateSchema}>
-              <AppFormDropDown
-                name="frustrated"
-                validationLabelTestID={"frustratedValidationTestID"}
-                labelProps={{
-                  text: STRINGS.roommateAgreement.dropDownTitle.frustrated,
-                  weight: "semi-bold",
-                  numberOfLines: 0
-                }}
-                appDropDownProps={{
-                  title: STRINGS.profile.dropDownInitialValue.addOptions,
-                  items: [
-                    { id: "0", title: "Having a group discussion" },
-                    { id: "1", title: "Split" },
-                    { id: "2", title: "Any thing else" }
-                  ],
-                  selectedItemCallback: () => {
-                    //setGamesTitle(item.title);
-                  },
-                  style: [
-                    styles.dropDown,
-                    { borderColor: theme.themedColors.border }
-                  ]
-                }}
-              />
-
+              validationSchema={yepSchema}>
               <SectionComponent listData={roommateData} />
               <AppFormFormSubmit
                 text={STRINGS.profile.buttonText.saveAndContinue}
@@ -106,25 +81,6 @@ const RoommateAgreementView: FC<Props> = ({ roommateData }) => {
             </AppForm>
           </View>
         </CardView>
-
-        {/*<AppForm*/}
-        {/*  initialValues={initialValues}*/}
-        {/*  onSubmit={onSubmit}*/}
-        {/*  validationSchema={validationSchema}>*/}
-        {/*  <Agreement />*/}
-        {/*  <View style={styles.buttonViewStyle}>*/}
-        {/*    <AppFormFormSubmit*/}
-        {/*      text={STRINGS.profile.buttonText.saveAndContinue}*/}
-        {/*      buttonType={BUTTON_TYPES.NORMAL}*/}
-        {/*      fontWeight={"semi-bold"}*/}
-        {/*      textStyle={{ color: theme.themedColors.background }}*/}
-        {/*      buttonStyle={[*/}
-        {/*        styles.buttonStyle,*/}
-        {/*        { backgroundColor: theme.themedColors.primary }*/}
-        {/*      ]}*/}
-        {/*    />*/}
-        {/*  </View>*/}
-        {/*</AppForm>*/}
       </ScrollView>
     </Screen>
   );

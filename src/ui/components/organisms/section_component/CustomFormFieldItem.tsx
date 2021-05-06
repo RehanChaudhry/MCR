@@ -5,12 +5,11 @@ import { DynamicAppFormField } from "ui/components/templates/roommate_agreement/
 import { AppLog } from "utils/Util";
 import { CheckBoxGroup } from "ui/components/atoms/checkbox_group/CheckBoxGroup";
 import { AppFormDropDown } from "ui/components/molecules/app_form/AppFormDropDown";
-import { STRINGS } from "config";
+import { SPACE, STRINGS } from "config";
+import { StyleSheet } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppFormRadioButton } from "ui/components/molecules/app_form/AppFormRadioButton";
 import { DIRECTION_TYPE } from "ui/components/atoms/radio_group/RadioGroup";
-import { StyleSheet, View } from "react-native";
-import { SPACE } from "config";
 
 type CustomFormFieldProps = {
   listData: FormInputFieldData;
@@ -26,18 +25,16 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
         return <AppLabel text={"text"} />;
       case "textarea":
         return (
-          <View style={styles.space}>
-            <DynamicAppFormField
-              label={listData?.label}
-              placeHolder={listData?.placeholder}
-              name={listData?.id.toString()}
-            />
-          </View>
+          <DynamicAppFormField
+            label={listData?.label}
+            placeHolder={listData?.placeholder}
+            name={listData?.id.toString()}
+          />
         );
       case "dropdown":
         return (
           <AppFormDropDown
-            name="gender"
+            name={listData?.id.toString()}
             validationLabelTestID={"genderValidationTestID"}
             labelProps={{
               text: listData.label,
@@ -45,7 +42,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
             }}
             appDropDownProps={{
               title: STRINGS.profile.dropDownInitialValue.gender,
-              items: listData.options,
+              items: listData!!.options,
               selectedItemCallback: () => {
                 //setTitle(item.title);
               },
@@ -59,17 +56,15 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
 
       case "checkbox":
         return (
-          <View style={styles.space}>
-            <CheckBoxGroup
-              listData={listData}
-              labelProps={{
-                text: listData.label,
-                weight: "semi-bold",
-                numberOfLines: 0
-              }}
-              onChange={(value) => AppLog.log(value)}
-            />
-          </View>
+          <CheckBoxGroup
+            listData={listData}
+            labelProps={{
+              text: listData.label,
+              weight: "semi-bold",
+              numberOfLines: 0
+            }}
+            onChange={(value) => AppLog.log(value)}
+          />
         );
       case "radio":
         return (
@@ -78,6 +73,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               text: listData.label,
               weight: "semi-bold"
             }}
+            //radioData={listData}
             radioData={listData.options!}
             //listData={listData}
             direction={DIRECTION_TYPE.HORIZONTAL}
@@ -96,9 +92,6 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
     }
   }
 );
-
-export default CustomFormFieldItem;
-
 const styles = StyleSheet.create({
   space: {
     marginTop: SPACE.sm
@@ -107,3 +100,4 @@ const styles = StyleSheet.create({
     borderWidth: 1
   }
 });
+export default CustomFormFieldItem;

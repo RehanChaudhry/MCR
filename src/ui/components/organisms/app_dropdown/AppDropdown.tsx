@@ -66,13 +66,12 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
       setSelectedItemPosition
     ] = useState<number>(-1);
     const selectedItem = (item: DropDownItem | any) => {
-      AppLog.log("selectedItem " + item.title);
+      AppLog.log("selectedItem " + item.value);
       setModalVisible(false);
-      setSelectedItemText(item.title);
+      setSelectedItemText(item.value);
       selectedItemCallback(item);
       setSelectedItemPosition(item.id);
     };
-    AppLog.logForcefully("condition check" + selectedItemText === title);
     return (
       <View
         style={[

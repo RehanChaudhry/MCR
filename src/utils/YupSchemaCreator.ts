@@ -1,33 +1,24 @@
 import * as Yup from "yup";
-import { AppLog } from "utils/Util";
+import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
+export const createYupSchema = (fields: FormInputFieldData[]) => {
+  // let validator: Schema<any> = Yup.string();
 
-export function createYupSchema(schema: any, config: any) {
-  let { id, inputType, isRequired } = config;
+  let FieldTypes = {
+    dropdown: () => Yup.object().required("Dropdown field required."),
+    text: () => Yup.string().required("Field is required."),
+    checkbox: () => Yup.object().notRequired(),
+    textarea: () => Yup.string().required("TextArea is required.")
+  };
 
-  if (inputType === "checkbox") {
-    return schema;
-  }
-  let validator = Yup.string();
+  const schema = fields.reduce((_schema, field) => {
+    return field.isRequired === 1
+      ? {
+          ..._schema,
+          // @ts-ignore
+          [field.id]: FieldTypes.text()
+        }
+      : _schema;
+  }, {});
 
-  // @ts-ignore
-  if (!validator[isRequiredField(isRequired)]) {
-    return;
-  }
-
-  // @ts-ignore
-  validator = validator[isRequiredField(isRequired)]("Field is required");
-
-  schema[id] = validator;
-
-  // @ts-ignore
-  AppLog.logForcefully("is null " + JSON.stringify(validator.required()));
-  return schema;
-}
-
-export function isRequiredField(isRequired: number): string {
-  if (isRequired === 1) {
-    return "required";
-  } else {
-    return "notrequired";
-  }
-}
+  return Yup.object().shape(schema);
+};
