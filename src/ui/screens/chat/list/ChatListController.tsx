@@ -98,7 +98,6 @@ export const ChatListController: FC<Props> = () => {
   const refreshCallback = useCallback(
     async (onComplete?: () => void) => {
       requestModel.current.page = 1;
-      onComplete?.();
       handleLoadChatsApi()
         .then(() => {
           onComplete?.();
@@ -111,7 +110,7 @@ export const ChatListController: FC<Props> = () => {
   );
 
   const onEndReached = useCallback(async () => {
-    AppLog.logForcefully("ChatList => onEndReached is called");
+    AppLog.log("ChatList => onEndReached is called");
     await handleLoadChatsApi();
   }, [handleLoadChatsApi]);
 
