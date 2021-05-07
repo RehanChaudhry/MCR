@@ -165,9 +165,7 @@ const RoommateAgreementController: FC<Props> = () => {
 
   const roommateAgreementApi = useCallback(async () => {
     const { hasError, dataBody, errorBody } = await roommateApi.request([
-      {
-        limit: 10
-      }
+      {}
     ]);
     if (hasError || dataBody === undefined) {
       // Alert.alert("Unable to find questions " + errorBody);
@@ -175,15 +173,13 @@ const RoommateAgreementController: FC<Props> = () => {
       return;
     } else {
       setRoommateData(dataBody);
-      AppLog.logForcefully("infunction" + JSON.stringify(dataBody.data));
-      AppLog.log("agreement-field-Data " + JSON.stringify(dataBody.data));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roommateApi]);
 
   useEffect(() => {
     roommateAgreementApi();
-  }, [roommateAgreementApi]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return <RoommateAgreementView roommateData={roommateData?.data} />;
 };
