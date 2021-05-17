@@ -9,11 +9,7 @@ async function fetchRoomAgreementFileds(
   return apiClient.get<RoommateAgreementResponseModel>(
     API.ROOMATE_AGREEMENT_FIELDS,
     {
-      limit: requestModel.limit,
-      paginate: requestModel.paginate,
-      order: requestModel.order,
-      classLevelId: requestModel.classLevelId,
-      isDefault: requestModel.isDefault
+      ...requestModel
     }
   );
 }

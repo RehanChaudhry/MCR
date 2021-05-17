@@ -69,6 +69,28 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
             />
           </>
         );
+      case "dropdown":
+        return (
+          <AppFormDropDown
+            name={listData?.id.toString()}
+            validationLabelTestID={"genderValidationTestID"}
+            labelProps={{
+              text: listData.label,
+              weight: "semi-bold"
+            }}
+            appDropDownProps={{
+              title: STRINGS.profile.dropDownInitialValue.gender,
+              items: listData!!.options,
+              selectedItemCallback: () => {
+                //setTitle(item.title);
+              },
+              style: [
+                styles.dropDown,
+                { borderColor: theme.themedColors.border }
+              ]
+            }}
+          />
+        );
 
       case "checkbox":
         return (
@@ -158,8 +180,10 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
     }
   }
 );
-
 const styles = StyleSheet.create({
+  space: {
+    marginTop: SPACE.sm
+  },
   dropDown: {
     borderWidth: 1
   },
@@ -170,5 +194,4 @@ const styles = StyleSheet.create({
     paddingTop: SPACE.lg
   }
 });
-
 export default CustomFormFieldItem;

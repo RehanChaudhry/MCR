@@ -12,7 +12,7 @@ import {
 } from "ui/components/organisms/app_dropdown/AppDropdown";
 import { FormikValues, useFormikContext } from "formik";
 import { AppFormValidationLabel } from "ui/components/molecules/app_form/AppFormValidationLabel";
-import { SvgProp } from "utils/Util";
+import { AppLog, SvgProp } from "utils/Util";
 
 type Props = {
   labelProps?: AppLabelProps;
@@ -39,6 +39,7 @@ export const AppFormDropDown: React.FC<Props> = ({
     <>
       {labelProps && (
         <AppLabel
+          numberOfLines={0}
           style={[styles.label, { color: theme.themedColors.label }]}
           {...labelProps}
         />
@@ -49,7 +50,9 @@ export const AppFormDropDown: React.FC<Props> = ({
           values[name] = item;
         }}
       />
-      {errors[name] && touched[name] && (
+
+      {AppLog.logForcefully("errors" + JSON.stringify(values))}
+      {(errors[name] || touched[name]) && (
         <AppFormValidationLabel
           validationLabelTestID={validationLabelTestID}
           errorString={errors[name] as string}

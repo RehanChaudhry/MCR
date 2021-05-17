@@ -28,6 +28,7 @@ export const AppFormRadioButton: React.FC<Props> = ({
     <View>
       {labelProps && (
         <AppLabel
+          numberOfLines={0}
           style={[styles.value, { color: theme.themedColors.label }]}
           {...labelProps}
         />

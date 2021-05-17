@@ -1,3 +1,5 @@
+import EIntBoolean from "models/enums/EIntBoolean";
+
 export type RoommateAgreementResponseModel = {
   message: string;
   data: FormInputFieldData[];
@@ -11,9 +13,9 @@ export type FormInputFieldData = {
   inputType?: string;
   label?: string;
   placeholder?: string;
-  options?: optionsData[] | undefined;
+  options?: OptionsData[] | undefined;
   order?: number;
-  isRequired?: number;
+  isRequired: EIntBoolean;
   isDefault?: number;
   content?: null;
   status?: string;
@@ -23,7 +25,7 @@ export type FormInputFieldData = {
   userMeta?: userMetaData[];
 };
 
-export type optionsData = {
+export type OptionsData = {
   id: number;
   value: string;
 };
