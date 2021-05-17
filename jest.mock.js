@@ -36,3 +36,6 @@ jest.mock("@ptomasroos/react-native-multi-slider", () => "");
 jest.mock("react-native-simple-toast", () => ({
   SHORT: jest.fn()
 }));
+
+// One Signal
+jest.mock("react-native-onesignal", () => "");
