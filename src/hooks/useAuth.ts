@@ -5,6 +5,7 @@ import { UserModel } from "models/api_responses/UserModel";
 import React, { useContext } from "react";
 import AuthStorage from "repo/auth/AuthStorage";
 import { resetApiClient } from "repo/Client";
+import { PushNotification } from "utils/PushNotification";
 
 type AuthProviderModel = {
   user?: UserModel;
@@ -35,6 +36,9 @@ export default () => {
     await resetApiClient(token);
     // update AuthProvider after everything has been done
     setUser(model);
+
+    PushNotification.init(model.profile?.id);
+
     return model;
   };
 
