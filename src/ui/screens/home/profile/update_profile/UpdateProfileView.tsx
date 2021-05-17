@@ -14,6 +14,8 @@ import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
 import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 import { Sections } from "models/FormInput";
 import { DynamicCardView } from "ui/components/templates/dynamic_card_view/DynamicCardView";
+// import {BasicProfile} from "ui/components/templates/basic_profile/BasicProfile";
+// import {Interests} from "ui/components/templates/interests/Interests";
 
 type Props = {
   openUpdateQuestionnaireScreen: () => void;

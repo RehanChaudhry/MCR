@@ -6,59 +6,75 @@ export const Sections = [
     formInputs: [
       {
         id: 0,
+        //fieldName: "firstName",
+        //label: "First Name",
+        inputType: "uploadphoto"
+        // userMeta: [],
+        // placeholder: "Enter Your First Name"
+      },
+      {
+        id: 0,
+        fieldName: "firstName",
         label: "First Name",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "Enter Your First Name"
+        placeholder: "Enter Your First Name"
       },
       {
         id: 1,
+        fieldName: "lastName",
         label: "Last Name",
         inputType: "textfield",
         userMeta: [],
-        placeHolder: "Enter Your Last Name"
+        placeholder: "Enter Your Last Name"
       },
       {
         id: 2,
+        fieldName: "aboutMe",
         label: "About Me",
         inputType: "textarea",
         userMeta: [],
-        placeHolder: "Brief description for your profile."
+        placeholder: "Brief description for your profile."
       },
       {
         id: 3,
+        fieldName: "faceBookProfile",
         label: "Facebook Profile",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "facebook.com/"
+        placeholder: "facebook.com/"
       },
       {
         id: 4,
+        fieldName: "twitterProfile",
         label: "Twitter Profile",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "twitter.com/"
+        placeholder: "twitter.com/"
       },
       {
         id: 5,
+        fieldName: "linkedInProfile",
         label: "LinkedIn Profile",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "linkedin.com/"
+        placeholder: "linkedin.com/"
       },
       {
         id: 6,
+        fieldName: "snapChatProfile",
         label: "SnapChat Profile",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "snapchat.com/"
+        placeholder: "snapchat.com/"
       },
       {
         id: 7,
+        fieldName: "tikTokProfile",
         label: "TikTok Profile",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "tiktok.com/"
+        placeholder: "tiktok.com/"
       }
     ]
   },
@@ -84,7 +100,7 @@ export const Sections = [
             value: "others"
           }
         ],
-        placeHolder: "Select your gender"
+        placeholder: "Select your gender"
       },
       {
         id: 9,
@@ -107,17 +123,19 @@ export const Sections = [
       },
       {
         id: 10,
+        fieldName: "homeTown",
         label: "Hometown",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "Enter your hometown"
+        placeholder: "Enter your hometown"
       },
       {
         id: 11,
+        fieldName: "intendedMajor",
         label: "Intended Major",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "Enter your intended major"
+        placeholder: "Enter your intended major"
       }
     ]
   },
@@ -261,7 +279,7 @@ export const Sections = [
       {
         id: 18,
         label: "Student ID",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [
           {
             value: "123456"
@@ -271,30 +289,34 @@ export const Sections = [
       {
         id: 19,
         label: "Programs",
-        inputType: "textarea",
+        fieldName: "programs",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "Enter your educational program"
+        placeholder: "Enter your educational program"
       },
       {
         id: 20,
+        fieldName: "community",
         label: "Community",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "Start typing seprated by comma"
+        placeholder: "Start typing seprated by comma"
       },
       {
         id: 21,
+        fieldName: "building",
         label: "Building",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "Enter your building information"
+        placeholder: "Enter your building information"
       },
       {
         id: 22,
+        fieldName: "room",
         label: "Room",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "Enter your room number"
+        placeholder: "Enter your room number"
       }
     ]
   },
@@ -305,10 +327,11 @@ export const Sections = [
     formInputs: [
       {
         id: 23,
+        fieldName: "youtubeVideoUrl",
         label: "YouTube Video URL",
-        inputType: "textarea",
+        inputType: "textfield",
         userMeta: [],
-        placeHolder: "youtube.com/"
+        placeholder: "youtube.com/"
       }
     ]
   }

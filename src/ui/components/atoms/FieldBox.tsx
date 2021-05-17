@@ -26,7 +26,7 @@ import { SvgProp } from "utils/Util";
 type Props = {
   name: string;
   viewStyle?: StyleProp<ViewStyle>;
-  title: string;
+  title: string | undefined;
   textStyle: StyleProp<TextStyle>;
   rightIcon: SvgProp | undefined;
 };

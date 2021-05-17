@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   radioButtonContainer: {
     flexDirection: "row",
     alignSelf: "flex-start",
-    marginTop: 16
+    marginTop: 8
   },
   radioButtonWrapper: {
     flexWrap: "wrap",
