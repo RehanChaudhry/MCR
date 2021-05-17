@@ -14,8 +14,6 @@ import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
 import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 import { Sections } from "models/FormInput";
 import { DynamicCardView } from "ui/components/templates/dynamic_card_view/DynamicCardView";
-// import {BasicProfile} from "ui/components/templates/basic_profile/BasicProfile";
-// import {Interests} from "ui/components/templates/interests/Interests";
 
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
@@ -27,11 +25,11 @@ const validationSchema = Yup.object().shape({
   //basic profile component
   firstName: Yup.string()
     .required("Enter your first name")
-    .min(1, "First name should be atleast 1 characters")
+    .min(3, "First name should be atleast 3 characters")
     .max(50, "First name should be less than 50 characters"),
   lastName: Yup.string()
     .required("Enter your last name")
-    .min(1, "Last name should be atleast 1 characters")
+    .min(3, "Last name should be atleast 3 characters")
     .max(50, "Last name should be less than 50 characters"),
   aboutMe: Yup.string().max(
     100,
@@ -54,11 +52,11 @@ const validationSchema = Yup.object().shape({
 
   //demo graphics component
   homeTown: Yup.string()
-    .min(1, "First name should be atleast 1 characters")
-    .max(50, "First name should be less than 50 characters"),
+    .min(3, "Home Town should be atleast 3 characters")
+    .max(50, "Home Town should be less than 50 characters"),
   intendedMajor: Yup.string()
-    .min(1, "First name should be atleast 1 characters")
-    .max(50, "First name should be less than 50 characters"),
+    .min(3, "Intended Major should be atleast 3 characters")
+    .max(50, "Intended Major should be less than 50 characters"),
   //gender: Yup.object().required("Please select your gender"),
 
   //interests components
@@ -71,17 +69,17 @@ const validationSchema = Yup.object().shape({
 
   //living details
   programs: Yup.string()
-    .min(1, "First name should be atleast 1 characters")
-    .max(100, "First name should be less than 100 characters"),
+    .min(3, "Programs should be atleast 3 characters")
+    .max(100, "Programs should be less than 100 characters"),
   community: Yup.string()
-    .min(1, "First name should be atleast 1 characters")
-    .max(100, "First name should be less than 100 characters"),
+    .min(3, "Community should be atleast 3 characters")
+    .max(100, "Community should be less than 100 characters"),
   building: Yup.string()
-    .min(1, "First name should be atleast 1 characters")
-    .max(100, "First name should be less than 100 characters"),
+    .min(3, "Building should be atleast 3 characters")
+    .max(100, "Building should be less than 100 characters"),
   room: Yup.string()
-    .min(1, "First name should be atleast 1 characters")
-    .max(100, "First name should be less than 100 characters"),
+    .min(3, "Room should be atleast 3 characters")
+    .max(100, "Room should be less than 100 characters"),
   //video introduction component
   youtubeVideoUrl: Yup.string().url("Please Provide Valid YouTube URL")
 });

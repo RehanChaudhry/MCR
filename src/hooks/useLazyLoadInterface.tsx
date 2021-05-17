@@ -9,14 +9,23 @@ import { usePreferredTheme } from "hooks/index";
 
 export default (
   actualView: React.ReactNode,
-  loadingView?: React.ReactNode
+  loadingView?: React.ReactNode,
+  delayAfterInteraction?: number
 ) => {
   const [interactionComplete, setInteractionComplete] = useState(false);
+  const [showUserInterface, setShowUserInterface] = useState(
+    !delayAfterInteraction
+  );
   const { themedColors } = usePreferredTheme();
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
       setInteractionComplete(true);
+      if (delayAfterInteraction) {
+        setTimeout(() => {
+          setShowUserInterface(true);
+        }, delayAfterInteraction);
+      }
     });
   });
 
@@ -34,7 +43,21 @@ export default (
       </View>
     );
   } else {
-    return actualView;
+    return (
+      <>
+        {actualView}
+        {!showUserInterface && (
+          <View style={styles.container}>
+            <ActivityIndicator
+              testID="initial-loader"
+              style={styles.initialPb}
+              size="small"
+              color={themedColors.primary}
+            />
+          </View>
+        )}
+      </>
+    );
   }
 };
 

@@ -29,8 +29,6 @@ export default {
   UPDATE_PROFILE: "user",
 
   // matches
-  GET_MATCHES: "matches",
-  POST_FRIEND_REQUEST: "friend-request",
   DISMISS_MATCH: "dismiss-match",
   GET_MATCHES_FILTER_COUNT: "matches-count",
 
@@ -39,12 +37,16 @@ export default {
   GET_COMMUNITY_ANNOUNCEMENT: "post",
   LIKE_DISLIKE: "post/like",
   COMMENT: "comment",
+  REPORT_CONTENT: "spam",
 
   //chat
   CONVERSATION: "conversation/",
+  //message
+  MESSAGE: "message/",
 
   //relations
   RELATION: "relation",
+  POST_RELATION: "relation",
   // MY_FRIENDS: "myfriends",
   MY_ROOMMATES: "myroommates",
   DISMISSED_OR_BLOCKED: "dismissedorblocked",

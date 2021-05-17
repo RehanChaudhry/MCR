@@ -104,7 +104,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
             <View style={styles.spacer} />
 
             <FieldBox
-              name="hobbies"
+              name={listData.name}
               title={listData.label}
               textStyle={{ color: theme.themedColors.placeholder }}
               rightIcon={chevronRight}
@@ -119,7 +119,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
             <AppFormField
               fieldTestID="firstName"
               validationLabelTestID={"firstNameValidationLabel"}
-              name="firstName"
+              name={listData.name}
               labelProps={{
                 text: listData?.label,
                 weight: "semi-bold"

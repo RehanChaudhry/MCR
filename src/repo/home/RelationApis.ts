@@ -10,9 +10,9 @@ function relations(request: RelationApiRequestModel) {
   });
 }
 
-function friendRequest(userId: number) {
-  return apiClient.post<ApiSuccessResponseModel>(API.POST_FRIEND_REQUEST, {
-    userId: userId
+function postRelation(userId: number) {
+  return apiClient.post<ApiSuccessResponseModel>(API.POST_RELATION, {
+    receiverId: userId
   });
 }
 
@@ -24,6 +24,6 @@ function matchDismiss(userId: number) {
 
 export default {
   relations,
-  friendRequest,
+  postRelation,
   matchDismiss
 };

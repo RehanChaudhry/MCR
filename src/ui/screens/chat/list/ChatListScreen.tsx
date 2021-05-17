@@ -1,71 +1,77 @@
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { StyleSheet, View } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, shadowStyleProps } from "utils/Util";
 import { ItemChatList } from "ui/components/molecules/item_chat/ItemChatList";
-import ChatItem from "models/ChatItem";
 import { ChatHeader } from "ui/components/molecules/item_chat/ChatHeader";
 import SearchField from "ui/components/atoms/search_field/SearchField";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
+import { Conversation } from "models/api_responses/ChatsResponseModel";
 
 interface ChatListProps {
-  onItemClick: (item: ChatItem) => void;
-  data: ChatItem[];
+  onItemClick: (item: Conversation) => void;
+  data: Conversation[] | undefined;
   pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
+  shouldShowProgressBar: boolean;
   isAllDataLoaded: boolean;
-  isLoading: boolean;
   error: string | undefined;
+  performSearch: (keyword: string) => void;
 }
 
 let lastHeaderTitle = "";
 export const ChatListScreen = React.memo<ChatListProps>(
   ({
-    isLoading,
     error,
     data,
     onItemClick,
+    shouldShowProgressBar,
     pullToRefreshCallback,
     onEndReached,
-    isAllDataLoaded
+    isAllDataLoaded,
+    performSearch
   }) => {
     AppLog.log("Rendering chat screen...");
     const { themedColors } = usePreferredTheme();
-    let [items, setItems] = useState<ChatItem[]>(data);
 
-    const performSearch = (textToSearch: string) =>
-      items.filter((obj: ChatItem) => {
-        return Object.values(obj).some((v) =>
-          `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
-        );
-      });
+    const handleClick = useCallback(
+      (textToSearch?: string) => {
+        lastHeaderTitle = "";
 
-    const handleClick = useCallback((textToSearch?: string) => {
-      lastHeaderTitle = "";
+        textToSearch !== "" &&
+          textToSearch !== undefined &&
+          performSearch(textToSearch);
+      },
+      [performSearch]
+    );
 
-      textToSearch !== "" && textToSearch !== undefined
-        ? setItems(performSearch(textToSearch))
-        : setItems(data);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const renderItem = ({ item }: { item: ChatItem }) => {
+    const renderItem = ({
+      item,
+      index
+    }: {
+      item: Conversation;
+      index: number;
+    }) => {
       AppLog.log("rendering list item : " + JSON.stringify(item));
+      if (index === 0) {
+        lastHeaderTitle = "";
+      }
       return (
         <>
           <ChatHeader
-            chatItem={item}
+            chatItem={new Conversation(item)}
             lastHeaderTitle={lastHeaderTitle}
             onHeaderCreated={(title: string) => {
               lastHeaderTitle = title;
+              AppLog.logForcefully("lastHeaderTitle " + lastHeaderTitle);
             }}
           />
           <ItemChatList
-            item={item}
+            item={new Conversation(item)}
             onPress={() => {
               onItemClick(item);
             }}
@@ -91,7 +97,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
           <>
             <FlatListWithPb
               removeClippedSubviews={true}
-              shouldShowProgressBar={isLoading}
+              shouldShowProgressBar={shouldShowProgressBar}
               error={error}
               data={data}
               renderItem={renderItem}

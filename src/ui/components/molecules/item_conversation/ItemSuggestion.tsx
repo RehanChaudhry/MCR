@@ -9,7 +9,7 @@ import React from "react";
 import { FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
-import { User } from "models/api_responses/ConversationSuggestionsResponseModel";
+import { User } from "models/User";
 
 export interface ItemConversationProps extends ViewStyle {
   onPress: (item: User) => void;
@@ -31,7 +31,7 @@ export const ItemSuggestion = optimizedMemo<ItemConversationProps>(
           source={{ uri: item.profilePicture?.fileURL }}
         />
         <AppLabel
-          text={item.firstName + " " + item?.lastName}
+          text={item.firstName + " " + item.lastName}
           style={styles.txt}
         />
       </TouchableOpacity>
