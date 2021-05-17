@@ -24,7 +24,7 @@ import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import EScreen from "models/enums/EScreen";
 import EGender from "models/enums/EGender";
-import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import RelationFilterType from "models/enums/RelationFilterType";
 import EIntBoolean from "models/enums/EIntBoolean";
 
@@ -78,11 +78,11 @@ const MatchesController: FC<Props> = () => {
 
   // Matches API
   const relationsApi = useApi<
-    RelationApiRequestModel,
+    PaginationParamsModel,
     RelationApiResponseModel
   >(RelationApis.relations);
 
-  const requestModel = useRef<RelationApiRequestModel>({
+  const requestModel = useRef<PaginationParamsModel>({
     type: RelationFilterType.MATCHES,
     gender: undefined,
     keyword: "",

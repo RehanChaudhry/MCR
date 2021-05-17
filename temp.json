@@ -1,66 +1,66 @@
 {
-  "duration": 1334,
-  "problem": null,
-  "originalError": null,
-  "ok": true,
-  "status": 200,
+  "duration": 703,
+  "problem": "CLIENT_ERROR",
+  "originalError": {
+    "message": "Request failed with status code 404",
+    "name": "Error",
+    "stack": "createError@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:118558:26\nsettle@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:118548:25\nhandleLoad@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:118448:15\ndispatchEvent@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:32386:31\nsetReadyState@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:31544:27\n__didCompleteResponse@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:31375:29\nemit@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:7202:42\n__callFunction@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2813:36\nhttp://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2545:31\n__guard@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2767:15\ncallFunctionReturnFlushedQueue@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2544:21\ncallFunctionReturnFlushedQueue@[native code]",
+    "config": {
+      "url": "friendrequests",
+      "method": "get",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjYsInVzZXJJZCI6MjA2LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MTk0OTU5MzYsImV4cCI6MTYyMjA4NzkzNn0.BW9ipIC-oMupTBS6tnk44sIQl_gQBKK9UV3RFyZoxYY"
+      },
+      "params": {},
+      "baseURL": "https://mcr-dev.cygnis.dev/api/",
+      "transformRequest": [null],
+      "transformResponse": [null],
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "maxBodyLength": -1
+    }
+  },
+  "ok": false,
+  "status": 404,
   "headers": {
-    "cf-request-id": "09d77ba4c600001897e9001000000001",
-    "content-type": "application/json; charset=utf-8",
-    "x-content-type-options": "nosniff",
-    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
-    "strict-transport-security": "max-age=0; includeSubDomains",
-    "nel": "{\"max_age\":604800,\"report_to\":\"cf-nel\"}",
-    "report-to": "{\"group\":\"cf-nel\",\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=ERFhnGAi2pZiWpLfpenyoYsyOxKRHqJXZTXDHOIaIMvG%2FCR7NBrMQI9hg9sin4cHbzeo7tbsAFR0Nh1bukUwmzhbiQ2VgNv3Sj6hEw8zxkaJFjk%3D\"}],\"max_age\":604800}",
-    "cf-ray": "649f621ad86a1897-SIN",
+    "content-type": "text/html; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=BQaH3Tp4nFCJ2PzSoutCnEBI1QDZynxrYRs49UC57fuI%2B%2FWwnSY7ScexN%2B%2FKmaNBv1OfwM2sDFdBqFUeF%2BL6941A802pDRE%2BoHdqUDD2sRqFwY8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
     "x-powered-by": "Express",
+    "date": "Mon, 17 May 2021 11:49:51 GMT",
+    "cf-ray": "650c9ff328f1cbd4-SIN",
+    "content-encoding": "br",
     "x-xss-protection": "1; mode=block",
+    "cf-request-id": "0a1bc24bf70000cbd4c7223000000001",
+    "content-security-policy": "default-src 'none'",
     "vary": "Accept-Encoding, Origin",
-    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
     "cf-cache-status": "DYNAMIC",
-    "x-frame-options": "SAMEORIGIN",
-    "date": "Tue, 04 May 2021 05:38:30 GMT",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
     "server": "cloudflare",
-    "etag": "W/\"142-8b8Eb5uKqXy1mbs8WnjkunSUKOY\""
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "SAMEORIGIN"
   },
   "config": {
-    "url": "spam",
-    "method": "post",
-    "data": "{\"reason\":\"ffgfgf\",\"referenceId\":499,\"problems\":[\"Concerning Content\"],\"type\":\"post\"}",
+    "url": "friendrequests",
+    "method": "get",
     "headers": {
       "Accept": "application/json",
-      "Content-Type": "application/json",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTk3LCJ1c2VySWQiOjIwNiwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiXSwiaWF0IjoxNjE5Njc5OTgxLCJleHAiOjE2MjIyNzE5ODF9._0F5hN1PRUfhE2of4jrLO2ySwrbjN2zgcSIvaqg8BgI"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjYsInVzZXJJZCI6MjA2LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MTk0OTU5MzYsImV4cCI6MTYyMjA4NzkzNn0.BW9ipIC-oMupTBS6tnk44sIQl_gQBKK9UV3RFyZoxYY"
     },
+    "params": {},
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
-    "transformRequest": [
-      null
-    ],
-    "transformResponse": [
-      null
-    ],
+    "transformRequest": [null],
+    "transformResponse": [null],
     "timeout": 0,
     "xsrfCookieName": "XSRF-TOKEN",
     "xsrfHeaderName": "X-XSRF-TOKEN",
     "maxContentLength": -1,
     "maxBodyLength": -1
   },
-  "data": {
-    "message": "Post has been marked as spam successfully.",
-    "data": {
-      "status": "active",
-      "id": 65,
-      "reason": null,
-      "referenceId": 499,
-      "problems": [
-        "Concerning Content"
-      ],
-      "type": "post",
-      "reportedBy": 206,
-      "reporterFirstName": "Clyde",
-      "reporterLastName": "Sakins",
-      "updatedAt": "2021-05-04T05:38:30.348Z",
-      "createdAt": "2021-05-04T05:38:30.348Z"
-    }
-  }
+  "data": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/friendrequests</pre>\n</body>\n</html>\n"
 }

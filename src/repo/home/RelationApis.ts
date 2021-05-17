@@ -2,9 +2,9 @@ import { API } from "config";
 import { apiClient } from "repo/Client";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
-import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 
-function relations(request: RelationApiRequestModel) {
+function relations(request: PaginationParamsModel) {
   return apiClient.get<RelationApiResponseModel>(API.RELATION, {
     ...request
   });

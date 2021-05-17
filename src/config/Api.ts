@@ -49,7 +49,7 @@ export default {
   POST_RELATION: "relation",
   // MY_FRIENDS: "myfriends",
   MY_ROOMMATES: "myroommates",
-  DISMISSED_OR_BLOCKED: "dismissedorblocked",
-  FRIEND_REQUESTS: "friendrequests",
-  ROOMMATE_REQUESTS: "roommaterequests"
+  DISMISSED_OR_BLOCKED: "relation/dismiss",
+  FRIEND_REQUESTS: "relation/pending/friends",
+  ROOMMATE_REQUESTS: "relation/pending/roommates"
 };
