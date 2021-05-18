@@ -8,6 +8,11 @@ import {
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import Questionnaire from "assets/images/office-building.svg";
+import Settings from "assets/images/settings.svg";
+import Profile from "assets/images/profile.svg";
+import UserAdd from "assets/images/user-add.svg";
+import RoommateRequest from "assets/images/request_state_icon.svg";
+import Dismissed from "assets/images/folder-remove.svg";
 import { Divider } from "react-native-elements";
 import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
 import ActivityLog from "models/ActivityLog";
@@ -22,53 +27,47 @@ interface Props {
 const ActivityLogItem = ({ activityLog }: Props) => {
   const { themedColors } = usePreferredTheme();
   AppLog.log("message: " + activityLog.getMessage());
-  // AppLog.log(
-  //   "rendering ProfileMatchItem, item: " + JSON.stringify(profileMatch)
-  // );
-
-  // const icon: SvgProp = () => {
-  //   switch (activityLog.type) {
-  //     // case ActivityType.ALL:
-  //     //   return <Profile width={20} fill={themedColors.background} />;
-  //     case ActivityType.ADDED_TO_DISMISSED:
-  //       return <Dismissed width={20} fill={themedColors.background} />;
-  //     case ActivityType.CREATED_CONVERSATION:
-  //       return <Conversation width={20} fill={themedColors.background} />;
-  //     case ActivityType.CREATED_POST:
-  //       return <Post width={20} fill={themedColors.background} />;
-  //     case ActivityType.ROOMMATE_REQUEST_SENT:
-  //       return (
-  //         <RoommateRequest width={20} fill={themedColors.background} />
-  //       );
-  //     case ActivityType.UPDATED_QUESTIONNAIRE:
-  //       return <Questionnaire width={20} fill={themedColors.background} />;
-  //     case ActivityType.UPDATED_PROFILE:
-  //       return <Profile width={20} fill={themedColors.background} />;
-  //     case ActivityType.UPDATED_AGREEMENT:
-  //       return (
-  //         <RoommateAgreement width={20} fill={themedColors.background} />
-  //       );
-  //     case ActivityType.COMMENT:
-  //       return <Comment width={20} fill={themedColors.background} />;
-  //     case ActivityType.FRIEND_REQUEST_SENT:
-  //       return <UserAdd width={20} fill={themedColors.background} />;
-  //     default:
-  //       return <Profile width={20} fill={themedColors.background} />;
-  //   }
-  // };
 
   const icon: any = () => {
     if (activityLog.type != null) {
       if (
-        activityLog.type === ActivityLogType.FRIEND_REQUEST &&
-        activityLog.action === Actions.SENT
+        activityLog.type === ActivityLogType.LOGIN_STUDENT ||
+        (ActivityLogType.LOGIN_STAFF &&
+          activityLog.action === Actions.LOGIN)
+      ) {
+        return <Profile width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type === ActivityLogType.QUESTIONAIRE &&
+        activityLog.action === Actions.CREATE
       ) {
         return <Questionnaire width={20} fill={themedColors.background} />;
       } else if (
-        activityLog.type === ActivityLogType.FRIEND_REQUEST &&
-        activityLog.action === Actions.REJECTED
+        activityLog.type === ActivityLogType.PROFILE &&
+        activityLog.action === Actions.UPDATED
       ) {
-        return <Questionnaire width={20} fill={themedColors.background} />;
+        return <Settings width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type === ActivityLogType.FRIEND_REQUEST &&
+        activityLog.action === Actions.CREATE
+      ) {
+        return <UserAdd width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type === ActivityLogType.ROOMMATE_REQUEST &&
+        activityLog.action === Actions.CREATE
+      ) {
+        return (
+          <RoommateRequest width={20} fill={themedColors.background} />
+        );
+      } else if (
+        activityLog.type === ActivityLogType.DISMISSED_LIST &&
+        activityLog.action === Actions.CREATE
+      ) {
+        return <Dismissed width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type === ActivityLogType.ROOMMATE_AGREEMENT &&
+        activityLog.action === Actions.UPDATED_AND_AGREED
+      ) {
+        return <Dismissed width={20} fill={themedColors.background} />;
       }
     } else {
       return null;

@@ -39,7 +39,8 @@ const ActivityLogController: FC<Props> = () => {
   >(ProfileApis.activityLogs);
 
   const requestModel = useRef<ActivityLogApiRequestModel>({
-    paginate: true
+    paginate: true,
+    limit: 100
   });
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const isFetchingInProgress = useRef(false);
@@ -121,6 +122,8 @@ const ActivityLogController: FC<Props> = () => {
     getActivityLogs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  AppLog.log("dataLength: " + activityLogs?.data.length);
 
   return (
     <ActivityLogView
