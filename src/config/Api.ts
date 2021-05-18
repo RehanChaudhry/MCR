@@ -10,12 +10,13 @@ export default {
   BASE_URL: Env.BASE_URL,
   API_URL: "api/",
   LOGIN_URL: "auth/login",
-  FETCH_MY_PROFILE_URL: "user/me",
+  FETCH_MY_PROFILE_URL: "user/me?meta=true",
   FORGOT_PASS_URL: "password/request/",
   RESET_PASS_URL: "password/set/",
   UPDATE_PROFILE_URL: "profile",
   NOTIFICATION_URL: "notifications",
   AGREEMENT_DETAILS: "agreement_details",
+  ROOMATE_AGREEMENT_FIELDS: "agreement-field",
 
   //Get universities
   UNIS: "university",
@@ -24,12 +25,12 @@ export default {
   GET_QUESTIONS: "question/",
   GET_ANSWERS: "answer/",
   POST_ANSWERS: "answer/",
-  GET_ACTIVITY_LOGS: "log",
-  UPDATE_PROFILE: "user/",
+  GET_ACTIVITY_LOGS: "activity-logs/",
+  UPDATE_PROFILE: "user",
+  // GET_ACTIVITY_LOGS: "log",
+  // UPDATE_PROFILE: "user/",
 
   // matches
-  GET_MATCHES: "matches",
-  POST_FRIEND_REQUEST: "friend-request",
   DISMISS_MATCH: "dismiss-match",
   GET_MATCHES_FILTER_COUNT: "matches-count",
 
@@ -38,15 +39,19 @@ export default {
   GET_COMMUNITY_ANNOUNCEMENT: "post",
   LIKE_DISLIKE: "post/like",
   COMMENT: "comment",
+  REPORT_CONTENT: "spam",
 
   //chat
-  GET_CHATS: "chats",
+  CONVERSATION: "conversation/",
+  //message
+  MESSAGE: "message/",
 
   //relations
   RELATION: "relation",
+  POST_RELATION: "relation",
   // MY_FRIENDS: "myfriends",
   MY_ROOMMATES: "myroommates",
-  DISMISSED_OR_BLOCKED: "dismissedorblocked",
-  FRIEND_REQUESTS: "friendrequests",
-  ROOMMATE_REQUESTS: "roommaterequests"
+  DISMISSED_OR_BLOCKED: "relation/dismiss",
+  FRIEND_REQUESTS: "relation/pending/friends",
+  ROOMMATE_REQUESTS: "relation/pending/roommates"
 };

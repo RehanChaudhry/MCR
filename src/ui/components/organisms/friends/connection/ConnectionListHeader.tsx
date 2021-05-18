@@ -29,6 +29,8 @@ const ConnectionListHeader: FC<Props> = ({
         shouldAlignTextWithLeftIconWithFullWidth={true}
         fontWeight="semi-bold"
         text={title}
+        shouldNotOptimize={true}
+        iconStyle={[{ marginLeft: SPACE.sm }]}
         textStyle={[
           styles.buttonText,
           {
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: FONT_SIZE.base,
-    paddingLeft: SPACE._2xs
+    paddingLeft: SPACE.xs
   },
   buttonTextContainer: { flex: 1, justifyContent: "flex-start" }
 });

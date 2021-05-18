@@ -191,7 +191,8 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   headerContainer: {
-    flexDirection: "column"
+    flexDirection: "column",
+    ...shadowStyleProps
   },
   footerContainer: {
     flexDirection: "column"

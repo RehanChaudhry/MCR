@@ -54,7 +54,7 @@ function updateAccountPassword(
 
 function updateProfile(requestModel: UpdateProfileRequestModel) {
   return apiClient.put<UpdateProfileResponseModel>(
-    API.UPDATE_PROFILE + requestModel.id,
+    API.UPDATE_PROFILE + "/" + requestModel.id,
     JSON.stringify(requestModel)
   );
 }

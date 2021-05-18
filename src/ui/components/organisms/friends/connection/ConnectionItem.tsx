@@ -90,14 +90,39 @@ const ConnectionItem: FC<Props> = ({
             ]}
             source={{ uri: profileImage }}
           />
-          <View style={styles.infoTextContainer}>
-            <AppLabel
-              style={[
-                styles.titleText,
-                { color: theme.themedColors.label }
-              ]}
-              text={title}
-            />
+          <View style={styles.mainContainer}>
+            <View style={styles.titleAndIconContainer}>
+              <AppLabel
+                style={[
+                  styles.titleText,
+                  { color: theme.themedColors.label }
+                ]}
+                text={title}
+              />
+
+              <View style={styles.space} />
+
+              {shouldShowTopActionable && (
+                <View style={styles.topRightIconsContainer}>
+                  <Pressable style={styles.iconWrapper} onPress={() => {}}>
+                    <RequestStateIcon
+                      fill={
+                        actionButtonState ===
+                        CONNECTION_ACTION_STATE.DANGER
+                          ? theme.themedColors.danger
+                          : theme.themedColors.success
+                      }
+                    />
+                  </Pressable>
+                  <TouchableOpacity
+                    style={styles.iconWrapper}
+                    onPress={onPressCross}>
+                    <Cross fill={theme.themedColors.interface[400]} />
+                  </TouchableOpacity>
+                </View>
+              )}
+            </View>
+
             <AppLabel
               style={[
                 styles.subTitleText,
@@ -106,25 +131,6 @@ const ConnectionItem: FC<Props> = ({
               text={subtitle}
             />
           </View>
-          <View style={styles.spacer} />
-          {shouldShowTopActionable && (
-            <View style={styles.iconsContainer}>
-              <Pressable style={styles.iconContainer} onPress={() => {}}>
-                <RequestStateIcon
-                  fill={
-                    actionButtonState === CONNECTION_ACTION_STATE.DANGER
-                      ? theme.themedColors.danger
-                      : theme.themedColors.success
-                  }
-                />
-              </Pressable>
-              <TouchableOpacity
-                style={styles.iconContainer}
-                onPress={onPressCross}>
-                <Cross fill={theme.themedColors.interface[400]} />
-              </TouchableOpacity>
-            </View>
-          )}
         </View>
         <View style={styles.actionsContainer}>
           <TouchableOpacity onPress={onPressChat}>
@@ -171,7 +177,7 @@ const styles = StyleSheet.create({
   },
   actionButtonText: {
     fontFamily: FONTS.semiBold,
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE.sm!! - 1
   },
   actionsContainer: {
     flexDirection: "row-reverse",
@@ -193,10 +199,11 @@ const styles = StyleSheet.create({
     padding: SPACE.md,
     ...shadowStyleProps
   },
-  iconsContainer: {
-    flexDirection: "row"
+  topRightIconsContainer: {
+    flexDirection: "row",
+    marginTop: -4
   },
-  iconContainer: {
+  iconWrapper: {
     width: 32,
     height: 32,
     justifyContent: "center",
@@ -205,16 +212,20 @@ const styles = StyleSheet.create({
   infoContainer: {
     flexDirection: "row"
   },
-  infoTextContainer: {
+  titleAndIconContainer: {
+    flexDirection: "row"
+  },
+  mainContainer: {
     flexDirection: "column",
-    paddingLeft: SPACE.sm
+    paddingLeft: SPACE.sm,
+    flex: 1
   },
   profileImage: {
     width: 48,
     height: 48,
     borderRadius: 24
   },
-  spacer: {
+  space: {
     flex: 1
   },
   subTitleText: {

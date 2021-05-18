@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     borderRadius: 4
   },
   label: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE.sm!! - 1
   },
   labelRight: {
     alignSelf: "flex-end"

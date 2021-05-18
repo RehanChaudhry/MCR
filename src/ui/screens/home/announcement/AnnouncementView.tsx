@@ -15,7 +15,6 @@ type Props = {
   pullToRefreshCallback: (onComplete?: () => void) => void;
   openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
-  likeDislikeAPi: (postId: number) => Promise<boolean>;
   error: string | undefined;
 };
 
@@ -28,7 +27,6 @@ export const AnnouncementView = React.memo<Props>(
     pullToRefreshCallback,
     openCommentsScreen,
     shouldPlayVideo,
-    likeDislikeAPi,
     error
   }) => {
     const keyExtractor = useCallback(
@@ -37,28 +35,36 @@ export const AnnouncementView = React.memo<Props>(
     );
 
     const listItem = useCallback(
-      ({ item }: { item: CommunityAnnouncement }) => (
-        <AnnouncementItem
-          announcementItem={item}
-          openCommentsScreen={openCommentsScreen}
-          shouldPlayVideo={shouldPlayVideo}
-          likeDislikeAPi={likeDislikeAPi}
-        />
-      ),
-      [likeDislikeAPi, openCommentsScreen, shouldPlayVideo]
+      ({ item }: { item: CommunityAnnouncement }) => {
+        return (
+          <AnnouncementItem
+            announcementItem={item}
+            openCommentsScreen={openCommentsScreen}
+            shouldPlayVideo={shouldPlayVideo}
+          />
+        );
+      },
+      [openCommentsScreen, shouldPlayVideo]
     );
+
+    const itemSeperatorComponent = useCallback(
+      () => <View style={styles.itemSeparator} />,
+      []
+    );
+
     return (
       <Screen style={styles.container}>
         {useLazyLoadInterface(
           <FlatListWithPb
             removeClippedSubviews={true}
+            initialNumToRender={4}
+            maxToRenderPerBatch={4}
+            windowSize={8}
             shouldShowProgressBar={shouldShowProgressBar}
             data={data}
             style={styles.list}
             contentContainerStyle={styles.listContainer}
-            ItemSeparatorComponent={() => (
-              <View style={styles.itemSeparator} />
-            )}
+            ItemSeparatorComponent={itemSeperatorComponent}
             error={error}
             renderItem={listItem}
             keyExtractor={keyExtractor}

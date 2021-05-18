@@ -48,10 +48,19 @@ export const CommentsController: FC<Props> = (Props) => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
   const isFetchingInProgress = useRef(false);
-  const [comments, _comments] = useState<Comment[] | undefined>(undefined);
+  const [comments, setComments] = useState<Comment[] | undefined>(
+    undefined
+  );
   const { params }: any = useRoute<typeof Props.route>();
   const { themedColors } = usePreferredTheme();
   let { user } = useAuth();
+
+  AppLog.logForcefully("rendering comments controller");
+
+  useEffect(() => {
+    AppLog.logForcefully("comments state changes");
+    AppLog.logForcefully("newComment " + JSON.stringify(comments));
+  }, [comments]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -109,10 +118,10 @@ export const CommentsController: FC<Props> = (Props) => {
     } else {
       // to handle pull to refresh
       if (requestModel.current.page === 1) {
-        _comments([]);
+        setComments([]);
       }
 
-      _comments((prevState) => {
+      setComments((prevState) => {
         return [
           ...(prevState === undefined || requestModel.current.page === 1
             ? []
@@ -145,15 +154,54 @@ export const CommentsController: FC<Props> = (Props) => {
       setShouldShowProgressBar(false);
       isFetchingInProgress.current = false;
 
-      if (hasError || dataBody === undefined) {
-        return errorBody;
-      } else {
-        return dataBody;
-      }
+      return { hasError, dataBody, errorBody };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+
+  const retry = (postId: number) => {
+    handlePostCommentApi({
+      postId: params.postId,
+      comment: comments
+        ?.filter((item) => item.id === postId)[0]
+        .id.toString()!!
+    })
+      .then((result) => {
+        const findIndex: number | undefined = comments?.findIndex(
+          (item) => item.id === postId
+        );
+
+        if (findIndex !== undefined && findIndex >= 0) {
+          let items = [];
+          comments?.splice(findIndex, 1, {
+            ...comments!![findIndex],
+            isError: result?.hasError,
+            isLoading: false
+          });
+          items = [...comments!!];
+          setComments(items);
+        }
+      })
+      .catch((error) => {
+        AppLog.log("postComment()=> Failure " + JSON.stringify(error));
+
+        const findIndex: number | undefined = comments?.findIndex(
+          (item) => item.id === postId
+        );
+
+        if (findIndex !== undefined && findIndex >= 0) {
+          let items = [];
+          comments?.splice(findIndex, 1, {
+            ...comments!![findIndex],
+            isError: true,
+            isLoading: false
+          });
+          items = [...comments!!];
+          setComments(items);
+        }
+      });
+  };
 
   function postCommentApi(comment: string) {
     let newList: Comment[] = [];
@@ -163,47 +211,15 @@ export const CommentsController: FC<Props> = (Props) => {
         ? comments[0].id + 1
         : 1;
 
-    handlePostCommentApi({
-      postId: params.postId,
-      comment: comment
-    })
-      .then((result) => {
-        if (comments) {
-          setTimeout(() => {
-            let items = [
-              {
-                ...newList[0],
-                isError: false,
-                isLoading: false
-              },
-              ...newList.slice(1)
-            ];
-            _comments(items);
-
-            AppLog.log("Items: " + JSON.stringify(items));
-          }, 5000);
-        }
-        AppLog.log("postComment()=> Success " + JSON.stringify(result));
-      })
-      .catch((error) => {
-        AppLog.log("postComment()=> Failure " + JSON.stringify(error));
-
-        let items = [
-          {
-            ...newList[0],
-            isError: true,
-            isLoading: false
-          },
-          ...newList.slice(1)
-        ];
-        _comments(items);
-      });
-
     let newComment: Comment = {
       postId: params.postId,
       comment: comment,
       userId: user?.profile?.id ?? 0,
-      user: user?.profile as User,
+      user: {
+        profilePicture: user?.profile?.profilePicture,
+        firstName: user?.profile?.firstName,
+        lastName: user?.profile?.lastName
+      } as User,
       id: commentId,
       createdAt: new Date(),
       isLoading: true,
@@ -211,11 +227,57 @@ export const CommentsController: FC<Props> = (Props) => {
     };
 
     newList.push(newComment);
-    if (comment !== undefined) {
+    if (comments !== undefined) {
       newList.push(...comments!!);
     }
 
-    _comments(newList);
+    setComments(newList);
+
+    handlePostCommentApi({
+      postId: params.postId,
+      comment: comment
+    })
+      .then((result) => {
+        const findIndex: number | undefined = newList?.findIndex(
+          (item) => item.id === commentId
+        );
+
+        AppLog.logForcefully("items before" + JSON.stringify(findIndex));
+        if (findIndex !== undefined && findIndex >= 0) {
+          let items = [];
+          newList?.splice(findIndex, 1, {
+            ...newList!![findIndex],
+            isError: result?.hasError,
+            isLoading: false
+          });
+          items = [...newList!!];
+          setComments(items);
+
+          AppLog.logForcefully("items" + JSON.stringify(comments));
+        }
+      })
+      .catch((error) => {
+        AppLog.logForcefully(
+          "postComment()=> Failure " + JSON.stringify(error)
+        );
+
+        const findIndex: number | undefined = comments?.findIndex(
+          (item) => item.id === commentId
+        );
+
+        if (findIndex !== undefined && findIndex >= 0) {
+          let items = [];
+          newList?.splice(findIndex, 1, {
+            ...newList!![findIndex],
+            isError: true,
+            isLoading: false
+          });
+          items = [...newList!!];
+          setComments(items);
+
+          AppLog.logForcefully("items" + JSON.stringify(commentId));
+        }
+      });
   }
 
   const onEndReached = useCallback(async () => {
@@ -252,6 +314,7 @@ export const CommentsController: FC<Props> = (Props) => {
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
       error={getComments.error}
+      retry={retry}
       pullToRefreshCallback={refreshCallback}
     />
   );

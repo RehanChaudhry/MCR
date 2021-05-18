@@ -24,7 +24,7 @@ import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import EScreen from "models/enums/EScreen";
 import EGender from "models/enums/EGender";
-import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import RelationFilterType from "models/enums/RelationFilterType";
 import EIntBoolean from "models/enums/EIntBoolean";
 
@@ -78,11 +78,11 @@ const MatchesController: FC<Props> = () => {
 
   // Matches API
   const relationsApi = useApi<
-    RelationApiRequestModel,
+    PaginationParamsModel,
     RelationApiResponseModel
   >(RelationApis.relations);
 
-  const requestModel = useRef<RelationApiRequestModel>({
+  const requestModel = useRef<PaginationParamsModel>({
     type: RelationFilterType.MATCHES,
     gender: undefined,
     keyword: "",
@@ -174,35 +174,41 @@ const MatchesController: FC<Props> = () => {
 
   // Friend Request API
   const friendRequestApi = useApi<number, ApiSuccessResponseModel>(
-    RelationApis.friendRequest
+    RelationApis.postRelation
   );
 
-  const postFriendRequest = async (userId: number) => {
-    const {
-      hasError,
-      errorBody,
-      dataBody
-    } = await friendRequestApi.request([userId]);
+  const postFriendRequest = useCallback(
+    async (userId: number) => {
+      const {
+        hasError,
+        errorBody,
+        dataBody
+      } = await friendRequestApi.request([userId]);
 
-    if (!hasError) {
-      setProfileMatches((prevState) => {
-        const requestedUser = prevState?.find(
-          (value) => value.matchingUserId === userId
-        );
-        if (requestedUser) {
-          requestedUser.relation = {
-            isFriend: EIntBoolean.FALSE,
-            isRoommate: EIntBoolean.FALSE,
-            status: Status.PENDING
-          };
-        }
-        return prevState;
-      });
-      Alert.alert("Fried Request Sent", dataBody!.message);
-    } else {
-      Alert.alert("Unable to send friend request", errorBody);
-    }
-  };
+      if (!hasError) {
+        setProfileMatches((prevState) => {
+          let requestedUserPosition =
+            prevState?.findIndex(
+              (value) => value.matchingUserId === userId
+            ) ?? -1;
+          if (requestedUserPosition !== -1) {
+            const updatedUser = new RelationModel(
+              prevState![requestedUserPosition]
+            );
+            updatedUser.isFriend = EIntBoolean.FALSE;
+            updatedUser.isRoommate = EIntBoolean.FALSE;
+            updatedUser.status = Status.PENDING;
+            prevState![requestedUserPosition] = updatedUser;
+          }
+          return Object.assign([], prevState);
+        });
+        Alert.alert("Fried Request Sent", dataBody!.message);
+      } else {
+        Alert.alert("Unable to send friend request", errorBody);
+      }
+    },
+    [friendRequestApi]
+  );
 
   // Match Dismiss API
   const matchDismissApi = useApi<number, ApiSuccessResponseModel>(
@@ -249,6 +255,7 @@ const MatchesController: FC<Props> = () => {
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
+      isFriendRequestApiLoading={friendRequestApi.loading}
       postFriendRequest={postFriendRequest}
       postMatchDismiss={postMatchDismiss}
       moveToChatScreen={moveToChatScreen}

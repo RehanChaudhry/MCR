@@ -4,7 +4,8 @@ enum RelationType {
   FRIEND,
   ROOMMATE,
   BLOCKED,
-  DISMISSED
+  DISMISSED,
+  NOT_ELIGIBLE
 }
 
 export default RelationType;

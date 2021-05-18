@@ -23,8 +23,11 @@ import Colors from "config/Colors";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
 import Strings from "config/Strings";
 import { AppLog } from "utils/Util";
+import { Sections } from "models/ViewProfileSections";
 
-type Props = {};
+type Props = {
+  section: Sections | undefined;
+};
 
 const AboutMe: FC<Props> = () => {
   const theme = usePreferredTheme();

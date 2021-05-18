@@ -209,6 +209,7 @@ export default {
     titleRight: "Done",
     title: "New Conversation",
     typingHint: "Start typing student name",
+    typingHintStaff: "Start typing staff name",
     createGroupText: "You can create a group of upto 5 people.",
     segmentValues: [
       { label: "Student", value: "Student" },
@@ -336,9 +337,11 @@ export default {
     somethingElse: "Something else",
     reason: "Reason",
     reasonPlaceholder: "Let us know why you think this is inappropriate",
-    submitSpamReport: "Submit Spam Report"
+    submitSpamReport: "Submit Spam Report",
+    enter_reason_validation: "Please enter a reason."
   },
   roommateAgreementdetails: {
     export_agreement: "Export Roommate Agreement"
-  }
+  },
+  somethingWentWrong: "Something went wrong!"
 };

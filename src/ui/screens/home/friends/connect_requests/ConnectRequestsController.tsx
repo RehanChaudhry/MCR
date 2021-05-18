@@ -4,16 +4,16 @@ import {
   useRoute
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import {
   FriendRequest,
   FriendRequestsResponseModel
 } from "models/api_responses/FriendRequestsResponseModel";
-import React, { FC, useLayoutEffect, useState } from "react";
+import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
 import { ConnectionRequestStackParamList } from "routes/ConnectionRequestStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import DataGenerator from "utils/DataGenerator";
 import { AppLog } from "utils/Util";
 import ConnectRequestsView from "./ConnectRequestsView";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
@@ -38,38 +38,89 @@ export enum ConnectRequestType {
 const ConnectRequestsController: FC<Props> = () => {
   const route = useRoute<ConnectRequestRouteProp>();
   const { title, type } = route.params;
-
   AppLog.log("showing connect for types: ", type);
 
+  const [requestModel, setRequestModel] = useState<PaginationParamsModel>({
+    page: 1,
+    limit: 5,
+    paginate: true
+  });
+
+  const [canLoadMore, setCanLoadMore] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
   const [connectRequests, setConnectRequests] = useState<
     Array<FriendRequest>
-  >(DataGenerator.getFriendRequests().data);
+  >();
 
   const connectRequestsApi = useApi<any, FriendRequestsResponseModel>(
     FriendsApis.getFriendRequests
   );
 
   const handleConnectRequestsResponse = async (
+    isFromPullToRefresh: boolean,
+    _requestModel: PaginationParamsModel,
     onComplete?: () => void
   ) => {
     const {
       hasError,
       dataBody,
       errorBody
-    } = await connectRequestsApi.request([]);
+    } = await connectRequestsApi.request([_requestModel]);
+
     if (hasError || dataBody === undefined) {
-      AppLog.log("Unable to find friend requests " + errorBody);
+      setErrorMessage(errorBody);
       return;
     } else {
-      setConnectRequests(dataBody.data);
+      setErrorMessage(undefined);
+      const data = dataBody.data ?? [];
+
+      if (isFromPullToRefresh) {
+        setConnectRequests(data);
+      } else {
+        setConnectRequests([...(connectRequests ?? []), ...data]);
+      }
+
+      setRequestModel({
+        ..._requestModel,
+        page: _requestModel.page + 1
+      });
+
+      setCanLoadMore(data.length >= _requestModel.limit);
+
       onComplete?.();
     }
   };
 
-  AppLog.log(
-    "handlefriendrequestsresponse: ",
-    handleConnectRequestsResponse
-  );
+  const onEndReached = () => {
+    if (connectRequestsApi.loading) {
+      return;
+    }
+
+    handleConnectRequestsResponse(false, requestModel);
+  };
+
+  const onPullToRefresh = (onComplete?: () => void) => {
+    if (connectRequestsApi.loading) {
+      onComplete?.();
+      return;
+    }
+
+    const _requestModel: PaginationParamsModel = {
+      ...requestModel,
+      page: 1
+    };
+
+    setRequestModel(_requestModel);
+
+    handleConnectRequestsResponse(true, _requestModel, () => {
+      onComplete?.();
+    });
+  };
+
+  useEffect(() => {
+    handleConnectRequestsResponse(false, requestModel);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onPressApproved = (item: FriendRequest) => {
     AppLog.log("friend request item:", item);
@@ -98,6 +149,11 @@ const ConnectRequestsController: FC<Props> = () => {
   return (
     <ConnectRequestsView
       data={connectRequests}
+      isLoading={connectRequestsApi.loading}
+      canLoadMore={canLoadMore}
+      error={errorMessage}
+      onEndReached={onEndReached}
+      onPullToRefresh={onPullToRefresh}
       onPressApproved={onPressApproved}
       onPressDeclined={onPressDeclined}
     />

@@ -224,11 +224,9 @@ export const CreatePostView = React.memo<Props>((props) => {
                 <PhotosButton
                   isSelected={postType === POST_TYPES.PHOTOS}
                   onPress={() => {
-                    AppLog.logForcefully(
-                      "new images length" + images.length
-                    );
+                    setImages([]);
                     setPostType(POST_TYPES.PHOTOS);
-                    images.length === 0 && openImageGallery();
+                    openImageGallery();
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
@@ -345,6 +343,7 @@ export const CreatePostView = React.memo<Props>((props) => {
               }}
               textStyle={{ color: theme.themedColors.background }}
               fontWeight="bold"
+              shouldShowProgressBar={props.shouldShowProgressBar}
             />
           </AppForm>
         </View>

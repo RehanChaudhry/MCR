@@ -26,7 +26,7 @@ export interface CommunityAnnouncement {
   updatedAt: Date;
   deletedAt: null;
   postFilter: PostFilter;
-  isLikedByMe: IsLikedByMe[] | undefined;
+  isLikedByMe: boolean;
 }
 
 export interface PostFilter {

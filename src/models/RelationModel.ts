@@ -2,15 +2,19 @@ import RelationType from "models/enums/RelationType";
 import FilePath from "models/FilePath";
 import EIntBoolean from "models/enums/EIntBoolean";
 
-class RelationUser {
+export class RelationUser {
   firstName?: string;
   lastName?: string;
   profilePicture?: FilePath;
-  matchGroupName?: string;
+  hometown?: string;
   major?: string;
 
   getFullName(): string {
-    return `${this.firstName} ${this.lastName ?? ""}`;
+    return `${this.firstName} ${this.lastName ?? ""}`.trim();
+  }
+
+  getSubtitle(): string {
+    return this.major + (this.hometown ? ", " + this.hometown : "");
   }
 }
 
@@ -22,10 +26,11 @@ export enum Status {
   REJECTED = "rejected"
 }
 
-type Relation = {
-  status: Status;
-  isRoommate: EIntBoolean;
-  isFriend: EIntBoolean;
+export enum InEligibilityReason {}
+
+type Criteria = {
+  eligible: boolean;
+  reason: InEligibilityReason;
 };
 
 export class RelationModel {
@@ -35,7 +40,10 @@ export class RelationModel {
   user?: RelationUser;
   createdAt: string = "";
   updatedAt: string = "";
-  relation?: Relation;
+  status?: Status;
+  isRoommate!: EIntBoolean;
+  isFriend!: EIntBoolean;
+  criteria?: Criteria;
 
   constructor(relationModel: RelationModel) {
     Object.assign(this, relationModel);
@@ -43,23 +51,23 @@ export class RelationModel {
   }
 
   getType(): RelationType {
-    if (this.relation !== null) {
-      if (this.relation?.isRoommate === EIntBoolean.TRUE) {
-        return RelationType.ROOMMATE;
-      } else if (
-        this.relation?.isFriend === EIntBoolean.TRUE &&
-        this.relation?.status === Status.ACCEPTED
-      ) {
-        return RelationType.FRIEND;
-      } else if (this.relation?.status === Status.PENDING) {
-        return RelationType.FRIEND_REQUESTED;
-      } else if (this.relation?.status === Status.DISMISSED) {
-        return RelationType.DISMISSED;
-      } else if (this.relation?.status === Status.BLOCKED) {
-        return RelationType.BLOCKED;
+    if (this.isRoommate === EIntBoolean.TRUE) {
+      return RelationType.ROOMMATE;
+    } else if (
+      this.isFriend === EIntBoolean.TRUE &&
+      this.status === Status.ACCEPTED
+    ) {
+      if (this.criteria !== null && this.criteria?.eligible === false) {
+        return RelationType.NOT_ELIGIBLE;
       } else {
-        return RelationType.NOT_FRIEND;
+        return RelationType.FRIEND;
       }
+    } else if (this.status === Status.PENDING) {
+      return RelationType.FRIEND_REQUESTED;
+    } else if (this.status === Status.DISMISSED) {
+      return RelationType.DISMISSED;
+    } else if (this.status === Status.BLOCKED) {
+      return RelationType.BLOCKED;
     } else {
       return RelationType.NOT_FRIEND;
     }

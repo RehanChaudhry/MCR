@@ -1,31 +1,66 @@
 {
-  "profilePicture": { "originalName": "", "fileURL": "" },
-  "firstName": "Muhammad ",
-  "lastName": "Noman",
-  "aboutMe": "Iam 26 years old and I I’m a student of Computer science",
-  "socialProfiles": {
-    "facebook": "https://noman.facebook.com",
-    "twitter": "https://noman.facebook.com",
-    "linkedin": "https://noman.facebook.com",
-    "instagram": "https://noman.facebook.com",
-    "snapchat": "https://noman.facebook.com",
-    "tiktok": "https://noman.facebook.com"
+  "duration": 703,
+  "problem": "CLIENT_ERROR",
+  "originalError": {
+    "message": "Request failed with status code 404",
+    "name": "Error",
+    "stack": "createError@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:118558:26\nsettle@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:118548:25\nhandleLoad@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:118448:15\ndispatchEvent@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:32386:31\nsetReadyState@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:31544:27\n__didCompleteResponse@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:31375:29\nemit@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:7202:42\n__callFunction@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2813:36\nhttp://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2545:31\n__guard@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2767:15\ncallFunctionReturnFlushedQueue@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2544:21\ncallFunctionReturnFlushedQueue@[native code]",
+    "config": {
+      "url": "friendrequests",
+      "method": "get",
+      "headers": {
+        "Accept": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjYsInVzZXJJZCI6MjA2LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MTk0OTU5MzYsImV4cCI6MTYyMjA4NzkzNn0.BW9ipIC-oMupTBS6tnk44sIQl_gQBKK9UV3RFyZoxYY"
+      },
+      "params": {},
+      "baseURL": "https://mcr-dev.cygnis.dev/api/",
+      "transformRequest": [null],
+      "transformResponse": [null],
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "maxBodyLength": -1
+    }
   },
-  "dateOfBirth": "1999-06-27",
-  "homeTown": "asdfasdf",
-  "intendedMajor": "asdfasdf",
-  "intrests": [],
-  "memberships": [],
-  "shows": [],
-  "music": [],
-  "books": [],
-  "games": [],
-  "studentId": 18288910,
-  "program": "Computer Science",
-  "communities": [],
-  "building": "101 Building 2nd floor",
-  "room": "A-102",
-  "videoURL": "https://YouTube.com",
-  "sendEmail": true,
-  "id": 1
+  "ok": false,
+  "status": 404,
+  "headers": {
+    "content-type": "text/html; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=BQaH3Tp4nFCJ2PzSoutCnEBI1QDZynxrYRs49UC57fuI%2B%2FWwnSY7ScexN%2B%2FKmaNBv1OfwM2sDFdBqFUeF%2BL6941A802pDRE%2BoHdqUDD2sRqFwY8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-powered-by": "Express",
+    "date": "Mon, 17 May 2021 11:49:51 GMT",
+    "cf-ray": "650c9ff328f1cbd4-SIN",
+    "content-encoding": "br",
+    "x-xss-protection": "1; mode=block",
+    "cf-request-id": "0a1bc24bf70000cbd4c7223000000001",
+    "content-security-policy": "default-src 'none'",
+    "vary": "Accept-Encoding, Origin",
+    "cf-cache-status": "DYNAMIC",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "SAMEORIGIN"
+  },
+  "config": {
+    "url": "friendrequests",
+    "method": "get",
+    "headers": {
+      "Accept": "application/json",
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjYsInVzZXJJZCI6MjA2LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MTk0OTU5MzYsImV4cCI6MTYyMjA4NzkzNn0.BW9ipIC-oMupTBS6tnk44sIQl_gQBKK9UV3RFyZoxYY"
+    },
+    "params": {},
+    "baseURL": "https://mcr-dev.cygnis.dev/api/",
+    "transformRequest": [null],
+    "transformResponse": [null],
+    "timeout": 0,
+    "xsrfCookieName": "XSRF-TOKEN",
+    "xsrfHeaderName": "X-XSRF-TOKEN",
+    "maxContentLength": -1,
+    "maxBodyLength": -1
+  },
+  "data": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/friendrequests</pre>\n</body>\n</html>\n"
 }

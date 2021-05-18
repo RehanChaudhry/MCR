@@ -1,3 +1,5 @@
+import { User } from "models/User";
+
 export interface CommentsResponseModel {
   message: string;
   data: Comment[];
@@ -15,15 +17,5 @@ export interface Comment {
   //for manual handle new comment
   isLoading?: boolean;
   isError?: boolean;
-}
-
-export interface User {
-  firstName: string;
-  lastName: string;
-  profilePicture: ProfilePicture;
-}
-
-export interface ProfilePicture {
-  fileURL: string;
-  originalName: string;
+  retry?: (postId: number) => void;
 }
