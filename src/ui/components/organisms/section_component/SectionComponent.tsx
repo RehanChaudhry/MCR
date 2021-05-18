@@ -7,22 +7,25 @@ import { AppLog } from "utils/Util";
 
 type Props = {
   listData: any[] | undefined;
+  showProgressBar: boolean;
 };
 
-export const SectionComponent = React.memo<Props>(({ listData }) => {
-  AppLog.logForcefully("creating element " + JSON.stringify(listData));
+export const SectionComponent = React.memo<Props>(
+  ({ listData, showProgressBar }) => {
+    AppLog.logForcefully("creating element " + JSON.stringify(listData));
 
-  const listItem = ({ item }: { item: FormInputFieldData }) => {
-    return <CustomFormFieldItem listData={item} />;
-  };
+    const listItem = ({ item }: { item: FormInputFieldData }) => {
+      return <CustomFormFieldItem listData={item} />;
+    };
 
-  return (
-    <View>
-      <FlatListWithPb
-        shouldShowProgressBar={true}
-        data={listData}
-        renderItem={listItem}
-      />
-    </View>
-  );
-});
+    return (
+      <View>
+        <FlatListWithPb
+          shouldShowProgressBar={showProgressBar}
+          data={listData}
+          renderItem={listItem}
+        />
+      </View>
+    );
+  }
+);

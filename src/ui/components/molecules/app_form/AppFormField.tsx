@@ -89,7 +89,7 @@ const AppFormField = optimizedMemo<Props>(
           secureTextEntry={secureTextEntry}
           {...fieldInputProps}
         />
-        {errors[name] && touched[name] && (
+        {(errors[name] || touched[name]) && (
           <AppFormValidationLabel
             validationLabelTestID={validationLabelTestID}
             errorString={errors[name] as string}

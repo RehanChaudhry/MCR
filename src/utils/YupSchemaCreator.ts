@@ -17,6 +17,8 @@ let FieldTypes = {
     return Yup.object().optional();
   },
   textarea: (field: FormInputFieldData): SchemaOf<any> =>
+    Yup.string().required(field?.inputType + " is required."),
+  agreement: (field: FormInputFieldData): SchemaOf<any> =>
     Yup.string().required(field?.inputType + " is required.")
 };
 

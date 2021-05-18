@@ -181,7 +181,12 @@ const RoommateAgreementController: FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <RoommateAgreementView roommateData={roommateData?.data} />;
+  return (
+    <RoommateAgreementView
+      roommateData={roommateData?.data}
+      showProgressBar={roommateApi.loading}
+    />
+  );
 };
 
 export default RoommateAgreementController;

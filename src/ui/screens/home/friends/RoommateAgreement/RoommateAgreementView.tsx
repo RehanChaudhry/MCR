@@ -18,6 +18,7 @@ import * as Yup from "yup";
 
 type Props = {
   roommateData: FormInputFieldData[] | undefined;
+  showProgressBar: boolean;
 };
 
 // const validationSchema = Yup.object().shape({
@@ -33,7 +34,10 @@ type Props = {
 //   upset: ""
 // };
 
-const RoommateAgreementView: FC<Props> = ({ roommateData }) => {
+const RoommateAgreementView: FC<Props> = ({
+  roommateData,
+  showProgressBar
+}) => {
   const theme = usePreferredTheme();
   const yepSchema =
     roommateData !== undefined
@@ -67,7 +71,11 @@ const RoommateAgreementView: FC<Props> = ({ roommateData }) => {
               initialValues={initialValues}
               onSubmit={onSubmit}
               validationSchema={yepSchema}>
-              <SectionComponent listData={roommateData} />
+              <SectionComponent
+                listData={roommateData}
+                showProgressBar={showProgressBar}
+              />
+
               <AppFormFormSubmit
                 text={STRINGS.profile.buttonText.saveAndContinue}
                 buttonType={BUTTON_TYPES.NORMAL}
