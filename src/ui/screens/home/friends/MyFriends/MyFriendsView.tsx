@@ -3,7 +3,7 @@ import { FONT_SIZE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import RelationType from "models/enums/RelationType";
 import RelationModel from "models/RelationModel";
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useCallback, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
@@ -12,6 +12,7 @@ import ConnectionItem, {
 } from "ui/components/organisms/friends/connection/ConnectionItem";
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
+import RemoveFriendAlert from "ui/screens/home/friends/MyFriends/RemoveFriendAlert";
 
 type Props = {
   friendsCount: number;
@@ -167,40 +168,6 @@ const MyFriendsView: FC<Props> = ({
     );
   };
 
-  const removeFriendAlert = () => {
-    return (
-      <AppPopUp
-        isVisible={showRemoveFriendAlert}
-        title={"Remove Friend"}
-        message={`Are you sure you want to remove ${
-          selectedItem.current?.user?.getFullName() ?? ""
-        } from your friends list?`}
-        actions={[
-          {
-            title: "Yes, remove",
-            onPress: () => {
-              setShowRemoveFriendAlert(false);
-            },
-            style: {
-              weight: "bold",
-              style: {
-                color: theme.themedColors.danger,
-                textAlign: "center",
-                fontSize: FONT_SIZE.lg
-              }
-            }
-          },
-          {
-            title: "Cancel",
-            onPress: () => {
-              setShowRemoveFriendAlert(false);
-            }
-          }
-        ]}
-      />
-    );
-  };
-
   const onPressAction = (item: RelationModel) => {
     selectedItem.current = item;
     const _item = new RelationModel(item);
@@ -228,6 +195,14 @@ const MyFriendsView: FC<Props> = ({
 
     return details;
   };
+
+  const hideSelf = useCallback(() => {
+    setShowRemoveFriendAlert(false);
+  }, []);
+
+  const getSelectedItem = useCallback(() => {
+    return selectedItem.current;
+  }, []);
 
   return (
     <>
@@ -268,7 +243,11 @@ const MyFriendsView: FC<Props> = ({
           data={data}
         />
       </Screen>
-      {removeFriendAlert()}
+      <RemoveFriendAlert
+        shouldShow={showRemoveFriendAlert}
+        getSelectedItem={getSelectedItem}
+        hideSelf={hideSelf}
+      />
       {roomateRequestAlert()}
       {notEligibleAlert()}
     </>
