@@ -40,6 +40,7 @@ const ConnectRequestsController: FC<Props> = () => {
   const { title, type } = route.params;
   AppLog.log("showing connect for types: ", type);
 
+  const [isLoading, setIsLoading] = useState(true);
   const [requestModel, setRequestModel] = useState<PaginationParamsModel>({
     page: 1,
     limit: 5,
@@ -68,9 +69,11 @@ const ConnectRequestsController: FC<Props> = () => {
     } = await connectRequestsApi.request([_requestModel]);
 
     if (hasError || dataBody === undefined) {
+      setIsLoading(false);
       setErrorMessage(errorBody);
       return;
     } else {
+      setIsLoading(false);
       setErrorMessage(undefined);
       const data = dataBody.data ?? [];
 
@@ -149,7 +152,7 @@ const ConnectRequestsController: FC<Props> = () => {
   return (
     <ConnectRequestsView
       data={connectRequests}
-      isLoading={connectRequestsApi.loading}
+      isLoading={isLoading}
       canLoadMore={canLoadMore}
       error={errorMessage}
       onEndReached={onEndReached}

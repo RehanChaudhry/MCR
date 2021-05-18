@@ -32,6 +32,7 @@ const MyFriendsController: FC<Props> = () => {
 
   const navigation = useNavigation<FriendsNavigationProp>();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [myFriends, setMyFriends] = useState<Array<RelationModel>>();
   const [canLoadMore, setCanLoadMore] = useState<boolean>(false);
 
@@ -57,9 +58,11 @@ const MyFriendsController: FC<Props> = () => {
     ]);
     if (hasError || dataBody === undefined) {
       setErrorMessage(errorBody);
+      setIsLoading(false);
       return;
     } else {
       setErrorMessage(undefined);
+      setIsLoading(false);
       const data = dataBody.data ?? [];
 
       if (isFromPullToRefresh) {
@@ -127,7 +130,7 @@ const MyFriendsController: FC<Props> = () => {
         friendsCount={friendsCount}
         pendingFriendsCount={pendingFriendsCount}
         data={myFriends}
-        isLoading={myFriendsApi.loading}
+        isLoading={isLoading}
         canLoadMore={canLoadMore}
         error={errorMessage}
         onEndReached={onEndReached}
