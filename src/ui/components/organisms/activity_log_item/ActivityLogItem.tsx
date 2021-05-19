@@ -18,7 +18,6 @@ import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
 import ActivityLog from "models/ActivityLog";
 import ActivityLogType from "models/enums/ActivityLogType";
 import Actions from "models/enums/ActivityLogAction";
-import { AppLog } from "utils/Util";
 
 interface Props {
   activityLog: ActivityLog;
@@ -26,7 +25,7 @@ interface Props {
 
 const ActivityLogItem = ({ activityLog }: Props) => {
   const { themedColors } = usePreferredTheme();
-  AppLog.log("message: " + activityLog.getMessage());
+  //AppLog.log("message: " + activityLog.getMessage());
 
   const icon: any = () => {
     if (activityLog.type != null) {

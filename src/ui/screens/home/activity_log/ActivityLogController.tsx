@@ -5,7 +5,6 @@ import React, {
   useRef,
   useState
 } from "react";
-import { Alert } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { AppLog } from "utils/Util";
@@ -30,7 +29,23 @@ const ActivityLogController: FC<Props> = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigation = useNavigation<ActivityLogNavigationProp>();
+  const LIMIT = 20;
+  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
+    false
+  );
   const [searchByKeyword, setSearchByKeyword] = useState<DropDownItem>();
+  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+  const [
+    activityLogs,
+    setActivityLogs
+  ] = useState<ActivityLogsResponseModel>();
+  const isFetchingInProgress = useRef(false);
+
+  const requestModel = useRef<ActivityLogApiRequestModel>({
+    paginate: true,
+    page: 1,
+    limit: LIMIT
+  });
 
   // Activity Log API
   const activityLogApi = useApi<
@@ -38,77 +53,65 @@ const ActivityLogController: FC<Props> = () => {
     ActivityLogsResponseModel
   >(ProfileApis.activityLogs);
 
-  const requestModel = useRef<ActivityLogApiRequestModel>({
-    paginate: true,
-    limit: 100
-  });
-  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
-  const isFetchingInProgress = useRef(false);
-  const [
-    activityLogs,
-    setActivityLogs
-  ] = useState<ActivityLogsResponseModel>();
-
-  const refreshCallback = async (onComplete: () => void) => {
-    requestModel.current.page = 1;
-    setIsAllDataLoaded(false);
-    getActivityLogs().then(() => {
-      onComplete();
-    });
-  };
-
   const getActivityLogs = useCallback(async () => {
     if (isFetchingInProgress.current) {
       return;
     }
     isFetchingInProgress.current = true;
-    if (requestModel.current.page === 0) {
+
+    const currentPageToReload = requestModel.current.page;
+
+    if (currentPageToReload === 0) {
+      AppLog.log("No data left to fetch");
       isFetchingInProgress.current = false;
       setIsAllDataLoaded(true);
       return;
     }
 
-    // AppLog.log(
-    //   "in getActivityLogs(), fetching page: " +
-    //     JSON.stringify(requestModel.current)
-    // );
+    requestModel.current.page!! > 1 && setShouldShowProgressBar(true);
+    const { hasError, dataBody } = await activityLogApi.request([
+      requestModel.current
+    ]);
 
-    const {
-      hasError,
-      errorBody,
-      dataBody
-    } = await activityLogApi.request([requestModel.current]);
-
-    // const { hasError, errorBody, dataBody } = await activityLogApi.request([
-    //   requestModel.current
-    // ]);
-
+    setShouldShowProgressBar(false);
     if (!hasError) {
-      if (requestModel.current.page === 1) {
-        setActivityLogs({ message: "", data: [] });
+      setActivityLogs((prevState) => {
+        return {
+          message: dataBody!.message,
+          data: [
+            ...(requestModel.current.page!! === 1 ||
+            prevState === undefined
+              ? []
+              : prevState.data),
+            ...dataBody!.data
+          ]
+        };
+      });
+
+      if ((dataBody?.data.length ?? 0) < LIMIT) {
+        // All data has been loaded
+        requestModel.current.page = 0;
       }
-      setActivityLogs((prevState) => ({
-        message: dataBody!.message,
-        data: [
-          ...(prevState === undefined || requestModel.current.page === 1
-            ? []
-            : prevState.data),
-          ...dataBody!.data
-        ],
-        pagination: 10
-      }));
-      //requestModel.current.page = dataBody!.pagination?.next ?? 0;
-    } else {
-      Alert.alert("Unable to fetch matches", errorBody);
-      AppLog.log("Actitivy Logs" + activityLogs);
+
+      requestModel.current.page = requestModel.current.page!! + 1;
     }
 
     isFetchingInProgress.current = false;
-  }, [activityLogs, activityLogApi]);
+  }, [activityLogApi]);
 
-  const onEndReached = () => {
-    // getActivityLogs();
+  const onEndReached = useCallback(() => {
+    AppLog.log("onEndReachedcall");
+    getActivityLogs();
+  }, [getActivityLogs]);
+
+  const refreshCallback = async (onComplete: () => void) => {
+    setIsAllDataLoaded(false);
+    requestModel.current.page = 1;
+    getActivityLogs().then(() => {
+      onComplete();
+    });
   };
+
   const searchText = useCallback(
     (textToSearch: DropDownItem) => {
       AppLog.log("Searching: " + textToSearch);
@@ -128,7 +131,7 @@ const ActivityLogController: FC<Props> = () => {
   return (
     <ActivityLogView
       selectedItem={searchText}
-      isApiLoading={activityLogApi.loading}
+      isApiLoading={shouldShowProgressBar}
       activityLogs={toSectionList(activityLogs?.data ?? [])}
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}

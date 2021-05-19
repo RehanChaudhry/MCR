@@ -25,9 +25,9 @@ export default {
   GET_QUESTIONS: "question/",
   GET_ANSWERS: "answer/",
   POST_ANSWERS: "answer/",
-  GET_ACTIVITY_LOGS: "activity-logs/",
+  // GET_ACTIVITY_LOGS: "activity-logs/",
   UPDATE_PROFILE: "user",
-  // GET_ACTIVITY_LOGS: "log",
+  GET_ACTIVITY_LOGS: "log",
   // UPDATE_PROFILE: "user/",
 
   // matches
