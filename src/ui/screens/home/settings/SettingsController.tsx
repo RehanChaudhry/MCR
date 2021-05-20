@@ -5,6 +5,7 @@ import { UpdateAccountPasswordApiRequestModel } from "models/api_requests/Update
 import { UpdateAccountPasswordApiResponseModel } from "models/api_responses/UpdateAccountPasswordApiResponseModel";
 import React, { FC, useLayoutEffect } from "react";
 import { Alert } from "react-native";
+import SimpleToast from "react-native-simple-toast";
 import AuthApis from "repo/auth/AuthApis";
 import { useApi } from "repo/Client";
 import { HomeDrawerParamList } from "routes";
@@ -50,7 +51,7 @@ const SettingsController: FC<Props> = () => {
         Alert.alert("Unable to Update account password", errorBody);
         return;
       } else {
-        AppLog.log(dataBody.message);
+        SimpleToast.show(dataBody.message);
       }
     }
   );

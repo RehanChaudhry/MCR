@@ -126,6 +126,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
             ]}>
             {!shouldShowProgressBar && (
               <AppLabel
+                shouldNotOptimize={true}
                 style={[
                   style.text,
                   { color: theme.themedColors.primary },

@@ -2,7 +2,7 @@ import { SPACE } from "config";
 import { FormikValues } from "formik";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { UpdateAccountPasswordApiRequestModel } from "models/api_requests/UpdateAccountPasswordApiRequestModel";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { CardView } from "ui/components/atoms/CardView";
@@ -22,6 +22,10 @@ type Props = {
 
 export const SettingsView = React.memo<Props>(
   ({ onUpdateAccountSettings }) => {
+    const [secEmail, setSecEmail] = useState("");
+    const [oldPassword, setOldPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [conPassword, setConPassword] = useState("");
     const validationSchema = Yup.object().shape({
       //basic profile component
       // primaryEmailAddress: Yup.string()
@@ -35,7 +39,7 @@ export const SettingsView = React.memo<Props>(
       newPassword: Yup.string()
         .matches(/[A-Z]/, "Password must contain one capital letter (A-Z)")
         .matches(/[0-9]/, "Password must contain one number (0-9)")
-        .min(8, "Password should be atleast 8 chars")
+        .min(8, "Password should be at least 8 characters")
         .optional(),
 
       confirmPassword: Yup.string().when("newPassword", {
@@ -43,7 +47,7 @@ export const SettingsView = React.memo<Props>(
         then: Yup.string()
           .oneOf(
             [Yup.ref("newPassword")],
-            "The passwords you entered do not match"
+            "New Password and Confirm Password do not match"
           )
           .required("Field is required")
       }),
@@ -51,11 +55,11 @@ export const SettingsView = React.memo<Props>(
       currentPassword: Yup.string()
         .optional()
         .min(8, "Password should be atleast 8 chars")
-        .when("newPassword", {
-          is: (value: any[]) => {
-            return value?.length > 0;
+        .when(["newPassword"], {
+          is: (valueNewPassword: any[]) => {
+            return valueNewPassword?.length > 0;
           },
-          then: Yup.string().required("Field is required")
+          then: Yup.string().required("Old Password field cannot be empty")
         })
     });
     let initialValues: FormikValues = {
@@ -67,14 +71,31 @@ export const SettingsView = React.memo<Props>(
       confirmPassword: ""
     };
 
+    function shouldDisable() {
+      let disable: boolean = false;
+      disable = !(
+        secEmail !== "" ||
+        oldPassword !== "" ||
+        newPassword !== "" ||
+        conPassword !== ""
+      );
+      AppLog.log(disable);
+      return disable;
+    }
+
     const onSubmit = (_value: FormikValues) => {
-      AppLog.log("form values" + initialValues);
-      onUpdateAccountSettings({
-        secondaryEmail: _value.alternateEmailAddress,
-        oldPassword: _value.currentPassword,
-        password: _value.newPassword,
-        confirmPassword: _value.confirmPassword
-      });
+      AppLog.log("form values" + JSON.stringify(_value));
+      const request: UpdateAccountPasswordApiRequestModel = {};
+      if (secEmail !== "") {
+        request.secondaryEmail = secEmail;
+      }
+      if (oldPassword !== "" && newPassword !== "" && conPassword !== "") {
+        request.oldPassword = oldPassword;
+        request.password = newPassword;
+        request.confirmPassword = conPassword;
+      }
+      AppLog.log("form values request" + JSON.stringify(request));
+      onUpdateAccountSettings(request);
     };
 
     const theme = usePreferredTheme();
@@ -127,7 +148,9 @@ export const SettingsView = React.memo<Props>(
                   text: "Alternative Email Address",
                   weight: "semi-bold"
                 }}
+                value={secEmail}
                 fieldInputProps={{
+                  onChangeText: setSecEmail,
                   textContentType: "name",
                   keyboardType: "default",
                   returnKeyType: "next",
@@ -153,7 +176,9 @@ export const SettingsView = React.memo<Props>(
                   text: "Current Password",
                   weight: "semi-bold"
                 }}
+                value={oldPassword}
                 fieldInputProps={{
+                  onChangeText: setOldPassword,
                   textContentType: "password",
                   keyboardType: "default",
                   returnKeyType: "next",
@@ -180,7 +205,9 @@ export const SettingsView = React.memo<Props>(
                   text: "New Password",
                   weight: "semi-bold"
                 }}
+                value={newPassword}
                 fieldInputProps={{
+                  onChangeText: setNewPassword,
                   textContentType: "name",
                   keyboardType: "default",
                   returnKeyType: "next",
@@ -207,7 +234,9 @@ export const SettingsView = React.memo<Props>(
                   text: "Confirm Password",
                   weight: "semi-bold"
                 }}
+                value={conPassword}
                 fieldInputProps={{
+                  onChangeText: setConPassword,
                   textContentType: "name",
                   keyboardType: "default",
                   returnKeyType: "next",
@@ -227,13 +256,22 @@ export const SettingsView = React.memo<Props>(
               />
               <View style={styles.buttonViewStyle}>
                 <AppFormFormSubmit
+                  isDisable={shouldDisable()}
                   text={"Save"}
                   buttonType={BUTTON_TYPES.NORMAL}
                   fontWeight={"semi-bold"}
-                  textStyle={{ color: theme.themedColors.background }}
+                  textStyle={
+                    shouldDisable()
+                      ? { color: theme.themedColors.primary }
+                      : { color: theme.themedColors.interface[100] }
+                  }
                   buttonStyle={[
                     styles.buttonStyle,
-                    { backgroundColor: theme.themedColors.primary }
+                    {
+                      backgroundColor: shouldDisable()
+                        ? theme.themedColors.interface[200]
+                        : theme.themedColors.primary
+                    }
                   ]}
                 />
               </View>

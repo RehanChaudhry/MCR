@@ -1,63 +1,36 @@
 {
-  "duration": 585,
-  "problem": "CLIENT_ERROR",
-  "originalError": {
-    "message": "Request failed with status code 422",
-    "name": "Error",
-    "stack": "Error: Request failed with status code 422\n    at createError (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119021:17)\n    at settle (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119011:14)\n    at XMLHttpRequest.handleLoad (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:118911:9)\n    at XMLHttpRequest.dispatchEvent (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:32318:27)\n    at XMLHttpRequest.setReadyState (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31476:14)\n    at XMLHttpRequest.__didCompleteResponse (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31307:16)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31417:47\n    at RCTDeviceEventEmitter.emit (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:3570:37)\n    at MessageQueue.__callFunction (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2780:31)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2512:17",
-    "config": {
-      "url": "relation",
-      "method": "post",
-      "data": "{\"receiverId\":0}",
-      "headers": {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ3MywidXNlcklkIjo2NCwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwidXBkYXRlLWFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MjE0ODgxNjgsImV4cCI6MTYyNDA4MDE2OH0.bI0q-o2sto-G5vMA9938Eli41hpyC-T0Elp8fuqzNu0"
-      },
-      "baseURL": "https://mcr-dev.cygnis.dev/api/",
-      "transformRequest": [
-        null
-      ],
-      "transformResponse": [
-        null
-      ],
-      "timeout": 0,
-      "xsrfCookieName": "XSRF-TOKEN",
-      "xsrfHeaderName": "X-XSRF-TOKEN",
-      "maxContentLength": -1,
-      "maxBodyLength": -1
-    }
-  },
-  "ok": false,
-  "status": 422,
+  "duration": 608,
+  "problem": null,
+  "originalError": null,
+  "ok": true,
+  "status": 200,
   "headers": {
-    "cf-request-id": "0a29e829400000565ece981000000001",
+    "cf-request-id": "0a2af84cc80000c33b99059000000001",
     "content-type": "application/json; charset=utf-8",
     "x-content-type-options": "nosniff",
-    "vary": "Origin",
-    "etag": "W/\"69-9LCIFLOHPbvkIEYmAUWgYWx/6Ik\"",
-    "date": "Thu, 20 May 2021 05:45:53 GMT",
-    "x-frame-options": "SAMEORIGIN",
     "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
-    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
     "strict-transport-security": "max-age=0; includeSubDomains",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=c4ZkPW2%2F7tdkwzXKqnp%2Fx6Uv3JzchKijG4scP44l1ZrB2ZUhnsZfLJoG79%2FOMqCwyRCkpBay3%2B%2F%2Bdetccw1y0mIcxHnOE%2FZwl%2FLswuEEhc0fGcc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=G%2BGBDW8vgYKZ3H2bmrGbUlkpnmGkKUsXobMDXnhQTwanv02rLH01NYHG2q%2FmR3jtGCUxCmWKZ%2BTpLXgN7ZZ7v%2BpaPzoYg6C86WCya4GHHBNEF6U%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "6524f65ad818c33b-SIN",
     "x-powered-by": "Express",
-    "cf-ray": "652342eecf7c565e-SIN",
-    "cf-cache-status": "DYNAMIC",
-    "server": "cloudflare",
-    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
     "x-xss-protection": "1; mode=block",
-    "content-length": "105"
+    "vary": "Accept-Encoding, Origin",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cf-cache-status": "DYNAMIC",
+    "x-frame-options": "SAMEORIGIN",
+    "date": "Thu, 20 May 2021 10:43:08 GMT",
+    "server": "cloudflare",
+    "etag": "W/\"3f2-ywf5JWLbQauC+YRm0cS+199cmds\""
   },
   "config": {
-    "url": "relation",
-    "method": "post",
-    "data": "{\"receiverId\":0}",
+    "url": "user/me",
+    "method": "put",
+    "data": "{\"secondaryEmail\":\"jaweria@cygnismedia.com\"}",
     "headers": {
       "Accept": "application/json",
       "Content-Type": "application/json",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ3MywidXNlcklkIjo2NCwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwidXBkYXRlLWFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MjE0ODgxNjgsImV4cCI6MTYyNDA4MDE2OH0.bI0q-o2sto-G5vMA9938Eli41hpyC-T0Elp8fuqzNu0"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTk3LCJ1c2VySWQiOjIwNiwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiXSwiaWF0IjoxNjE5Njc5OTgxLCJleHAiOjE2MjIyNzE5ODF9._0F5hN1PRUfhE2of4jrLO2ySwrbjN2zgcSIvaqg8BgI"
     },
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
     "transformRequest": [
@@ -73,9 +46,45 @@
     "maxBodyLength": -1
   },
   "data": {
-    "message": "Please fix following errors",
-    "errors": {
-      "receiverId": "Receiver Id should be greater than 1."
+    "message": "Your profile has been updated successfully.",
+    "data": {
+      "id": 206,
+      "firstName": "Clyde",
+      "lastName": "Sakins",
+      "email": "csakins4z@theglobeandmail.com",
+      "secondaryEmail": "jaweria@cygnismedia.com",
+      "roleId": 4,
+      "roleTitle": "Student",
+      "enrollmentId": "iq7srslusvq",
+      "status": "active",
+      "profilePicture": {
+        "fileURL": "https://randomuser.me/api/portraits/men/11.jpg",
+        "originalName": "11.jpg"
+      },
+      "genderId": 1,
+      "gender": "Male",
+      "major": "Surveying",
+      "hometown": "East Dax",
+      "program": null,
+      "youtubeVideoURL": null,
+      "matchingPattern": "",
+      "matchingPatternWeightage": 0,
+      "matchGroupId": 3,
+      "matchGroupName": "Junior",
+      "floorPlanRoomId": 2,
+      "building": "Red Robin Palace",
+      "roomNumber": "77016",
+      "welcomeVideoStatus": "completed",
+      "questionnaireStatus": "completed",
+      "totalQuestions": 49,
+      "totalQuestionsAnswered": 0,
+      "activatedAt": "2021-05-07T05:44:27.000Z",
+      "profileCompletedAt": "2021-05-20T10:35:21.000Z",
+      "loggedInAt": "2021-05-18T05:59:39.000Z",
+      "isFlagged": 0,
+      "lastReportedAt": null,
+      "createdAt": "2021-05-06T05:44:27.000Z",
+      "updatedAt": "2021-05-20T10:43:08.788Z"
     }
   }
 }

@@ -60,6 +60,7 @@ exports[`snapshot testing 1`] = `
     >
       <Text
         numberOfLines={1}
+        shouldNotOptimize={true}
         style={
           Array [
             Array [
