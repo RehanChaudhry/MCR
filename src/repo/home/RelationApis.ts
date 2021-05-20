@@ -1,4 +1,5 @@
 import { API } from "config";
+import { MatchDismissBlockApiRequestModel } from "models/api_requests/MatchDismissBlockApiRequestModel";
 import { apiClient } from "repo/Client";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
@@ -16,9 +17,9 @@ function postRelation(userId: number) {
   });
 }
 
-function matchDismiss(userId: number) {
-  return apiClient.post<ApiSuccessResponseModel>(API.DISMISS_MATCH, {
-    userId: userId
+function matchDismiss(requestModel: MatchDismissBlockApiRequestModel) {
+  return apiClient.put<ApiSuccessResponseModel>(API.DISMISS_MATCH, {
+    requestModel
   });
 }
 

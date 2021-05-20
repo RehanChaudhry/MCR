@@ -1,3 +1,4 @@
+import { MatchDismissBlockApiRequestModel } from "models/api_requests/MatchDismissBlockApiRequestModel";
 import React, {
   FC,
   useCallback,
@@ -209,21 +210,26 @@ const MatchesController: FC<Props> = () => {
   );
 
   // Match Dismiss API
-  const matchDismissApi = useApi<number, ApiSuccessResponseModel>(
-    RelationApis.matchDismiss
-  );
+  const matchDismissApi = useApi<
+    MatchDismissBlockApiRequestModel,
+    ApiSuccessResponseModel
+  >(RelationApis.matchDismiss);
 
-  const postMatchDismiss = async (userId: number) => {
+  const postMatchDismiss = async (
+    request: MatchDismissBlockApiRequestModel
+  ) => {
     const {
       hasError,
       errorBody,
       dataBody
-    } = await matchDismissApi.request([userId]);
+    } = await matchDismissApi.request([request]);
 
     if (!hasError) {
       setProfileMatches((prevState) => {
         const dismissedUserIndex =
-          prevState?.findIndex((value) => value.userId === userId) ?? -1;
+          prevState?.findIndex(
+            (value) => value.userId === request.userId
+          ) ?? -1;
         if (dismissedUserIndex > -1) {
           prevState!.splice(dismissedUserIndex, 1);
         }

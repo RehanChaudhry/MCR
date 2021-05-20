@@ -1,3 +1,4 @@
+import { MatchDismissBlockApiRequestModel } from "models/api_requests/MatchDismissBlockApiRequestModel";
 import React, { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
@@ -28,7 +29,9 @@ type Props = {
   isAllDataLoaded: boolean;
   isFriendRequestApiLoading: boolean;
   postFriendRequest: (userId: number) => void;
-  postMatchDismiss: (userId: number) => void;
+  postMatchDismiss: (
+    requestModel: MatchDismissBlockApiRequestModel
+  ) => void;
   selectedTotalCount: number;
   moveToChatScreen: (profileMatch: RelationModel) => void;
   moveToProfileScreen: (profileMatch: RelationModel) => void;
@@ -75,7 +78,7 @@ export const MatchesView: React.FC<Props> = ({
         <ProfileMatchItem
           profileMatch={_item}
           isFriendRequestApiLoading={
-            profileMatch.current?.matchingUserId === _item.userId
+            profileMatch.current?.userId === _item.userId
               ? isFriendRequestApiLoading
               : false
           }
@@ -158,7 +161,10 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.dismiss_block.dismiss,
           onPress: () => {
             setDismissDialogVisible(false);
-            postMatchDismiss(profileMatch.current!.userId);
+            postMatchDismiss({
+              userId: profileMatch.current!.userId,
+              status: "dismiss"
+            });
           },
           style: {
             weight: "semi-bold",
