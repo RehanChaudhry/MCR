@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { usePreventDoubleTap } from "hooks";
 import { UpdateAccountPasswordApiRequestModel } from "models/api_requests/UpdateAccountPasswordApiRequestModel";
 import { UpdateAccountPasswordApiResponseModel } from "models/api_responses/UpdateAccountPasswordApiResponseModel";
-import React, { FC, useLayoutEffect } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import { Alert } from "react-native";
 import SimpleToast from "react-native-simple-toast";
 import AuthApis from "repo/auth/AuthApis";
@@ -22,7 +22,7 @@ type SettingNavigationProp = StackNavigationProp<
 
 const SettingsController: FC<Props> = () => {
   const navigation = useNavigation<SettingNavigationProp>();
-
+  const [shouldShowPb, setShouldShowPb] = useState(false);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => <Hamburger />,
@@ -39,7 +39,7 @@ const SettingsController: FC<Props> = () => {
   const handleUpdateAccountPassword = usePreventDoubleTap(
     async (apiRequestModel: UpdateAccountPasswordApiRequestModel) => {
       AppLog.log("handleUpdateAccountPassword: ");
-
+      setShouldShowPb(true);
       // authenticate user
       const {
         hasError,
@@ -48,9 +48,11 @@ const SettingsController: FC<Props> = () => {
       } = await updateAccountPasswordApi.request([apiRequestModel]);
 
       if (hasError || dataBody === undefined) {
+        setShouldShowPb(false);
         Alert.alert("Unable to Update account password", errorBody);
         return;
       } else {
+        setShouldShowPb(false);
         SimpleToast.show(dataBody.message);
       }
     }
@@ -58,7 +60,7 @@ const SettingsController: FC<Props> = () => {
 
   return (
     <SettingsView
-      shouldShowProgressBar={updateAccountPasswordApi.loading}
+      shouldShowProgressBar={shouldShowPb}
       onUpdateAccountSettings={(_requestModel) => {
         handleUpdateAccountPassword(_requestModel);
       }}

@@ -21,7 +21,7 @@ type Props = {
 };
 
 export const SettingsView = React.memo<Props>(
-  ({ onUpdateAccountSettings }) => {
+  ({ onUpdateAccountSettings, shouldShowProgressBar }) => {
     const [secEmail, setSecEmail] = useState("");
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -256,6 +256,8 @@ export const SettingsView = React.memo<Props>(
               />
               <View style={styles.buttonViewStyle}>
                 <AppFormFormSubmit
+                  loaderColor={theme.themedColors.background}
+                  shouldShowProgressBar={shouldShowProgressBar}
                   isDisable={shouldDisable()}
                   text={"Save"}
                   buttonType={BUTTON_TYPES.NORMAL}
