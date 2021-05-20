@@ -35,7 +35,7 @@ type Criteria = {
 
 export class RelationModel {
   id!: number;
-  matchingUserId: number = 0;
+  userId: number = 0;
   matchScore?: number;
   user?: RelationUser;
   createdAt: string = "";

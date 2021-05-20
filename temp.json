@@ -1,21 +1,26 @@
 {
-  "duration": 703,
+  "duration": 585,
   "problem": "CLIENT_ERROR",
   "originalError": {
-    "message": "Request failed with status code 404",
+    "message": "Request failed with status code 422",
     "name": "Error",
-    "stack": "createError@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:118558:26\nsettle@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:118548:25\nhandleLoad@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:118448:15\ndispatchEvent@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:32386:31\nsetReadyState@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:31544:27\n__didCompleteResponse@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:31375:29\nemit@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:7202:42\n__callFunction@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2813:36\nhttp://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2545:31\n__guard@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2767:15\ncallFunctionReturnFlushedQueue@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false:2544:21\ncallFunctionReturnFlushedQueue@[native code]",
+    "stack": "Error: Request failed with status code 422\n    at createError (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119021:17)\n    at settle (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119011:14)\n    at XMLHttpRequest.handleLoad (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:118911:9)\n    at XMLHttpRequest.dispatchEvent (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:32318:27)\n    at XMLHttpRequest.setReadyState (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31476:14)\n    at XMLHttpRequest.__didCompleteResponse (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31307:16)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31417:47\n    at RCTDeviceEventEmitter.emit (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:3570:37)\n    at MessageQueue.__callFunction (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2780:31)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2512:17",
     "config": {
-      "url": "friendrequests",
-      "method": "get",
+      "url": "relation",
+      "method": "post",
+      "data": "{\"receiverId\":0}",
       "headers": {
         "Accept": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjYsInVzZXJJZCI6MjA2LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MTk0OTU5MzYsImV4cCI6MTYyMjA4NzkzNn0.BW9ipIC-oMupTBS6tnk44sIQl_gQBKK9UV3RFyZoxYY"
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ3MywidXNlcklkIjo2NCwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwidXBkYXRlLWFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MjE0ODgxNjgsImV4cCI6MTYyNDA4MDE2OH0.bI0q-o2sto-G5vMA9938Eli41hpyC-T0Elp8fuqzNu0"
       },
-      "params": {},
       "baseURL": "https://mcr-dev.cygnis.dev/api/",
-      "transformRequest": [null],
-      "transformResponse": [null],
+      "transformRequest": [
+        null
+      ],
+      "transformResponse": [
+        null
+      ],
       "timeout": 0,
       "xsrfCookieName": "XSRF-TOKEN",
       "xsrfHeaderName": "X-XSRF-TOKEN",
@@ -24,43 +29,53 @@
     }
   },
   "ok": false,
-  "status": 404,
+  "status": 422,
   "headers": {
-    "content-type": "text/html; charset=utf-8",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=BQaH3Tp4nFCJ2PzSoutCnEBI1QDZynxrYRs49UC57fuI%2B%2FWwnSY7ScexN%2B%2FKmaNBv1OfwM2sDFdBqFUeF%2BL6941A802pDRE%2BoHdqUDD2sRqFwY8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
-    "x-powered-by": "Express",
-    "date": "Mon, 17 May 2021 11:49:51 GMT",
-    "cf-ray": "650c9ff328f1cbd4-SIN",
-    "content-encoding": "br",
-    "x-xss-protection": "1; mode=block",
-    "cf-request-id": "0a1bc24bf70000cbd4c7223000000001",
-    "content-security-policy": "default-src 'none'",
-    "vary": "Accept-Encoding, Origin",
-    "cf-cache-status": "DYNAMIC",
-    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
-    "server": "cloudflare",
-    "strict-transport-security": "max-age=0; includeSubDomains",
-    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
-    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "cf-request-id": "0a29e829400000565ece981000000001",
+    "content-type": "application/json; charset=utf-8",
     "x-content-type-options": "nosniff",
-    "x-frame-options": "SAMEORIGIN"
+    "vary": "Origin",
+    "etag": "W/\"69-9LCIFLOHPbvkIEYmAUWgYWx/6Ik\"",
+    "date": "Thu, 20 May 2021 05:45:53 GMT",
+    "x-frame-options": "SAMEORIGIN",
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=c4ZkPW2%2F7tdkwzXKqnp%2Fx6Uv3JzchKijG4scP44l1ZrB2ZUhnsZfLJoG79%2FOMqCwyRCkpBay3%2B%2F%2Bdetccw1y0mIcxHnOE%2FZwl%2FLswuEEhc0fGcc%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-powered-by": "Express",
+    "cf-ray": "652342eecf7c565e-SIN",
+    "cf-cache-status": "DYNAMIC",
+    "server": "cloudflare",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-xss-protection": "1; mode=block",
+    "content-length": "105"
   },
   "config": {
-    "url": "friendrequests",
-    "method": "get",
+    "url": "relation",
+    "method": "post",
+    "data": "{\"receiverId\":0}",
     "headers": {
       "Accept": "application/json",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjYsInVzZXJJZCI6MjA2LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MTk0OTU5MzYsImV4cCI6MTYyMjA4NzkzNn0.BW9ipIC-oMupTBS6tnk44sIQl_gQBKK9UV3RFyZoxYY"
+      "Content-Type": "application/json",
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ3MywidXNlcklkIjo2NCwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwidXBkYXRlLWFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MjE0ODgxNjgsImV4cCI6MTYyNDA4MDE2OH0.bI0q-o2sto-G5vMA9938Eli41hpyC-T0Elp8fuqzNu0"
     },
-    "params": {},
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
-    "transformRequest": [null],
-    "transformResponse": [null],
+    "transformRequest": [
+      null
+    ],
+    "transformResponse": [
+      null
+    ],
     "timeout": 0,
     "xsrfCookieName": "XSRF-TOKEN",
     "xsrfHeaderName": "X-XSRF-TOKEN",
     "maxContentLength": -1,
     "maxBodyLength": -1
   },
-  "data": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/friendrequests</pre>\n</body>\n</html>\n"
+  "data": {
+    "message": "Please fix following errors",
+    "errors": {
+      "receiverId": "Receiver Id should be greater than 1."
+    }
+  }
 }

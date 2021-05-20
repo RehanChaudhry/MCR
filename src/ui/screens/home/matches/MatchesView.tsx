@@ -75,7 +75,7 @@ export const MatchesView: React.FC<Props> = ({
         <ProfileMatchItem
           profileMatch={_item}
           isFriendRequestApiLoading={
-            profileMatch.current?.matchingUserId === _item.matchingUserId
+            profileMatch.current?.matchingUserId === _item.userId
               ? isFriendRequestApiLoading
               : false
           }
@@ -123,7 +123,7 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.friend_request.success,
           onPress: () => {
             setRequestDialogVisible(false);
-            postFriendRequest(profileMatch.current!.matchingUserId);
+            postFriendRequest(profileMatch.current!.userId);
           },
           style: {
             weight: "semi-bold",
@@ -158,7 +158,7 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.dismiss_block.dismiss,
           onPress: () => {
             setDismissDialogVisible(false);
-            postMatchDismiss(profileMatch.current!.matchingUserId);
+            postMatchDismiss(profileMatch.current!.userId);
           },
           style: {
             weight: "semi-bold",
@@ -169,7 +169,7 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.dismiss_block.block,
           onPress: () => {
             setDismissDialogVisible(false);
-            postMatchDismiss(profileMatch.current!.matchingUserId);
+            postMatchDismiss(profileMatch.current!.userId);
             profileMatch.current = undefined;
           },
           style: {
@@ -208,7 +208,7 @@ export const MatchesView: React.FC<Props> = ({
         onEndReached={onEndReached}
         pullToRefreshCallback={pullToRefreshCallback}
         isAllDataLoaded={isAllDataLoaded}
-        keyExtractor={(item) => item.matchingUserId?.toString()}
+        keyExtractor={(item) => item.userId?.toString()}
         error={error}
         retryCallback={pullToRefreshCallback}
         extraData={isFriendRequestApiLoading}

@@ -188,9 +188,7 @@ const MatchesController: FC<Props> = () => {
       if (!hasError) {
         setProfileMatches((prevState) => {
           let requestedUserPosition =
-            prevState?.findIndex(
-              (value) => value.matchingUserId === userId
-            ) ?? -1;
+            prevState?.findIndex((value) => value.userId === userId) ?? -1;
           if (requestedUserPosition !== -1) {
             const updatedUser = new RelationModel(
               prevState![requestedUserPosition]
@@ -225,9 +223,7 @@ const MatchesController: FC<Props> = () => {
     if (!hasError) {
       setProfileMatches((prevState) => {
         const dismissedUserIndex =
-          prevState?.findIndex(
-            (value) => value.matchingUserId === userId
-          ) ?? -1;
+          prevState?.findIndex((value) => value.userId === userId) ?? -1;
         if (dismissedUserIndex > -1) {
           prevState!.splice(dismissedUserIndex, 1);
         }

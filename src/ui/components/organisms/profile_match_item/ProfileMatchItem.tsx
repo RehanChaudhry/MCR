@@ -78,7 +78,7 @@ const ProfileMatchItem = ({
       <Pressable
         style={styles.icCross}
         onPress={() => {
-          onCrossClicked(profileMatch.matchingUserId);
+          onCrossClicked(profileMatch.userId);
         }}>
         <Cross
           fill={themedColors.interface[400]}
@@ -105,7 +105,7 @@ const ProfileMatchItem = ({
           <AppButton
             shouldShowProgressBar={isFriendRequestApiLoading}
             onPress={() => {
-              onFriendRequestClicked(profileMatch.matchingUserId);
+              onFriendRequestClicked(profileMatch.userId);
             }}
             fontWeight={"semi-bold"}
             textStyle={[
