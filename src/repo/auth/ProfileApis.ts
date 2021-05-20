@@ -35,10 +35,9 @@ function answers(requestModel: AnswerApiRequestModel) {
 }
 
 function activityLogs(requestModel: ActivityLogApiRequestModel) {
-  return apiClient.get<ActivityLogsResponseModel>(
-    API.GET_ACTIVITY_LOGS,
-    JSON.stringify(requestModel)
-  );
+  return apiClient.get<ActivityLogsResponseModel>(API.GET_ACTIVITY_LOGS, {
+    ...requestModel
+  });
 }
 
 export default {
