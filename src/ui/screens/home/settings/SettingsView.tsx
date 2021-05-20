@@ -149,8 +149,8 @@ export const SettingsView = React.memo<Props>(
                   weight: "semi-bold"
                 }}
                 value={secEmail}
+                customTextChanged={setSecEmail}
                 fieldInputProps={{
-                  onChangeText: setSecEmail,
                   textContentType: "name",
                   keyboardType: "default",
                   returnKeyType: "next",
@@ -177,8 +177,8 @@ export const SettingsView = React.memo<Props>(
                   weight: "semi-bold"
                 }}
                 value={oldPassword}
+                customTextChanged={setOldPassword}
                 fieldInputProps={{
-                  onChangeText: setOldPassword,
                   textContentType: "password",
                   keyboardType: "default",
                   returnKeyType: "next",
@@ -206,8 +206,8 @@ export const SettingsView = React.memo<Props>(
                   weight: "semi-bold"
                 }}
                 value={newPassword}
+                customTextChanged={setNewPassword}
                 fieldInputProps={{
-                  onChangeText: setNewPassword,
                   textContentType: "name",
                   keyboardType: "default",
                   returnKeyType: "next",
@@ -235,8 +235,8 @@ export const SettingsView = React.memo<Props>(
                   weight: "semi-bold"
                 }}
                 value={conPassword}
+                customTextChanged={setConPassword}
                 fieldInputProps={{
-                  onChangeText: setConPassword,
                   textContentType: "name",
                   keyboardType: "default",
                   returnKeyType: "next",
