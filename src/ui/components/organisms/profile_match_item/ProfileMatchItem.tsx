@@ -163,11 +163,11 @@ const ProfileMatchItem = ({
             fontWeight={"semi-bold"}
             textStyle={[
               styles.btnActionText,
-              { color: themedColors.success }
+              { color: themedColors.primary }
             ]}
             buttonStyle={[
               styles.btnAction,
-              { backgroundColor: themedColors.successShade }
+              { backgroundColor: themedColors.primaryShade }
             ]}
             text={STRINGS.matches.label_roommate_request}
           />
