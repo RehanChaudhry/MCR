@@ -207,7 +207,12 @@ const MatchesController: FC<Props> = () => {
           Alert.alert("Roommate Request Sent", dataBody!.message);
         }
       } else {
-        Alert.alert("Unable to send friend request", errorBody);
+        if (type === RelationActionType.FRIEND_REQUEST) {
+          Alert.alert("Unable to send friend request", errorBody);
+        }
+        if (type === RelationActionType.ROOMMATE_REQUEST) {
+          Alert.alert("Unable to send roommate request", errorBody);
+        }
       }
     },
     [requestApi]
@@ -303,9 +308,6 @@ const MatchesController: FC<Props> = () => {
           }
           return Object.assign([], prevState);
         });
-      }
-      if (type === RelationActionType.BLOCKED) {
-        Alert.alert("Match Blocked", dataBody!.message);
       }
     } else {
       if (
