@@ -105,7 +105,8 @@ export default {
     placeholder_search_keyword: "Search by keyword",
     title: "Matches",
     label_not_eligible: "Not Eligible",
-    label_roommate_request: "Roommate Request"
+    label_roommate_request: "Roommate Request",
+    label_request_received: "Request Received"
   },
   profile: {
     title:

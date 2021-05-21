@@ -172,6 +172,21 @@ const ProfileMatchItem = ({
             text={STRINGS.matches.label_roommate_request}
           />
         )}
+        {profileMatch.getType() === RelationType.REQUEST_RECEIVED && (
+          <AppButton
+            isDisable={true}
+            fontWeight={"semi-bold"}
+            textStyle={[
+              styles.btnActionText,
+              { color: themedColors.primary }
+            ]}
+            buttonStyle={[
+              styles.btnAction,
+              { backgroundColor: themedColors.primaryShade }
+            ]}
+            text={STRINGS.matches.label_request_received}
+          />
+        )}
       </View>
     </View>
   );

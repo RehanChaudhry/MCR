@@ -55,13 +55,20 @@ export class RelationModel {
       return RelationType.ROOMMATE;
     } else if (
       this.isFriend === EIntBoolean.TRUE &&
-      this.status === Status.ACCEPTED
+      (this.status === Status.ACCEPTED || this.status === Status.REJECTED)
     ) {
       if (this.criteria !== null && this.criteria?.eligible === false) {
         return RelationType.NOT_ELIGIBLE;
       } else {
         return RelationType.FRIEND;
       }
+    } else if (
+      this.isFriend === EIntBoolean.TRUE &&
+      this.status === Status.PENDING &&
+      this.criteria !== null &&
+      this.criteria?.eligible === false
+    ) {
+      return RelationType.REQUEST_RECEIVED;
     } else if (this.status === Status.PENDING) {
       return RelationType.FRIEND_REQUESTED;
     } else if (this.status === Status.DISMISSED) {
