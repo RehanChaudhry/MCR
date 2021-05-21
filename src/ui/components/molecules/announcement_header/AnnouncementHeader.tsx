@@ -19,7 +19,7 @@ import {
 import { SvgProp } from "utils/Util";
 
 export interface AnnouncementHeaderProps extends TouchableOpacityProps {
-  leftImageUrl?: string;
+  leftImageUrl?: string | undefined;
   title: string;
   subTitle?: string;
   titleStyle?: StyleProp<TextStyle>;
@@ -60,7 +60,11 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
           <View style={style.leftContainer}>
             <Image
               style={[style.profileImage, leftImageStyle]}
-              source={{ uri: leftImageUrl }}
+              source={
+                leftImageUrl !== undefined
+                  ? { uri: leftImageUrl }
+                  : require("assets/images/profile.png")
+              }
             />
 
             <View style={style.titleSubtitle}>
