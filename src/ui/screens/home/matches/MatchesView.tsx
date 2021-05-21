@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import { MatchDismissBlockApiRequestModel } from "models/api_requests/MatchDismissBlockApiRequestModel";
+import React, { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import RelationModel from "models/RelationModel";
@@ -26,11 +27,17 @@ type Props = {
   pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
+  isFriendRequestApiLoading: boolean;
   postFriendRequest: (userId: number) => void;
-  postMatchDismiss: (userId: number) => void;
+  postMatchDismiss: (
+    requestModel: MatchDismissBlockApiRequestModel
+  ) => void;
   selectedTotalCount: number;
   moveToChatScreen: (profileMatch: RelationModel) => void;
   moveToProfileScreen: (profileMatch: RelationModel) => void;
+  postMatchBlocked: (
+    requestModel: MatchDismissBlockApiRequestModel
+  ) => void;
 };
 
 export const MatchesView: React.FC<Props> = ({
@@ -42,11 +49,13 @@ export const MatchesView: React.FC<Props> = ({
   pullToRefreshCallback,
   onEndReached,
   isAllDataLoaded,
+  isFriendRequestApiLoading,
   postFriendRequest,
   postMatchDismiss,
   selectedTotalCount,
   moveToChatScreen,
-  moveToProfileScreen
+  moveToProfileScreen,
+  postMatchBlocked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -66,25 +75,33 @@ export const MatchesView: React.FC<Props> = ({
 
   const profileMatch = useRef<RelationModel>();
 
-  const renderItem = ({ item }: { item: RelationModel }) => {
-    const _item = new RelationModel(item);
-    return (
-      <ProfileMatchItem
-        profileMatch={_item}
-        onFriendRequestClicked={() => {
-          profileMatch.current = _item;
-          setRequestDialogVisible(true);
-        }}
-        onCrossClicked={() => {
-          AppLog.log("onCrossClicked()");
-          profileMatch.current = _item;
-          setDismissDialogVisible(true);
-        }}
-        onChatButtonClicked={moveToChatScreen}
-        onImageClicked={moveToProfileScreen}
-      />
-    );
-  };
+  const renderItem = useCallback(
+    ({ item }: { item: RelationModel }) => {
+      const _item = new RelationModel(item);
+      return (
+        <ProfileMatchItem
+          profileMatch={_item}
+          isFriendRequestApiLoading={
+            profileMatch.current?.userId === _item.userId
+              ? isFriendRequestApiLoading
+              : false
+          }
+          onFriendRequestClicked={() => {
+            profileMatch.current = _item;
+            setRequestDialogVisible(true);
+          }}
+          onCrossClicked={() => {
+            AppLog.log("onCrossClicked()");
+            profileMatch.current = _item;
+            setDismissDialogVisible(true);
+          }}
+          onChatButtonClicked={moveToChatScreen}
+          onImageClicked={moveToProfileScreen}
+        />
+      );
+    },
+    [moveToProfileScreen, moveToChatScreen, isFriendRequestApiLoading]
+  );
 
   function filter(): OptimizedBBCItem<MatchesTypeFilter>[] {
     return getMatchesTypeFilterData().map((value) => {
@@ -113,8 +130,7 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.friend_request.success,
           onPress: () => {
             setRequestDialogVisible(false);
-            postFriendRequest(profileMatch.current!.matchingUserId);
-            profileMatch.current = undefined;
+            postFriendRequest(profileMatch.current!.userId);
           },
           style: {
             weight: "semi-bold",
@@ -149,8 +165,10 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.dismiss_block.dismiss,
           onPress: () => {
             setDismissDialogVisible(false);
-            postMatchDismiss(profileMatch.current!.matchingUserId);
-            profileMatch.current = undefined;
+            postMatchDismiss({
+              userId: profileMatch.current!.userId,
+              status: "dismissed"
+            });
           },
           style: {
             weight: "semi-bold",
@@ -161,7 +179,10 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.dismiss_block.block,
           onPress: () => {
             setDismissDialogVisible(false);
-            postMatchDismiss(profileMatch.current!.matchingUserId);
+            postMatchBlocked({
+              userId: profileMatch.current!.userId,
+              status: "blocked"
+            });
             profileMatch.current = undefined;
           },
           style: {
@@ -200,9 +221,10 @@ export const MatchesView: React.FC<Props> = ({
         onEndReached={onEndReached}
         pullToRefreshCallback={pullToRefreshCallback}
         isAllDataLoaded={isAllDataLoaded}
-        keyExtractor={(item) => item.matchingUserId.toString()}
+        keyExtractor={(item) => item.userId?.toString()}
         error={error}
         retryCallback={pullToRefreshCallback}
+        extraData={isFriendRequestApiLoading}
       />
       {requestDialog()}
       {dismissDialog()}

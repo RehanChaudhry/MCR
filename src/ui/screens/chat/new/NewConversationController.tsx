@@ -1,5 +1,6 @@
 import React, {
   FC,
+  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -18,15 +19,14 @@ import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_w
 import { moderateScale } from "config/Dimens";
 import { ChatRootStackParamList } from "routes/ChatRootStack";
 import { useApi } from "repo/Client";
-import {
-  ConversationSuggestionsResponseModel,
-  User
-} from "models/api_responses/ConversationSuggestionsResponseModel";
+import { ConversationSuggestionsResponseModel } from "models/api_responses/ConversationSuggestionsResponseModel";
 import ChatApis from "repo/chat/ChatApis";
 import { AppLog } from "utils/Util";
 import { ConversationSuggestionsRequestModel } from "models/api_requests/ConversationSuggestionsRequestModel";
 import { CreateConversationRequestModel } from "models/api_requests/CreateConversationRequestModel";
 import SimpleToast from "react-native-simple-toast";
+import { CreateConversationResponseModel } from "models/api_responses/CreateConversationResponseModel";
+import { User } from "models/User";
 
 type ConversationNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -49,16 +49,84 @@ export const NewConversationController: FC<Props> = () => {
   const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
   const [clearInputField, setClearInputField] = useState<boolean>(false);
 
-  const goBack = () => {
-    const users: string[] = newConversations!!.reduce(
-      (newArray: string[], item) => (
-        newArray.push(item.firstName + " " + item.lastName), newArray
-      ),
-      []
+  const openChatThreadScreen = useCallback(
+    (conversationId: number) => {
+      const users: string[] = newConversations!!.reduce(
+        (newArray: string[], item) => (
+          newArray.push(item.firstName + " " + item.lastName), newArray
+        ),
+        []
+      );
+      navigation.goBack();
+      navigation.navigate("ChatThread", {
+        title: users,
+        conversationId: conversationId
+      });
+    },
+    [navigation, newConversations]
+  );
+
+  const getSuggestions = useApi<
+    ConversationSuggestionsRequestModel,
+    ConversationSuggestionsResponseModel
+  >(ChatApis.getSuggestions);
+
+  const handleGetSuggestionApi = async (keyword: string) => {
+    setShowProgressbar(true);
+    const { hasError, dataBody, errorBody } = await getSuggestions.request(
+      [
+        {
+          keyword: keyword,
+          roleTitle: conversationType.current === 0 ? "Student" : "Staff"
+        }
+      ]
     );
-    navigation.goBack();
-    navigation.navigate("ChatThread", { title: users });
+    setShowProgressbar(false);
+    if (hasError || dataBody === undefined) {
+      AppLog.log("Unable to find suggestions " + errorBody);
+      return;
+    } else {
+      setSuggestions(dataBody.data);
+    }
   };
+
+  const createConversationAPi = useApi<
+    CreateConversationRequestModel,
+    CreateConversationResponseModel
+  >(ChatApis.createConversations);
+
+  const handleCreateConversationApi = useCallback(async () => {
+    const { hasError, dataBody, errorBody } = await createConversationAPi // @ts-ignore
+      .request([{ userIds: usersIds.current }]);
+
+    return { hasError, dataBody, errorBody };
+  }, [createConversationAPi]);
+
+  const headerRightClick = useCallback(() => {
+    AppLog.logForcefully("dats  : " + JSON.stringify(newConversations));
+    if (newConversations !== undefined && newConversations.length > 0) {
+      handleCreateConversationApi()
+        .then((result) => {
+          if (result.hasError && result.dataBody !== undefined) {
+            SimpleToast.show(
+              result.errorBody ?? Strings.somethingWentWrong
+            );
+          } else {
+            openChatThreadScreen(result.dataBody!!.data.id);
+          }
+        })
+        .catch((error) => {
+          SimpleToast.show(error ?? Strings.somethingWentWrong);
+        });
+    } else {
+      navigation.goBack();
+    }
+  }, [
+    navigation,
+    openChatThreadScreen,
+    newConversations,
+    handleCreateConversationApi
+  ]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -84,34 +152,7 @@ export const NewConversationController: FC<Props> = () => {
       headerRight: () => (
         <HeaderRightTextWithIcon
           text={Strings.newConversation.titleRight}
-          onPress={() => {
-            if (
-              newConversations !== undefined &&
-              newConversations.length > 0
-            ) {
-              handleCreateConversationApi()
-                .then((result) => {
-                  AppLog.logForcefully(
-                    "CreateConversationApi() => " + JSON.stringify(result)
-                  );
-                  if (result.hasError) {
-                    SimpleToast.show(
-                      result.errorBody ?? Strings.somethingWentWrong
-                    );
-                  } else {
-                    goBack();
-                  }
-                })
-                .catch((error) => {
-                  AppLog.logForcefully(
-                    "CreateConversationApi() => catch =>" +
-                      JSON.stringify(error)
-                  );
-                });
-            } else {
-              navigation.goBack();
-            }
-          }}
+          onPress={headerRightClick}
           icon={() => (
             <CircularTick
               testID="icon"
@@ -128,45 +169,7 @@ export const NewConversationController: FC<Props> = () => {
         shadowColor: "#00000000"
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigation]);
-
-  const getSuggestions = useApi<
-    ConversationSuggestionsRequestModel,
-    ConversationSuggestionsResponseModel
-  >(ChatApis.getSuggestions);
-
-  const handleGetSuggestionApi = async (keyword: string) => {
-    setShowProgressbar(true);
-    const { hasError, dataBody, errorBody } = await getSuggestions.request(
-      [
-        {
-          keyword: keyword,
-          roleTitle: conversationType.current === 0 ? "Student" : "Staff"
-        }
-      ]
-    );
-    setShowProgressbar(false);
-    if (hasError || dataBody === undefined) {
-      AppLog.logForcefully("Unable to find suggestions " + errorBody);
-      return;
-    } else {
-      AppLog.logForcefully("suggestions " + dataBody.data);
-      setSuggestions(dataBody.data);
-    }
-  };
-
-  const createConversationAPi = useApi<
-    CreateConversationRequestModel,
-    ConversationSuggestionsResponseModel
-  >(ChatApis.createConversations);
-
-  const handleCreateConversationApi = async () => {
-    const { hasError, dataBody, errorBody } = await createConversationAPi // @ts-ignore
-      .request([{ userIds: usersIds.current }]);
-
-    return { hasError, dataBody, errorBody };
-  };
+  }, [navigation, headerRightClick, themedColors.primary]);
 
   const removeItemFromList = (itemToDelete: User) => {
     setNewConversation(

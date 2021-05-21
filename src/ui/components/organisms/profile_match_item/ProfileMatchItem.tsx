@@ -18,6 +18,7 @@ import Cross from "assets/images/ic_cross.svg";
 
 interface Props {
   profileMatch: RelationModel;
+  isFriendRequestApiLoading: boolean;
   onFriendRequestClicked: (userId: number) => void;
   onCrossClicked: (userId: number) => void;
   onChatButtonClicked: (profileMatch: RelationModel) => void;
@@ -26,6 +27,7 @@ interface Props {
 
 const ProfileMatchItem = ({
   profileMatch,
+  isFriendRequestApiLoading,
   onFriendRequestClicked,
   onCrossClicked,
   onChatButtonClicked,
@@ -61,9 +63,7 @@ const ProfileMatchItem = ({
               styles.subtitle,
               { color: themedColors.interface[600] }
             ]}
-            text={`${
-              profileMatch.user?.matchGroupName ?? STRINGS.common.not_found
-            }, ${profileMatch.user?.major ?? STRINGS.common.not_found}`}
+            text={profileMatch.user?.getSubtitle()}
           />
           <MatchScore
             style={styles.matchScore}
@@ -78,7 +78,7 @@ const ProfileMatchItem = ({
       <Pressable
         style={styles.icCross}
         onPress={() => {
-          onCrossClicked(profileMatch.matchingUserId);
+          onCrossClicked(profileMatch.userId);
         }}>
         <Cross
           fill={themedColors.interface[400]}
@@ -103,8 +103,9 @@ const ProfileMatchItem = ({
         />
         {profileMatch.getType() === RelationType.NOT_FRIEND && (
           <AppButton
+            shouldShowProgressBar={isFriendRequestApiLoading}
             onPress={() => {
-              onFriendRequestClicked(profileMatch.matchingUserId);
+              onFriendRequestClicked(profileMatch.userId);
             }}
             fontWeight={"semi-bold"}
             textStyle={[
@@ -154,7 +155,8 @@ const styles = StyleSheet.create({
     borderRadius: 32
   },
   infoTextContainer: {
-    marginStart: SPACE.md
+    marginStart: SPACE.md,
+    flex: 1
   },
   userName: { fontSize: FONT_SIZE.lg, includeFontPadding: false },
   subtitle: { fontSize: FONT_SIZE.xs, marginTop: SPACE._2xs },

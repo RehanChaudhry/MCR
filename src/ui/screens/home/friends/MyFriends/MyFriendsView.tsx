@@ -3,7 +3,7 @@ import { FONT_SIZE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import RelationType from "models/enums/RelationType";
 import RelationModel from "models/RelationModel";
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useCallback, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
@@ -12,8 +12,11 @@ import ConnectionItem, {
 } from "ui/components/organisms/friends/connection/ConnectionItem";
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
+import RemoveFriendAlert from "ui/screens/home/friends/MyFriends/RemoveFriendAlert";
 
 type Props = {
+  friendsCount: number;
+  pendingFriendsCount: number;
   data?: RelationModel[];
   isLoading: boolean;
   canLoadMore: boolean;
@@ -54,9 +57,9 @@ const listItem = (
   return (
     <ConnectionItem
       title={_item.user?.getFullName() ?? ""}
-      subtitle={`${
-        _item.user?.matchGroupName ?? STRINGS.common.not_found
-      }, ${_item.user?.major ?? STRINGS.common.not_found}`}
+      subtitle={`${_item.user?.hometown ?? STRINGS.common.not_found}, ${
+        _item.user?.major ?? STRINGS.common.not_found
+      }`}
       profileImage={_item.user?.profilePicture?.fileURL ?? ""}
       actionButtonTitle={actionButtonTitle()}
       actionButtonState={actionButtonState()}
@@ -78,6 +81,8 @@ const listItem = (
 };
 
 const MyFriendsView: FC<Props> = ({
+  friendsCount,
+  pendingFriendsCount,
   data,
   isLoading,
   canLoadMore,
@@ -163,40 +168,6 @@ const MyFriendsView: FC<Props> = ({
     );
   };
 
-  const removeFriendAlert = () => {
-    return (
-      <AppPopUp
-        isVisible={showRemoveFriendAlert}
-        title={"Remove Friend"}
-        message={`Are you sure you want to remove ${
-          selectedItem.current?.user?.getFullName() ?? ""
-        } from your friends list?`}
-        actions={[
-          {
-            title: "Yes, remove",
-            onPress: () => {
-              setShowRemoveFriendAlert(false);
-            },
-            style: {
-              weight: "bold",
-              style: {
-                color: theme.themedColors.danger,
-                textAlign: "center",
-                fontSize: FONT_SIZE.lg
-              }
-            }
-          },
-          {
-            title: "Cancel",
-            onPress: () => {
-              setShowRemoveFriendAlert(false);
-            }
-          }
-        ]}
-      />
-    );
-  };
-
   const onPressAction = (item: RelationModel) => {
     selectedItem.current = item;
     const _item = new RelationModel(item);
@@ -212,6 +183,27 @@ const MyFriendsView: FC<Props> = ({
     setShowRemoveFriendAlert(true);
   };
 
+  const headerDetails: () => string = () => {
+    const friendLabel: string = friendsCount > 1 ? "friends" : "friend";
+    let details = `You have currently ${friendsCount} ` + friendLabel;
+
+    if (pendingFriendsCount > 0) {
+      details +=
+        ` and received ${pendingFriendsCount} friend ` +
+        (pendingFriendsCount > 1 ? "requests." : "request.");
+    }
+
+    return details;
+  };
+
+  const hideSelf = useCallback(() => {
+    setShowRemoveFriendAlert(false);
+  }, []);
+
+  const getSelectedItem = useCallback(() => {
+    return selectedItem.current;
+  }, []);
+
   return (
     <>
       <Screen shouldAddBottomInset={false}>
@@ -225,10 +217,11 @@ const MyFriendsView: FC<Props> = ({
           error={error}
           ListHeaderComponent={() => (
             <ConnectionListHeader
-              title="Received 2 new friend requests"
-              detail={
-                "You have currently 7 friends and received 2 new friend requests."
+              title={
+                `Received ${pendingFriendsCount} new friend ` +
+                (pendingFriendsCount > 1 ? "requests" : "request")
               }
+              detail={headerDetails()}
               icon={() => (
                 <UserGroupIcon
                   fill={theme.themedColors.labelSecondary}
@@ -250,7 +243,11 @@ const MyFriendsView: FC<Props> = ({
           data={data}
         />
       </Screen>
-      {removeFriendAlert()}
+      <RemoveFriendAlert
+        shouldShow={showRemoveFriendAlert}
+        getSelectedItem={getSelectedItem}
+        hideSelf={hideSelf}
+      />
       {roomateRequestAlert()}
       {notEligibleAlert()}
     </>

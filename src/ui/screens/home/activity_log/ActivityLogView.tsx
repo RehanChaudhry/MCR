@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { SectionList, StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import ActivityLog from "models/ActivityLog";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import Selector from "assets/images/selector.svg";
 import ActivityLogItem from "ui/components/organisms/activity_log_item/ActivityLogItem";
 import { getActivityTypeFilterData } from "models/enums/ActivityType";
 import { ActivityLogSection } from "utils/SectionListHelper";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { shadowStyleProps } from "utils/Util";
+import { AppLog, shadowStyleProps } from "utils/Util";
+import { DropDownItem } from "models/DropDownItem";
+import ActivityLog from "models/ActivityLog";
+import { AppLoadMore } from "ui/components/atoms/app_load_more/AppLoadMore";
 
 type Props = {
   isApiLoading: boolean;
@@ -18,6 +20,7 @@ type Props = {
   pullToRefreshCallback: (onComplete: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
+  selectedItem: (item: DropDownItem) => void;
 };
 
 export const ActivityLogView: React.FC<Props> = ({
@@ -25,14 +28,16 @@ export const ActivityLogView: React.FC<Props> = ({
   activityLogs,
   pullToRefreshCallback,
   onEndReached,
-  isAllDataLoaded
+  selectedItem
 }: Props) => {
   const { themedColors } = usePreferredTheme();
   const [isRefreshing, setRefreshing] = useState<boolean>(false);
 
   const renderItem = ({ item }: { item: ActivityLog }) => (
-    <ActivityLogItem activityLog={item} />
+    <ActivityLogItem activityLog={new ActivityLog(item)} />
   );
+
+  AppLog.log("loading" + isApiLoading);
 
   const headerView = ({ section }: { section: ActivityLogSection }) => {
     // AppLog.log(`rendering HeaderView ${section.header.key()}`);
@@ -54,6 +59,18 @@ export const ActivityLogView: React.FC<Props> = ({
       </View>
     );
   };
+
+  const footerWrapper = useCallback(() => {
+    return (
+      <>
+        {isApiLoading && activityLogs !== undefined && (
+          <View style={styles.loadMore}>
+            <AppLoadMore testID="loader" />
+          </View>
+        )}
+      </>
+    );
+  }, [isApiLoading, activityLogs]);
 
   return (
     <Screen
@@ -80,17 +97,20 @@ export const ActivityLogView: React.FC<Props> = ({
           )}
           title={getActivityTypeFilterData()[0].title}
           items={getActivityTypeFilterData()}
-          selectedItemCallback={(_) => {}}
+          selectedItemCallback={(item) => {
+            selectedItem(item);
+          }}
         />
       </View>
-      {!isApiLoading && activityLogs && (
+      {activityLogs && (
         <SectionList
+          initialNumToRender={10}
           onEndReachedThreshold={0.5}
           style={styles.activityLogList}
           sections={activityLogs}
           renderSectionHeader={headerView}
           renderItem={renderItem}
-          onEndReached={isAllDataLoaded ? undefined : onEndReached}
+          onEndReached={onEndReached}
           onRefresh={() => {
             setRefreshing(true);
             pullToRefreshCallback?.(() => {
@@ -100,6 +120,7 @@ export const ActivityLogView: React.FC<Props> = ({
           refreshing={isRefreshing}
           keyExtractor={(item) => item.id.toString()}
           stickySectionHeadersEnabled={true}
+          renderSectionFooter={footerWrapper}
         />
       )}
     </Screen>
@@ -122,5 +143,10 @@ const styles = StyleSheet.create({
   filterText: { fontSize: FONT_SIZE.sm },
   separator: { height: SPACE.md },
   headerContainer: { padding: SPACE.lg },
-  headerText: { fontSize: FONT_SIZE.xs }
+  headerText: { fontSize: FONT_SIZE.xs },
+  loadMore: {
+    height: 30,
+    justifyContent: "center",
+    flexDirection: "column"
+  }
 });

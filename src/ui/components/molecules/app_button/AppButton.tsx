@@ -46,6 +46,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
   ({
     text,
     onPress,
+    iconStyle,
     buttonStyle,
     textStyle,
     shouldShowProgressBar = false,
@@ -106,6 +107,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
           {leftIcon && !shouldShowProgressBar && (
             <View
               style={[
+                iconStyle,
                 style.leftIconContainer,
                 !shouldAlignTextWithLeftIconWithFullWidth
                   ? style.leftIconContainerPosition
@@ -124,6 +126,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
             ]}>
             {!shouldShowProgressBar && (
               <AppLabel
+                shouldNotOptimize={true}
                 style={[
                   style.text,
                   { color: theme.themedColors.primary },

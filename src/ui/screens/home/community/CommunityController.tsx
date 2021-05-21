@@ -28,7 +28,6 @@ import { Alert } from "react-native";
 import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
-import { LikeDislikeResponseModel } from "models/api_responses/LikeDislikeResponseModel";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
@@ -41,7 +40,7 @@ const CommunityController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
   const isFetchingInProgress = useRef(false);
-  const [communities, _communities] = useState<
+  const [communities, setCommunities] = useState<
     CommunityAnnouncement[] | undefined
   >(undefined);
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
@@ -100,10 +99,6 @@ const CommunityController: FC<Props> = () => {
     CommunityAnnouncementResponseModel
   >(CommunityAnnouncementApis.getCommunityAnnouncements);
 
-  const likeDislikeApi = useApi<number, LikeDislikeResponseModel>(
-    CommunityAnnouncementApis.likeDislike
-  );
-
   const fetchCommunities = useCallback(async () => {
     if (isFetchingInProgress.current) {
       return;
@@ -124,12 +119,7 @@ const CommunityController: FC<Props> = () => {
       Alert.alert("Unable to Sign In", errorBody);
       return;
     } else {
-      // to handle pull to refresh
-      if (requestModel.current.page === 1) {
-        _communities([]);
-      }
-
-      _communities((prevState) => {
+      setCommunities((prevState) => {
         return [
           ...(prevState === undefined || requestModel.current.page === 1
             ? []
@@ -142,26 +132,7 @@ const CommunityController: FC<Props> = () => {
         dataBody.data.length < requestModel.current.limit
       );
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const likeDislikeApiCall = async (postId: number): Promise<boolean> => {
-    AppLog.logForcefully("like dislike api : " + postId);
-
-    const {
-      hasError,
-      errorBody,
-      dataBody
-    } = await likeDislikeApi.request([postId]);
-
-    if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to Sign In", errorBody);
-      return false; //return to announcements footer
-    } else {
-      return true; //return to announcements footer
-    }
-  };
+  }, [getCommunitiesApi]);
 
   const onEndReached = useCallback(async () => {
     requestModel.current.page = requestModel.current.page!! + 1;
@@ -179,35 +150,37 @@ const CommunityController: FC<Props> = () => {
           onComplete();
         });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [fetchCommunities]
   );
 
-  const filterDataBy = (type: string) => {
-    switch (type) {
-      case FeedsTypeFilter.MOST_RECENT: {
-        requestModel.current.filterBy = "recent";
-        break;
+  const filterDataBy = useCallback(
+    (type: string) => {
+      switch (type) {
+        case FeedsTypeFilter.MOST_RECENT: {
+          requestModel.current.filterBy = "recent";
+          break;
+        }
+        case FeedsTypeFilter.MOST_POPULAR: {
+          requestModel.current.filterBy = "popular";
+          break;
+        }
+        case FeedsTypeFilter.FRIENDS_ONLY: {
+          requestModel.current.filterBy = "friend";
+          break;
+        }
+        default: {
+          requestModel.current.filterBy = "own";
+          break;
+        }
       }
-      case FeedsTypeFilter.MOST_POPULAR: {
-        requestModel.current.filterBy = "popular";
-        break;
-      }
-      case FeedsTypeFilter.FRIENDS_ONLY: {
-        requestModel.current.filterBy = "friend";
-        break;
-      }
-      default: {
-        requestModel.current.filterBy = "own";
-        break;
-      }
-    }
 
-    _communities(undefined);
-    setIsAllDataLoaded(false);
-    requestModel.current.page = 1;
-    fetchCommunities();
-  };
+      setCommunities(undefined);
+      setIsAllDataLoaded(false);
+      requestModel.current.page = 1;
+      fetchCommunities();
+    },
+    [fetchCommunities]
+  );
 
   const getFeedsFilterList = () => {
     return getFeedsTypeFilterData();
@@ -217,8 +190,8 @@ const CommunityController: FC<Props> = () => {
     navigation.navigate("Comments", { postId: postId });
   };
 
-  const openReportContentScreen = () => {
-    navigation.navigate("ReportContent");
+  const openReportContentScreen = (postId: number) => {
+    navigation.navigate("ReportContent", { postId: postId });
   };
 
   useEffect(() => {
@@ -237,7 +210,6 @@ const CommunityController: FC<Props> = () => {
       openCommentsScreen={openCommentsScreen}
       shouldPlayVideo={shouldPlayVideo}
       openReportContentScreen={openReportContentScreen}
-      likeDislikeAPi={likeDislikeApiCall}
       filterDataBy={filterDataBy}
     />
   );

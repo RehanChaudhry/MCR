@@ -1,29 +1,43 @@
 import { API } from "config";
+import { MatchDismissBlockApiRequestModel } from "models/api_requests/MatchDismissBlockApiRequestModel";
 import { apiClient } from "repo/Client";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
-import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 
-function relations(request: RelationApiRequestModel) {
+function relations(request: PaginationParamsModel) {
   return apiClient.get<RelationApiResponseModel>(API.RELATION, {
     ...request
   });
 }
 
-function friendRequest(userId: number) {
-  return apiClient.post<ApiSuccessResponseModel>(API.POST_FRIEND_REQUEST, {
-    userId: userId
+function postRelation(userId: number) {
+  return apiClient.post<ApiSuccessResponseModel>(API.POST_RELATION, {
+    receiverId: userId
   });
 }
 
-function matchDismiss(userId: number) {
-  return apiClient.post<ApiSuccessResponseModel>(API.DISMISS_MATCH, {
-    userId: userId
-  });
+function matchDismiss(requestModel: MatchDismissBlockApiRequestModel) {
+  return apiClient.put<ApiSuccessResponseModel>(
+    API.DISMISS_MATCH + requestModel.userId,
+    {
+      status: requestModel.status
+    }
+  );
+}
+
+function matchBlocked(requestModel: MatchDismissBlockApiRequestModel) {
+  return apiClient.put<ApiSuccessResponseModel>(
+    API.BLOCKED_MATCH + requestModel.userId,
+    {
+      status: requestModel.status
+    }
+  );
 }
 
 export default {
   relations,
-  friendRequest,
-  matchDismiss
+  postRelation,
+  matchDismiss,
+  matchBlocked
 };

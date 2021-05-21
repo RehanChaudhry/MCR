@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
 import RelationFilterType from "models/enums/RelationFilterType";
 import RelationModel from "models/RelationModel";
@@ -21,37 +21,36 @@ type FriendsNavigationProp = StackNavigationProp<
 
 const MyFriendsController: FC<Props> = () => {
   const [
-    relationRequestModel,
-    setRelationRequestModel
-  ] = useState<RelationApiRequestModel>({
+    paginationRequestModel,
+    setPaginationRequestModel
+  ] = useState<PaginationParamsModel>({
     type: RelationFilterType.FRIENDS,
     page: 1,
-    limit: 2,
+    limit: 5,
     paginate: true
   });
 
   const navigation = useNavigation<FriendsNavigationProp>();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [myFriends, setMyFriends] = useState<Array<RelationModel>>();
   const [canLoadMore, setCanLoadMore] = useState<boolean>(false);
-  const [isLoadingMyFriends, setLoadingMyFriends] = useState<boolean>(
-    false
-  );
-  const [, setIsRefreshing] = useState<boolean>(false);
+
   const [errorMessage, setErrorMessage] = useState<string>();
 
+  const [friendsCount, setFriendsCount] = useState<number>(0);
+  const [pendingFriendsCount, setPendingFriendsCount] = useState<number>(
+    0
+  );
+
   const myFriendsApi = useApi<
-    RelationApiRequestModel,
+    PaginationParamsModel,
     RelationApiResponseModel
   >(FriendsApis.getMyFriends);
 
-  useEffect(() => {
-    setLoadingMyFriends(myFriendsApi.loading);
-  }, [myFriendsApi.loading]);
-
   const handleMyFriendsResponse = async (
-    isRefreshing: boolean,
-    requestModel: RelationApiRequestModel,
+    isFromPullToRefresh: boolean,
+    requestModel: PaginationParamsModel,
     onComplete?: () => void
   ) => {
     const { hasError, dataBody, errorBody } = await myFriendsApi.request([
@@ -59,65 +58,62 @@ const MyFriendsController: FC<Props> = () => {
     ]);
     if (hasError || dataBody === undefined) {
       setErrorMessage(errorBody);
+      setIsLoading(false);
       return;
     } else {
       setErrorMessage(undefined);
+      setIsLoading(false);
       const data = dataBody.data ?? [];
 
-      if (isRefreshing) {
+      if (isFromPullToRefresh) {
         setMyFriends(data);
       } else {
         setMyFriends([...(myFriends ?? []), ...data]);
       }
 
-      setRelationRequestModel({
+      if (requestModel.page === 1) {
+        setFriendsCount(dataBody.count ?? 0);
+        setPendingFriendsCount(dataBody.pendingCount ?? 0);
+      }
+
+      setPaginationRequestModel({
         ...requestModel,
         page: requestModel.page + 1
       });
       setCanLoadMore(data.length >= requestModel.limit);
+
       onComplete?.();
     }
-
-    setIsRefreshing(false);
   };
 
   const onEndReached = () => {
-    if (myFriendsApi.loading || !canLoadMore) {
+    if (myFriendsApi.loading) {
       return;
     }
 
-    handleMyFriendsResponse(false, relationRequestModel);
+    handleMyFriendsResponse(false, paginationRequestModel);
   };
 
   const onPullToRefresh = (onComplete?: () => void) => {
-    if (isLoadingMyFriends) {
+    if (myFriendsApi.loading) {
+      onComplete?.();
+      return;
     }
 
-    const myFriendRequestModel: RelationApiRequestModel = {
-      ...relationRequestModel,
+    const myFriendRequestModel: PaginationParamsModel = {
+      ...paginationRequestModel,
       page: 1
     };
 
-    const refreshing: boolean = true;
+    setPaginationRequestModel(myFriendRequestModel);
 
-    setRelationRequestModel(myFriendRequestModel);
-    setIsRefreshing(refreshing);
-
-    handleMyFriendsResponse(refreshing, myFriendRequestModel, () => {
+    handleMyFriendsResponse(true, myFriendRequestModel, () => {
       onComplete?.();
     });
   };
 
-  // useEffect(() => {
-  //   if (isRefreshing) {
-  //     handleMyFriendsResponse(() => {
-  //       onComplete?.();
-  //     });
-  //   }
-  // }, [isRefreshing]);
-
   useEffect(() => {
-    handleMyFriendsResponse(false, relationRequestModel);
+    handleMyFriendsResponse(false, paginationRequestModel);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -131,8 +127,10 @@ const MyFriendsController: FC<Props> = () => {
   return (
     <>
       <MyFriendsView
+        friendsCount={friendsCount}
+        pendingFriendsCount={pendingFriendsCount}
         data={myFriends}
-        isLoading={isLoadingMyFriends}
+        isLoading={isLoading}
         canLoadMore={canLoadMore}
         error={errorMessage}
         onEndReached={onEndReached}

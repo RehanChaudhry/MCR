@@ -19,7 +19,7 @@ import {
 import { SvgProp } from "utils/Util";
 
 export interface AnnouncementHeaderProps extends TouchableOpacityProps {
-  leftImageUrl?: string;
+  leftImageUrl?: string | undefined;
   title: string;
   subTitle?: string;
   titleStyle?: StyleProp<TextStyle>;
@@ -30,8 +30,9 @@ export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   shouldHideBottomSeparator?: boolean;
   titleFontWeight?: Weight;
   rightIcon?: SvgProp;
-  onPress?: () => void;
+  onClickedReportContentButton?: (postId: number) => void | undefined;
   leftImageStyle?: StyleProp<ImageStyle> | undefined;
+  postId?: number;
 }
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
@@ -46,9 +47,10 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
     shouldHideSubTitle = false,
     shouldHideBottomSeparator = false,
     titleFontWeight = "normal",
-    onPress,
+    onClickedReportContentButton,
     rightIcon,
-    leftImageStyle
+    leftImageStyle,
+    postId
   }) => {
     const theme = usePreferredTheme();
 
@@ -58,7 +60,11 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
           <View style={style.leftContainer}>
             <Image
               style={[style.profileImage, leftImageStyle]}
-              source={{ uri: leftImageUrl }}
+              source={
+                leftImageUrl !== undefined
+                  ? { uri: leftImageUrl }
+                  : require("assets/images/profile.png")
+              }
             />
 
             <View style={style.titleSubtitle}>
@@ -93,7 +99,9 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
                 },
                 style.rightImage
               ]}
-              onPress={onPress}
+              onPress={() => {
+                onClickedReportContentButton?.(postId ?? 0);
+              }}
             />
           )}
         </View>

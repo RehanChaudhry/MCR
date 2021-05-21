@@ -19,16 +19,31 @@ export interface AnnouncementItemProps extends TouchableOpacityProps {
   announcementItem: CommunityAnnouncement;
   openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
-  likeDislikeAPi: (postId: number) => Promise<boolean>;
+}
+
+function showAttachedItemsIfAny(
+  item: CommunityAnnouncement,
+  shouldPlayVideo: boolean
+) {
+  if (item.link) {
+    return <UrlMetaData url={item.link} />;
+  } else if (item.embed) {
+    return (
+      <WebViewComponent
+        url={item.embed}
+        urlType={URL_TYPES.EMBEDDED}
+        shouldPlayVideo={shouldPlayVideo}
+      />
+    );
+  } else if (item.photos) {
+    return <ImagesSlideShow images={item.photos} />;
+  } else if (item.link) {
+    return <UrlMetaData url={item.link} />;
+  }
 }
 
 export const AnnouncementItem = React.memo<AnnouncementItemProps>(
-  ({
-    announcementItem,
-    openCommentsScreen,
-    shouldPlayVideo,
-    likeDislikeAPi
-  }) => {
+  ({ announcementItem, openCommentsScreen, shouldPlayVideo }) => {
     const theme = usePreferredTheme();
 
     return (
@@ -46,43 +61,22 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
           subTitle={new PrettyTimeFormat().getPrettyTime(
             (announcementItem.updatedAt as unknown) as string
           )}
-          leftImageUrl={announcementItem.postedByProfilePicture.fileURL}
+          leftImageUrl={announcementItem.postedByProfilePicture?.fileURL}
           shouldShowRightImage={false}
         />
-        {announcementItem.content != null && true && (
+        {announcementItem.content && (
           <AppLabel
             text={announcementItem.content}
             style={[{ color: theme.themedColors.label }, style.text]}
             numberOfLines={0}
           />
         )}
-        {announcementItem.link != null && (
-          <WebViewComponent
-            url={announcementItem.link}
-            urlType={URL_TYPES.LINK}
-            shouldPlayVideo={shouldPlayVideo}
-          />
-        )}
-        {announcementItem.embed != null && (
-          <WebViewComponent
-            url={announcementItem.embed!!}
-            urlType={URL_TYPES.EMBEDDED}
-            shouldPlayVideo={shouldPlayVideo}
-          />
-        )}
-        {announcementItem.photos !== null &&
-          announcementItem.photos.length > 0 && (
-            <ImagesSlideShow images={announcementItem.photos} />
-          )}
-        {announcementItem.embed != null && (
-          <UrlMetaData url={announcementItem.embed} />
-        )}
+        {showAttachedItemsIfAny(announcementItem, shouldPlayVideo)}
         <AnnouncementFooter
           commentCount={announcementItem.commentsCount}
           likeCount={announcementItem.likesCount}
           openCommentsScreen={openCommentsScreen}
-          likedBy={announcementItem.isLikedByMe}
-          likeDislikeAPi={likeDislikeAPi}
+          isLikedByMe={announcementItem.isLikedByMe}
           postId={announcementItem.id}
         />
       </View>

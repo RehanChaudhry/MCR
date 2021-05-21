@@ -1,19 +1,19 @@
+import { FONT_SIZE, SPACE } from "config";
 import { FormikValues, useFormikContext } from "formik";
 import { usePreferredTheme } from "hooks";
 import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import {
   AppLabel,
   AppLabelProps
 } from "ui/components/atoms/app_label/AppLabel";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import {
   AppInputField,
   AppInputFieldProps
 } from "../appinputfield/AppInputField";
 import { AppFormValidationLabel } from "./AppFormValidationLabel";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
-import { FONT_SIZE, SPACE } from "config";
 
 export interface AppFormFieldProps {
   fieldTestID?: string;
@@ -27,6 +27,7 @@ export interface AppFormFieldProps {
   linkLabelOnPress?: () => void;
   secureTextEntry?: boolean;
   shouldNotOptimize?: boolean;
+  customTextChanged?: (value: string) => void;
 }
 
 type Props = AppFormFieldProps;
@@ -41,12 +42,13 @@ const AppFormField = optimizedMemo<Props>(
     validationLabelTestID,
     linkLabelProps,
     linkLabelOnPress,
-    secureTextEntry
+    secureTextEntry,
+    customTextChanged
   }) => {
     const {
       errors,
-      handleChange,
       setFieldTouched,
+      setFieldValue,
       touched,
       values
     } = useFormikContext<FormikValues>();
@@ -84,7 +86,11 @@ const AppFormField = optimizedMemo<Props>(
         <AppInputField
           testID={fieldTestID}
           value={value ? value : values[name]}
-          onChangeText={handleChange(name)}
+          onChangeText={(e) => {
+            setFieldValue(name, e);
+            customTextChanged?.(e);
+          }}
+          // onChangeText={handleChange(name)}
           onBlur={_setFieldTouched}
           secureTextEntry={secureTextEntry}
           {...fieldInputProps}
