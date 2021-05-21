@@ -7,19 +7,19 @@ let FieldTypes = {
   dropdown: (field: FormInputFieldData): SchemaOf<any> =>
     Yup.object().required(field?.inputType + " field required."),
   text: (field: FormInputFieldData): SchemaOf<any> =>
-    Yup.string().required(field?.inputType + " is required."),
+    Yup.string().notRequired(),
   checkbox: (field: FormInputFieldData): SchemaOf<any> => {
     AppLog.log("remove warning " + field.inputType);
-    return Yup.object().notRequired();
+    return Yup.array().notRequired();
   },
   radio: (field: FormInputFieldData): SchemaOf<any> => {
     AppLog.log("remove warning " + field.inputType);
-    return Yup.object().optional();
+    return Yup.string().notRequired();
   },
   textarea: (field: FormInputFieldData): SchemaOf<any> =>
     Yup.string().required(field?.inputType + " is required."),
   agreement: (field: FormInputFieldData): SchemaOf<any> =>
-    Yup.string().required(field?.inputType + " is required.")
+    Yup.string().notRequired()
 };
 
 export const createYupSchema = (fields: FormInputFieldData[]) => {

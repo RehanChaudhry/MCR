@@ -15,28 +15,18 @@ import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import { AppLog } from "utils/Util";
 import { createYupSchema } from "utils/YupSchemaCreator";
 import * as Yup from "yup";
+import { AgreementAnswersRequestModel } from "models/api_requests/AgreementAnswersRequestModel";
 
 type Props = {
   roommateData: FormInputFieldData[] | undefined;
   showProgressBar: boolean;
+  handleSaveAndContinue: (values: AgreementAnswersRequestModel) => void;
 };
-
-// const validationSchema = Yup.object().shape({
-//   frustrated: Yup.object().required("Select one option"),
-//   upset: Yup.string()
-//     .required("This field is required")
-//     .min(1, "should be atleast 1 characters")
-//     .max(50, "should be less than 50 characters")
-// });
-//
-// let initialValues: FormikValues = {
-//   frustrated: "",
-//   upset: ""
-// };
 
 const RoommateAgreementView: FC<Props> = ({
   roommateData,
-  showProgressBar
+  showProgressBar,
+  handleSaveAndContinue
 }) => {
   const theme = usePreferredTheme();
   const yepSchema =
@@ -50,45 +40,54 @@ const RoommateAgreementView: FC<Props> = ({
   });
   const onSubmit = (_value: FormikValues) => {
     initialValues = _value;
-    AppLog.log("Button Pressed");
+    AppLog.log("Button Pressed" + JSON.stringify(initialValues));
+    handleSaveAndContinue({
+      agreementUserAnswers: Object.entries(_value).map(([key, value]) => ({
+        agreementFieldId: Number(key),
+        agreementFieldValue: value
+      })),
+      roommates: [],
+      agreementAccepted: false
+    });
   };
   return (
     <Screen shouldAddBottomInset={false}>
       <ScrollView>
-        <View style={styles.labelViewStyle}>
-          <AppLabel
-            text={
-              "You, Kinslee Fink and Rosa Lawson are the parties of this roommate agreement."
-            }
-            numberOfLines={0}
-          />
-        </View>
-        <RoommateAgreementTerms />
+        <AppForm
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          validationSchema={yepSchema}>
+          <View style={styles.labelViewStyle}>
+            <AppLabel
+              text={
+                "You, Kinslee Fink and Rosa Lawson are the parties of this roommate agreement."
+              }
+              numberOfLines={0}
+            />
+          </View>
+          <RoommateAgreementTerms />
 
-        <CardView style={styles.cardView}>
-          <View style={styles.innerCardView}>
-            <AppForm
-              initialValues={initialValues}
-              onSubmit={onSubmit}
-              validationSchema={yepSchema}>
+          <CardView style={styles.cardView}>
+            <View style={styles.innerCardView}>
               <SectionComponent
                 listData={roommateData}
                 showProgressBar={showProgressBar}
               />
-
-              <AppFormFormSubmit
-                text={STRINGS.profile.buttonText.saveAndContinue}
-                buttonType={BUTTON_TYPES.NORMAL}
-                fontWeight={"semi-bold"}
-                textStyle={{ color: theme.themedColors.background }}
-                buttonStyle={[
-                  styles.buttonStyle,
-                  { backgroundColor: theme.themedColors.primary }
-                ]}
-              />
-            </AppForm>
+            </View>
+          </CardView>
+          <View style={styles.button}>
+            <AppFormFormSubmit
+              text={STRINGS.profile.buttonText.saveAndContinue}
+              buttonType={BUTTON_TYPES.NORMAL}
+              fontWeight={"semi-bold"}
+              textStyle={{ color: theme.themedColors.background }}
+              buttonStyle={[
+                styles.buttonStyle,
+                { backgroundColor: theme.themedColors.primary }
+              ]}
+            />
           </View>
-        </CardView>
+        </AppForm>
       </ScrollView>
     </Screen>
   );
@@ -119,7 +118,8 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACE.lg,
     marginTop: SPACE.lg,
     marginBottom: SPACE.lg
-  }
+  },
+  button: { marginHorizontal: SPACE.lg, marginBottom: SPACE.lg }
 });
 
 export default RoommateAgreementView;

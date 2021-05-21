@@ -28,6 +28,10 @@ import { useApi } from "repo/Client";
 import { RoommateAgreementResponseModel } from "models/api_responses/RoommateAgreementResponseModel";
 import RoomAgreementApis from "repo/auth/RoomAgreementApis";
 import { RoommateAgreementRequestModel } from "models/api_requests/RoommateAgreementRequestModel";
+import {
+  AgreementAnswersRequestModel,
+  Roommate
+} from "models/api_requests/AgreementAnswersRequestModel";
 
 type Props = {};
 
@@ -181,10 +185,28 @@ const RoommateAgreementController: FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const submitAgreement = (data: AgreementAnswersRequestModel) => {
+    data.roommates = roommateData?.data.reduce(
+      (newArray: Roommate[], _item) => (
+        newArray.push({
+          userId: 1, //needs to be dynamic
+          status: "agreed" //needs to be dynamic
+        }),
+        newArray
+      ),
+      []
+    );
+
+    data.agreementAccepted = false; //needs to be dynamic
+
+    AppLog.logForcefully("resuled values " + JSON.stringify(data));
+  };
+
   return (
     <RoommateAgreementView
       roommateData={roommateData?.data}
       showProgressBar={roommateApi.loading}
+      handleSaveAndContinue={submitAgreement}
     />
   );
 };

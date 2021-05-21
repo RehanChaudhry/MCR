@@ -11,19 +11,24 @@ import {
   DIRECTION_TYPE,
   RadioGroup
 } from "ui/components/atoms/radio_group/RadioGroup";
+import { FormikValues, useFormikContext } from "formik";
+import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 
 type Props = {
   labelProps?: AppLabelProps;
   radioData: Array<Choice>;
   direction: DIRECTION_TYPE;
+  name: string;
 };
 
 export const AppFormRadioButton: React.FC<Props> = ({
   labelProps,
   radioData,
-  direction
+  direction,
+  name
 }) => {
   const theme = usePreferredTheme();
+  const { errors, touched, values } = useFormikContext<FormikValues>();
   return (
     <View>
       {labelProps && (
@@ -37,6 +42,9 @@ export const AppFormRadioButton: React.FC<Props> = ({
         values={radioData!}
         direction={direction}
         itemsInRow={3}
+        onChange={(item) => {
+          values[name] = item.value;
+        }}
       />
     </View>
   );

@@ -63,6 +63,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               weight: "semi-bold",
               numberOfLines: 0
             }}
+            name={listData.id.toString()}
             onChange={(value) => AppLog.log(value)}
           />
         );
@@ -77,6 +78,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
             radioData={listData.options!}
             //listData={listData}
             direction={DIRECTION_TYPE.HORIZONTAL}
+            name={listData.id.toString()}
           />
         );
       case "date":

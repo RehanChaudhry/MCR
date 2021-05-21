@@ -24,8 +24,8 @@ export type FormInputFieldData = {
 };
 
 export type OptionsData = {
-  id: number;
   value: string;
+  text: string;
 };
 
 export type userMetaData = {
