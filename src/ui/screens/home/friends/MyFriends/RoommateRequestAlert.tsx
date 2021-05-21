@@ -17,28 +17,28 @@ type Props = {
   hideSelf: () => void;
 };
 
-const RemoveFriendAlert: FC<Props> = React.memo(
+const RoommateRequestAlert: FC<Props> = React.memo(
   ({ shouldShow, getSelectedItem, hideSelf }) => {
     AppLog.log("in RemoveFriendAlert");
+
     const theme = usePreferredTheme();
 
     const [shouldShowPb, setShouldShowPb] = useState(false);
-    const removeFriendApi = useApi<
+    const sendRoommateRequestApi = useApi<
       UpdateRelationApiRequestModel,
       UpdateRelationApiResponseModel
-    >(RoomApis.updateRelation);
+    >(RoomApis.sendFriendOrRoommateRequest);
 
-    async function removeFriend() {
+    async function sendRoommateRequest() {
       setShouldShowPb(true);
 
       const {
         hasError,
         errorBody,
         dataBody
-      } = await removeFriendApi.request([
+      } = await sendRoommateRequestApi.request([
         {
-          recieverId: getSelectedItem()?.id?.toString() ?? "",
-          status: "unfriend"
+          recieverId: getSelectedItem()?.id?.toString() ?? ""
         }
       ]);
 
@@ -52,10 +52,10 @@ const RemoveFriendAlert: FC<Props> = React.memo(
     return (
       <AppPopUp
         isVisible={shouldShow}
-        title="Remove Friend"
-        message={`Are you sure you want to remove ${
+        title={"Roommate Request"}
+        message={`Are you sure you want to send roommate request to ${
           getSelectedItem()?.user?.getFullName() ?? "N/A"
-        } from your friends list?`}
+        }?`}
         customActionButtons={
           <View>
             <View
@@ -65,16 +65,16 @@ const RemoveFriendAlert: FC<Props> = React.memo(
               ]}
             />
             <AppButton
-              text="Yes, remove"
+              text="Yes, send request"
               style={styles.actionContainer}
               shouldShowProgressBar={shouldShowPb}
               onPress={() => {
-                removeFriend();
+                sendRoommateRequest();
               }}
               textStyle={[
                 styles.actionStyle,
                 {
-                  color: theme.themedColors.danger,
+                  color: theme.themedColors.primary,
                   textAlign: "center",
                   fontSize: FONT_SIZE.base
                 }
@@ -120,4 +120,4 @@ const styles = StyleSheet.create({
     height: 0.5
   }
 });
-export default RemoveFriendAlert;
+export default RoommateRequestAlert;
