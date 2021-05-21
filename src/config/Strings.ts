@@ -101,9 +101,11 @@ export default {
   matches: {
     match_score: "Match Score: ",
     action_add_friend: "Add Friend",
-    label_pending_request: "Pending Request",
+    label_pending_request: "Cancel Request",
     placeholder_search_keyword: "Search by keyword",
-    title: "Matches"
+    title: "Matches",
+    label_not_eligible: "Not Eligible",
+    label_roommate_request: "Roommate Request"
   },
   profile: {
     title:
@@ -311,6 +313,10 @@ export default {
       title: "Add to Dismissed or Blocked List",
       dismiss: "Dismiss",
       block: "Block"
+    },
+    roommate_request: {
+      title: "Roommate Request",
+      success: "Yes, send request"
     }
   },
   activity_log: {

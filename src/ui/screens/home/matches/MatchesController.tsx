@@ -1,4 +1,19 @@
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import InfoCircle from "assets/images/info_circle.svg";
+import { STRINGS } from "config";
+import { usePreferredTheme } from "hooks";
 import { MatchDismissBlockApiRequestModel } from "models/api_requests/MatchDismissBlockApiRequestModel";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
+import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
+import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
+import EGender from "models/enums/EGender";
+import EIntBoolean from "models/enums/EIntBoolean";
+import EScreen from "models/enums/EScreen";
+import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
+import RelationActionType from "models/enums/RelationActionType";
+import RelationFilterType from "models/enums/RelationFilterType";
+import RelationModel, { Status } from "models/RelationModel";
 import React, {
   FC,
   useCallback,
@@ -7,27 +22,13 @@ import React, {
   useRef,
   useState
 } from "react";
-import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { Alert } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation } from "@react-navigation/native";
-import { AppLog } from "utils/Util";
-import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
 import { useApi } from "repo/Client";
-import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
 import RelationApis from "repo/home/RelationApis";
-import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
 import { MatchesStackParamList } from "routes/MatchesStack";
-import InfoCircle from "assets/images/info_circle.svg";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
-import RelationModel, { Status } from "models/RelationModel";
-import { STRINGS } from "config";
-import { usePreferredTheme } from "hooks";
-import EScreen from "models/enums/EScreen";
-import EGender from "models/enums/EGender";
-import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
-import RelationFilterType from "models/enums/RelationFilterType";
-import EIntBoolean from "models/enums/EIntBoolean";
+import { MatchesView } from "ui/screens/home/matches/MatchesView";
+import { AppLog } from "utils/Util";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -173,18 +174,16 @@ const MatchesController: FC<Props> = () => {
     getProfileMatches();
   };
 
-  // Friend Request API
-  const friendRequestApi = useApi<number, ApiSuccessResponseModel>(
+  // Friend , Roommate , cancel Request API
+  const requestApi = useApi<number, ApiSuccessResponseModel>(
     RelationApis.postRelation
   );
 
-  const postFriendRequest = useCallback(
-    async (userId: number) => {
-      const {
-        hasError,
-        errorBody,
-        dataBody
-      } = await friendRequestApi.request([userId]);
+  const postRequest = useCallback(
+    async (userId: number, type: RelationActionType) => {
+      const { hasError, errorBody, dataBody } = await requestApi.request([
+        userId
+      ]);
 
       if (!hasError) {
         setProfileMatches((prevState) => {
@@ -201,12 +200,17 @@ const MatchesController: FC<Props> = () => {
           }
           return Object.assign([], prevState);
         });
-        Alert.alert("Fried Request Sent", dataBody!.message);
+        if (type === RelationActionType.FRIEND_REQUEST) {
+          Alert.alert("Friend Request Sent", dataBody!.message);
+        }
+        if (type === RelationActionType.ROOMMATE_REQUEST) {
+          Alert.alert("Roommate Request Sent", dataBody!.message);
+        }
       } else {
         Alert.alert("Unable to send friend request", errorBody);
       }
     },
-    [friendRequestApi]
+    [requestApi]
   );
 
   // Match Dismiss API
@@ -289,8 +293,8 @@ const MatchesController: FC<Props> = () => {
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
-      isFriendRequestApiLoading={friendRequestApi.loading}
-      postFriendRequest={postFriendRequest}
+      isFriendRequestApiLoading={requestApi.loading}
+      postFriendRequest={postRequest}
       postMatchDismiss={postMatchDismiss}
       moveToChatScreen={moveToChatScreen}
       moveToProfileScreen={moveToProfileScreen}

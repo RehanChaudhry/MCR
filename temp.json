@@ -1,36 +1,42 @@
 {
-  "duration": 608,
+  "duration": 525,
   "problem": null,
   "originalError": null,
   "ok": true,
   "status": 200,
   "headers": {
-    "cf-request-id": "0a2af84cc80000c33b99059000000001",
+    "cf-request-id": "0a2efd86ed000019601a9b6000000001",
     "content-type": "application/json; charset=utf-8",
     "x-content-type-options": "nosniff",
-    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
-    "strict-transport-security": "max-age=0; includeSubDomains",
-    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=G%2BGBDW8vgYKZ3H2bmrGbUlkpnmGkKUsXobMDXnhQTwanv02rLH01NYHG2q%2FmR3jtGCUxCmWKZ%2BTpLXgN7ZZ7v%2BpaPzoYg6C86WCya4GHHBNEF6U%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
-    "cf-ray": "6524f65ad818c33b-SIN",
-    "x-powered-by": "Express",
-    "x-xss-protection": "1; mode=block",
-    "vary": "Accept-Encoding, Origin",
-    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
-    "cf-cache-status": "DYNAMIC",
+    "etag": "W/\"e78-BqEpn+Oy6PH1f1AMN1br/QJqA/Y\"",
+    "date": "Fri, 21 May 2021 05:27:20 GMT",
     "x-frame-options": "SAMEORIGIN",
-    "date": "Thu, 20 May 2021 10:43:08 GMT",
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=besJ9U2kUhvDlD9dDa%2BXyCmucuqOMdmkFv1jK6eBMUckOENSOuVcLBRKpzsKC0rTC5HblwXoNTvxSgKfjpJihk2fQQ%2FKQ6uI11CBcd1Ll1RTpP8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-powered-by": "Express",
+    "vary": "Origin",
+    "cf-ray": "652b651e4bac1960-SIN",
+    "cf-cache-status": "DYNAMIC",
     "server": "cloudflare",
-    "etag": "W/\"3f2-ywf5JWLbQauC+YRm0cS+199cmds\""
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-xss-protection": "1; mode=block"
   },
   "config": {
-    "url": "user/me",
-    "method": "put",
-    "data": "{\"secondaryEmail\":\"jaweria@cygnismedia.com\"}",
+    "url": "relation",
+    "method": "get",
     "headers": {
       "Accept": "application/json",
-      "Content-Type": "application/json",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTk3LCJ1c2VySWQiOjIwNiwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiXSwiaWF0IjoxNjE5Njc5OTgxLCJleHAiOjE2MjIyNzE5ODF9._0F5hN1PRUfhE2of4jrLO2ySwrbjN2zgcSIvaqg8BgI"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ3MywidXNlcklkIjo2NCwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwidXBkYXRlLWFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MjE0ODgxNjgsImV4cCI6MTYyNDA4MDE2OH0.bI0q-o2sto-G5vMA9938Eli41hpyC-T0Elp8fuqzNu0"
+    },
+    "params": {
+      "type": "matches",
+      "keyword": "",
+      "paginate": true,
+      "page": 1,
+      "limit": 10,
+      "filterBy": "friends"
     },
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
     "transformRequest": [
@@ -46,45 +52,219 @@
     "maxBodyLength": -1
   },
   "data": {
-    "message": "Your profile has been updated successfully.",
-    "data": {
-      "id": 206,
-      "firstName": "Clyde",
-      "lastName": "Sakins",
-      "email": "csakins4z@theglobeandmail.com",
-      "secondaryEmail": "jaweria@cygnismedia.com",
-      "roleId": 4,
-      "roleTitle": "Student",
-      "enrollmentId": "iq7srslusvq",
-      "status": "active",
-      "profilePicture": {
-        "fileURL": "https://randomuser.me/api/portraits/men/11.jpg",
-        "originalName": "11.jpg"
+    "message": "Success",
+    "data": [
+      {
+        "id": 7680,
+        "userId": 207,
+        "matchScore": 0,
+        "dismissed": 0,
+        "createdAt": "2021-05-06T23:10:08.000Z",
+        "updatedAt": "2021-05-06T23:10:08.000Z",
+        "user": {
+          "firstName": "Hort",
+          "lastName": "Dohms",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/women/51.jpg",
+            "originalName": "51.jpg"
+          },
+          "hometown": "Walshville",
+          "major": "German",
+          "floorPlanRoomId": 4,
+          "genderId": 3,
+          "status": "active",
+          "matchGroupId": 3,
+          "matchGroupName": "Junior"
+        },
+        "isFriend": 1,
+        "isRoommate": 0,
+        "status": "accepted",
+        "acceptee": null,
+        "criteria": {
+          "eligible": true
+        }
       },
-      "genderId": 1,
-      "gender": "Male",
-      "major": "Surveying",
-      "hometown": "East Dax",
-      "program": null,
-      "youtubeVideoURL": null,
-      "matchingPattern": "",
-      "matchingPatternWeightage": 0,
-      "matchGroupId": 3,
-      "matchGroupName": "Junior",
-      "floorPlanRoomId": 2,
-      "building": "Red Robin Palace",
-      "roomNumber": "77016",
-      "welcomeVideoStatus": "completed",
-      "questionnaireStatus": "completed",
-      "totalQuestions": 49,
-      "totalQuestionsAnswered": 0,
-      "activatedAt": "2021-05-07T05:44:27.000Z",
-      "profileCompletedAt": "2021-05-20T10:35:21.000Z",
-      "loggedInAt": "2021-05-18T05:59:39.000Z",
-      "isFlagged": 0,
-      "lastReportedAt": null,
-      "createdAt": "2021-05-06T05:44:27.000Z",
-      "updatedAt": "2021-05-20T10:43:08.788Z"
-    }
+      {
+        "id": 7586,
+        "userId": 113,
+        "matchScore": 95,
+        "dismissed": 0,
+        "createdAt": "2021-05-06T23:10:08.000Z",
+        "updatedAt": "2021-05-06T23:10:08.000Z",
+        "user": {
+          "firstName": "Gamaliel",
+          "lastName": "Waugh",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/women/22.jpg",
+            "originalName": "22.jpg"
+          },
+          "hometown": "Franciscofort",
+          "major": "Bakery Science",
+          "floorPlanRoomId": 8,
+          "genderId": 2,
+          "status": "active",
+          "matchGroupId": 2,
+          "matchGroupName": "Sophomore"
+        },
+        "isFriend": 1,
+        "isRoommate": 0,
+        "status": "accepted",
+        "acceptee": null,
+        "criteria": {
+          "eligible": true
+        }
+      },
+      {
+        "id": 7653,
+        "userId": 180,
+        "matchScore": 77,
+        "dismissed": 0,
+        "createdAt": "2021-05-06T23:10:08.000Z",
+        "updatedAt": "2021-05-06T23:10:08.000Z",
+        "user": {
+          "firstName": "Vince",
+          "lastName": "Pfeffer",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/women/18.jpg",
+            "originalName": "18.jpg"
+          },
+          "hometown": "McDermottmouth",
+          "major": "Modern Greek",
+          "floorPlanRoomId": 13,
+          "genderId": 3,
+          "status": "active",
+          "matchGroupId": 3,
+          "matchGroupName": "Junior"
+        },
+        "isFriend": 1,
+        "isRoommate": 0,
+        "status": "accepted",
+        "acceptee": null,
+        "criteria": {
+          "eligible": true
+        }
+      },
+      {
+        "id": 7633,
+        "userId": 160,
+        "matchScore": 72,
+        "dismissed": 0,
+        "createdAt": "2021-05-06T23:10:08.000Z",
+        "updatedAt": "2021-05-06T23:10:08.000Z",
+        "user": {
+          "firstName": "Janey",
+          "lastName": "Loynes",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/women/55.jpg",
+            "originalName": "55.jpg"
+          },
+          "hometown": "Port Jessehaven",
+          "major": "Recreation Management",
+          "floorPlanRoomId": 1,
+          "genderId": 2,
+          "status": "active",
+          "matchGroupId": 3,
+          "matchGroupName": "Junior"
+        },
+        "isFriend": 1,
+        "isRoommate": 0,
+        "status": "pending",
+        "acceptee": 160,
+        "criteria": {
+          "eligible": true
+        }
+      },
+      {
+        "id": 7545,
+        "userId": 72,
+        "matchScore": 6,
+        "dismissed": 0,
+        "createdAt": "2021-05-06T23:10:08.000Z",
+        "updatedAt": "2021-05-06T23:10:08.000Z",
+        "user": {
+          "firstName": "Quillan",
+          "lastName": "Shackel",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/4.jpg",
+            "originalName": "4.jpg"
+          },
+          "hometown": "Madgemouth",
+          "major": "Data Processing",
+          "floorPlanRoomId": 15,
+          "genderId": 1,
+          "status": "active",
+          "matchGroupId": 3,
+          "matchGroupName": "Junior"
+        },
+        "isFriend": 1,
+        "isRoommate": 0,
+        "status": "pending",
+        "acceptee": 64,
+        "criteria": {
+          "eligible": true
+        }
+      },
+      {
+        "id": 7609,
+        "userId": 136,
+        "matchScore": 50,
+        "dismissed": 0,
+        "createdAt": "2021-05-06T23:10:08.000Z",
+        "updatedAt": "2021-05-06T23:10:08.000Z",
+        "user": {
+          "firstName": "Hedy",
+          "lastName": "Bellows",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/women/38.jpg",
+            "originalName": "38.jpg"
+          },
+          "hometown": "New Brandy",
+          "major": "Modern Greek",
+          "floorPlanRoomId": 2,
+          "genderId": 2,
+          "status": "active",
+          "matchGroupId": 1,
+          "matchGroupName": "Freshman"
+        },
+        "isFriend": 1,
+        "isRoommate": 0,
+        "status": "accepted",
+        "acceptee": null,
+        "criteria": {
+          "eligible": true
+        }
+      },
+      {
+        "id": 7574,
+        "userId": 101,
+        "matchScore": 47,
+        "dismissed": 0,
+        "createdAt": "2021-05-06T23:10:08.000Z",
+        "updatedAt": "2021-05-06T23:10:08.000Z",
+        "user": {
+          "firstName": "Bryon",
+          "lastName": "Blodgetts",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/women/66.jpg",
+            "originalName": "66.jpg"
+          },
+          "hometown": "Lake Lazaroview",
+          "major": "English",
+          "floorPlanRoomId": 9,
+          "genderId": 2,
+          "status": "active",
+          "matchGroupId": 1,
+          "matchGroupName": "Freshman"
+        },
+        "isFriend": 1,
+        "isRoommate": 0,
+        "status": "accepted",
+        "acceptee": null,
+        "criteria": {
+          "eligible": true
+        }
+      }
+    ],
+    "count": 7
   }
 }

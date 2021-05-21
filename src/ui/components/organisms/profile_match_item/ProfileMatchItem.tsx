@@ -23,6 +23,7 @@ interface Props {
   onCrossClicked: (userId: number) => void;
   onChatButtonClicked: (profileMatch: RelationModel) => void;
   onImageClicked: (profileMatch: RelationModel) => void;
+  onRoommateRequestClicked: (userId: number) => void;
 }
 
 const ProfileMatchItem = ({
@@ -31,7 +32,8 @@ const ProfileMatchItem = ({
   onFriendRequestClicked,
   onCrossClicked,
   onChatButtonClicked,
-  onImageClicked
+  onImageClicked,
+  onRoommateRequestClicked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -132,6 +134,38 @@ const ProfileMatchItem = ({
               { backgroundColor: themedColors.interface[200] }
             ]}
             text={STRINGS.matches.label_pending_request}
+          />
+        )}
+        {profileMatch.getType() === RelationType.NOT_ELIGIBLE && (
+          <AppButton
+            // isDisable={true}
+            fontWeight={"semi-bold"}
+            textStyle={[
+              styles.btnActionText,
+              { color: themedColors.interface[500] }
+            ]}
+            buttonStyle={[
+              styles.btnAction,
+              { backgroundColor: themedColors.danger }
+            ]}
+            text={STRINGS.matches.label_not_eligible}
+          />
+        )}
+        {profileMatch.getType() === RelationType.FRIEND && (
+          <AppButton
+            onPress={() => {
+              onRoommateRequestClicked(profileMatch.userId);
+            }}
+            fontWeight={"semi-bold"}
+            textStyle={[
+              styles.btnActionText,
+              { color: themedColors.label }
+            ]}
+            buttonStyle={[
+              styles.btnAction,
+              { backgroundColor: themedColors.interface["200"] }
+            ]}
+            text={STRINGS.matches.label_roommate_request}
           />
         )}
       </View>
