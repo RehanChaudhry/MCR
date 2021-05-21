@@ -31,8 +31,9 @@ export default {
   // UPDATE_PROFILE: "user/",
 
   // matches
-  DISMISS_MATCH: "relation/dismiss",
+  DISMISS_MATCH: "relation/dismissed/",
   GET_MATCHES_FILTER_COUNT: "matches-count",
+  BLOCKED_MATCH: "relation/",
 
   //community, announcements
   CREATE_POST: "post",

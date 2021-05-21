@@ -35,6 +35,9 @@ type Props = {
   selectedTotalCount: number;
   moveToChatScreen: (profileMatch: RelationModel) => void;
   moveToProfileScreen: (profileMatch: RelationModel) => void;
+  postMatchBlocked: (
+    requestModel: MatchDismissBlockApiRequestModel
+  ) => void;
 };
 
 export const MatchesView: React.FC<Props> = ({
@@ -51,7 +54,8 @@ export const MatchesView: React.FC<Props> = ({
   postMatchDismiss,
   selectedTotalCount,
   moveToChatScreen,
-  moveToProfileScreen
+  moveToProfileScreen,
+  postMatchBlocked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -163,7 +167,7 @@ export const MatchesView: React.FC<Props> = ({
             setDismissDialogVisible(false);
             postMatchDismiss({
               userId: profileMatch.current!.userId,
-              status: "dismiss"
+              status: "dismissed"
             });
           },
           style: {
@@ -175,7 +179,10 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.dismiss_block.block,
           onPress: () => {
             setDismissDialogVisible(false);
-            postMatchDismiss(profileMatch.current!.userId);
+            postMatchBlocked({
+              userId: profileMatch.current!.userId,
+              status: "blocked"
+            });
             profileMatch.current = undefined;
           },
           style: {

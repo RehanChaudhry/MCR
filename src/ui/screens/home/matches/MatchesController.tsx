@@ -241,6 +241,38 @@ const MatchesController: FC<Props> = () => {
     }
   };
 
+  // Match Dismiss API
+  const matchBlockedApi = useApi<
+    MatchDismissBlockApiRequestModel,
+    ApiSuccessResponseModel
+  >(RelationApis.matchBlocked);
+
+  const postMatchBlocked = async (
+    request: MatchDismissBlockApiRequestModel
+  ) => {
+    const {
+      hasError,
+      errorBody,
+      dataBody
+    } = await matchBlockedApi.request([request]);
+
+    if (!hasError) {
+      setProfileMatches((prevState) => {
+        const dismissedUserIndex =
+          prevState?.findIndex(
+            (value) => value.userId === request.userId
+          ) ?? -1;
+        if (dismissedUserIndex > -1) {
+          prevState!.splice(dismissedUserIndex, 1);
+        }
+        return prevState;
+      });
+      Alert.alert("Match Blocked", dataBody!.message);
+    } else {
+      Alert.alert("Unable to blocked match", errorBody);
+    }
+  };
+
   useEffect(() => {
     getProfileMatches();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -262,6 +294,7 @@ const MatchesController: FC<Props> = () => {
       postMatchDismiss={postMatchDismiss}
       moveToChatScreen={moveToChatScreen}
       moveToProfileScreen={moveToProfileScreen}
+      postMatchBlocked={postMatchBlocked}
     />
   );
 };

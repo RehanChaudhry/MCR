@@ -18,13 +18,26 @@ function postRelation(userId: number) {
 }
 
 function matchDismiss(requestModel: MatchDismissBlockApiRequestModel) {
-  return apiClient.put<ApiSuccessResponseModel>(API.DISMISS_MATCH, {
-    requestModel
-  });
+  return apiClient.put<ApiSuccessResponseModel>(
+    API.DISMISS_MATCH + requestModel.userId,
+    {
+      status: requestModel.status
+    }
+  );
+}
+
+function matchBlocked(requestModel: MatchDismissBlockApiRequestModel) {
+  return apiClient.put<ApiSuccessResponseModel>(
+    API.BLOCKED_MATCH + requestModel.userId,
+    {
+      status: requestModel.status
+    }
+  );
 }
 
 export default {
   relations,
   postRelation,
-  matchDismiss
+  matchDismiss,
+  matchBlocked
 };
