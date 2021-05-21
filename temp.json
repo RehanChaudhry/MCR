@@ -1,23 +1,23 @@
 {
-  "duration": 525,
+  "duration": 552,
   "problem": null,
   "originalError": null,
   "ok": true,
   "status": 200,
   "headers": {
-    "cf-request-id": "0a2efd86ed000019601a9b6000000001",
+    "cf-request-id": "0a2f9e89f0000001bcff967000000001",
     "content-type": "application/json; charset=utf-8",
     "x-content-type-options": "nosniff",
-    "etag": "W/\"e78-BqEpn+Oy6PH1f1AMN1br/QJqA/Y\"",
-    "date": "Fri, 21 May 2021 05:27:20 GMT",
+    "etag": "W/\"eec-8RmikpmaotVZ1bHaCAHZwMHrwJA\"",
+    "date": "Fri, 21 May 2021 08:23:12 GMT",
     "x-frame-options": "SAMEORIGIN",
     "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
     "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
     "strict-transport-security": "max-age=0; includeSubDomains",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=besJ9U2kUhvDlD9dDa%2BXyCmucuqOMdmkFv1jK6eBMUckOENSOuVcLBRKpzsKC0rTC5HblwXoNTvxSgKfjpJihk2fQQ%2FKQ6uI11CBcd1Ll1RTpP8%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=Ks%2BexreFvVidRPIWaMv1gyy9V%2Bo2dzQSdhBtAM02aq2N9xUBA%2BjpjJOhqV7HZriXSuLHniGv1e8%2FPxmrDUXfzapDSF1pCOVHSxJ45MitdPADW2Q%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
     "x-powered-by": "Express",
     "vary": "Origin",
-    "cf-ray": "652b651e4bac1960-SIN",
+    "cf-ray": "652c66bcb90701bc-SIN",
     "cf-cache-status": "DYNAMIC",
     "server": "cloudflare",
     "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
@@ -28,7 +28,7 @@
     "method": "get",
     "headers": {
       "Accept": "application/json",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ3MywidXNlcklkIjo2NCwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwidXBkYXRlLWFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MjE0ODgxNjgsImV4cCI6MTYyNDA4MDE2OH0.bI0q-o2sto-G5vMA9938Eli41hpyC-T0Elp8fuqzNu0"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUxNCwidXNlcklkIjo2NCwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwidXBkYXRlLWFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MjE1Nzg0MTEsImV4cCI6MTYyNDE3MDQxMX0.BiM-iZqxSPlh6-QEnUXZWNA2er2hsIISnziyrgA4KYM"
     },
     "params": {
       "type": "matches",
@@ -85,31 +85,31 @@
         }
       },
       {
-        "id": 7586,
-        "userId": 113,
-        "matchScore": 95,
+        "id": 7633,
+        "userId": 160,
+        "matchScore": 72,
         "dismissed": 0,
         "createdAt": "2021-05-06T23:10:08.000Z",
         "updatedAt": "2021-05-06T23:10:08.000Z",
         "user": {
-          "firstName": "Gamaliel",
-          "lastName": "Waugh",
+          "firstName": "Janey",
+          "lastName": "Loynes",
           "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/women/22.jpg",
-            "originalName": "22.jpg"
+            "fileURL": "https://randomuser.me/api/portraits/women/55.jpg",
+            "originalName": "55.jpg"
           },
-          "hometown": "Franciscofort",
-          "major": "Bakery Science",
-          "floorPlanRoomId": 8,
+          "hometown": "Port Jessehaven",
+          "major": "Recreation Management",
+          "floorPlanRoomId": 1,
           "genderId": 2,
           "status": "active",
-          "matchGroupId": 2,
-          "matchGroupName": "Sophomore"
+          "matchGroupId": 3,
+          "matchGroupName": "Junior"
         },
         "isFriend": 1,
         "isRoommate": 0,
-        "status": "accepted",
-        "acceptee": null,
+        "status": "rejected",
+        "acceptee": 160,
         "criteria": {
           "eligible": true
         }
@@ -141,37 +141,39 @@
         "status": "accepted",
         "acceptee": null,
         "criteria": {
-          "eligible": true
+          "eligible": false,
+          "reason": "Floor Plan"
         }
       },
       {
-        "id": 7633,
-        "userId": 160,
-        "matchScore": 72,
+        "id": 7586,
+        "userId": 113,
+        "matchScore": 95,
         "dismissed": 0,
         "createdAt": "2021-05-06T23:10:08.000Z",
         "updatedAt": "2021-05-06T23:10:08.000Z",
         "user": {
-          "firstName": "Janey",
-          "lastName": "Loynes",
+          "firstName": "Gamaliel",
+          "lastName": "Waugh",
           "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/women/55.jpg",
-            "originalName": "55.jpg"
+            "fileURL": "https://randomuser.me/api/portraits/women/22.jpg",
+            "originalName": "22.jpg"
           },
-          "hometown": "Port Jessehaven",
-          "major": "Recreation Management",
-          "floorPlanRoomId": 1,
+          "hometown": "Franciscofort",
+          "major": "Bakery Science",
+          "floorPlanRoomId": 8,
           "genderId": 2,
           "status": "active",
-          "matchGroupId": 3,
-          "matchGroupName": "Junior"
+          "matchGroupId": 2,
+          "matchGroupName": "Sophomore"
         },
         "isFriend": 1,
         "isRoommate": 0,
-        "status": "pending",
-        "acceptee": 160,
+        "status": "accepted",
+        "acceptee": null,
         "criteria": {
-          "eligible": true
+          "eligible": false,
+          "reason": "Floor Plan"
         }
       },
       {
@@ -201,7 +203,8 @@
         "status": "pending",
         "acceptee": 64,
         "criteria": {
-          "eligible": true
+          "eligible": false,
+          "reason": "Floor Plan"
         }
       },
       {
@@ -231,7 +234,8 @@
         "status": "accepted",
         "acceptee": null,
         "criteria": {
-          "eligible": true
+          "eligible": false,
+          "reason": "Floor Plan"
         }
       },
       {
@@ -261,7 +265,8 @@
         "status": "accepted",
         "acceptee": null,
         "criteria": {
-          "eligible": true
+          "eligible": false,
+          "reason": "Floor Plan"
         }
       }
     ],

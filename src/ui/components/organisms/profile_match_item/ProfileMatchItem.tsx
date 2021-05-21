@@ -1,20 +1,20 @@
+import ChatRound from "assets/images/chat_round.svg";
+import Cross from "assets/images/ic_cross.svg";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
+import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
+import RelationType from "models/enums/RelationType";
+import RelationModel from "models/RelationModel";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
-import { shadowStyleProps } from "utils/Util";
-import RelationModel from "models/RelationModel";
-import { moderateScale } from "config/Dimens";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import MatchScore from "ui/components/molecules/match_score/MatchScore";
-import RelationType from "models/enums/RelationType";
-import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
-import ChatRound from "assets/images/chat_round.svg";
-import Cross from "assets/images/ic_cross.svg";
+import { AppButton } from "ui/components/molecules/app_button/AppButton";
+import MatchScore from "ui/components/molecules/match_score/MatchScore";
+import { shadowStyleProps } from "utils/Util";
 
 interface Props {
   profileMatch: RelationModel;
@@ -24,6 +24,7 @@ interface Props {
   onChatButtonClicked: (profileMatch: RelationModel) => void;
   onImageClicked: (profileMatch: RelationModel) => void;
   onRoommateRequestClicked: (userId: number) => void;
+  onCancelRequestClicked: (userId: number) => void;
 }
 
 const ProfileMatchItem = ({
@@ -33,7 +34,8 @@ const ProfileMatchItem = ({
   onCrossClicked,
   onChatButtonClicked,
   onImageClicked,
-  onRoommateRequestClicked
+  onRoommateRequestClicked,
+  onCancelRequestClicked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -123,7 +125,9 @@ const ProfileMatchItem = ({
         )}
         {profileMatch.getType() === RelationType.FRIEND_REQUESTED && (
           <AppButton
-            isDisable={true}
+            onPress={() => {
+              onCancelRequestClicked(profileMatch.userId);
+            }}
             fontWeight={"semi-bold"}
             textStyle={[
               styles.btnActionText,
@@ -133,20 +137,20 @@ const ProfileMatchItem = ({
               styles.btnAction,
               { backgroundColor: themedColors.interface[200] }
             ]}
-            text={STRINGS.matches.label_pending_request}
+            text={STRINGS.matches.label_cancel_request}
           />
         )}
         {profileMatch.getType() === RelationType.NOT_ELIGIBLE && (
           <AppButton
-            // isDisable={true}
+            isDisable={true}
             fontWeight={"semi-bold"}
             textStyle={[
               styles.btnActionText,
-              { color: themedColors.interface[500] }
+              { color: themedColors.danger }
             ]}
             buttonStyle={[
               styles.btnAction,
-              { backgroundColor: themedColors.danger }
+              { backgroundColor: themedColors.dangerShade }
             ]}
             text={STRINGS.matches.label_not_eligible}
           />
@@ -159,11 +163,11 @@ const ProfileMatchItem = ({
             fontWeight={"semi-bold"}
             textStyle={[
               styles.btnActionText,
-              { color: themedColors.label }
+              { color: themedColors.success }
             ]}
             buttonStyle={[
               styles.btnAction,
-              { backgroundColor: themedColors.interface["200"] }
+              { backgroundColor: themedColors.successShade }
             ]}
             text={STRINGS.matches.label_roommate_request}
           />

@@ -1,6 +1,6 @@
+import EIntBoolean from "models/enums/EIntBoolean";
 import RelationType from "models/enums/RelationType";
 import FilePath from "models/FilePath";
-import EIntBoolean from "models/enums/EIntBoolean";
 
 export class RelationUser {
   firstName?: string;
@@ -28,9 +28,9 @@ export enum Status {
 
 export enum InEligibilityReason {}
 
-type Criteria = {
+export type Criteria = {
   eligible: boolean;
-  reason: InEligibilityReason;
+  reason?: InEligibilityReason;
 };
 
 export class RelationModel {

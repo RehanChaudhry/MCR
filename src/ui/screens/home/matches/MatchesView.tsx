@@ -1,7 +1,8 @@
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
-import { MatchDismissBlockApiRequestModel } from "models/api_requests/MatchDismissBlockApiRequestModel";
+import { MatchDismissBlockCancelApiRequestModel } from "models/api_requests/MatchDismissBlockCancelApiRequestModel";
 import EGender from "models/enums/EGender";
+import EIntBoolean from "models/enums/EIntBoolean";
 import MatchesTypeFilter, {
   getMatchesTypeFilterData
 } from "models/enums/MatchesTypeFilter";
@@ -32,13 +33,14 @@ type Props = {
   isFriendRequestApiLoading: boolean;
   postFriendRequest: (userId: number, action: RelationActionType) => void;
   postMatchDismiss: (
-    requestModel: MatchDismissBlockApiRequestModel
+    requestModel: MatchDismissBlockCancelApiRequestModel
   ) => void;
   selectedTotalCount: number;
   moveToChatScreen: (profileMatch: RelationModel) => void;
   moveToProfileScreen: (profileMatch: RelationModel) => void;
   postMatchBlocked: (
-    requestModel: MatchDismissBlockApiRequestModel
+    requestModel: MatchDismissBlockCancelApiRequestModel,
+    action: RelationActionType
   ) => void;
 };
 
@@ -80,6 +82,11 @@ export const MatchesView: React.FC<Props> = ({
     setRoommateDialogVisible
   ] = useState<boolean>(false);
 
+  const [
+    isCancelRequestDialogVisible,
+    setCancelRequestDialogVisible
+  ] = useState<boolean>(false);
+
   const profileMatch = useRef<RelationModel>();
 
   const renderItem = useCallback(
@@ -107,6 +114,10 @@ export const MatchesView: React.FC<Props> = ({
           onRoommateRequestClicked={() => {
             profileMatch.current = _item;
             setRoommateDialogVisible(true);
+          }}
+          onCancelRequestClicked={() => {
+            profileMatch.current = _item;
+            setCancelRequestDialogVisible(true);
           }}
         />
       );
@@ -231,10 +242,13 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.dismiss_block.block,
           onPress: () => {
             setDismissDialogVisible(false);
-            postMatchBlocked({
-              userId: profileMatch.current!.userId,
-              status: RelationFilterType.BLOCKED
-            });
+            postMatchBlocked(
+              {
+                userId: profileMatch.current!.userId,
+                status: RelationFilterType.BLOCKED
+              },
+              RelationActionType.BLOCKED
+            );
             profileMatch.current = undefined;
           },
           style: {
@@ -252,6 +266,59 @@ export const MatchesView: React.FC<Props> = ({
           },
           onPress: () => {
             setDismissDialogVisible(false);
+          }
+        }
+      ]}
+    />
+  );
+
+  const getTypeOfCancelRequest = () => {
+    AppLog.log("profile match: " + JSON.stringify(profileMatch));
+    if (
+      profileMatch?.current?.isFriend === EIntBoolean.FALSE &&
+      profileMatch.current.isRoommate === EIntBoolean.FALSE
+    ) {
+      return RelationActionType.CANCEL_FRIEND_REQUEST;
+    } else {
+      return RelationActionType.CANCEL_ROOMMATE_REQUEST;
+    }
+  };
+
+  const cancelRequestDialog = () => (
+    <AppPopUp
+      isVisible={isCancelRequestDialogVisible}
+      title={STRINGS.dialogs.cancel_request.title}
+      titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
+      messageStyle={{ style: styles.dialogMessageStyle }}
+      message={`Are you sure you want to cancel request to ${profileMatch.current?.user?.getFullName()}?`}
+      actions={[
+        {
+          title: STRINGS.dialogs.cancel_request.success,
+          onPress: () => {
+            setCancelRequestDialogVisible(false);
+            postMatchBlocked(
+              {
+                userId: profileMatch.current!.userId,
+                status: RelationFilterType.CANCEL
+              },
+              getTypeOfCancelRequest()
+            );
+          },
+          style: {
+            weight: "semi-bold",
+            style: [
+              { color: themedColors.primary },
+              styles.dialogButtonStyle
+            ]
+          }
+        },
+        {
+          title: STRINGS.dialogs.cancel,
+          style: {
+            style: styles.dialogButtonStyle
+          },
+          onPress: () => {
+            setCancelRequestDialogVisible(false);
           }
         }
       ]}
@@ -281,6 +348,7 @@ export const MatchesView: React.FC<Props> = ({
       {requestDialog()}
       {dismissDialog()}
       {roommateRequestDialog()}
+      {cancelRequestDialog()}
       <OptimizedBottomBreadCrumbs<MatchesTypeFilter>
         data={filter()}
         onPress={(value) => {

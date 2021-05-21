@@ -101,7 +101,7 @@ export default {
   matches: {
     match_score: "Match Score: ",
     action_add_friend: "Add Friend",
-    label_pending_request: "Cancel Request",
+    label_cancel_request: "Cancel Request",
     placeholder_search_keyword: "Search by keyword",
     title: "Matches",
     label_not_eligible: "Not Eligible",
@@ -317,6 +317,10 @@ export default {
     roommate_request: {
       title: "Roommate Request",
       success: "Yes, send request"
+    },
+    cancel_request: {
+      title: "Cancel Request",
+      success: "Yes, cancel request"
     }
   },
   activity_log: {

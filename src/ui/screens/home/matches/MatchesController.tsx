@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import InfoCircle from "assets/images/info_circle.svg";
 import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
-import { MatchDismissBlockApiRequestModel } from "models/api_requests/MatchDismissBlockApiRequestModel";
+import { MatchDismissBlockCancelApiRequestModel } from "models/api_requests/MatchDismissBlockCancelApiRequestModel";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
@@ -13,7 +13,7 @@ import EScreen from "models/enums/EScreen";
 import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
 import RelationActionType from "models/enums/RelationActionType";
 import RelationFilterType from "models/enums/RelationFilterType";
-import RelationModel, { Status } from "models/RelationModel";
+import RelationModel, { Criteria, Status } from "models/RelationModel";
 import React, {
   FC,
   useCallback,
@@ -215,12 +215,12 @@ const MatchesController: FC<Props> = () => {
 
   // Match Dismiss API
   const matchDismissApi = useApi<
-    MatchDismissBlockApiRequestModel,
+    MatchDismissBlockCancelApiRequestModel,
     ApiSuccessResponseModel
   >(RelationApis.matchDismiss);
 
   const postMatchDismiss = async (
-    request: MatchDismissBlockApiRequestModel
+    request: MatchDismissBlockCancelApiRequestModel
   ) => {
     const {
       hasError,
@@ -247,12 +247,13 @@ const MatchesController: FC<Props> = () => {
 
   // Match Dismiss API
   const matchBlockedApi = useApi<
-    MatchDismissBlockApiRequestModel,
+    MatchDismissBlockCancelApiRequestModel,
     ApiSuccessResponseModel
   >(RelationApis.matchBlocked);
 
   const postMatchBlocked = async (
-    request: MatchDismissBlockApiRequestModel
+    request: MatchDismissBlockCancelApiRequestModel,
+    type: RelationActionType
   ) => {
     const {
       hasError,
@@ -261,19 +262,61 @@ const MatchesController: FC<Props> = () => {
     } = await matchBlockedApi.request([request]);
 
     if (!hasError) {
-      setProfileMatches((prevState) => {
-        const dismissedUserIndex =
-          prevState?.findIndex(
-            (value) => value.userId === request.userId
-          ) ?? -1;
-        if (dismissedUserIndex > -1) {
-          prevState!.splice(dismissedUserIndex, 1);
-        }
-        return prevState;
-      });
-      Alert.alert("Match Blocked", dataBody!.message);
+      if (type === RelationActionType.BLOCKED) {
+        setProfileMatches((prevState) => {
+          const dismissedUserIndex =
+            prevState?.findIndex(
+              (value) => value.userId === request.userId
+            ) ?? -1;
+          if (dismissedUserIndex > -1) {
+            prevState!.splice(dismissedUserIndex, 1);
+          }
+          return prevState;
+        });
+      }
+      if (
+        type === RelationActionType.CANCEL_ROOMMATE_REQUEST ||
+        RelationActionType.CANCEL_FRIEND_REQUEST
+      ) {
+        Alert.alert("Request Cancelled", dataBody!.message);
+        setProfileMatches((prevState) => {
+          let requestedUserPosition =
+            prevState?.findIndex(
+              (value) => value.userId === request.userId
+            ) ?? -1;
+          if (requestedUserPosition !== -1) {
+            const updatedUser = new RelationModel(
+              prevState![requestedUserPosition]
+            );
+            if (type === RelationActionType.CANCEL_FRIEND_REQUEST) {
+              updatedUser.isFriend = EIntBoolean.FALSE;
+              updatedUser.isRoommate = EIntBoolean.FALSE;
+              updatedUser.status = undefined;
+            } else {
+              updatedUser.isFriend = EIntBoolean.TRUE;
+              updatedUser.isRoommate = EIntBoolean.FALSE;
+              updatedUser.status = Status.ACCEPTED;
+              const cri: Criteria = { eligible: true };
+              updatedUser.criteria = cri;
+            }
+            prevState![requestedUserPosition] = updatedUser;
+          }
+          return Object.assign([], prevState);
+        });
+      }
+      if (type === RelationActionType.BLOCKED) {
+        Alert.alert("Match Blocked", dataBody!.message);
+      }
     } else {
-      Alert.alert("Unable to blocked match", errorBody);
+      if (
+        type === RelationActionType.CANCEL_ROOMMATE_REQUEST ||
+        RelationActionType.CANCEL_FRIEND_REQUEST
+      ) {
+        Alert.alert("Unable to cancel request", errorBody);
+      }
+      if (type === RelationActionType.BLOCKED) {
+        Alert.alert("Unable to blocked match", errorBody);
+      }
     }
   };
 
