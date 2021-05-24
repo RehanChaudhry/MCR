@@ -15,6 +15,7 @@ export type FormInputFieldData = {
   placeholder?: string;
   options?: OptionsData[] | undefined;
   order?: number;
+  isLocked: EIntBoolean;
   isRequired: EIntBoolean;
   isDefault?: number;
   content?: null;
@@ -22,7 +23,7 @@ export type FormInputFieldData = {
   createdAt?: string;
   updatedAt?: string;
   deletedAt?: null;
-  userMeta?: userMetaData[];
+  userMeta?: UserMetaData[];
 };
 
 export type OptionsData = {
@@ -30,6 +31,6 @@ export type OptionsData = {
   value: string;
 };
 
-export type userMetaData = {
+export type UserMetaData = {
   value?: string;
 };

@@ -1,62 +1,380 @@
 {
-  "title": "Basic Profile",
-  "description": "This information will be displayed publicly so be careful what you share.",
-  "formInputs": [
-    {
-      "id": 0,
-      "label": "First Name",
-      "inputType": "textarea",
-      "userMeta": [],
-      "placeHolder": "Enter Your First Name"
+  "duration": 332,
+  "problem": null,
+  "originalError": null,
+  "ok": true,
+  "status": 200,
+  "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=TjVSLvg3TB2%2B3cjBw9fWVEPURf8to%2B6YzUVIMg5TeAzJZrRTLw9XfolOjFZHbHuVEi%2FCjF5pwOjZAIGwcB3UFx2keL4RFLyiGvDLuLPvYp2%2BYTY%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "x-frame-options": "SAMEORIGIN",
+    "cf-request-id": "0a3f67c32000000a46209d2000000001",
+    "cf-cache-status": "DYNAMIC",
+    "x-powered-by": "Express",
+    "date": "Mon, 24 May 2021 09:57:17 GMT",
+    "cf-ray": "6545a8b1c9fa0a46-KIX",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
+    "x-xss-protection": "1; mode=block",
+    "content-encoding": "br",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "server": "cloudflare",
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "x-content-type-options": "nosniff",
+    "etag": "W/\"1758-k4e4VR216xpZSrUQJSqLheP7+X0\"",
+    "vary": "Accept-Encoding, Origin"
+  },
+  "config": {
+    "url": "user/me?meta=true",
+    "method": "get",
+    "headers": {
+      "Accept": "application/json",
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3MCwidXNlcklkIjo2NCwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwidXBkYXRlLWFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCJdLCJpYXQiOjE2MjE4NDMzNDksImV4cCI6MTYyNDQzNTM0OX0.FKNbavf2b6ciBgd3XWbds9r2MadaK7pIec5qfqWY-ec"
     },
-    {
-      "id": 1,
-      "label": "Last Name",
-      "inputType": "textfield",
-      "userMeta": [],
-      "placeHolder": "Enter Your Last Name"
-    },
-    {
-      "id": 2,
-      "label": "About Me",
-      "inputType": "textfield",
-      "userMeta": [],
-      "placeHolder": "Brief description for your profile."
-    },
-    {
-      "id": 3,
-      "label": "Facebook Profile",
-      "inputType": "textfield",
-      "userMeta": [],
-      "placeHolder": "facebook.com/"
-    },
-    {
-      "id": 4,
-      "label": "Twitter Profile",
-      "inputType": "textfield",
-      "userMeta": [],
-      "placeHolder": "twitter.com/"
-    },
-    {
-      "id": 5,
-      "label": "LinkedIn Profile",
-      "inputType": "textfield",
-      "userMeta": [],
-      "placeHolder": "linkedin.com/"
-    },
-    {
-      "id": 6,
-      "label": "SnapChat Profile",
-      "inputType": "textfield",
-      "userMeta": [],
-      "placeHolder": "snapchat.com/"
-    },
-    {
-      "id": 7,
-      "label": "TikTok Profile",
-      "inputType": "textfield",
-      "userMeta": [],
-      "placeHolder": "tiktok.com/"
+    "params": {},
+    "baseURL": "https://mcr-dev.cygnis.dev/api/",
+    "transformRequest": [null],
+    "transformResponse": [null],
+    "timeout": 0,
+    "xsrfCookieName": "XSRF-TOKEN",
+    "xsrfHeaderName": "X-XSRF-TOKEN",
+    "maxContentLength": -1,
+    "maxBodyLength": -1
+  },
+  "data": {
+    "message": "Success.",
+    "data": {
+      "id": 64,
+      "firstName": "Lucie",
+      "lastName": "France",
+      "email": "lfrance11@geocities.jp",
+      "secondaryEmail": "qwerty@gmail.com",
+      "roleId": 4,
+      "roleTitle": "Student",
+      "enrollmentId": "na6a1f83bi3",
+      "status": "active",
+      "profilePicture": "\"\\\"\\\\\\\"\\\\\\\\\\\\\\\"{\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"fileURL\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"https://randomuser.me/api/portraits/women/1.jpg\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"originalName\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\":\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"1.jpg\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"}\\\\\\\\\\\\\\\"\\\\\\\"\\\"\"",
+      "genderId": 3,
+      "gender": "Other",
+      "major": "Painting",
+      "hometown": "Ivoryton",
+      "program": null,
+      "youtubeVideoURL": "https://www.youtube.com/watch?v=UhvMXQK1pcQ",
+      "matchGroupId": 2,
+      "matchGroupName": "Sophomore",
+      "floorPlanRoomId": 4,
+      "building": "High Point Tower",
+      "roomNumber": "74524",
+      "welcomeVideoStatus": "skipped",
+      "questionnaireStatus": "completed",
+      "totalQuestions": 49,
+      "totalQuestionsAnswered": 0,
+      "profileCompletedAt": "2021-05-20T05:24:57.000Z",
+      "isFlagged": 0,
+      "lastReportedAt": null,
+      "createdAt": "2021-05-06T05:44:15.000Z",
+      "updatedAt": "2021-05-24T09:57:09.903Z",
+      "sections": [
+        {
+          "title": "Basic Profile",
+          "description": "User profile setting.",
+          "icon": "",
+          "formInputs": [
+            {
+              "id": 1,
+              "label": "Profile Picture",
+              "inputType": "file",
+              "options": [],
+              "placeholder": "",
+              "isLocked": 1,
+              "isRequired": 0,
+              "userMeta": []
+            },
+            {
+              "id": 2,
+              "label": "First Name",
+              "inputType": "text",
+              "options": [],
+              "placeholder": "Start typing",
+              "isLocked": 1,
+              "isRequired": 1,
+              "userMeta": [{ "value": "Lucie" }]
+            },
+            {
+              "id": 3,
+              "label": "Last Name",
+              "inputType": "text",
+              "options": [],
+              "placeholder": "Start typing",
+              "isLocked": 1,
+              "isRequired": 1,
+              "userMeta": [{ "value": "France" }]
+            },
+            {
+              "id": 4,
+              "label": "About me",
+              "inputType": "checkbox",
+              "options": [
+                { "text": "Are you sure", "value": "Yes" },
+                { "text": "Are you sure", "value": "No" }
+              ],
+              "placeholder": "Brief description for your profile",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": [
+                {
+                  "value": "I am a Communications major and a gym freak. You wanna workout? Let's do it 25/7. Haha, just kidding! Or am I? I am a typical extrovert and a nutrition geek. I make friends easy and resolve conflicts even easier."
+                }
+              ]
+            },
+            {
+              "id": 5,
+              "label": "Facebook profile",
+              "inputType": "text",
+              "options": null,
+              "placeholder": "facebook.com/",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            },
+            {
+              "id": 6,
+              "label": "Twitter profile",
+              "inputType": "text",
+              "options": null,
+              "placeholder": "twitter.com/",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            },
+            {
+              "id": 7,
+              "label": "Linkedin profile",
+              "inputType": "text",
+              "options": null,
+              "placeholder": "linkedin.com/",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            },
+            {
+              "id": 8,
+              "label": "Instagram profile",
+              "inputType": "text",
+              "options": null,
+              "placeholder": "instagram.com/",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            }
+          ]
+        },
+        {
+          "title": "Demographics",
+          "description": "User profile setting.",
+          "icon": "",
+          "formInputs": [
+            {
+              "id": 11,
+              "label": "Gender",
+              "inputType": "dropdown",
+              "options": [
+                { "text": "Male", "value": "Male" },
+                { "text": "Female", "value": "Female" },
+                { "text": "Other", "value": "Other" }
+              ],
+              "placeholder": "Select your gender",
+              "isLocked": 1,
+              "isRequired": 1,
+              "userMeta": [{ "value": "Other" }]
+            },
+            {
+              "id": 12,
+              "label": "Smoking habits",
+              "inputType": "radio",
+              "options": [
+                { "text": "Never", "value": "never" },
+                { "text": "Occasionally", "value": "occasionally" },
+                { "text": "Frequently", "value": "frequently" }
+              ],
+              "placeholder": "",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            },
+            {
+              "id": 13,
+              "label": "Hometown",
+              "inputType": "text",
+              "options": [],
+              "placeholder": "Enter your hometown",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            },
+            {
+              "id": 14,
+              "label": "Intended major",
+              "inputType": "text",
+              "options": [],
+              "placeholder": "Enter your intended major",
+              "isLocked": 1,
+              "isRequired": 0,
+              "userMeta": [
+                { "value": "Aerospace Engineering" },
+                { "value": "Korean" },
+                { "value": "Theatre" }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Interests",
+          "description": "User profile setting.",
+          "icon": "",
+          "formInputs": [
+            {
+              "id": 15,
+              "label": "Hobbies & interests",
+              "inputType": "multiselect",
+              "options": [],
+              "placeholder": "Start typing separated by comma",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            },
+            {
+              "id": 16,
+              "label": "Clubs & memberships",
+              "inputType": "multiselect",
+              "options": [],
+              "placeholder": "Start typing separated by comma",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            },
+            {
+              "id": 17,
+              "label": "Favorite movies & TV shows",
+              "inputType": "multiselect",
+              "options": [],
+              "placeholder": "Start typing separated by comma",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            },
+            {
+              "id": 18,
+              "label": "Music",
+              "inputType": "multiselect",
+              "options": [],
+              "placeholder": "Start typing separated by comma",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            },
+            {
+              "id": 19,
+              "label": "Books",
+              "inputType": "multiselect",
+              "options": [],
+              "placeholder": "Start typing separated by comma",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            },
+            {
+              "id": 20,
+              "label": "Games",
+              "inputType": "multiselect",
+              "options": [],
+              "placeholder": "Start typing separated by comma",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            }
+          ]
+        },
+        {
+          "title": "Living Detail",
+          "description": "User profile setting.",
+          "icon": "",
+          "formInputs": [
+            {
+              "id": 22,
+              "label": "Enrollment ID",
+              "inputType": "text",
+              "options": [],
+              "placeholder": "Start typing",
+              "isLocked": 1,
+              "isRequired": 0,
+              "userMeta": [
+                { "value": "ume6tzdxcnz" },
+                { "value": "tmo3vcgnmrw" },
+                { "value": "na6a1f83bi3" }
+              ]
+            },
+            {
+              "id": 23,
+              "label": "Building",
+              "inputType": "text",
+              "options": [],
+              "placeholder": "Enter your building information",
+              "isLocked": 1,
+              "isRequired": 0,
+              "userMeta": [{ "value": "High Point Tower" }]
+            },
+            {
+              "id": 24,
+              "label": "Room",
+              "inputType": "text",
+              "options": [],
+              "placeholder": "Enter your room number",
+              "isLocked": 1,
+              "isRequired": 0,
+              "userMeta": [{ "value": "74524" }]
+            },
+            {
+              "id": 25,
+              "label": "Programs",
+              "inputType": "text",
+              "options": [],
+              "placeholder": "Enter your educational program",
+              "isLocked": 1,
+              "isRequired": 0,
+              "userMeta": [{ "value": "BS" }, { "value": "PhD" }]
+            },
+            {
+              "id": 21,
+              "label": "Communities",
+              "inputType": "multiselect",
+              "options": [],
+              "placeholder": "Start typing separated by comma",
+              "isLocked": 0,
+              "isRequired": 0,
+              "userMeta": []
+            }
+          ]
+        },
+        {
+          "title": "Video Introduction",
+          "description": "User profile setting.",
+          "icon": "",
+          "formInputs": [
+            {
+              "id": 26,
+              "label": "Youtube video URL",
+              "inputType": "text",
+              "options": [],
+              "placeholder": "youtube.com/",
+              "isLocked": 1,
+              "isRequired": 0,
+              "userMeta": []
+            }
+          ]
+        }
+      ],
+      "agreementId": null
     }
-  ]
+  }
 }

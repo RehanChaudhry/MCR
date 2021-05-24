@@ -7,6 +7,6 @@ export type DynamicFormSections = {
 export type SectionsType = {
   title?: string;
   description?: string;
-  formInputs?: FormInputFieldData[];
+  formInputs?: FormInputFieldData[] | undefined;
   placeHolder?: string;
 };

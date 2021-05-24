@@ -40,9 +40,9 @@ export const DemoGraphics = optimizedMemo(({}) => {
           appDropDownProps={{
             title: STRINGS.profile.dropDownInitialValue.gender,
             items: [
-              { id: 0, title: "Male" },
-              { id: 1, title: "Female" },
-              { id: 2, title: "Others" }
+              { id: 0, value: "Male" },
+              { id: 1, value: "Female" },
+              { id: 2, value: "Others" }
             ],
             selectedItemCallback: () => {
               //setTitle(item.title);

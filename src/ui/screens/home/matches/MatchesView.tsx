@@ -208,7 +208,7 @@ export const MatchesView: React.FC<Props> = ({
         onEndReached={onEndReached}
         pullToRefreshCallback={pullToRefreshCallback}
         isAllDataLoaded={isAllDataLoaded}
-        keyExtractor={(item) => item.matchingUserId.toString()}
+        keyExtractor={(item) => item.matchingUserId?.toString()}
         error={error}
         retryCallback={pullToRefreshCallback}
         extraData={isFriendRequestApiLoading}

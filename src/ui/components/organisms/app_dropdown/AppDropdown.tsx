@@ -19,7 +19,7 @@ import { SPACE } from "config";
 
 export interface AppDropdownProps {
   title?: string;
-  items: DropDownItem[] | undefined;
+  items: DropDownItem[];
   selectedItemCallback: (item: DropDownItem) => void;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;

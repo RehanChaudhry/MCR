@@ -1,5 +1,8 @@
-import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
-import React from "react";
+import {
+  FormInputFieldData,
+  UserMetaData
+} from "models/api_responses/RoommateAgreementResponseModel";
+import React, { useState } from "react";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { DynamicAppFormField } from "ui/components/templates/roommate_agreement/DynamicAppFormField";
 import { AppLog } from "utils/Util";
@@ -19,18 +22,32 @@ import { UploadProfilePhoto } from "ui/components/templates/basic_profile/Upload
 type CustomFormFieldProps = {
   listData: FormInputFieldData;
 };
+
+function createInitialListForFieldBoxFromUserMeta(
+  userMeta: UserMetaData[]
+) {
+  return userMeta.map((value, index) => ({
+    id: index,
+    value: value.value ?? "N/A",
+    userId: 0
+  }));
+}
+
 export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
   ({ listData }) => {
+    const [text, setText] = useState(
+      listData.userMeta?.length === 0 ? "" : listData.userMeta![0].value
+    );
+
     //for multi select item
     const chevronRight = () => <ChevronRight height={20} width={20} />;
 
     AppLog.logForcefully("Options Data " + listData.options);
     const theme = usePreferredTheme();
+
     switch (listData.inputType) {
       case "agreement":
         return <AppLabel text={"Agreement"} />;
-      case "text":
-        return <AppLabel text={"text"} />;
       case "textarea":
         return (
           <>
@@ -45,34 +62,8 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
         );
       case "dropdown":
         return (
-          <>
-            <View style={styles.spacer} />
-
-            <AppFormDropDown
-              name="gender"
-              validationLabelTestID={"genderValidationTestID"}
-              labelProps={{
-                text: listData.label,
-                weight: "semi-bold"
-              }}
-              appDropDownProps={{
-                title: STRINGS.profile.dropDownInitialValue.gender,
-                items: listData.options,
-                selectedItemCallback: () => {
-                  //setTitle(item.title);
-                },
-                style: [
-                  styles.dropDown,
-                  { borderColor: theme.themedColors.border }
-                ]
-              }}
-            />
-          </>
-        );
-      case "dropdown":
-        return (
           <AppFormDropDown
-            name={listData?.id.toString()}
+            name={listData.id.toString()}
             validationLabelTestID={"genderValidationTestID"}
             labelProps={{
               text: listData.label,
@@ -80,7 +71,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
             }}
             appDropDownProps={{
               title: STRINGS.profile.dropDownInitialValue.gender,
-              items: listData!!.options,
+              items: listData.options!,
               selectedItemCallback: () => {
                 //setTitle(item.title);
               },
@@ -126,22 +117,23 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
             <View style={styles.spacer} />
 
             <FieldBox
-              name={listData.name}
+              name={listData.id.toString()}
               title={listData.label}
               textStyle={{ color: theme.themedColors.placeholder }}
               rightIcon={chevronRight}
+              initialList={createInitialListForFieldBoxFromUserMeta(
+                listData.userMeta ?? []
+              )}
             />
           </>
         );
 
-      case "textfield":
+      case "text":
         return (
           <>
             <View style={styles.spacer} />
             <AppFormField
-              fieldTestID="firstName"
-              validationLabelTestID={"firstNameValidationLabel"}
-              name={listData.name}
+              name={listData.id.toString()}
               labelProps={{
                 text: listData?.label,
                 weight: "semi-bold"
@@ -151,6 +143,8 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
                 keyboardType: "default",
                 returnKeyType: "next",
                 placeholder: listData?.placeholder,
+                value: text,
+                onChangeText: (value) => setText(value),
                 autoCapitalize: "none",
                 placeholderTextColor: theme.themedColors.placeholder,
                 style: { color: theme.themedColors.label },
@@ -166,7 +160,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
           </>
         );
 
-      case "uploadphoto":
+      case "file":
         return (
           <>
             <View style={styles.spacer} />

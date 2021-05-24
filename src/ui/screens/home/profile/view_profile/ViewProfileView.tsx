@@ -6,24 +6,20 @@ import ViewProfileDemoGraphics from "ui/components/templates/ViewProfileDemoGrap
 import EducationalInformation from "ui/components/templates/EducationalInformation";
 import MyRoommates from "ui/components/templates/my_roommates/MyRoommates";
 import Screen from "ui/components/atoms/Screen";
-import { UserModel } from "models/api_responses/UserModel";
-//import { useAuth } from "hooks";
 
 type Props = {
   openRoommateAgreementScreen: () => void;
-  user: UserModel | undefined;
 };
 
 export const ViewProfileView: React.FC<Props> = ({
-  openRoommateAgreementScreen,
-  user
+  openRoommateAgreementScreen
 }) => {
   //const { user } = useAuth();
   return (
     <Screen shouldAddBottomInset={false}>
       <ScrollView>
         <View>
-          <AboutMe section={user?.profile?.sections[0]} />
+          <AboutMe />
           <ViewProfileDemoGraphics />
           <InterestsTagsList />
           <EducationalInformation />

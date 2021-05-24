@@ -7,13 +7,14 @@ import {
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { AppLog } from "utils/Util";
 import SimpleToast from "react-native-simple-toast";
+import {err} from "react-native-svg/lib/typescript/xml";
 
 export const AppFormFormSubmit = optimizedMemo<AppButtonProps>((props) => {
-  const { handleSubmit, isValid } = useFormikContext();
+  const { handleSubmit, isValid, errors } = useFormikContext();
   return (
     <AppButton
       onPress={() => {
-        AppLog.logForcefully("isValid", isValid);
+        AppLog.logForcefully("isValid", JSON.stringify(errors));
         isValid
           ? handleSubmit()
           : SimpleToast.show("Please insert valid values");

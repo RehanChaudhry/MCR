@@ -51,7 +51,6 @@ export const AppFormDropDown: React.FC<Props> = ({
         }}
       />
 
-      {AppLog.logForcefully("errors" + JSON.stringify(values))}
       {(errors[name] || touched[name]) && (
         <AppFormValidationLabel
           validationLabelTestID={validationLabelTestID}
@@ -59,9 +58,6 @@ export const AppFormDropDown: React.FC<Props> = ({
           shouldVisible={true}
         />
       )}
-      {/*style={style}*/}
-      {/*shouldShowCustomIcon={shouldShowCustomIcon}*/}
-      {/*dropDownIcon={dropDownIcon}*/}
     </>
   );
 };
