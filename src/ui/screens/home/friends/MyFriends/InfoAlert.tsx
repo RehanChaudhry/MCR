@@ -11,9 +11,9 @@ type Props = {
   hideSelf: () => void;
 };
 
-const NotEligibleAlert: FC<Props> = React.memo(
+const InfoAlert: FC<Props> = React.memo(
   ({ shouldShow, getSelectedItem, hideSelf }) => {
-    AppLog.log("in RemoveFriendAlert");
+    AppLog.log("in InfoAlert");
 
     const theme = usePreferredTheme();
     return (
@@ -43,4 +43,4 @@ const NotEligibleAlert: FC<Props> = React.memo(
   }
 );
 
-export default NotEligibleAlert;
+export default InfoAlert;

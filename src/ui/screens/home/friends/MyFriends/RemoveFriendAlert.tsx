@@ -3,12 +3,13 @@ import { usePreferredTheme } from "hooks";
 import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 import { UpdateRelationApiResponseModel } from "models/api_responses/UpdateRelationApiResponseModel";
 import RelationModel from "models/RelationModel";
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useContext, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import RoomApis from "repo/auth/RoomApis";
 import { useApi } from "repo/Client";
+import RelationApis from "repo/home/RelationApis";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
+import { MyFriendsContext } from "ui/screens/home/friends/MyFriends/MyFriendsController";
 import { AppLog } from "utils/Util";
 
 type Props = {
@@ -21,12 +22,20 @@ const RemoveFriendAlert: FC<Props> = React.memo(
   ({ shouldShow, getSelectedItem, hideSelf }) => {
     AppLog.log("in RemoveFriendAlert");
     const theme = usePreferredTheme();
+    const { myFriends, setMyFriends } = useContext(MyFriendsContext);
+
+    const onFriendRemoved = useCallback(
+      (id: number) => {
+        setMyFriends(myFriends?.filter((value) => value.id !== id));
+      },
+      [myFriends, setMyFriends]
+    );
 
     const [shouldShowPb, setShouldShowPb] = useState(false);
     const removeFriendApi = useApi<
       UpdateRelationApiRequestModel,
       UpdateRelationApiResponseModel
-    >(RoomApis.updateRelation);
+    >(RelationApis.updateRelation);
 
     async function removeFriend() {
       setShouldShowPb(true);
@@ -37,7 +46,7 @@ const RemoveFriendAlert: FC<Props> = React.memo(
         dataBody
       } = await removeFriendApi.request([
         {
-          recieverId: getSelectedItem()?.id?.toString() ?? "",
+          receiverId: getSelectedItem()?.user?.id?.toString() ?? "",
           status: "unfriend"
         }
       ]);
@@ -46,6 +55,13 @@ const RemoveFriendAlert: FC<Props> = React.memo(
         Alert.alert("Unable to remove friend", errorBody);
         setShouldShowPb(false);
         return;
+      } else {
+        try {
+          onFriendRemoved(getSelectedItem()?.id ?? -1);
+        } finally {
+          hideSelf();
+          setShouldShowPb(false);
+        }
       }
     }
 

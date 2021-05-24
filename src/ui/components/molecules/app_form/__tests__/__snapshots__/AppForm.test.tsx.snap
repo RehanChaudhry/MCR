@@ -27,7 +27,7 @@ exports[`rendering... renders correctly 1`] = `
               "color": "#111827",
             },
             Object {
-              "lineHeight": undefined,
+              "lineHeight": 42,
             },
             Array [
               Object {
@@ -131,7 +131,7 @@ exports[`rendering... renders correctly 1`] = `
               "color": "#111827",
             },
             Object {
-              "lineHeight": undefined,
+              "lineHeight": 42,
             },
             Array [
               Object {

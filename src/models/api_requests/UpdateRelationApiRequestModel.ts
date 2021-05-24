@@ -1,5 +1,5 @@
 export type UpdateRelationApiRequestModel = {
-  recieverId: string;
+  receiverId: string;
   status?:
     | "accepted"
     | "rejected"

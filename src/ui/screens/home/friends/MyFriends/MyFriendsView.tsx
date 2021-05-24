@@ -12,7 +12,7 @@ import ConnectionItem, {
 } from "ui/components/organisms/friends/connection/ConnectionItem";
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
 import RemoveFriendAlert from "ui/screens/home/friends/MyFriends/RemoveFriendAlert";
-import InfoAlert from "./NotEligibleAlert";
+import InfoAlert from "./InfoAlert";
 import RoommateRequestAlert from "./RoommateRequestAlert";
 
 type Props = {
