@@ -43,6 +43,13 @@ import LeftArrow from "assets/images/left.svg";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { HomeDrawerParamList } from "routes";
 import { GetAnswersResponseModel } from "models/api_responses/GetAnswersResponseModel";
+import StaticContentRequestModel, {
+  StaticContentType
+} from "models/api_requests/StaticContentRequestModel";
+import StaticContentResponseModel, {
+  StaticContent
+} from "models/api_responses/StaticContentResponseModel";
+import OtherApis from "repo/home/OtherApis";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -159,6 +166,35 @@ const QuestionsController: FC<Props> = () => {
 
   const requestModel = useRef<AnswerApiRequestModel>();
 
+  // static content
+  const [headerContent, setHeaderContent] = useState<StaticContent>();
+
+  const staticContentApi = useApi<
+    StaticContentRequestModel,
+    StaticContentResponseModel
+  >(OtherApis.staticContent);
+
+  const getHeaderContent = useCallback(async () => {
+    const {
+      hasError,
+      dataBody,
+      errorBody
+    } = await staticContentApi.request([
+      { type: StaticContentType.QUESTIONNAIRE }
+    ]);
+    if (hasError || dataBody === undefined) {
+      AppLog.log("Unable to find header content " + errorBody);
+      return;
+    } else {
+      setHeaderContent(dataBody.data);
+    }
+  }, [staticContentApi]);
+
+  const moveToHeaderContent = useCallback(
+    (_headerContent: StaticContent) => {},
+    []
+  );
+
   const [questions, setQuestions] = useState<
     Section<QuestionSection, Question>[]
   >([]);
@@ -177,6 +213,7 @@ const QuestionsController: FC<Props> = () => {
 
   useEffect(() => {
     isQuestionAnswersFetched.current = false;
+    getHeaderContent();
     handleGetQuestionsApi();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -244,7 +281,9 @@ const QuestionsController: FC<Props> = () => {
   return (
     <ProgressErrorView
       isLoading={!isQuestionAnswersFetched.current}
-      error={questionApi.error || getAnswersApi.error}
+      error={
+        questionApi.error || getAnswersApi.error || staticContentApi.error
+      }
       errorView={(message) => {
         return (
           <View>
@@ -252,9 +291,11 @@ const QuestionsController: FC<Props> = () => {
           </View>
         );
       }}
-      data={questions}>
+      data={questions && headerContent}>
       {useLazyLoadInterface(
         <QuestionsView
+          headerContent={headerContent!}
+          moveToHeaderContent={moveToHeaderContent}
           isFrom={route.params.isFrom}
           submitAnswers={submitAnswersCallback}
           questions={questions}

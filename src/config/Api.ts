@@ -54,5 +54,8 @@ export default {
   MY_ROOMMATES: "myroommates",
   DISMISSED_OR_BLOCKED: "relation/dismiss",
   FRIEND_REQUESTS: "relation/pending/friends",
-  ROOMMATE_REQUESTS: "relation/pending/roommates"
+  ROOMMATE_REQUESTS: "relation/pending/roommates",
+
+  // others
+  GET_STATIC_CONTENT: "static-content/"
 };
