@@ -299,7 +299,8 @@ export default {
     },
     textFieldPlaceholder: {
       response: "Start typing the response"
-    }
+    },
+    roommate_agreement_text: "Roommate Agreem"
   },
   dialogs: {
     friend_request: {

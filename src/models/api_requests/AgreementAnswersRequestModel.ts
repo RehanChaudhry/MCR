@@ -2,6 +2,7 @@ export interface AgreementAnswersRequestModel {
   agreementUserAnswers: AgreementUserAnswer[];
   roommates: Roommate[] | undefined;
   agreementAccepted: boolean;
+  agreementId?: number;
 }
 
 export interface AgreementUserAnswer {

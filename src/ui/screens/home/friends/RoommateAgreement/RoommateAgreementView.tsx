@@ -4,7 +4,7 @@ import RoommateAgreementTerms from "ui/components/templates/roommate_agreement/R
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import { FormikValues } from "formik";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { SPACE, STRINGS } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
@@ -16,19 +16,25 @@ import { AppLog } from "utils/Util";
 import { createYupSchema } from "utils/YupSchemaCreator";
 import * as Yup from "yup";
 import { AgreementAnswersRequestModel } from "models/api_requests/AgreementAnswersRequestModel";
+import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 
 type Props = {
   roommateData: FormInputFieldData[] | undefined;
   showProgressBar: boolean;
   handleSaveAndContinue: (values: AgreementAnswersRequestModel) => void;
+  showAgreementDialog: boolean;
+  agreementDialogCallback: (status: string) => void;
 };
 
 const RoommateAgreementView: FC<Props> = ({
   roommateData,
   showProgressBar,
-  handleSaveAndContinue
+  handleSaveAndContinue,
+  showAgreementDialog,
+  agreementDialogCallback
 }) => {
-  const theme = usePreferredTheme();
+  const { themedColors } = usePreferredTheme();
+
   const yepSchema =
     roommateData !== undefined
       ? createYupSchema(roommateData!!)
@@ -50,6 +56,49 @@ const RoommateAgreementView: FC<Props> = ({
       agreementAccepted: false
     });
   };
+
+  const agreementDialog = () => (
+    <AppPopUp
+      isVisible={showAgreementDialog}
+      title={STRINGS.roommateAgreement.roommate_agreement_text}
+      titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
+      messageStyle={{ style: styles.dialogMessageStyle }}
+      message={`Do you want to add  in your dismissed list or blocked list?`}
+      actions={[
+        {
+          title: "Agree",
+          onPress: () => {
+            agreementDialogCallback("agreed");
+          },
+          style: {
+            weight: "semi-bold",
+            style: [{ color: themedColors.warn }, styles.dialogButtonStyle]
+          }
+        },
+        {
+          title: "DisAgree",
+          onPress: () => {
+            agreementDialogCallback("disagreed");
+          },
+          style: {
+            weight: "semi-bold",
+            style: [
+              { color: themedColors.danger },
+              styles.dialogButtonStyle
+            ]
+          }
+        },
+        {
+          title: "Cancel",
+          style: {
+            style: styles.dialogButtonStyle
+          },
+          onPress: () => {}
+        }
+      ]}
+    />
+  );
+
   return (
     <Screen shouldAddBottomInset={false}>
       <ScrollView>
@@ -75,15 +124,16 @@ const RoommateAgreementView: FC<Props> = ({
               />
             </View>
           </CardView>
+          {agreementDialog()}
           <View style={styles.button}>
             <AppFormFormSubmit
               text={STRINGS.profile.buttonText.saveAndContinue}
               buttonType={BUTTON_TYPES.NORMAL}
               fontWeight={"semi-bold"}
-              textStyle={{ color: theme.themedColors.background }}
+              textStyle={{ color: themedColors.background }}
               buttonStyle={[
                 styles.buttonStyle,
-                { backgroundColor: theme.themedColors.primary }
+                { backgroundColor: themedColors.primary }
               ]}
             />
           </View>
@@ -119,7 +169,13 @@ const styles = StyleSheet.create({
     marginTop: SPACE.lg,
     marginBottom: SPACE.lg
   },
-  button: { marginHorizontal: SPACE.lg, marginBottom: SPACE.lg }
+  button: { marginHorizontal: SPACE.lg, marginBottom: SPACE.lg },
+  dialogButtonStyle: {
+    textAlign: "center",
+    fontSize: FONT_SIZE.base
+  },
+  dialogTitleStyle: { fontSize: FONT_SIZE.base, textAlign: "center" },
+  dialogMessageStyle: { fontSize: FONT_SIZE.sm, textAlign: "center" }
 });
 
 export default RoommateAgreementView;
