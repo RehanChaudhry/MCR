@@ -11,7 +11,6 @@ import { AppLog } from "utils/Util";
 import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
 import QuestionSection from "models/QuestionSection";
 import Question from "models/Question";
-import { StackNavigationProp } from "@react-navigation/stack";
 import {
   RouteProp,
   useNavigation,
@@ -30,7 +29,6 @@ import QuestionsResponseModel from "models/api_responses/QuestionsResponseModel"
 import { QuestionsView } from "ui/screens/questions/QuestionsView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import { UpdateQuestionnaireStackParamList } from "routes/ProfileStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import EScreen from "models/enums/EScreen";
@@ -50,6 +48,9 @@ import StaticContentResponseModel, {
   StaticContent
 } from "models/api_responses/StaticContentResponseModel";
 import OtherApis from "repo/home/OtherApis";
+import { ProfileStackParamList } from "routes/ProfileBottomBar";
+import { ProfileRootStackParamList } from "routes/ProfileRootStack";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -66,6 +67,8 @@ type ProfileNavigationProp = StackNavigationProp<
   "UpdateQuestionnaire"
 >;
 
+type ProfileRootNavigationProp = StackNavigationProp<ProfileRootStackParamList>;
+
 type HomeNavigationProp = DrawerNavigationProp<HomeDrawerParamList>;
 
 type ProfileRouteProp = RouteProp<
@@ -81,6 +84,7 @@ const QuestionsController: FC<Props> = () => {
   const { themedColors } = usePreferredTheme();
 
   const route = useRoute<ProfileRouteProp>();
+  const profileRootNavigation = useNavigation<ProfileRootNavigationProp>();
   const homeNavigation = useNavigation<HomeNavigationProp>();
   const welcomeNavigation = useNavigation<WelcomeNavigationProp>();
   const profileNavigation = useNavigation<ProfileNavigationProp>();
@@ -191,8 +195,13 @@ const QuestionsController: FC<Props> = () => {
   }, [staticContentApi]);
 
   const moveToHeaderContent = useCallback(
-    (_headerContent: StaticContent) => {},
-    []
+    (content: StaticContent) => {
+      profileRootNavigation.navigate("StaticContent", {
+        isFrom: route.params.isFrom,
+        staticContent: content
+      });
+    },
+    [route.params.isFrom, profileRootNavigation]
   );
 
   const [questions, setQuestions] = useState<

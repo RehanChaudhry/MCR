@@ -2,7 +2,7 @@ import { StaticContentType } from "models/api_requests/StaticContentRequestModel
 
 export type StaticContent = {
   id: number;
-  type?: StaticContentType;
+  type: StaticContentType;
   title?: string;
   description?: string;
   content?: string;
