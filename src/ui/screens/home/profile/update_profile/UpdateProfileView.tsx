@@ -42,7 +42,6 @@ export const UpdateProfileView: React.FC<Props> = ({
     updateProfileUiData?.sections?.forEach((section) => {
       section.formInputs?.forEach((formInput) => {
         const val = _value[formInput.id.toString()];
-        AppLog.logForcefully("isValid", JSON.stringify(val));
         if (val) {
           if (_.isArray(val)) {
             //if its array
