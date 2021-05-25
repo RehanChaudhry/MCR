@@ -89,7 +89,9 @@ export const FONT_SIZE_LINE_HEIGHT = {
   xl: mapsOfSizesAndHeight.get("xl")?.height,
   _2xl: mapsOfSizesAndHeight.get("_2xl")?.height,
   _3xl: mapsOfSizesAndHeight.get("_3xl")?.height,
-  ofFontSize: (size: number) => _mapsOfSizesAndHeightWithSizeKey.get(size)
+  ofFontSize: (size: number) =>
+    _mapsOfSizesAndHeightWithSizeKey.get(size) ??
+    mapsOfSizesAndHeight.get("base")?.height
 };
 
 export const MARGIN_SIZE = {

@@ -1,7 +1,7 @@
 import { DateUtils, timeAgo } from "utils/Util";
 import Actions from "models/enums/ActivityLogAction";
 import ActivityLogType from "models/enums/ActivityLogType";
-import User from "models/user";
+import { User } from "models/User";
 
 class ActivityLog {
   id!: number;

@@ -5,8 +5,10 @@ import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import { MatchDismissBlockCancelApiRequestModel } from "models/api_requests/MatchDismissBlockCancelApiRequestModel";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
+import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
+import { UpdateRelationApiResponseModel } from "models/api_responses/UpdateRelationApiResponseModel";
 import EGender from "models/enums/EGender";
 import EIntBoolean from "models/enums/EIntBoolean";
 import EScreen from "models/enums/EScreen";
@@ -175,14 +177,17 @@ const MatchesController: FC<Props> = () => {
   };
 
   // Friend , Roommate , cancel Request API
-  const requestApi = useApi<number, ApiSuccessResponseModel>(
-    RelationApis.postRelation
-  );
+  const requestApi = useApi<
+    UpdateRelationApiRequestModel,
+    UpdateRelationApiResponseModel
+  >(RelationApis.sendFriendOrRoommateRequest);
 
   const postRequest = useCallback(
     async (userId: number, type: RelationActionType) => {
       const { hasError, errorBody, dataBody } = await requestApi.request([
-        userId
+        {
+          receiverId: userId.toString()
+        }
       ]);
 
       if (!hasError) {
