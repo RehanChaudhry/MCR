@@ -2,7 +2,7 @@ import {
   FormInputFieldData,
   UserMetaData
 } from "models/api_responses/RoommateAgreementResponseModel";
-import React, { useState } from "react";
+import React from "react";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { DynamicAppFormField } from "ui/components/templates/roommate_agreement/DynamicAppFormField";
 import { AppLog } from "utils/Util";
@@ -35,10 +35,6 @@ function createInitialListForFieldBoxFromUserMeta(
 
 export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
   ({ listData }) => {
-    const [text, setText] = useState(
-      listData.userMeta?.length === 0 ? "" : listData.userMeta![0].value
-    );
-
     //for multi select item
     const chevronRight = () => <ChevronRight height={20} width={20} />;
 
@@ -143,8 +139,8 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
                 keyboardType: "default",
                 returnKeyType: "next",
                 placeholder: listData?.placeholder,
-                value: text,
-                onChangeText: (value) => setText(value),
+                /* value: text,
+                onChangeText: (value) => setText(value),*/
                 autoCapitalize: "none",
                 placeholderTextColor: theme.themedColors.placeholder,
                 style: { color: theme.themedColors.label },

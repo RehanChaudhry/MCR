@@ -7,7 +7,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_memo/optimized_memo";
 import { AppLog, SvgProp } from "utils/Util";
@@ -20,6 +20,7 @@ import { SPACE } from "config";
 export interface AppDropdownProps {
   title?: string;
   items: DropDownItem[];
+  preselectedItemString?: string | DropDownItem;
   selectedItemCallback: (item: DropDownItem) => void;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -34,6 +35,7 @@ export interface AppDropdownProps {
 export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
   ({
     title,
+    preselectedItemString,
     items,
     selectedItemCallback,
     dialogBgColor,
@@ -65,13 +67,33 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
       selectedItemPosition,
       setSelectedItemPosition
     ] = useState<number>(-1);
-    const selectedItem = (item: DropDownItem | any) => {
-      AppLog.log("selectedItem " + item.value);
-      setModalVisible(false);
-      setSelectedItemText(item.value);
-      selectedItemCallback(item);
-      setSelectedItemPosition(item.id);
-    };
+
+    const selectedItem = useCallback(
+      (item: DropDownItem | any) => {
+        AppLog.log("selectedItem " + item.value);
+        setModalVisible(false);
+        setSelectedItemText(item.value);
+        selectedItemCallback(item);
+        setSelectedItemPosition(item.id);
+      },
+      [selectedItemCallback]
+    );
+
+    // show pre-selected item's text
+    useEffect(() => {
+      if (selectedItemPosition === -1) {
+        let _selectedItemIndex = items.findIndex(
+          (item) =>
+            item.value?.toLowerCase() ===
+            preselectedItemString?.toString()?.toLowerCase()
+        );
+
+        if (_selectedItemIndex !== -1) {
+          selectedItem(items[_selectedItemIndex]);
+        }
+      }
+    }, [items, selectedItem, preselectedItemString, selectedItemPosition]);
+
     return (
       <View
         style={[

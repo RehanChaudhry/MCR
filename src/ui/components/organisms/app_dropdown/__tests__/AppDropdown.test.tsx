@@ -11,16 +11,16 @@ import { DropDownItem } from "models/DropDownItem";
 
 let items: Array<DropDownItem> = [
   {
-    title: "Male",
-    id: "1"
+    value: "Male",
+    id: 1
   },
   {
-    title: "Female",
-    id: "2"
+    value: "Female",
+    id: 2
   },
   {
-    title: "Other",
-    id: "3"
+    value: "Other",
+    id: 3
   }
 ];
 
@@ -153,8 +153,8 @@ it("check if dropdown shows selected item with right value", async () => {
   //then
   await waitFor(() => {
     expect(onSelectedItem).toHaveBeenCalledWith({
-      title: "Male",
-      id: "1"
+      value: "Male",
+      id: 1
     });
   });
 
@@ -165,8 +165,8 @@ it("check if dropdown shows selected item with right value", async () => {
   //then
   await waitFor(() => {
     expect(onSelectedItem).toHaveBeenLastCalledWith({
-      title: "Other",
-      id: "3"
+      value: "Other",
+      id: 3
     });
   });
 

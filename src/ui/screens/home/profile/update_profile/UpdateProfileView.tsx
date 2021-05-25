@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
-import { FormikValues } from "formik";
+import { FormikValues, isObject } from "formik";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
 import RightArrow from "assets/images/arrow_circle_right.svg";
@@ -35,19 +35,27 @@ export const UpdateProfileView: React.FC<Props> = ({
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
 
+  AppLog.logForcefully("remove warning: " + openUpdateQuestionnaireScreen);
   //dynamic form validation on submit
   let onSubmit = (_value: FormikValues) => {
     AppLog.log("in onSubmit");
     updateProfileUiData?.sections?.forEach((section) => {
       section.formInputs?.forEach((formInput) => {
         const val = _value[formInput.id.toString()];
-
+        AppLog.logForcefully("isValid", JSON.stringify(val));
         if (val) {
           if (_.isArray(val)) {
             //if its array
             const meta = val.map((obj: any) => {
               return { value: obj.value };
             });
+            formInput.userMeta = meta;
+          } else if (isObject(val)) {
+            const meta = [
+              {
+                value: val.value
+              }
+            ];
             formInput.userMeta = meta;
           } else {
             //if its string input
@@ -83,6 +91,7 @@ export const UpdateProfileView: React.FC<Props> = ({
         ...(value.formInputs ?? [])
       ];
     });
+
     fieldToGetValidation.current = fieldToGetValidation.current.filter(
       (value) => value.isRequired === 1
     );
@@ -97,14 +106,21 @@ export const UpdateProfileView: React.FC<Props> = ({
     updateProfileUiData?.sections?.forEach((section) => {
       section.formInputs?.forEach((formInput) => {
         // @ts-ignore
-        initialValues[formInput.id] = formInput.userMeta?.[0]?.value;
+        initialValues.current[formInput.id] =
+          formInput.userMeta?.[0]?.value;
       });
     });
   }, [updateProfileUiData]);
 
   useEffect(() => {
+    AppLog.logForcefully("In UpdateProfileView useEffect...");
     init();
   }, [init]);
+
+  AppLog.logForcefully(
+    "Initial Values from UpdateProfileView: " +
+      JSON.stringify(initialValues.current)
+  );
 
   return (
     <KeyboardAwareScrollView keyboardOpeningTime={50} extraHeight={200}>

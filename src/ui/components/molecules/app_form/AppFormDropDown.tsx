@@ -12,7 +12,7 @@ import {
 } from "ui/components/organisms/app_dropdown/AppDropdown";
 import { FormikValues, useFormikContext } from "formik";
 import { AppFormValidationLabel } from "ui/components/molecules/app_form/AppFormValidationLabel";
-import { AppLog, SvgProp } from "utils/Util";
+import { SvgProp } from "utils/Util";
 
 type Props = {
   labelProps?: AppLabelProps;
@@ -34,7 +34,15 @@ export const AppFormDropDown: React.FC<Props> = ({
   // shouldShowCustomIcon = false
 }) => {
   const theme = usePreferredTheme();
-  const { errors, touched, values } = useFormikContext<FormikValues>();
+  const {
+    errors,
+    touched,
+    values,
+    setFieldValue
+  } = useFormikContext<FormikValues>();
+
+  const { title, ...appDropDownPropsCopy } = appDropDownProps;
+
   return (
     <>
       {labelProps && (
@@ -45,9 +53,11 @@ export const AppFormDropDown: React.FC<Props> = ({
         />
       )}
       <AppDropdown
-        {...appDropDownProps}
+        {...appDropDownPropsCopy}
+        title={title}
+        preselectedItemString={values[name]}
         selectedItemCallback={(item) => {
-          values[name] = item;
+          setFieldValue(name, item);
         }}
       />
 

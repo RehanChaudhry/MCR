@@ -27,6 +27,7 @@ export interface AppFormFieldProps {
   linkLabelOnPress?: () => void;
   secureTextEntry?: boolean;
   shouldNotOptimize?: boolean;
+  customTextChanged?: (value: string) => void;
 }
 
 type Props = AppFormFieldProps;
@@ -45,8 +46,8 @@ const AppFormField = optimizedMemo<Props>(
   }) => {
     const {
       errors,
-      handleChange,
       setFieldTouched,
+      setFieldValue,
       touched,
       values
     } = useFormikContext<FormikValues>();
@@ -83,8 +84,10 @@ const AppFormField = optimizedMemo<Props>(
         )}
         <AppInputField
           testID={fieldTestID}
-          value={value ? value : values[name]}
-          onChangeText={handleChange(name)}
+          valueToShowAtStart={value ? value : values[name]}
+          onChangeText={(text) => {
+            setFieldValue(name, text);
+          }}
           onBlur={_setFieldTouched}
           secureTextEntry={secureTextEntry}
           {...fieldInputProps}
