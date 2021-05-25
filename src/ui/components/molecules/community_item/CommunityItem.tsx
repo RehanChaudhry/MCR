@@ -88,8 +88,9 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           leftImageUrl={communityItem.postedByProfilePicture?.fileURL}
           shouldShowRightImage={true}
           rightIcon={rightImage}
-          onClickedReportContentButton={openReportContentScreen}
-          postId={communityItem.id}
+          onRightBtnClicked={() => {
+            openReportContentScreen?.(communityItem.id);
+          }}
         />
 
         {communityItem.content != null && true && (
