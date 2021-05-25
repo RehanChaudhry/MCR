@@ -14,7 +14,7 @@ import {
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
-import { AppLog, shadowStyleProps } from "utils/Util";
+import { shadowStyleProps } from "utils/Util";
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -44,13 +44,12 @@ const Roommates: React.FC<Props> = ({
       <AnnouncementHeader
         leftImageUrl={item.user?.profilePicture?.fileURL}
         title={
-          `${item.user?.firstName}  ${item.user?.lastName} ` ??
+          `${item.user?.firstName} ${item.user?.lastName}` ??
           STRINGS.common.not_found
         }
         subTitle={`${item.user?.hometown}, ${item.user?.major}`}
         shouldShowRightImage={true}
-        onPress={() => {
-          AppLog.logForcefully("moveToChatScreen()");
+        onRightBtnClicked={() => {
           onChatClicked?.(item);
         }}
         rightIcon={() => (

@@ -71,7 +71,10 @@ const MatchInfoController: FC<Props> = () => {
     );
 
     navigation.push("Chat", {
-      title: [profileMatch.user?.getFullName() ?? STRINGS.common.not_found]
+      title: [
+        `${profileMatch.user?.firstName} ${profileMatch.user?.lastName}` ??
+          STRINGS.common.not_found
+      ]
     });
   };
 
@@ -140,7 +143,8 @@ const MatchInfoController: FC<Props> = () => {
   useEffect(() => {
     handleGetMatchInfoApi();
     handleGetRoommatesApi();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ProgressErrorView
