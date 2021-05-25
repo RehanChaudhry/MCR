@@ -34,6 +34,7 @@ export default {
   DISMISS_MATCH: "relation/dismissed/",
   GET_MATCHES_FILTER_COUNT: "matches-count",
   BLOCKED_MATCH: "relation/",
+  MATCH_INFO: "user/matching-information",
 
   //community, announcements
   CREATE_POST: "post",

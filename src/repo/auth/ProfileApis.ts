@@ -8,6 +8,7 @@ import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiReques
 import { AgreementDetailsResponseModel } from "models/api_responses/AgreementDetailsResponseModel";
 import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
 import { GetAnswersResponseModel } from "models/api_responses/GetAnswersResponseModel";
+import { MatchInfoApiResponseModel } from "models/api_responses/MatchInfoApiResponseModel";
 
 function questions() {
   return apiClient.get<QuestionsResponseModel>(API.GET_QUESTIONS);
@@ -15,6 +16,10 @@ function questions() {
 
 function getAnswers() {
   return apiClient.get<GetAnswersResponseModel>(API.GET_ANSWERS);
+}
+
+function getMatchInfo() {
+  return apiClient.get<MatchInfoApiResponseModel>(API.MATCH_INFO);
 }
 
 function getNotifications() {
@@ -46,5 +51,6 @@ export default {
   answers,
   getNotifications,
   activityLogs,
-  getAgreementDetails
+  getAgreementDetails,
+  getMatchInfo
 };
