@@ -23,7 +23,8 @@ type Props = {
   titleStyle?: AppLabelProps;
   messageStyle?: AppLabelProps;
 
-  actions: Action[];
+  actions?: Action[];
+  customActionButtons?: React.ReactElement;
 };
 
 const AppPopUp: FC<Props> = ({
@@ -32,7 +33,8 @@ const AppPopUp: FC<Props> = ({
   message,
   actions,
   titleStyle,
-  messageStyle
+  messageStyle,
+  customActionButtons
 }) => {
   const theme = usePreferredTheme();
   return (
@@ -73,32 +75,34 @@ const AppPopUp: FC<Props> = ({
               />
             )}
           </View>
-          <View style={styles.actionsContainer}>
-            {actions.map((action, idx) => {
-              return (
-                <View key={idx}>
-                  <View
-                    style={[
-                      styles.separator,
-                      { backgroundColor: theme.themedColors.separator }
-                    ]}
-                  />
-                  <TouchableOpacity
-                    style={styles.actionContainer}
-                    onPress={action.onPress}>
-                    <AppLabel
+          <View>
+            {customActionButtons}
+            {!customActionButtons &&
+              actions?.map((action, idx) => {
+                return (
+                  <View key={idx}>
+                    <View
                       style={[
-                        styles.actionStyle,
-                        { color: theme.themedColors.label }
+                        styles.separator,
+                        { backgroundColor: theme.themedColors.separator }
                       ]}
-                      text={action.title}
-                      numberOfLines={0}
-                      {...action.style}
                     />
-                  </TouchableOpacity>
-                </View>
-              );
-            })}
+                    <TouchableOpacity
+                      style={styles.actionContainer}
+                      onPress={action.onPress}>
+                      <AppLabel
+                        style={[
+                          styles.actionStyle,
+                          { color: theme.themedColors.label }
+                        ]}
+                        text={action.title}
+                        numberOfLines={0}
+                        {...action.style}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                );
+              })}
           </View>
         </View>
       </View>
@@ -113,7 +117,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(90,94,94,0.6)"
   },
-  actionsContainer: {},
   actionContainer: {
     padding: SPACE.md
   },
@@ -131,11 +134,11 @@ const styles = StyleSheet.create({
     padding: SPACE.lg
   },
   titleStyle: {
-    fontSize: FONT_SIZE.lg,
+    fontSize: FONT_SIZE.base,
     textAlign: "center"
   },
   messageStyle: {
-    fontSize: FONT_SIZE.lg,
+    fontSize: FONT_SIZE.sm,
     textAlign: "center"
   },
   separator: {
