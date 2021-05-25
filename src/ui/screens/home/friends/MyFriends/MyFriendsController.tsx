@@ -19,6 +19,15 @@ type FriendsNavigationProp = StackNavigationProp<
   "ConnectRequests"
 >;
 
+type MyFriendsContextType = {
+  myFriends?: RelationModel[];
+  setMyFriends: (myFriends: RelationModel[] | undefined) => void;
+};
+
+export const MyFriendsContext = React.createContext<MyFriendsContextType>({
+  setMyFriends: () => {}
+});
+
 const MyFriendsController: FC<Props> = () => {
   const [
     paginationRequestModel,
@@ -33,7 +42,7 @@ const MyFriendsController: FC<Props> = () => {
   const navigation = useNavigation<FriendsNavigationProp>();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [myFriends, setMyFriends] = useState<Array<RelationModel>>();
+  const [myFriends, setMyFriends] = useState<RelationModel[]>();
   const [canLoadMore, setCanLoadMore] = useState<boolean>(false);
 
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -125,7 +134,7 @@ const MyFriendsController: FC<Props> = () => {
   };
 
   return (
-    <>
+    <MyFriendsContext.Provider value={{ myFriends, setMyFriends }}>
       <MyFriendsView
         friendsCount={friendsCount}
         pendingFriendsCount={pendingFriendsCount}
@@ -140,7 +149,7 @@ const MyFriendsController: FC<Props> = () => {
         }}
         onPressReceivedFriendRequests={onPressReceivedFriendRequests}
       />
-    </>
+    </MyFriendsContext.Provider>
   );
 };
 

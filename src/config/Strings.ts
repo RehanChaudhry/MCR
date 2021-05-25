@@ -354,5 +354,6 @@ export default {
   roommateAgreementdetails: {
     export_agreement: "Export Roommate Agreement"
   },
-  somethingWentWrong: "Something went wrong!"
+  somethingWentWrong: "Something went wrong!",
+  staticContent: {}
 };

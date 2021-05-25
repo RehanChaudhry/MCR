@@ -5,6 +5,7 @@ import React, {
   useLayoutEffect,
   useState
 } from "react";
+import RoomApis from "repo/auth/RoomApis";
 import RoommateAgreementView from "ui/screens/home/friends/RoommateAgreement/RoommateAgreementView";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RoommateAgreementStackParamList } from "routes/FriendsStack";
@@ -26,7 +27,6 @@ import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_wit
 import { ProfileRootStackParamList } from "routes/ProfileRootStack";
 import { useApi } from "repo/Client";
 import { RoommateAgreementResponseModel } from "models/api_responses/RoommateAgreementResponseModel";
-import RoomAgreementApis from "repo/auth/RoomAgreementApis";
 import { RoommateAgreementRequestModel } from "models/api_requests/RoommateAgreementRequestModel";
 
 type Props = {};
@@ -66,7 +66,7 @@ const RoommateAgreementController: FC<Props> = () => {
   const roommateApi = useApi<
     RoommateAgreementRequestModel,
     RoommateAgreementResponseModel
-  >(RoomAgreementApis.fetchRoomAgreementFileds);
+  >(RoomApis.fetchRoomAgreementFileds);
   const [
     roommateData,
     setRoommateData

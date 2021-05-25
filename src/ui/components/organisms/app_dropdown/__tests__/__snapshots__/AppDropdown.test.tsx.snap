@@ -373,7 +373,7 @@ exports[`Renders snapshot as expected 1`] = `
                 "color": "#111827",
               },
               Object {
-                "lineHeight": undefined,
+                "lineHeight": 42,
               },
               Array [
                 Object {
