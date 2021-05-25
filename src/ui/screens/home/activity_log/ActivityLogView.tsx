@@ -10,7 +10,6 @@ import { getActivityTypeFilterData } from "models/enums/ActivityType";
 import { ActivityLogSection } from "utils/SectionListHelper";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppLog, shadowStyleProps } from "utils/Util";
-import { DropDownItem } from "models/DropDownItem";
 import ActivityLog from "models/ActivityLog";
 import { AppLoadMore } from "ui/components/atoms/app_load_more/AppLoadMore";
 
@@ -20,7 +19,7 @@ type Props = {
   pullToRefreshCallback: (onComplete: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
-  selectedItem: (item: DropDownItem) => void;
+  selectedItem: (textToFilter: string) => void;
 };
 
 export const ActivityLogView: React.FC<Props> = ({
@@ -98,7 +97,7 @@ export const ActivityLogView: React.FC<Props> = ({
           title={getActivityTypeFilterData()[0].title}
           items={getActivityTypeFilterData()}
           selectedItemCallback={(item) => {
-            selectedItem(item);
+            selectedItem(item.id!);
           }}
         />
       </View>

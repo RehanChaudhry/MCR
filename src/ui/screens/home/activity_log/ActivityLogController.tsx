@@ -15,7 +15,6 @@ import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiReques
 import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
 import { ActivityLogView } from "ui/screens/home/activity_log/ActivityLogView";
 import { toSectionList } from "utils/SectionListHelper";
-import { DropDownItem } from "models/DropDownItem";
 
 type ActivityLogNavigationProp = StackNavigationProp<
   ActivityLogStackParamList,
@@ -33,7 +32,6 @@ const ActivityLogController: FC<Props> = () => {
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
     false
   );
-  const [searchByKeyword, setSearchByKeyword] = useState<DropDownItem>();
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const [
     activityLogs,
@@ -112,13 +110,18 @@ const ActivityLogController: FC<Props> = () => {
     });
   };
 
+  function clearActivityLogList() {
+    requestModel.current.page = 1;
+    setActivityLogs(undefined);
+  }
+
   const searchText = useCallback(
-    (textToSearch: DropDownItem) => {
-      AppLog.log("Searching: " + textToSearch);
-      setSearchByKeyword(textToSearch);
-      AppLog.log(searchByKeyword);
+    (textToSearch: string) => {
+      clearActivityLogList();
+      requestModel.current.actionType = textToSearch;
+      getActivityLogs();
     },
-    [searchByKeyword]
+    [getActivityLogs]
   );
 
   useEffect(() => {
