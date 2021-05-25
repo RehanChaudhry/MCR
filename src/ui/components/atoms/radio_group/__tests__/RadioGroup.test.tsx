@@ -33,7 +33,7 @@ test("check radio button on Press", () => {
   );
   const radioButton = getByText("Male");
   fireEvent.press(radioButton);
-  expect(onPress).toBeCalledTimes(1);
+  expect(onPress).toBeCalledTimes(2);
   expect(onPress).toBeCalledWith({ id: 1, value: "Male" }, 0);
 });
 
@@ -51,9 +51,10 @@ test("check radio button label on Press", () => {
       onChange={onPress}
     />
   );
+  expect(onPress).toBeCalledTimes(1);
   const radioButton = getByText("Female");
   fireEvent.press(radioButton);
-  expect(onPress).toBeCalledTimes(1);
+  expect(onPress).toBeCalledTimes(2);
   expect(onPress).toBeCalledWith({ id: 2, value: "Female" }, 1);
 });
 

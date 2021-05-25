@@ -96,6 +96,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
           <>
             <View style={styles.spacer} />
             <AppFormRadioButton
+              name={listData.id.toString()}
               labelProps={{
                 text: listData.label,
                 weight: "semi-bold"

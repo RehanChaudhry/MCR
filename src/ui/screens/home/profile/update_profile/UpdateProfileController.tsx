@@ -188,7 +188,7 @@ const UpdateProfileController: FC<Props> = () => {
         AppLog.log("Update profile data is updated " + dataBody.message);
         Alert.alert(
           "Your profile has been updated successfully.",
-          errorBody
+          dataBody.message
         );
       }
     }
