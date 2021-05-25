@@ -193,7 +193,11 @@ const MatchesController: FC<Props> = () => {
             const updatedUser = new RelationModel(
               prevState![requestedUserPosition]
             );
-            updatedUser.isFriend = EIntBoolean.FALSE;
+            if (type === RelationActionType.ROOMMATE_REQUEST) {
+              updatedUser.isFriend = EIntBoolean.TRUE;
+            } else {
+              updatedUser.isFriend = EIntBoolean.FALSE;
+            }
             updatedUser.isRoommate = EIntBoolean.FALSE;
             updatedUser.status = Status.PENDING;
             prevState![requestedUserPosition] = updatedUser;
@@ -260,6 +264,7 @@ const MatchesController: FC<Props> = () => {
     request: MatchDismissBlockCancelApiRequestModel,
     type: RelationActionType
   ) => {
+    AppLog.log("type: " + type);
     const {
       hasError,
       errorBody,
@@ -301,8 +306,8 @@ const MatchesController: FC<Props> = () => {
               updatedUser.isFriend = EIntBoolean.TRUE;
               updatedUser.isRoommate = EIntBoolean.FALSE;
               updatedUser.status = Status.ACCEPTED;
-              const cri: Criteria = { eligible: true };
-              updatedUser.criteria = cri;
+              const actualCriteria: Criteria = { eligible: true };
+              updatedUser.criteria = actualCriteria;
             }
             prevState![requestedUserPosition] = updatedUser;
           }
