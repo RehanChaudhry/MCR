@@ -1,4 +1,10 @@
-import React, { FC, useLayoutEffect, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState
+} from "react";
 import { UpdateProfileView } from "ui/screens/home/profile/update_profile/UpdateProfileView";
 import {
   RouteProp,
@@ -22,9 +28,12 @@ import { AppLog } from "utils/Util";
 import { Alert } from "react-native";
 import { useApi } from "repo/Client";
 import AuthApis from "repo/auth/AuthApis";
-import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
-import SimpleToast from "react-native-simple-toast";
+import {
+  ProfileData,
+  UpdateProfileUiResponseModel
+} from "models/api_responses/UpdateProfileUiResponseModel";
+import { UpdateProfileUiRequestModel } from "models/api_requests/UpdateProfileUiRequestModel";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -47,26 +56,63 @@ const UpdateProfileController: FC<Props> = () => {
   const route = useRoute<UpdateProfileRouteProp>();
   const { themedColors } = usePreferredTheme();
 
-  const routeName = useRoute<UpdateProfileRouteProp>();
-
   //for info text shown
 
   const [infoTextShown, setInfoTextShown] = useState(false);
 
-  //update profile api integration
+  //for update profile Ui
 
+  const [
+    updateProfileUiData,
+    setUpdateProfileUiData
+  ] = useState<ProfileData>();
+
+  //update profile UI integration
+
+  const updateProfileUiApi = useApi<any, UpdateProfileUiResponseModel>(
+    AuthApis.updateProfileUi
+  );
+
+  //handle update profile ui api
+  const fetchMyProfile = useCallback(async () => {
+    AppLog.log("handleSignIn: ");
+
+    //setShouldShowPb(true);
+
+    // authenticate user
+    const {
+      hasError,
+      errorBody,
+      dataBody
+    } = await updateProfileUiApi.request([]);
+
+    if (hasError || dataBody === undefined) {
+      Alert.alert("Unable to fetch update profile ui", errorBody);
+      return;
+    } else {
+      AppLog.log("Update profile data is updated " + dataBody.data);
+      setUpdateProfileUiData(dataBody.data);
+    }
+  }, [updateProfileUiApi]);
+
+  //update profile api integration
   const updateProfileApi = useApi<
-    UpdateProfileRequestModel,
+    UpdateProfileUiRequestModel,
     UpdateProfileResponseModel
   >(AuthApis.updateProfile);
 
-  AppLog.log("data" + routeName.params.options);
+  useEffect(() => {
+    fetchMyProfile();
+  }, [fetchMyProfile]);
+
+  //AppLog.log("data" + routeName.params.options);
 
   const openQuestionnaireScreen = usePreventDoubleTap(() => {
     welcomeNavigation.navigate("Questionnaire", {
       isFrom: EScreen.WELCOME
     });
   });
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => <Hamburger />,
@@ -121,9 +167,10 @@ const UpdateProfileController: FC<Props> = () => {
     openQuestionnaireScreen
   ]);
 
+  //handle update profile api
   const handleUpdateProfile = usePreventDoubleTap(
-    async (apiRequestModel: UpdateProfileRequestModel) => {
-      AppLog.log("handleSignIn: ");
+    async (apiRequestModel: UpdateProfileUiRequestModel) => {
+      // AppLog.log("handleSignIn: ");
 
       //setShouldShowPb(true);
 
@@ -135,10 +182,14 @@ const UpdateProfileController: FC<Props> = () => {
       } = await updateProfileApi.request([apiRequestModel]);
 
       if (hasError || dataBody === undefined) {
-        Alert.alert("Unable to Sign In", errorBody);
+        Alert.alert("Unable to update your profile", errorBody);
         return;
       } else {
-        SimpleToast.show(dataBody.message);
+        AppLog.log("Update profile data is updated " + dataBody.message);
+        Alert.alert(
+          "Your profile has been updated successfully.",
+          dataBody.message
+        );
       }
     }
   );
@@ -150,9 +201,12 @@ const UpdateProfileController: FC<Props> = () => {
           openUpdateQuestionnaireScreen={openQuestionnaireScreen}
           infoTextShown={infoTextShown}
           handleUpdateProfile={(_requestModel) => {
-            (_requestModel.id = 1), handleUpdateProfile(_requestModel);
+            handleUpdateProfile(_requestModel);
           }}
-        />
+          updateProfileUiData={updateProfileUiData}
+        />,
+        null,
+        3000
       )}
     </>
   );

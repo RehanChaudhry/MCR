@@ -6,59 +6,83 @@ export const Sections = [
     formInputs: [
       {
         id: 0,
-        label: "First Name",
-        inputType: "textarea",
-        userMeta: [],
-        placeHolder: "Enter Your First Name"
+        //fieldName: "firstName",
+        //label: "First Name",
+        inputType: "uploadphoto"
+        // userMeta: [],
+        // placeholder: "Enter Your First Name"
       },
       {
         id: 1,
-        label: "Last Name",
+        name: "firstName",
+        label: "First Name",
         inputType: "textfield",
         userMeta: [],
-        placeHolder: "Enter Your Last Name"
+        placeholder: "Enter Your First Name",
+        isRequired: 1
       },
       {
         id: 2,
-        label: "About Me",
-        inputType: "textarea",
+        name: "lastName",
+        label: "Last Name",
+        inputType: "textfield",
+        isRequired: 1,
         userMeta: [],
-        placeHolder: "Brief description for your profile."
+        placeholder: "Enter Your Last Name"
       },
       {
         id: 3,
-        label: "Facebook Profile",
+        name: "aboutMe",
+        label: "About Me",
         inputType: "textarea",
+        isRequired: 0,
         userMeta: [],
-        placeHolder: "facebook.com/"
+        placeholder: "Brief description for your profile."
       },
       {
         id: 4,
-        label: "Twitter Profile",
-        inputType: "textarea",
+        name: "faceBookProfile",
+        label: "Facebook Profile",
+        inputType: "textfield",
+        isRequired: 0,
         userMeta: [],
-        placeHolder: "twitter.com/"
+        placeholder: "facebook.com/"
       },
       {
         id: 5,
-        label: "LinkedIn Profile",
-        inputType: "textarea",
+        name: "twitterProfile",
+        label: "Twitter Profile",
+        inputType: "textfield",
+        isRequired: 0,
         userMeta: [],
-        placeHolder: "linkedin.com/"
+        placeholder: "twitter.com/"
       },
       {
         id: 6,
-        label: "SnapChat Profile",
-        inputType: "textarea",
+        name: "linkedInProfile",
+        label: "LinkedIn Profile",
+        inputType: "textfield",
+        isRequired: 0,
         userMeta: [],
-        placeHolder: "snapchat.com/"
+        placeholder: "linkedin.com/"
       },
       {
         id: 7,
-        label: "TikTok Profile",
-        inputType: "textarea",
+        name: "snapChatProfile",
+        label: "SnapChat Profile",
+        inputType: "textfield",
+        isRequired: 0,
         userMeta: [],
-        placeHolder: "tiktok.com/"
+        placeholder: "snapchat.com/"
+      },
+      {
+        id: 8,
+        name: "tikTokProfile",
+        label: "TikTok Profile",
+        inputType: "textfield",
+        isRequired: 0,
+        userMeta: [],
+        placeholder: "tiktok.com/"
       }
     ]
   },
@@ -67,8 +91,9 @@ export const Sections = [
     description: "Please take a moment to tell us more about you.",
     formInputs: [
       {
-        id: 8,
+        id: 9,
         label: "Gender",
+        name: "gender",
         inputType: "dropdown",
         options: [
           {
@@ -84,12 +109,14 @@ export const Sections = [
             value: "others"
           }
         ],
-        placeHolder: "Select your gender"
+        placeholder: "Select your gender"
       },
       {
-        id: 9,
+        id: 10,
         label: "Smoking habits",
+        name: "smokingHabits",
         inputType: "radio",
+        isRequired: 0,
         options: [
           {
             id: 0,
@@ -106,18 +133,22 @@ export const Sections = [
         ]
       },
       {
-        id: 10,
+        id: 11,
+        name: "homeTown",
         label: "Hometown",
-        inputType: "textarea",
+        inputType: "textfield",
+        isRequired: 0,
         userMeta: [],
-        placeHolder: "Enter your hometown"
+        placeholder: "Enter your hometown"
       },
       {
-        id: 11,
+        id: 12,
+        name: "intendedMajor",
         label: "Intended Major",
-        inputType: "textarea",
+        inputType: "textfield",
+        isRequired: 0,
         userMeta: [],
-        placeHolder: "Enter your intended major"
+        placeholder: "Enter your intended major"
       }
     ]
   },
@@ -126,9 +157,11 @@ export const Sections = [
     description: "Tell us about what do you love to do?",
     formInputs: [
       {
-        id: 12,
+        id: 13,
         label: "Hobbies & interests",
+        name: "hobbies",
         inputType: "multiselect",
+        isRequired: 0,
         options: [
           {
             id: 0,
@@ -157,28 +190,11 @@ export const Sections = [
         ]
       },
       {
-        id: 13,
-        label: "Club & Memberships",
-        inputType: "multiselect",
-        options: [
-          {
-            id: 0,
-            value: "Drunk In Love forever"
-          },
-          {
-            id: 1,
-            value: "Heathens"
-          },
-          {
-            id: 2,
-            value: 'Love Me Harder" by Ariana Grande ft. The Weeknd'
-          }
-        ]
-      },
-      {
         id: 14,
-        label: "Favorite movies & TV shows",
+        label: "Club & Memberships",
+        name: "memberships",
         inputType: "multiselect",
+        isRequired: 0,
         options: [
           {
             id: 0,
@@ -196,8 +212,11 @@ export const Sections = [
       },
       {
         id: 15,
-        label: "Music",
+        label: "Favorite movies & TV shows",
         inputType: "multiselect",
+        isRequired: 0,
+        name: "movies",
+
         options: [
           {
             id: 0,
@@ -215,8 +234,11 @@ export const Sections = [
       },
       {
         id: 16,
-        label: "Books",
+        label: "Music",
         inputType: "multiselect",
+        isRequired: 0,
+        name: "music",
+
         options: [
           {
             id: 0,
@@ -234,8 +256,33 @@ export const Sections = [
       },
       {
         id: 17,
+        label: "Books",
+        inputType: "multiselect",
+        isRequired: 0,
+        name: "books",
+
+        options: [
+          {
+            id: 0,
+            value: "Drunk In Love forever"
+          },
+          {
+            id: 1,
+            value: "Heathens"
+          },
+          {
+            id: 2,
+            value: 'Love Me Harder" by Ariana Grande ft. The Weeknd'
+          }
+        ]
+      },
+      {
+        id: 18,
         label: "Games",
         inputType: "multiselect",
+        isRequired: 0,
+        name: "games",
+
         options: [
           {
             id: 0,
@@ -259,9 +306,11 @@ export const Sections = [
       "Please provide your educational information to complete your profile.",
     formInputs: [
       {
-        id: 18,
+        id: 19,
         label: "Student ID",
-        inputType: "textarea",
+        name: "studentID",
+        inputType: "textfield",
+        isRequired: 0,
         userMeta: [
           {
             value: "123456"
@@ -269,32 +318,40 @@ export const Sections = [
         ]
       },
       {
-        id: 19,
-        label: "Programs",
-        inputType: "textarea",
-        userMeta: [],
-        placeHolder: "Enter your educational program"
-      },
-      {
         id: 20,
-        label: "Community",
-        inputType: "textarea",
+        label: "Programs",
+        name: "programs",
+        inputType: "textfield",
+        isRequired: 0,
         userMeta: [],
-        placeHolder: "Start typing seprated by comma"
+        placeholder: "Enter your educational program"
       },
       {
         id: 21,
-        label: "Building",
-        inputType: "textarea",
+        name: "community",
+        label: "Community",
+        inputType: "textfield",
+        isRequired: 0,
         userMeta: [],
-        placeHolder: "Enter your building information"
+        placeholder: "Start typing seprated by comma"
       },
       {
         id: 22,
-        label: "Room",
-        inputType: "textarea",
+        name: "building",
+        label: "Building",
+        inputType: "textfield",
+        isRequired: 0,
         userMeta: [],
-        placeHolder: "Enter your room number"
+        placeholder: "Enter your building information"
+      },
+      {
+        id: 23,
+        name: "room",
+        label: "Room",
+        inputType: "textfield",
+        isRequired: 0,
+        userMeta: [],
+        placeholder: "Enter your room number"
       }
     ]
   },
@@ -304,11 +361,13 @@ export const Sections = [
       "Record 60 seconds self-introduction video presentation and post it on YouTube.",
     formInputs: [
       {
-        id: 23,
+        id: 24,
+        name: "youtubeVideoUrl",
         label: "YouTube Video URL",
-        inputType: "textarea",
+        inputType: "textfield",
+        isRequired: 0,
         userMeta: [],
-        placeHolder: "youtube.com/"
+        placeholder: "youtube.com/"
       }
     ]
   }

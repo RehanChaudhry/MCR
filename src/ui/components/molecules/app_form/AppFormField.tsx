@@ -85,12 +85,11 @@ const AppFormField = optimizedMemo<Props>(
         )}
         <AppInputField
           testID={fieldTestID}
-          value={value ? value : values[name]}
-          onChangeText={(e) => {
-            setFieldValue(name, e);
-            customTextChanged?.(e);
+          valueToShowAtStart={value ? value : values[name]}
+          onChangeText={(text) => {
+            setFieldValue(name, text);
+            customTextChanged?.(text);
           }}
-          // onChangeText={handleChange(name)}
           onBlur={_setFieldTouched}
           secureTextEntry={secureTextEntry}
           {...fieldInputProps}

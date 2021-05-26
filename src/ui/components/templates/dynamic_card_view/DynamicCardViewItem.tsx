@@ -15,6 +15,7 @@ export const DynamicCardViewItem = React.memo<DynamicCardViewItemProps>(
     return (
       <CardView style={styles.cardView}>
         <HeadingWithText
+          headingFontWeight={"semi-bold"}
           headingText={sections.title}
           text={sections.description}
         />
@@ -26,7 +27,10 @@ export const DynamicCardViewItem = React.memo<DynamicCardViewItemProps>(
 
 const styles = StyleSheet.create({
   cardView: {
-    margin: SPACE.md,
-    padding: SPACE.md
+    marginHorizontal: SPACE.lg,
+    marginBottom: SPACE.sm,
+    marginTop: SPACE.sm,
+    paddingVertical: SPACE.lg,
+    paddingHorizontal: SPACE.lg
   }
 });

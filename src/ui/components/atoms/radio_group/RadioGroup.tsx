@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   StyleProp,
@@ -42,11 +42,14 @@ export const RadioGroup = optimizedMemo<Props>(
       values.length - 1 >= byDefaultSelected ? byDefaultSelected : 0
     );
 
+    useEffect(() => {
+      //to call preselected item callback
+      onChange?.(values[selectedPosition], selectedPosition);
+    }, [selectedPosition, values, onChange]);
+
     function buttonPressed(position: number) {
-      const oldSelectedOption = selectedPosition;
-      setSelectedPosition(position);
-      if (position !== oldSelectedOption) {
-        onChange?.(values[position], position);
+      if (position !== selectedPosition) {
+        setSelectedPosition(position);
       }
     }
 
@@ -110,7 +113,7 @@ const styles = StyleSheet.create({
   radioButtonContainer: {
     flexDirection: "row",
     alignSelf: "flex-start",
-    marginTop: 16
+    marginTop: 8
   },
   radioButtonWrapper: {
     flexWrap: "wrap",

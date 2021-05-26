@@ -6,13 +6,16 @@ export type RoommateAgreementResponseModel = {
 };
 
 export type FormInputFieldData = {
+  fieldName?: string;
   id: number;
+  name: string;
   matchGroupId?: null;
   inputType?: string;
   label?: string;
   placeholder?: string;
   options?: OptionsData[] | undefined;
   order?: number;
+  isLocked: EIntBoolean;
   isRequired: EIntBoolean;
   isDefault?: number;
   content?: null;
@@ -20,7 +23,7 @@ export type FormInputFieldData = {
   createdAt?: string;
   updatedAt?: string;
   deletedAt?: null;
-  userMeta?: userMetaData[];
+  userMeta?: UserMetaData[];
 };
 
 export type OptionsData = {
@@ -28,6 +31,6 @@ export type OptionsData = {
   text: string;
 };
 
-export type userMetaData = {
+export type UserMetaData = {
   value?: string;
 };
