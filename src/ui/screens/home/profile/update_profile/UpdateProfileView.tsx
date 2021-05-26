@@ -112,14 +112,8 @@ export const UpdateProfileView: React.FC<Props> = ({
   }, [updateProfileUiData]);
 
   useEffect(() => {
-    AppLog.logForcefully("In UpdateProfileView useEffect...");
     init();
   }, [init]);
-
-  AppLog.logForcefully(
-    "Initial Values from UpdateProfileView: " +
-      JSON.stringify(initialValues.current)
-  );
 
   return (
     <KeyboardAwareScrollView keyboardOpeningTime={50} extraHeight={200}>
