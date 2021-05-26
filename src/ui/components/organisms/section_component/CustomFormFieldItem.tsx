@@ -5,8 +5,6 @@ import {
 import React from "react";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { DynamicAppFormField } from "ui/components/templates/roommate_agreement/DynamicAppFormField";
-import { AppLog } from "utils/Util";
-import { CheckBoxGroup } from "ui/components/atoms/checkbox_group/CheckBoxGroup";
 import { AppFormDropDown } from "ui/components/molecules/app_form/AppFormDropDown";
 import { SPACE, STRINGS } from "config";
 import { StyleSheet, View } from "react-native";
@@ -18,6 +16,7 @@ import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import ChevronRight from "assets/images/chevron_right.svg";
 import { FieldBox } from "ui/components/atoms/FieldBox";
 import { UploadProfilePhoto } from "ui/components/templates/basic_profile/UploadProfilePhoto";
+import { AppFormCheckBoxGroup } from "ui/components/molecules/app_form/AppFormCheckBoxGroup";
 
 type CustomFormFieldProps = {
   listData: FormInputFieldData;
@@ -38,7 +37,6 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
     //for multi select item
     const chevronRight = () => <ChevronRight height={20} width={20} />;
 
-    AppLog.logForcefully("Options Data " + listData.options);
     const theme = usePreferredTheme();
 
     switch (listData.inputType) {
@@ -81,15 +79,15 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
 
       case "checkbox":
         return (
-          <CheckBoxGroup
-            listData={listData}
+          <AppFormCheckBoxGroup
+            listData={listData.options!!}
             labelProps={{
               text: listData.label,
               weight: "semi-bold",
               numberOfLines: 0
             }}
             name={listData.id.toString()}
-            onChange={(value) => AppLog.log(value)}
+            // onChange={(value) => AppLog.log(value)}
           />
         );
       case "radio":
