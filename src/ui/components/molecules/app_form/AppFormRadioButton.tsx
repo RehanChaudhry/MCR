@@ -19,15 +19,13 @@ type Props = {
   labelProps?: AppLabelProps;
   radioData: Array<Choice>;
   direction: DIRECTION_TYPE;
-  name: string;
 };
 
 export const AppFormRadioButton: React.FC<Props> = ({
   name,
   labelProps,
   radioData,
-  direction,
-  name
+  direction
 }) => {
   const theme = usePreferredTheme();
 
@@ -48,7 +46,7 @@ export const AppFormRadioButton: React.FC<Props> = ({
         itemsInRow={3}
         onChange={(value: Choice, index: number) => {
           AppLog.log("Select radio button index : " + index);
-          setFieldValue(name, value);
+          setFieldValue(name, value.value);
         }}
         byDefaultSelected={radioData.findIndex(
           (item) =>
