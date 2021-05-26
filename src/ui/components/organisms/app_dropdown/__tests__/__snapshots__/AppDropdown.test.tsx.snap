@@ -68,16 +68,16 @@ exports[`Renders snapshot as expected 1`] = `
               data={
                 Array [
                   Object {
-                    "id": "1",
-                    "title": "Male",
+                    "text": "male",
+                    "value": "Male",
                   },
                   Object {
-                    "id": "2",
-                    "title": "Female",
+                    "text": "female",
+                    "value": "Female",
                   },
                   Object {
-                    "id": "3",
-                    "title": "Other",
+                    "text": "other",
+                    "value": "Other",
                   },
                 ]
               }

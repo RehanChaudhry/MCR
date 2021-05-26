@@ -5,18 +5,19 @@ import { StyleSheet } from "react-native";
 import { SPACE } from "config";
 
 type Props = {
-  label: string;
-  placeHolder: string;
+  label: string | undefined;
+  placeHolder: string | undefined;
+  name: string;
 };
 
 export const DynamicAppFormField = React.memo<Props>(
-  ({ label, placeHolder }) => {
+  ({ label, placeHolder, name }) => {
     const theme = usePreferredTheme();
     return (
       <AppFormField
         fieldTestID="upset"
         validationLabelTestID={"upsetValidationLabel"}
-        name="upset"
+        name={name}
         labelProps={{
           text: label,
           weight: "semi-bold",

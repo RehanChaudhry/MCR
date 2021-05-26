@@ -1,5 +1,5 @@
 export type ConversationItem = {
   id: number;
-  name: string;
+  value: string;
   userId: number;
 };

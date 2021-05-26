@@ -38,13 +38,10 @@
       "limit": 10,
       "filterBy": "friends"
     },
+    "params": {},
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
-    "transformRequest": [
-      null
-    ],
-    "transformResponse": [
-      null
-    ],
+    "transformRequest": [null],
+    "transformResponse": [null],
     "timeout": 0,
     "xsrfCookieName": "XSRF-TOKEN",
     "xsrfHeaderName": "X-XSRF-TOKEN",

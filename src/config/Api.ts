@@ -17,6 +17,8 @@ export default {
   NOTIFICATION_URL: "notifications",
   AGREEMENT_DETAILS: "agreement_details",
   ROOMATE_AGREEMENT_FIELDS: "agreement-field",
+  UPDATE_ROOMATE_AGREEMENT: "agreement-answer",
+  FETCH_ROOMATE_AGREEMENT_ANSWERS: "agreement-answer",
 
   //Get universities
   UNIS: "university",

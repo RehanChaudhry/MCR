@@ -34,31 +34,40 @@ export const AppFormDropDown: React.FC<Props> = ({
   // shouldShowCustomIcon = false
 }) => {
   const theme = usePreferredTheme();
-  const { errors, touched, values } = useFormikContext<FormikValues>();
+  const {
+    errors,
+    touched,
+    values,
+    setFieldValue
+  } = useFormikContext<FormikValues>();
+
+  const { title, ...appDropDownPropsCopy } = appDropDownProps;
+
   return (
     <>
       {labelProps && (
         <AppLabel
+          numberOfLines={0}
           style={[styles.label, { color: theme.themedColors.label }]}
           {...labelProps}
         />
       )}
       <AppDropdown
-        {...appDropDownProps}
+        {...appDropDownPropsCopy}
+        title={title}
+        preselectedItemString={values[name]}
         selectedItemCallback={(item) => {
-          values[name] = item;
+          setFieldValue(name, item);
         }}
       />
-      {errors[name] && touched[name] && (
+
+      {(errors[name] || touched[name]) && (
         <AppFormValidationLabel
           validationLabelTestID={validationLabelTestID}
           errorString={errors[name] as string}
           shouldVisible={true}
         />
       )}
-      {/*style={style}*/}
-      {/*shouldShowCustomIcon={shouldShowCustomIcon}*/}
-      {/*dropDownIcon={dropDownIcon}*/}
     </>
   );
 };
