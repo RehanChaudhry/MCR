@@ -1,4 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import PencilAlt from "assets/images/pencil_alt.svg";
 import Strings from "config/Strings";
@@ -34,6 +38,8 @@ type CommunityNavigationProp = StackNavigationProp<
   "Community"
 >;
 
+type CommunityRoute = RouteProp<CommunityStackParamList, "Community">;
+
 type Props = {};
 
 const CommunityController: FC<Props> = () => {
@@ -45,6 +51,7 @@ const CommunityController: FC<Props> = () => {
   >(undefined);
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   const navigation = useNavigation<CommunityNavigationProp>();
+  const route = useRoute<CommunityRoute>();
   const theme = usePreferredTheme();
 
   useEffect(() => {
@@ -197,6 +204,21 @@ const CommunityController: FC<Props> = () => {
   useEffect(() => {
     fetchCommunities().then().catch();
   }, [fetchCommunities]);
+
+  useEffect(() => {
+    if (route.params?.postId) {
+      setCommunities((prevState) => {
+        const spamUserIndex =
+          prevState?.findIndex(
+            (value) => value.id === route.params?.postId
+          ) ?? -1;
+        if (spamUserIndex > -1) {
+          prevState!.splice(spamUserIndex, 1);
+        }
+        return prevState;
+      });
+    }
+  }, [route.params?.postId]);
 
   return (
     <CommunityView
