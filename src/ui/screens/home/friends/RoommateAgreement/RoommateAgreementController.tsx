@@ -72,7 +72,7 @@ const RoommateAgreementController: FC<Props> = () => {
     RoommateAgreementRequestModel,
     RoommateAgreementResponseModel
   >(RoomAgreementApis.fetchRoomAgreementFileds);
-  const submitAnswerRequest = useRef<AgreementAnswersRequestModel>();
+  const submitAnswerRequest = useRef<AgreementAnswersRequestModel>({});
   const [
     roommateData,
     setRoommateData
@@ -217,17 +217,17 @@ const RoommateAgreementController: FC<Props> = () => {
   const agreementDialogCallback = (status: string) => {
     setAgreementDialog(false);
 
-    if (submitAnswerRequest!!.current!!.roommates === undefined) {
-      submitAnswerRequest!!.current!!.roommates = [];
+    if (submitAnswerRequest.current.roommates === undefined) {
+      submitAnswerRequest.current.roommates = [];
     }
-    submitAnswerRequest!!.current!!.roommates.push({
-      userId: user?.profile?.id!!,
+    submitAnswerRequest.current.roommates.push({
+      userId: user?.profile?.id,
       status: status
     });
 
-    submitAnswerRequest.current!!.agreementId!! = user?.profile?.agreementId!!;
+    submitAnswerRequest.current.agreementId = user?.profile?.agreementId!!;
 
-    //call submit/update agrrement api
+    //call submit/update agreement api
     handleRoommateUpdateApi();
   };
 
