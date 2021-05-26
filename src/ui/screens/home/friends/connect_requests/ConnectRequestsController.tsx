@@ -6,9 +6,9 @@ import {
 import { StackNavigationProp } from "@react-navigation/stack";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import {
-  FriendRequest,
-  FriendRequestsResponseModel
-} from "models/api_responses/FriendRequestsResponseModel";
+  PendingRequest,
+  PendingRequestsResponseModel
+} from "models/api_responses/PendingRequestsResponseModel";
 import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
@@ -50,11 +50,16 @@ const ConnectRequestsController: FC<Props> = () => {
   const [canLoadMore, setCanLoadMore] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const [connectRequests, setConnectRequests] = useState<
-    Array<FriendRequest>
+    Array<PendingRequest>
   >();
 
-  const connectRequestsApi = useApi<any, FriendRequestsResponseModel>(
-    FriendsApis.getFriendRequests
+  const connectRequestsApi = useApi<
+    PaginationParamsModel,
+    PendingRequestsResponseModel
+  >(
+    type === ConnectRequestType.FRIEND_REQUESTS
+      ? FriendsApis.getFriendsRequests
+      : FriendsApis.getRoommateRequests
   );
 
   const handleConnectRequestsResponse = async (
@@ -125,11 +130,11 @@ const ConnectRequestsController: FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onPressApproved = (item: FriendRequest) => {
+  const onPressApproved = (item: PendingRequest) => {
     AppLog.log("friend request item:", item);
   };
 
-  const onPressDeclined = (item: FriendRequest) => {
+  const onPressDeclined = (item: PendingRequest) => {
     AppLog.log("friend request item:", item);
   };
 
