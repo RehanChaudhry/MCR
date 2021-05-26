@@ -7,15 +7,18 @@ import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { CardView } from "ui/components/atoms/CardView";
 import Screen from "ui/components/atoms/Screen";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
+import { HTMLView } from "react-native-htmlview";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
+import { StaticContent } from "models/api_responses/StaticContentResponseModel";
 
 type Props = {
   openUpdateProfileScreen: () => void;
   shouldShowProgressBar?: boolean;
+  staticContent: StaticContent;
 };
 
 export const WelcomeView = React.memo<Props>(
-  ({ openUpdateProfileScreen }) => {
+  ({ openUpdateProfileScreen, staticContent }) => {
     const theme = usePreferredTheme();
     const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
 
@@ -58,52 +61,19 @@ export const WelcomeView = React.memo<Props>(
             </View>
 
             <HeadingWithText
-              headingText={STRINGS.welcome.learn_about_heading}
+              headingText={staticContent.title ?? ""}
               headingFontWeight={"bold"}
               headingNumberOfLines={0}
               headingStyle={styles.learnAboutHeading}
-              text={STRINGS.welcome.learn_about_text}
+              text={staticContent.description ?? ""}
               textStyle={styles.learnAboutText}
             />
 
             <CardView style={styles.cardView}>
               <View style={styles.cardViewMainContainer}>
-                <HeadingWithText
-                  headingText={STRINGS.welcome.roommate_selection_heading}
-                  headingFontWeight={"bold"}
-                  headingStyle={styles.roommate_heading}
-                  text={STRINGS.welcome.roommate_selection}
-                  textStyle={styles.roommate_text}
-                />
-
-                <HeadingWithText
-                  headingText={STRINGS.welcome.socail_network_heading}
-                  headingFontWeight={"bold"}
-                  headingStyle={styles.heading}
-                  text={STRINGS.welcome.socail_network_text}
-                  textStyle={styles.roommate_text}
-                />
-
-                <HeadingWithText
-                  headingText={STRINGS.welcome.roommate_designer}
-                  headingFontWeight={"bold"}
-                  headingStyle={styles.heading}
-                  text={STRINGS.welcome.roommate_designer_text}
-                  textStyle={styles.roommate_text}
-                />
-                <HeadingWithText
-                  headingText={STRINGS.welcome.accurate_matches}
-                  headingFontWeight={"bold"}
-                  headingStyle={styles.heading}
-                  text={STRINGS.welcome.accurate_matches_text}
-                  textStyle={styles.roommate_text}
-                />
-                <HeadingWithText
-                  headingText={STRINGS.welcome.friends_messages}
-                  headingFontWeight={"bold"}
-                  headingStyle={styles.heading}
-                  text={STRINGS.welcome.friends_messages_text}
-                  textStyle={styles.roommate_text}
+                <HTMLView
+                  value={staticContent.content}
+                  stylesheet={styles}
                 />
               </View>
             </CardView>
@@ -195,5 +165,12 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: FONT_SIZE.lg
+  },
+  b: {
+    fontSize: FONT_SIZE.lg,
+    fontWeight: "bold"
+  },
+  br: {
+    lineHeight: -12
   }
 });
