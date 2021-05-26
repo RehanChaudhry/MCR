@@ -1,6 +1,6 @@
 import { FONT_SIZE, FONTS, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleProp,
   StyleSheet,
@@ -15,6 +15,7 @@ interface OwnProps extends ViewProps {
   text: string;
   isBold?: boolean;
   style?: StyleProp<ViewStyle>;
+  preSelected: boolean;
   onChange: (checked: boolean, text?: string) => void;
   shouldNotOptimize?: boolean;
 }
@@ -22,9 +23,19 @@ interface OwnProps extends ViewProps {
 type Props = OwnProps;
 
 const CheckboxWithText = optimizedMemo<Props>(
-  ({ text, style, onChange }) => {
+  ({ text, style, preSelected, onChange }) => {
     const [checked, setChecked] = useState(false);
     const theme = usePreferredTheme();
+
+    //callback for preselected item only
+    useEffect(() => {
+      if (preSelected) {
+        setChecked(true);
+      }
+      onChange?.(true, text);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [preSelected]);
+
     return (
       <View style={[styles.container, style]}>
         <CheckBox

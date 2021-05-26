@@ -7,12 +7,13 @@ import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel
 type CheckBoxGroupProps = {
   listData: OptionsData[];
   onChange: (checked: boolean, text: string) => void;
+  preSelected?: [string];
   style?: StyleProp<ViewStyle>;
   shouldNotOptimize?: boolean;
 };
 
 export const CheckBoxGroup = optimizedMemo<CheckBoxGroupProps>(
-  ({ listData, onChange }) => {
+  ({ listData, onChange, preSelected }) => {
     return (
       <View>
         {listData?.map((item) => (
@@ -21,6 +22,10 @@ export const CheckBoxGroup = optimizedMemo<CheckBoxGroupProps>(
             onChange={(checked, text) => {
               onChange?.(checked, text!!);
             }}
+            preSelected={
+              preSelected?.find((data) => data === item.value) !==
+              undefined
+            }
           />
         ))}
       </View>

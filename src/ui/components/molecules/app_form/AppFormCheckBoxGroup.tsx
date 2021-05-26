@@ -8,6 +8,7 @@ import {
 } from "ui/components/atoms/app_label/AppLabel";
 import { View } from "react-native";
 import { CheckBoxGroup } from "ui/components/atoms/checkbox_group/CheckBoxGroup";
+import { AppLog } from "utils/Util";
 
 type AppFormCheckBoxGroupProps = {
   name: string;
@@ -21,7 +22,7 @@ export const AppFormCheckBoxGroup: React.FC<AppFormCheckBoxGroupProps> = ({
   name
 }) => {
   const theme = usePreferredTheme();
-  const { setFieldValue } = useFormikContext<FormikValues>();
+  const { setFieldValue, values } = useFormikContext<FormikValues>();
   let result: React.MutableRefObject<OptionsData[]> = useRef([]);
 
   return (
@@ -33,9 +34,17 @@ export const AppFormCheckBoxGroup: React.FC<AppFormCheckBoxGroupProps> = ({
           {...labelProps}
         />
       )}
+
       <CheckBoxGroup
         listData={listData}
+        preSelected={values[name]}
         onChange={(checked: boolean, text?: string) => {
+          AppLog.log(
+            "Checkbox check changed : " +
+              checked +
+              " and text is : " +
+              text
+          );
           let findElement = listData?.filter(
             ({ value }) => value === text
           );

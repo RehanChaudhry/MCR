@@ -7,7 +7,7 @@ import { AppLog } from "utils/Util";
 
 type Props = {
   listData: any[] | undefined;
-  showProgressBar: boolean;
+  showProgressBar?: boolean;
 };
 
 export const SectionComponent = React.memo<Props>(
