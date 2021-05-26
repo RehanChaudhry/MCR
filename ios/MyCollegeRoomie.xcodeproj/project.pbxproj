@@ -235,6 +235,7 @@
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				D71C6A9CA803391B740BD05F /* [CP] Copy Pods Resources */,
+				BE60B432BBC143A5FF72F597 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -259,6 +260,7 @@
 				F9514923C70EB8CD75DE293D /* [CP] Copy Pods Resources */,
 				398A097DC9663B61D95E4FE8 /* [CP-User] [RNFB] Core Configuration */,
 				2D1DB2EFF9835EEDE8A3A660 /* [CP-User] [RNFB] Crashlytics Configuration */,
+				85FFBC25DBA003A889772E64 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -491,6 +493,42 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		85FFBC25DBA003A889772E64 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyCollegeRoomie/Pods-MyCollegeRoomie-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyCollegeRoomie/Pods-MyCollegeRoomie-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BE60B432BBC143A5FF72F597 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyCollegeRoomie-MyCollegeRoomieTests/Pods-MyCollegeRoomie-MyCollegeRoomieTests-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyCollegeRoomie-MyCollegeRoomieTests/Pods-MyCollegeRoomie-MyCollegeRoomieTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D6EF9AC68AFF102D1C0197C9 /* [CP] Check Pods Manifest.lock */ = {
