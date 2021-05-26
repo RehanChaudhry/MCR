@@ -116,7 +116,7 @@ const CommunityController: FC<Props> = () => {
     setShouldShowProgressBar(false);
     isFetchingInProgress.current = false;
     if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to Sign In", errorBody);
+      Alert.alert("Unable to fetch posts", errorBody);
       return;
     } else {
       setCommunities((prevState) => {
