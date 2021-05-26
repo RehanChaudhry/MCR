@@ -75,7 +75,7 @@ export const AppLabel = optimizedMemo<Props>(
           {
             lineHeight: FONT_SIZE_LINE_HEIGHT.ofFontSize(
               // @ts-ignore
-              StyleSheet.flatten(style)?.fontSize ?? 12.0
+              StyleSheet.flatten(style)?.fontSize ?? 13.0
             )
           },
           style

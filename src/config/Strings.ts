@@ -101,9 +101,12 @@ export default {
   matches: {
     match_score: "Match Score: ",
     action_add_friend: "Add Friend",
-    label_pending_request: "Pending Request",
+    label_cancel_request: "Cancel Request",
     placeholder_search_keyword: "Search by keyword",
-    title: "Matches"
+    title: "Matches",
+    label_not_eligible: "Not Eligible",
+    label_roommate_request: "Roommate Request",
+    label_request_received: "Request Received"
   },
   profile: {
     title:
@@ -312,6 +315,14 @@ export default {
       title: "Add to Dismissed or Blocked List",
       dismiss: "Dismiss",
       block: "Block"
+    },
+    roommate_request: {
+      title: "Roommate Request",
+      success: "Yes, send request"
+    },
+    cancel_request: {
+      title: "Cancel Request",
+      success: "Yes, cancel request"
     }
   },
   activity_log: {
@@ -344,5 +355,6 @@ export default {
   roommateAgreementdetails: {
     export_agreement: "Export Roommate Agreement"
   },
-  somethingWentWrong: "Something went wrong!"
+  somethingWentWrong: "Something went wrong!",
+  staticContent: {}
 };

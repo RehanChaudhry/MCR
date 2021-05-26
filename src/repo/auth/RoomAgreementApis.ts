@@ -5,7 +5,7 @@ import { RoommateAgreementRequestModel } from "models/api_requests/RoommateAgree
 import { AgreementAnswersRequestModel } from "models/api_requests/AgreementAnswersRequestModel";
 import { AgreementAnswerResponseModel } from "models/api_responses/AgreementAnswerResponseModel";
 
-async function fetchRoomAgreementFileds(
+function fetchRoomAgreementFileds(
   requestModel: RoommateAgreementRequestModel
 ) {
   return apiClient.get<RoommateAgreementResponseModel>(

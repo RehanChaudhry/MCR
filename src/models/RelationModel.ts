@@ -1,8 +1,9 @@
+import EIntBoolean from "models/enums/EIntBoolean";
 import RelationType from "models/enums/RelationType";
 import FilePath from "models/FilePath";
-import EIntBoolean from "models/enums/EIntBoolean";
 
 export class RelationUser {
+  id?: string;
   firstName?: string;
   lastName?: string;
   profilePicture?: FilePath;
@@ -28,9 +29,9 @@ export enum Status {
 
 export enum InEligibilityReason {}
 
-type Criteria = {
+export type Criteria = {
   eligible: boolean;
-  reason: InEligibilityReason;
+  reason?: InEligibilityReason;
 };
 
 export class RelationModel {
@@ -53,17 +54,12 @@ export class RelationModel {
   getType(): RelationType {
     if (this.isRoommate === EIntBoolean.TRUE) {
       return RelationType.ROOMMATE;
-    } else if (
-      this.isFriend === EIntBoolean.TRUE &&
-      this.status === Status.ACCEPTED
-    ) {
-      if (this.criteria !== null && this.criteria?.eligible === false) {
-        return RelationType.NOT_ELIGIBLE;
-      } else {
-        return RelationType.FRIEND;
-      }
+    } else if (this.criteria?.eligible === false) {
+      return RelationType.NOT_ELIGIBLE;
     } else if (this.status === Status.PENDING) {
       return RelationType.FRIEND_REQUESTED;
+    } else if (this.isFriend === EIntBoolean.TRUE) {
+      return RelationType.FRIEND;
     } else if (this.status === Status.DISMISSED) {
       return RelationType.DISMISSED;
     } else if (this.status === Status.BLOCKED) {

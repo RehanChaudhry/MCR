@@ -1,5 +1,7 @@
 import { API } from "config";
-import { MatchDismissBlockApiRequestModel } from "models/api_requests/MatchDismissBlockApiRequestModel";
+import { MatchDismissBlockCancelApiRequestModel } from "models/api_requests/MatchDismissBlockCancelApiRequestModel";
+import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
+import { UpdateRelationApiResponseModel } from "models/api_responses/UpdateRelationApiResponseModel";
 import { apiClient } from "repo/Client";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
@@ -11,22 +13,18 @@ function relations(request: PaginationParamsModel) {
   });
 }
 
-function postRelation(userId: number) {
-  return apiClient.post<ApiSuccessResponseModel>(API.POST_RELATION, {
-    receiverId: userId
-  });
-}
-
-function matchDismiss(requestModel: MatchDismissBlockApiRequestModel) {
+function matchDismiss(
+  requestModel: MatchDismissBlockCancelApiRequestModel
+) {
   return apiClient.put<ApiSuccessResponseModel>(
-    API.DISMISS_MATCH + requestModel.userId,
-    {
-      status: requestModel.status
-    }
+    API.DISMISS_MATCH,
+    requestModel
   );
 }
 
-function matchBlocked(requestModel: MatchDismissBlockApiRequestModel) {
+function matchBlocked(
+  requestModel: MatchDismissBlockCancelApiRequestModel
+) {
   return apiClient.put<ApiSuccessResponseModel>(
     API.BLOCKED_MATCH + requestModel.userId,
     {
@@ -35,9 +33,26 @@ function matchBlocked(requestModel: MatchDismissBlockApiRequestModel) {
   );
 }
 
+function updateRelation(requestModel: UpdateRelationApiRequestModel) {
+  return apiClient.put<UpdateRelationApiResponseModel>(
+    `${API.REMOVE_FRIEND}/${requestModel.receiverId}`,
+    requestModel
+  );
+}
+
+function sendFriendOrRoommateRequest(
+  requestModel: UpdateRelationApiRequestModel
+) {
+  return apiClient.post<UpdateRelationApiResponseModel>(
+    `${API.POST_RELATION}`,
+    requestModel
+  );
+}
+
 export default {
   relations,
-  postRelation,
   matchDismiss,
-  matchBlocked
+  matchBlocked,
+  updateRelation,
+  sendFriendOrRoommateRequest
 };

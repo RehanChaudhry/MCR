@@ -3,6 +3,7 @@ enum RelationFilterType {
   DISMISSED = "dismissed",
   MATCHES = "matches",
   FRIENDS = "friends",
+  CANCEL = "cancel",
   CONNECT_REQUEST = "connect_requests",
   ROOMMATE = "roommate"
 }

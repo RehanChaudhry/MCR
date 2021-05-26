@@ -83,13 +83,14 @@ export const CommunityItem = React.memo<CommunityItemProps>(
             communityItem.postedByLastName
           }
           subTitle={new PrettyTimeFormat().getPrettyTime(
-            (communityItem.updatedAt as unknown) as string
+            (communityItem.createdAt as unknown) as string
           )}
           leftImageUrl={communityItem.postedByProfilePicture?.fileURL}
           shouldShowRightImage={true}
           rightIcon={rightImage}
-          onClickedReportContentButton={openReportContentScreen}
-          postId={communityItem.id}
+          onRightBtnClicked={() => {
+            openReportContentScreen?.(communityItem.id);
+          }}
         />
 
         {communityItem.content != null && true && (
