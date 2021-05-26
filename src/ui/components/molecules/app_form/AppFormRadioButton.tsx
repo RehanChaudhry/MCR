@@ -7,17 +7,17 @@ import {
 import { SPACE } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import {
-  Choice,
   DIRECTION_TYPE,
   RadioGroup
 } from "ui/components/atoms/radio_group/RadioGroup";
 import { FormikValues, useFormikContext } from "formik";
 import { AppLog } from "utils/Util";
+import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel";
 
 type Props = {
   name: string;
   labelProps?: AppLabelProps;
-  radioData: Array<Choice>;
+  radioData: OptionsData[];
   direction: DIRECTION_TYPE;
 };
 
@@ -44,8 +44,8 @@ export const AppFormRadioButton: React.FC<Props> = ({
         values={radioData!}
         direction={direction}
         itemsInRow={3}
-        onChange={(value: Choice, index: number) => {
-          AppLog.log("Select radio button index : " + index);
+        onChange={(value: OptionsData, index: number) => {
+          AppLog.log("Selected radio button index : " + index);
           setFieldValue(name, value.value);
         }}
         byDefaultSelected={radioData.findIndex(

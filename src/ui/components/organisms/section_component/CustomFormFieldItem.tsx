@@ -102,7 +102,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
                 text: listData.label,
                 weight: "semi-bold"
               }}
-              radioData={listData.options!}
+              radioData={listData.options!!}
               direction={DIRECTION_TYPE.HORIZONTAL}
             />
           </>

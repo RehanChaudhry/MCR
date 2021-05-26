@@ -11,13 +11,13 @@ import {
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
-import { AppLog } from "utils/Util";
+import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel";
 
 export type Choice = { id: number; value: string };
 type Props = {
   style?: StyleProp<ViewStyle>;
-  values: Array<Choice>;
-  onChange?: (value: Choice, index: number) => void;
+  values: Array<OptionsData>;
+  onChange?: (value: OptionsData, index: number) => void;
   direction: DIRECTION_TYPE;
   byDefaultSelected?: number;
   itemsInRow?: number; //for horizontal buttons
@@ -52,7 +52,6 @@ export const RadioGroup = optimizedMemo<Props>(
     }, [byDefaultSelected]);
 
     function buttonPressed(position: number) {
-      AppLog.log("position : " + position);
       if (position !== selectedPosition) {
         setSelectedPosition(position);
         onChange?.(values[selectedPosition], position);
