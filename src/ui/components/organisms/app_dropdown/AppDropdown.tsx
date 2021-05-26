@@ -74,9 +74,11 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
         setModalVisible(false);
         setSelectedItemText(item.value);
         selectedItemCallback(item);
-        setSelectedItemPosition(item.id);
+        setSelectedItemPosition(
+          items.findIndex((optionItem) => optionItem.value === item.value)
+        );
       },
-      [selectedItemCallback]
+      [selectedItemCallback, items]
     );
 
     // show pre-selected item's text

@@ -12,15 +12,15 @@ import { DropDownItem } from "models/DropDownItem";
 let items: Array<DropDownItem> = [
   {
     value: "Male",
-    id: 1
+    text: "male"
   },
   {
     value: "Female",
-    id: 2
+    text: "female"
   },
   {
     value: "Other",
-    id: 3
+    text: "other"
   }
 ];
 
@@ -154,7 +154,7 @@ it("check if dropdown shows selected item with right value", async () => {
   await waitFor(() => {
     expect(onSelectedItem).toHaveBeenCalledWith({
       value: "Male",
-      id: 1
+      text: "male"
     });
   });
 
@@ -166,7 +166,7 @@ it("check if dropdown shows selected item with right value", async () => {
   await waitFor(() => {
     expect(onSelectedItem).toHaveBeenLastCalledWith({
       value: "Other",
-      id: 3
+      text: "other"
     });
   });
 
