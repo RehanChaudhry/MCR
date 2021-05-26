@@ -146,6 +146,7 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
 
               return (
                 <TouchableNativeFeedback
+                  key={index}
                   onPress={() => {
                     setCurrentItem(route.name);
                     navigation.navigate(route.name);
