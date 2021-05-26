@@ -89,7 +89,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
     };
     return (
       <TouchableOpacity
-        onPress={onPress}
+        onPress={shouldShowProgressBar ? undefined : onPress}
         disabled={isDisable}
         style={[
           style.button,

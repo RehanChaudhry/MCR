@@ -12,6 +12,8 @@ type Props = {
   profileImage: string;
   onPressReject: () => void;
   onPressApproved: () => void;
+  onPressApprovedShowPb: boolean;
+  onPressDeclinedShowPb: boolean;
 };
 
 const ConnectRequestItem: FC<Props> = ({
@@ -19,7 +21,9 @@ const ConnectRequestItem: FC<Props> = ({
   subtitle,
   profileImage,
   onPressApproved,
-  onPressReject
+  onPressReject,
+  onPressApprovedShowPb,
+  onPressDeclinedShowPb
 }) => {
   const theme = usePreferredTheme();
   return (
@@ -66,6 +70,7 @@ const ConnectRequestItem: FC<Props> = ({
               { backgroundColor: theme.themedColors.primaryShade }
             ]}
             text={"Approve"}
+            shouldShowProgressBar={onPressApprovedShowPb}
             onPress={onPressApproved}
           />
           <View style={styles.spacer} />
@@ -75,6 +80,7 @@ const ConnectRequestItem: FC<Props> = ({
               styles.actionButtonText,
               { color: theme.themedColors.danger }
             ]}
+            shouldShowProgressBar={onPressDeclinedShowPb}
             buttonStyle={[
               styles.actionButton,
               { backgroundColor: theme.themedColors.dangerShade }

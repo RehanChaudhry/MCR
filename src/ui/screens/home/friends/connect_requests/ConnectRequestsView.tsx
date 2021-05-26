@@ -10,6 +10,8 @@ type Props = {
   data: RelationModel[] | undefined;
   onPressApproved: (item: RelationModel) => void;
   onPressDeclined: (item: RelationModel) => void;
+  onPressApprovedShowPb: boolean;
+  onPressDeclinedShowPb: boolean;
   isLoading: boolean;
   canLoadMore: boolean;
   error?: string;
@@ -20,7 +22,9 @@ type Props = {
 const listItem = (
   item: RelationModel,
   onPressApproved: (item: RelationModel) => void,
-  onPressDeclined: (item: RelationModel) => void
+  onPressDeclined: (item: RelationModel) => void,
+  onPressApprovedShowPb: boolean,
+  onPressDeclinedShowPb: boolean
 ) => {
   const _item = new RelationModel(item);
   return (
@@ -33,9 +37,11 @@ const listItem = (
       onPressApproved={() => {
         onPressApproved(_item);
       }}
+      onPressApprovedShowPb={onPressApprovedShowPb}
       onPressReject={() => {
         onPressDeclined(_item);
       }}
+      onPressDeclinedShowPb={onPressDeclinedShowPb}
     />
   );
 };
@@ -48,7 +54,9 @@ const ConnectRequestsView: FC<Props> = ({
   canLoadMore,
   error,
   onPullToRefresh,
-  onEndReached
+  onEndReached,
+  onPressApprovedShowPb,
+  onPressDeclinedShowPb
 }) => {
   return (
     <Screen style={styles.container}>
@@ -66,8 +74,10 @@ const ConnectRequestsView: FC<Props> = ({
         renderItem={({ item }) => {
           return listItem(
             item,
-            (onPressApproved = onPressApproved),
-            (onPressDeclined = onPressDeclined)
+            onPressApproved,
+            onPressDeclined,
+            onPressApprovedShowPb,
+            onPressDeclinedShowPb
           );
         }}
         data={data}
