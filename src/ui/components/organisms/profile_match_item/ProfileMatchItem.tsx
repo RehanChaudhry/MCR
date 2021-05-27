@@ -3,7 +3,6 @@ import Cross from "assets/images/ic_cross.svg";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
-import RelationType from "models/enums/RelationType";
 import RelationModel from "models/RelationModel";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
@@ -15,6 +14,11 @@ import {
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import MatchScore from "ui/components/molecules/match_score/MatchScore";
 import { shadowStyleProps } from "utils/Util";
+import getRelationStatus, {
+  ActionPerformed,
+  Eligible,
+  RelationType
+} from "utils/RelationHelper";
 
 interface Props {
   profileMatch: RelationModel;
@@ -25,6 +29,7 @@ interface Props {
   onImageClicked: (profileMatch: RelationModel) => void;
   onRoommateRequestClicked: (userId: number) => void;
   onCancelRequestClicked: (userId: number) => void;
+  onRequestReceivedClicked: (userId: number) => void;
 }
 
 const ProfileMatchItem = ({
@@ -35,9 +40,136 @@ const ProfileMatchItem = ({
   onChatButtonClicked,
   onImageClicked,
   onRoommateRequestClicked,
-  onCancelRequestClicked
+  onCancelRequestClicked,
+  onRequestReceivedClicked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
+
+  function getActionButton() {
+    let actionButton: React.ReactElement;
+    getRelationStatus(
+      profileMatch,
+      (relationType, actionPerformed, eligible) => {
+        if (relationType === RelationType.NONE) {
+          if (actionPerformed === ActionPerformed.NONE) {
+            actionButton = (
+              <AppButton
+                shouldShowProgressBar={isFriendRequestApiLoading}
+                onPress={() => {
+                  onFriendRequestClicked(profileMatch.userId);
+                }}
+                fontWeight={"semi-bold"}
+                textStyle={[
+                  styles.btnActionText,
+                  { color: themedColors.primary }
+                ]}
+                buttonStyle={[
+                  styles.btnAction,
+                  { backgroundColor: themedColors.primaryShade }
+                ]}
+                text={STRINGS.matches.action_add_friend}
+              />
+            );
+          } else {
+            actionButton = (
+              <AppButton
+                onPress={() => {
+                  onCancelRequestClicked(profileMatch.userId);
+                }}
+                fontWeight={"semi-bold"}
+                textStyle={[
+                  styles.btnActionText,
+                  { color: themedColors.interface[500] }
+                ]}
+                buttonStyle={[
+                  styles.btnAction,
+                  { backgroundColor: themedColors.interface[200] }
+                ]}
+                text={STRINGS.matches.label_cancel_request}
+              />
+            );
+          }
+        } else if (relationType === RelationType.FRIEND) {
+          if (actionPerformed === ActionPerformed.NONE) {
+            if (eligible === Eligible.NOT_ELIGIBLE) {
+              actionButton = (
+                <AppButton
+                  isDisable={true}
+                  fontWeight={"semi-bold"}
+                  textStyle={[
+                    styles.btnActionText,
+                    { color: themedColors.danger }
+                  ]}
+                  buttonStyle={[
+                    styles.btnAction,
+                    { backgroundColor: themedColors.dangerShade }
+                  ]}
+                  text={STRINGS.matches.label_not_eligible}
+                />
+              );
+            } else {
+              actionButton = (
+                <AppButton
+                  onPress={() => {
+                    onRoommateRequestClicked(profileMatch.userId);
+                  }}
+                  fontWeight={"semi-bold"}
+                  textStyle={[
+                    styles.btnActionText,
+                    { color: themedColors.primary }
+                  ]}
+                  buttonStyle={[
+                    styles.btnAction,
+                    { backgroundColor: themedColors.primaryShade }
+                  ]}
+                  text={STRINGS.matches.label_roommate_request}
+                />
+              );
+            }
+          } else if (
+            actionPerformed === ActionPerformed.ROOMMATE_REQUESTED_RECEIVED
+          ) {
+            actionButton = (
+              <AppButton
+                onPress={() => {
+                  onRequestReceivedClicked(profileMatch.userId);
+                }}
+                fontWeight={"semi-bold"}
+                textStyle={[
+                  styles.btnActionText,
+                  { color: themedColors.primary }
+                ]}
+                buttonStyle={[
+                  styles.btnAction,
+                  { backgroundColor: themedColors.primaryShade }
+                ]}
+                text={STRINGS.matches.label_request_received}
+              />
+            );
+          } else {
+            actionButton = (
+              <AppButton
+                onPress={() => {
+                  onCancelRequestClicked(profileMatch.userId);
+                }}
+                fontWeight={"semi-bold"}
+                textStyle={[
+                  styles.btnActionText,
+                  { color: themedColors.interface[500] }
+                ]}
+                buttonStyle={[
+                  styles.btnAction,
+                  { backgroundColor: themedColors.interface[200] }
+                ]}
+                text={STRINGS.matches.label_cancel_request}
+              />
+            );
+          }
+        }
+      }
+    );
+    return actionButton!;
+  }
 
   return (
     <View
@@ -105,88 +237,7 @@ const ProfileMatchItem = ({
             />
           )}
         />
-        {profileMatch.getType() === RelationType.NOT_FRIEND && (
-          <AppButton
-            shouldShowProgressBar={isFriendRequestApiLoading}
-            onPress={() => {
-              onFriendRequestClicked(profileMatch.userId);
-            }}
-            fontWeight={"semi-bold"}
-            textStyle={[
-              styles.btnActionText,
-              { color: themedColors.primary }
-            ]}
-            buttonStyle={[
-              styles.btnAction,
-              { backgroundColor: themedColors.primaryShade }
-            ]}
-            text={STRINGS.matches.action_add_friend}
-          />
-        )}
-        {profileMatch.getType() === RelationType.FRIEND_REQUESTED && (
-          <AppButton
-            onPress={() => {
-              onCancelRequestClicked(profileMatch.userId);
-            }}
-            fontWeight={"semi-bold"}
-            textStyle={[
-              styles.btnActionText,
-              { color: themedColors.interface[500] }
-            ]}
-            buttonStyle={[
-              styles.btnAction,
-              { backgroundColor: themedColors.interface[200] }
-            ]}
-            text={STRINGS.matches.label_cancel_request}
-          />
-        )}
-        {profileMatch.getType() === RelationType.NOT_ELIGIBLE && (
-          <AppButton
-            isDisable={true}
-            fontWeight={"semi-bold"}
-            textStyle={[
-              styles.btnActionText,
-              { color: themedColors.danger }
-            ]}
-            buttonStyle={[
-              styles.btnAction,
-              { backgroundColor: themedColors.dangerShade }
-            ]}
-            text={STRINGS.matches.label_not_eligible}
-          />
-        )}
-        {profileMatch.getType() === RelationType.FRIEND && (
-          <AppButton
-            onPress={() => {
-              onRoommateRequestClicked(profileMatch.userId);
-            }}
-            fontWeight={"semi-bold"}
-            textStyle={[
-              styles.btnActionText,
-              { color: themedColors.primary }
-            ]}
-            buttonStyle={[
-              styles.btnAction,
-              { backgroundColor: themedColors.primaryShade }
-            ]}
-            text={STRINGS.matches.label_roommate_request}
-          />
-        )}
-        {profileMatch.getType() === RelationType.REQUEST_RECEIVED && (
-          <AppButton
-            isDisable={true}
-            fontWeight={"semi-bold"}
-            textStyle={[
-              styles.btnActionText,
-              { color: themedColors.primary }
-            ]}
-            buttonStyle={[
-              styles.btnAction,
-              { backgroundColor: themedColors.primaryShade }
-            ]}
-            text={STRINGS.matches.label_request_received}
-          />
-        )}
+        {getActionButton()}
       </View>
     </View>
   );

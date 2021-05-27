@@ -1,4 +1,4 @@
 export type DropDownItem = {
   value: string;
-  text: string;
+  text: string | undefined;
 };

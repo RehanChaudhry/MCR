@@ -1,5 +1,5 @@
-import { SPACE } from "config";
-import { FriendRequest } from "models/api_responses/FriendRequestsResponseModel";
+import { SPACE, STRINGS } from "config";
+import RelationModel from "models/RelationModel";
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
@@ -7,9 +7,11 @@ import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb
 import ConnectRequestItem from "ui/components/organisms/friends/connect_request/ConnectRequestItem";
 
 type Props = {
-  data: FriendRequest[] | undefined;
-  onPressApproved: (item: FriendRequest) => void;
-  onPressDeclined: (item: FriendRequest) => void;
+  data: RelationModel[] | undefined;
+  onPressApproved: (item: RelationModel) => void;
+  onPressDeclined: (item: RelationModel) => void;
+  onPressApprovedShowPb: boolean;
+  onPressDeclinedShowPb: boolean;
   isLoading: boolean;
   canLoadMore: boolean;
   error?: string;
@@ -18,21 +20,28 @@ type Props = {
 };
 
 const listItem = (
-  item: FriendRequest,
-  onPressApproved: (item: FriendRequest) => void,
-  onPressDeclined: (item: FriendRequest) => void
+  item: RelationModel,
+  onPressApproved: (item: RelationModel) => void,
+  onPressDeclined: (item: RelationModel) => void,
+  onPressApprovedShowPb: boolean,
+  onPressDeclinedShowPb: boolean
 ) => {
+  const _item = new RelationModel(item);
   return (
     <ConnectRequestItem
-      title={item.title}
-      subtitle={item.subtitle}
-      profileImage={item.profileImage}
+      title={_item.user?.getFullName() ?? ""}
+      subtitle={`${_item.user?.hometown ?? STRINGS.common.not_found}, ${
+        _item.user?.major ?? STRINGS.common.not_found
+      }`}
+      profileImage={_item.user?.profilePicture?.fileURL ?? ""}
       onPressApproved={() => {
-        onPressApproved(item);
+        onPressApproved(_item);
       }}
+      onPressApprovedShowPb={onPressApprovedShowPb}
       onPressReject={() => {
-        onPressDeclined(item);
+        onPressDeclined(_item);
       }}
+      onPressDeclinedShowPb={onPressDeclinedShowPb}
     />
   );
 };
@@ -45,7 +54,9 @@ const ConnectRequestsView: FC<Props> = ({
   canLoadMore,
   error,
   onPullToRefresh,
-  onEndReached
+  onEndReached,
+  onPressApprovedShowPb,
+  onPressDeclinedShowPb
 }) => {
   return (
     <Screen style={styles.container}>
@@ -63,8 +74,10 @@ const ConnectRequestsView: FC<Props> = ({
         renderItem={({ item }) => {
           return listItem(
             item,
-            (onPressApproved = onPressApproved),
-            (onPressDeclined = onPressDeclined)
+            onPressApproved,
+            onPressDeclined,
+            onPressApprovedShowPb,
+            onPressDeclinedShowPb
           );
         }}
         data={data}
