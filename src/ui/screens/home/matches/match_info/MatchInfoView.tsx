@@ -60,13 +60,13 @@ export const MatchInfoView: React.FC<Props> = ({
               userProfile.matchGroupName ?? STRINGS.common.not_found
             }, ${userProfile.major ?? STRINGS.common.not_found}`}
           />
-          <AppLabel
-            style={styles.description}
-            text={
-              "<Required in 'user/me' API>" ?? STRINGS.common.not_found
-            }
-            numberOfLines={0}
-          />
+          {userProfile.about && (
+            <AppLabel
+              style={styles.description}
+              text={userProfile.about}
+              numberOfLines={0}
+            />
+          )}
           <AppProgressBar
             style={styles.progress}
             progressPercentage={
