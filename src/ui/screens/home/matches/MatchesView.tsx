@@ -40,6 +40,7 @@ type Props = {
     requestModel: UpdateRelationApiRequestModel,
     action: RelationActionType
   ) => void;
+  moveToRoommateRequests: (userId: number) => void;
 };
 
 export const MatchesView: React.FC<Props> = ({
@@ -57,7 +58,8 @@ export const MatchesView: React.FC<Props> = ({
   selectedTotalCount,
   moveToChatScreen,
   moveToProfileScreen,
-  postMatchBlocked
+  postMatchBlocked,
+  moveToRoommateRequests
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -117,10 +119,16 @@ export const MatchesView: React.FC<Props> = ({
             profileMatch.current = _item;
             setCancelRequestDialogVisible(true);
           }}
+          onRequestReceivedClicked={moveToRoommateRequests}
         />
       );
     },
-    [moveToProfileScreen, moveToChatScreen, isRequestApiLoading]
+    [
+      moveToProfileScreen,
+      moveToChatScreen,
+      isRequestApiLoading,
+      moveToRoommateRequests
+    ]
   );
 
   function filter(): OptimizedBBCItem<MatchesTypeFilter>[] {

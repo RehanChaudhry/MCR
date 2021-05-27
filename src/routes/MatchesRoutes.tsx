@@ -12,6 +12,7 @@ import RoommateAgreementController from "ui/screens/home/friends/RoommateAgreeme
 import QuestionsController from "ui/screens/questions/QuestionsController";
 import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
 import AgreementDetailsController from "ui/screens/home/friends/agreement_details/AgreementDetailsController";
+import ConnectRequestsController from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 
 const MatchesRoutes = ({ navigation }: any) => {
   const route: any = useRoute();
@@ -77,10 +78,13 @@ const MatchesRoutes = ({ navigation }: any) => {
           )
         }}
       />
-
       <MatchesStack.Screen
         name="AgreementDetails"
         component={AgreementDetailsController}
+      />
+      <MatchesStack.Screen
+        name={"ConnectRequests"}
+        component={ConnectRequestsController}
       />
     </MatchesStack.Navigator>
   );

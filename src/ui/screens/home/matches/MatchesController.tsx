@@ -30,6 +30,7 @@ import { MatchesStackParamList } from "routes/MatchesStack";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { AppLog } from "utils/Util";
+import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -78,6 +79,16 @@ const MatchesController: FC<Props> = () => {
     );
     navigation.navigate("Profile", { isFrom: EScreen.MATCH_INFO });
   };
+
+  const moveToRoommateRequests = useCallback(
+    (_: number) => {
+      navigation.navigate("ConnectRequests", {
+        title: "Roommate Requests",
+        type: ConnectRequestType.ROOMMATE_REQUESTS
+      });
+    },
+    [navigation]
+  );
 
   // Matches API
   const relationsApi = useApi<
@@ -353,6 +364,7 @@ const MatchesController: FC<Props> = () => {
       postMatchBlocked={requestUpdateRelationApi}
       moveToChatScreen={moveToChatScreen}
       moveToProfileScreen={moveToProfileScreen}
+      moveToRoommateRequests={moveToRoommateRequests}
     />
   );
 };

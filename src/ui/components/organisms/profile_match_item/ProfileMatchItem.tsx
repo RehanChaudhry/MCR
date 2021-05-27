@@ -29,6 +29,7 @@ interface Props {
   onImageClicked: (profileMatch: RelationModel) => void;
   onRoommateRequestClicked: (userId: number) => void;
   onCancelRequestClicked: (userId: number) => void;
+  onRequestReceivedClicked: (userId: number) => void;
 }
 
 const ProfileMatchItem = ({
@@ -39,7 +40,8 @@ const ProfileMatchItem = ({
   onChatButtonClicked,
   onImageClicked,
   onRoommateRequestClicked,
-  onCancelRequestClicked
+  onCancelRequestClicked,
+  onRequestReceivedClicked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -129,7 +131,9 @@ const ProfileMatchItem = ({
           ) {
             actionButton = (
               <AppButton
-                isDisable={true}
+                onPress={() => {
+                  onRequestReceivedClicked(profileMatch.userId);
+                }}
                 fontWeight={"semi-bold"}
                 textStyle={[
                   styles.btnActionText,
