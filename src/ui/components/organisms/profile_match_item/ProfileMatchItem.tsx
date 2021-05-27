@@ -124,6 +124,24 @@ const ProfileMatchItem = ({
                 />
               );
             }
+          } else if (
+            actionPerformed === ActionPerformed.ROOMMATE_REQUESTED_RECEIVED
+          ) {
+            actionButton = (
+              <AppButton
+                isDisable={true}
+                fontWeight={"semi-bold"}
+                textStyle={[
+                  styles.btnActionText,
+                  { color: themedColors.primary }
+                ]}
+                buttonStyle={[
+                  styles.btnAction,
+                  { backgroundColor: themedColors.primaryShade }
+                ]}
+                text={STRINGS.matches.label_request_received}
+              />
+            );
           } else {
             actionButton = (
               <AppButton
@@ -144,23 +162,6 @@ const ProfileMatchItem = ({
             );
           }
         }
-        // {
-        //   profileMatch.getType() === RelationType.REQUEST_RECEIVED && (
-        //     <AppButton
-        //       isDisable={true}
-        //       fontWeight={"semi-bold"}
-        //       textStyle={[
-        //         styles.btnActionText,
-        //         { color: themedColors.primary }
-        //       ]}
-        //       buttonStyle={[
-        //         styles.btnAction,
-        //         { backgroundColor: themedColors.primaryShade }
-        //       ]}
-        //       text={STRINGS.matches.label_request_received}
-        //     />
-        //   );
-        // }
       }
     );
     return actionButton!;
