@@ -172,7 +172,8 @@ const style = StyleSheet.create({
   },
   text: {
     fontSize: FONT_SIZE.base,
-    overflow: "hidden"
+    overflow: "hidden",
+    lineHeight: 0
   },
   loader: {
     marginLeft: 10

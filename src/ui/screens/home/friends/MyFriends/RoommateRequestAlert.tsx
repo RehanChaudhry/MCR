@@ -3,9 +3,9 @@ import { usePreferredTheme } from "hooks";
 import RelationModel, { Status } from "models/RelationModel";
 import React, { FC, useCallback, useContext } from "react";
 import { StyleSheet, View } from "react-native";
+import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
-import { MyFriendsContext } from "ui/screens/home/friends/MyFriends/MyFriendsController";
 import useSendFriendOrRoommateRequest from "ui/screens/home/friends/useSendFriendOrRoommateRequest";
 
 type Props = {
@@ -37,7 +37,7 @@ const RoommateRequestAlert: FC<Props> = React.memo(
         updatedFriend.status = status;
         _myFriends.splice(index, 1, updatedFriend);
 
-        setMyFriends(_myFriends);
+        setMyFriends?.(_myFriends);
       },
       [myFriends, setMyFriends]
     );

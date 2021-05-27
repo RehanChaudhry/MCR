@@ -7,15 +7,20 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import { PendingRequestsResponseModel } from "models/api_responses/PendingRequestsResponseModel";
 import RelationModel from "models/RelationModel";
-import React, { FC, useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  FC,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState
+} from "react";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
 import { ConnectionRequestStackParamList } from "routes/ConnectionRequestStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
-import { AppLog } from "utils/Util";
-import ConnectRequestsView from "./ConnectRequestsView";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
+import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
+import ConnectRequestsView from "./ConnectRequestsView";
 
 type Props = {};
 
@@ -37,7 +42,6 @@ export enum ConnectRequestType {
 const ConnectRequestsController: FC<Props> = () => {
   const route = useRoute<ConnectRequestRouteProp>();
   const { title, type } = route.params;
-  AppLog.log("showing connect for types: ", type);
 
   const [isLoading, setIsLoading] = useState(true);
   const [requestModel, setRequestModel] = useState<PaginationParamsModel>({
@@ -129,42 +133,13 @@ const ConnectRequestsController: FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { resetMyFriends } = useContext(MyFriendsContext);
   function removeItemFromList(_item: RelationModel) {
-    // TODO: Remove item from list of requests
-    // TODO: Notify other sections
+    resetMyFriends?.();
+    setConnectRequests(
+      connectRequests?.filter((value) => value.id !== _item.id)
+    );
   }
-
-  const {
-    shouldShowPb: acceptRequestPb,
-    updateRelation: acceptRequest
-  } = useUpdateRelation(
-    "accepted",
-    "Unable to accept the request",
-    undefined,
-    (item) => {
-      removeItemFromList(item);
-    }
-  );
-
-  const {
-    shouldShowPb: rejectRequestPb,
-    updateRelation: rejectRequest
-  } = useUpdateRelation(
-    "rejected",
-    "Unable to reject the request",
-    undefined,
-    (item) => {
-      removeItemFromList(item);
-    }
-  );
-
-  const onPressApproved = (item: RelationModel) => {
-    acceptRequest(item);
-  };
-
-  const onPressDeclined = (item: RelationModel) => {
-    rejectRequest(item);
-  };
 
   const navigation = useNavigation<ConnectRequestsNavigationProp>();
 
@@ -190,10 +165,7 @@ const ConnectRequestsController: FC<Props> = () => {
       error={errorMessage}
       onEndReached={onEndReached}
       onPullToRefresh={onPullToRefresh}
-      onPressApproved={onPressApproved}
-      onPressApprovedShowPb={acceptRequestPb}
-      onPressDeclined={onPressDeclined}
-      onPressDeclinedShowPb={rejectRequestPb}
+      removeItemFromList={removeItemFromList}
     />
   );
 };

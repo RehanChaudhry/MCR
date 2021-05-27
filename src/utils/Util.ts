@@ -7,6 +7,10 @@ import React from "react";
 import { ViewStyle } from "react-native";
 import moment from "moment";
 
+export function timeout(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export const AppLog = (function () {
   return {
     log: (message?: any, ...optionalParams: any[]) => {
