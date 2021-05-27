@@ -1,7 +1,8 @@
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { usePreferredTheme } from "hooks";
-import React, { FC, useRef } from "react";
+import RelationModel from "models/RelationModel";
+import React, { FC, MutableRefObject, useRef, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FriendsStackParamList } from "routes/FriendsBottomBar";
@@ -13,6 +14,18 @@ import BottomBreadCrumbs, {
 type FriendsNavigationProp = BottomTabNavigationProp<FriendsStackParamList>;
 
 type Props = {};
+
+type MyFriendsContextType = {
+  myFriends?: RelationModel[];
+  setMyFriends?: (myFriends: RelationModel[] | undefined) => void;
+  onResetMyFriends: MutableRefObject<(() => void) | undefined>;
+  resetMyFriends?: () => void;
+};
+
+export const MyFriendsContext = React.createContext<MyFriendsContextType>(
+  // @ts-ignore
+  {}
+);
 
 const FriendsController: FC<Props> = () => {
   const navigation = useNavigation<FriendsNavigationProp>();
@@ -49,19 +62,32 @@ const FriendsController: FC<Props> = () => {
   const theme = usePreferredTheme();
   const safeAreaInsets = useSafeAreaInsets();
 
+  const [myFriends, setMyFriends] = useState<RelationModel[]>();
+  const onResetMyFriends = useRef<(() => void) | undefined>();
+
   return (
     <View style={styles.container}>
-      <FriendsRoutes />
-      <BottomBreadCrumbs data={itemsRef.current} />
-      <View
-        style={[
-          styles.bottomSafeArea,
-          {
-            backgroundColor: theme.themedColors.background,
-            height: safeAreaInsets.bottom
+      <MyFriendsContext.Provider
+        value={{
+          myFriends: myFriends,
+          setMyFriends: setMyFriends,
+          onResetMyFriends: onResetMyFriends,
+          resetMyFriends: () => {
+            onResetMyFriends?.current?.();
           }
-        ]}
-      />
+        }}>
+        <FriendsRoutes />
+        <BottomBreadCrumbs data={itemsRef.current} />
+        <View
+          style={[
+            styles.bottomSafeArea,
+            {
+              backgroundColor: theme.themedColors.background,
+              height: safeAreaInsets.bottom
+            }
+          ]}
+        />
+      </MyFriendsContext.Provider>
     </View>
   );
 };

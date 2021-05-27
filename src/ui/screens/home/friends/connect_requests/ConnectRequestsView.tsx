@@ -1,4 +1,4 @@
-import { SPACE, STRINGS } from "config";
+import { SPACE } from "config";
 import RelationModel from "models/RelationModel";
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
@@ -8,10 +8,7 @@ import ConnectRequestItem from "ui/components/organisms/friends/connect_request/
 
 type Props = {
   data: RelationModel[] | undefined;
-  onPressApproved: (item: RelationModel) => void;
-  onPressDeclined: (item: RelationModel) => void;
-  onPressApprovedShowPb: boolean;
-  onPressDeclinedShowPb: boolean;
+  removeItemFromList: (item: RelationModel) => void;
   isLoading: boolean;
   canLoadMore: boolean;
   error?: string;
@@ -21,42 +18,25 @@ type Props = {
 
 const listItem = (
   item: RelationModel,
-  onPressApproved: (item: RelationModel) => void,
-  onPressDeclined: (item: RelationModel) => void,
-  onPressApprovedShowPb: boolean,
-  onPressDeclinedShowPb: boolean
+  removeItemFromList: (item: RelationModel) => void
 ) => {
   const _item = new RelationModel(item);
   return (
     <ConnectRequestItem
-      title={_item.user?.getFullName() ?? ""}
-      subtitle={`${_item.user?.hometown ?? STRINGS.common.not_found}, ${
-        _item.user?.major ?? STRINGS.common.not_found
-      }`}
-      profileImage={_item.user?.profilePicture?.fileURL ?? ""}
-      onPressApproved={() => {
-        onPressApproved(_item);
-      }}
-      onPressApprovedShowPb={onPressApprovedShowPb}
-      onPressReject={() => {
-        onPressDeclined(_item);
-      }}
-      onPressDeclinedShowPb={onPressDeclinedShowPb}
+      item={_item}
+      removeItemFromList={removeItemFromList}
     />
   );
 };
 
 const ConnectRequestsView: FC<Props> = ({
   data,
-  onPressApproved,
-  onPressDeclined,
+  removeItemFromList,
   isLoading,
   canLoadMore,
   error,
   onPullToRefresh,
-  onEndReached,
-  onPressApprovedShowPb,
-  onPressDeclinedShowPb
+  onEndReached
 }) => {
   return (
     <Screen style={styles.container}>
@@ -72,13 +52,7 @@ const ConnectRequestsView: FC<Props> = ({
         pullToRefreshCallback={onPullToRefresh}
         error={error}
         renderItem={({ item }) => {
-          return listItem(
-            item,
-            onPressApproved,
-            onPressDeclined,
-            onPressApprovedShowPb,
-            onPressDeclinedShowPb
-          );
+          return listItem(item, removeItemFromList);
         }}
         data={data}
       />
