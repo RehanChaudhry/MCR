@@ -18,10 +18,9 @@ import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
 import { ConnectionRequestStackParamList } from "routes/ConnectionRequestStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import { MyFriendsContext } from "ui/screens/home/friends/FriendsController";
-import { AppLog } from "utils/Util";
-import ConnectRequestsView from "./ConnectRequestsView";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
+import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
+import ConnectRequestsView from "./ConnectRequestsView";
 
 type Props = {};
 
@@ -43,7 +42,6 @@ export enum ConnectRequestType {
 const ConnectRequestsController: FC<Props> = () => {
   const route = useRoute<ConnectRequestRouteProp>();
   const { title, type } = route.params;
-  AppLog.log("showing connect for types: ", type);
 
   const [isLoading, setIsLoading] = useState(true);
   const [requestModel, setRequestModel] = useState<PaginationParamsModel>({
@@ -137,10 +135,10 @@ const ConnectRequestsController: FC<Props> = () => {
 
   const { resetMyFriends } = useContext(MyFriendsContext);
   function removeItemFromList(_item: RelationModel) {
+    resetMyFriends?.();
     setConnectRequests(
       connectRequests?.filter((value) => value.id !== _item.id)
     );
-    resetMyFriends?.();
   }
 
   const navigation = useNavigation<ConnectRequestsNavigationProp>();

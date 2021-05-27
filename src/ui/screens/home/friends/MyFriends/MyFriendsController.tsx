@@ -14,8 +14,8 @@ import React, {
 } from "react";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
+import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
 import { FriendsRootStackParamList } from "routes/FriendsRootStack";
-import { MyFriendsContext } from "ui/screens/home/friends/FriendsController";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "../connect_requests/ConnectRequestsController";
 import MyFriendsView from "./MyFriendsView";
@@ -33,7 +33,7 @@ const MyFriendsController: FC<Props> = () => {
   ] = useState<PaginationParamsModel>({
     type: RelationFilterType.FRIENDS,
     page: 1,
-    limit: 5,
+    limit: 9,
     paginate: true
   });
 

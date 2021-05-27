@@ -14,12 +14,6 @@ type Props = {
 };
 
 const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
-  const title = item.user?.getFullName() ?? "";
-  const subtitle = `${item.user?.hometown ?? STRINGS.common.not_found}, ${
-    item.user?.major ?? STRINGS.common.not_found
-  }`;
-  const profileImage = item.user?.profilePicture?.fileURL ?? "";
-
   const theme = usePreferredTheme();
 
   const {
@@ -59,7 +53,7 @@ const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
               styles.profileImage,
               { backgroundColor: theme.themedColors.interface[200] }
             ]}
-            source={{ uri: profileImage }}
+            source={{ uri: item.user?.profilePicture?.fileURL }}
           />
           <View style={styles.infoTextContainer}>
             <AppLabel
@@ -67,14 +61,16 @@ const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
                 styles.titleText,
                 { color: theme.themedColors.label }
               ]}
-              text={title}
+              text={item.user?.getFullName() ?? "N/A"}
             />
             <AppLabel
               style={[
                 styles.subTitleText,
                 { color: theme.themedColors.labelSecondary }
               ]}
-              text={subtitle}
+              text={`${item.user?.hometown ?? STRINGS.common.not_found}, ${
+                item.user?.major ?? STRINGS.common.not_found
+              }`}
             />
           </View>
         </View>
@@ -92,7 +88,9 @@ const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
             text={"Approve"}
             shouldShowProgressBar={acceptRequestPb}
             onPress={() => {
-              acceptRequest(item);
+              if (!rejectRequestPb) {
+                acceptRequest(item);
+              }
             }}
           />
           <View style={styles.spacer} />
@@ -109,7 +107,9 @@ const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
             ]}
             text={"Reject"}
             onPress={() => {
-              rejectRequest(item);
+              if (!acceptRequestPb) {
+                rejectRequest(item);
+              }
             }}
           />
         </View>
