@@ -172,8 +172,10 @@ const styles = StyleSheet.create({
   paginationColor: {
     borderRadius: 30,
     marginBottom: 10,
-    width: "25%",
-    height: 15
+    width: undefined,
+    paddingRight: 10,
+    paddingLeft: 10,
+    height: 17
   },
   image: {
     borderRadius: 12,
