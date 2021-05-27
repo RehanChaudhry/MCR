@@ -32,11 +32,6 @@ export default {
   GET_ACTIVITY_LOGS: "log",
   // UPDATE_PROFILE: "user/",
 
-  // matches
-  DISMISS_MATCH: "relation/dismissed/",
-  GET_MATCHES_FILTER_COUNT: "matches-count",
-  BLOCKED_MATCH: "relation/",
-
   //community, announcements
   CREATE_POST: "post",
   GET_COMMUNITY_ANNOUNCEMENT: "post",
@@ -51,10 +46,8 @@ export default {
 
   //relations
   RELATION: "relation",
-  POST_RELATION: "relation",
-  // MY_FRIENDS: "myfriends",
+  RELATION_DISMISS_RESTORE: "relation/dismissed",
   MY_ROOMMATES: "myroommates",
-  REMOVE_FRIEND: "relation",
   DISMISSED_OR_BLOCKED: "relation/dismiss",
   FRIEND_REQUESTS: "relation/pending/friends",
   ROOMMATE_REQUESTS: "relation/pending/roommates",

@@ -1,6 +1,5 @@
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
-import { MatchDismissBlockCancelApiRequestModel } from "models/api_requests/MatchDismissBlockCancelApiRequestModel";
 import EGender from "models/enums/EGender";
 import EIntBoolean from "models/enums/EIntBoolean";
 import MatchesTypeFilter, {
@@ -20,6 +19,7 @@ import OptimizedBottomBreadCrumbs, {
   OptimizedBBCItem
 } from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
 import { AppLog, capitalizeWords } from "utils/Util";
+import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 
 type Props = {
   isLoading: boolean;
@@ -30,16 +30,14 @@ type Props = {
   pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
-  isFriendRequestApiLoading: boolean;
-  postFriendRequest: (userId: number, action: RelationActionType) => void;
-  postMatchDismiss: (
-    requestModel: MatchDismissBlockCancelApiRequestModel
-  ) => void;
+  isRequestApiLoading: boolean;
+  postRequest: (userId: number, action: RelationActionType) => void;
+  postMatchDismiss: (requestModel: UpdateRelationApiRequestModel) => void;
   selectedTotalCount: number;
   moveToChatScreen: (profileMatch: RelationModel) => void;
   moveToProfileScreen: (profileMatch: RelationModel) => void;
   postMatchBlocked: (
-    requestModel: MatchDismissBlockCancelApiRequestModel,
+    requestModel: UpdateRelationApiRequestModel,
     action: RelationActionType
   ) => void;
 };
@@ -53,8 +51,8 @@ export const MatchesView: React.FC<Props> = ({
   pullToRefreshCallback,
   onEndReached,
   isAllDataLoaded,
-  isFriendRequestApiLoading,
-  postFriendRequest,
+  isRequestApiLoading,
+  postRequest,
   postMatchDismiss,
   selectedTotalCount,
   moveToChatScreen,
@@ -97,7 +95,7 @@ export const MatchesView: React.FC<Props> = ({
           profileMatch={_item}
           isFriendRequestApiLoading={
             profileMatch.current?.userId === _item.userId
-              ? isFriendRequestApiLoading
+              ? isRequestApiLoading
               : false
           }
           onFriendRequestClicked={() => {
@@ -122,7 +120,7 @@ export const MatchesView: React.FC<Props> = ({
         />
       );
     },
-    [moveToProfileScreen, moveToChatScreen, isFriendRequestApiLoading]
+    [moveToProfileScreen, moveToChatScreen, isRequestApiLoading]
   );
 
   function filter(): OptimizedBBCItem<MatchesTypeFilter>[] {
@@ -152,7 +150,7 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.friend_request.success,
           onPress: () => {
             setRequestDialogVisible(false);
-            postFriendRequest(
+            postRequest(
               profileMatch.current!.userId,
               RelationActionType.FRIEND_REQUEST
             );
@@ -190,7 +188,7 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.roommate_request.success,
           onPress: () => {
             setRoommateDialogVisible(false);
-            postFriendRequest(
+            postRequest(
               profileMatch.current!.userId,
               RelationActionType.ROOMMATE_REQUEST
             );
@@ -229,7 +227,7 @@ export const MatchesView: React.FC<Props> = ({
           onPress: () => {
             setDismissDialogVisible(false);
             postMatchDismiss({
-              userId: profileMatch.current!.userId,
+              receiverId: profileMatch.current!.userId,
               status: RelationFilterType.DISMISSED
             });
           },
@@ -244,7 +242,7 @@ export const MatchesView: React.FC<Props> = ({
             setDismissDialogVisible(false);
             postMatchBlocked(
               {
-                userId: profileMatch.current!.userId,
+                receiverId: profileMatch.current!.userId,
                 status: RelationFilterType.BLOCKED
               },
               RelationActionType.BLOCKED
@@ -298,7 +296,7 @@ export const MatchesView: React.FC<Props> = ({
             setCancelRequestDialogVisible(false);
             postMatchBlocked(
               {
-                userId: profileMatch.current!.userId,
+                receiverId: profileMatch.current!.userId,
                 status: RelationFilterType.CANCEL
               },
               getTypeOfCancelRequest()
@@ -343,7 +341,7 @@ export const MatchesView: React.FC<Props> = ({
         keyExtractor={(item) => item.id?.toString()}
         error={error}
         retryCallback={pullToRefreshCallback}
-        extraData={isFriendRequestApiLoading}
+        extraData={isRequestApiLoading}
       />
       {requestDialog()}
       {dismissDialog()}

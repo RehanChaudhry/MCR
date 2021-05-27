@@ -1,5 +1,4 @@
 import { API } from "config";
-import { MatchDismissBlockCancelApiRequestModel } from "models/api_requests/MatchDismissBlockCancelApiRequestModel";
 import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 import { UpdateRelationApiResponseModel } from "models/api_responses/UpdateRelationApiResponseModel";
 import { apiClient } from "repo/Client";
@@ -13,46 +12,34 @@ function relations(request: PaginationParamsModel) {
   });
 }
 
-function matchDismiss(
-  requestModel: MatchDismissBlockCancelApiRequestModel
+function sendFriendOrRoommateRequest(
+  requestModel: UpdateRelationApiRequestModel
 ) {
-  return apiClient.put<ApiSuccessResponseModel>(
-    API.DISMISS_MATCH,
+  return apiClient.post<UpdateRelationApiResponseModel>(
+    API.RELATION,
     requestModel
   );
 }
 
-function matchBlocked(
-  requestModel: MatchDismissBlockCancelApiRequestModel
+function relationDismissRestore(
+  requestModel: UpdateRelationApiRequestModel
 ) {
   return apiClient.put<ApiSuccessResponseModel>(
-    API.BLOCKED_MATCH + requestModel.userId,
-    {
-      status: requestModel.status
-    }
+    `${API.RELATION_DISMISS_RESTORE}/${requestModel.receiverId}`,
+    requestModel
   );
 }
 
 function updateRelation(requestModel: UpdateRelationApiRequestModel) {
   return apiClient.put<UpdateRelationApiResponseModel>(
-    `${API.REMOVE_FRIEND}/${requestModel.receiverId}`,
-    requestModel
-  );
-}
-
-function sendFriendOrRoommateRequest(
-  requestModel: UpdateRelationApiRequestModel
-) {
-  return apiClient.post<UpdateRelationApiResponseModel>(
-    `${API.POST_RELATION}`,
+    `${API.RELATION}/${requestModel.receiverId}`,
     requestModel
   );
 }
 
 export default {
   relations,
-  matchDismiss,
-  matchBlocked,
+  relationDismissRestore,
   updateRelation,
   sendFriendOrRoommateRequest
 };
