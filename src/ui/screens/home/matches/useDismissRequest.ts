@@ -27,7 +27,8 @@ export default (
         dataBody
       } = await sendRequestApi.request([
         {
-          receiverId: item?.user?.id ?? 0
+          receiverId: item?.user?.id ?? 0,
+          status: "dismissed"
         }
       ]);
 
