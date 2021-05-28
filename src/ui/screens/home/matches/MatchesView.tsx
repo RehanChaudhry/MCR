@@ -1,4 +1,4 @@
-import { FONT_SIZE, SPACE } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 import EGender from "models/enums/EGender";
 import MatchesTypeFilter, {
@@ -15,8 +15,6 @@ import ProfileMatchItem from "ui/components/organisms/profile_match_item/Profile
 import OptimizedBottomBreadCrumbs, {
   OptimizedBBCItem
 } from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
-import CancelAlert from "ui/screens/home/friends/MyFriends/CancelAlert";
-import DismissBlockAlert from "ui/screens/home/friends/MyFriends/DismissBlockAlert";
 import RoommateRequestAlert from "ui/screens/home/friends/MyFriends/RoommateRequestAlert";
 import { AppLog, capitalizeWords } from "utils/Util";
 
@@ -190,17 +188,30 @@ export const MatchesView: React.FC<Props> = ({
         getSelectedItem={getSelectedItem}
         hideSelf={hideFriendRequestAlert}
         title="Friend Request"
-        message="friend"
+        message={`Are you sure you want to send friend request to ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        }?`}
       />
-      <CancelAlert
+      <RoommateRequestAlert
         shouldShow={isCancelRequestDialogVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideCancelRequestAlert}
+        title={STRINGS.dialogs.cancel_request.title}
+        message={`Are you sure you want to cancel request to ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        }?`}
+        firstButtonText={STRINGS.dialogs.cancel_request.success}
+        type={"cancel"}
       />
-      <DismissBlockAlert
+      <RoommateRequestAlert
         shouldShow={isDismissDialogVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideDismissBlockAlert}
+        title={STRINGS.dialogs.dismiss_block.title}
+        message={`Do you want to add ${getSelectedItem()?.user?.getFullName()} in your dismissed list or blocked list?`}
+        firstButtonText={STRINGS.dialogs.dismiss_block.dismiss}
+        secondButtonText={STRINGS.dialogs.dismiss_block.block}
+        type="blocked"
       />
       <OptimizedBottomBreadCrumbs<MatchesTypeFilter>
         data={filter()}
