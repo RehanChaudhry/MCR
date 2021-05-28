@@ -1,16 +1,12 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
-import { UpdateRelationApiResponseModel } from "models/api_responses/UpdateRelationApiResponseModel";
 import RelationModel, { Status } from "models/RelationModel";
-import React, { FC, useCallback, useContext, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
-import { useApi } from "repo/Client";
-import RelationApis from "repo/home/RelationApis";
+import React, { FC, useCallback, useContext } from "react";
+import { StyleSheet, View } from "react-native";
+import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
-import { MyFriendsContext } from "ui/screens/home/friends/MyFriends/MyFriendsController";
-import { AppLog } from "utils/Util";
+import useSendFriendOrRoommateRequest from "ui/screens/home/friends/useSendFriendOrRoommateRequest";
 
 type Props = {
   shouldShow: boolean;
@@ -20,16 +16,10 @@ type Props = {
 
 const RoommateRequestAlert: FC<Props> = React.memo(
   ({ shouldShow, getSelectedItem, hideSelf }) => {
-    AppLog.log(
-      "in RoommateRequestAlert, selectedItem: " +
-        getSelectedItem()?.user?.firstName
-    );
-
     const theme = usePreferredTheme();
 
     const { myFriends, setMyFriends } = useContext(MyFriendsContext);
 
-    AppLog.log("User status: " + getSelectedItem()?.status);
     const changeStatus = useCallback(
       (friend: RelationModel | undefined, status: Status) => {
         if (!myFriends || !friend) {
@@ -47,45 +37,18 @@ const RoommateRequestAlert: FC<Props> = React.memo(
         updatedFriend.status = status;
         _myFriends.splice(index, 1, updatedFriend);
 
-        AppLog.log("Changing friends to:" + JSON.stringify(_myFriends));
-
-        setMyFriends(_myFriends);
+        setMyFriends?.(_myFriends);
       },
       [myFriends, setMyFriends]
     );
 
-    const [shouldShowPb, setShouldShowPb] = useState(false);
-    const sendRoommateRequestApi = useApi<
-      UpdateRelationApiRequestModel,
-      UpdateRelationApiResponseModel
-    >(RelationApis.sendFriendOrRoommateRequest);
-
-    async function sendRoommateRequest() {
-      setShouldShowPb(true);
-
-      const {
-        hasError,
-        errorBody,
-        dataBody
-      } = await sendRoommateRequestApi.request([
-        {
-          receiverId: getSelectedItem()?.user?.id?.toString() ?? ""
-        }
-      ]);
-
-      if (hasError || dataBody === undefined) {
-        Alert.alert("Unable to remove friend", errorBody);
-        setShouldShowPb(false);
-        return;
-      } else {
-        try {
-          changeStatus(getSelectedItem(), Status.PENDING);
-        } finally {
-          hideSelf();
-          setShouldShowPb(false);
-        }
+    const { shouldShowPb, sendRequest } = useSendFriendOrRoommateRequest(
+      "Unable to send friend request",
+      hideSelf,
+      () => {
+        changeStatus(getSelectedItem(), Status.PENDING);
       }
-    }
+    );
 
     return (
       <AppPopUp
@@ -107,7 +70,7 @@ const RoommateRequestAlert: FC<Props> = React.memo(
               style={styles.actionContainer}
               shouldShowProgressBar={shouldShowPb}
               onPress={() => {
-                sendRoommateRequest();
+                sendRequest(getSelectedItem());
               }}
               textStyle={[
                 styles.actionStyle,

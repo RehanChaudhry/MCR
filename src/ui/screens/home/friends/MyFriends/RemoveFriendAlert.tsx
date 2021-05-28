@@ -1,16 +1,12 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
-import { UpdateRelationApiResponseModel } from "models/api_responses/UpdateRelationApiResponseModel";
 import RelationModel from "models/RelationModel";
-import React, { FC, useCallback, useContext, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
-import { useApi } from "repo/Client";
-import RelationApis from "repo/home/RelationApis";
+import React, { FC, useCallback, useContext } from "react";
+import { StyleSheet, View } from "react-native";
+import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
-import { MyFriendsContext } from "ui/screens/home/friends/MyFriends/MyFriendsController";
-import { AppLog } from "utils/Util";
+import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
 
 type Props = {
   shouldShow: boolean;
@@ -20,50 +16,24 @@ type Props = {
 
 const RemoveFriendAlert: FC<Props> = React.memo(
   ({ shouldShow, getSelectedItem, hideSelf }) => {
-    AppLog.log("in RemoveFriendAlert");
     const theme = usePreferredTheme();
     const { myFriends, setMyFriends } = useContext(MyFriendsContext);
 
     const onFriendRemoved = useCallback(
       (id: number) => {
-        setMyFriends(myFriends?.filter((value) => value.id !== id));
+        setMyFriends?.(myFriends?.filter((value) => value.id !== id));
       },
       [myFriends, setMyFriends]
     );
 
-    const [shouldShowPb, setShouldShowPb] = useState(false);
-    const removeFriendApi = useApi<
-      UpdateRelationApiRequestModel,
-      UpdateRelationApiResponseModel
-    >(RelationApis.updateRelation);
-
-    async function removeFriend() {
-      setShouldShowPb(true);
-
-      const {
-        hasError,
-        errorBody,
-        dataBody
-      } = await removeFriendApi.request([
-        {
-          receiverId: getSelectedItem()?.user?.id?.toString() ?? "",
-          status: "unfriend"
-        }
-      ]);
-
-      if (hasError || dataBody === undefined) {
-        Alert.alert("Unable to remove friend", errorBody);
-        setShouldShowPb(false);
-        return;
-      } else {
-        try {
-          onFriendRemoved(getSelectedItem()?.id ?? -1);
-        } finally {
-          hideSelf();
-          setShouldShowPb(false);
-        }
+    const { shouldShowPb, updateRelation } = useUpdateRelation(
+      "unfriend",
+      "Unable to remove friend",
+      hideSelf,
+      () => {
+        onFriendRemoved(getSelectedItem()?.id ?? -1);
       }
-    }
+    );
 
     return (
       <AppPopUp
@@ -85,7 +55,7 @@ const RemoveFriendAlert: FC<Props> = React.memo(
               style={styles.actionContainer}
               shouldShowProgressBar={shouldShowPb}
               onPress={() => {
-                removeFriend();
+                updateRelation(getSelectedItem());
               }}
               textStyle={[
                 styles.actionStyle,

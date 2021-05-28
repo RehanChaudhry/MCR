@@ -1,27 +1,45 @@
-import { FONTS, FONT_SIZE, SPACE } from "config";
+import { FONTS, FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
+import RelationModel from "models/RelationModel";
 import React, { FC } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
+import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
 import { shadowStyleProps } from "utils/Util";
 
 type Props = {
-  title: string;
-  subtitle: string;
-  profileImage: string;
-  onPressReject: () => void;
-  onPressApproved: () => void;
+  item: RelationModel;
+  removeItemFromList: (item: RelationModel) => void;
 };
 
-const ConnectRequestItem: FC<Props> = ({
-  title,
-  subtitle,
-  profileImage,
-  onPressApproved,
-  onPressReject
-}) => {
+const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
   const theme = usePreferredTheme();
+
+  const {
+    shouldShowPb: acceptRequestPb,
+    updateRelation: acceptRequest
+  } = useUpdateRelation(
+    "accepted",
+    "Unable to accept the request",
+    undefined,
+    (_item) => {
+      removeItemFromList(item);
+    }
+  );
+
+  const {
+    shouldShowPb: rejectRequestPb,
+    updateRelation: rejectRequest
+  } = useUpdateRelation(
+    "rejected",
+    "Unable to reject the request",
+    undefined,
+    (_item) => {
+      removeItemFromList(item);
+    }
+  );
+
   return (
     <View style={styles.container}>
       <View
@@ -35,7 +53,7 @@ const ConnectRequestItem: FC<Props> = ({
               styles.profileImage,
               { backgroundColor: theme.themedColors.interface[200] }
             ]}
-            source={{ uri: profileImage }}
+            source={{ uri: item.user?.profilePicture?.fileURL }}
           />
           <View style={styles.infoTextContainer}>
             <AppLabel
@@ -43,14 +61,16 @@ const ConnectRequestItem: FC<Props> = ({
                 styles.titleText,
                 { color: theme.themedColors.label }
               ]}
-              text={title}
+              text={item.user?.getFullName() ?? "N/A"}
             />
             <AppLabel
               style={[
                 styles.subTitleText,
                 { color: theme.themedColors.labelSecondary }
               ]}
-              text={subtitle}
+              text={`${item.user?.hometown ?? STRINGS.common.not_found}, ${
+                item.user?.major ?? STRINGS.common.not_found
+              }`}
             />
           </View>
         </View>
@@ -66,7 +86,12 @@ const ConnectRequestItem: FC<Props> = ({
               { backgroundColor: theme.themedColors.primaryShade }
             ]}
             text={"Approve"}
-            onPress={onPressApproved}
+            shouldShowProgressBar={acceptRequestPb}
+            onPress={() => {
+              if (!rejectRequestPb) {
+                acceptRequest(item);
+              }
+            }}
           />
           <View style={styles.spacer} />
           <AppButton
@@ -75,12 +100,17 @@ const ConnectRequestItem: FC<Props> = ({
               styles.actionButtonText,
               { color: theme.themedColors.danger }
             ]}
+            shouldShowProgressBar={rejectRequestPb}
             buttonStyle={[
               styles.actionButton,
               { backgroundColor: theme.themedColors.dangerShade }
             ]}
             text={"Reject"}
-            onPress={onPressReject}
+            onPress={() => {
+              if (!acceptRequestPb) {
+                rejectRequest(item);
+              }
+            }}
           />
         </View>
       </View>
