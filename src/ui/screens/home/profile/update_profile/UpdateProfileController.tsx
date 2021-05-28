@@ -204,6 +204,7 @@ const UpdateProfileController: FC<Props> = () => {
             handleUpdateProfile(_requestModel);
           }}
           updateProfileUiData={updateProfileUiData}
+          shouldShowProgressBar={updateProfileApi.loading}
         />,
         null,
         3000

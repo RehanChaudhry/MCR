@@ -24,13 +24,15 @@ type Props = {
   infoTextShown: boolean;
   handleUpdateProfile: (values: UpdateProfileUiRequestModel) => void;
   updateProfileUiData: ProfileData | undefined;
+  shouldShowProgressBar: boolean;
 };
 
 export const UpdateProfileView: React.FC<Props> = ({
   openUpdateQuestionnaireScreen,
   infoTextShown,
   handleUpdateProfile,
-  updateProfileUiData
+  updateProfileUiData,
+  shouldShowProgressBar
 }) => {
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
@@ -146,6 +148,7 @@ export const UpdateProfileView: React.FC<Props> = ({
             ]}
             rightIcon={rightArrowIcon}
             iconStyle={styles.iconStyle}
+            shouldShowProgressBar={shouldShowProgressBar}
           />
         </View>
       </AppForm>
