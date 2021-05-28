@@ -1,69 +1,37 @@
-import { FONT_SIZE, SPACE } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
-import RelationModel, { Status } from "models/RelationModel";
-import React, { FC, useCallback, useContext } from "react";
+import RelationModel from "models/RelationModel";
+import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
-import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
-import useSendFriendOrRoommateRequest from "ui/screens/home/friends/useSendFriendOrRoommateRequest";
+import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
 import { AppLog } from "utils/Util";
 
 type Props = {
-  title?: string;
-  message?: string;
   shouldShow: boolean;
   getSelectedItem: () => RelationModel | undefined;
   hideSelf: () => void;
 };
 
-const RoommateRequestAlert: FC<Props> = React.memo(
-  ({
-    shouldShow,
-    getSelectedItem,
-    hideSelf,
-    title = "Roommate Request",
-    message = "roommate"
-  }) => {
+const CancelAlert: FC<Props> = React.memo(
+  ({ shouldShow, getSelectedItem, hideSelf }) => {
     const theme = usePreferredTheme();
 
-    const { myFriends, setMyFriends } = useContext(MyFriendsContext);
-
-    const changeStatus = useCallback(
-      (friend: RelationModel | undefined, status: Status) => {
-        if (!myFriends || !friend) {
-          return;
-        }
-
-        let _myFriends = [...myFriends];
-        let index = _myFriends.findIndex(
-          (value) => value.id === friend.id
-        );
-        let updatedFriend: RelationModel = Object.assign(
-          Object.create(friend),
-          friend
-        );
-        updatedFriend.status = status;
-        _myFriends.splice(index, 1, updatedFriend);
-
-        setMyFriends?.(_myFriends);
-      },
-      [myFriends, setMyFriends]
-    );
-
-    const { shouldShowPb, sendRequest } = useSendFriendOrRoommateRequest(
-      "Unable to send friend request",
+    const { shouldShowPb, updateRelation } = useUpdateRelation(
+      "cancel",
+      "Unable to cancel request",
       hideSelf,
       () => {
-        changeStatus(getSelectedItem(), Status.PENDING);
+        AppLog.logForcefully("success");
       }
     );
 
     return (
       <AppPopUp
         isVisible={shouldShow}
-        title={title}
-        message={`Are you sure you want to send ${message} request to ${
+        title={STRINGS.dialogs.cancel_request.title}
+        message={`Are you sure you want to cancel request to ${
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         }?`}
         customActionButtons={
@@ -75,12 +43,11 @@ const RoommateRequestAlert: FC<Props> = React.memo(
               ]}
             />
             <AppButton
-              text="Yes, send request"
+              text={STRINGS.dialogs.cancel_request.success}
               style={styles.actionContainer}
               shouldShowProgressBar={shouldShowPb}
               onPress={() => {
-                AppLog.logForcefully("id: " + getSelectedItem()?.id);
-                sendRequest(getSelectedItem());
+                updateRelation(getSelectedItem());
               }}
               textStyle={[
                 styles.actionStyle,
@@ -131,4 +98,4 @@ const styles = StyleSheet.create({
     height: 0.5
   }
 });
-export default RoommateRequestAlert;
+export default CancelAlert;

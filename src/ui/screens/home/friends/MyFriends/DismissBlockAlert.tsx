@@ -1,71 +1,46 @@
-import { FONT_SIZE, SPACE } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
-import RelationModel, { Status } from "models/RelationModel";
-import React, { FC, useCallback, useContext } from "react";
+import RelationModel from "models/RelationModel";
+import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
-import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
-import useSendFriendOrRoommateRequest from "ui/screens/home/friends/useSendFriendOrRoommateRequest";
+import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
+import useDismissRequest from "ui/screens/home/matches/useDismissRequest";
 import { AppLog } from "utils/Util";
 
 type Props = {
-  title?: string;
-  message?: string;
   shouldShow: boolean;
   getSelectedItem: () => RelationModel | undefined;
   hideSelf: () => void;
 };
 
-const RoommateRequestAlert: FC<Props> = React.memo(
-  ({
-    shouldShow,
-    getSelectedItem,
-    hideSelf,
-    title = "Roommate Request",
-    message = "roommate"
-  }) => {
+const DismissBlockAlert: FC<Props> = React.memo(
+  ({ shouldShow, getSelectedItem, hideSelf }) => {
     const theme = usePreferredTheme();
 
-    const { myFriends, setMyFriends } = useContext(MyFriendsContext);
-
-    const changeStatus = useCallback(
-      (friend: RelationModel | undefined, status: Status) => {
-        if (!myFriends || !friend) {
-          return;
-        }
-
-        let _myFriends = [...myFriends];
-        let index = _myFriends.findIndex(
-          (value) => value.id === friend.id
-        );
-        let updatedFriend: RelationModel = Object.assign(
-          Object.create(friend),
-          friend
-        );
-        updatedFriend.status = status;
-        _myFriends.splice(index, 1, updatedFriend);
-
-        setMyFriends?.(_myFriends);
-      },
-      [myFriends, setMyFriends]
-    );
-
-    const { shouldShowPb, sendRequest } = useSendFriendOrRoommateRequest(
-      "Unable to send friend request",
+    const { shouldShowPb, updateRelation } = useUpdateRelation(
+      "blocked",
+      "Unable to block request",
       hideSelf,
       () => {
-        changeStatus(getSelectedItem(), Status.PENDING);
+        AppLog.logForcefully("success");
+      }
+    );
+
+    const { shouldShowDismissPb, sendDismissRequest } = useDismissRequest(
+      "Unable to block request",
+      hideSelf,
+      () => {
+        AppLog.logForcefully("success");
       }
     );
 
     return (
       <AppPopUp
         isVisible={shouldShow}
-        title={title}
-        message={`Are you sure you want to send ${message} request to ${
-          getSelectedItem()?.user?.getFullName() ?? "N/A"
-        }?`}
+        title={STRINGS.dialogs.dismiss_block.title}
+        message={`Do you want to add ${getSelectedItem()?.user?.getFullName()} in your dismissed list or blocked list?`}
         customActionButtons={
           <View>
             <View
@@ -75,17 +50,39 @@ const RoommateRequestAlert: FC<Props> = React.memo(
               ]}
             />
             <AppButton
-              text="Yes, send request"
+              text={STRINGS.dialogs.dismiss_block.dismiss}
               style={styles.actionContainer}
-              shouldShowProgressBar={shouldShowPb}
+              shouldShowProgressBar={shouldShowDismissPb}
               onPress={() => {
-                AppLog.logForcefully("id: " + getSelectedItem()?.id);
-                sendRequest(getSelectedItem());
+                sendDismissRequest(getSelectedItem());
               }}
               textStyle={[
                 styles.actionStyle,
                 {
-                  color: theme.themedColors.primary,
+                  color: theme.themedColors.warn,
+                  textAlign: "center",
+                  fontSize: FONT_SIZE.base
+                }
+              ]}
+              fontWeight="semi-bold"
+            />
+            <View
+              style={[
+                styles.separator,
+                { backgroundColor: theme.themedColors.separator }
+              ]}
+            />
+            <AppButton
+              text={STRINGS.dialogs.dismiss_block.block}
+              style={styles.actionContainer}
+              shouldShowProgressBar={shouldShowPb}
+              onPress={() => {
+                updateRelation(getSelectedItem());
+              }}
+              textStyle={[
+                styles.actionStyle,
+                {
+                  color: theme.themedColors.danger,
                   textAlign: "center",
                   fontSize: FONT_SIZE.base
                 }
@@ -131,4 +128,4 @@ const styles = StyleSheet.create({
     height: 0.5
   }
 });
-export default RoommateRequestAlert;
+export default DismissBlockAlert;

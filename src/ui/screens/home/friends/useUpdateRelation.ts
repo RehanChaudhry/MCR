@@ -35,7 +35,7 @@ export default (
         dataBody
       } = await updateRelationApi.request([
         {
-          receiverId: item.user?.id?.toString() ?? "",
+          receiverId: item.user?.id ?? 0,
           status: status
         }
       ]);
