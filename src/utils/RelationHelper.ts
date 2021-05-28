@@ -23,14 +23,7 @@ export enum Eligible {
   NOT_ELIGIBLE
 }
 
-const getRelationStatus = (
-  relationModel: RelationModel,
-  onSuccess: (
-    relationType?: RelationType,
-    actionPerformed?: ActionPerformed,
-    eligible?: Eligible
-  ) => void
-) => {
+const getRelationStatus = (relationModel: RelationModel) => {
   let relationType = RelationType.NONE,
     actionPerformed = ActionPerformed.NONE,
     eligible = Eligible.NONE;
@@ -69,7 +62,7 @@ const getRelationStatus = (
     }
   }
 
-  onSuccess(relationType, actionPerformed, eligible);
+  return { relationType, actionPerformed, eligible };
 };
 
 export default getRelationStatus;
