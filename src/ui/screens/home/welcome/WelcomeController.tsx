@@ -13,6 +13,9 @@ import StaticContentResponseModel from "models/api_responses/StaticContentRespon
 import OtherApis from "repo/home/OtherApis";
 import { AppLog } from "utils/Util";
 import { StaticContentType } from "models/api_requests/StaticContentRequestModel";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
+import { View } from "react-native";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -88,10 +91,22 @@ const WelcomeController: FC<Props> = () => {
   }, []);
 
   return (
-    <WelcomeView
-      openUpdateProfileScreen={openUpdateProfileScreen}
-      staticContent={staticContent?.data!!}
-    />
+    <ProgressErrorView
+      isLoading={staticContentApi.loading}
+      error={staticContentApi.error}
+      errorView={(message) => {
+        return (
+          <View>
+            <AppLabel text={message} />
+          </View>
+        );
+      }}
+      data={staticContent}>
+      <WelcomeView
+        openUpdateProfileScreen={openUpdateProfileScreen}
+        staticContent={staticContent?.data!!}
+      />
+    </ProgressErrorView>
   );
 };
 

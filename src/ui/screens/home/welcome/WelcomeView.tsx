@@ -3,13 +3,14 @@ import Play from "assets/images/play.svg";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import React, { useState } from "react";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { CardView } from "ui/components/atoms/CardView";
 import Screen from "ui/components/atoms/Screen";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
-import { HTMLView } from "react-native-htmlview";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import { StaticContent } from "models/api_responses/StaticContentResponseModel";
+import HtmlView from "react-native-htmlview";
+import YouTube from "react-native-youtube";
 
 type Props = {
   openUpdateProfileScreen: () => void;
@@ -22,6 +23,7 @@ export const WelcomeView = React.memo<Props>(
     const theme = usePreferredTheme();
     const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
 
+    // @ts-ignore
     return (
       <Screen>
         <ScrollView>
@@ -33,10 +35,21 @@ export const WelcomeView = React.memo<Props>(
               text={STRINGS.welcome.welcome_text}
               textStyle={styles.text}
             />
-            <Image
-              source={require("assets/images/video_image.png")}
-              resizeMode="cover"
-              style={styles.image}
+            {/*<Image*/}
+            {/*  source={require("assets/images/video_image.png")}*/}
+            {/*  resizeMode="cover"*/}
+            {/*  style={styles.image}*/}
+            {/*/>*/}
+
+            <YouTube
+              apiKey="AIzaSyCce0TNBZDyCCP62B2P8EkTfgjgp20ZqOA"
+              videoId="yR9ZW4mS_EA"
+              play={shouldPlayVideo}
+              controls={0}
+              style={{
+                //alignSelf: "stretch",
+                aspectRatio: 18 / 10
+              }}
             />
             <View style={styles.buttonViewStyle}>
               <AppButton
@@ -56,7 +69,7 @@ export const WelcomeView = React.memo<Props>(
                     fill={theme.themedColors.background}
                   />
                 )}
-                onPress={() => setShouldPlayVideo(true)}
+                onPress={() => setShouldPlayVideo(!shouldPlayVideo)}
               />
             </View>
 
@@ -71,8 +84,8 @@ export const WelcomeView = React.memo<Props>(
 
             <CardView style={styles.cardView}>
               <View style={styles.cardViewMainContainer}>
-                <HTMLView
-                  value={staticContent.content}
+                <HtmlView
+                  value={staticContent.content!}
                   stylesheet={styles}
                 />
               </View>
@@ -166,11 +179,11 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: FONT_SIZE.lg
   },
-  b: {
+  h3: {
     fontSize: FONT_SIZE.lg,
     fontWeight: "bold"
   },
   br: {
-    lineHeight: -12
+    lineHeight: -20
   }
 });
