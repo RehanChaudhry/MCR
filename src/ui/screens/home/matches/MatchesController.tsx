@@ -18,6 +18,7 @@ import RelationModel, { Status } from "models/RelationModel";
 import React, {
   FC,
   useCallback,
+  useContext,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -28,6 +29,7 @@ import { useApi } from "repo/Client";
 import RelationApis from "repo/home/RelationApis";
 import { MatchesStackParamList } from "routes/MatchesStack";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
+import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
@@ -107,7 +109,9 @@ const MatchesController: FC<Props> = () => {
   });
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const isFetchingInProgress = useRef(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [profileMatches, setProfileMatches] = useState<RelationModel[]>();
+  const { myFriends, setMyFriends } = useContext(MyFriendsContext);
   const [totalCount, setTotalCount] = useState<number>(0);
 
   const getProfileMatches = useCallback(async () => {
@@ -128,12 +132,15 @@ const MatchesController: FC<Props> = () => {
     if (hasError || dataBody === undefined) {
       Alert.alert("Unable to fetch matches", errorBody);
     } else {
-      setProfileMatches((prevState) => [
-        ...(prevState === undefined || requestModel.current.page === 1
-          ? []
-          : prevState),
-        ...(dataBody.data ?? [])
-      ]);
+      setMyFriends?.([...(myFriends ?? []), ...(dataBody.data ?? [])]);
+
+      // setMyFriends?.((prevState) => [
+      //   ...(prevState === undefined || requestModel.current.page === 1
+      //     ? []
+      //     : prevState),
+      //   ...(dataBody.data ?? [])
+      // ]);
+
       setTotalCount(dataBody.count ?? 0);
       if (dataBody!.data?.length === 10) {
         requestModel.current.page = requestModel.current.page + 1;
@@ -143,7 +150,7 @@ const MatchesController: FC<Props> = () => {
     }
 
     isFetchingInProgress.current = false;
-  }, [relationsApi]);
+  }, [relationsApi, myFriends, setMyFriends]);
 
   const refreshCallback = useCallback((onComplete?: () => void) => {
     if (isFetchingInProgress.current) {
@@ -352,7 +359,7 @@ const MatchesController: FC<Props> = () => {
       isLoading={relationsApi.loading}
       error={relationsApi.error}
       selectedTotalCount={totalCount}
-      matches={profileMatches}
+      matches={myFriends}
       onTypeChange={onTypeChange}
       onFilterChange={onFilterChange}
       pullToRefreshCallback={refreshCallback}

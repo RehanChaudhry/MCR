@@ -1,13 +1,13 @@
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import RelationModel from "models/RelationModel";
-import React, { FC } from "react";
+import React, { FC, useCallback, useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
+import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
 import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
 import useDismissRequest from "ui/screens/home/matches/useDismissRequest";
-import { AppLog } from "utils/Util";
 
 type Props = {
   shouldShow: boolean;
@@ -19,20 +19,29 @@ const DismissBlockAlert: FC<Props> = React.memo(
   ({ shouldShow, getSelectedItem, hideSelf }) => {
     const theme = usePreferredTheme();
 
+    const { myFriends, setMyFriends } = useContext(MyFriendsContext);
+
+    const onMatchRemoved = useCallback(
+      (id: number) => {
+        setMyFriends?.(myFriends?.filter((value) => value.id !== id));
+      },
+      [myFriends, setMyFriends]
+    );
+
     const { shouldShowPb, updateRelation } = useUpdateRelation(
       "blocked",
       "Unable to block request",
       hideSelf,
       () => {
-        AppLog.logForcefully("success");
+        onMatchRemoved(getSelectedItem()?.id ?? -1);
       }
     );
 
     const { shouldShowDismissPb, sendDismissRequest } = useDismissRequest(
-      "Unable to block request",
+      "Unable to dismiss request",
       hideSelf,
       () => {
-        AppLog.logForcefully("success");
+        onMatchRemoved(getSelectedItem()?.id ?? -1);
       }
     );
 

@@ -1,6 +1,7 @@
 import { useRoute } from "@react-navigation/native";
 import React from "react";
 import { MatchesStack } from "routes/MatchesStack";
+import MyFriendsProvider from "ui/screens/home/friends/MyFriendsProvider";
 import MatchesController from "ui/screens/home/matches/MatchesController";
 import MatchInfoController from "ui/screens/home/matches/match_info/MatchInfoController";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
@@ -26,67 +27,76 @@ const MatchesRoutes = ({ navigation }: any) => {
   }, [navigation, route]);
 
   return (
-    <MatchesStack.Navigator
-      initialRouteName={"Matches"}
-      screenOptions={{ headerTitleAlign: "center" }}>
-      <MatchesStack.Screen
-        name="Matches"
-        component={MatchesController}
-        options={{
-          headerLeft: () => <Hamburger />,
-          headerTitle: () => <HeaderTitle text={STRINGS.matches.title} />,
-          headerStyle: {
-            elevation: 0,
-            shadowOpacity: 0
-          }
-        }}
-      />
-      <MatchesStack.Screen
-        name="MatchInfo"
-        component={MatchInfoController}
-        options={{
-          headerTitle: () => <HeaderTitle text={STRINGS.matchInfo.title} />
-        }}
-      />
-      <MatchesStack.Screen name="Chat" component={ChatThreadController} />
-      <MatchesStack.Screen
-        name="Profile"
-        component={ViewProfileController}
-      />
-      <MatchesStack.Screen
-        name="RoommateAgreement"
-        component={RoommateAgreementController}
-        options={{
-          headerTitle: () => (
-            <HeaderTitle
-              text={"Roommate Agreement"}
-              labelStyle={{ fontSize: FONT_SIZE.xs }}
-            />
-          )
-        }}
-      />
-      <MatchesStack.Screen
-        name="UpdateProfile"
-        component={UpdateProfileController}
-      />
-      <MatchesStack.Screen
-        name="Questionnaire"
-        component={QuestionsController}
-        options={{
-          headerTitle: () => (
-            <HeaderTitle text={STRINGS.questionnaire.title_update} />
-          )
-        }}
-      />
-      <MatchesStack.Screen
-        name="AgreementDetails"
-        component={AgreementDetailsController}
-      />
-      <MatchesStack.Screen
-        name={"ConnectRequests"}
-        component={ConnectRequestsController}
-      />
-    </MatchesStack.Navigator>
+    <MyFriendsProvider>
+      <MatchesStack.Navigator
+        initialRouteName={"Matches"}
+        screenOptions={{ headerTitleAlign: "center" }}>
+        <MatchesStack.Screen
+          name="Matches"
+          component={MatchesController}
+          options={{
+            headerLeft: () => <Hamburger />,
+            headerTitle: () => (
+              <HeaderTitle text={STRINGS.matches.title} />
+            ),
+            headerStyle: {
+              elevation: 0,
+              shadowOpacity: 0
+            }
+          }}
+        />
+        <MatchesStack.Screen
+          name="MatchInfo"
+          component={MatchInfoController}
+          options={{
+            headerTitle: () => (
+              <HeaderTitle text={STRINGS.matchInfo.title} />
+            )
+          }}
+        />
+        <MatchesStack.Screen
+          name="Chat"
+          component={ChatThreadController}
+        />
+        <MatchesStack.Screen
+          name="Profile"
+          component={ViewProfileController}
+        />
+        <MatchesStack.Screen
+          name="RoommateAgreement"
+          component={RoommateAgreementController}
+          options={{
+            headerTitle: () => (
+              <HeaderTitle
+                text={"Roommate Agreement"}
+                labelStyle={{ fontSize: FONT_SIZE.xs }}
+              />
+            )
+          }}
+        />
+        <MatchesStack.Screen
+          name="UpdateProfile"
+          component={UpdateProfileController}
+        />
+        <MatchesStack.Screen
+          name="Questionnaire"
+          component={QuestionsController}
+          options={{
+            headerTitle: () => (
+              <HeaderTitle text={STRINGS.questionnaire.title_update} />
+            )
+          }}
+        />
+        <MatchesStack.Screen
+          name="AgreementDetails"
+          component={AgreementDetailsController}
+        />
+        <MatchesStack.Screen
+          name={"ConnectRequests"}
+          component={ConnectRequestsController}
+        />
+      </MatchesStack.Navigator>
+    </MyFriendsProvider>
   );
 };
 
