@@ -114,10 +114,10 @@ const RoommateRequestAlert: FC<Props> = React.memo(
                   : shouldShowPb
               }
               onPress={() => {
-                if (type === null) {
-                  sendRequest(getSelectedItem());
-                } else {
+                if (type !== null && type !== undefined) {
                   updateRelation(getSelectedItem());
+                } else {
+                  sendRequest(getSelectedItem());
                 }
               }}
               textStyle={[
