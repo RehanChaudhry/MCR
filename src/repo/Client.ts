@@ -119,14 +119,8 @@ export const useApi = <
   );
 
   const result = useRef({ data, error, loading, request });
-  update(result.current, { data, error, loading, request });
+  Object.assign(result.current, { data, error, loading, request });
   return result.current;
 };
-
-function update(obj: any, newObj: any) {
-  Object.keys(newObj).forEach(function (key) {
-    obj[key] = newObj[key];
-  });
-}
 
 export default { apiClient, useApi };
