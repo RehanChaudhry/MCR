@@ -46,10 +46,12 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
   ({
     text,
     onPress,
+    iconStyle,
     buttonStyle,
     textStyle,
     shouldShowProgressBar = false,
     loaderSize = 15,
+    loaderColor,
     leftIcon,
     rightIcon,
     buttonType = BUTTON_TYPES.NORMAL,
@@ -87,7 +89,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
     };
     return (
       <TouchableOpacity
-        onPress={onPress}
+        onPress={shouldShowProgressBar ? undefined : onPress}
         disabled={isDisable}
         style={[
           style.button,
@@ -105,6 +107,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
           {leftIcon && !shouldShowProgressBar && (
             <View
               style={[
+                iconStyle,
                 style.leftIconContainer,
                 !shouldAlignTextWithLeftIconWithFullWidth
                   ? style.leftIconContainerPosition
@@ -123,6 +126,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
             ]}>
             {!shouldShowProgressBar && (
               <AppLabel
+                shouldNotOptimize={true}
                 style={[
                   style.text,
                   { color: theme.themedColors.primary },
@@ -137,7 +141,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
                 testID="loader"
                 style={[style.loader]}
                 size={loaderSize}
-                color={theme.themedColors.label}
+                color={loaderColor ?? theme.themedColors.label}
               />
             )}
           </View>
@@ -168,7 +172,8 @@ const style = StyleSheet.create({
   },
   text: {
     fontSize: FONT_SIZE.base,
-    overflow: "hidden"
+    overflow: "hidden",
+    lineHeight: 0
   },
   loader: {
     marginLeft: 10

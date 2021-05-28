@@ -2,7 +2,7 @@ import AgreementIcon from "assets/images/agreement_icon.svg";
 import ChatRound from "assets/images/chat_round.svg";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
-import ProfileMatch from "models/ProfileMatch";
+import RelationModel from "models/RelationModel";
 import React from "react";
 import {
   FlatList,
@@ -18,8 +18,8 @@ import { shadowStyleProps } from "utils/Util";
 
 interface Props {
   style?: StyleProp<ViewStyle>;
-  roommates: ProfileMatch[];
-  onChatClicked?: (profileMatch: ProfileMatch) => void;
+  roommates: RelationModel[];
+  onChatClicked?: (profileMatch: RelationModel) => void;
   onRoommateAgreementClicked?: () => void;
 }
 
@@ -39,7 +39,7 @@ const Roommates: React.FC<Props> = ({
     />
   );
 
-  const renderItem = ({ item }: { item: ProfileMatch }) => {
+  const renderItem = ({ item }: { item: RelationModel }) => {
     return (
       <AnnouncementHeader
         leftImageUrl={item.profilePicture}
@@ -88,7 +88,7 @@ const Roommates: React.FC<Props> = ({
         { backgroundColor: themedColors.background },
         style
       ]}>
-      <FlatList<ProfileMatch>
+      <FlatList<RelationModel>
         ListHeaderComponent={listHeaderComponent}
         data={roommates}
         renderItem={renderItem}

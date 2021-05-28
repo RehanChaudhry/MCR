@@ -1,163 +1,127 @@
-import React from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { StyleSheet, View } from "react-native";
-import { DemoGraphics } from "ui/components/templates/demographics/DemoGraphics";
-import { Interests } from "ui/components/templates/interests/Interests";
-import { LivingDetails } from "ui/components/templates/living_details/LivingDetails";
-import { VideoIntroduction } from "ui/components/templates/video_introduction/VideoIntroduction";
 import * as Yup from "yup";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
-import { FormikValues } from "formik";
+import { FormikValues, isObject } from "formik";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { SPACE, STRINGS } from "config";
 import RightArrow from "assets/images/arrow_circle_right.svg";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
-import { BasicProfile } from "ui/components/templates/basic_profile/BasicProfile";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { AppLog } from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
+import { DynamicCardView } from "ui/components/templates/dynamic_card_view/DynamicCardView";
+import { ProfileData } from "models/api_responses/UpdateProfileUiResponseModel";
+import { UpdateProfileUiRequestModel } from "models/api_requests/UpdateProfileUiRequestModel";
+import { createYupSchema } from "utils/YupSchemaCreator";
+import _ from "lodash";
+import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
+import { AppLog } from "utils/Util";
 
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
   infoTextShown: boolean;
+  handleUpdateProfile: (values: UpdateProfileUiRequestModel) => void;
+  updateProfileUiData: ProfileData | undefined;
 };
-
-const validationSchema = Yup.object().shape({
-  //basic profile component
-  firstName: Yup.string()
-    .required("Enter your first name")
-    .min(1, "First name should be atleast 1 characters")
-    .max(50, "First name should be less than 50 characters"),
-  lastName: Yup.string()
-    .required("Enter your last name")
-    .min(1, "Last name should be atleast 1 characters")
-    .max(50, "Last name should be less than 50 characters"),
-  aboutMe: Yup.string().max(
-    100,
-    "About Me should be less than 100 characters"
-  ),
-  faceBookProfile: Yup.string().url(
-    "Please Provide Valid Facebook profile"
-  ),
-  twitterProfile: Yup.string().url("Please Provide Twitter  profile"),
-  linkedInProfile: Yup.string().url(
-    "Please Provide Valid LinkedIn profile"
-  ),
-  instagramProfile: Yup.string().url(
-    "Please Provide Valid Instagram profile"
-  ),
-  snapChatProfile: Yup.string().url(
-    "Please Provide Valid SnapChat profile"
-  ),
-  tikTokProfile: Yup.string().url("Please Provide Valid TikTok profile"),
-
-  //demo graphics component
-  homeTown: Yup.string()
-    .min(1, "First name should be atleast 1 characters")
-    .max(50, "First name should be less than 50 characters"),
-  intendedMajor: Yup.string()
-    .min(1, "First name should be atleast 1 characters")
-    .max(50, "First name should be less than 50 characters"),
-  //gender: Yup.object().required("Please select your gender"),
-
-  //interests components
-  // hobbies: Yup.object().required("Select your hobbies"),
-  // memberships: Yup.object().required("Select your memberships"),
-  // movies: Yup.object().required("Select your movies and tv shows"),
-  // music: Yup.object().required("Select your music"),
-  // books: Yup.object().required("Select your books"),
-  // games: Yup.object().required("Select your games"),
-
-  //living details
-  programs: Yup.string()
-    .min(1, "First name should be atleast 1 characters")
-    .max(100, "First name should be less than 100 characters"),
-  community: Yup.string()
-    .min(1, "First name should be atleast 1 characters")
-    .max(100, "First name should be less than 100 characters"),
-  building: Yup.string()
-    .min(1, "First name should be atleast 1 characters")
-    .max(100, "First name should be less than 100 characters"),
-  room: Yup.string()
-    .min(1, "First name should be atleast 1 characters")
-    .max(100, "First name should be less than 100 characters"),
-  //video introduction component
-  youtubeVideoUrl: Yup.string().url("Please Provide Valid YouTube URL")
-});
-let initialValues = {
-  // basic profile
-  firstName: "",
-  lastName: "",
-  aboutMe: "",
-  faceBookProfile: "",
-  twitterProfile: "",
-  linkedInProfile: "",
-  instagramProfile: "",
-  snapChatProfile: "",
-  tikTokProfile: "",
-
-  //demographics component
-  homeTown: "",
-  intendedMajor: "",
-  gender: "",
-
-  //interests component
-  hobbies: [],
-  memberships: [],
-  movies: [],
-  music: [],
-  books: [],
-  games: [],
-
-  //living details component
-  programs: "",
-  community: "",
-  building: "",
-  room: "",
-
-  //video introduction component
-  youtubeVideoUrl: ""
-};
-
-export type UpdateProfileFormKeys = typeof initialValues;
 
 export const UpdateProfileView: React.FC<Props> = ({
   openUpdateQuestionnaireScreen,
-  infoTextShown
+  infoTextShown,
+  handleUpdateProfile,
+  updateProfileUiData
 }) => {
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
-  const onSubmit = (_value: FormikValues) => {
-    AppLog.logForcefully("FormikValues: " + JSON.stringify(_value));
-    openUpdateQuestionnaireScreen();
+
+  AppLog.logForcefully("remove warning: " + openUpdateQuestionnaireScreen);
+  //dynamic form validation on submit
+  let onSubmit = (_value: FormikValues) => {
+    AppLog.log("in onSubmit");
+    updateProfileUiData?.sections?.forEach((section) => {
+      section.formInputs?.forEach((formInput) => {
+        const val = _value[formInput.id.toString()];
+        if (val) {
+          if (_.isArray(val)) {
+            //if its array
+            const meta = val.map((obj: any) => {
+              return { value: obj.value };
+            });
+            formInput.userMeta = meta;
+          } else if (isObject(val)) {
+            const meta = [
+              {
+                value: val.value
+              }
+            ];
+            formInput.userMeta = meta;
+          } else {
+            //if its string input
+            const meta = [
+              {
+                value: val
+              }
+            ];
+            formInput.userMeta = meta;
+          }
+        }
+      });
+    });
+
+    handleUpdateProfile({
+      sections: updateProfileUiData?.sections!
+    });
+    AppLog.log(
+      "Update Profile Request Model Data = " +
+        JSON.stringify(updateProfileUiData?.sections)
+    );
   };
 
-  // const [scrollPosition, setScrollPosition] = useState(0);
-  // let scrollRef: any;
-  // const navigation = useNavigation();
-  // navigation.addListener("focus", () => {
-  //   // To prevent FlatList scrolls to top automatically,
-  //   // we have to delay scroll to the original position
-  //   setTimeout(() => {
-  //     AppLog.logForcefully(
-  //       "scrollRef?.current?.scrollToPosition" +
-  //         JSON.stringify(scrollRef?.current?.scrollToPosition)
-  //     );
-  //     scrollRef?.current?.scrollToPosition(scrollPosition, false);
-  //   }, 500);
-  // });
-  // const handleScroll = (event: any) => {
-  //   setScrollPosition(event.nativeEvent.contentOffset.y);
-  // };
+  let yepSchema = useRef({});
+  let initialValues = useRef({});
+  let fieldToGetValidation = useRef<FormInputFieldData[]>([]);
+
+  // dynamic form validation making sure this complex logic executes only once when screen renders
+  const init = useCallback(() => {
+    updateProfileUiData?.sections.forEach((value) => {
+      fieldToGetValidation.current = [
+        ...fieldToGetValidation.current,
+        ...(value.formInputs ?? [])
+      ];
+    });
+
+    fieldToGetValidation.current = fieldToGetValidation.current.filter(
+      (value) => value.isRequired === 1
+    );
+
+    yepSchema.current =
+      updateProfileUiData !== undefined
+        ? createYupSchema(fieldToGetValidation.current)
+        : Yup.string().notRequired();
+
+    // FieldBox's initial state is being handled here.
+    // it is being handled in CustomForFieldItem
+    updateProfileUiData?.sections?.forEach((section) => {
+      section.formInputs?.forEach((formInput) => {
+        // @ts-ignore
+        initialValues.current[formInput.id] =
+          formInput.userMeta?.[0]?.value;
+      });
+    });
+  }, [updateProfileUiData]);
+
+  useEffect(() => {
+    init();
+  }, [init]);
 
   return (
     <KeyboardAwareScrollView keyboardOpeningTime={50} extraHeight={200}>
       <AppForm
-        initialValues={initialValues}
+        initialValues={initialValues.current}
         validateOnMount={false}
-        onSubmit={onSubmit}
-        validationSchema={validationSchema}>
+        validationSchema={yepSchema.current}
+        onSubmit={onSubmit}>
         {infoTextShown && (
           <AppLabel
             text={
@@ -167,11 +131,8 @@ export const UpdateProfileView: React.FC<Props> = ({
             style={styles.topText}
           />
         )}
-        <BasicProfile />
-        <DemoGraphics />
-        <Interests />
-        <LivingDetails />
-        <VideoIntroduction />
+
+        <DynamicCardView sectionsData={updateProfileUiData?.sections} />
         <View style={styles.buttonViewStyle}>
           <AppFormFormSubmit
             text={STRINGS.profile.buttonText.saveAndContinue}

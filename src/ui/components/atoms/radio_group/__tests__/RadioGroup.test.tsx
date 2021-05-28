@@ -6,9 +6,9 @@ test("check label match to the provided", () => {
   const { getByTestId } = render(
     <RadioGroup
       values={[
-        { id: 1, label: "Male" },
-        { id: 2, label: "Female" },
-        { id: 3, label: "Others" }
+        { text: "male", value: "Male" },
+        { text: "female", value: "Female" },
+        { text: "others", value: "Others" }
       ]}
       direction={DIRECTION_TYPE.HORIZONTAL}
     />
@@ -22,19 +22,19 @@ test("check radio button on Press", () => {
   const { getByText } = render(
     <RadioGroup
       values={[
-        { id: 1, label: "Male" },
-        { id: 2, label: "Female" },
-        { id: 3, label: "Others" }
+        { text: "male", value: "Male" },
+        { text: "female", value: "Female" },
+        { text: "others", value: "Others" }
       ]}
       direction={DIRECTION_TYPE.HORIZONTAL}
-      byDefaultSelected={1}
+      byDefaultSelected={0}
       onChange={onPress}
     />
   );
   const radioButton = getByText("Male");
   fireEvent.press(radioButton);
   expect(onPress).toBeCalledTimes(1);
-  expect(onPress).toBeCalledWith({ id: 1, label: "Male" }, 0);
+  expect(onPress).toBeCalledWith({ text: "male", value: "Male" }, 0);
 });
 
 test("check radio button label on Press", () => {
@@ -42,28 +42,29 @@ test("check radio button label on Press", () => {
   const { getByText } = render(
     <RadioGroup
       values={[
-        { id: 1, label: "Male" },
-        { id: 2, label: "Female" },
-        { id: 3, label: "Others" }
+        { text: "male", value: "Male" },
+        { text: "female", value: "Female" },
+        { text: "others", value: "Others" }
       ]}
       direction={DIRECTION_TYPE.HORIZONTAL}
-      byDefaultSelected={2}
+      byDefaultSelected={1}
       onChange={onPress}
     />
   );
+  expect(onPress).toBeCalledTimes(1);
   const radioButton = getByText("Female");
   fireEvent.press(radioButton);
   expect(onPress).toBeCalledTimes(1);
-  expect(onPress).toBeCalledWith({ id: 2, label: "Female" }, 1);
+  expect(onPress).toBeCalledWith({ text: "female", value: "Female" }, 1);
 });
 
 it("Snapshot testing", () => {
   const rendered = render(
     <RadioGroup
       values={[
-        { id: 1, label: "Male" },
-        { id: 2, label: "Female" },
-        { id: 3, label: "Others" }
+        { text: "male", value: "Male" },
+        { text: "female", value: "Female" },
+        { text: "others", value: "Others" }
       ]}
       direction={DIRECTION_TYPE.HORIZONTAL}
     />

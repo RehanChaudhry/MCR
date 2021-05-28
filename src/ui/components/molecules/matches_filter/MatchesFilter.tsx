@@ -16,11 +16,11 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
   const { themedColors } = usePreferredTheme();
 
   const keyword = useRef<string | undefined>();
-  const gender = useRef<EGender>(EGender.ALL);
+  const gender = useRef<EGender>();
 
   const onChangeText = useCallback(
     (item) => {
-      gender.current = item.id as EGender;
+      gender.current = item.text as EGender;
       onFilterChange(keyword.current, gender.current);
     },
     [onFilterChange]
@@ -68,7 +68,7 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
             height={20}
           />
         )}
-        title={genders[0].title}
+        preselectedItemString={genders[0].value}
         items={genders}
         selectedItemCallback={onChangeText}
       />

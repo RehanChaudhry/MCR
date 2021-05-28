@@ -58,19 +58,26 @@ exports[`Renders snapshot as expected 1`] = `
             style={Object {}}
           >
             <RCTScrollView
+              ListFooterComponent={
+                Object {
+                  "$$typeof": Symbol(react.memo),
+                  "compare": null,
+                  "type": [Function],
+                }
+              }
               data={
                 Array [
                   Object {
-                    "id": "1",
-                    "title": "Male",
+                    "text": "male",
+                    "value": "Male",
                   },
                   Object {
-                    "id": "2",
-                    "title": "Female",
+                    "text": "female",
+                    "value": "Female",
                   },
                   Object {
-                    "id": "3",
-                    "title": "Other",
+                    "text": "other",
+                    "value": "Other",
                   },
                 ]
               }
@@ -129,12 +136,13 @@ exports[`Renders snapshot as expected 1`] = `
                               "color": "#111827",
                             },
                             Object {
-                              "lineHeight": undefined,
+                              "lineHeight": 48,
                             },
                             Array [
                               Object {
                                 "alignSelf": "center",
-                                "paddingVertical": 8,
+                                "fontSize": 32,
+                                "paddingVertical": 10,
                               },
                               Object {
                                 "color": "#111827",
@@ -181,12 +189,13 @@ exports[`Renders snapshot as expected 1`] = `
                               "color": "#111827",
                             },
                             Object {
-                              "lineHeight": undefined,
+                              "lineHeight": 48,
                             },
                             Array [
                               Object {
                                 "alignSelf": "center",
-                                "paddingVertical": 8,
+                                "fontSize": 32,
+                                "paddingVertical": 10,
                               },
                               Object {
                                 "color": "#111827",
@@ -233,12 +242,13 @@ exports[`Renders snapshot as expected 1`] = `
                               "color": "#111827",
                             },
                             Object {
-                              "lineHeight": undefined,
+                              "lineHeight": 48,
                             },
                             Array [
                               Object {
                                 "alignSelf": "center",
-                                "paddingVertical": 8,
+                                "fontSize": 32,
+                                "paddingVertical": 10,
                               },
                               Object {
                                 "color": "#111827",
@@ -255,6 +265,9 @@ exports[`Renders snapshot as expected 1`] = `
                     </Text>
                   </View>
                 </View>
+                <View
+                  onLayout={[Function]}
+                />
               </View>
             </RCTScrollView>
           </View>
@@ -360,7 +373,7 @@ exports[`Renders snapshot as expected 1`] = `
                 "color": "#111827",
               },
               Object {
-                "lineHeight": undefined,
+                "lineHeight": 42,
               },
               Array [
                 Object {

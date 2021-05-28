@@ -102,13 +102,13 @@ export const AddInterestsController: FC<Props> = () => {
   const addItem = (value: string) => {
     if (
       value &&
-      _list.filter((item) => item.name === value).length === 0
+      _list.filter((item) => item.value === value).length === 0
     ) {
       AppLog.logForcefully("Adding Item: " + value);
 
       _list.push({
         id: _list.length + 1,
-        name: value,
+        value: value,
         userId: _list.length + 1
       });
       _setList([..._list]);

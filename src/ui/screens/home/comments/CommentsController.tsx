@@ -1,37 +1,66 @@
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Close from "assets/images/close.svg";
 import Strings from "config/Strings";
-import { usePreferredTheme } from "hooks";
-import { ChatsResponseModel } from "models/api_responses/ChatsResponseModel";
-import ChatItem from "models/ChatItem";
-import React, { FC, useLayoutEffect, useState } from "react";
-import { View } from "react-native";
-import ChatApis from "repo/chat/ChatAPis";
+import { useAuth, usePreferredTheme } from "hooks";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
 import { useApi } from "repo/Client";
 import { CommunityStackParamList } from "routes/CommunityStack";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
-import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { CommentsView } from "ui/screens/home/comments/CommentsView";
-import DataGenerator from "utils/DataGenerator";
 import { AppLog } from "utils/Util";
+import CommentsRequestModel from "models/api_requests/CommentsRequestModel";
+import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
+import {
+  Comment,
+  CommentsResponseModel,
+  User
+} from "models/api_responses/CommentsResponseModel";
+import PostCommentApiRequestModel from "models/api_requests/PostCommentApiRequestModel";
+import PostCommentApiResponseModel from "models/api_responses/PostCommentApiResponseModel";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
   "Comments"
 >;
 
-type Props = {};
+type CommentsParams = RouteProp<CommunityStackParamList, "Comments">;
 
-const dummyComments = DataGenerator.createComments();
+type Props = {
+  route: CommentsParams;
+  navigation: CommunityNavigationProp;
+};
 
-export const CommentsController: FC<Props> = () => {
-  const navigation = useNavigation<CommunityNavigationProp>();
-  const [comments, setComments] = useState<ChatItem[]>(dummyComments);
-
+export const CommentsController: FC<Props> = (Props) => {
+  const navigation = useNavigation<typeof Props.navigation>();
+  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
+  const isFetchingInProgress = useRef(false);
+  const [comments, setComments] = useState<Comment[] | undefined>(
+    undefined
+  );
+  const { params }: any = useRoute<typeof Props.route>();
   const { themedColors } = usePreferredTheme();
+  let { user } = useAuth();
+
+  AppLog.logForcefully("rendering comments controller");
+
+  useEffect(() => {
+    AppLog.logForcefully("comments state changes");
+    AppLog.logForcefully("newComment " + JSON.stringify(comments));
+  }, [comments]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -52,64 +81,241 @@ export const CommentsController: FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loadConversations = useApi<any, ChatsResponseModel>(
-    ChatApis.getChats
+  const requestModel = useRef<CommentsRequestModel>({
+    paginate: true,
+    page: 1,
+    limit: 10,
+    postId: params?.postId
+  });
+
+  const getComments = useApi<CommentsRequestModel, CommentsResponseModel>(
+    CommunityAnnouncementApis.getComments
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleLoadCommentsApi = async (onComplete?: () => void) => {
-    const {
-      hasError,
-      dataBody,
-      errorBody
-    } = await loadConversations.request([]);
+  const postComment = useApi<
+    PostCommentApiRequestModel,
+    PostCommentApiResponseModel
+  >(CommunityAnnouncementApis.postComment);
+
+  const handleGetCommentsApi = useCallback(async () => {
+    if (isFetchingInProgress.current) {
+      return;
+    }
+
+    isFetchingInProgress.current = true;
+    setShouldShowProgressBar(true);
+
+    const { hasError, dataBody, errorBody } = await getComments.request([
+      requestModel.current
+    ]);
+
+    setShouldShowProgressBar(false);
+    isFetchingInProgress.current = false;
+
     if (hasError || dataBody === undefined) {
       AppLog.logForcefully("Unable to find chats " + errorBody);
       return;
     } else {
-      AppLog.logForcefully("Find chats" + errorBody);
-      setComments(dataBody.data);
-      onComplete?.();
+      // to handle pull to refresh
+      if (requestModel.current.page === 1) {
+        setComments([]);
+      }
+
+      setComments((prevState) => {
+        return [
+          ...(prevState === undefined || requestModel.current.page === 1
+            ? []
+            : prevState),
+          ...dataBody.data
+        ];
+      });
+
+      setIsAllDataLoaded(
+        dataBody.data.length < requestModel.current.limit
+      );
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handlePostCommentApi = useCallback(
+    async (request: PostCommentApiRequestModel) => {
+      if (isFetchingInProgress.current) {
+        return;
+      }
+
+      isFetchingInProgress.current = true;
+      setShouldShowProgressBar(true);
+
+      const { hasError, dataBody, errorBody } = await postComment.request([
+        request
+      ]);
+
+      setShouldShowProgressBar(false);
+      isFetchingInProgress.current = false;
+
+      return { hasError, dataBody, errorBody };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  const retry = (postId: number) => {
+    handlePostCommentApi({
+      postId: params.postId,
+      comment: comments
+        ?.filter((item) => item.id === postId)[0]
+        .id.toString()!!
+    })
+      .then((result) => {
+        const findIndex: number | undefined = comments?.findIndex(
+          (item) => item.id === postId
+        );
+
+        if (findIndex !== undefined && findIndex >= 0) {
+          let items = [];
+          comments?.splice(findIndex, 1, {
+            ...comments!![findIndex],
+            isError: result?.hasError,
+            isLoading: false
+          });
+          items = [...comments!!];
+          setComments(items);
+        }
+      })
+      .catch((error) => {
+        AppLog.log("postComment()=> Failure " + JSON.stringify(error));
+
+        const findIndex: number | undefined = comments?.findIndex(
+          (item) => item.id === postId
+        );
+
+        if (findIndex !== undefined && findIndex >= 0) {
+          let items = [];
+          comments?.splice(findIndex, 1, {
+            ...comments!![findIndex],
+            isError: true,
+            isLoading: false
+          });
+          items = [...comments!!];
+          setComments(items);
+        }
+      });
   };
 
-  const sentMessage = (message: ChatItem) => {
-    AppLog.log("message to sent : " + JSON.stringify(message));
-  };
+  function postCommentApi(comment: string) {
+    let newList: Comment[] = [];
 
-  function updateCommentsList(
-    oldList: ChatItem[],
-    message: ChatItem
-  ): ChatItem[] {
-    sentMessage(message);
+    let commentId =
+      comments !== undefined && comments.length > 0
+        ? comments[0].id + 1
+        : 1;
 
-    let newList: ChatItem[] = [];
+    let newComment: Comment = {
+      postId: params.postId,
+      comment: comment,
+      userId: user?.profile?.id ?? 0,
+      user: {
+        profilePicture: user?.profile?.profilePicture,
+        firstName: user?.profile?.firstName,
+        lastName: user?.profile?.lastName
+      } as User,
+      id: commentId,
+      createdAt: new Date(),
+      isLoading: true,
+      isError: false
+    };
 
-    newList.push(...oldList);
-    newList.push(message);
+    newList.push(newComment);
+    if (comments !== undefined) {
+      newList.push(...comments!!);
+    }
 
-    return newList;
+    setComments(newList);
+
+    handlePostCommentApi({
+      postId: params.postId,
+      comment: comment
+    })
+      .then((result) => {
+        const findIndex: number | undefined = newList?.findIndex(
+          (item) => item.id === commentId
+        );
+
+        AppLog.logForcefully("items before" + JSON.stringify(findIndex));
+        if (findIndex !== undefined && findIndex >= 0) {
+          let items = [];
+          newList?.splice(findIndex, 1, {
+            ...newList!![findIndex],
+            isError: result?.hasError,
+            isLoading: false
+          });
+          items = [...newList!!];
+          setComments(items);
+
+          AppLog.logForcefully("items" + JSON.stringify(comments));
+        }
+      })
+      .catch((error) => {
+        AppLog.logForcefully(
+          "postComment()=> Failure " + JSON.stringify(error)
+        );
+
+        const findIndex: number | undefined = comments?.findIndex(
+          (item) => item.id === commentId
+        );
+
+        if (findIndex !== undefined && findIndex >= 0) {
+          let items = [];
+          newList?.splice(findIndex, 1, {
+            ...newList!![findIndex],
+            isError: true,
+            isLoading: false
+          });
+          items = [...newList!!];
+          setComments(items);
+
+          AppLog.logForcefully("items" + JSON.stringify(commentId));
+        }
+      });
   }
 
-  /* useEffect(() => {
-    AppLog.logForcefully("inside useEffect()");
-    handleLoadChatsApi();
+  const onEndReached = useCallback(async () => {
+    AppLog.logForcefully("onEndReached");
+    requestModel.current.page = requestModel.current.page!! + 1;
+    await handleGetCommentsApi();
+  }, [handleGetCommentsApi]);
+
+  const refreshCallback = useCallback(
+    async (onComplete: () => void) => {
+      requestModel.current.page = 1;
+      handleGetCommentsApi()
+        .then(() => {
+          onComplete();
+        })
+        .catch(() => {
+          onComplete();
+        });
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);*/
+    []
+  );
+
+  useEffect(() => {
+    handleGetCommentsApi().then().catch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <ProgressErrorView
+    <CommentsView
       data={comments}
-      isLoading={loadConversations.loading}
-      error={loadConversations.error}
-      errorView={(message) => {
-        return (
-          <View>
-            <AppLabel text={message} />
-          </View>
-        );
-      }}>
-      <CommentsView data={comments} sentMessageApi={updateCommentsList} />
-    </ProgressErrorView>
+      sentMessageApi={postCommentApi}
+      shouldShowProgressBar={shouldShowProgressBar}
+      onEndReached={onEndReached}
+      isAllDataLoaded={isAllDataLoaded}
+      error={getComments.error}
+      retry={retry}
+      pullToRefreshCallback={refreshCallback}
+    />
   );
 };

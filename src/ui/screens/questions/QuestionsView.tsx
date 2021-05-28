@@ -17,13 +17,16 @@ import {
   QuestionItem,
   SliderCallback
 } from "ui/components/organisms/question_item/QuestionItem";
-import { shadowStyleProps } from "utils/Util";
+import { AppLog, shadowStyleProps } from "utils/Util";
 import Screen from "ui/components/atoms/Screen";
 import SectionedList, {
   Section
 } from "ui/components/organisms/sectioned_list/SectionedList";
+import { StaticContent } from "models/api_responses/StaticContentResponseModel";
 
 type Props = {
+  headerContent: StaticContent;
+  moveToHeaderContent: (staticContent: StaticContent) => void;
   isFrom: EScreen;
   submitAnswersLoading: boolean;
   submitAnswers: () => void;
@@ -31,17 +34,23 @@ type Props = {
 };
 
 export const QuestionsView = ({
+  headerContent,
+  moveToHeaderContent,
   isFrom,
   questions,
   submitAnswersLoading,
   submitAnswers
 }: Props) => {
+  AppLog.log("rendering QuestionsView");
   const { themedColors } = usePreferredTheme();
 
-  const listHeader = useRef(createListHeader(isFrom, themedColors));
-
-  const listFooter = useRef(
-    createListFooter(submitAnswersLoading, submitAnswers, themedColors)
+  const listHeader = useRef(
+    createListHeader(
+      headerContent,
+      moveToHeaderContent,
+      isFrom,
+      themedColors
+    )
   );
 
   return (
@@ -53,7 +62,11 @@ export const QuestionsView = ({
         isCollapsable={true}
         headerView={headerView}
         bodyView={bodyView}
-        listFooterComponent={listFooter.current}
+        listFooterComponent={createListFooter(
+          submitAnswersLoading,
+          submitAnswers,
+          themedColors
+        )}
       />
     </Screen>
   );
@@ -74,19 +87,20 @@ function bodyView(
       question={bodyItem}
       initialValuesTopSlider={[bodyItem.answer?.answer ?? 5]}
       initialValuesBottomSlider={[
-        bodyItem.answer?.minPreference ?? 3,
+        bodyItem.answer?.minPreference ?? 4,
         bodyItem.answer?.maxPreference ?? 7
       ]}
       style={style}
       callback={(result: SliderCallback) => {
         bodyItem.answer = {
+          questionId: bodyItem.id,
           answer: result.topRangeSliderResult[0],
           maxPreference: result.bottomRangeSliderResult[1],
           minPreference: result.bottomRangeSliderResult[0],
-          noPreference: !result.isPreferenceActive
+          noPreference: result.isPreferenceActive ? 1 : 0
         };
       }}
-      preferenceInitialValue={bodyItem.answer?.noPreference === false}
+      preferenceInitialValue={bodyItem.answer?.noPreference === 1}
     />
   );
 }
@@ -99,7 +113,12 @@ function headerView(
   return <QuestionHeader questionGroup={header} isExpanded={isSelected} />;
 }
 
-function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
+function createListHeader(
+  headerContent: StaticContent,
+  moveToHeaderContent: (staticContent: StaticContent) => void,
+  isFrom: EScreen,
+  themedColors: ColorPalette
+) {
   return (
     <View style={styles.headerContainer}>
       {isFrom === EScreen.WELCOME && (
@@ -118,10 +137,10 @@ function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
           }
         ]}>
         <HeadingWithText
-          headingText={STRINGS.questionnaire.how_it_works}
+          headingText={headerContent.title ?? STRINGS.common.not_found}
           headingStyle={styles.infoCardHeading}
           headingFontWeight="semi-bold"
-          text={STRINGS.questionnaire.how_it_works_detail}
+          text={headerContent.description ?? STRINGS.common.not_found}
           textStyle={[
             styles.infoCardText,
             { color: themedColors.interface[600] }
@@ -139,6 +158,9 @@ function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
               fill={themedColors.primary}
             />
           )}
+          onPress={() => {
+            moveToHeaderContent(headerContent);
+          }}
         />
       </View>
     </View>
@@ -164,6 +186,7 @@ function createListFooter(
         ]}
         fontWeight={"semi-bold"}
         textStyle={[styles.saveButton, { color: themedColors.background }]}
+        loaderColor={themedColors.background}
         rightIcon={() => (
           <RightArrowCircle
             width={13}
@@ -188,7 +211,8 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   headerContainer: {
-    flexDirection: "column"
+    flexDirection: "column",
+    ...shadowStyleProps
   },
   footerContainer: {
     flexDirection: "column"

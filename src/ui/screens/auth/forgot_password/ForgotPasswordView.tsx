@@ -8,7 +8,7 @@ import { usePreferredTheme } from "hooks";
 import Colors from "config/Colors";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
-import Logo from "assets/images/logo.svg";
+import { UniLogo } from "ui/components/atoms/UniLogo";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import * as Yup from "yup";
@@ -36,6 +36,7 @@ let initialValues: FormikValues = {
 export const ForgotPasswordView = React.memo<Props>(
   ({ openForgotPasswordFeedBackScreen, openSignInScreen }) => {
     const theme = usePreferredTheme();
+
     const onSubmit = (_value: FormikValues) => {
       initialValues = _value;
       AppLog.log("form values" + initialValues);
@@ -65,7 +66,7 @@ export const ForgotPasswordView = React.memo<Props>(
               onPress={openSignInScreen}
             />
 
-            <Logo style={styles.logo} />
+            <UniLogo />
 
             <HeadingWithText
               headingText={STRINGS.forgotpassword.forgot_your_password}
@@ -143,11 +144,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     elevation: 2,
     width: 32,
-    height: 32,
-    marginTop: SPACE.xl
-  },
-  logo: {
-    marginTop: SPACE._2xl
+    height: 32
   },
   forgotPasswordHeading: {
     fontSize: FONT_SIZE.xl,

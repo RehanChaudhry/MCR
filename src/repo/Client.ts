@@ -1,10 +1,10 @@
 import { ApiResponse, create } from "apisauce";
 import { API } from "config";
 import { ApiErrorResponseModel } from "models/api_responses/ApiErrorResponseModel";
-import { useState } from "react";
-import AuthStorage from "repo/auth/AuthStorage";
+import { useRef, useState } from "react";
 import { useAuth } from "hooks";
 import { AppLog } from "utils/Util";
+import { extractAndRefreshTokenIfExpire } from "./auth/RefreshTokenHelper";
 
 export const apiClient = create({
   baseURL: API.BASE_URL + API.API_URL
@@ -13,19 +13,22 @@ export const apiClient = create({
 resetApiClient();
 
 export function resetApiClient(providedAuthToken?: string) {
+  AppLog.log("Resetting Authorization Token...");
+  // clear all transforms
+  apiClient.asyncRequestTransforms.length = 0;
+  // add new transform
   apiClient.addAsyncRequestTransform(async (request) => {
     request.headers.accept = "application/json";
 
-    const authToken =
-      providedAuthToken ?? (await AuthStorage.getUserToken());
-    if (__DEV__) {
-      AppLog.logForcefully("Authorization Token: " + authToken);
-    }
+    let token =
+      providedAuthToken ?? (await extractAndRefreshTokenIfExpire());
 
-    if (authToken === undefined) {
+    AppLog.log("Access Token: " + token);
+
+    if (token === undefined) {
       return;
     }
-    request.headers.Authorization = "Bearer " + authToken;
+    request.headers.Authorization = "Bearer " + token;
   });
 }
 
@@ -57,12 +60,10 @@ export const useApi = <
     setLoading(true);
     setError(undefined);
 
-    if (__DEV__) {
-      AppLog.logForcefully("Request Body:");
-      AppLog.logForcefully(args);
-    }
+    AppLog.logForcefully("Request Body:");
+    AppLog.logForcefully(args);
 
-    let response;
+    let response: any;
     try {
       response = await apiFunc(...args);
     } catch (e) {
@@ -70,14 +71,10 @@ export const useApi = <
       AppLog.bug(e);
     }
 
-    if (__DEV__) {
-      AppLog.logForcefully("Response Body:");
-      AppLog.logForcefully(
-        response?.config?.url + ": " + JSON.stringify(response)
-      );
-    }
-
-    setLoading(false);
+    AppLog.logForcefully("Response Body:");
+    AppLog.logForcefullyForComplexMessages(
+      () => response?.config?.url + ": " + JSON.stringify(response)
+    );
 
     if (!response?.ok) {
       // move user to login screen if the token has expired
@@ -92,19 +89,35 @@ export const useApi = <
           "An unexpected error occurred.";
       }
 
-      setError(errorBody);
-      return { hasError: true, errorBody };
+      try {
+        return { hasError: true, errorBody };
+      } finally {
+        setError(errorBody);
+        setLoading(false);
+      }
     } else {
       let dataBody = response.data;
       if (dataBody === undefined) {
-        return { hasError: true, errorBody: "Empty data" };
+        try {
+          return { hasError: true, errorBody: "Empty data" };
+        } finally {
+          setError("Empty data");
+          setLoading(false);
+        }
       }
-      setData(dataBody);
-      return { hasError: false, dataBody };
+
+      try {
+        return { hasError: false, dataBody };
+      } finally {
+        setData(dataBody);
+        setLoading(false);
+      }
     }
   };
 
-  return { data, error, loading, request };
+  const result = useRef({ data, error, loading, request });
+
+  return result.current;
 };
 
 export default { apiClient, useApi };

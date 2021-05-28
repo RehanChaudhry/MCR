@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import {
   StyleProp,
   StyleSheet,
@@ -22,13 +22,15 @@ import { WelcomeStackParamList } from "routes/WelcomeStack";
 import EScreen from "models/enums/EScreen";
 import { FormikValues, useFormikContext } from "formik";
 import { SvgProp } from "utils/Util";
+import { ConversationItem } from "models/ConversationItem";
 
 type Props = {
   name: string;
   viewStyle?: StyleProp<ViewStyle>;
-  title: string;
+  title: string | undefined;
   textStyle: StyleProp<TextStyle>;
   rightIcon: SvgProp | undefined;
+  initialList?: ConversationItem[];
 };
 
 type UpdateProfileNavigationProp = StackNavigationProp<
@@ -49,7 +51,8 @@ export const FieldBox: FC<Props> = ({
   viewStyle,
   title,
   textStyle,
-  rightIcon
+  rightIcon,
+  initialList
 }) => {
   const theme = usePreferredTheme();
   const route = useRoute<UpdateProfileRouteProp>();
@@ -62,22 +65,31 @@ export const FieldBox: FC<Props> = ({
   );
   const [areOptionsAdded, setAreOptionsAdded] = useState(false);
 
+  const updateUi = useCallback(() => {
+    if (values[name]?.length > 0) {
+      setOptionsText(
+        `Added ${values[name].length} option${
+          values[name]?.length === 1 ? "" : "s"
+        }`
+      );
+      setAreOptionsAdded(true);
+    } else {
+      setOptionsText(Strings.profile.dropDownInitialValue.addOptions);
+      setAreOptionsAdded(false);
+    }
+  }, [name, values]);
+
+  useEffect(() => {
+    values[name] = initialList;
+    updateUi();
+  }, [updateUi, values, name, initialList]);
+
   useEffect(() => {
     if (route.params.listKey === name) {
       values[name] = route.params.list;
-      if (values[name]?.length > 0) {
-        setOptionsText(
-          `Added ${values[name].length} option${
-            values[name]?.length === 1 ? "" : "s"
-          }`
-        );
-        setAreOptionsAdded(true);
-      } else {
-        setOptionsText(Strings.profile.dropDownInitialValue.addOptions);
-        setAreOptionsAdded(false);
-      }
+      updateUi();
     }
-  }, [values, name, route.params.list, route.params.listKey]);
+  }, [updateUi, values, name, route.params.list, route.params.listKey]);
 
   return (
     <View>

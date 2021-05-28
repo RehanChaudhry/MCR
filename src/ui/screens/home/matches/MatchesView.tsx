@@ -1,35 +1,46 @@
-import React, { useRef, useState } from "react";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
+import { usePreferredTheme } from "hooks";
+import EGender from "models/enums/EGender";
+import EIntBoolean from "models/enums/EIntBoolean";
+import MatchesTypeFilter, {
+  getMatchesTypeFilterData
+} from "models/enums/MatchesTypeFilter";
+import RelationActionType from "models/enums/RelationActionType";
+import RelationFilterType from "models/enums/RelationFilterType";
+import RelationModel from "models/RelationModel";
+import React, { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
-import ProfileMatch from "models/ProfileMatch";
-import ProfileMatchItem from "ui/components/organisms/profile_match_item/ProfileMatchItem";
 import MatchesFilter from "ui/components/molecules/matches_filter/MatchesFilter";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import { FONT_SIZE, SPACE, STRINGS } from "config";
-import { FilterCount } from "models/api_responses/MatchesFilterApiResponseModel";
-import { AppLog, capitalizeWords } from "utils/Util";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
-import { usePreferredTheme } from "hooks";
+import ProfileMatchItem from "ui/components/organisms/profile_match_item/ProfileMatchItem";
 import OptimizedBottomBreadCrumbs, {
   OptimizedBBCItem
 } from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
-import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
-import EGender from "models/enums/EGender";
+import { AppLog, capitalizeWords } from "utils/Util";
+import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 
 type Props = {
   isLoading: boolean;
   error: string | undefined;
-  matches?: ProfileMatch[];
-  onTypeChange: (value: MatchesTypeFilter) => void;
+  matches?: RelationModel[];
+  onTypeChange: (value?: MatchesTypeFilter) => void;
   onFilterChange: (keyword?: string, gender?: EGender) => void;
   pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
-  postFriendRequest: (userId: number) => void;
-  postMatchDismiss: (userId: number) => void;
-  filterCounts: FilterCount[];
-  moveToChatScreen: (profileMatch: ProfileMatch) => void;
-  moveToProfileScreen: (profileMatch: ProfileMatch) => void;
+  isRequestApiLoading: boolean;
+  postRequest: (userId: number, action: RelationActionType) => void;
+  postMatchDismiss: (requestModel: UpdateRelationApiRequestModel) => void;
+  selectedTotalCount: number;
+  moveToChatScreen: (profileMatch: RelationModel) => void;
+  moveToProfileScreen: (profileMatch: RelationModel) => void;
+  postMatchBlocked: (
+    requestModel: UpdateRelationApiRequestModel,
+    action: RelationActionType
+  ) => void;
+  moveToRoommateRequests: (userId: number) => void;
 };
 
 export const MatchesView: React.FC<Props> = ({
@@ -41,13 +52,20 @@ export const MatchesView: React.FC<Props> = ({
   pullToRefreshCallback,
   onEndReached,
   isAllDataLoaded,
-  postFriendRequest,
+  isRequestApiLoading,
+  postRequest,
   postMatchDismiss,
-  filterCounts,
+  selectedTotalCount,
   moveToChatScreen,
-  moveToProfileScreen
+  moveToProfileScreen,
+  postMatchBlocked,
+  moveToRoommateRequests
 }: Props) => {
   const { themedColors } = usePreferredTheme();
+
+  const [filterType, setFilterType] = useState<MatchesTypeFilter>(
+    MatchesTypeFilter.MATCHES
+  );
 
   const [
     isRequestDialogVisible,
@@ -59,30 +77,68 @@ export const MatchesView: React.FC<Props> = ({
     setDismissDialogVisible
   ] = useState<boolean>(false);
 
-  const profileMatch = useRef<ProfileMatch>();
+  const [
+    isRoommateDialogVisible,
+    setRoommateDialogVisible
+  ] = useState<boolean>(false);
 
-  const renderItem = ({ item }: { item: ProfileMatch }) => (
-    <ProfileMatchItem
-      profileMatch={item}
-      onFriendRequestClicked={() => {
-        profileMatch.current = item;
-        setRequestDialogVisible(true);
-      }}
-      onCrossClicked={() => {
-        AppLog.log("onCrossClicked()");
-        profileMatch.current = item;
-        setDismissDialogVisible(true);
-      }}
-      onChatButtonClicked={moveToChatScreen}
-      onImageClicked={moveToProfileScreen}
-    />
+  const [
+    isCancelRequestDialogVisible,
+    setCancelRequestDialogVisible
+  ] = useState<boolean>(false);
+
+  const profileMatch = useRef<RelationModel>();
+
+  const renderItem = useCallback(
+    ({ item }: { item: RelationModel }) => {
+      const _item = new RelationModel(item);
+      return (
+        <ProfileMatchItem
+          profileMatch={_item}
+          isFriendRequestApiLoading={
+            profileMatch.current?.userId === _item.userId
+              ? isRequestApiLoading
+              : false
+          }
+          onFriendRequestClicked={() => {
+            profileMatch.current = _item;
+            setRequestDialogVisible(true);
+          }}
+          onCrossClicked={() => {
+            AppLog.log("onCrossClicked()");
+            profileMatch.current = _item;
+            setDismissDialogVisible(true);
+          }}
+          onChatButtonClicked={moveToChatScreen}
+          onImageClicked={moveToProfileScreen}
+          onRoommateRequestClicked={() => {
+            profileMatch.current = _item;
+            setRoommateDialogVisible(true);
+          }}
+          onCancelRequestClicked={() => {
+            profileMatch.current = _item;
+            setCancelRequestDialogVisible(true);
+          }}
+          onRequestReceivedClicked={moveToRoommateRequests}
+        />
+      );
+    },
+    [
+      moveToProfileScreen,
+      moveToChatScreen,
+      isRequestApiLoading,
+      moveToRoommateRequests
+    ]
   );
 
-  function getFilterCountData(): OptimizedBBCItem<MatchesTypeFilter>[] {
-    return filterCounts.map((value) => {
+  function filter(): OptimizedBBCItem<MatchesTypeFilter>[] {
+    return getMatchesTypeFilterData().map((value) => {
       const item: OptimizedBBCItem<MatchesTypeFilter> = {
         title: capitalizeWords(
-          `${value.type.replace("_", " ")} (${value.count})`
+          `${value.type.replace("_", " ")}` +
+            (filterType === value.type && selectedTotalCount > 0
+              ? " (" + selectedTotalCount + ")"
+              : "")
         ),
         value: value.type as MatchesTypeFilter
       };
@@ -96,14 +152,16 @@ export const MatchesView: React.FC<Props> = ({
       title={STRINGS.dialogs.friend_request.title}
       titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
       messageStyle={{ style: styles.dialogMessageStyle }}
-      message={`Are you sure you want to send friend request to ${profileMatch.current?.userName}?`}
+      message={`Are you sure you want to send friend request to ${profileMatch.current?.user?.getFullName()}?`}
       actions={[
         {
           title: STRINGS.dialogs.friend_request.success,
           onPress: () => {
             setRequestDialogVisible(false);
-            postFriendRequest(profileMatch.current!.userId);
-            profileMatch.current = undefined;
+            postRequest(
+              profileMatch.current!.userId,
+              RelationActionType.FRIEND_REQUEST
+            );
           },
           style: {
             weight: "semi-bold",
@@ -126,20 +184,60 @@ export const MatchesView: React.FC<Props> = ({
     />
   );
 
+  const roommateRequestDialog = () => (
+    <AppPopUp
+      isVisible={isRoommateDialogVisible}
+      title={STRINGS.dialogs.roommate_request.title}
+      titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
+      messageStyle={{ style: styles.dialogMessageStyle }}
+      message={`Are you sure you want to send roommate request to ${profileMatch.current?.user?.getFullName()}?`}
+      actions={[
+        {
+          title: STRINGS.dialogs.roommate_request.success,
+          onPress: () => {
+            setRoommateDialogVisible(false);
+            postRequest(
+              profileMatch.current!.userId,
+              RelationActionType.ROOMMATE_REQUEST
+            );
+          },
+          style: {
+            weight: "semi-bold",
+            style: [
+              { color: themedColors.primary },
+              styles.dialogButtonStyle
+            ]
+          }
+        },
+        {
+          title: STRINGS.dialogs.cancel,
+          style: {
+            style: styles.dialogButtonStyle
+          },
+          onPress: () => {
+            setRoommateDialogVisible(false);
+          }
+        }
+      ]}
+    />
+  );
+
   const dismissDialog = () => (
     <AppPopUp
       isVisible={isDismissDialogVisible}
       title={STRINGS.dialogs.dismiss_block.title}
       titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
       messageStyle={{ style: styles.dialogMessageStyle }}
-      message={`Do you want to add ${profileMatch.current?.userName} in your dismissed list or blocked list?`}
+      message={`Do you want to add ${profileMatch.current?.user?.getFullName()} in your dismissed list or blocked list?`}
       actions={[
         {
           title: STRINGS.dialogs.dismiss_block.dismiss,
           onPress: () => {
             setDismissDialogVisible(false);
-            postMatchDismiss(profileMatch.current!.userId);
-            profileMatch.current = undefined;
+            postMatchDismiss({
+              receiverId: profileMatch.current!.userId,
+              status: RelationFilterType.DISMISSED
+            });
           },
           style: {
             weight: "semi-bold",
@@ -150,7 +248,13 @@ export const MatchesView: React.FC<Props> = ({
           title: STRINGS.dialogs.dismiss_block.block,
           onPress: () => {
             setDismissDialogVisible(false);
-            postMatchDismiss(profileMatch.current!.userId);
+            postMatchBlocked(
+              {
+                receiverId: profileMatch.current!.userId,
+                status: RelationFilterType.BLOCKED
+              },
+              RelationActionType.BLOCKED
+            );
             profileMatch.current = undefined;
           },
           style: {
@@ -174,10 +278,63 @@ export const MatchesView: React.FC<Props> = ({
     />
   );
 
+  const getTypeOfCancelRequest = () => {
+    AppLog.log("profile match: " + JSON.stringify(profileMatch));
+    if (
+      profileMatch?.current?.isFriend === EIntBoolean.FALSE &&
+      profileMatch.current.isRoommate === EIntBoolean.FALSE
+    ) {
+      return RelationActionType.CANCEL_FRIEND_REQUEST;
+    } else {
+      return RelationActionType.CANCEL_ROOMMATE_REQUEST;
+    }
+  };
+
+  const cancelRequestDialog = () => (
+    <AppPopUp
+      isVisible={isCancelRequestDialogVisible}
+      title={STRINGS.dialogs.cancel_request.title}
+      titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
+      messageStyle={{ style: styles.dialogMessageStyle }}
+      message={`Are you sure you want to cancel request to ${profileMatch.current?.user?.getFullName()}?`}
+      actions={[
+        {
+          title: STRINGS.dialogs.cancel_request.success,
+          onPress: () => {
+            setCancelRequestDialogVisible(false);
+            postMatchBlocked(
+              {
+                receiverId: profileMatch.current!.userId,
+                status: RelationFilterType.CANCEL
+              },
+              getTypeOfCancelRequest()
+            );
+          },
+          style: {
+            weight: "semi-bold",
+            style: [
+              { color: themedColors.primary },
+              styles.dialogButtonStyle
+            ]
+          }
+        },
+        {
+          title: STRINGS.dialogs.cancel,
+          style: {
+            style: styles.dialogButtonStyle
+          },
+          onPress: () => {
+            setCancelRequestDialogVisible(false);
+          }
+        }
+      ]}
+    />
+  );
+
   return (
     <Screen style={styles.container}>
       <MatchesFilter onFilterChange={onFilterChange} />
-      <FlatListWithPb<ProfileMatch>
+      <FlatListWithPb<RelationModel>
         style={styles.matchesList}
         shouldShowProgressBar={isLoading}
         data={matches}
@@ -189,15 +346,23 @@ export const MatchesView: React.FC<Props> = ({
         onEndReached={onEndReached}
         pullToRefreshCallback={pullToRefreshCallback}
         isAllDataLoaded={isAllDataLoaded}
-        keyExtractor={(item) => item.userId.toString()}
+        keyExtractor={(item) => item.id?.toString()}
         error={error}
         retryCallback={pullToRefreshCallback}
+        extraData={isRequestApiLoading}
       />
       {requestDialog()}
       {dismissDialog()}
+      {roommateRequestDialog()}
+      {cancelRequestDialog()}
       <OptimizedBottomBreadCrumbs<MatchesTypeFilter>
-        data={getFilterCountData()}
-        onPress={onTypeChange}
+        data={filter()}
+        onPress={(value) => {
+          if (filterType !== value!) {
+            setFilterType(value!);
+            onTypeChange(value);
+          }
+        }}
       />
     </Screen>
   );

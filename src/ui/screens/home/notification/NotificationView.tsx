@@ -104,14 +104,14 @@ export const NotificationView = React.memo<Props>(
           ]}>
           <AppDropdown
             items={[
-              { id: "-1", title: "Filter by notification type" },
-              { id: "0", title: "View Friend Request" },
-              { id: "1", title: "View Profile" },
-              { id: "2", title: "View Roommate Request" },
-              { id: "3", title: "View Announcement" },
-              { id: "4", title: "View Message" },
-              { id: "5", title: "View Post" },
-              { id: "6", title: "View Roommate Request" }
+              { id: -1, value: "Filter by notification type" },
+              { id: 0, value: "View Friend Request" },
+              { id: 1, value: "View Profile" },
+              { id: 2, value: "View Roommate Request" },
+              { id: 3, value: "View Announcement" },
+              { id: 4, value: "View Message" },
+              { id: 5, value: "View Post" },
+              { id: 6, value: "View Roommate Request" }
             ]}
             title={"Filter by notification type"}
             textStyle={styles.filterText}

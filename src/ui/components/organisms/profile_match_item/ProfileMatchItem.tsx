@@ -1,35 +1,182 @@
+import ChatRound from "assets/images/chat_round.svg";
+import Cross from "assets/images/ic_cross.svg";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
+import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
+import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
+import RelationModel from "models/RelationModel";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
-import { shadowStyleProps } from "utils/Util";
-import ProfileMatch from "models/ProfileMatch";
-import { moderateScale } from "config/Dimens";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import MatchScore from "ui/components/molecules/match_score/MatchScore";
-import ProfileMatchType from "models/enums/ProfileMatchType";
-import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
-import ChatRound from "assets/images/chat_round.svg";
-import Cross from "assets/images/ic_cross.svg";
+import { AppButton } from "ui/components/molecules/app_button/AppButton";
+import MatchScore from "ui/components/molecules/match_score/MatchScore";
+import { shadowStyleProps } from "utils/Util";
+import getRelationStatus, {
+  ActionPerformed,
+  Eligible,
+  RelationType
+} from "utils/RelationHelper";
 
 interface Props {
-  profileMatch: ProfileMatch;
+  profileMatch: RelationModel;
+  isFriendRequestApiLoading: boolean;
   onFriendRequestClicked: (userId: number) => void;
   onCrossClicked: (userId: number) => void;
-  onChatButtonClicked: (profileMatch: ProfileMatch) => void;
-  onImageClicked: (profileMatch: ProfileMatch) => void;
+  onChatButtonClicked: (profileMatch: RelationModel) => void;
+  onImageClicked: (profileMatch: RelationModel) => void;
+  onRoommateRequestClicked: (userId: number) => void;
+  onCancelRequestClicked: (userId: number) => void;
+  onRequestReceivedClicked: (userId: number) => void;
+}
+
+function createActionButton(
+  profileMatch: RelationModel,
+  isFriendRequestApiLoading: boolean,
+  onFriendRequestClicked: (userId: number) => void,
+  themedColors: ColorPalette,
+  onCancelRequestClicked: (userId: number) => void,
+  onRoommateRequestClicked: (userId: number) => void,
+  onRequestReceivedClicked: (userId: number) => void
+) {
+  let actionButton: React.ReactElement;
+  const { relationType, actionPerformed, eligible } = getRelationStatus(
+    profileMatch
+  );
+
+  if (relationType === RelationType.NONE) {
+    if (actionPerformed === ActionPerformed.NONE) {
+      actionButton = (
+        <AppButton
+          shouldShowProgressBar={isFriendRequestApiLoading}
+          onPress={() => {
+            onFriendRequestClicked(profileMatch.userId);
+          }}
+          fontWeight={"semi-bold"}
+          textStyle={[
+            styles.btnActionText,
+            { color: themedColors.primary }
+          ]}
+          buttonStyle={[
+            styles.btnAction,
+            { backgroundColor: themedColors.primaryShade }
+          ]}
+          text={STRINGS.matches.action_add_friend}
+        />
+      );
+    } else {
+      actionButton = (
+        <AppButton
+          onPress={() => {
+            onCancelRequestClicked(profileMatch.userId);
+          }}
+          fontWeight={"semi-bold"}
+          textStyle={[
+            styles.btnActionText,
+            { color: themedColors.interface[500] }
+          ]}
+          buttonStyle={[
+            styles.btnAction,
+            { backgroundColor: themedColors.interface[200] }
+          ]}
+          text={STRINGS.matches.label_cancel_request}
+        />
+      );
+    }
+  } else if (relationType === RelationType.FRIEND) {
+    if (actionPerformed === ActionPerformed.NONE) {
+      if (eligible === Eligible.NOT_ELIGIBLE) {
+        actionButton = (
+          <AppButton
+            isDisable={true}
+            fontWeight={"semi-bold"}
+            textStyle={[
+              styles.btnActionText,
+              { color: themedColors.danger }
+            ]}
+            buttonStyle={[
+              styles.btnAction,
+              { backgroundColor: themedColors.dangerShade }
+            ]}
+            text={STRINGS.matches.label_not_eligible}
+          />
+        );
+      } else {
+        actionButton = (
+          <AppButton
+            onPress={() => {
+              onRoommateRequestClicked(profileMatch.userId);
+            }}
+            fontWeight={"semi-bold"}
+            textStyle={[
+              styles.btnActionText,
+              { color: themedColors.primary }
+            ]}
+            buttonStyle={[
+              styles.btnAction,
+              { backgroundColor: themedColors.primaryShade }
+            ]}
+            text={STRINGS.matches.label_roommate_request}
+          />
+        );
+      }
+    } else if (
+      actionPerformed === ActionPerformed.ROOMMATE_REQUESTED_RECEIVED
+    ) {
+      actionButton = (
+        <AppButton
+          onPress={() => {
+            onRequestReceivedClicked(profileMatch.userId);
+          }}
+          fontWeight={"semi-bold"}
+          textStyle={[
+            styles.btnActionText,
+            { color: themedColors.primary }
+          ]}
+          buttonStyle={[
+            styles.btnAction,
+            { backgroundColor: themedColors.primaryShade }
+          ]}
+          text={STRINGS.matches.label_request_received}
+        />
+      );
+    } else {
+      actionButton = (
+        <AppButton
+          onPress={() => {
+            onCancelRequestClicked(profileMatch.userId);
+          }}
+          fontWeight={"semi-bold"}
+          textStyle={[
+            styles.btnActionText,
+            { color: themedColors.interface[500] }
+          ]}
+          buttonStyle={[
+            styles.btnAction,
+            { backgroundColor: themedColors.interface[200] }
+          ]}
+          text={STRINGS.matches.label_cancel_request}
+        />
+      );
+    }
+  }
+
+  return actionButton!;
 }
 
 const ProfileMatchItem = ({
   profileMatch,
+  isFriendRequestApiLoading,
   onFriendRequestClicked,
   onCrossClicked,
   onChatButtonClicked,
-  onImageClicked
+  onImageClicked,
+  onRoommateRequestClicked,
+  onCancelRequestClicked,
+  onRequestReceivedClicked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -46,20 +193,22 @@ const ProfileMatchItem = ({
           }}>
           <Image
             style={styles.profileImage}
-            source={{ uri: profileMatch.profilePicture }}
+            source={{ uri: profileMatch.user?.profilePicture?.fileURL }}
           />
         </Pressable>
         <View style={styles.infoTextContainer}>
           <AppLabel
             style={styles.userName}
-            text={profileMatch.userName ?? STRINGS.common.not_found}
+            text={
+              profileMatch.user?.getFullName() ?? STRINGS.common.not_found
+            }
           />
           <AppLabel
             style={[
               styles.subtitle,
               { color: themedColors.interface[600] }
             ]}
-            text={`${profileMatch.classLevel}, ${profileMatch.major}`}
+            text={profileMatch.user?.getSubtitle()}
           />
           <MatchScore
             style={styles.matchScore}
@@ -97,33 +246,14 @@ const ProfileMatchItem = ({
             />
           )}
         />
-        {profileMatch.getType() === ProfileMatchType.NOT_FRIEND && (
-          <AppButton
-            isDisable={profileMatch.isFriendRequested}
-            onPress={() => {
-              if (!profileMatch.isFriendRequested) {
-                onFriendRequestClicked(profileMatch.userId);
-              }
-            }}
-            fontWeight={"semi-bold"}
-            textStyle={[
-              styles.btnActionText,
-              profileMatch.isFriendRequested
-                ? { color: themedColors.interface[500] }
-                : { color: themedColors.primary }
-            ]}
-            buttonStyle={[
-              styles.btnAction,
-              profileMatch.isFriendRequested
-                ? { backgroundColor: themedColors.interface[200] }
-                : { backgroundColor: themedColors.primaryShade }
-            ]}
-            text={
-              profileMatch.isFriendRequested
-                ? STRINGS.matches.label_pending_request
-                : STRINGS.matches.action_add_friend
-            }
-          />
+        {createActionButton(
+          profileMatch,
+          isFriendRequestApiLoading,
+          onFriendRequestClicked,
+          themedColors,
+          onCancelRequestClicked,
+          onRoommateRequestClicked,
+          onRequestReceivedClicked
         )}
       </View>
     </View>
@@ -146,7 +276,8 @@ const styles = StyleSheet.create({
     borderRadius: 32
   },
   infoTextContainer: {
-    marginStart: SPACE.md
+    marginStart: SPACE.md,
+    flex: 1
   },
   userName: { fontSize: FONT_SIZE.lg, includeFontPadding: false },
   subtitle: { fontSize: FONT_SIZE.xs, marginTop: SPACE._2xs },

@@ -1,11 +1,11 @@
 import { SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import React, { FC, useState } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 import { AppInputField } from "ui/components/molecules/appinputfield/AppInputField";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import UniSelectionCell from "../../components/organisms/uni_selection/UniSelectionCell";
+import UniSelectionCell from "ui/components/organisms/uni_selection/UniSelectionCell";
 import Search from "assets/images/search_icon.svg";
 import { Uni } from "models/api_responses/UniSelectionResponseModel";
 import Screen from "ui/components/atoms/Screen";
@@ -13,7 +13,7 @@ import { CardView } from "ui/components/atoms/CardView";
 import Logo from "assets/images/mcr_logo.svg";
 
 type Props = {
-  unis: Uni[];
+  unis?: Uni[];
   isLoading: boolean;
   isError?: string;
   didSelectItem: (item: Uni) => void;
@@ -34,16 +34,16 @@ const UniSelectionView: FC<Props> = ({
   const [filteredData, setFilteredData] = useState(unis);
   const [search, setSearch] = useState("");
 
+  useLayoutEffect(() => {
+    setFilteredData(unis);
+  }, [unis]);
+
   const searchFilterFunction = (text: string) => {
     if (text) {
-      const newData = unis.filter(function (item) {
-        const itemData = item.name
-          ? item.name.toUpperCase()
-          : "".toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
+      const filteredUnis = unis?.filter(function (item) {
+        return item.title.toLowerCase().indexOf(text.toLowerCase()) >= 0;
       });
-      setFilteredData(newData);
+      setFilteredData(filteredUnis);
       setSearch(text);
     } else {
       setFilteredData(unis);
@@ -92,6 +92,7 @@ const UniSelectionView: FC<Props> = ({
             error={isError}
             shouldShowProgressBar={isLoading}
             data={filteredData}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => {
               return listItem(item, didSelectItem);
             }}

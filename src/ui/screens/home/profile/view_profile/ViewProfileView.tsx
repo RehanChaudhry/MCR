@@ -14,6 +14,7 @@ type Props = {
 export const ViewProfileView: React.FC<Props> = ({
   openRoommateAgreementScreen
 }) => {
+  //const { user } = useAuth();
   return (
     <Screen shouldAddBottomInset={false}>
       <ScrollView>

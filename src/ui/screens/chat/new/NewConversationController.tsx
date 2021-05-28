@@ -1,8 +1,14 @@
-import React, { FC, useLayoutEffect } from "react";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { NewConversationScreen } from "ui/screens/chat/new/NewConversationScreen";
-import { ConversationItem } from "models/ConversationItem";
 import Strings from "config/Strings";
 import CircularTick from "assets/images/circular_tick.svg";
 import Close from "assets/images/close.svg";
@@ -12,6 +18,15 @@ import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_wit
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { moderateScale } from "config/Dimens";
 import { ChatRootStackParamList } from "routes/ChatRootStack";
+import { useApi } from "repo/Client";
+import { ConversationSuggestionsResponseModel } from "models/api_responses/ConversationSuggestionsResponseModel";
+import ChatApis from "repo/chat/ChatApis";
+import { AppLog } from "utils/Util";
+import { ConversationSuggestionsRequestModel } from "models/api_requests/ConversationSuggestionsRequestModel";
+import { CreateConversationRequestModel } from "models/api_requests/CreateConversationRequestModel";
+import SimpleToast from "react-native-simple-toast";
+import { CreateConversationResponseModel } from "models/api_responses/CreateConversationResponseModel";
+import { User } from "models/User";
 
 type ConversationNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -20,33 +35,98 @@ type ConversationNavigationProp = StackNavigationProp<
 
 type Props = {};
 
-const dummyData: ConversationItem[] = [
-  {
-    id: 1,
-    name: "Rose King",
-    userId: 1
-  },
-  {
-    id: 2,
-    name: "Lian Oneill",
-    userId: 2
-  }
-];
-
 export const NewConversationController: FC<Props> = () => {
   const navigation = useNavigation<ConversationNavigationProp>();
-
+  const [suggestions, setSuggestions] = useState<User[] | undefined>(
+    undefined
+  );
+  const usersIds = useRef<number[]>([]);
+  const conversationType = useRef<number>(0);
   const { themedColors } = usePreferredTheme();
+  const [newConversations, setNewConversation] = useState<
+    User[] | undefined
+  >(undefined);
+  const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
+  const [clearInputField, setClearInputField] = useState<boolean>(false);
 
-  const goBack = () => {
-    const users: string[] = dummyData.reduce(
-      (newArray: string[], item) => (newArray.push(item.name), newArray),
-      []
+  const openChatThreadScreen = useCallback(
+    (conversationId: number) => {
+      const users: string[] = newConversations!!.reduce(
+        (newArray: string[], item) => (
+          newArray.push(item.firstName + " " + item.lastName), newArray
+        ),
+        []
+      );
+      navigation.goBack();
+      navigation.navigate("ChatThread", {
+        title: users,
+        conversationId: conversationId
+      });
+    },
+    [navigation, newConversations]
+  );
+
+  const getSuggestions = useApi<
+    ConversationSuggestionsRequestModel,
+    ConversationSuggestionsResponseModel
+  >(ChatApis.getSuggestions);
+
+  const handleGetSuggestionApi = async (keyword: string) => {
+    setShowProgressbar(true);
+    const { hasError, dataBody, errorBody } = await getSuggestions.request(
+      [
+        {
+          keyword: keyword,
+          roleTitle: conversationType.current === 0 ? "Student" : "Staff"
+        }
+      ]
     );
-
-    navigation.goBack();
-    navigation.navigate("ChatThread", { title: users });
+    setShowProgressbar(false);
+    if (hasError || dataBody === undefined) {
+      AppLog.log("Unable to find suggestions " + errorBody);
+      return;
+    } else {
+      setSuggestions(dataBody.data);
+    }
   };
+
+  const createConversationAPi = useApi<
+    CreateConversationRequestModel,
+    CreateConversationResponseModel
+  >(ChatApis.createConversations);
+
+  const handleCreateConversationApi = useCallback(async () => {
+    const { hasError, dataBody, errorBody } = await createConversationAPi // @ts-ignore
+      .request([{ userIds: usersIds.current }]);
+
+    return { hasError, dataBody, errorBody };
+  }, [createConversationAPi]);
+
+  const headerRightClick = useCallback(() => {
+    AppLog.logForcefully("dats  : " + JSON.stringify(newConversations));
+    if (newConversations !== undefined && newConversations.length > 0) {
+      handleCreateConversationApi()
+        .then((result) => {
+          if (result.hasError && result.dataBody !== undefined) {
+            SimpleToast.show(
+              result.errorBody ?? Strings.somethingWentWrong
+            );
+          } else {
+            openChatThreadScreen(result.dataBody!!.data.id);
+          }
+        })
+        .catch((error) => {
+          SimpleToast.show(error ?? Strings.somethingWentWrong);
+        });
+    } else {
+      navigation.goBack();
+    }
+  }, [
+    navigation,
+    openChatThreadScreen,
+    newConversations,
+    handleCreateConversationApi
+  ]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -72,9 +152,7 @@ export const NewConversationController: FC<Props> = () => {
       headerRight: () => (
         <HeaderRightTextWithIcon
           text={Strings.newConversation.titleRight}
-          onPress={() => {
-            goBack();
-          }}
+          onPress={headerRightClick}
           icon={() => (
             <CircularTick
               testID="icon"
@@ -91,35 +169,64 @@ export const NewConversationController: FC<Props> = () => {
         shadowColor: "#00000000"
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigation]);
+  }, [navigation, headerRightClick, themedColors.primary]);
 
-  //const loadChatsApi = useApi<any, ChatsResponseModel>(ChatApis.getChats);
-
-  /*  const handleLoadChatsApi = async (onComplete?: () => void) => {
-    const { hasError, dataBody, errorBody } = await loadChatsApi.request(
-      []
+  const removeItemFromList = (itemToDelete: User) => {
+    setNewConversation(
+      newConversations!!.filter((item) => item.id !== itemToDelete.id)
     );
-    if (hasError || dataBody === undefined) {
-      AppLog.logForcefully("Unable to find chats " + errorBody);
-      return;
-    } else {
-      AppLog.logForcefully("Find chats" + errorBody);
-      onComplete?.();
-    }
-  };*/
-
-  const removeItemFromList = (
-    items: ConversationItem[],
-    itemToDelete: ConversationItem
-  ) => {
-    return items.filter((item) => item.id !== itemToDelete.id);
   };
+
+  // eslint-disable-next-line no-undef
+  let timeOutId: NodeJS.Timeout;
+  const typeAHead = (keyword: string = "") => {
+    setClearInputField(false);
+    clearTimeout(timeOutId);
+    timeOutId = setTimeout(() => {
+      keyword !== ""
+        ? handleGetSuggestionApi(keyword)
+        : setSuggestions([]);
+    }, 500);
+  };
+
+  const setConversationType = (type: number) => {
+    conversationType.current = type;
+    setNewConversation([]);
+    setClearInputField(true);
+  };
+
+  const addItem = (item: User) => {
+    if (
+      newConversations === undefined ||
+      (newConversations!!.filter(
+        (_item) => _item.id.toString() === item.id.toString()
+      ).length < 1 &&
+        newConversations.length < 5)
+    ) {
+      usersIds.current.push(item.id);
+      setNewConversation((prevState) => {
+        return [...(prevState === undefined ? [] : prevState), item];
+      });
+      setClearInputField(true);
+    } else {
+      SimpleToast.show("Item already added or limit reached");
+    }
+  };
+
+  useEffect(() => {
+    setSuggestions([]);
+  }, [newConversations]);
 
   return (
     <NewConversationScreen
-      data={dummyData}
+      data={newConversations}
       removeItem={removeItemFromList}
+      suggestions={typeAHead}
+      suggestionsList={suggestions}
+      addItem={addItem}
+      setConversationType={setConversationType}
+      showProgressbar={showProgressbar}
+      clearInputField={clearInputField}
     />
   );
 };

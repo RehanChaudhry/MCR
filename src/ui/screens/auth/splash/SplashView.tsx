@@ -1,7 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { COLORS, Constants, SPACE } from "config";
 import { AuthContext } from "hooks/useAuth";
-import { SignInApiResponseModel } from "models/api_responses/SignInApiResponseModel";
+import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
+import { Uni } from "models/api_responses/UniSelectionResponseModel";
+import { UserModel } from "models/api_responses/UserModel";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -11,73 +13,132 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import AuthApis from "repo/auth/AuthApis";
 import AuthStorage from "repo/auth/AuthStorage";
-import { AuthRoutes } from "routes";
+import { useApi } from "repo/Client";
+import { AuthRoutes, HomeRoutes } from "routes";
 import { WelcomeRoutes } from "routes/WelcomeRoutes";
 import { AppLog, shadowStyleProps } from "utils/Util";
 import VersionCheck from "react-native-version-check";
 import Screen from "ui/components/atoms/Screen";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import Logo from "assets/images/mcr_logo.svg";
 
 interface Props {}
 
+function isLoggedIn(_user?: UserModel) {
+  return (
+    _user?.authentication !== undefined && _user.profile !== undefined
+  );
+}
+
+function hasCompletedWelcomeJourney(_user?: UserModel) {
+  return _user?.profile?.welcomeVideoStatus === "skipped";
+}
+
+async function versionCheckLibraryImpl(): Promise<{
+  isNeeded: boolean;
+  storeUrl: string;
+}> {
+  let versionCheckNeedUpdate;
+  const noStoreUrlFound = {
+    isNeeded: false,
+    storeUrl: "N/A"
+  };
+  try {
+    versionCheckNeedUpdate =
+      (await VersionCheck.needUpdate()) ?? noStoreUrlFound;
+  } catch (e) {
+    // in case of no store url found
+    AppLog.logForcefully("Exception occurred.. No store url found..");
+    versionCheckNeedUpdate = noStoreUrlFound;
+  }
+
+  AppLog.logForcefully(
+    "versionCheckNeedUpdate: " + JSON.stringify(versionCheckNeedUpdate)
+  );
+  return versionCheckNeedUpdate;
+}
+
+async function checkForForcedUpdate() {
+  const versionCheckNeedUpdate = await versionCheckLibraryImpl();
+  return versionCheckNeedUpdate;
+}
+
+function showForcedUpdateDialog(storeUrl: string) {
+  Alert.alert(
+    "Update available",
+    "It looks like you are using an older version of our app. Please update to continue.",
+    [
+      {
+        text: "Update",
+        onPress: () => {
+          BackHandler.exitApp();
+          Linking.openURL(storeUrl);
+        }
+      }
+    ]
+  );
+}
+
 export const SplashView = React.memo<Props>(() => {
   AppLog.log("Rendering SplashView...");
-  const [user, setUser] = useState<SignInApiResponseModel>();
+  const [user, setUser] = useState<UserModel>();
+  const [uni, setUni] = useState<Uni>();
   const [isReady, setIsReady] = useState(false);
   //const initialRouteNameRef = useRef<"SignUp" | "Login">("Login");
 
-  const restoreUser = async () => {
+  const fetchProfileApi = useApi<string, FetchMyProfileResponseModel>(
+    AuthApis.fetchMyProfile
+  );
+
+  const auth = useAuth();
+
+  const restoreUserIfExists = async () => {
     const _user = await AuthStorage.getUser();
-    if (_user) {
-      setUser(_user);
+    // fetch profile data
+    if (_user?.authentication?.accessToken) {
+      await fetchUserProfile(_user);
+    } else if (_user?.profile) {
+      // remove profile data if no access token exists
+      AppLog.logForcefully(
+        "Got NULL token with a user's profile upon user restoration.."
+      );
+      auth.logOut();
+      return;
     }
   };
 
-  async function versionCheckLibraryImpl(): Promise<{
-    isNeeded: boolean;
-    storeUrl: string;
-  }> {
-    let versionCheckNeedUpdate;
-    const noStoreUrlFound = {
-      isNeeded: false,
-      storeUrl: "N/A"
-    };
-    try {
-      versionCheckNeedUpdate =
-        (await VersionCheck.needUpdate()) ?? noStoreUrlFound;
-    } catch (e) {
-      // in case of no store url found
-      AppLog.logForcefully("Exception occurred.. No store url found..");
-      versionCheckNeedUpdate = noStoreUrlFound;
+  async function restoreUni() {
+    const _uni = await AuthStorage.getUni();
+    setUni(_uni);
+  }
+
+  async function fetchUserProfile(_user: UserModel) {
+    AppLog.logForcefully("Fetching user profile...");
+    const {
+      hasError,
+      errorBody,
+      dataBody
+    } = await fetchProfileApi.request([]);
+
+    if (!hasError && dataBody) {
+      let updatedUser = await auth.saveProfile(dataBody.data, _user);
+      await restoreUni();
+      setUser(updatedUser);
+    } else {
+      AppLog.logForcefully(
+        "Error fetching updated profile: " + JSON.stringify(errorBody)
+      );
+
+      // let the user continue if we have a previously fetched profile
+      if (_user?.profile) {
+        await restoreUni();
+        setUser(_user);
+      } else {
+        auth.logOut();
+      }
     }
-
-    AppLog.logForcefully(
-      "versionCheckNeedUpdate: " + JSON.stringify(versionCheckNeedUpdate)
-    );
-    return versionCheckNeedUpdate;
-  }
-
-  async function checkForForcedUpdate() {
-    const versionCheckNeedUpdate = await versionCheckLibraryImpl();
-    return versionCheckNeedUpdate;
-  }
-
-  function showForcedUpdateDialog(storeUrl: string) {
-    Alert.alert(
-      "Update available",
-      "It looks like you are using an older version of our app. Please update to continue.",
-      [
-        {
-          text: "Update",
-          onPress: () => {
-            BackHandler.exitApp();
-            Linking.openURL(storeUrl);
-          }
-        }
-      ]
-    );
   }
 
   async function initializeApp() {
@@ -87,8 +148,8 @@ export const SplashView = React.memo<Props>(() => {
     } else {
       if (!isReady) {
         setTimeout(() => {
-          restoreUser().then(() => {
-            AppLog.logForcefully("Logging in...");
+          restoreUserIfExists().then(() => {
+            AppLog.logForcefully("Get set go...");
             setIsReady(true);
           });
         }, 2000);
@@ -121,11 +182,21 @@ export const SplashView = React.memo<Props>(() => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, uni, setUni }}>
       <NavigationContainer>
         {AppLog.log("User exists: " + (user !== undefined))}
-        {user !== undefined ? (
-          <WelcomeRoutes />
+        {AppLog.log("User is logged in: " + isLoggedIn(user))}
+        {AppLog.log(
+          "User has completed welcome journey: " +
+            hasCompletedWelcomeJourney(user)
+        )}
+
+        {isLoggedIn(user) ? (
+          hasCompletedWelcomeJourney(user) ? (
+            <HomeRoutes />
+          ) : (
+            <WelcomeRoutes />
+          )
         ) : (
           <AuthRoutes initialRouteName={"UniSelection"} />
         )}

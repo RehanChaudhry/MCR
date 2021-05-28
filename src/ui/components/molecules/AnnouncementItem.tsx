@@ -13,16 +13,39 @@ import { AnnouncementHeader } from "ui/components/molecules/announcement_header/
 import { ImagesSlideShow } from "ui/components/molecules/image_slide_show/ImagesSlideShow";
 import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
 import { shadowStyleProps } from "utils/Util";
+import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
 export interface AnnouncementItemProps extends TouchableOpacityProps {
   announcementItem: CommunityAnnouncement;
-  openCommentsScreen?: () => void | undefined;
+  openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
+}
+
+function showAttachedItemsIfAny(
+  item: CommunityAnnouncement,
+  shouldPlayVideo: boolean
+) {
+  if (item.link) {
+    return <UrlMetaData url={item.link} />;
+  } else if (item.embed) {
+    return (
+      <WebViewComponent
+        url={item.embed}
+        urlType={URL_TYPES.EMBEDDED}
+        shouldPlayVideo={shouldPlayVideo}
+      />
+    );
+  } else if (item.photos) {
+    return <ImagesSlideShow images={item.photos} />;
+  } else if (item.link) {
+    return <UrlMetaData url={item.link} />;
+  }
 }
 
 export const AnnouncementItem = React.memo<AnnouncementItemProps>(
   ({ announcementItem, openCommentsScreen, shouldPlayVideo }) => {
     const theme = usePreferredTheme();
+
     return (
       <View
         style={[
@@ -30,44 +53,31 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
           { backgroundColor: theme.themedColors.background }
         ]}>
         <AnnouncementHeader
-          title={announcementItem.name}
-          subTitle={announcementItem.time}
-          leftImageUrl={announcementItem.profileImageUrl}
+          title={
+            announcementItem.postedByFirstName +
+            " " +
+            announcementItem.postedByLastName
+          }
+          subTitle={new PrettyTimeFormat().getPrettyTime(
+            (announcementItem.createdAt as unknown) as string
+          )}
+          leftImageUrl={announcementItem.postedByProfilePicture?.fileURL}
           shouldShowRightImage={false}
         />
-        {announcementItem.text != null && true && (
+        {announcementItem.content && (
           <AppLabel
-            text={announcementItem.text}
+            text={announcementItem.content}
             style={[{ color: theme.themedColors.label }, style.text]}
             numberOfLines={0}
           />
         )}
-        {announcementItem.link != null && true && (
-          <WebViewComponent
-            url={announcementItem.link}
-            urlType={URL_TYPES.LINK}
-            shouldPlayVideo={shouldPlayVideo}
-          />
-        )}
-        {announcementItem.embeddedUrl != null && true && (
-          <WebViewComponent
-            url={announcementItem.embeddedUrl}
-            urlType={URL_TYPES.EMBEDDED}
-            shouldPlayVideo={shouldPlayVideo}
-          />
-        )}
-        {announcementItem.images != null &&
-          true &&
-          announcementItem.images.length > 0 && (
-            <ImagesSlideShow images={announcementItem.images} />
-          )}
-        {announcementItem.metaDataUrl != null && true && (
-          <UrlMetaData url={announcementItem.metaDataUrl} />
-        )}
+        {showAttachedItemsIfAny(announcementItem, shouldPlayVideo)}
         <AnnouncementFooter
-          commentCount={announcementItem.commentCount}
-          likeCount={announcementItem.likeCount}
+          commentCount={announcementItem.commentsCount}
+          likeCount={announcementItem.likesCount}
           openCommentsScreen={openCommentsScreen}
+          isLikedByMe={announcementItem.isLikedByMe}
+          postId={announcementItem.id}
         />
       </View>
     );

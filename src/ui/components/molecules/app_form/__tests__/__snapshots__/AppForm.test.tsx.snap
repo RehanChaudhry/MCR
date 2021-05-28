@@ -27,7 +27,7 @@ exports[`rendering... renders correctly 1`] = `
               "color": "#111827",
             },
             Object {
-              "lineHeight": undefined,
+              "lineHeight": 42,
             },
             Array [
               Object {
@@ -131,7 +131,7 @@ exports[`rendering... renders correctly 1`] = `
               "color": "#111827",
             },
             Object {
-              "lineHeight": undefined,
+              "lineHeight": 42,
             },
             Array [
               Object {
@@ -273,6 +273,7 @@ exports[`rendering... renders correctly 1`] = `
       >
         <Text
           numberOfLines={1}
+          shouldNotOptimize={true}
           style={
             Array [
               Array [
@@ -288,6 +289,7 @@ exports[`rendering... renders correctly 1`] = `
                 Array [
                   Object {
                     "fontSize": 28,
+                    "lineHeight": 0,
                     "overflow": "hidden",
                   },
                   Object {

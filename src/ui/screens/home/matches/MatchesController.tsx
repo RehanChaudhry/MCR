@@ -1,3 +1,20 @@
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import InfoCircle from "assets/images/info_circle.svg";
+import { STRINGS } from "config";
+import { usePreferredTheme } from "hooks";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
+import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
+import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
+import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
+import { UpdateRelationApiResponseModel } from "models/api_responses/UpdateRelationApiResponseModel";
+import EGender from "models/enums/EGender";
+import EIntBoolean from "models/enums/EIntBoolean";
+import EScreen from "models/enums/EScreen";
+import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
+import RelationActionType from "models/enums/RelationActionType";
+import RelationFilterType from "models/enums/RelationFilterType";
+import RelationModel, { Status } from "models/RelationModel";
 import React, {
   FC,
   useCallback,
@@ -6,31 +23,14 @@ import React, {
   useRef,
   useState
 } from "react";
-import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { Alert } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation } from "@react-navigation/native";
-import { AppLog } from "utils/Util";
-import DataGenerator from "utils/DataGenerator";
-import MatchesApiRequestModel from "models/api_requests/MatchesApiRequestModel";
-import MatchesTypeFilter, {
-  getMatchesTypeFilterData
-} from "models/enums/MatchesTypeFilter";
 import { useApi } from "repo/Client";
-import MatchesApiResponseModel from "models/api_responses/MatchesApiResponseModel";
-import MatchesApis from "repo/home/MatchesApis";
-import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
-import MatchesFilterApiResponseModel, {
-  FilterCount
-} from "models/api_responses/MatchesFilterApiResponseModel";
+import RelationApis from "repo/home/RelationApis";
 import { MatchesStackParamList } from "routes/MatchesStack";
-import InfoCircle from "assets/images/info_circle.svg";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
-import ProfileMatch from "models/ProfileMatch";
-import { STRINGS } from "config";
-import { usePreferredTheme } from "hooks";
-import EScreen from "models/enums/EScreen";
-import EGender from "models/enums/EGender";
+import { MatchesView } from "ui/screens/home/matches/MatchesView";
+import { AppLog } from "utils/Util";
+import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -51,7 +51,6 @@ const MatchesController: FC<Props> = () => {
           text={"More"}
           onPress={() => navigation.navigate("MatchInfo")}
           icon={(color, width, height) => {
-            AppLog.log(color);
             return (
               <InfoCircle
                 width={width}
@@ -65,106 +64,109 @@ const MatchesController: FC<Props> = () => {
     });
   }, [navigation, themedColors]);
 
-  const moveToChatScreen = (profileMatch: ProfileMatch) => {
+  const moveToChatScreen = (profileMatch: RelationModel) => {
     // AppLog.log(
     //   "moveToChatScreen(), profile: " + JSON.stringify(profileMatch)
     // );
     navigation.navigate("Chat", {
-      title: [profileMatch.userName ?? STRINGS.common.not_found]
+      title: [profileMatch.user?.getFullName() ?? STRINGS.common.not_found]
     });
   };
 
-  const moveToProfileScreen = (profileMatch: ProfileMatch) => {
+  const moveToProfileScreen = (profileMatch: RelationModel) => {
     AppLog.log(
       "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
     );
     navigation.navigate("Profile", { isFrom: EScreen.MATCH_INFO });
   };
 
-  // Matches API
-  const matchesApi = useApi<
-    MatchesApiRequestModel,
-    MatchesApiResponseModel
-  >(MatchesApis.matches);
+  const moveToRoommateRequests = useCallback(
+    (_: number) => {
+      navigation.navigate("ConnectRequests", {
+        title: "Roommate Requests",
+        type: ConnectRequestType.ROOMMATE_REQUESTS
+      });
+    },
+    [navigation]
+  );
 
-  const requestModel = useRef<MatchesApiRequestModel>({
+  // Matches API
+  const relationsApi = useApi<
+    PaginationParamsModel,
+    RelationApiResponseModel
+  >(RelationApis.relations);
+
+  const requestModel = useRef<PaginationParamsModel>({
+    type: RelationFilterType.MATCHES,
     gender: undefined,
     keyword: "",
-    limit: 5,
-    pageNo: 1,
-    type: MatchesTypeFilter.MATCHES
+    paginate: true,
+    page: 1,
+    limit: 10,
+    filterBy: MatchesTypeFilter.MATCHES
   });
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const isFetchingInProgress = useRef(false);
-  const [
-    profileMatches,
-    setProfileMatches
-  ] = useState<MatchesApiResponseModel>();
+  const [profileMatches, setProfileMatches] = useState<RelationModel[]>();
+  const [totalCount, setTotalCount] = useState<number>(0);
 
   const getProfileMatches = useCallback(async () => {
     if (isFetchingInProgress.current) {
       return;
     }
     isFetchingInProgress.current = true;
-    if (requestModel.current.pageNo === 0) {
-      isFetchingInProgress.current = false;
-      setIsAllDataLoaded(true);
-      return;
-    }
 
     // AppLog.log(
     //   "in getProfileMatches(), fetching page: " +
     //     JSON.stringify(requestModel.current)
     // );
 
-    const {
-      hasError,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      errorBody,
-      dataBody
-    } = await DataGenerator.getProfileMatches(requestModel.current);
+    const { hasError, errorBody, dataBody } = await relationsApi.request([
+      requestModel.current
+    ]);
 
-    // const { hasError, errorBody, dataBody } = await matchesApi.request([
-    //   requestModel.current
-    // ]);
-
-    if (!hasError) {
-      setProfileMatches((prevState) => ({
-        message: dataBody!.message,
-        data: [
-          ...(prevState === undefined || requestModel.current.pageNo === 1
-            ? []
-            : prevState.data),
-          ...dataBody!.data
-        ],
-        pagination: dataBody!.pagination
-      }));
-      requestModel.current.pageNo = dataBody!.pagination?.next ?? 0;
+    if (hasError || dataBody === undefined) {
+      Alert.alert("Unable to fetch matches", errorBody);
     } else {
-      // Alert.alert("Unable to fetch matches", errorBody);
+      setProfileMatches((prevState) => [
+        ...(prevState === undefined || requestModel.current.page === 1
+          ? []
+          : prevState),
+        ...(dataBody.data ?? [])
+      ]);
+      setTotalCount(dataBody.count ?? 0);
+      if (dataBody!.data?.length === 10) {
+        requestModel.current.page = requestModel.current.page + 1;
+      } else {
+        setIsAllDataLoaded(true);
+      }
     }
 
     isFetchingInProgress.current = false;
+  }, [relationsApi]);
+
+  const refreshCallback = useCallback((onComplete?: () => void) => {
+    if (isFetchingInProgress.current) {
+      return;
+    }
+    requestModel.current.page = 1;
+    setIsAllDataLoaded(false);
+    getProfileMatches()
+      .then(() => {
+        onComplete?.();
+      })
+      .catch((reason) => {
+        AppLog.log("refreshCallback > catch(), reason:" + reason);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const refreshCallback = useCallback(
-    async (onComplete?: () => void) => {
-      requestModel.current.pageNo = 1;
-      setIsAllDataLoaded(false);
-      getProfileMatches()
-        .then(() => {
-          onComplete?.();
-        })
-        .catch((reason) => {
-          AppLog.log("refreshCallback > catch(), reason:" + reason);
-        });
-    },
-    [getProfileMatches]
-  );
-
   const onTypeChange = useCallback(
-    (value: MatchesTypeFilter) => {
-      requestModel.current.type = value;
+    (value?: MatchesTypeFilter) => {
+      setProfileMatches(undefined);
+      setTotalCount(0);
+      requestModel.current.filterBy =
+        value !== MatchesTypeFilter.MATCHES ? value : undefined;
       refreshCallback();
     },
     [refreshCallback]
@@ -172,7 +174,7 @@ const MatchesController: FC<Props> = () => {
 
   const onFilterChange = useCallback(
     (keyword?: string, gender?: EGender) => {
-      AppLog.log(keyword);
+      // AppLog.log(keyword);
       requestModel.current.keyword = keyword;
       requestModel.current.gender = gender;
       refreshCallback();
@@ -184,97 +186,82 @@ const MatchesController: FC<Props> = () => {
     getProfileMatches();
   };
 
-  // Friend Request API
-  const friendRequestApi = useApi<number, ApiSuccessResponseModel>(
-    MatchesApis.friendRequest
+  // Friend , Roommate , cancel Request API
+  const requestApi = useApi<
+    UpdateRelationApiRequestModel,
+    UpdateRelationApiResponseModel
+  >(RelationApis.sendFriendOrRoommateRequest);
+
+  const postRequest = useCallback(
+    async (userId: number, type: RelationActionType) => {
+      const { hasError, errorBody, dataBody } = await requestApi.request([
+        {
+          receiverId: userId
+        }
+      ]);
+
+      if (!hasError) {
+        setProfileMatches((prevState) => {
+          let requestedUserPosition =
+            prevState?.findIndex((value) => value.userId === userId) ?? -1;
+          if (requestedUserPosition !== -1) {
+            const updatedUser = new RelationModel(
+              prevState![requestedUserPosition]
+            );
+            if (type === RelationActionType.ROOMMATE_REQUEST) {
+              updatedUser.isFriend = EIntBoolean.TRUE;
+            } else {
+              updatedUser.isFriend = EIntBoolean.FALSE;
+            }
+            updatedUser.isRoommate = EIntBoolean.FALSE;
+            updatedUser.status = Status.PENDING;
+            prevState![requestedUserPosition] = updatedUser;
+          }
+          return Object.assign([], prevState);
+        });
+        if (type === RelationActionType.FRIEND_REQUEST) {
+          Alert.alert("Friend Request Sent", dataBody!.message);
+        }
+        if (type === RelationActionType.ROOMMATE_REQUEST) {
+          Alert.alert("Roommate Request Sent", dataBody!.message);
+        }
+      } else {
+        if (type === RelationActionType.FRIEND_REQUEST) {
+          Alert.alert("Unable to send friend request", errorBody);
+        }
+        if (type === RelationActionType.ROOMMATE_REQUEST) {
+          Alert.alert("Unable to send roommate request", errorBody);
+        }
+      }
+    },
+    [requestApi]
   );
-
-  const postFriendRequest = async (userId: number) => {
-    // For UI build
-    if (true) {
-      setProfileMatches((prevState) => {
-        const requestedUser = prevState?.data.find(
-          (value) => value.userId === userId
-        );
-        if (requestedUser) {
-          requestedUser.isFriendRequested = true;
-        }
-        return {
-          message: prevState?.message ?? "",
-          data: prevState?.data ?? [],
-          pagination: prevState?.pagination
-        };
-      });
-      return;
-    }
-    const {
-      hasError,
-      errorBody,
-      dataBody
-    } = await friendRequestApi.request([userId]);
-
-    if (!hasError) {
-      setProfileMatches((prevState) => {
-        const requestedUser = prevState?.data.find(
-          (value) => value.userId === userId
-        );
-        if (requestedUser) {
-          requestedUser.isFriendRequested = true;
-        }
-        return {
-          message: prevState?.message ?? "",
-          data: prevState?.data ?? [],
-          pagination: prevState?.pagination
-        };
-      });
-      Alert.alert("Fried Request Sent", dataBody!.message);
-    } else {
-      Alert.alert("Unable to send friend request", errorBody);
-    }
-  };
 
   // Match Dismiss API
-  const matchDismissApi = useApi<number, ApiSuccessResponseModel>(
-    MatchesApis.matchDismiss
-  );
+  const relationDismissRestoreApi = useApi<
+    UpdateRelationApiRequestModel,
+    ApiSuccessResponseModel
+  >(RelationApis.relationDismissRestore);
 
-  const postMatchDismiss = async (userId: number) => {
-    // For UI build
-    if (true) {
-      setProfileMatches((prevState) => {
-        const dismissedUserIndex =
-          prevState?.data.findIndex((value) => value.userId === userId) ??
-          -1;
-        if (dismissedUserIndex > -1) {
-          prevState!.data.splice(dismissedUserIndex, 1);
-        }
-        return {
-          message: prevState?.message ?? "",
-          data: prevState?.data ?? [],
-          pagination: prevState?.pagination
-        };
-      });
-      return;
-    }
+  const requestRelationDismissRestoreApi = async (
+    request: UpdateRelationApiRequestModel
+  ) => {
     const {
       hasError,
       errorBody,
       dataBody
-    } = await matchDismissApi.request([userId]);
+    } = await relationDismissRestoreApi.request([request]);
 
     if (!hasError) {
       setProfileMatches((prevState) => {
         const dismissedUserIndex =
-          prevState?.data.findIndex((value) => value.userId === userId) ??
-          -1;
+          prevState?.findIndex(
+            (value) => value.userId === request.receiverId
+          ) ?? -1;
         if (dismissedUserIndex > -1) {
-          prevState!.data.splice(dismissedUserIndex, 1);
+          prevState!.splice(dismissedUserIndex, 1);
         }
-        return {
-          message: prevState?.message ?? "",
-          data: prevState?.data ?? [],
-          pagination: prevState?.pagination
-        };
+        return prevState;
       });
       Alert.alert("Match Dismissed", dataBody!.message);
     } else {
@@ -282,49 +269,102 @@ const MatchesController: FC<Props> = () => {
     }
   };
 
-  // Matches filter count API
-  const [filterCounts, setFilterCounts] = useState<FilterCount[]>(
-    getMatchesTypeFilterData()
-  );
-  const matchesFilterCountApi = useApi<any, MatchesFilterApiResponseModel>(
-    MatchesApis.filterCount
-  );
+  // Update Relation API
+  const updateRelationApi = useApi<
+    UpdateRelationApiRequestModel,
+    UpdateRelationApiResponseModel
+  >(RelationApis.updateRelation);
 
-  const getFilterCount = async () => {
+  const requestUpdateRelationApi = async (
+    request: UpdateRelationApiRequestModel,
+    type: RelationActionType
+  ) => {
+    AppLog.log("type: " + type);
     const {
       hasError,
       errorBody,
       dataBody
-    } = await matchesFilterCountApi.request([]);
+    } = await updateRelationApi.request([request]);
 
     if (!hasError) {
-      setFilterCounts(dataBody!.data);
+      if (type === RelationActionType.BLOCKED) {
+        Alert.alert("User Blocked", dataBody!.message);
+        setProfileMatches((prevState) => {
+          const dismissedUserIndex =
+            prevState?.findIndex(
+              (value) => value.userId === request.receiverId
+            ) ?? -1;
+          if (dismissedUserIndex > -1) {
+            prevState!.splice(dismissedUserIndex, 1);
+          }
+          return prevState;
+        });
+      }
+      if (
+        type === RelationActionType.CANCEL_ROOMMATE_REQUEST ||
+        type === RelationActionType.CANCEL_FRIEND_REQUEST
+      ) {
+        Alert.alert("Request Cancelled", dataBody!.message);
+        setProfileMatches((prevState) => {
+          let requestedUserPosition =
+            prevState?.findIndex(
+              (value) => value.userId === request.receiverId
+            ) ?? -1;
+          if (requestedUserPosition !== -1) {
+            const updatedUser = new RelationModel(
+              prevState![requestedUserPosition]
+            );
+            if (type === RelationActionType.CANCEL_FRIEND_REQUEST) {
+              updatedUser.isFriend = EIntBoolean.FALSE;
+              updatedUser.isRoommate = EIntBoolean.FALSE;
+              updatedUser.status = undefined;
+            } else {
+              updatedUser.isFriend = EIntBoolean.TRUE;
+              updatedUser.isRoommate = EIntBoolean.FALSE;
+              updatedUser.status = Status.ACCEPTED;
+              updatedUser.criteria = { eligible: true };
+            }
+            prevState![requestedUserPosition] = updatedUser;
+          }
+          return Object.assign([], prevState);
+        });
+      }
     } else {
-      AppLog.log("getFilterCount() > failed, error: " + errorBody);
+      if (
+        type === RelationActionType.CANCEL_ROOMMATE_REQUEST ||
+        RelationActionType.CANCEL_FRIEND_REQUEST
+      ) {
+        Alert.alert("Unable to cancel request", errorBody);
+      }
+      if (type === RelationActionType.BLOCKED) {
+        Alert.alert("Unable to blocked match", errorBody);
+      }
     }
   };
 
   useEffect(() => {
-    getFilterCount();
     getProfileMatches();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <MatchesView
-      isLoading={matchesApi.loading}
-      error={matchesApi.error}
-      filterCounts={filterCounts}
-      matches={profileMatches?.data}
+      isLoading={relationsApi.loading}
+      error={relationsApi.error}
+      selectedTotalCount={totalCount}
+      matches={profileMatches}
       onTypeChange={onTypeChange}
       onFilterChange={onFilterChange}
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
-      postFriendRequest={postFriendRequest}
-      postMatchDismiss={postMatchDismiss}
+      isRequestApiLoading={requestApi.loading}
+      postRequest={postRequest}
+      postMatchDismiss={requestRelationDismissRestoreApi}
+      postMatchBlocked={requestUpdateRelationApi}
       moveToChatScreen={moveToChatScreen}
       moveToProfileScreen={moveToProfileScreen}
+      moveToRoommateRequests={moveToRoommateRequests}
     />
   );
 };

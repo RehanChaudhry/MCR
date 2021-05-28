@@ -5,8 +5,8 @@ import { FONT_SIZE } from "config";
 import { optimizedMemoWithStyleProp } from "ui/components/templates/optimized_memo/optimized_memo";
 
 interface OwnProps {
-  headingText: string;
-  text: string;
+  headingText: string | undefined;
+  text: string | undefined;
   headingNumberOfLines?: number;
   headingStyle?: StyleProp<TextStyle>;
   textStyle?: StyleProp<TextStyle>;

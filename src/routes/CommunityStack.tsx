@@ -1,10 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
 
 export type CommunityStackParamList = {
-  Community: undefined;
+  Community: { postId?: number };
   CreatePost: undefined;
-  Comments: undefined;
-  ReportContent: undefined;
+  Comments: { postId: number };
+  ReportContent: { postId: number };
 };
 
 export const CommunityStack = createStackNavigator<CommunityStackParamList>();

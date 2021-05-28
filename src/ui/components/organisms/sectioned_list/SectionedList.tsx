@@ -1,4 +1,10 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
 import {
   Pressable,
   SectionList,
@@ -51,10 +57,14 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
 }: Props<ItemT, ItemU>) => {
   // AppLog.log("rendering _SectionedList");
   const [selectedIndex, setSelectedIndex] = useState<number>(
-    selectedIndexProp ?? (list.length > 0 ? 0 : -1)
+    selectedIndexProp ?? -1
   );
+  useEffect(() => {
+    setSelectedIndex(selectedIndexProp ?? (list.length > 0 ? 0 : -1));
+  }, [selectedIndexProp, list]);
 
   const sectionList = useRef<SectionList<any, any> | null>(null);
+  const previouslyOpenedSection = useRef<number>(-1);
 
   const bodyItemView = useCallback(
     ({
@@ -86,13 +96,8 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
       const onPress = () => {
         // AppLog.log(`HeaderView ${section.header.key()} pressed`);
         if (isCollapsable) {
-          setSelectedIndex(selectedIndex !== index ? index : -1);
-
-          // AppLog.log(`scrolling to section ${selectedIndex} and item 0`);
-          sectionList.current?.scrollToLocation({
-            sectionIndex: selectedIndex,
-            itemIndex: 0
-          });
+          let updatedIndex = selectedIndex !== index ? index : -1;
+          setSelectedIndex(updatedIndex);
         }
       };
 
@@ -111,21 +116,50 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
     [isCollapsable, list, selectedIndex, headerView]
   );
 
+  const sectionFooter = useCallback(
+    () => <View style={{ height: SPACE.lg }} />,
+    []
+  );
+
+  const keyExtractor = useCallback((item) => item.key(), []);
+
+  useLayoutEffect(() => {
+    if (
+      previouslyOpenedSection.current < selectedIndex &&
+      previouslyOpenedSection.current !== -1
+    ) {
+      AppLog.logForcefully(
+        `previouslyOpenedSection: ${previouslyOpenedSection.current}, selectedIndex: ${selectedIndex}`
+      );
+      setTimeout(() => {
+        sectionList.current?.scrollToLocation({
+          sectionIndex: selectedIndex,
+          itemIndex: 0,
+          viewPosition: 0,
+          viewOffset: 100,
+          animated: false
+        });
+      }, 25);
+    }
+    previouslyOpenedSection.current = selectedIndex;
+  }, [selectedIndex]);
+
   return (
     <SectionList
+      removeClippedSubviews={true}
       ListHeaderComponent={listHeaderComponent}
       ref={sectionList}
       sections={list}
       renderItem={bodyItemView}
       renderSectionHeader={sectionView}
-      renderSectionFooter={() => <View style={{ height: SPACE.lg }} />}
-      keyExtractor={(item) => item.key()}
+      renderSectionFooter={sectionFooter}
+      keyExtractor={keyExtractor}
       contentContainerStyle={style}
       onScrollToIndexFailed={(info) => {
-        AppLog.log("Failed to scroll to " + info.index);
+        AppLog.logForcefully("Failed to scroll to " + info.index);
       }}
       ListFooterComponent={listFooterComponent}
-      stickySectionHeadersEnabled={true} // true by default for iOS, for same experience
+      stickySectionHeadersEnabled={false} // true by default for iOS, for same experience
     />
   );
 };

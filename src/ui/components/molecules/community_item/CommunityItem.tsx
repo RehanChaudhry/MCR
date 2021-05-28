@@ -2,7 +2,7 @@ import Shield from "assets/images/shield.svg";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, TouchableOpacityProps, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
@@ -14,12 +14,40 @@ import { AnnouncementHeader } from "ui/components/molecules/announcement_header/
 import { ImagesSlideShow } from "ui/components/molecules/image_slide_show/ImagesSlideShow";
 import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
 import { shadowStyleProps, SvgProp } from "utils/Util";
+import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
 export interface CommunityItemProps extends TouchableOpacityProps {
   communityItem: CommunityAnnouncement;
-  openCommentsScreen?: () => void | undefined;
+  openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
-  openReportContentScreen?: () => void | undefined;
+  openReportContentScreen?: (postId: number) => void;
+}
+
+function showAttachedItemsIfAny(
+  item: CommunityAnnouncement,
+  shouldPlayVideo: boolean
+) {
+  if (item.link) {
+    return (
+      <WebViewComponent
+        url={item.link}
+        urlType={URL_TYPES.LINK}
+        shouldPlayVideo={shouldPlayVideo}
+      />
+    );
+  } else if (item.embed) {
+    return (
+      <WebViewComponent
+        url={item.embed}
+        urlType={URL_TYPES.EMBEDDED}
+        shouldPlayVideo={shouldPlayVideo}
+      />
+    );
+  } else if (item.photos) {
+    return <ImagesSlideShow images={item.photos} />;
+  } else if (item.link) {
+    return <UrlMetaData url={item.link} />;
+  }
 }
 
 export const CommunityItem = React.memo<CommunityItemProps>(
@@ -30,7 +58,8 @@ export const CommunityItem = React.memo<CommunityItemProps>(
     openReportContentScreen
   }) => {
     const theme = usePreferredTheme();
-    const rightImage: SvgProp = () => {
+
+    const rightImage: SvgProp = useCallback(() => {
       return (
         <Shield
           testID="right-icon"
@@ -39,7 +68,8 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           fill={theme.themedColors.interface["700"]}
         />
       );
-    };
+    }, [theme.themedColors]);
+
     return (
       <View
         style={[
@@ -47,46 +77,38 @@ export const CommunityItem = React.memo<CommunityItemProps>(
           { backgroundColor: theme.themedColors.background }
         ]}>
         <AnnouncementHeader
-          title={communityItem.name}
-          subTitle={communityItem.time}
-          leftImageUrl={communityItem.profileImageUrl}
+          title={
+            communityItem.postedByFirstName +
+            " " +
+            communityItem.postedByLastName
+          }
+          subTitle={new PrettyTimeFormat().getPrettyTime(
+            (communityItem.createdAt as unknown) as string
+          )}
+          leftImageUrl={communityItem.postedByProfilePicture?.fileURL}
           shouldShowRightImage={true}
           rightIcon={rightImage}
-          onPress={openReportContentScreen}
+          onRightBtnClicked={() => {
+            openReportContentScreen?.(communityItem.id);
+          }}
         />
-        {communityItem.text != null && true && (
+
+        {communityItem.content != null && true && (
           <AppLabel
-            text={communityItem.text}
+            text={communityItem.content}
             style={[{ color: theme.themedColors.label }, style.text]}
             numberOfLines={0}
           />
         )}
-        {communityItem.link != null && true && (
-          <WebViewComponent
-            url={communityItem.link}
-            urlType={URL_TYPES.LINK}
-            shouldPlayVideo={shouldPlayVideo}
-          />
-        )}
-        {communityItem.embeddedUrl != null && true && (
-          <WebViewComponent
-            url={communityItem.embeddedUrl}
-            urlType={URL_TYPES.EMBEDDED}
-            shouldPlayVideo={shouldPlayVideo}
-          />
-        )}
-        {communityItem.images != null &&
-          true &&
-          communityItem.images.length > 0 && (
-            <ImagesSlideShow images={communityItem.images} />
-          )}
-        {communityItem.metaDataUrl != null && true && (
-          <UrlMetaData url={communityItem.metaDataUrl} />
-        )}
+
+        {showAttachedItemsIfAny(communityItem, shouldPlayVideo)}
+
         <AnnouncementFooter
-          commentCount={communityItem.commentCount}
-          likeCount={communityItem.likeCount}
+          commentCount={communityItem.commentsCount}
+          likeCount={communityItem.likesCount}
           openCommentsScreen={openCommentsScreen}
+          isLikedByMe={communityItem.isLikedByMe}
+          postId={communityItem.id}
         />
       </View>
     );

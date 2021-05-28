@@ -1,10 +1,19 @@
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import PencilAlt from "assets/images/pencil_alt.svg";
 import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
-import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
-import { getFeedsTypeFilterData } from "models/enums/FeedsTypeFilter";
+import {
+  CommunityAnnouncement,
+  CommunityAnnouncementResponseModel
+} from "models/api_responses/CommunityAnnouncementResponseModel";
+import FeedsTypeFilter, {
+  getFeedsTypeFilterData
+} from "models/enums/FeedsTypeFilter";
 import React, {
   FC,
   useCallback,
@@ -18,29 +27,46 @@ import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { CommunityView } from "ui/screens/home/community/CommunityView";
-import DataGenerator from "utils/DataGenerator";
 import { AppLog } from "utils/Util";
+import { Alert } from "react-native";
+import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
+import { useApi } from "repo/Client";
+import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
   "Community"
 >;
 
+type CommunityRoute = RouteProp<CommunityStackParamList, "Community">;
+
 type Props = {};
 
 const CommunityController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
-  const pageToReload = useRef<number>(1);
   const isFetchingInProgress = useRef(false);
-  const [communities, setCommunities] = useState<CommunityAnnouncement[]>(
-    DataGenerator.getCommunityList(pageToReload.current)
-  );
+  const [communities, setCommunities] = useState<
+    CommunityAnnouncement[] | undefined
+  >(undefined);
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
-  const totalPages = 3;
   const navigation = useNavigation<CommunityNavigationProp>();
+  const route = useRoute<CommunityRoute>();
   const theme = usePreferredTheme();
+
+  useEffect(() => {
+    return navigation.addListener("blur", () => {
+      AppLog.log("community screen is blur");
+      setShouldPlayVideo(false);
+    });
+  }, [navigation]);
+
+  useEffect(() => {
+    return navigation.addListener("focus", () => {
+      AppLog.log("community screen is focus");
+      setShouldPlayVideo(true);
+    });
+  }, [navigation]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -67,89 +93,132 @@ const CommunityController: FC<Props> = () => {
     });
   }, [navigation, theme]);
 
+  const requestModel = useRef<AnnouncementRequestModel>({
+    paginate: true,
+    page: 1,
+    limit: 10,
+    type: "feed",
+    filterBy: "recent"
+  });
+
+  const getCommunitiesApi = useApi<
+    AnnouncementRequestModel,
+    CommunityAnnouncementResponseModel
+  >(CommunityAnnouncementApis.getCommunityAnnouncements);
+
   const fetchCommunities = useCallback(async () => {
     if (isFetchingInProgress.current) {
       return;
     }
+
     isFetchingInProgress.current = true;
-    const currentPageToReload = pageToReload.current;
-    if (currentPageToReload === 0) {
-      isFetchingInProgress.current = false;
-      setIsAllDataLoaded(true);
-      return;
-    }
-    const communitiesData = DataGenerator.getCommunityList(
-      pageToReload.current
-    );
-    if (pageToReload.current < totalPages) {
-      pageToReload.current = pageToReload.current + 1;
-    } else {
-      pageToReload.current = 0;
-    }
+    setShouldShowProgressBar(true);
 
-    // Make list empty first
-    if (currentPageToReload === 1) {
-      setCommunities([]);
-    }
-    setCommunities((prevState) => {
-      return [
-        ...(prevState === undefined || currentPageToReload === 1
-          ? []
-          : prevState),
-        ...communitiesData
-      ];
-    });
+    const {
+      hasError,
+      errorBody,
+      dataBody
+    } = await getCommunitiesApi.request([requestModel.current]);
+
+    setShouldShowProgressBar(false);
     isFetchingInProgress.current = false;
-  }, []);
+    if (hasError || dataBody === undefined) {
+      Alert.alert("Unable to fetch posts", errorBody);
+      return;
+    } else {
+      setCommunities((prevState) => {
+        return [
+          ...(prevState === undefined || requestModel.current.page === 1
+            ? []
+            : prevState),
+          ...dataBody.data
+        ];
+      });
 
-  const onEndReached = useCallback(() => {
-    fetchCommunities();
+      setIsAllDataLoaded(
+        dataBody.data.length < requestModel.current.limit
+      );
+    }
+  }, [getCommunitiesApi]);
+
+  const onEndReached = useCallback(async () => {
+    requestModel.current.page = requestModel.current.page!! + 1;
+    await fetchCommunities();
   }, [fetchCommunities]);
 
   const refreshCallback = useCallback(
     async (onComplete: () => void) => {
-      pageToReload.current = 1;
-      fetchCommunities().then(() => {
-        onComplete();
-      });
+      requestModel.current.page = 1;
+      fetchCommunities()
+        .then(() => {
+          onComplete();
+        })
+        .catch(() => {
+          onComplete();
+        });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [pageToReload]
+    [fetchCommunities]
+  );
+
+  const filterDataBy = useCallback(
+    (type: string) => {
+      switch (type) {
+        case FeedsTypeFilter.MOST_RECENT: {
+          requestModel.current.filterBy = "recent";
+          break;
+        }
+        case FeedsTypeFilter.MOST_POPULAR: {
+          requestModel.current.filterBy = "popular";
+          break;
+        }
+        case FeedsTypeFilter.FRIENDS_ONLY: {
+          requestModel.current.filterBy = "friend";
+          break;
+        }
+        default: {
+          requestModel.current.filterBy = "own";
+          break;
+        }
+      }
+
+      setCommunities(undefined);
+      setIsAllDataLoaded(false);
+      requestModel.current.page = 1;
+      fetchCommunities();
+    },
+    [fetchCommunities]
   );
 
   const getFeedsFilterList = () => {
     return getFeedsTypeFilterData();
   };
 
-  const openCommentsScreen = () => {
-    navigation.navigate("Comments");
+  const openCommentsScreen = (postId: number) => {
+    navigation.navigate("Comments", { postId: postId });
   };
 
-  const openReportContentScreen = () => {
-    navigation.navigate("ReportContent");
+  const openReportContentScreen = (postId: number) => {
+    navigation.navigate("ReportContent", { postId: postId });
   };
 
   useEffect(() => {
-    fetchCommunities();
+    fetchCommunities().then().catch();
   }, [fetchCommunities]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
-      AppLog.logForcefully("community screen is blur");
-      setShouldPlayVideo(false);
-    });
-
-    return unsubscribe;
-  }, [navigation]);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      AppLog.logForcefully("community screen is focus");
-      setShouldPlayVideo(true);
-    });
-
-    return unsubscribe;
-  }, [navigation]);
+    if (route.params?.postId) {
+      setCommunities((prevState) => {
+        const spamUserIndex =
+          prevState?.findIndex(
+            (value) => value.id === route.params?.postId
+          ) ?? -1;
+        if (spamUserIndex > -1) {
+          prevState!.splice(spamUserIndex, 1);
+        }
+        return prevState;
+      });
+    }
+  }, [route.params?.postId]);
 
   return (
     <CommunityView
@@ -157,11 +226,13 @@ const CommunityController: FC<Props> = () => {
       shouldShowProgressBar={shouldShowProgressBar}
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
+      error={getCommunitiesApi.error}
       pullToRefreshCallback={refreshCallback}
       feedsFilterData={getFeedsFilterList()}
       openCommentsScreen={openCommentsScreen}
       shouldPlayVideo={shouldPlayVideo}
       openReportContentScreen={openReportContentScreen}
+      filterDataBy={filterDataBy}
     />
   );
 };

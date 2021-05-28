@@ -1,0 +1,12 @@
+enum RelationType {
+  NOT_FRIEND,
+  FRIEND_REQUESTED,
+  FRIEND,
+  ROOMMATE,
+  BLOCKED,
+  DISMISSED,
+  NOT_ELIGIBLE,
+  REQUEST_RECEIVED
+}
+
+export default RelationType;

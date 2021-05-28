@@ -18,9 +18,11 @@ type Props = {
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete: () => void) => void;
   feedsFilterData: FilterCount[];
-  openCommentsScreen?: () => void | undefined;
+  openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
-  openReportContentScreen?: () => void | undefined;
+  openReportContentScreen?: (postId: number) => void;
+  error: string | undefined;
+  filterDataBy: (type: string) => void;
 };
 
 export const CommunityView = React.memo<Props>(
@@ -33,7 +35,9 @@ export const CommunityView = React.memo<Props>(
     feedsFilterData,
     openCommentsScreen,
     shouldPlayVideo,
-    openReportContentScreen
+    openReportContentScreen,
+    error,
+    filterDataBy
   }) => {
     const keyExtractor = useCallback(
       (item: CommunityAnnouncement) => item.id.toString(),
@@ -55,26 +59,36 @@ export const CommunityView = React.memo<Props>(
       return feedsFilterData.map((value) => {
         const item: Item = {
           title: value.type,
-          onPress: () => {}
+          onPress: () => {
+            filterDataBy(value.type);
+          }
         };
         return item;
       });
     }
+
+    const itemSeperatorComponent = useCallback(
+      () => <View style={styles.itemSeparator} />,
+      []
+    );
+
     return (
       <Screen style={styles.container}>
         {useLazyLoadInterface(
           <>
             <FlatListWithPb
               removeClippedSubviews={true}
+              initialNumToRender={4}
+              maxToRenderPerBatch={4}
+              windowSize={8}
               shouldShowProgressBar={shouldShowProgressBar}
               data={data}
               style={styles.list}
               renderItem={listItem}
               keyExtractor={keyExtractor}
+              error={error}
               contentContainerStyle={styles.listContainer}
-              ItemSeparatorComponent={() => (
-                <View style={styles.itemSeparator} />
-              )}
+              ItemSeparatorComponent={itemSeperatorComponent}
               onEndReached={onEndReached}
               isAllDataLoaded={isAllDataLoaded}
               pullToRefreshCallback={pullToRefreshCallback}
