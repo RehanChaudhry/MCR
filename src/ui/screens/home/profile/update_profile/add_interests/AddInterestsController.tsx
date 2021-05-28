@@ -109,8 +109,7 @@ export const AddInterestsController: FC<Props> = () => {
 
       _list.push({
         id: _list.length + 1,
-        value: value,
-        userId: _list.length + 1
+        value: value
       });
       _setList([..._list]);
     }
