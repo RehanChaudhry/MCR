@@ -13,23 +13,29 @@ import {
 import { FormikValues, useFormikContext } from "formik";
 import { AppLog } from "utils/Util";
 import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type Props = {
   name: string;
   labelProps?: AppLabelProps;
   radioData: OptionsData[];
   direction: DIRECTION_TYPE;
+  isLocked?: EIntBoolean;
 };
 
 export const AppFormRadioButton: React.FC<Props> = ({
   name,
   labelProps,
   radioData,
-  direction
+  direction,
+  isLocked = EIntBoolean.FALSE
 }) => {
   const theme = usePreferredTheme();
 
-  const { setFieldValue, values } = useFormikContext<FormikValues>();
+  const {
+    setFieldValue,
+    initialValues
+  } = useFormikContext<FormikValues>();
 
   return (
     <View>
@@ -44,6 +50,7 @@ export const AppFormRadioButton: React.FC<Props> = ({
         values={radioData!}
         direction={direction}
         itemsInRow={3}
+        isLocked={isLocked}
         onChange={(value: OptionsData, index: number) => {
           AppLog.log("Selected radio button index : " + index);
           setFieldValue(name, value.value);
@@ -51,7 +58,7 @@ export const AppFormRadioButton: React.FC<Props> = ({
         byDefaultSelected={radioData.findIndex(
           (item) =>
             item.value.toLowerCase() ===
-            values[name]?.toString().toLowerCase()
+            initialValues[name]?.toString().toLowerCase()
         )}
       />
     </View>

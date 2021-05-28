@@ -13,6 +13,7 @@ import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb
 import { usePreferredTheme } from "hooks";
 import { DropDownItem } from "models/DropDownItem";
 import { FONT_SIZE } from "config";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 export interface DropDownModalProps {
   isVisible: boolean;
@@ -22,6 +23,7 @@ export interface DropDownModalProps {
   dropDownBgColor?: string;
   dialogCloseIconStyle?: StyleProp<ImageStyle>;
   selectedItemPosition: number;
+  isLocked?: EIntBoolean;
 }
 
 export const DropdownModal = React.memo<DropDownModalProps>(

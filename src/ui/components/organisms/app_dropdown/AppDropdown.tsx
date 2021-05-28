@@ -16,6 +16,7 @@ import { usePreferredTheme } from "hooks";
 import { DropDownItem } from "models/DropDownItem";
 import ChevronDown from "assets/images/chevron-down.svg";
 import { SPACE } from "config";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 export interface AppDropdownProps {
   title?: string;
@@ -30,6 +31,7 @@ export interface AppDropdownProps {
   dropDownIcon?: SvgProp;
   shouldShowCustomIcon?: boolean;
   shouldNotOptimize?: boolean;
+  isLocked?: EIntBoolean;
 }
 
 export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
@@ -44,7 +46,8 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
     style,
     textStyle,
     dropDownIcon,
-    shouldShowCustomIcon = false
+    shouldShowCustomIcon = false,
+    isLocked = EIntBoolean.FALSE
   }) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [selectedItemText, setSelectedItemText] = useState<
@@ -115,12 +118,13 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
           dropDownBgColor={dialogBgColor}
           dialogCloseIconStyle={dialogCloseIconStyle}
           selectedItemPosition={selectedItemPosition}
+          isLocked={isLocked}
         />
 
         <Pressable
           testID="dropdown-click"
           onPress={() => {
-            openModal();
+            !isLocked && openModal();
           }}>
           <View style={[styles.wrapper]}>
             <AppLabel

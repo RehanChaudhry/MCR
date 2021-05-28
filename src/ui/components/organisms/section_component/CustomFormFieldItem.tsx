@@ -51,6 +51,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               label={listData?.label}
               placeHolder={listData?.placeholder}
               name={listData?.id.toString()}
+              isLocked={listData.isLocked}
             />
           </>
         );
@@ -63,6 +64,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               text: listData.label,
               weight: "semi-bold"
             }}
+            isLocked={listData.isLocked}
             appDropDownProps={{
               title: STRINGS.profile.dropDownInitialValue.gender,
               items: listData.options!,
@@ -71,7 +73,14 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               },
               style: [
                 styles.dropDown,
-                { borderColor: theme.themedColors.border }
+                {
+                  borderColor: !listData.isLocked
+                    ? theme.themedColors.border
+                    : theme.themedColors.borderSecondary,
+                  backgroundColor: !listData.isLocked
+                    ? theme.themedColors.background
+                    : theme.themedColors.backgroundSecondary
+                }
               ]
             }}
           />
@@ -87,6 +96,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               numberOfLines: 0
             }}
             name={listData.id.toString()}
+            isLocked={listData.isLocked}
             // onChange={(value) => AppLog.log(value)}
           />
         );
@@ -102,6 +112,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               }}
               radioData={listData.options!!}
               direction={DIRECTION_TYPE.HORIZONTAL}
+              isLocked={listData.isLocked}
             />
           </>
         );
@@ -120,6 +131,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               initialList={createInitialListForFieldBoxFromUserMeta(
                 listData.userMeta ?? []
               )}
+              isLocked={listData.isLocked}
             />
           </>
         );
@@ -147,11 +159,16 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
                 viewStyle: [
                   styles.textFieldStyle,
                   {
-                    backgroundColor: theme.themedColors.background,
-                    borderColor: theme.themedColors.border
+                    backgroundColor: !listData.isLocked
+                      ? theme.themedColors.background
+                      : theme.themedColors.backgroundSecondary,
+                    borderColor: !listData.isLocked
+                      ? theme.themedColors.border
+                      : theme.themedColors.borderSecondary
                   }
                 ]
               }}
+              isLocked={listData.isLocked}
             />
           </>
         );

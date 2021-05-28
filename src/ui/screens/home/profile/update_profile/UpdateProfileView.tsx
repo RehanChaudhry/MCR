@@ -108,6 +108,7 @@ export const UpdateProfileView: React.FC<Props> = ({
         initialValues.current[formInput.id] =
           formInput.userMeta?.[0]?.value;
       });
+      AppLog.log("initialValues : " + JSON.stringify(initialValues));
     });
   }, [updateProfileUiData]);
 
