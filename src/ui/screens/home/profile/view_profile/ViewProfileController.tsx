@@ -1,4 +1,10 @@
-import React, { FC, useLayoutEffect } from "react";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState
+} from "react";
 import { ViewProfileView } from "ui/screens/home/profile/view_profile/ViewProfileView";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ProfileStackParamList } from "routes/ProfileBottomBar";
@@ -15,6 +21,14 @@ import { NotificationParamList } from "routes/NotificationParams";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { ProfileRootStackParamList } from "routes/ProfileRootStack";
 import { useAuth } from "hooks";
+import {
+  ProfileData,
+  UpdateProfileUiResponseModel
+} from "models/api_responses/UpdateProfileUiResponseModel";
+import { useApi } from "repo/Client";
+import AuthApis from "repo/auth/AuthApis";
+import { AppLog } from "utils/Util";
+import { Alert } from "react-native";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -40,6 +54,43 @@ type NotificationNavigationProp = StackNavigationProp<
 type ProfileRouteProp = RouteProp<ProfileStackParamList, "ViewProfile">;
 
 const ViewProfileController: FC<Props> = () => {
+  const [
+    viewProfileUiData,
+    setViewProfileUiData
+  ] = useState<ProfileData>();
+
+  //update profile UI integration
+
+  const updateProfileUiApi = useApi<any, UpdateProfileUiResponseModel>(
+    AuthApis.updateProfileUi
+  );
+
+  //handle update profile ui api
+  const fetchMyProfile = useCallback(async () => {
+    AppLog.log("handleSignIn: ");
+
+    //setShouldShowPb(true);
+
+    // authenticate user
+    const {
+      hasError,
+      errorBody,
+      dataBody
+    } = await updateProfileUiApi.request([]);
+
+    if (hasError || dataBody === undefined) {
+      Alert.alert("Unable to fetch view profile ui", errorBody);
+      return;
+    } else {
+      AppLog.log("view profile data is fetched " + dataBody.data);
+      setViewProfileUiData(dataBody.data);
+    }
+  }, [updateProfileUiApi]);
+
+  useEffect(() => {
+    fetchMyProfile();
+  }, [fetchMyProfile]);
+
   const navigation = useNavigation<ProfileNavigationProp>();
   const navigationViewProfile = useNavigation<ViewProfileNavigationProp>();
 
@@ -89,6 +140,7 @@ const ViewProfileController: FC<Props> = () => {
         <ViewProfileView
           openRoommateAgreementScreen={openRoommateAgreementScreen}
           user={user}
+          viewProfileUiData={viewProfileUiData}
         />
       )}
     </>

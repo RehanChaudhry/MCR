@@ -12,6 +12,8 @@ import RoommateAgreementController from "ui/screens/home/friends/RoommateAgreeme
 import QuestionsController from "ui/screens/questions/QuestionsController";
 import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
 import AgreementDetailsController from "ui/screens/home/friends/agreement_details/AgreementDetailsController";
+import EScreen from "models/enums/EScreen";
+import {ViewProfileStack} from "routes/ProfileStack";
 
 const MatchesRoutes = ({ navigation }: any) => {
   const route: any = useRoute();
@@ -51,6 +53,8 @@ const MatchesRoutes = ({ navigation }: any) => {
       <MatchesStack.Screen
         name="Profile"
         component={ViewProfileController}
+        initialParams={{ isFrom: EScreen.HOME, updateProfile: false }}
+        options={{ title: "View Profile" }}
       />
       <MatchesStack.Screen
         name="RoommateAgreement"
