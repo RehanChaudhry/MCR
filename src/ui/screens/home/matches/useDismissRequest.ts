@@ -1,5 +1,5 @@
 import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
-import { UpdateRelationApiResponseModel } from "models/api_responses/UpdateRelationApiResponseModel";
+import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
 import RelationModel from "models/RelationModel";
 import { useCallback, useState } from "react";
 import { Alert } from "react-native";
@@ -11,15 +11,15 @@ export default (
   onFinish: () => void,
   onSuccess: () => void
 ) => {
-  const [shouldShowPb, setShouldShowPb] = useState(false);
+  const [shouldShowDismissPb, setShouldShowDismissPb] = useState(false);
   const sendRequestApi = useApi<
     UpdateRelationApiRequestModel,
-    UpdateRelationApiResponseModel
-  >(RelationApis.sendFriendOrRoommateRequest);
+    ApiSuccessResponseModel
+  >(RelationApis.relationDismissRestore);
 
-  const sendRequest = useCallback(
+  const sendDismissRequest = useCallback(
     async (item?: RelationModel) => {
-      setShouldShowPb(true);
+      setShouldShowDismissPb(true);
 
       const {
         hasError,
@@ -27,24 +27,25 @@ export default (
         dataBody
       } = await sendRequestApi.request([
         {
-          receiverId: item?.user?.id ?? 0
+          receiverId: item?.user?.id ?? 0,
+          status: "dismissed"
         }
       ]);
 
       if (hasError || dataBody === undefined) {
         Alert.alert(messageOnFailed, errorBody);
-        setShouldShowPb(false);
+        setShouldShowDismissPb(false);
         return;
       } else {
         try {
           onSuccess();
         } finally {
           onFinish();
-          setShouldShowPb(false);
+          setShouldShowDismissPb(false);
         }
       }
     },
     [messageOnFailed, onFinish, onSuccess, sendRequestApi]
   );
-  return { shouldShowPb, sendRequest };
+  return { shouldShowDismissPb, sendDismissRequest };
 };
