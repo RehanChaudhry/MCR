@@ -6,9 +6,12 @@ import {
 } from "ui/components/molecules/app_button/AppButton";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import SimpleToast from "react-native-simple-toast";
+import { AppLog } from "utils/Util";
 
 export const AppFormFormSubmit = optimizedMemo<AppButtonProps>((props) => {
-  const { handleSubmit, isValid } = useFormikContext();
+  const { handleSubmit, isValid, values } = useFormikContext();
+
+  AppLog.logForcefully("handle submit " + JSON.stringify(values));
   return (
     <AppButton
       onPress={() => {

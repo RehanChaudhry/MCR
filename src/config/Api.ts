@@ -53,5 +53,6 @@ export default {
   ROOMMATE_REQUESTS: "relation/pending/roommates",
 
   // others
-  GET_STATIC_CONTENT: "static-content/"
+  GET_STATIC_CONTENT: "static-content/",
+  GET_SIGNED_URL: "file/upload-image"
 };

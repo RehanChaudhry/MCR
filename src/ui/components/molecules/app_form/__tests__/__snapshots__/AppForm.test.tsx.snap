@@ -289,7 +289,6 @@ exports[`rendering... renders correctly 1`] = `
                 Array [
                   Object {
                     "fontSize": 28,
-                    "lineHeight": 0,
                     "overflow": "hidden",
                   },
                   Object {
