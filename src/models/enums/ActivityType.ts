@@ -17,25 +17,25 @@ export const getActivityTypeFilterData = () => {
   const filters: DropDownItem[] = [];
 
   filters.push({
-    title: "Roommate Agreement",
-    id: ActivityType.ROMMATE_AGREEMENT
+    text: "Roommate Agreement",
+    value: ActivityType.ROMMATE_AGREEMENT
   });
 
   filters.push({
-    title: "Friend Request",
-    id: ActivityType.FRIEND_REQUEST
+    text: "Friend Request",
+    value: ActivityType.FRIEND_REQUEST
   });
   filters.push({
-    title: "Dismissed",
-    id: ActivityType.DISMISSED
+    text: "Dismissed",
+    value: ActivityType.DISMISSED
   });
   filters.push({
-    title: "Roommate Request",
-    id: ActivityType.ROOMMATE_REQUEST
+    text: "Roommate Request",
+    value: ActivityType.ROOMMATE_REQUEST
   });
   filters.push({
-    title: "Updated Profile",
-    id: ActivityType.UPDATED_PROFILE
+    text: "Updated Profile",
+    value: ActivityType.UPDATED_PROFILE
   });
   return filters;
 };

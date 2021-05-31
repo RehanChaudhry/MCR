@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useRef,
   useState
 } from "react";
 import { NotificationView } from "ui/screens/home/notification/NotificationView";
@@ -16,11 +17,11 @@ import ProgressErrorView from "ui/components/templates/progress_error_view/Progr
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { usePreventDoubleTap } from "hooks";
-
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { NotificationParamList } from "routes/NotificationParams";
 import EScreen from "models/enums/EScreen";
+import { NotificationApiRequestModel } from "models/api_requests/NotificationApiRequestModel";
 
 type NotificationNavigationProp = StackNavigationProp<
   NotificationParamList,
@@ -40,6 +41,19 @@ const NotificationController: FC<Props> = () => {
   const notificationApi = useApi<any, NotificationsResponseModel>(
     ProfileApis.getNotifications
   );
+  const isFetchingInProgress = useRef(false);
+  const LIMIT = 10;
+  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
+    false
+  );
+  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+
+  const requestModel = useRef<NotificationApiRequestModel>({
+    paginate: true,
+    limit: LIMIT,
+    page: 1,
+    type: "friend-request"
+  });
 
   const openMyProfileScreen = usePreventDoubleTap(() => {
     navigation.push("ViewProfile", { isFrom: EScreen.NOTIFICATION });
@@ -54,28 +68,83 @@ const NotificationController: FC<Props> = () => {
     });
   }, [navigation]);
 
-  const handleGetNotificationApi = useCallback(
-    async (onComplete?: () => void) => {
-      const {
-        hasError,
-        dataBody,
-        errorBody
-      } = await notificationApi.request([]);
-      if (hasError || dataBody === undefined) {
-        // Alert.alert("Unable to find questions " + errorBody);
-        AppLog.log("Unable to find questions " + errorBody);
-        return;
-      } else {
-        setNotifications(dataBody);
-        onComplete?.();
+  const handleGetNotificationApi = useCallback(async () => {
+    if (isFetchingInProgress.current) {
+      return;
+    }
+    isFetchingInProgress.current = true;
+
+    const currentPageToReload = requestModel.current.page;
+
+    if (currentPageToReload === 0) {
+      AppLog.log("No data left to fetch");
+      isFetchingInProgress.current = false;
+      setIsAllDataLoaded(true);
+      return;
+    }
+
+    requestModel.current.page!! > 1 && setShouldShowProgressBar(true);
+    const { hasError, dataBody } = await notificationApi.request([
+      requestModel.current
+    ]);
+
+    setShouldShowProgressBar(false);
+    if (!hasError) {
+      setNotifications((prevState) => {
+        return {
+          message: dataBody!.message,
+          data: [
+            ...(requestModel.current.page!! === 1 ||
+            prevState === undefined
+              ? []
+              : prevState.data),
+            ...dataBody!.data
+          ]
+        };
+      });
+
+      if ((dataBody?.data.length ?? 0) < LIMIT) {
+        // All data has been loaded
+        requestModel.current.page = 0;
       }
+
+      requestModel.current.page = requestModel.current.page!! + 1;
+    }
+
+    isFetchingInProgress.current = false;
+  }, [notificationApi]);
+
+  const onEndReached = useCallback(() => {
+    AppLog.log("onEndReachedcall");
+    handleGetNotificationApi();
+  }, [handleGetNotificationApi]);
+
+  const refreshCallback = async (onComplete: () => void) => {
+    setIsAllDataLoaded(false);
+    requestModel.current.page = 1;
+    handleGetNotificationApi().then(() => {
+      onComplete();
+    });
+  };
+
+  function clearActivityLogList() {
+    requestModel.current.page = 1;
+    setNotifications(undefined);
+  }
+
+  const searchText = useCallback(
+    (textToSearch: string) => {
+      clearActivityLogList();
+      requestModel.current.type = textToSearch;
+      handleGetNotificationApi();
     },
-    [notificationApi]
+    [handleGetNotificationApi]
   );
 
   useEffect(() => {
     handleGetNotificationApi();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ProgressErrorView
@@ -90,8 +159,13 @@ const NotificationController: FC<Props> = () => {
       }}
       data={notifications}>
       <NotificationView
+        isAllDataLoaded={isAllDataLoaded}
+        onEndReached={onEndReached}
+        pullToRefreshCallback={refreshCallback}
+        shouldShowProgressBar={shouldShowProgressBar}
         notifications={notifications?.data}
         openMyProfileScreen={openMyProfileScreen}
+        selectedItem={searchText}
       />
     </ProgressErrorView>
   );
