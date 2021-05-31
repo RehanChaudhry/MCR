@@ -26,7 +26,10 @@ const RemoveFriendAlert: FC<Props> = React.memo(
       [myFriends, setMyFriends]
     );
 
-    const { shouldShowPb, updateRelation } = useUpdateRelation(
+    const {
+      shouldShowRelationUpdatePb,
+      updateRelation
+    } = useUpdateRelation(
       "unfriend",
       "Unable to remove friend",
       hideSelf,
@@ -53,7 +56,7 @@ const RemoveFriendAlert: FC<Props> = React.memo(
             <AppButton
               text="Yes, remove"
               style={styles.actionContainer}
-              shouldShowProgressBar={shouldShowPb}
+              shouldShowProgressBar={shouldShowRelationUpdatePb}
               onPress={() => {
                 updateRelation(getSelectedItem());
               }}

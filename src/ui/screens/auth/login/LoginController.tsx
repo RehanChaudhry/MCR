@@ -4,7 +4,7 @@ import { useAuth, usePreventDoubleTap } from "hooks";
 import { SignInApiRequestModel } from "models/api_requests/SignInApiRequestModel";
 import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
 import { SignInApiResponseModel } from "models/api_responses/SignInApiResponseModel";
-import React, { FC, useLayoutEffect, useState } from "react";
+import React, { FC, useLayoutEffect } from "react";
 import { Alert } from "react-native";
 import AuthApis from "repo/auth/AuthApis";
 import { useApi } from "repo/Client";
@@ -40,8 +40,6 @@ const LoginController: FC<Props> = () => {
     AuthApis.fetchMyProfile
   );
 
-  const [shouldShowPb, setShouldShowPb] = useState(false);
-
   const openUniSelectionScreen = usePreventDoubleTap(() => {
     navigation.goBack();
   });
@@ -54,38 +52,28 @@ const LoginController: FC<Props> = () => {
     async (apiRequestModel: SignInApiRequestModel) => {
       AppLog.log("handleSignIn: ");
 
-      setShouldShowPb(true);
-
       // authenticate user
-      const { hasError, errorBody, dataBody } = await signInApi.request([
-        apiRequestModel
-      ]);
+      const { hasError } = await signInApi.request([apiRequestModel]);
 
-      if (hasError || dataBody === undefined) {
-        Alert.alert("Unable to Sign In", errorBody);
-        setShouldShowPb(false);
+      if (hasError) {
+        Alert.alert("Unable to Sign In", signInApi.error);
         return;
       }
 
       // fetch user profile dataP
-      const {
-        hasError: hasErrorProfile,
-        errorBody: errorBodyProfile,
-        dataBody: dataBodyProfile
-      } = await fetchProfileApi.request([
-        dataBody?.data?.accessToken ?? ""
+      const { hasError: hasErrorProfile } = await fetchProfileApi.request([
+        signInApi.data?.data?.accessToken ?? ""
       ]);
 
-      if (hasErrorProfile || dataBodyProfile === undefined) {
+      if (hasErrorProfile) {
         Alert.alert(
           "Unable to Sign In",
-          "Couldn't fetch user information.\n" + errorBodyProfile
+          "Couldn't fetch user information.\n" + fetchProfileApi.error
         );
-        setShouldShowPb(false);
       } else {
         await auth.saveUser({
-          authentication: dataBody.data,
-          profile: dataBodyProfile.data
+          authentication: signInApi.data?.data,
+          profile: fetchProfileApi.data?.data
         });
       }
     }
@@ -93,7 +81,7 @@ const LoginController: FC<Props> = () => {
 
   return (
     <LoginView
-      shouldShowProgressBar={shouldShowPb}
+      shouldShowProgressBar={signInApi.loading || fetchProfileApi.loading}
       openForgotPasswordScreen={openForgotPasswordScreen}
       onLogin={(_requestModel) => {
         handleSignIn(_requestModel);

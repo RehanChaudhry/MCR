@@ -3,54 +3,37 @@ import QuestionSection, {
 } from "models/QuestionSection";
 import Question, { BaseQuestion } from "models/Question";
 import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
-import { Answer } from "models/Answer";
 
 export type SectionResponse = BaseQuestionSection & {
   questions: BaseQuestion[];
 };
 
-class QuestionsResponseModel {
-  message: string = "Success";
+type QuestionsResponseModel = {
+  message: string;
   data?: SectionResponse[];
+};
 
-  constructor(message: string, data?: SectionResponse[]) {
-    this.message = message;
-    this.data = data;
-  }
+export const toSections = (response: SectionResponse[]) => {
+  const sections: Section<QuestionSection, Question>[] = [];
+  response.forEach((value) => {
+    const { questions, ...sectionData } = value;
+    const section: Section<QuestionSection, Question> = {
+      header: {
+        ...sectionData,
+        key: () => `Header${value.id}`
+      },
+      data: []
+    };
 
-  assignAnswers(answers: Answer[]) {
-    this.data?.forEach((value) => {
-      const { questions } = value;
-      questions.forEach((question) => {
-        question.answer = answers.find(
-          (answer) => answer.questionId === question.id
-        );
+    questions.forEach((value1) => {
+      section.data.push({
+        ...value1,
+        key: () => `Header${value.id}|Body${value1.id}`
       });
     });
-  }
-
-  toSections() {
-    const sections: Section<QuestionSection, Question>[] = [];
-    this.data?.forEach((value) => {
-      const { questions, ...sectionData } = value;
-      const section: Section<QuestionSection, Question> = {
-        header: {
-          ...sectionData,
-          key: () => `Header${value.id}`
-        },
-        data: []
-      };
-
-      questions.forEach((value1) => {
-        section.data.push({
-          ...value1,
-          key: () => `Header${value.id}|Body${value1.id}`
-        });
-      });
-      sections.push(section);
-    });
-    return sections;
-  }
-}
+    sections.push(section);
+  });
+  return sections;
+};
 
 export default QuestionsResponseModel;

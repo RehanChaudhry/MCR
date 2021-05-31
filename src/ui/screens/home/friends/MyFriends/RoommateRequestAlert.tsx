@@ -1,27 +1,45 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
+import { UpdateRelationStatus } from "models/api_requests/UpdateRelationApiRequestModel";
 import RelationModel, { Status } from "models/RelationModel";
 import React, { FC, useCallback, useContext } from "react";
 import { StyleSheet, View } from "react-native";
-import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
+import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
 import useSendFriendOrRoommateRequest from "ui/screens/home/friends/useSendFriendOrRoommateRequest";
+import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
 
 type Props = {
+  title?: string;
+  message?: string;
   shouldShow: boolean;
   getSelectedItem: () => RelationModel | undefined;
   hideSelf: () => void;
+  type?: UpdateRelationStatus;
+  firstButtonText?: string;
+  secondButtonText?: string;
 };
 
 const RoommateRequestAlert: FC<Props> = React.memo(
-  ({ shouldShow, getSelectedItem, hideSelf }) => {
+  ({
+    shouldShow,
+    getSelectedItem,
+    hideSelf,
+    type,
+    title = "Roommate Request",
+    message = `Are you sure you want to send roommate request to ${
+      getSelectedItem()?.user?.getFullName() ?? "N/A"
+    }?`,
+    firstButtonText = "Yes, send request",
+    secondButtonText = null
+  }) => {
     const theme = usePreferredTheme();
 
     const { myFriends, setMyFriends } = useContext(MyFriendsContext);
 
     const changeStatus = useCallback(
-      (friend: RelationModel | undefined, status: Status) => {
+      (friend: RelationModel | undefined, status?: Status) => {
         if (!myFriends || !friend) {
           return;
         }
@@ -42,6 +60,13 @@ const RoommateRequestAlert: FC<Props> = React.memo(
       [myFriends, setMyFriends]
     );
 
+    const onMatchRemoved = useCallback(
+      (id: number) => {
+        setMyFriends?.(myFriends?.filter((value) => value.id !== id));
+      },
+      [myFriends, setMyFriends]
+    );
+
     const { shouldShowPb, sendRequest } = useSendFriendOrRoommateRequest(
       "Unable to send friend request",
       hideSelf,
@@ -50,13 +75,28 @@ const RoommateRequestAlert: FC<Props> = React.memo(
       }
     );
 
+    //for cancel, dismissed and block match
+    const {
+      shouldShowRelationUpdatePb,
+      updateRelation
+    } = useUpdateRelation(
+      type ?? "accepted",
+      "Unable to cancel request",
+      hideSelf,
+      () => {
+        if (type === "cancel") {
+          changeStatus(getSelectedItem(), undefined);
+        } else {
+          onMatchRemoved(getSelectedItem()?.id ?? -1);
+        }
+      }
+    );
+
     return (
       <AppPopUp
         isVisible={shouldShow}
-        title={"Roommate Request"}
-        message={`Are you sure you want to send roommate request to ${
-          getSelectedItem()?.user?.getFullName() ?? "N/A"
-        }?`}
+        title={title}
+        message={message}
         customActionButtons={
           <View>
             <View
@@ -66,22 +106,60 @@ const RoommateRequestAlert: FC<Props> = React.memo(
               ]}
             />
             <AppButton
-              text="Yes, send request"
+              text={firstButtonText}
               style={styles.actionContainer}
-              shouldShowProgressBar={shouldShowPb}
+              shouldShowProgressBar={
+                type === "cancel" || type === "blocked"
+                  ? shouldShowRelationUpdatePb
+                  : shouldShowPb
+              }
               onPress={() => {
-                sendRequest(getSelectedItem());
+                if (type !== null && type !== undefined) {
+                  updateRelation(getSelectedItem());
+                } else {
+                  sendRequest(getSelectedItem());
+                }
               }}
               textStyle={[
                 styles.actionStyle,
                 {
-                  color: theme.themedColors.primary,
+                  color:
+                    secondButtonText !== null
+                      ? theme.themedColors.warn
+                      : theme.themedColors.primary,
                   textAlign: "center",
                   fontSize: FONT_SIZE.base
                 }
               ]}
               fontWeight="semi-bold"
             />
+            {secondButtonText !== null && (
+              <>
+                <View
+                  style={[
+                    styles.separator,
+                    { backgroundColor: theme.themedColors.separator }
+                  ]}
+                />
+                <AppButton
+                  text={secondButtonText}
+                  style={styles.actionContainer}
+                  shouldShowProgressBar={shouldShowRelationUpdatePb}
+                  onPress={() => {
+                    updateRelation(getSelectedItem());
+                  }}
+                  textStyle={[
+                    styles.actionStyle,
+                    {
+                      color: theme.themedColors.danger,
+                      textAlign: "center",
+                      fontSize: FONT_SIZE.base
+                    }
+                  ]}
+                  fontWeight="semi-bold"
+                />
+              </>
+            )}
             <View
               style={[
                 styles.separator,
