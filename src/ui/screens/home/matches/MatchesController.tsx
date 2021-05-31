@@ -109,7 +109,6 @@ const MatchesController: FC<Props> = () => {
   });
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const isFetchingInProgress = useRef(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   const refreshCallback = useCallback((onComplete?: () => void) => {
     if (isFetchingInProgress.current) {
