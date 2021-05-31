@@ -3,7 +3,7 @@ import { usePreferredTheme } from "hooks";
 import RelationModel from "models/RelationModel";
 import React, { FC, useCallback, useContext } from "react";
 import { StyleSheet, View } from "react-native";
-import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
@@ -17,13 +17,16 @@ type Props = {
 const RemoveFriendAlert: FC<Props> = React.memo(
   ({ shouldShow, getSelectedItem, hideSelf }) => {
     const theme = usePreferredTheme();
-    const { myFriends, setMyFriends } = useContext(MyFriendsContext);
+    const { myFriends, setMyFriends, resetData } = useContext(
+      MyFriendsContext
+    );
 
     const onFriendRemoved = useCallback(
       (id: number) => {
         setMyFriends?.(myFriends?.filter((value) => value.id !== id));
+        resetData();
       },
-      [myFriends, setMyFriends]
+      [myFriends, setMyFriends, resetData]
     );
 
     const {

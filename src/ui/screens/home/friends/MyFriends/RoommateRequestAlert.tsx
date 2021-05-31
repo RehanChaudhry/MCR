@@ -6,7 +6,7 @@ import React, { FC, useCallback, useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
-import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 import useSendFriendOrRoommateRequest from "ui/screens/home/friends/useSendFriendOrRoommateRequest";
 import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
 
