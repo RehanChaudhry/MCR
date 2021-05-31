@@ -1,26 +1,36 @@
+import EIntBoolean from "models/enums/EIntBoolean";
+
 export type RoommateAgreementResponseModel = {
   message: string;
-  data: RoommateData[];
+  data: FormInputFieldData[];
 };
 
-export type RoommateData = {
+export type FormInputFieldData = {
+  fieldName?: string;
   id: number;
-  matchGroupId: null;
-  inputType: string;
-  label: string;
-  placeholder: string;
-  options: [
-    {
-      text: string;
-      value: string;
-    }
-  ];
-  order: number;
-  isRequired: number;
-  isDefault: number;
-  content: null;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: null;
+  name: string;
+  matchGroupId?: null;
+  inputType?: string;
+  label?: string;
+  placeholder?: string;
+  options?: OptionsData[] | undefined;
+  order?: number;
+  isLocked: EIntBoolean;
+  isRequired: EIntBoolean;
+  isDefault?: number;
+  content?: null;
+  status?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: null;
+  userMeta?: UserMetaData[];
+};
+
+export type OptionsData = {
+  value: string;
+  text: string;
+};
+
+export type UserMetaData = {
+  value?: string;
 };

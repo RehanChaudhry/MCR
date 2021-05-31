@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   StyleProp,
@@ -11,12 +11,13 @@ import {
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel";
 
-export type Choice = { id: number; label: string };
+export type Choice = { id: number; value: string };
 type Props = {
   style?: StyleProp<ViewStyle>;
-  values: Array<Choice>;
-  onChange?: (value: Choice, index: number) => void;
+  values: Array<OptionsData>;
+  onChange?: (value: OptionsData, index: number) => void;
   direction: DIRECTION_TYPE;
   byDefaultSelected?: number;
   itemsInRow?: number; //for horizontal buttons
@@ -39,14 +40,21 @@ export const RadioGroup = optimizedMemo<Props>(
   }) => {
     const theme = usePreferredTheme();
     const [selectedPosition, setSelectedPosition] = useState<number>(
-      values.length - 1 >= byDefaultSelected ? byDefaultSelected : 0
+      values.length - 1 >= byDefaultSelected && byDefaultSelected !== -1
+        ? byDefaultSelected
+        : 0
     );
 
+    //only used to sent default callback when byDefaultSelected is updated
+    useEffect(() => {
+      onChange?.(values[selectedPosition], selectedPosition);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [byDefaultSelected]);
+
     function buttonPressed(position: number) {
-      const oldSelectedOption = selectedPosition;
-      setSelectedPosition(position);
-      if (position !== oldSelectedOption) {
-        onChange?.(values[position], position);
+      if (position !== selectedPosition) {
+        setSelectedPosition(position);
+        onChange?.(values[selectedPosition], position);
       }
     }
 
@@ -68,7 +76,7 @@ export const RadioGroup = optimizedMemo<Props>(
       <View
         style={[style, getDirection(), styles.radioButtonWrapper]}
         testID={"RADIO_GROUP"}>
-        {values.map((item, index) => (
+        {values?.map((item, index) => (
           <View
             style={[
               styles.radioButtonContainer,
@@ -76,7 +84,7 @@ export const RadioGroup = optimizedMemo<Props>(
                 width: Dimensions.get("window").width / (itemsInRow - 10)
               }
             ]}
-            key={item.label}>
+            key={item.value}>
             <TouchableOpacity
               testID={"RADIO_GROUP_BUTTON"}
               style={[
@@ -97,7 +105,7 @@ export const RadioGroup = optimizedMemo<Props>(
             <TouchableWithoutFeedback
               testID="RADIO_GROUP_LABEL"
               onPress={() => buttonPressed(index)}>
-              <AppLabel style={styles.radioButtonText} text={item.label} />
+              <AppLabel style={styles.radioButtonText} text={item.value} />
             </TouchableWithoutFeedback>
           </View>
         ))}
@@ -110,7 +118,7 @@ const styles = StyleSheet.create({
   radioButtonContainer: {
     flexDirection: "row",
     alignSelf: "flex-start",
-    marginTop: 16
+    marginTop: 8
   },
   radioButtonWrapper: {
     flexWrap: "wrap",

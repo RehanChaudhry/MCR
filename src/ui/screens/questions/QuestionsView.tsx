@@ -22,8 +22,11 @@ import Screen from "ui/components/atoms/Screen";
 import SectionedList, {
   Section
 } from "ui/components/organisms/sectioned_list/SectionedList";
+import { StaticContent } from "models/api_responses/StaticContentResponseModel";
 
 type Props = {
+  headerContent: StaticContent;
+  moveToHeaderContent: (staticContent: StaticContent) => void;
   isFrom: EScreen;
   submitAnswersLoading: boolean;
   submitAnswers: () => void;
@@ -31,6 +34,8 @@ type Props = {
 };
 
 export const QuestionsView = ({
+  headerContent,
+  moveToHeaderContent,
   isFrom,
   questions,
   submitAnswersLoading,
@@ -39,7 +44,14 @@ export const QuestionsView = ({
   AppLog.log("rendering QuestionsView");
   const { themedColors } = usePreferredTheme();
 
-  const listHeader = useRef(createListHeader(isFrom, themedColors));
+  const listHeader = useRef(
+    createListHeader(
+      headerContent,
+      moveToHeaderContent,
+      isFrom,
+      themedColors
+    )
+  );
 
   return (
     <Screen shouldAddBottomInset={false}>
@@ -101,7 +113,12 @@ function headerView(
   return <QuestionHeader questionGroup={header} isExpanded={isSelected} />;
 }
 
-function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
+function createListHeader(
+  headerContent: StaticContent,
+  moveToHeaderContent: (staticContent: StaticContent) => void,
+  isFrom: EScreen,
+  themedColors: ColorPalette
+) {
   return (
     <View style={styles.headerContainer}>
       {isFrom === EScreen.WELCOME && (
@@ -120,10 +137,10 @@ function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
           }
         ]}>
         <HeadingWithText
-          headingText={STRINGS.questionnaire.how_it_works}
+          headingText={headerContent.title ?? STRINGS.common.not_found}
           headingStyle={styles.infoCardHeading}
           headingFontWeight="semi-bold"
-          text={STRINGS.questionnaire.how_it_works_detail}
+          text={headerContent.description ?? STRINGS.common.not_found}
           textStyle={[
             styles.infoCardText,
             { color: themedColors.interface[600] }
@@ -141,6 +158,9 @@ function createListHeader(isFrom: EScreen, themedColors: ColorPalette) {
               fill={themedColors.primary}
             />
           )}
+          onPress={() => {
+            moveToHeaderContent(headerContent);
+          }}
         />
       </View>
     </View>
@@ -191,7 +211,8 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   headerContainer: {
-    flexDirection: "column"
+    flexDirection: "column",
+    ...shadowStyleProps
   },
   footerContainer: {
     flexDirection: "column"

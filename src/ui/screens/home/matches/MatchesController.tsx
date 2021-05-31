@@ -1,3 +1,20 @@
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import InfoCircle from "assets/images/info_circle.svg";
+import { STRINGS } from "config";
+import { usePreferredTheme } from "hooks";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
+import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
+import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
+import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
+import { UpdateRelationApiResponseModel } from "models/api_responses/UpdateRelationApiResponseModel";
+import EGender from "models/enums/EGender";
+import EIntBoolean from "models/enums/EIntBoolean";
+import EScreen from "models/enums/EScreen";
+import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
+import RelationActionType from "models/enums/RelationActionType";
+import RelationFilterType from "models/enums/RelationFilterType";
+import RelationModel, { Status } from "models/RelationModel";
 import React, {
   FC,
   useCallback,
@@ -6,27 +23,14 @@ import React, {
   useRef,
   useState
 } from "react";
-import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { Alert } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation } from "@react-navigation/native";
-import { AppLog } from "utils/Util";
-import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
 import { useApi } from "repo/Client";
-import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
 import RelationApis from "repo/home/RelationApis";
-import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
 import { MatchesStackParamList } from "routes/MatchesStack";
-import InfoCircle from "assets/images/info_circle.svg";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
-import RelationModel, { Status } from "models/RelationModel";
-import { STRINGS } from "config";
-import { usePreferredTheme } from "hooks";
-import EScreen from "models/enums/EScreen";
-import EGender from "models/enums/EGender";
-import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
-import RelationFilterType from "models/enums/RelationFilterType";
-import EIntBoolean from "models/enums/EIntBoolean";
+import { MatchesView } from "ui/screens/home/matches/MatchesView";
+import { AppLog } from "utils/Util";
+import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -76,13 +80,23 @@ const MatchesController: FC<Props> = () => {
     navigation.navigate("Profile", { isFrom: EScreen.MATCH_INFO });
   };
 
+  const moveToRoommateRequests = useCallback(
+    (_: number) => {
+      navigation.navigate("ConnectRequests", {
+        title: "Roommate Requests",
+        type: ConnectRequestType.ROOMMATE_REQUESTS
+      });
+    },
+    [navigation]
+  );
+
   // Matches API
   const relationsApi = useApi<
-    RelationApiRequestModel,
+    PaginationParamsModel,
     RelationApiResponseModel
   >(RelationApis.relations);
 
-  const requestModel = useRef<RelationApiRequestModel>({
+  const requestModel = useRef<PaginationParamsModel>({
     type: RelationFilterType.MATCHES,
     gender: undefined,
     keyword: "",
@@ -172,55 +186,77 @@ const MatchesController: FC<Props> = () => {
     getProfileMatches();
   };
 
-  // Friend Request API
-  const friendRequestApi = useApi<number, ApiSuccessResponseModel>(
-    RelationApis.friendRequest
-  );
+  // Friend , Roommate , cancel Request API
+  const requestApi = useApi<
+    UpdateRelationApiRequestModel,
+    UpdateRelationApiResponseModel
+  >(RelationApis.sendFriendOrRoommateRequest);
 
-  const postFriendRequest = async (userId: number) => {
-    const {
-      hasError,
-      errorBody,
-      dataBody
-    } = await friendRequestApi.request([userId]);
-
-    if (!hasError) {
-      setProfileMatches((prevState) => {
-        const requestedUser = prevState?.find(
-          (value) => value.matchingUserId === userId
-        );
-        if (requestedUser) {
-          requestedUser.relation = {
-            isFriend: EIntBoolean.FALSE,
-            isRoommate: EIntBoolean.FALSE,
-            status: Status.PENDING
-          };
+  const postRequest = useCallback(
+    async (userId: number, type: RelationActionType) => {
+      const { hasError, errorBody, dataBody } = await requestApi.request([
+        {
+          receiverId: userId
         }
-        return prevState;
-      });
-      Alert.alert("Fried Request Sent", dataBody!.message);
-    } else {
-      Alert.alert("Unable to send friend request", errorBody);
-    }
-  };
+      ]);
+
+      if (!hasError) {
+        setProfileMatches((prevState) => {
+          let requestedUserPosition =
+            prevState?.findIndex((value) => value.userId === userId) ?? -1;
+          if (requestedUserPosition !== -1) {
+            const updatedUser = new RelationModel(
+              prevState![requestedUserPosition]
+            );
+            if (type === RelationActionType.ROOMMATE_REQUEST) {
+              updatedUser.isFriend = EIntBoolean.TRUE;
+            } else {
+              updatedUser.isFriend = EIntBoolean.FALSE;
+            }
+            updatedUser.isRoommate = EIntBoolean.FALSE;
+            updatedUser.status = Status.PENDING;
+            prevState![requestedUserPosition] = updatedUser;
+          }
+          return Object.assign([], prevState);
+        });
+        if (type === RelationActionType.FRIEND_REQUEST) {
+          Alert.alert("Friend Request Sent", dataBody!.message);
+        }
+        if (type === RelationActionType.ROOMMATE_REQUEST) {
+          Alert.alert("Roommate Request Sent", dataBody!.message);
+        }
+      } else {
+        if (type === RelationActionType.FRIEND_REQUEST) {
+          Alert.alert("Unable to send friend request", errorBody);
+        }
+        if (type === RelationActionType.ROOMMATE_REQUEST) {
+          Alert.alert("Unable to send roommate request", errorBody);
+        }
+      }
+    },
+    [requestApi]
+  );
 
   // Match Dismiss API
-  const matchDismissApi = useApi<number, ApiSuccessResponseModel>(
-    RelationApis.matchDismiss
-  );
+  const relationDismissRestoreApi = useApi<
+    UpdateRelationApiRequestModel,
+    ApiSuccessResponseModel
+  >(RelationApis.relationDismissRestore);
 
-  const postMatchDismiss = async (userId: number) => {
+  const requestRelationDismissRestoreApi = async (
+    request: UpdateRelationApiRequestModel
+  ) => {
     const {
       hasError,
       errorBody,
       dataBody
-    } = await matchDismissApi.request([userId]);
+    } = await relationDismissRestoreApi.request([request]);
 
     if (!hasError) {
       setProfileMatches((prevState) => {
         const dismissedUserIndex =
           prevState?.findIndex(
-            (value) => value.matchingUserId === userId
+            (value) => value.userId === request.receiverId
           ) ?? -1;
         if (dismissedUserIndex > -1) {
           prevState!.splice(dismissedUserIndex, 1);
@@ -230,6 +266,79 @@ const MatchesController: FC<Props> = () => {
       Alert.alert("Match Dismissed", dataBody!.message);
     } else {
       Alert.alert("Unable to dismiss match", errorBody);
+    }
+  };
+
+  // Update Relation API
+  const updateRelationApi = useApi<
+    UpdateRelationApiRequestModel,
+    UpdateRelationApiResponseModel
+  >(RelationApis.updateRelation);
+
+  const requestUpdateRelationApi = async (
+    request: UpdateRelationApiRequestModel,
+    type: RelationActionType
+  ) => {
+    AppLog.log("type: " + type);
+    const {
+      hasError,
+      errorBody,
+      dataBody
+    } = await updateRelationApi.request([request]);
+
+    if (!hasError) {
+      if (type === RelationActionType.BLOCKED) {
+        Alert.alert("User Blocked", dataBody!.message);
+        setProfileMatches((prevState) => {
+          const dismissedUserIndex =
+            prevState?.findIndex(
+              (value) => value.userId === request.receiverId
+            ) ?? -1;
+          if (dismissedUserIndex > -1) {
+            prevState!.splice(dismissedUserIndex, 1);
+          }
+          return prevState;
+        });
+      }
+      if (
+        type === RelationActionType.CANCEL_ROOMMATE_REQUEST ||
+        type === RelationActionType.CANCEL_FRIEND_REQUEST
+      ) {
+        Alert.alert("Request Cancelled", dataBody!.message);
+        setProfileMatches((prevState) => {
+          let requestedUserPosition =
+            prevState?.findIndex(
+              (value) => value.userId === request.receiverId
+            ) ?? -1;
+          if (requestedUserPosition !== -1) {
+            const updatedUser = new RelationModel(
+              prevState![requestedUserPosition]
+            );
+            if (type === RelationActionType.CANCEL_FRIEND_REQUEST) {
+              updatedUser.isFriend = EIntBoolean.FALSE;
+              updatedUser.isRoommate = EIntBoolean.FALSE;
+              updatedUser.status = undefined;
+            } else {
+              updatedUser.isFriend = EIntBoolean.TRUE;
+              updatedUser.isRoommate = EIntBoolean.FALSE;
+              updatedUser.status = Status.ACCEPTED;
+              updatedUser.criteria = { eligible: true };
+            }
+            prevState![requestedUserPosition] = updatedUser;
+          }
+          return Object.assign([], prevState);
+        });
+      }
+    } else {
+      if (
+        type === RelationActionType.CANCEL_ROOMMATE_REQUEST ||
+        RelationActionType.CANCEL_FRIEND_REQUEST
+      ) {
+        Alert.alert("Unable to cancel request", errorBody);
+      }
+      if (type === RelationActionType.BLOCKED) {
+        Alert.alert("Unable to blocked match", errorBody);
+      }
     }
   };
 
@@ -249,10 +358,13 @@ const MatchesController: FC<Props> = () => {
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
-      postFriendRequest={postFriendRequest}
-      postMatchDismiss={postMatchDismiss}
+      isRequestApiLoading={requestApi.loading}
+      postRequest={postRequest}
+      postMatchDismiss={requestRelationDismissRestoreApi}
+      postMatchBlocked={requestUpdateRelationApi}
       moveToChatScreen={moveToChatScreen}
       moveToProfileScreen={moveToProfileScreen}
+      moveToRoommateRequests={moveToRoommateRequests}
     />
   );
 };

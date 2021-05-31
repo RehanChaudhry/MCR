@@ -7,10 +7,10 @@ import AppFormField from "ui/components/molecules/app_form/AppFormField";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import * as Yup from "yup";
 import { FormikValues } from "formik";
-import { RoommateData } from "models/api_responses/RoommateAgreementResponseModel";
+import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
 
 type Props = {
-  roommateData: RoommateData;
+  roommateData: FormInputFieldData;
 };
 
 const validationSchema = Yup.object().shape({

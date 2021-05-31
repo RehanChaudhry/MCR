@@ -86,19 +86,15 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     paddingHorizontal: SPACE.lg,
     paddingVertical: SPACE.sm,
-
     ...shadowStyleProps
   },
   expandedContainer: {
     flexDirection: "column",
     padding: SPACE.lg,
-    overflow: "hidden",
     borderTopStartRadius: 6,
     borderTopEndRadius: 6,
-    borderBottomWidth: StyleSheet.hairlineWidth
-
-    // shadow
-    // ...shadowStyleProps
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    ...shadowStyleProps
   },
   title: { fontSize: FONT_SIZE.base },
   description: {
@@ -106,8 +102,8 @@ const styles = StyleSheet.create({
     marginTop: SPACE.sm
   },
   arrowContainer: {
-    width: 32,
-    height: 32
+    width: 28,
+    height: 28
   }
 });
 

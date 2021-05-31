@@ -60,6 +60,7 @@ exports[`snapshot testing 1`] = `
     >
       <Text
         numberOfLines={1}
+        shouldNotOptimize={true}
         style={
           Array [
             Array [
@@ -75,6 +76,7 @@ exports[`snapshot testing 1`] = `
               Array [
                 Object {
                   "fontSize": 28,
+                  "lineHeight": 0,
                   "overflow": "hidden",
                 },
                 Object {

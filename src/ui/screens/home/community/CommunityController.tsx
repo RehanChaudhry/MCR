@@ -1,4 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import PencilAlt from "assets/images/pencil_alt.svg";
 import Strings from "config/Strings";
@@ -28,12 +32,13 @@ import { Alert } from "react-native";
 import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
-import { LikeDislikeResponseModel } from "models/api_responses/LikeDislikeResponseModel";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
   "Community"
 >;
+
+type CommunityRoute = RouteProp<CommunityStackParamList, "Community">;
 
 type Props = {};
 
@@ -41,11 +46,12 @@ const CommunityController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
   const isFetchingInProgress = useRef(false);
-  const [communities, _communities] = useState<
+  const [communities, setCommunities] = useState<
     CommunityAnnouncement[] | undefined
   >(undefined);
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   const navigation = useNavigation<CommunityNavigationProp>();
+  const route = useRoute<CommunityRoute>();
   const theme = usePreferredTheme();
 
   useEffect(() => {
@@ -100,10 +106,6 @@ const CommunityController: FC<Props> = () => {
     CommunityAnnouncementResponseModel
   >(CommunityAnnouncementApis.getCommunityAnnouncements);
 
-  const likeDislikeApi = useApi<number, LikeDislikeResponseModel>(
-    CommunityAnnouncementApis.likeDislike
-  );
-
   const fetchCommunities = useCallback(async () => {
     if (isFetchingInProgress.current) {
       return;
@@ -121,15 +123,10 @@ const CommunityController: FC<Props> = () => {
     setShouldShowProgressBar(false);
     isFetchingInProgress.current = false;
     if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to Sign In", errorBody);
+      Alert.alert("Unable to fetch posts", errorBody);
       return;
     } else {
-      // to handle pull to refresh
-      if (requestModel.current.page === 1) {
-        _communities([]);
-      }
-
-      _communities((prevState) => {
+      setCommunities((prevState) => {
         return [
           ...(prevState === undefined || requestModel.current.page === 1
             ? []
@@ -142,26 +139,7 @@ const CommunityController: FC<Props> = () => {
         dataBody.data.length < requestModel.current.limit
       );
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const likeDislikeApiCall = async (postId: number): Promise<boolean> => {
-    AppLog.logForcefully("like dislike api : " + postId);
-
-    const {
-      hasError,
-      errorBody,
-      dataBody
-    } = await likeDislikeApi.request([postId]);
-
-    if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to Sign In", errorBody);
-      return false; //return to announcements footer
-    } else {
-      return true; //return to announcements footer
-    }
-  };
+  }, [getCommunitiesApi]);
 
   const onEndReached = useCallback(async () => {
     requestModel.current.page = requestModel.current.page!! + 1;
@@ -179,35 +157,37 @@ const CommunityController: FC<Props> = () => {
           onComplete();
         });
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [fetchCommunities]
   );
 
-  const filterDataBy = (type: string) => {
-    switch (type) {
-      case FeedsTypeFilter.MOST_RECENT: {
-        requestModel.current.filterBy = "recent";
-        break;
+  const filterDataBy = useCallback(
+    (type: string) => {
+      switch (type) {
+        case FeedsTypeFilter.MOST_RECENT: {
+          requestModel.current.filterBy = "recent";
+          break;
+        }
+        case FeedsTypeFilter.MOST_POPULAR: {
+          requestModel.current.filterBy = "popular";
+          break;
+        }
+        case FeedsTypeFilter.FRIENDS_ONLY: {
+          requestModel.current.filterBy = "friend";
+          break;
+        }
+        default: {
+          requestModel.current.filterBy = "own";
+          break;
+        }
       }
-      case FeedsTypeFilter.MOST_POPULAR: {
-        requestModel.current.filterBy = "popular";
-        break;
-      }
-      case FeedsTypeFilter.FRIENDS_ONLY: {
-        requestModel.current.filterBy = "friend";
-        break;
-      }
-      default: {
-        requestModel.current.filterBy = "own";
-        break;
-      }
-    }
 
-    _communities(undefined);
-    setIsAllDataLoaded(false);
-    requestModel.current.page = 1;
-    fetchCommunities();
-  };
+      setCommunities(undefined);
+      setIsAllDataLoaded(false);
+      requestModel.current.page = 1;
+      fetchCommunities();
+    },
+    [fetchCommunities]
+  );
 
   const getFeedsFilterList = () => {
     return getFeedsTypeFilterData();
@@ -217,13 +197,28 @@ const CommunityController: FC<Props> = () => {
     navigation.navigate("Comments", { postId: postId });
   };
 
-  const openReportContentScreen = () => {
-    navigation.navigate("ReportContent");
+  const openReportContentScreen = (postId: number) => {
+    navigation.navigate("ReportContent", { postId: postId });
   };
 
   useEffect(() => {
     fetchCommunities().then().catch();
   }, [fetchCommunities]);
+
+  useEffect(() => {
+    if (route.params?.postId) {
+      setCommunities((prevState) => {
+        const spamUserIndex =
+          prevState?.findIndex(
+            (value) => value.id === route.params?.postId
+          ) ?? -1;
+        if (spamUserIndex > -1) {
+          prevState!.splice(spamUserIndex, 1);
+        }
+        return prevState;
+      });
+    }
+  }, [route.params?.postId]);
 
   return (
     <CommunityView
@@ -237,7 +232,6 @@ const CommunityController: FC<Props> = () => {
       openCommentsScreen={openCommentsScreen}
       shouldPlayVideo={shouldPlayVideo}
       openReportContentScreen={openReportContentScreen}
-      likeDislikeAPi={likeDislikeApiCall}
       filterDataBy={filterDataBy}
     />
   );

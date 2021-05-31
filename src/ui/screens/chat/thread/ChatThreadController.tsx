@@ -1,4 +1,11 @@
-import React, { FC, useLayoutEffect, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
+} from "react";
 import { ChatThreadScreen } from "ui/screens/chat/thread/ChatThreadScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
@@ -6,14 +13,10 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import DataGenerator from "utils/DataGenerator";
-import ChatItem from "models/ChatItem";
 import { useApi } from "repo/Client";
-import { ChatsResponseModel } from "models/api_responses/ChatsResponseModel";
+import ChatResponseModel from "models/api_responses/ChatsResponseModel";
 import ChatApis from "repo/chat/ChatApis";
 import { AppLog } from "utils/Util";
-import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { COLORS, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import Archive from "assets/images/archive.svg";
@@ -22,9 +25,14 @@ import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import Strings from "config/Strings";
-import { View } from "react-native";
 import { moderateScale } from "config/Dimens";
 import { ChatRootStackParamList } from "routes/ChatRootStack";
+import ChatRequestModel, {
+  ESortBy,
+  ESortOrder
+} from "models/api_requests/chatRequestModel";
+import MessagesResponseModel from "models/api_responses/MessagesResponseModel";
+import Message from "models/Message";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -41,14 +49,21 @@ type Props = {
   navigation: ChatListNavigationProp;
 };
 
-const dummyChats = DataGenerator.createChatThread();
-
 export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
   const myNavigation = useNavigation<typeof navigation>();
   const { params }: any = useRoute<typeof route>();
-  const [chats, setChats] = useState<ChatItem[]>(dummyChats);
-
+  const [messages, setMessages] = useState<Message[] | undefined>(
+    undefined
+  );
+  const conversationId: number = params.conversationId;
   const { themedColors } = usePreferredTheme();
+  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
+    false
+  );
+  const isFetchingInProgress = useRef(false);
+
+  AppLog.log("remove warning " + conversationId);
 
   const getTitle = (): string => {
     const title = params?.title ?? "N/A";
@@ -107,64 +122,108 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loadConversations = useApi<any, ChatsResponseModel>(
-    ChatApis.getChats
+  const loadMessages = useApi<ChatRequestModel, MessagesResponseModel>(
+    ChatApis.getMessages
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleLoadChatsApi = async (onComplete?: () => void) => {
-    const {
-      hasError,
-      dataBody,
-      errorBody
-    } = await loadConversations.request([]);
-    if (hasError || dataBody === undefined) {
-      AppLog.logForcefully("Unable to find chats " + errorBody);
-      return;
-    } else {
-      AppLog.logForcefully("Find chats" + errorBody);
-      setChats(dataBody.data);
-      onComplete?.();
-    }
-  };
+  const requestModel = useRef<ChatRequestModel>({
+    paginate: true,
+    page: 1,
+    limit: 10,
+    orderBy: ESortBy.UPDATED_AT,
+    order: ESortOrder.DSC
+  });
 
-  const sentMessage = (message: ChatItem) => {
-    AppLog.log("message to sent : " + JSON.stringify(message));
-  };
+  const handleLoadMessagesApi = useCallback(
+    async (onComplete?: () => void) => {
+      setShouldShowProgressBar(true);
+      isFetchingInProgress.current = true;
+      const {
+        hasError,
+        dataBody,
+        errorBody
+      } = await loadMessages.request([requestModel.current]);
+      if (hasError || dataBody === undefined) {
+        AppLog.logForcefully("Unable to find messages " + errorBody);
+        setShouldShowProgressBar(false);
+        return;
+      } else {
+        setMessages((prevState) => {
+          return [
+            ...(prevState === undefined || requestModel.current.page === 1
+              ? []
+              : prevState),
+            ...dataBody.data!!
+          ];
+        });
 
-  function updateMessagesList(
-    oldList: ChatItem[],
-    message: ChatItem
-  ): ChatItem[] {
-    sentMessage(message);
+        setIsAllDataLoaded(
+          dataBody.data!!.length < requestModel.current.limit
+        );
 
-    let newList: ChatItem[] = [];
+        onComplete?.();
+        requestModel.current.page = (requestModel?.current?.page ?? 0) + 1;
 
-    newList.push(message);
-    newList.push(...oldList);
+        isFetchingInProgress.current = false;
+        setShouldShowProgressBar(false);
+      }
+    },
+    [loadMessages]
+  );
 
-    return newList;
+  const sentMessageApi = useApi<Object, ChatResponseModel>(
+    ChatApis.sentMessage
+  );
+
+  const sentMessage = useCallback(
+    async (message: string) => {
+      AppLog.log("message to sent : " + JSON.stringify(message));
+
+      const {
+        hasError,
+        dataBody,
+        errorBody
+      } = await sentMessageApi.request([
+        {
+          conversationId: conversationId,
+          text: message
+        }
+      ]);
+
+      if (
+        hasError ||
+        dataBody === undefined ||
+        dataBody.data === undefined
+      ) {
+        AppLog.log("Unable to sent message " + errorBody);
+        return;
+      } else {
+      }
+    },
+    [conversationId, sentMessageApi]
+  );
+
+  function updateMessagesList(text: string) {
+    sentMessage(text).then().catch();
+
+    let newList: Message[] | undefined = [];
+
+    // newList.push(messages);
+    // newList.push(messages);
+    setMessages(newList);
   }
 
-  /* useEffect(() => {
-    AppLog.logForcefully("inside useEffect()");
-    handleLoadChatsApi();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);*/
+  useEffect(() => {
+    handleLoadMessagesApi().then().catch();
+  }, [handleLoadMessagesApi]);
 
   return (
-    <ProgressErrorView
-      data={chats}
-      isLoading={loadConversations.loading}
-      error={loadConversations.error}
-      errorView={(message) => {
-        return (
-          <View>
-            <AppLabel text={message} />
-          </View>
-        );
-      }}>
-      <ChatThreadScreen data={chats} sentMessageApi={updateMessagesList} />
-    </ProgressErrorView>
+    <ChatThreadScreen
+      data={messages}
+      sentMessageApi={updateMessagesList}
+      shouldShowProgressBar={shouldShowProgressBar}
+      error={loadMessages.error}
+      isAllDataLoaded={isAllDataLoaded}
+    />
   );
 };

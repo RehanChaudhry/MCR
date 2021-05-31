@@ -1,5 +1,5 @@
 import { SPACE } from "config";
-import { FriendRequest } from "models/api_responses/FriendRequestsResponseModel";
+import RelationModel from "models/RelationModel";
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
@@ -7,50 +7,52 @@ import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb
 import ConnectRequestItem from "ui/components/organisms/friends/connect_request/ConnectRequestItem";
 
 type Props = {
-  data: FriendRequest[];
-  onPressApproved: (item: FriendRequest) => void;
-  onPressDeclined: (item: FriendRequest) => void;
+  data: RelationModel[] | undefined;
+  removeItemFromList: (item: RelationModel) => void;
+  isLoading: boolean;
+  canLoadMore: boolean;
+  error?: string;
+  onPullToRefresh: (onComplete?: () => void) => void;
+  onEndReached: () => void;
 };
 
 const listItem = (
-  item: FriendRequest,
-  onPressApproved: (item: FriendRequest) => void,
-  onPressDeclined: (item: FriendRequest) => void
+  item: RelationModel,
+  removeItemFromList: (item: RelationModel) => void
 ) => {
+  const _item = new RelationModel(item);
   return (
     <ConnectRequestItem
-      title={item.title}
-      subtitle={item.subtitle}
-      profileImage={item.profileImage}
-      onPressApproved={() => {
-        onPressApproved(item);
-      }}
-      onPressReject={() => {
-        onPressDeclined(item);
-      }}
+      item={_item}
+      removeItemFromList={removeItemFromList}
     />
   );
 };
 
 const ConnectRequestsView: FC<Props> = ({
   data,
-  onPressApproved,
-  onPressDeclined
+  removeItemFromList,
+  isLoading,
+  canLoadMore,
+  error,
+  onPullToRefresh,
+  onEndReached
 }) => {
   return (
     <Screen style={styles.container}>
       <FlatListWithPb
+        keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={() => {
           return <View style={styles.header} />;
         }}
         style={styles.list}
-        shouldShowProgressBar={false}
+        shouldShowProgressBar={isLoading}
+        isAllDataLoaded={!canLoadMore}
+        onEndReached={onEndReached}
+        pullToRefreshCallback={onPullToRefresh}
+        error={error}
         renderItem={({ item }) => {
-          return listItem(
-            item,
-            (onPressApproved = onPressApproved),
-            (onPressDeclined = onPressDeclined)
-          );
+          return listItem(item, removeItemFromList);
         }}
         data={data}
       />

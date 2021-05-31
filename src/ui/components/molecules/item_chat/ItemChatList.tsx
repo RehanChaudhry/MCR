@@ -13,13 +13,16 @@ import NotifyIndic from "assets/images/notification-indicator.svg";
 import NotifyIndicInActive from "assets/images/notification-indicator-inactive.svg";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
-import ChatItem, { SenderType } from "models/ChatItem";
+import { SenderType } from "models/ChatItem";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
+import { Conversation } from "models/api_responses/ChatsResponseModel";
+import { AppLog } from "utils/Util";
+import { User } from "models/User";
 
 export interface ItemChatListProps extends ViewStyle {
   onPress: () => void;
-  item: ChatItem;
+  item: Conversation;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -27,26 +30,33 @@ export const ItemChatList = React.memo<ItemChatListProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
 
+    AppLog.log("item : " + JSON.stringify(item));
+
     let prettyTime = new PrettyTimeFormat(
       "m ago",
       "s ago",
       "y ago",
       "d ago",
       "h ago"
-    ).getPrettyTime(item.createdAt);
+    ).getPrettyTime(item.lastMessagedAt.toString());
 
     return (
       <TouchableOpacity onPress={onPress}>
         <View
           style={styles.container(
-            item.name.length > 1 && !item.isMessageRead,
+            item.conversationUsers.length > 1 && !item.isMessageRead,
             themedColors
           )}>
           <Image
             style={styles.imgStyle}
-            source={{
-              uri: item.image
-            }}
+            source={
+              item.conversationUsers[0].profilePicture?.fileURL !==
+              undefined
+                ? {
+                    uri: item.conversationUsers[0].profilePicture?.fileURL
+                  }
+                : require("assets/images/profile.png")
+            }
           />
 
           <NotifyIndic width={10} height={10} style={styles.indicator} />
@@ -61,20 +71,22 @@ export const ItemChatList = React.memo<ItemChatListProps>(
               <AppLabel
                 style={styles.nameText(
                   themedColors,
-                  item.name.length,
-                  item.isMessageRead
+                  item.conversationUsers.length,
+                  item.isRead
                 )}
                 text={
-                  item.name.length === 1
-                    ? item.name[0]
-                    : item.name.length === 2
-                    ? item.name[0] + " & " + item.name[1]
-                    : item.name[0] +
+                  item.conversationUsers.length === 1
+                    ? new User(item.conversationUsers[0]).fullName()
+                    : item.conversationUsers.length === 2
+                    ? new User(item.conversationUsers[0]).fullName() +
                       " & " +
-                      (item.name.length - 1) +
+                      new User(item.conversationUsers[1]).fullName()
+                    : new User(item.conversationUsers[0]).fullName() +
+                      " & " +
+                      (item.conversationUsers.length - 1) +
                       " more"
                 }
-                weight={item.isMessageRead ? "normal" : "semi-bold"}
+                weight={item.isRead ? "normal" : "semi-bold"}
               />
               <AppLabel
                 style={styles.timeText(themedColors)}
@@ -85,10 +97,12 @@ export const ItemChatList = React.memo<ItemChatListProps>(
             <AppLabel
               style={styles.messageText(
                 themedColors,
-                item.type === SenderType.STAFF,
-                item.isMessageRead
+                item.userType === SenderType.STAFF,
+                item.isRead
               )}
-              text={item.message}
+              text={
+                item.message[0] !== undefined ? item.message[0].text : ""
+              }
               numberOfLines={2}
               ellipsizeMode="tail"
               weight="normal"

@@ -5,7 +5,8 @@ enum RelationType {
   ROOMMATE,
   BLOCKED,
   DISMISSED,
-  NOT_ELIGIBLE
+  NOT_ELIGIBLE,
+  REQUEST_RECEIVED
 }
 
 export default RelationType;

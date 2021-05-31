@@ -5,7 +5,7 @@ import { AppLog } from "utils/Util";
 import MatchInfo from "models/MatchInfo";
 import { MyRoommatesResponseModel } from "models/api_responses/MyRoommatesResponseModel";
 import { DismissedOrBlockedResponseModel } from "models/api_responses/DismissedOrBlockedResponseModel";
-import { FriendRequestsResponseModel } from "models/api_responses/FriendRequestsResponseModel";
+import { PendingRequestsResponseModel } from "models/api_responses/PendingRequestsResponseModel";
 import { RoommateRequestsResponseModel } from "models/api_responses/RoommateRequestsResponseModel";
 import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiRequestModel";
 import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
@@ -229,7 +229,7 @@ const getRoommateRequests = () => {
 };
 
 const getFriendRequests = () => {
-  const response: FriendRequestsResponseModel = {
+  const response: PendingRequestsResponseModel = {
     message: "",
     data: [
       {
@@ -360,10 +360,10 @@ const getActivityLogs: (
       data: activityLogs,
       pagination: {
         total: 30,
-        current: request.pageNo,
+        current: request.page,
         first: activityLogs[0].id,
         last: activityLogs[activityLogs.length - 1].id,
-        next: request.pageNo + 1 <= 3 ? request.pageNo + 1 : 0
+        next: request.page + 1 <= 3 ? request.page + 1 : 0
       }
     }
   };

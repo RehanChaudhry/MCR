@@ -4,6 +4,7 @@ type RelationApiResponseModel = {
   message: string;
   data?: RelationModel[];
   count?: number;
+  pendingCount?: number;
 };
 
 export default RelationApiResponseModel;

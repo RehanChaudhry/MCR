@@ -23,7 +23,7 @@ export const DemoGraphics = optimizedMemo(({}) => {
           headingFontWeight={"semi-bold"}
           headingStyle={[
             styles.headingStyle,
-            { color: theme.themedColors.label }
+            { color: theme.themedColors.value }
           ]}
           textStyle={[{ color: theme.themedColors.labelSecondary }]}
         />
@@ -40,9 +40,9 @@ export const DemoGraphics = optimizedMemo(({}) => {
           appDropDownProps={{
             title: STRINGS.profile.dropDownInitialValue.gender,
             items: [
-              { id: "0", title: "Male" },
-              { id: "1", title: "Female" },
-              { id: "2", title: "Others" }
+              { id: 0, value: "Male" },
+              { id: 1, value: "Female" },
+              { id: 2, value: "Others" }
             ],
             selectedItemCallback: () => {
               //setTitle(item.title);
@@ -65,19 +65,19 @@ export const DemoGraphics = optimizedMemo(({}) => {
           radioData={[
             {
               id: 1,
-              label:
+              value:
                 STRINGS.profile.demoGraphics.radioButton.smokingHabitValues
                   .never
             },
             {
               id: 2,
-              label:
+              value:
                 STRINGS.profile.demoGraphics.radioButton.smokingHabitValues
                   .occasionally
             },
             {
               id: 3,
-              label:
+              value:
                 STRINGS.profile.demoGraphics.radioButton.smokingHabitValues
                   .frequently
             }
@@ -101,7 +101,7 @@ export const DemoGraphics = optimizedMemo(({}) => {
             placeholder: STRINGS.profile.placeHolder.homeTown,
             autoCapitalize: "none",
             placeholderTextColor: theme.themedColors.placeholder,
-            style: { color: theme.themedColors.label },
+            style: { color: theme.themedColors.value },
             viewStyle: [
               styles.textFieldStyle,
               {
@@ -127,7 +127,7 @@ export const DemoGraphics = optimizedMemo(({}) => {
             placeholder: STRINGS.profile.placeHolder.intendedMajor,
             autoCapitalize: "none",
             placeholderTextColor: theme.themedColors.placeholder,
-            style: { color: theme.themedColors.label },
+            style: { color: theme.themedColors.value },
             viewStyle: [
               styles.textFieldStyle,
               {
