@@ -68,6 +68,10 @@ export const DateUtils = {
     const hours = diff / (1000 * 60 * 60); //in milliseconds
 
     return parseInt(hours.toFixed(0));
+  },
+
+  getHoursDiff(date: Date): number {
+    return DateUtils.diffInHours(date ?? new Date());
   }
 };
 

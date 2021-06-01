@@ -136,6 +136,20 @@ const MyFriendsController: FC<Props> = () => {
     [handleMyFriendsResponse, myFriendsApi, paginationRequestModel]
   );
 
+  const moveToProfileScreen = useCallback((_: RelationModel) => {
+    // move to ViewProfileController
+  }, []);
+
+  const moveToRoommateRequests = useCallback(
+    (_: RelationModel) => {
+      navigation.navigate("ConnectRequests", {
+        title: "Roommate Requests",
+        type: ConnectRequestType.ROOMMATE_REQUESTS
+      });
+    },
+    [navigation]
+  );
+
   useEffect(() => {
     handleMyFriendsResponse(false, paginationRequestModel);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -172,6 +186,8 @@ const MyFriendsController: FC<Props> = () => {
         AppLog.log("onPressChat: ", item);
       }}
       onPressReceivedFriendRequests={onPressReceivedFriendRequests}
+      moveToProfileScreen={moveToProfileScreen}
+      moveToRoommateRequests={moveToRoommateRequests}
     />
   );
 };

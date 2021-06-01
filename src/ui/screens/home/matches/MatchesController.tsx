@@ -83,7 +83,7 @@ const MatchesController: FC<Props> = () => {
   };
 
   const moveToRoommateRequests = useCallback(
-    (_: number) => {
+    (_: RelationModel) => {
       navigation.navigate("ConnectRequests", {
         title: "Roommate Requests",
         type: ConnectRequestType.ROOMMATE_REQUESTS

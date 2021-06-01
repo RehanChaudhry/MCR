@@ -16,7 +16,7 @@ import OptimizedBottomBreadCrumbs, {
   OptimizedBBCItem
 } from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
 import ThreeButtonsAlert from "ui/screens/home/friends/MyFriends/ThreeButtonsAlert";
-import { AppLog, capitalizeWords } from "utils/Util";
+import { capitalizeWords } from "utils/Util";
 import TwoButtonsAlert, {
   Type
 } from "../friends/MyFriends/TwoButtonsAlert";
@@ -40,7 +40,7 @@ type Props = {
     requestModel: UpdateRelationApiRequestModel,
     action: RelationActionType
   ) => void;
-  moveToRoommateRequests: (userId: number) => void;
+  moveToRoommateRequests: (profileMatch: RelationModel) => void;
 };
 
 export const MatchesView: React.FC<Props> = ({
@@ -106,17 +106,7 @@ export const MatchesView: React.FC<Props> = ({
       return (
         <ProfileMatchItem
           profileMatch={_item}
-          isFriendRequestApiLoading={
-            profileMatch.current?.userId === _item.userId
-              ? isRequestApiLoading
-              : false
-          }
-          onFriendRequestClicked={() => {
-            profileMatch.current = _item;
-            setFriendRequestDialogVisible(true);
-          }}
           onCrossClicked={() => {
-            AppLog.log("onCrossClicked()");
             profileMatch.current = _item;
             setDismissDialogVisible(true);
           }}
@@ -131,15 +121,14 @@ export const MatchesView: React.FC<Props> = ({
             setCancelRequestDialogVisible(true);
           }}
           onRequestReceivedClicked={moveToRoommateRequests}
+          onFriendRequestClicked={() => {
+            profileMatch.current = _item;
+            setFriendRequestDialogVisible(true);
+          }}
         />
       );
     },
-    [
-      moveToProfileScreen,
-      moveToChatScreen,
-      isRequestApiLoading,
-      moveToRoommateRequests
-    ]
+    [moveToProfileScreen, moveToChatScreen, moveToRoommateRequests]
   );
 
   const getSelectedItem = useCallback(() => {
