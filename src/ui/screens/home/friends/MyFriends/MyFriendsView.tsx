@@ -84,7 +84,7 @@ const listItem = (
   );*/
   return (
     <RelationItem
-      profileMatch={_item}
+      relationModel={_item}
       onCrossClicked={onPressCross}
       onChatButtonClicked={onPressChat}
       onImageClicked={moveToProfileScreen}
