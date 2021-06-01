@@ -1,19 +1,16 @@
 import UserGroupIcon from "assets/images/icon_user_group.svg";
-import { STRINGS } from "config";
+import { SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
-import RelationType from "models/enums/RelationType";
 import RelationModel from "models/RelationModel";
 import React, { FC, useCallback, useRef, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import ConnectionItem, {
-  CONNECTION_ACTION_STATE
-} from "ui/components/organisms/friends/connection/ConnectionItem";
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
 import RemoveFriendAlert from "ui/screens/home/friends/MyFriends/RemoveFriendAlert";
 import InfoAlert from "./InfoAlert";
 import RoommateRequestAlert from "./RoommateRequestAlert";
+import ProfileMatchItem from "ui/components/organisms/profile_match_item/ProfileMatchItem";
 
 type Props = {
   friendsCount: number;
@@ -26,16 +23,22 @@ type Props = {
   onEndReached: () => void;
   onPressChat: (item: RelationModel) => void;
   onPressReceivedFriendRequests: () => void;
+  moveToProfileScreen: (relationModel: RelationModel) => void;
+  moveToRoommateRequests: (relationModel: RelationModel) => void;
 };
 
 const listItem = (
   item: RelationModel,
   onPressChat: (item: RelationModel) => void,
-  onPressAction: (item: RelationModel) => void,
-  onPressCross: (item: RelationModel) => void
+  showRequestAlert: (item: RelationModel) => void,
+  showInfoAlert: (item: RelationModel) => void,
+  showCancelAlert: (item: RelationModel) => void,
+  onPressCross: (item: RelationModel) => void,
+  moveToProfileScreen: (relationModel: RelationModel) => void,
+  moveToRoommateRequests: (relationModel: RelationModel) => void
 ) => {
   const _item = new RelationModel(item);
-  const actionButtonTitle: () => string = () => {
+  /*const actionButtonTitle: () => string = () => {
     if (_item.getType() === RelationType.NOT_ELIGIBLE) {
       return "Not Eligible";
     } else if (_item.getType() === RelationType.FRIEND_REQUESTED) {
@@ -78,6 +81,17 @@ const listItem = (
         onPressCross(_item);
       }}
     />
+  );*/
+  return (
+    <ProfileMatchItem
+      profileMatch={_item}
+      onCrossClicked={onPressCross}
+      onChatButtonClicked={onPressChat}
+      onImageClicked={moveToProfileScreen}
+      onRoommateRequestClicked={showRequestAlert}
+      onCancelRequestClicked={showCancelAlert}
+      onRequestReceivedClicked={moveToRoommateRequests}
+    />
   );
 };
 
@@ -91,7 +105,9 @@ const MyFriendsView: FC<Props> = ({
   onPullToRefresh,
   onEndReached,
   onPressChat,
-  onPressReceivedFriendRequests
+  onPressReceivedFriendRequests,
+  moveToProfileScreen,
+  moveToRoommateRequests
 }) => {
   const theme = usePreferredTheme();
 
@@ -99,20 +115,29 @@ const MyFriendsView: FC<Props> = ({
 
   const [showRequestAlert, setShowRequestAlert] = useState<boolean>(false);
   const [showInfoAlert, setShowInfoAlert] = useState<boolean>(false);
+  const [
+    isCancelAlertVisible,
+    setCancelAlertVisibility
+  ] = useState<boolean>(false);
 
   const [
     showRemoveFriendAlert,
     setShowRemoveFriendAlert
   ] = useState<boolean>(false);
 
-  const onPressAction = (item: RelationModel) => {
+  const showRoommateRequestAlert = (item: RelationModel) => {
     selectedItem.current = item;
-    const _item = new RelationModel(item);
-    if (_item.getType() === RelationType.NOT_ELIGIBLE) {
-      setShowInfoAlert(true);
-    } else {
-      setShowRequestAlert(true);
-    }
+    setShowRequestAlert(true);
+  };
+
+  const showIneligibleInfoAlert = (item: RelationModel) => {
+    selectedItem.current = item;
+    setShowInfoAlert(true);
+  };
+
+  const showCancelAlert = (item: RelationModel) => {
+    selectedItem.current = item;
+    setCancelAlertVisibility(true);
   };
 
   const onPressCross = (item: RelationModel) => {
@@ -142,7 +167,9 @@ const MyFriendsView: FC<Props> = ({
   const hideInfoAlert = useCallback(() => {
     setShowInfoAlert(false);
   }, []);
-
+  const hideCancelRequestAlert = useCallback(() => {
+    setCancelAlertVisibility(false);
+  }, []);
   const getSelectedItem = useCallback(() => {
     return selectedItem.current;
   }, []);
@@ -160,6 +187,7 @@ const MyFriendsView: FC<Props> = ({
           error={error}
           ListHeaderComponent={() => (
             <ConnectionListHeader
+              containerStyle={styles.header}
               title={
                 `Received ${pendingFriendsCount} new friend ` +
                 (pendingFriendsCount > 1 ? "requests" : "request")
@@ -179,11 +207,19 @@ const MyFriendsView: FC<Props> = ({
             return listItem(
               item,
               onPressChat,
-              onPressAction,
-              onPressCross
+              showRoommateRequestAlert,
+              showIneligibleInfoAlert,
+              showCancelAlert,
+              onPressCross,
+              moveToProfileScreen,
+              moveToRoommateRequests
             );
           }}
           data={data}
+          contentContainerStyle={styles.listContainer}
+          ItemSeparatorComponent={() => (
+            <View style={styles.itemSeparator} />
+          )}
         />
       </Screen>
       <RemoveFriendAlert
@@ -201,6 +237,17 @@ const MyFriendsView: FC<Props> = ({
         getSelectedItem={getSelectedItem}
         hideSelf={hideInfoAlert}
       />
+      <RoommateRequestAlert
+        shouldShow={isCancelAlertVisible}
+        getSelectedItem={getSelectedItem}
+        hideSelf={hideCancelRequestAlert}
+        title={STRINGS.dialogs.cancel_request.title}
+        message={`Are you sure you want to cancel request to ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        }?`}
+        firstButtonText={STRINGS.dialogs.cancel_request.success}
+        type={"cancel"}
+      />
     </>
   );
 };
@@ -209,6 +256,13 @@ const styles = StyleSheet.create({
   list: {
     width: "100%",
     height: "100%"
+  },
+  listContainer: { padding: SPACE.lg },
+  itemSeparator: {
+    height: SPACE.lg
+  },
+  header: {
+    paddingBottom: SPACE.sm
   }
 });
 

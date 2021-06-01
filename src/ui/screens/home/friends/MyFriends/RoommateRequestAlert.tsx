@@ -53,6 +53,9 @@ const RoommateRequestAlert: FC<Props> = React.memo(
           friend
         );
         updatedFriend.status = status;
+        if (status === Status.PENDING) {
+          updatedFriend.acceptee = updatedFriend?.user?.id;
+        }
         _myFriends.splice(index, 1, updatedFriend);
 
         setMyFriends?.(_myFriends);
