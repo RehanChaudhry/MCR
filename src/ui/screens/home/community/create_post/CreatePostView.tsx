@@ -135,13 +135,7 @@ export const CreatePostView = React.memo<Props>((props) => {
               ];
             });
           } else if (response.isFailed) {
-            SimpleToast.show(
-              "Image Gallery image uplaod failed : " + response.fileName
-            );
-            SimpleToast.show(
-              "Image Gallery image uplaod failed : " +
-                JSON.stringify(images)
-            );
+            SimpleToast.show("Image upload failed : " + response.fileName);
             setImages((prevState) =>
               _.remove(
                 prevState,
