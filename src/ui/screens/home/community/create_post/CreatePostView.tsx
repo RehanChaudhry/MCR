@@ -9,7 +9,6 @@ import { useAuth, usePreferredTheme } from "hooks";
 import React, { useCallback, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import * as ImagePicker from "react-native-image-picker";
 import { ImagePickerResponse } from "react-native-image-picker";
 import SimpleToast from "react-native-simple-toast";
 import { EmbedButton } from "ui/components/atoms/compact_buttons/EmbedButton";
@@ -28,12 +27,13 @@ import { ImageWithCross } from "ui/components/molecules/image_with_cross/ImageWi
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, iframePattern, pattern, SvgProp } from "utils/Util";
 import * as Yup from "yup";
+import { useImageUpload } from "hooks/useImageUpload";
+import MyImagePickerResponse from "models/api_responses/MyImagePickerResponse";
+import _ from "lodash";
 
 type Props = {
   shouldShowProgressBar?: boolean;
   createPost: (values: FormikValues) => void;
-  createSignedUrl: (image: ImagePickerResponse) => void;
-  removeSignedImageUrl: (filename: string, removeAll: boolean) => void;
 };
 
 const validationSchema = Yup.object().shape({
@@ -59,8 +59,9 @@ export enum POST_TYPES {
 
 export const CreatePostView = React.memo<Props>((props) => {
   const theme = usePreferredTheme();
-  const [images, setImages] = useState<ImagePickerResponse[]>([]);
+  const [images, setImages] = useState<MyImagePickerResponse[]>([]);
   const [postType, setPostType] = useState<POST_TYPES>(POST_TYPES.NONE);
+  const imageGalleryResult = useImageUpload();
 
   let initialValues: FormikValues = {
     message: String,
@@ -75,6 +76,7 @@ export const CreatePostView = React.memo<Props>((props) => {
 
   const onSubmit = (_value: FormikValues) => {
     initialValues = _value;
+    initialValues.images = images;
     props.createPost(initialValues);
   };
 
@@ -111,38 +113,38 @@ export const CreatePostView = React.memo<Props>((props) => {
               })
             ];
           });
-
-          props.removeSignedImageUrl(imageResponse.fileName!!, false);
         }}
       />
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+
   const openImageGallery = () => {
     if (images.length < 5) {
-      ImagePicker.launchImageLibrary(
-        {
-          mediaType: "photo",
-          includeBase64: true
-        },
-        (response) => {
-          if (
-            response !== null &&
-            response !== undefined &&
-            response.didCancel !== true
-          ) {
-            AppLog.log("response" + JSON.stringify(response));
+      imageGalleryResult((response: MyImagePickerResponse) => {
+        AppLog.log(
+          "Image Gallery image uplaod failed : " + JSON.stringify(response)
+        );
+        if (response !== null && response !== undefined) {
+          if (response.inProgress) {
             setImages((prevState) => {
               return [
                 ...(prevState === undefined ? [] : prevState),
                 response
               ];
             });
-            props.createSignedUrl(response);
+          } else if (response.isFailed) {
+            SimpleToast.show("Image upload failed : " + response.fileName);
+            setImages((prevState) =>
+              _.remove(
+                prevState,
+                (item) => item.fileName !== response.fileName
+              )
+            );
           }
         }
-      );
+      });
     } else {
       SimpleToast.show(Strings.createPost.title.maxImageMessage);
     }
@@ -227,27 +229,37 @@ export const CreatePostView = React.memo<Props>((props) => {
                 <PhotosButton
                   isSelected={postType === POST_TYPES.PHOTOS}
                   onPress={() => {
-                    setImages([]);
-                    setPostType(POST_TYPES.PHOTOS);
-                    openImageGallery();
+                    if (
+                      !postType.includes(POST_TYPES.PHOTOS) ||
+                      images.length === 0
+                    ) {
+                      AppLog.logForcefully("if");
+                      setImages([]);
+                      setPostType(POST_TYPES.PHOTOS);
+                      openImageGallery();
+                    }
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
                 <LinkButton
                   isSelected={postType === POST_TYPES.LINK}
                   onPress={() => {
-                    setPostType(POST_TYPES.LINK);
-                    props.removeSignedImageUrl("", true);
-                    AppLog.log("postType: " + postType);
+                    if (!postType.includes(POST_TYPES.LINK)) {
+                      setPostType(POST_TYPES.LINK);
+                      setImages([]);
+                      AppLog.log("postType: " + postType);
+                    }
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
                 <EmbedButton
                   isSelected={postType === POST_TYPES.EMBED}
                   onPress={() => {
-                    setPostType(POST_TYPES.EMBED);
-                    props.removeSignedImageUrl("", true);
-                    AppLog.log("postType: " + postType);
+                    if (!postType.includes(POST_TYPES.EMBED)) {
+                      setPostType(POST_TYPES.EMBED);
+                      setImages([]);
+                      AppLog.log("postType: " + postType);
+                    }
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
