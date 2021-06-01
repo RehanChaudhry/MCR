@@ -68,12 +68,22 @@ const CommunityController: FC<Props> = () => {
     });
   }, [navigation]);
 
+  //listen callback from create post screen
+  const postCreatedSuccessfully = useCallback(() => {
+    setCommunities(undefined); //to show loader in screen
+    requestModel.current.page = 1;
+    fetchCommunities().then().catch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRightTextWithIcon
           onPress={() => {
-            navigation.navigate("CreatePost");
+            navigation.navigate("CreatePost", {
+              postCreatedSuccessfully: postCreatedSuccessfully
+            });
           }}
           text={Strings.createPost.title.createPost}
           icon={() => {
@@ -91,7 +101,7 @@ const CommunityController: FC<Props> = () => {
       headerTitleAlign: "center",
       headerTitle: () => <HeaderTitle text="Community" />
     });
-  }, [navigation, theme]);
+  }, [postCreatedSuccessfully, navigation, theme]);
 
   const requestModel = useRef<AnnouncementRequestModel>({
     paginate: true,

@@ -32,7 +32,9 @@ function relationDismissRestore(
 
 function updateRelation(requestModel: UpdateRelationApiRequestModel) {
   return apiClient.put<UpdateRelationApiResponseModel>(
-    `${API.RELATION}/${requestModel.receiverId}`,
+    requestModel.status === "dismissed"
+      ? `${API.RELATION_DISMISS_RESTORE}/${requestModel.receiverId}`
+      : `${API.RELATION}/${requestModel.receiverId}`,
     requestModel
   );
 }

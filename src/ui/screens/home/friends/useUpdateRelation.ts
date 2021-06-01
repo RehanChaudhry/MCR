@@ -15,10 +15,7 @@ export default (
   onFinish: (() => void) | undefined,
   onSuccess: (item: RelationModel) => void
 ) => {
-  const [
-    shouldShowRelationUpdatePb,
-    setShouldShowRelationUpdatePb
-  ] = useState(false);
+  const [shouldShowPb, setShouldShowPb] = useState(false);
   const updateRelationApi = useApi<
     UpdateRelationApiRequestModel,
     UpdateRelationApiResponseModel
@@ -30,7 +27,7 @@ export default (
         return;
       }
 
-      setShouldShowRelationUpdatePb(true);
+      setShouldShowPb(true);
 
       const {
         hasError,
@@ -45,18 +42,18 @@ export default (
 
       if (hasError || dataBody === undefined) {
         Alert.alert(messageOnFailed, errorBody);
-        setShouldShowRelationUpdatePb(false);
+        setShouldShowPb(false);
         return;
       } else {
         try {
           onSuccess(item);
         } finally {
           onFinish?.();
-          setShouldShowRelationUpdatePb(false);
+          setShouldShowPb(false);
         }
       }
     },
     [messageOnFailed, status, onFinish, onSuccess, updateRelationApi]
   );
-  return { shouldShowRelationUpdatePb, updateRelation };
+  return { shouldShowPb, updateRelation };
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
-import MatchInfo from "models/MatchInfo";
 import { usePreferredTheme } from "hooks";
 import { shadowStyleProps } from "utils/Util";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
@@ -20,10 +19,12 @@ import UserHeader from "ui/components/organisms/user_header/UserHeader";
 import Roommates from "ui/components/organisms/roommates/Roommates";
 import RelationModel from "models/RelationModel";
 import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
+import { MatchInfoData } from "models/api_responses/MatchInfoApiResponseModel";
 
 type Props = {
   userProfile: Profile;
-  matchInfo: MatchInfo;
+  matchInfo: MatchInfoData;
+  relationModel: RelationModel[];
   moveToChatScreen: (profileMatch: RelationModel) => void;
   moveToProfileScreen: (profileMatch: RelationModel) => void;
   moveToRoommateAgreementScreen: () => void;
@@ -37,7 +38,8 @@ export const MatchInfoView: React.FC<Props> = ({
   moveToChatScreen,
   moveToRoommateAgreementScreen,
   moveToUpdateProfileScreen,
-  moveToQuestionnaireScreen
+  moveToQuestionnaireScreen,
+  relationModel
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -144,11 +146,7 @@ export const MatchInfoView: React.FC<Props> = ({
               />
             )}
             heading={STRINGS.matchInfo.matching_status}
-            title={
-              matchInfo.isRoommateMatchingOpen
-                ? STRINGS.matchInfo.label_open
-                : STRINGS.matchInfo.label_close
-            }
+            title={matchInfo.currentStatus!}
           />
           <Divider style={{ backgroundColor: themedColors.separator }} />
           <SocialDetailForm
@@ -169,9 +167,7 @@ export const MatchInfoView: React.FC<Props> = ({
               />
             )}
             heading={STRINGS.matchInfo.matching_deadline}
-            title={moment(matchInfo.roommateMatchingDeadline).format(
-              "MMMM DD, YYYY"
-            )}
+            title={moment(matchInfo.deadline).format("MMMM DD, YYYY")}
           />
           <Divider style={{ backgroundColor: themedColors.separator }} />
           <SocialDetailForm
@@ -192,8 +188,8 @@ export const MatchInfoView: React.FC<Props> = ({
               />
             )}
             heading={STRINGS.matchInfo.max_roommate_count}
-            title={`${matchInfo.maxRoommateCount} roommate${
-              matchInfo.maxRoommateCount ?? 0 > 1 ? "s" : ""
+            title={`${matchInfo.noOfRoommates} roommate${
+              matchInfo.noOfRoommates ?? 0 > 1 ? "s" : ""
             }`}
           />
           <Divider style={{ backgroundColor: themedColors.separator }} />
@@ -215,19 +211,15 @@ export const MatchInfoView: React.FC<Props> = ({
               />
             )}
             heading={STRINGS.matchInfo.matching_criteria}
-            title={`${
-              matchInfo.matchingCriteria?.gender ??
-              STRINGS.common.not_found
-            }, ${
-              matchInfo.matchingCriteria?.majors ??
-              STRINGS.common.not_found
+            title={`${matchInfo.criteria ?? STRINGS.common.not_found}, ${
+              matchInfo.criteria ?? STRINGS.common.not_found
             }`}
           />
         </View>
-        {matchInfo.roommates && matchInfo.roommates.length > 0 && (
+        {relationModel && relationModel.length > 0 && (
           <Roommates
             style={styles.card}
-            roommates={matchInfo.roommates}
+            roommates={relationModel}
             onChatClicked={moveToChatScreen}
             onRoommateAgreementClicked={moveToRoommateAgreementScreen}
           />

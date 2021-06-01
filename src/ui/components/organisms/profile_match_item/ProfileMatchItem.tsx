@@ -23,24 +23,24 @@ import getRelationStatus, {
 
 interface Props {
   profileMatch: RelationModel;
-  isFriendRequestApiLoading: boolean;
-  onFriendRequestClicked: (userId: number) => void;
-  onCrossClicked: (userId: number) => void;
+  onCrossClicked: (profileMatch: RelationModel) => void;
   onChatButtonClicked: (profileMatch: RelationModel) => void;
   onImageClicked: (profileMatch: RelationModel) => void;
-  onRoommateRequestClicked: (userId: number) => void;
-  onCancelRequestClicked: (userId: number) => void;
-  onRequestReceivedClicked: (userId: number) => void;
+  onRoommateRequestClicked: (profileMatch: RelationModel) => void;
+  onCancelRequestClicked: (profileMatch: RelationModel) => void;
+  onRequestReceivedClicked: (profileMatch: RelationModel) => void;
+  onFriendRequestClicked?: (profileMatch: RelationModel) => void;
+  onNotEligibleClicked?: (profileMatch: RelationModel) => void;
 }
 
 function createActionButton(
   profileMatch: RelationModel,
-  isFriendRequestApiLoading: boolean,
-  onFriendRequestClicked: (userId: number) => void,
   themedColors: ColorPalette,
-  onCancelRequestClicked: (userId: number) => void,
-  onRoommateRequestClicked: (userId: number) => void,
-  onRequestReceivedClicked: (userId: number) => void
+  onCancelRequestClicked: (profileMatch: RelationModel) => void,
+  onRoommateRequestClicked: (profileMatch: RelationModel) => void,
+  onRequestReceivedClicked: (profileMatch: RelationModel) => void,
+  onFriendRequestClicked?: (profileMatch: RelationModel) => void,
+  onNotEligibleClicked?: (profileMatch: RelationModel) => void
 ) {
   let actionButton: React.ReactElement;
   const { relationType, actionPerformed, eligible } = getRelationStatus(
@@ -51,9 +51,8 @@ function createActionButton(
     if (actionPerformed === ActionPerformed.NONE) {
       actionButton = (
         <AppButton
-          shouldShowProgressBar={isFriendRequestApiLoading}
           onPress={() => {
-            onFriendRequestClicked(profileMatch.userId);
+            onFriendRequestClicked?.(profileMatch);
           }}
           fontWeight={"semi-bold"}
           textStyle={[
@@ -71,7 +70,7 @@ function createActionButton(
       actionButton = (
         <AppButton
           onPress={() => {
-            onCancelRequestClicked(profileMatch.userId);
+            onCancelRequestClicked(profileMatch);
           }}
           fontWeight={"semi-bold"}
           textStyle={[
@@ -91,7 +90,9 @@ function createActionButton(
       if (eligible === Eligible.NOT_ELIGIBLE) {
         actionButton = (
           <AppButton
-            isDisable={true}
+            onPress={() => {
+              onNotEligibleClicked?.(profileMatch);
+            }}
             fontWeight={"semi-bold"}
             textStyle={[
               styles.btnActionText,
@@ -108,7 +109,7 @@ function createActionButton(
         actionButton = (
           <AppButton
             onPress={() => {
-              onRoommateRequestClicked(profileMatch.userId);
+              onRoommateRequestClicked(profileMatch);
             }}
             fontWeight={"semi-bold"}
             textStyle={[
@@ -129,7 +130,7 @@ function createActionButton(
       actionButton = (
         <AppButton
           onPress={() => {
-            onRequestReceivedClicked(profileMatch.userId);
+            onRequestReceivedClicked(profileMatch);
           }}
           fontWeight={"semi-bold"}
           textStyle={[
@@ -147,7 +148,7 @@ function createActionButton(
       actionButton = (
         <AppButton
           onPress={() => {
-            onCancelRequestClicked(profileMatch.userId);
+            onCancelRequestClicked(profileMatch);
           }}
           fontWeight={"semi-bold"}
           textStyle={[
@@ -169,14 +170,14 @@ function createActionButton(
 
 const ProfileMatchItem = ({
   profileMatch,
-  isFriendRequestApiLoading,
-  onFriendRequestClicked,
   onCrossClicked,
   onChatButtonClicked,
   onImageClicked,
   onRoommateRequestClicked,
   onCancelRequestClicked,
-  onRequestReceivedClicked
+  onRequestReceivedClicked,
+  onFriendRequestClicked,
+  onNotEligibleClicked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -210,20 +211,18 @@ const ProfileMatchItem = ({
             ]}
             text={profileMatch.user?.getSubtitle()}
           />
-          <MatchScore
-            style={styles.matchScore}
-            matchScore={
-              profileMatch.matchScore
-                ? `${profileMatch.matchScore}%`
-                : STRINGS.common.not_found
-            }
-          />
+          {profileMatch.matchScore && (
+            <MatchScore
+              style={styles.matchScore}
+              matchScore={`${profileMatch.matchScore}%`}
+            />
+          )}
         </View>
       </View>
       <Pressable
         style={styles.icCross}
         onPress={() => {
-          onCrossClicked(profileMatch.userId);
+          onCrossClicked(profileMatch);
         }}>
         <Cross
           fill={themedColors.interface[400]}
@@ -248,12 +247,12 @@ const ProfileMatchItem = ({
         />
         {createActionButton(
           profileMatch,
-          isFriendRequestApiLoading,
-          onFriendRequestClicked,
           themedColors,
           onCancelRequestClicked,
           onRoommateRequestClicked,
-          onRequestReceivedClicked
+          onRequestReceivedClicked,
+          onFriendRequestClicked,
+          onNotEligibleClicked
         )}
       </View>
     </View>
