@@ -1,7 +1,7 @@
 import { DropDownItem } from "models/DropDownItem";
 
 enum ActivityType {
-  ROMMATE_AGREEMENT = "roomate-agreement",
+  ROMMATE_AGREEMENT = "roommate-agreement",
   FRIEND_REQUEST = "friend-request",
   DISMISSED = "dismissed",
   UPDATED_PROFILE = "updated-profile",
@@ -17,25 +17,25 @@ export const getActivityTypeFilterData = () => {
   const filters: DropDownItem[] = [];
 
   filters.push({
-    text: "Roommate Agreement",
-    value: ActivityType.ROMMATE_AGREEMENT
+    text: ActivityType.ROMMATE_AGREEMENT,
+    value: "Roommate Agreement"
   });
 
   filters.push({
-    text: "Friend Request",
-    value: ActivityType.FRIEND_REQUEST
+    text: ActivityType.FRIEND_REQUEST,
+    value: "Friend Request"
   });
   filters.push({
-    text: "Dismissed",
-    value: ActivityType.DISMISSED
+    text: ActivityType.DISMISSED,
+    value: "Dismissed"
   });
   filters.push({
-    text: "Roommate Request",
-    value: ActivityType.ROOMMATE_REQUEST
+    text: ActivityType.ROOMMATE_REQUEST,
+    value: "Roommate Request"
   });
   filters.push({
-    text: "Updated Profile",
-    value: ActivityType.UPDATED_PROFILE
+    text: ActivityType.UPDATED_PROFILE,
+    value: "Updated Profile"
   });
   return filters;
 };

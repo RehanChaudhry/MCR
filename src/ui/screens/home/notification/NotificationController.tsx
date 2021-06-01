@@ -11,9 +11,6 @@ import { useApi } from "repo/Client";
 import ProfileApis from "repo/auth/ProfileApis";
 import { NotificationsResponseModel } from "models/api_responses/NotificationsResponseModel";
 import { AppLog } from "utils/Util";
-import { View } from "react-native";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { usePreventDoubleTap } from "hooks";
@@ -147,27 +144,15 @@ const NotificationController: FC<Props> = () => {
   }, []);
 
   return (
-    <ProgressErrorView
-      isLoading={notificationApi.loading}
-      error={notificationApi.error}
-      errorView={(message) => {
-        return (
-          <View>
-            <AppLabel text={message} />
-          </View>
-        );
-      }}
-      data={notifications}>
-      <NotificationView
-        isAllDataLoaded={isAllDataLoaded}
-        onEndReached={onEndReached}
-        pullToRefreshCallback={refreshCallback}
-        shouldShowProgressBar={shouldShowProgressBar}
-        notifications={notifications?.data}
-        openMyProfileScreen={openMyProfileScreen}
-        selectedItem={searchText}
-      />
-    </ProgressErrorView>
+    <NotificationView
+      isAllDataLoaded={isAllDataLoaded}
+      onEndReached={onEndReached}
+      pullToRefreshCallback={refreshCallback}
+      shouldShowProgressBar={shouldShowProgressBar}
+      notifications={notifications?.data}
+      openMyProfileScreen={openMyProfileScreen}
+      selectedItem={searchText}
+    />
   );
 };
 

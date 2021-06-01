@@ -23,7 +23,9 @@ export const CircleImageWithText = React.memo<Props>(
 
     return (
       <View style={styles.mainContainer}>
-        <CircleImageBorder imageUrl={""} />
+        <CircleImageBorder
+          imageUrl={notifications?.sender?.profilePicture?.fileURL!}
+        />
         <View style={styles.viewRequest}>
           <View style={styles.circleWithText}>
             <LabelHtml
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
     marginTop: SPACE._2xs
   },
   buttonStyle: {
-    width: "40%",
+    width: "60%",
     height: moderateScale(32),
     borderRadius: 8,
     elevation: 0

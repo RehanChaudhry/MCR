@@ -30,22 +30,24 @@ class NotificationData implements ChronologicalObject {
       if (this.type === ActivityLogType.FRIEND_REQUEST) {
         return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> has sent you a friend request`;
       } else if (this.type === ActivityLogType.ROOMMATE_REQUEST) {
-        return "<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b>has sent you a roommate request";
+        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> has sent you a roommate request`;
+      } else if (this.type === ActivityLogType.CHAT) {
+        return "View Chat";
+      } else if (this.type === ActivityLogType.NEW_CONVERSATION) {
+        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> Started a new conversation with`;
+      } else if (this.type === ActivityLogType.DISAGREED) {
+        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> Disagreed your `;
+      } else if (this.type === ActivityLogType.AGREED) {
+        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> Agreed your `;
+      } else if (this.type === ActivityLogType.COMMENT) {
+        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> Comment your `;
       } else if (this.type === ActivityLogType.ANNOUNCEMENT) {
-        return "<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b>has posted a new announcement";
-      } else if (this.type === ActivityLogType.POST) {
-        return "<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b>Commented on any post";
-      } else if (this.type === ActivityLogType.CONVERSATION) {
-        return "<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b>Started a new conversation with";
-      } else if (this.type === ActivityLogType.QUESTIONAIRE) {
-        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b>Update your `;
-      } else if (this.type === ActivityLogType.PROFILE) {
-        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b>Update your `;
+        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> has posted a new announcement`;
       } else if (this.type === ActivityLogType.LIKE) {
-        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> Update your `;
+        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> Like your `;
       }
     } else {
-      return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> ds`;
+      return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> never`;
     }
   }
 
@@ -54,6 +56,22 @@ class NotificationData implements ChronologicalObject {
     if (this.type != null) {
       if (this.type === ActivityLogType.FRIEND_REQUEST) {
         return "View Friend Request";
+      } else if (this.type === ActivityLogType.ROOMMATE_REQUEST) {
+        return "View Roommate Request";
+      } else if (this.type === ActivityLogType.CHAT) {
+        return "View Chat";
+      } else if (this.type === ActivityLogType.NEW_CONVERSATION) {
+        return "View New Conversation";
+      } else if (this.type === ActivityLogType.DISAGREED) {
+        return "View Disagreed";
+      } else if (this.type === ActivityLogType.AGREED) {
+        return "Agreed";
+      } else if (this.type === ActivityLogType.COMMENT) {
+        return "View Comment";
+      } else if (this.type === ActivityLogType.ANNOUNCEMENT) {
+        return "View Announcement";
+      } else if (this.type === ActivityLogType.LIKE) {
+        return "View Like";
       }
     } else {
       return "";

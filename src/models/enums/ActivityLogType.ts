@@ -11,7 +11,12 @@ enum ActivityLogType {
   LOGIN_STAFF = "login-staff",
   ANNOUNCEMENT = "announcement",
   MESSAGE = "message",
-  LIKE = "like"
+  LIKE = "like",
+  CHAT = "chat",
+  NEW_CONVERSATION = "new-conversation",
+  DISAGREED = "disagreed",
+  AGREED = "agreed",
+  COMMENT = "comment"
 }
 
 export default ActivityLogType;

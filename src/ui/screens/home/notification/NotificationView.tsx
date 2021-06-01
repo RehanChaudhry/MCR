@@ -2,14 +2,13 @@ import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
-import { AppLog, shadowStyleProps } from "utils/Util";
+import { shadowStyleProps } from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config/Dimens";
 import Selector from "assets/images/selector.svg";
 import { usePreferredTheme } from "hooks";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
-import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import NotificationData from "models/NotificationData";
 
 type Props = {
@@ -104,8 +103,6 @@ export const NotificationView = React.memo<Props>(
       );
     };
 
-    AppLog.logForcefully("progress" + shouldShowProgressBar);
-
     return (
       <Screen style={styles.container}>
         <View
@@ -121,20 +118,19 @@ export const NotificationView = React.memo<Props>(
               },
               {
                 value: "View Friend Request",
-                text: "View Friend Request"
+                text: "friend-request"
               },
-              { value: "View Profile", text: "View Profile" },
-              {
-                value: "View Roommate Request",
-                text: "View Roommate Request"
-              },
-              { value: "View Announcement", text: "View Announcement" },
-              { value: "View Message", text: "View Message" },
-              { value: "View Post", text: "View Post" },
               {
                 value: "View Roommate Request",
                 text: "roommate-request"
-              }
+              },
+              { value: "View Chat", text: "View Message" },
+              { value: "View Conversation", text: "new-conversation" },
+              { value: "View Disagreed", text: "disagreed" },
+              { value: "View Agreed", text: "agreed" },
+              { value: "View Comment", text: "comment" },
+              { value: "View Announcement", text: "announcement" },
+              { value: "View Like", text: "like" }
             ]}
             title={"Filter by notification type"}
             textStyle={styles.filterText}
@@ -155,21 +151,18 @@ export const NotificationView = React.memo<Props>(
             shouldShowCustomIcon={true}
           />
         </View>
-        {useLazyLoadInterface(
-          <>
-            {notifications && (
-              <FlatListWithPb
-                shouldShowProgressBar={shouldShowProgressBar}
-                data={notifications}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={listItem}
-                style={styles.list}
-                onEndReached={onEndReached}
-                isAllDataLoaded={isAllDataLoaded}
-                pullToRefreshCallback={pullToRefreshCallback}
-              />
-            )}
-          </>
+
+        {notifications && (
+          <FlatListWithPb
+            shouldShowProgressBar={shouldShowProgressBar}
+            data={notifications}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={listItem}
+            style={styles.list}
+            onEndReached={onEndReached}
+            isAllDataLoaded={isAllDataLoaded}
+            pullToRefreshCallback={pullToRefreshCallback}
+          />
         )}
       </Screen>
     );

@@ -1,7 +1,7 @@
 export class NotificationSenderData {
   firstName?: string;
   lastName?: string;
-  profilePicture?: string;
+  profilePicture?: ProfilePicture;
 
   constructor(notificationSenderData: NotificationSenderData) {
     Object.assign(this, notificationSenderData);
@@ -11,5 +11,10 @@ export class NotificationSenderData {
     return this.firstName + " " + this.lastName;
   };
 }
+
+export type ProfilePicture = {
+  fileURL: string;
+  originalName: string;
+};
 
 export default NotificationSenderData;
