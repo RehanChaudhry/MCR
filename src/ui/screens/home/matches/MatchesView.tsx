@@ -190,6 +190,9 @@ export const MatchesView: React.FC<Props> = ({
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         }?`}
         type={Type.MATCHES_ROOMMATE_REQUEST}
+        errorMessage="Unable to send roommate request"
+        firstButtonText="Yes, send request"
+        isFromMatchScreen={true}
       />
       <TwoButtonsAlert
         shouldShow={isFriendRequestDialogVisible}
@@ -200,6 +203,9 @@ export const MatchesView: React.FC<Props> = ({
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         }?`}
         type={Type.FRIEND_REQUEST}
+        errorMessage="Unable to send friend request"
+        firstButtonText="Yes, send request"
+        isFromMatchScreen={true}
       />
       <TwoButtonsAlert
         shouldShow={isCancelRequestDialogVisible}
@@ -211,6 +217,8 @@ export const MatchesView: React.FC<Props> = ({
         }?`}
         firstButtonText={STRINGS.dialogs.cancel_request.success}
         type={Type.CANCEL}
+        errorMessage="Unable to send cancel request"
+        isFromMatchScreen={true}
       />
       <ThreeButtonsAlert
         shouldShow={isDismissDialogVisible}

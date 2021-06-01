@@ -36,7 +36,7 @@ const ThreeButtonsAlert: FC<Props> = React.memo(
       updateRelation: updateRelationDismissed
     } = useUpdateRelation(
       "dismissed",
-      "Unable to dismissed friend",
+      "Unable to dismissed the match",
       hideSelf,
       () => {
         onMatchRemoved(getSelectedItem()?.id ?? -1);

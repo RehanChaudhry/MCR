@@ -1,7 +1,13 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import RelationModel, { Status } from "models/RelationModel";
-import React, { FC, useCallback, useContext } from "react";
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useContext
+} from "react";
 import { StyleSheet, View } from "react-native";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
@@ -18,14 +24,15 @@ export enum Type {
 }
 
 type Props = {
-  title?: string;
-  message?: string;
+  title: string;
+  message: string;
+  errorMessage: string;
   shouldShow: boolean;
+  isFromMatchScreen: boolean;
   getSelectedItem: () => RelationModel | undefined;
   hideSelf: () => void;
   type: Type;
-  firstButtonText?: string;
-  secondButtonText?: string;
+  firstButtonText: string;
 };
 
 const TwoButtonsAlert: FC<Props> = React.memo(
@@ -34,12 +41,11 @@ const TwoButtonsAlert: FC<Props> = React.memo(
     getSelectedItem,
     hideSelf,
     type,
-    title = "Roommate Request",
-    message = `Are you sure you want to send roommate request to ${
-      getSelectedItem()?.user?.getFullName() ?? "N/A"
-    }?`,
-    firstButtonText = "Yes, send request",
-    secondButtonText = null
+    title,
+    message,
+    firstButtonText,
+    isFromMatchScreen,
+    errorMessage
   }) => {
     const theme = usePreferredTheme();
 
@@ -51,65 +57,51 @@ const TwoButtonsAlert: FC<Props> = React.memo(
       resetData
     } = useContext(MyFriendsContext);
 
-    const changedMyFriendStatus = useCallback(
-      (friend: RelationModel | undefined, status?: Status) => {
-        if (!myFriends || !friend) {
+    let relations: RelationModel[] | undefined,
+      setRelations:
+        | Dispatch<SetStateAction<RelationModel[] | undefined>>
+        | undefined;
+    if (isFromMatchScreen) {
+      [relations, setRelations] = [matches, setMatches];
+    } else {
+      [relations, setRelations] = [myFriends, setMyFriends];
+    }
+
+    const changedRelationStatus = useCallback(
+      (relation: RelationModel | undefined, status?: Status) => {
+        if (!relations || !relation) {
           return;
         }
 
-        let _myFriends = [...myFriends];
-        let index = _myFriends.findIndex(
-          (value) => value.id === friend.id
+        let _relations = [...relations];
+        let index = _relations.findIndex(
+          (value) => value.id === relation.id
         );
-        let updatedFriend: RelationModel = Object.assign(
-          Object.create(friend),
-          friend
+        let updatedRelation: RelationModel = Object.assign(
+          Object.create(relation),
+          relation
         );
-        updatedFriend.status = status;
-        _myFriends.splice(index, 1, updatedFriend);
+        updatedRelation.status = status;
+        _relations.splice(index, 1, updatedRelation);
 
-        setMyFriends?.(_myFriends);
+        setRelations?.(_relations);
       },
-      [myFriends, setMyFriends]
-    );
-
-    const changeMatchesStatus = useCallback(
-      (match: RelationModel | undefined, status?: Status) => {
-        if (!matches || !match) {
-          return;
-        }
-
-        let _matches = [...matches];
-        let index = _matches.findIndex((value) => value.id === match.id);
-        let updatedMatch: RelationModel = Object.assign(
-          Object.create(match),
-          match
-        );
-        updatedMatch.status = status;
-        _matches.splice(index, 1, updatedMatch);
-
-        setMatches?.(_matches);
-      },
-      [matches, setMatches]
+      [relations, setRelations]
     );
 
     const onFriendRemoved = useCallback(
       (id: number) => {
-        setMyFriends?.(myFriends?.filter((value) => value.id !== id));
+        setRelations?.(relations?.filter((value) => value.id !== id));
         resetData();
       },
-      [myFriends, setMyFriends, resetData]
+      [relations, setRelations, resetData]
     );
 
     const { shouldShowPb, sendRequest } = useSendFriendOrRoommateRequest(
-      "Unable to send friend request",
+      errorMessage,
       hideSelf,
       () => {
-        if (type === Type.FRIENDS_ROOMMATE_REQUEST) {
-          changedMyFriendStatus(getSelectedItem(), Status.PENDING);
-        } else {
-          changeMatchesStatus(getSelectedItem(), Status.PENDING);
-        }
+        changedRelationStatus(getSelectedItem(), Status.PENDING);
       }
     );
 
@@ -121,17 +113,17 @@ const TwoButtonsAlert: FC<Props> = React.memo(
       }
     };
 
-    //for cancel, dismissed and block match
+    //for cancel match and unfriend
     const {
       shouldShowPb: shouldShowRelationUpdatePb,
       updateRelation
     } = useUpdateRelation(
       getTypeForUpdateRelation(),
-      "Unable to cancel request",
+      errorMessage,
       hideSelf,
       () => {
         if (type === Type.CANCEL) {
-          changeMatchesStatus(getSelectedItem(), undefined);
+          changedRelationStatus(getSelectedItem(), undefined);
         } else {
           onFriendRemoved(getSelectedItem()?.id ?? -1);
         }
@@ -178,15 +170,18 @@ const TwoButtonsAlert: FC<Props> = React.memo(
               textStyle={[
                 styles.actionStyle,
                 {
-                  color:
-                    secondButtonText !== null
-                      ? theme.themedColors.warn
-                      : theme.themedColors.primary,
+                  color: theme.themedColors.primary,
                   textAlign: "center",
                   fontSize: FONT_SIZE.base
                 }
               ]}
               fontWeight="semi-bold"
+            />
+            <View
+              style={[
+                styles.separator,
+                { backgroundColor: theme.themedColors.separator }
+              ]}
             />
             <AppButton
               text="Cancel"

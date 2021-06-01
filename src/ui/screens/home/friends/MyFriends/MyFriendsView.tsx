@@ -12,7 +12,6 @@ import ConnectionItem, {
 } from "ui/components/organisms/friends/connection/ConnectionItem";
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
 import InfoAlert from "./InfoAlert";
-import ThreeButtonsAlert from "./ThreeButtonsAlert";
 import TwoButtonsAlert, { Type } from "./TwoButtonsAlert";
 
 type Props = {
@@ -186,10 +185,18 @@ const MyFriendsView: FC<Props> = ({
           data={data}
         />
       </Screen>
-      <ThreeButtonsAlert
+      <TwoButtonsAlert
         shouldShow={showRemoveFriendAlert}
         getSelectedItem={getSelectedItem}
         hideSelf={hideRemoveFriendAlert}
+        title="Remove Friend"
+        message={`Are you sure you want to remove ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        } from your friends list?`}
+        type={Type.FRIENDS_ROOMMATE_REQUEST}
+        errorMessage="Unable to remove friend"
+        firstButtonText="Yes, remove"
+        isFromMatchScreen={false}
       />
       <TwoButtonsAlert
         shouldShow={showRequestAlert}
@@ -200,6 +207,9 @@ const MyFriendsView: FC<Props> = ({
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         }?`}
         type={Type.FRIENDS_ROOMMATE_REQUEST}
+        errorMessage="Unable to send roommate request"
+        firstButtonText="Yes, send request"
+        isFromMatchScreen={false}
       />
       <InfoAlert
         shouldShow={showInfoAlert}
