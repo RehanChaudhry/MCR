@@ -14,7 +14,8 @@ export default {
   FORGOT_PASS_URL: "password/request/",
   RESET_PASS_URL: "password/set/",
   UPDATE_ACCOUNT_PASSWORD_URL: "user/me",
-  NOTIFICATION_URL: "notifications",
+  UPDATE_PROFILE_URL: "profile",
+  NOTIFICATION_URL: "notification",
   AGREEMENT_DETAILS: "agreement_details",
   ROOMATE_AGREEMENT_FIELDS: "agreement-field",
   UPDATE_ROOMATE_AGREEMENT: "agreement-answer",
@@ -30,6 +31,12 @@ export default {
   UPDATE_PROFILE: "user",
   GET_ACTIVITY_LOGS: "log",
   // UPDATE_PROFILE: "user/",
+
+  // matches
+  DISMISS_MATCH: "relation/dismissed/",
+  GET_MATCHES_FILTER_COUNT: "matches-count",
+  BLOCKED_MATCH: "relation/",
+  MATCH_INFO: "user/matching-information",
 
   //community, announcements
   CREATE_POST: "post",
