@@ -7,9 +7,10 @@ import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
-import RemoveFriendAlert from "ui/screens/home/friends/MyFriends/RemoveFriendAlert";
+import TwoButtonsAlert, {
+  Type
+} from "ui/screens/home/friends/MyFriends/TwoButtonsAlert";
 import InfoAlert from "./InfoAlert";
-import RoommateRequestAlert from "./RoommateRequestAlert";
 import RelationItem from "ui/components/organisms/relation_item/RelationItem";
 
 type Props = {
@@ -223,22 +224,38 @@ const MyFriendsView: FC<Props> = ({
           )}
         />
       </Screen>
-      <RemoveFriendAlert
+      <TwoButtonsAlert
         shouldShow={showRemoveFriendAlert}
         getSelectedItem={getSelectedItem}
         hideSelf={hideRemoveFriendAlert}
+        title="Remove Friend"
+        message={`Are you sure you want to remove ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        } from your friends list?`}
+        type={Type.FRIENDS_ROOMMATE_REQUEST}
+        errorMessage="Unable to remove friend"
+        firstButtonText="Yes, remove"
+        isFromMatchScreen={false}
       />
-      <RoommateRequestAlert
+      <TwoButtonsAlert
         shouldShow={showRequestAlert}
         getSelectedItem={getSelectedItem}
         hideSelf={hideRommateRequestAlert}
+        title="Roommate Request"
+        message={`Are you sure you want to send roommate request to ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        }?`}
+        type={Type.FRIENDS_ROOMMATE_REQUEST}
+        errorMessage="Unable to send roommate request"
+        firstButtonText="Yes, send request"
+        isFromMatchScreen={false}
       />
       <InfoAlert
         shouldShow={showInfoAlert}
         getSelectedItem={getSelectedItem}
         hideSelf={hideInfoAlert}
       />
-      <RoommateRequestAlert
+      <TwoButtonsAlert
         shouldShow={isCancelAlertVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideCancelRequestAlert}
@@ -247,7 +264,9 @@ const MyFriendsView: FC<Props> = ({
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         }?`}
         firstButtonText={STRINGS.dialogs.cancel_request.success}
-        type={"cancel"}
+        type={Type.CANCEL}
+        errorMessage="Unable to send cancel request"
+        isFromMatchScreen={false}
       />
     </>
   );

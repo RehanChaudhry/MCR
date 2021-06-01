@@ -15,8 +15,11 @@ import RelationItem from "ui/components/organisms/relation_item/RelationItem";
 import OptimizedBottomBreadCrumbs, {
   OptimizedBBCItem
 } from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
-import RoommateRequestAlert from "ui/screens/home/friends/MyFriends/RoommateRequestAlert";
+import ThreeButtonsAlert from "ui/screens/home/friends/MyFriends/ThreeButtonsAlert";
 import { capitalizeWords } from "utils/Util";
+import TwoButtonsAlert, {
+  Type
+} from "../friends/MyFriends/TwoButtonsAlert";
 
 type Props = {
   isLoading: boolean;
@@ -167,12 +170,20 @@ export const MatchesView: React.FC<Props> = ({
         retryCallback={pullToRefreshCallback}
         extraData={isRequestApiLoading}
       />
-      <RoommateRequestAlert
+      <TwoButtonsAlert
         shouldShow={isRoommateDialogVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideRommateRequestAlert}
+        title="Roommate Request"
+        message={`Are you sure you want to send roommate request to ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        }?`}
+        type={Type.MATCHES_ROOMMATE_REQUEST}
+        errorMessage="Unable to send roommate request"
+        firstButtonText="Yes, send request"
+        isFromMatchScreen={true}
       />
-      <RoommateRequestAlert
+      <TwoButtonsAlert
         shouldShow={isFriendRequestDialogVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideFriendRequestAlert}
@@ -180,8 +191,12 @@ export const MatchesView: React.FC<Props> = ({
         message={`Are you sure you want to send friend request to ${
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         }?`}
+        type={Type.FRIEND_REQUEST}
+        errorMessage="Unable to send friend request"
+        firstButtonText="Yes, send request"
+        isFromMatchScreen={true}
       />
-      <RoommateRequestAlert
+      <TwoButtonsAlert
         shouldShow={isCancelRequestDialogVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideCancelRequestAlert}
@@ -190,17 +205,16 @@ export const MatchesView: React.FC<Props> = ({
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         }?`}
         firstButtonText={STRINGS.dialogs.cancel_request.success}
-        type={"cancel"}
+        type={Type.CANCEL}
+        errorMessage="Unable to send cancel request"
+        isFromMatchScreen={true}
       />
-      <RoommateRequestAlert
+      <ThreeButtonsAlert
         shouldShow={isDismissDialogVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideDismissBlockAlert}
         title={STRINGS.dialogs.dismiss_block.title}
         message={`Do you want to add ${getSelectedItem()?.user?.getFullName()} in your dismissed list or blocked list?`}
-        firstButtonText={STRINGS.dialogs.dismiss_block.dismiss}
-        secondButtonText={STRINGS.dialogs.dismiss_block.block}
-        type="blocked"
       />
       <OptimizedBottomBreadCrumbs<MatchesTypeFilter>
         data={filter()}
