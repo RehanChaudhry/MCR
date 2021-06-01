@@ -122,12 +122,11 @@ const style = StyleSheet.create({
     marginTop: SPACE.lg
   },
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    flexDirection: "row"
   },
   leftContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+    flex: 1
   },
   title: {
     fontSize: FONT_SIZE.base
@@ -137,7 +136,11 @@ const style = StyleSheet.create({
   },
   titleSubtitle: {
     marginLeft: SPACE.md,
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    flex: 1,
+    marginStart: SPACE.sm,
+    paddingStart: SPACE.sm,
+    paddingEnd: SPACE.md
   },
   bottomLine: {
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -151,5 +154,10 @@ const style = StyleSheet.create({
   rightImage: {
     width: 36,
     height: 36
+  },
+  rightContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end"
   }
 });

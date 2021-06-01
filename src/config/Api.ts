@@ -32,6 +32,12 @@ export default {
   GET_ACTIVITY_LOGS: "log",
   // UPDATE_PROFILE: "user/",
 
+  // matches
+  DISMISS_MATCH: "relation/dismissed/",
+  GET_MATCHES_FILTER_COUNT: "matches-count",
+  BLOCKED_MATCH: "relation/",
+  MATCH_INFO: "user/matching-information",
+
   //community, announcements
   CREATE_POST: "post",
   GET_COMMUNITY_ANNOUNCEMENT: "post",
