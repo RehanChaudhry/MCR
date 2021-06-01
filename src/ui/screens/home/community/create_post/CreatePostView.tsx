@@ -227,16 +227,23 @@ export const CreatePostView = React.memo<Props>((props) => {
                 <PhotosButton
                   isSelected={postType === POST_TYPES.PHOTOS}
                   onPress={() => {
-                    setImages([]);
-                    setPostType(POST_TYPES.PHOTOS);
-                    openImageGallery();
+                    if (
+                      !postType.includes(POST_TYPES.PHOTOS) ||
+                      images.length === 0
+                    ) {
+                      AppLog.logForcefully("if");
+                      setImages([]);
+                      setPostType(POST_TYPES.PHOTOS);
+                      openImageGallery();
+                    }
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
                 <LinkButton
                   isSelected={postType === POST_TYPES.LINK}
                   onPress={() => {
-                    setPostType(POST_TYPES.LINK);
+                    !postType.includes(POST_TYPES.LINK) &&
+                      setPostType(POST_TYPES.LINK);
                     props.removeSignedImageUrl("", true);
                     AppLog.log("postType: " + postType);
                   }}
@@ -245,7 +252,8 @@ export const CreatePostView = React.memo<Props>((props) => {
                 <EmbedButton
                   isSelected={postType === POST_TYPES.EMBED}
                   onPress={() => {
-                    setPostType(POST_TYPES.EMBED);
+                    !postType.includes(POST_TYPES.EMBED) &&
+                      setPostType(POST_TYPES.EMBED);
                     props.removeSignedImageUrl("", true);
                     AppLog.log("postType: " + postType);
                   }}
