@@ -1,6 +1,5 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import { UpdateRelationStatus } from "models/api_requests/UpdateRelationApiRequestModel";
 import RelationModel, { Status } from "models/RelationModel";
 import React, { FC, useCallback, useContext } from "react";
 import { StyleSheet, View } from "react-native";
@@ -10,18 +9,26 @@ import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 import useSendFriendOrRoommateRequest from "ui/screens/home/friends/useSendFriendOrRoommateRequest";
 import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
 
+export enum Type {
+  FRIEND_REQUEST = "friend_request",
+  FRIENDS_ROOMMATE_REQUEST = "friends_roommate_request",
+  MATCHES_ROOMMATE_REQUEST = "matches_roommate_request",
+  CANCEL = "cancel",
+  UNFRIEND = "unfriend"
+}
+
 type Props = {
   title?: string;
   message?: string;
   shouldShow: boolean;
   getSelectedItem: () => RelationModel | undefined;
   hideSelf: () => void;
-  type?: UpdateRelationStatus;
+  type: Type;
   firstButtonText?: string;
   secondButtonText?: string;
 };
 
-const RoommateRequestAlert: FC<Props> = React.memo(
+const TwoButtonsAlert: FC<Props> = React.memo(
   ({
     shouldShow,
     getSelectedItem,
@@ -36,9 +43,15 @@ const RoommateRequestAlert: FC<Props> = React.memo(
   }) => {
     const theme = usePreferredTheme();
 
-    const { myFriends, setMyFriends } = useContext(MyFriendsContext);
+    const {
+      myFriends,
+      setMyFriends,
+      matches,
+      setMatches,
+      resetData
+    } = useContext(MyFriendsContext);
 
-    const changeStatus = useCallback(
+    const changedMyFriendStatus = useCallback(
       (friend: RelationModel | undefined, status?: Status) => {
         if (!myFriends || !friend) {
           return;
@@ -60,34 +73,67 @@ const RoommateRequestAlert: FC<Props> = React.memo(
       [myFriends, setMyFriends]
     );
 
-    const onMatchRemoved = useCallback(
+    const changeMatchesStatus = useCallback(
+      (match: RelationModel | undefined, status?: Status) => {
+        if (!matches || !match) {
+          return;
+        }
+
+        let _matches = [...matches];
+        let index = _matches.findIndex((value) => value.id === match.id);
+        let updatedMatch: RelationModel = Object.assign(
+          Object.create(match),
+          match
+        );
+        updatedMatch.status = status;
+        _matches.splice(index, 1, updatedMatch);
+
+        setMatches?.(_matches);
+      },
+      [matches, setMatches]
+    );
+
+    const onFriendRemoved = useCallback(
       (id: number) => {
         setMyFriends?.(myFriends?.filter((value) => value.id !== id));
+        resetData();
       },
-      [myFriends, setMyFriends]
+      [myFriends, setMyFriends, resetData]
     );
 
     const { shouldShowPb, sendRequest } = useSendFriendOrRoommateRequest(
       "Unable to send friend request",
       hideSelf,
       () => {
-        changeStatus(getSelectedItem(), Status.PENDING);
+        if (type === Type.FRIENDS_ROOMMATE_REQUEST) {
+          changedMyFriendStatus(getSelectedItem(), Status.PENDING);
+        } else {
+          changeMatchesStatus(getSelectedItem(), Status.PENDING);
+        }
       }
     );
 
+    const getTypeForUpdateRelation = () => {
+      if (type === Type.CANCEL) {
+        return "cancel";
+      } else {
+        return "unfriend";
+      }
+    };
+
     //for cancel, dismissed and block match
     const {
-      shouldShowRelationUpdatePb,
+      shouldShowPb: shouldShowRelationUpdatePb,
       updateRelation
     } = useUpdateRelation(
-      type ?? "accepted",
+      getTypeForUpdateRelation(),
       "Unable to cancel request",
       hideSelf,
       () => {
-        if (type === "cancel") {
-          changeStatus(getSelectedItem(), undefined);
+        if (type === Type.CANCEL) {
+          changeMatchesStatus(getSelectedItem(), undefined);
         } else {
-          onMatchRemoved(getSelectedItem()?.id ?? -1);
+          onFriendRemoved(getSelectedItem()?.id ?? -1);
         }
       }
     );
@@ -109,15 +155,24 @@ const RoommateRequestAlert: FC<Props> = React.memo(
               text={firstButtonText}
               style={styles.actionContainer}
               shouldShowProgressBar={
-                type === "cancel" || type === "blocked"
-                  ? shouldShowRelationUpdatePb
-                  : shouldShowPb
+                type === Type.FRIEND_REQUEST ||
+                type === Type.FRIENDS_ROOMMATE_REQUEST ||
+                type === Type.MATCHES_ROOMMATE_REQUEST
+                  ? shouldShowPb
+                  : shouldShowRelationUpdatePb
               }
               onPress={() => {
-                if (type !== null && type !== undefined) {
-                  updateRelation(getSelectedItem());
-                } else {
+                if (
+                  type === Type.FRIEND_REQUEST ||
+                  type === Type.FRIENDS_ROOMMATE_REQUEST ||
+                  type === Type.MATCHES_ROOMMATE_REQUEST
+                ) {
                   sendRequest(getSelectedItem());
+                } else if (
+                  type === Type.CANCEL ||
+                  type === Type.UNFRIEND
+                ) {
+                  updateRelation(getSelectedItem());
                 }
               }}
               textStyle={[
@@ -132,39 +187,6 @@ const RoommateRequestAlert: FC<Props> = React.memo(
                 }
               ]}
               fontWeight="semi-bold"
-            />
-            {secondButtonText !== null && (
-              <>
-                <View
-                  style={[
-                    styles.separator,
-                    { backgroundColor: theme.themedColors.separator }
-                  ]}
-                />
-                <AppButton
-                  text={secondButtonText}
-                  style={styles.actionContainer}
-                  shouldShowProgressBar={shouldShowRelationUpdatePb}
-                  onPress={() => {
-                    updateRelation(getSelectedItem());
-                  }}
-                  textStyle={[
-                    styles.actionStyle,
-                    {
-                      color: theme.themedColors.danger,
-                      textAlign: "center",
-                      fontSize: FONT_SIZE.base
-                    }
-                  ]}
-                  fontWeight="semi-bold"
-                />
-              </>
-            )}
-            <View
-              style={[
-                styles.separator,
-                { backgroundColor: theme.themedColors.separator }
-              ]}
             />
             <AppButton
               text="Cancel"
@@ -199,4 +221,4 @@ const styles = StyleSheet.create({
     height: 0.5
   }
 });
-export default RoommateRequestAlert;
+export default TwoButtonsAlert;

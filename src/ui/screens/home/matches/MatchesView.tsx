@@ -15,8 +15,11 @@ import ProfileMatchItem from "ui/components/organisms/profile_match_item/Profile
 import OptimizedBottomBreadCrumbs, {
   OptimizedBBCItem
 } from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
-import RoommateRequestAlert from "ui/screens/home/friends/MyFriends/RoommateRequestAlert";
+import ThreeButtonsAlert from "ui/screens/home/friends/MyFriends/ThreeButtonsAlert";
 import { AppLog, capitalizeWords } from "utils/Util";
+import TwoButtonsAlert, {
+  Type
+} from "../friends/MyFriends/TwoButtonsAlert";
 
 type Props = {
   isLoading: boolean;
@@ -178,12 +181,17 @@ export const MatchesView: React.FC<Props> = ({
         retryCallback={pullToRefreshCallback}
         extraData={isRequestApiLoading}
       />
-      <RoommateRequestAlert
+      <TwoButtonsAlert
         shouldShow={isRoommateDialogVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideRommateRequestAlert}
+        title="Roommate Request"
+        message={`Are you sure you want to send roommate request to ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        }?`}
+        type={Type.MATCHES_ROOMMATE_REQUEST}
       />
-      <RoommateRequestAlert
+      <TwoButtonsAlert
         shouldShow={isFriendRequestDialogVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideFriendRequestAlert}
@@ -191,8 +199,9 @@ export const MatchesView: React.FC<Props> = ({
         message={`Are you sure you want to send friend request to ${
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         }?`}
+        type={Type.FRIEND_REQUEST}
       />
-      <RoommateRequestAlert
+      <TwoButtonsAlert
         shouldShow={isCancelRequestDialogVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideCancelRequestAlert}
@@ -201,17 +210,14 @@ export const MatchesView: React.FC<Props> = ({
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         }?`}
         firstButtonText={STRINGS.dialogs.cancel_request.success}
-        type={"cancel"}
+        type={Type.CANCEL}
       />
-      <RoommateRequestAlert
+      <ThreeButtonsAlert
         shouldShow={isDismissDialogVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideDismissBlockAlert}
         title={STRINGS.dialogs.dismiss_block.title}
         message={`Do you want to add ${getSelectedItem()?.user?.getFullName()} in your dismissed list or blocked list?`}
-        firstButtonText={STRINGS.dialogs.dismiss_block.dismiss}
-        secondButtonText={STRINGS.dialogs.dismiss_block.block}
-        type="blocked"
       />
       <OptimizedBottomBreadCrumbs<MatchesTypeFilter>
         data={filter()}

@@ -11,9 +11,9 @@ import ConnectionItem, {
   CONNECTION_ACTION_STATE
 } from "ui/components/organisms/friends/connection/ConnectionItem";
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
-import RemoveFriendAlert from "ui/screens/home/friends/MyFriends/RemoveFriendAlert";
 import InfoAlert from "./InfoAlert";
-import RoommateRequestAlert from "./RoommateRequestAlert";
+import ThreeButtonsAlert from "./ThreeButtonsAlert";
+import TwoButtonsAlert, { Type } from "./TwoButtonsAlert";
 
 type Props = {
   friendsCount: number;
@@ -186,15 +186,20 @@ const MyFriendsView: FC<Props> = ({
           data={data}
         />
       </Screen>
-      <RemoveFriendAlert
+      <ThreeButtonsAlert
         shouldShow={showRemoveFriendAlert}
         getSelectedItem={getSelectedItem}
         hideSelf={hideRemoveFriendAlert}
       />
-      <RoommateRequestAlert
+      <TwoButtonsAlert
         shouldShow={showRequestAlert}
         getSelectedItem={getSelectedItem}
         hideSelf={hideRommateRequestAlert}
+        title="Roommate Request"
+        message={`Are you sure you want to send roommate request to ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        }?`}
+        type={Type.FRIENDS_ROOMMATE_REQUEST}
       />
       <InfoAlert
         shouldShow={showInfoAlert}
