@@ -31,7 +31,7 @@ const listItem = (
   item: RelationModel,
   onPressChat: (item: RelationModel) => void,
   showRequestAlert: (item: RelationModel) => void,
-  showInfoAlert: (item: RelationModel) => void,
+  showIneligibleInfoAlert: (item: RelationModel) => void,
   showCancelAlert: (item: RelationModel) => void,
   onPressCross: (item: RelationModel) => void,
   moveToProfileScreen: (relationModel: RelationModel) => void,
@@ -91,6 +91,7 @@ const listItem = (
       onRoommateRequestClicked={showRequestAlert}
       onCancelRequestClicked={showCancelAlert}
       onRequestReceivedClicked={moveToRoommateRequests}
+      onNotEligibleClicked={showIneligibleInfoAlert}
     />
   );
 };

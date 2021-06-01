@@ -30,6 +30,7 @@ interface Props {
   onCancelRequestClicked: (profileMatch: RelationModel) => void;
   onRequestReceivedClicked: (profileMatch: RelationModel) => void;
   onFriendRequestClicked?: (profileMatch: RelationModel) => void;
+  onNotEligibleClicked?: (profileMatch: RelationModel) => void;
 }
 
 function createActionButton(
@@ -38,7 +39,8 @@ function createActionButton(
   onCancelRequestClicked: (profileMatch: RelationModel) => void,
   onRoommateRequestClicked: (profileMatch: RelationModel) => void,
   onRequestReceivedClicked: (profileMatch: RelationModel) => void,
-  onFriendRequestClicked?: (profileMatch: RelationModel) => void
+  onFriendRequestClicked?: (profileMatch: RelationModel) => void,
+  onNotEligibleClicked?: (profileMatch: RelationModel) => void
 ) {
   let actionButton: React.ReactElement;
   const { relationType, actionPerformed, eligible } = getRelationStatus(
@@ -88,7 +90,9 @@ function createActionButton(
       if (eligible === Eligible.NOT_ELIGIBLE) {
         actionButton = (
           <AppButton
-            isDisable={true}
+            onPress={() => {
+              onNotEligibleClicked?.(profileMatch);
+            }}
             fontWeight={"semi-bold"}
             textStyle={[
               styles.btnActionText,
@@ -172,7 +176,8 @@ const ProfileMatchItem = ({
   onRoommateRequestClicked,
   onCancelRequestClicked,
   onRequestReceivedClicked,
-  onFriendRequestClicked
+  onFriendRequestClicked,
+  onNotEligibleClicked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -246,7 +251,8 @@ const ProfileMatchItem = ({
           onCancelRequestClicked,
           onRoommateRequestClicked,
           onRequestReceivedClicked,
-          onFriendRequestClicked
+          onFriendRequestClicked,
+          onNotEligibleClicked
         )}
       </View>
     </View>
