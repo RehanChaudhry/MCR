@@ -7,15 +7,10 @@ import { NotificationsResponseModel } from "models/api_responses/NotificationsRe
 import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiRequestModel";
 import { AgreementDetailsResponseModel } from "models/api_responses/AgreementDetailsResponseModel";
 import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
-import { GetAnswersResponseModel } from "models/api_responses/GetAnswersResponseModel";
 import { NotificationApiRequestModel } from "models/api_requests/NotificationApiRequestModel";
 
 function questions() {
   return apiClient.get<QuestionsResponseModel>(API.GET_QUESTIONS);
-}
-
-function getAnswers() {
-  return apiClient.get<GetAnswersResponseModel>(API.GET_ANSWERS);
 }
 
 function getNotifications(requestModel: NotificationApiRequestModel) {
@@ -45,7 +40,6 @@ function activityLogs(requestModel: ActivityLogApiRequestModel) {
 
 export default {
   questions,
-  getAnswers,
   answers,
   getNotifications,
   activityLogs,

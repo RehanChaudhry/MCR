@@ -25,7 +25,9 @@ import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseMo
 import ProfileApis from "repo/auth/ProfileApis";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { Alert, View } from "react-native";
-import QuestionsResponseModel from "models/api_responses/QuestionsResponseModel";
+import QuestionsResponseModel, {
+  toSections
+} from "models/api_responses/QuestionsResponseModel";
 import { QuestionsView } from "ui/screens/questions/QuestionsView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
@@ -40,7 +42,6 @@ import RightArrow from "assets/images/right.svg";
 import LeftArrow from "assets/images/left.svg";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { HomeDrawerParamList } from "routes";
-import { GetAnswersResponseModel } from "models/api_responses/GetAnswersResponseModel";
 import StaticContentRequestModel, {
   StaticContentType
 } from "models/api_requests/StaticContentRequestModel";
@@ -89,8 +90,6 @@ const QuestionsController: FC<Props> = () => {
   const welcomeNavigation = useNavigation<WelcomeNavigationProp>();
   const profileNavigation = useNavigation<ProfileNavigationProp>();
   const matchesNavigation = useNavigation<MatchesNavigationProp>();
-
-  const isQuestionAnswersFetched = useRef<boolean>(false);
 
   const moveToHomeScreen = useCallback(() => {
     homeNavigation.reset({
@@ -212,22 +211,17 @@ const QuestionsController: FC<Props> = () => {
     ProfileApis.questions
   );
 
-  const getAnswersApi = useApi<any, GetAnswersResponseModel>(
-    ProfileApis.getAnswers
-  );
-
   const answerApi = useApi<AnswerApiRequestModel, AnswerApiResponseModel>(
     ProfileApis.answers
   );
 
   useEffect(() => {
-    isQuestionAnswersFetched.current = false;
     getHeaderContent();
-    handleGetQuestionsApi();
+    requestGetQuestionsApi();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleGetQuestionsApi = async (onComplete?: () => void) => {
+  const requestGetQuestionsApi = async (onComplete?: () => void) => {
     const { hasError, dataBody, errorBody } = await questionApi.request(
       []
     );
@@ -236,28 +230,7 @@ const QuestionsController: FC<Props> = () => {
       AppLog.log("Unable to find questions " + errorBody);
       return;
     } else {
-      await handleGetAnswersApi(
-        new QuestionsResponseModel(dataBody.message, dataBody.data)
-      );
-      onComplete?.();
-    }
-  };
-
-  const handleGetAnswersApi = async (
-    questionsApiResponse?: QuestionsResponseModel,
-    onComplete?: () => void
-  ) => {
-    const { hasError, dataBody, errorBody } = await getAnswersApi.request(
-      []
-    );
-    if (hasError || dataBody === undefined) {
-      // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.log("Unable to find answers " + errorBody);
-      return;
-    } else {
-      questionsApiResponse?.assignAnswers(dataBody.data);
-      isQuestionAnswersFetched.current = true;
-      setQuestions(questionsApiResponse?.toSections() ?? []);
+      setQuestions(toSections(dataBody.data ?? []));
       onComplete?.();
     }
   };
@@ -276,6 +249,8 @@ const QuestionsController: FC<Props> = () => {
     } else {
       if (route.params.isFrom === EScreen.WELCOME) {
         moveToHomeScreen();
+      } else {
+        Alert.alert("Answers submitted successfully", dataBody.message);
       }
     }
   });
@@ -289,10 +264,8 @@ const QuestionsController: FC<Props> = () => {
 
   return (
     <ProgressErrorView
-      isLoading={!isQuestionAnswersFetched.current}
-      error={
-        questionApi.error || getAnswersApi.error || staticContentApi.error
-      }
+      isLoading={questionApi.loading}
+      error={questionApi.error || staticContentApi.error}
       errorView={(message) => {
         return (
           <View>

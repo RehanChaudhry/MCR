@@ -120,7 +120,7 @@ const MyFriendsView: FC<Props> = ({
     setShowRemoveFriendAlert(true);
   };
 
-  const headerDetails: () => string = () => {
+  const headerDetails = () => {
     const friendLabel: string = friendsCount > 1 ? "friends" : "friend";
     let details = `You have currently ${friendsCount} ` + friendLabel;
 

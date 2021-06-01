@@ -9,12 +9,11 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useMemo,
   useState
 } from "react";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
-import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 import { FriendsRootStackParamList } from "routes/FriendsRootStack";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "../connect_requests/ConnectRequestsController";
@@ -38,9 +37,6 @@ const MyFriendsController: FC<Props> = () => {
   });
 
   const navigation = useNavigation<FriendsNavigationProp>();
-  const { myFriends, setMyFriends, onResetMyFriends } = useContext(
-    MyFriendsContext
-  );
 
   const [isLoading, setIsLoading] = useState(true);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(false);
@@ -51,6 +47,13 @@ const MyFriendsController: FC<Props> = () => {
   const [pendingFriendsCount, setPendingFriendsCount] = useState<number>(
     0
   );
+
+  const {
+    myFriends,
+    setMyFriends,
+    addListenerOnResetData,
+    removeListenerOnResetData
+  } = useContext(MyFriendsContext);
 
   const myFriendsApi = useApi<
     PaginationParamsModel,
@@ -145,11 +148,15 @@ const MyFriendsController: FC<Props> = () => {
     });
   }, [navigation]);
 
-  useMemo(() => {
-    onResetMyFriends.current = () => {
+  useEffect(() => {
+    let listener = () => {
       onPullToRefresh();
     };
-  }, [onPullToRefresh, onResetMyFriends]);
+    addListenerOnResetData(listener);
+    return () => {
+      removeListenerOnResetData(listener);
+    };
+  }, [onPullToRefresh, addListenerOnResetData, removeListenerOnResetData]);
 
   return (
     <MyFriendsView

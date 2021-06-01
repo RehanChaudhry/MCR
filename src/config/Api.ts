@@ -25,8 +25,7 @@ export default {
   UNIS: "university",
 
   // Profile
-  GET_QUESTIONS: "question/",
-  GET_ANSWERS: "answer/",
+  GET_QUESTIONS: "answer/",
   POST_ANSWERS: "answer/",
   // GET_ACTIVITY_LOGS: "activity-logs/",
   UPDATE_PROFILE: "user",
@@ -54,5 +53,6 @@ export default {
   ROOMMATE_REQUESTS: "relation/pending/roommates",
 
   // others
-  GET_STATIC_CONTENT: "static-content/"
+  GET_STATIC_CONTENT: "static-content/",
+  GET_SIGNED_URL: "file/upload-image"
 };

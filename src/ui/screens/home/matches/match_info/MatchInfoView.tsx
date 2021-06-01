@@ -55,7 +55,7 @@ export const MatchInfoView: React.FC<Props> = ({
             name={`${userProfile.firstName ?? STRINGS.common.not_found} ${
               userProfile.lastName ?? STRINGS.common.not_found
             }`}
-            image={userProfile.profilePicture.fileURL ?? ""}
+            image={userProfile.profilePicture.fileURL}
             subtitle={`${
               userProfile.matchGroupName ?? STRINGS.common.not_found
             }, ${userProfile.major ?? STRINGS.common.not_found}`}

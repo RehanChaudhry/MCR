@@ -32,10 +32,14 @@ import * as Yup from "yup";
 type Props = {
   shouldShowProgressBar?: boolean;
   createPost: (values: FormikValues) => void;
+  createSignedUrl: (image: ImagePickerResponse) => void;
+  removeSignedImageUrl: (filename: string, removeAll: boolean) => void;
 };
 
 const validationSchema = Yup.object().shape({
-  message: Yup.string().required(Strings.createPost.requiredField.message),
+  message: Yup.string()
+    .min(10)
+    .required(Strings.createPost.requiredField.message),
   link: Yup.string().matches(
     pattern,
     Strings.createPost.fieldValidationMessage.invalidUrl
@@ -67,10 +71,10 @@ export const CreatePostView = React.memo<Props>((props) => {
 
   initialValues.link = "";
   initialValues.embed = "";
+  initialValues.message = "";
 
   const onSubmit = (_value: FormikValues) => {
     initialValues = _value;
-    initialValues.images = images;
     props.createPost(initialValues);
   };
 
@@ -98,10 +102,8 @@ export const CreatePostView = React.memo<Props>((props) => {
       <ImageWithCross
         imageResponse={item}
         onImageRemoved={(imageResponse) => {
-          AppLog.logForcefully(JSON.stringify(images));
-          AppLog.logForcefully(
-            "images length when item remove" + images.length
-          );
+          AppLog.log(JSON.stringify(images));
+          AppLog.log("images length when item remove" + images.length);
           setImages((prevState) => {
             return [
               ...prevState.filter((filteredImage) => {
@@ -109,6 +111,8 @@ export const CreatePostView = React.memo<Props>((props) => {
               })
             ];
           });
+
+          props.removeSignedImageUrl(imageResponse.fileName!!, false);
         }}
       />
     ),
@@ -120,9 +124,7 @@ export const CreatePostView = React.memo<Props>((props) => {
       ImagePicker.launchImageLibrary(
         {
           mediaType: "photo",
-          includeBase64: false,
-          maxHeight: 200,
-          maxWidth: 200
+          includeBase64: true
         },
         (response) => {
           if (
@@ -130,13 +132,14 @@ export const CreatePostView = React.memo<Props>((props) => {
             response !== undefined &&
             response.didCancel !== true
           ) {
-            AppLog.logForcefully("response" + JSON.stringify(response));
+            AppLog.log("response" + JSON.stringify(response));
             setImages((prevState) => {
               return [
                 ...(prevState === undefined ? [] : prevState),
                 response
               ];
             });
+            props.createSignedUrl(response);
           }
         }
       );
@@ -234,7 +237,8 @@ export const CreatePostView = React.memo<Props>((props) => {
                   isSelected={postType === POST_TYPES.LINK}
                   onPress={() => {
                     setPostType(POST_TYPES.LINK);
-                    AppLog.logForcefully("postType: " + postType);
+                    props.removeSignedImageUrl("", true);
+                    AppLog.log("postType: " + postType);
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
@@ -242,7 +246,8 @@ export const CreatePostView = React.memo<Props>((props) => {
                   isSelected={postType === POST_TYPES.EMBED}
                   onPress={() => {
                     setPostType(POST_TYPES.EMBED);
-                    AppLog.logForcefully("postType: " + postType);
+                    props.removeSignedImageUrl("", true);
+                    AppLog.log("postType: " + postType);
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
