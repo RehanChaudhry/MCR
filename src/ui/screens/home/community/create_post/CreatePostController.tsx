@@ -1,4 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Strings from "config/Strings";
 import { FormikValues } from "formik";
@@ -29,6 +33,8 @@ type CommunityNavigationProp = StackNavigationProp<
   "CreatePost"
 >;
 
+type CommunityRoutes = RouteProp<CommunityStackParamList, "CreatePost">;
+
 type Props = {};
 
 const CreatePostController: FC<Props> = () => {
@@ -36,6 +42,7 @@ const CreatePostController: FC<Props> = () => {
   const theme = usePreferredTheme();
   const [showProgressBar, setShowProgressBar] = useState<boolean>(false);
   const signedUrls = useRef<string[]>([]);
+  const route = useRoute<CommunityRoutes>();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -142,14 +149,12 @@ const CreatePostController: FC<Props> = () => {
       []
     );
 
-    AppLog.logForcefully(
-      "create post request : " + JSON.stringify(values.images)
-    );
     handleCreatePost();
   };
 
   const closeScreen = usePreventDoubleTap(() => {
     navigation.goBack();
+    route.params?.postCreatedSuccessfully?.();
   });
 
   const removeSignedImageUrl = (filename: string, removeAll: boolean) => {
