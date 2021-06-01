@@ -10,7 +10,7 @@ import ConnectionListHeader from "ui/components/organisms/friends/connection/Con
 import RemoveFriendAlert from "ui/screens/home/friends/MyFriends/RemoveFriendAlert";
 import InfoAlert from "./InfoAlert";
 import RoommateRequestAlert from "./RoommateRequestAlert";
-import ProfileMatchItem from "ui/components/organisms/profile_match_item/ProfileMatchItem";
+import RelationItem from "ui/components/organisms/relation_item/RelationItem";
 
 type Props = {
   friendsCount: number;
@@ -83,7 +83,7 @@ const listItem = (
     />
   );*/
   return (
-    <ProfileMatchItem
+    <RelationItem
       profileMatch={_item}
       onCrossClicked={onPressCross}
       onChatButtonClicked={onPressChat}

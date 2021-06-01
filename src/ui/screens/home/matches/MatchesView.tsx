@@ -11,7 +11,7 @@ import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import MatchesFilter from "ui/components/molecules/matches_filter/MatchesFilter";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import ProfileMatchItem from "ui/components/organisms/profile_match_item/ProfileMatchItem";
+import RelationItem from "ui/components/organisms/relation_item/RelationItem";
 import OptimizedBottomBreadCrumbs, {
   OptimizedBBCItem
 } from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
@@ -101,8 +101,8 @@ export const MatchesView: React.FC<Props> = ({
     ({ item }: { item: RelationModel }) => {
       const _item = new RelationModel(item);
       return (
-        <ProfileMatchItem
-          profileMatch={_item}
+        <RelationItem
+          relationModel={_item}
           onCrossClicked={() => {
             profileMatch.current = _item;
             setDismissDialogVisible(true);
