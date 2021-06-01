@@ -16,10 +16,10 @@ import OptimizedBottomBreadCrumbs, {
   OptimizedBBCItem
 } from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
 import ThreeButtonsAlert from "ui/screens/home/friends/MyFriends/ThreeButtonsAlert";
-import { capitalizeWords } from "utils/Util";
 import TwoButtonsAlert, {
   Type
-} from "../friends/MyFriends/TwoButtonsAlert";
+} from "ui/screens/home/friends/MyFriends/TwoButtonsAlert";
+import { capitalizeWords } from "utils/Util";
 
 type Props = {
   isLoading: boolean;

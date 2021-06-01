@@ -232,7 +232,7 @@ const MyFriendsView: FC<Props> = ({
         message={`Are you sure you want to remove ${
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         } from your friends list?`}
-        type={Type.FRIENDS_ROOMMATE_REQUEST}
+        type={Type.UNFRIEND}
         errorMessage="Unable to remove friend"
         firstButtonText="Yes, remove"
         isFromMatchScreen={false}

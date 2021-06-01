@@ -82,6 +82,9 @@ const TwoButtonsAlert: FC<Props> = React.memo(
           relation
         );
         updatedRelation.status = status;
+        if (status === Status.PENDING) {
+          updatedRelation.acceptee = relation.user?.id;
+        }
         _relations.splice(index, 1, updatedRelation);
 
         setRelations?.(_relations);
