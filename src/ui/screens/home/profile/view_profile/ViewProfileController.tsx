@@ -20,7 +20,6 @@ import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_wit
 import { NotificationParamList } from "routes/NotificationParams";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { ProfileRootStackParamList } from "routes/ProfileRootStack";
-import { useAuth } from "hooks";
 import {
   ProfileData,
   UpdateProfileUiResponseModel
@@ -83,6 +82,13 @@ const ViewProfileController: FC<Props> = () => {
       return;
     } else {
       AppLog.log("view profile data is fetched " + dataBody.data);
+
+      //data modification for profile header
+      let modifiedItem = dataBody.data.sections?.[0]?.formInputs?.[0]!!;
+      modifiedItem.firstName = dataBody.data.sections![0].formInputs![1].userMeta![0].value;
+      modifiedItem.lastName = dataBody.data.sections![0].formInputs![2].userMeta![0].value;
+      dataBody.data.sections?.[0].formInputs?.splice(0, 3, modifiedItem);
+
       setViewProfileUiData(dataBody.data);
     }
   }, [updateProfileUiApi]);
@@ -93,7 +99,6 @@ const ViewProfileController: FC<Props> = () => {
 
   const navigation = useNavigation<ProfileNavigationProp>();
   const navigationViewProfile = useNavigation<ViewProfileNavigationProp>();
-
   const navigationNotification = useNavigation<NotificationNavigationProp>();
   const route = useRoute<ViewProfileRouteProp>();
 
@@ -131,15 +136,11 @@ const ViewProfileController: FC<Props> = () => {
     navigationNotification
   ]);
 
-  //for the user profile data
-  const { user } = useAuth();
-
   return (
     <>
       {useLazyLoadInterface(
         <ViewProfileView
           openRoommateAgreementScreen={openRoommateAgreementScreen}
-          user={user}
           viewProfileUiData={viewProfileUiData}
         />
       )}

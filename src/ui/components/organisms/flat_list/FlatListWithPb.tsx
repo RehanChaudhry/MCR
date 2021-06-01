@@ -15,7 +15,7 @@ import ErrorWithRetryView from "ui/components/molecules/ErrorWithRetryView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 
 interface OwnProps<ItemT> extends FlatListProps<ItemT> {
-  shouldShowProgressBar: boolean;
+  shouldShowProgressBar?: boolean;
   error?: string;
   errorView?: (errorText: string) => React.ReactElement | null;
   retryCallback?: () => void;

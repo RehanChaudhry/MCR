@@ -8,7 +8,7 @@ import { useRoute } from "@react-navigation/native";
 import { CustomViewProfileItems } from "ui/components/organisms/section_component/CustomViewProfiletems";
 
 type Props = {
-  listData: any[] | undefined;
+  listData: FormInputFieldData[] | undefined;
   showProgressBar: boolean;
 };
 

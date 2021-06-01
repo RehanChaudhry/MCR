@@ -16,6 +16,7 @@ export const DynamicCardViewItem = React.memo<DynamicCardViewItemProps>(
     const updateProfileRoute = useRoute<any>();
     return (
       <CardView style={styles.cardView}>
+        {/*//when update profile is open then basic profile will be shown*/}
         {updateProfileRoute.params.updateProfile === true && (
           <HeadingWithText
             headingFontWeight={"semi-bold"}
@@ -23,17 +24,18 @@ export const DynamicCardViewItem = React.memo<DynamicCardViewItemProps>(
             text={sections.description}
           />
         )}
+        {/*//when view profile is open basic profile will not be shown*/}
         {updateProfileRoute.params.updateProfile === false && (
           <HeadingWithText
             headingFontWeight={"semi-bold"}
             headingText={
               sections.title === "Basic Profile"
-                ? ""
+                ? undefined
                 : sections.title
             }
             text={
               sections.title === "Basic Profile"
-                ? ""
+                ? undefined
                 : sections.description
             }
           />
@@ -50,8 +52,8 @@ export const DynamicCardViewItem = React.memo<DynamicCardViewItemProps>(
 const styles = StyleSheet.create({
   cardView: {
     marginHorizontal: SPACE.lg,
-    marginBottom: SPACE.sm,
-    marginTop: SPACE.sm,
+    marginBottom: SPACE.xs,
+    marginTop: SPACE.lg,
     paddingVertical: SPACE.lg,
     paddingHorizontal: SPACE.lg
   }

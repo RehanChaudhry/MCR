@@ -6,6 +6,8 @@ export type RoommateAgreementResponseModel = {
 };
 
 export type FormInputFieldData = {
+  firstName?: string;
+  lastName?: string;
   fieldName?: string;
   id: number;
   name: string;
