@@ -1,15 +1,14 @@
+import { FONT_SIZE, SPACE, STRINGS } from "config";
+import Colors from "config/Colors";
+import Fonts from "config/Fonts";
+import { usePreferredTheme } from "hooks";
+import NotificationData from "models/NotificationData";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { CircleImageBorder } from "ui/components/atoms/circle_image_border/CircleImageBorder";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { AppButton } from "ui/components/molecules/app_button/AppButton";
-import Colors from "config/Colors";
-import { FONT_SIZE, SPACE, STRINGS } from "config";
-import { usePreferredTheme } from "hooks";
-import { moderateScale } from "config/Dimens";
-import Fonts from "config/Fonts";
-import NotificationData from "models/NotificationData";
+import { CircleImageBorder } from "ui/components/atoms/circle_image_border/CircleImageBorder";
 import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
+import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
 
 type Props = {
   notifications?: NotificationData;
@@ -43,17 +42,15 @@ export const CircleImageWithText = React.memo<Props>(
                 { color: theme.themedColors.interface["700"] }
               ]}
             />
-
-            <AppButton
+            <LinkButton
               text={notifications?.getButtonText()!}
-              shouldNotOptimize={false}
-              buttonStyle={[
+              viewStyle={[
                 styles.buttonStyle,
                 { backgroundColor: theme.themedColors.primaryShade }
               ]}
-              textStyle={styles.buttonText}
-              fontWeight={"bold"}
               onPress={userNameOnPress}
+              fontWeight="bold"
+              textStyle={styles.buttonText}
             />
           </View>
           <View
@@ -86,10 +83,11 @@ const styles = StyleSheet.create({
     marginTop: SPACE._2xs
   },
   buttonStyle: {
-    width: "60%",
-    height: moderateScale(32),
     borderRadius: 8,
-    elevation: 0
+    elevation: 0,
+    paddingLeft: SPACE.sm,
+    paddingTop: SPACE.sm,
+    paddingBottom: SPACE.sm
   },
   view: {
     backgroundColor: Colors.grey2,
