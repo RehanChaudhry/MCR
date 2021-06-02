@@ -1,7 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
 buildscript {
     repositories {
@@ -11,6 +10,8 @@ buildscript {
         classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.10, 0.99.99]'
     }
 }
+
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
 
 import com.android.build.OutputFile

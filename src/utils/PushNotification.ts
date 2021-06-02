@@ -13,17 +13,6 @@ export const PushNotification = {
     });
 
     userId !== undefined &&
-      OneSignal.setExternalUserId(userId.toString(), (results) => {
-        AppLog.log(
-          "OneSignal: device subscribed: ",
-          JSON.stringify(results)
-        );
-      });
-
-    userId !== undefined &&
-      OneSignal.addTrigger("user_id", userId.toString());
-
-    userId !== undefined &&
       OneSignal.sendTag("user_id", userId.toString());
 
     /* O N E S I G N A L   S E T U P */
