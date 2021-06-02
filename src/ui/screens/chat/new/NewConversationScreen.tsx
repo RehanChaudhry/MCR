@@ -14,8 +14,8 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { ItemConversation } from "ui/components/molecules/item_conversation/ItemConversation";
 import Strings from "config/Strings";
-import { User } from "models/api_responses/ConversationSuggestionsResponseModel";
 import { ItemSuggestion } from "ui/components/molecules/item_conversation/ItemSuggestion";
+import { User } from "models/User";
 
 type Props = {
   data: User[] | undefined;
@@ -45,7 +45,6 @@ export const NewConversationScreen = React.memo<Props>(
     );
 
     function appInputCallback(text: string) {
-      AppLog.logForcefully("callback");
       suggestions(text);
     }
 
