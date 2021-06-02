@@ -2,7 +2,7 @@ import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { usePreferredTheme } from "hooks";
 import React, { FC, useRef } from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FriendsStackParamList } from "routes/FriendsBottomBar";
 import { FriendsRoutes } from "routes/FriendsRoutes";

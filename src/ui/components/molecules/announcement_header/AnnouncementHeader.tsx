@@ -19,7 +19,7 @@ import {
 import { SvgProp } from "utils/Util";
 
 export interface AnnouncementHeaderProps extends TouchableOpacityProps {
-  leftImageUrl?: string;
+  leftImageUrl?: string | undefined;
   title: string;
   subTitle?: string;
   titleStyle?: StyleProp<TextStyle>;
@@ -30,9 +30,8 @@ export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   shouldHideBottomSeparator?: boolean;
   titleFontWeight?: Weight;
   rightIcon?: SvgProp;
-  onClickedReportContentButton?: (postId: number) => void | undefined;
+  onRightBtnClicked?: () => void | undefined;
   leftImageStyle?: StyleProp<ImageStyle> | undefined;
-  postId?: number;
 }
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
@@ -47,10 +46,9 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
     shouldHideSubTitle = false,
     shouldHideBottomSeparator = false,
     titleFontWeight = "normal",
-    onClickedReportContentButton,
     rightIcon,
     leftImageStyle,
-    postId
+    onRightBtnClicked
   }) => {
     const theme = usePreferredTheme();
 
@@ -60,7 +58,11 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
           <View style={style.leftContainer}>
             <Image
               style={[style.profileImage, leftImageStyle]}
-              source={{ uri: leftImageUrl }}
+              source={
+                leftImageUrl !== undefined
+                  ? { uri: leftImageUrl }
+                  : require("assets/images/profile.png")
+              }
             />
 
             <View style={style.titleSubtitle}>
@@ -96,7 +98,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
                 style.rightImage
               ]}
               onPress={() => {
-                onClickedReportContentButton?.(postId ?? 0);
+                onRightBtnClicked?.();
               }}
             />
           )}
@@ -120,12 +122,11 @@ const style = StyleSheet.create({
     marginTop: SPACE.lg
   },
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    flexDirection: "row"
   },
   leftContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+    flex: 1
   },
   title: {
     fontSize: FONT_SIZE.base
@@ -135,7 +136,11 @@ const style = StyleSheet.create({
   },
   titleSubtitle: {
     marginLeft: SPACE.md,
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    flex: 1,
+    marginStart: SPACE.sm,
+    paddingStart: SPACE.sm,
+    paddingEnd: SPACE.md
   },
   bottomLine: {
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -149,5 +154,10 @@ const style = StyleSheet.create({
   rightImage: {
     width: 36,
     height: 36
+  },
+  rightContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end"
   }
 });

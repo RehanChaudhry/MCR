@@ -56,6 +56,8 @@ const styles = StyleSheet.create({
     width: "40%",
     height: undefined,
     borderBottomLeftRadius: 10,
-    borderTopLeftRadius: 10
+    borderTopLeftRadius: 10,
+    resizeMode: "contain",
+    marginStart: 1
   }
 });

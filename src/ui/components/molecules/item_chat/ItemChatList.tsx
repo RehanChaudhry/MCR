@@ -46,9 +46,14 @@ export const ItemChatList = React.memo<ItemChatListProps>(
           )}>
           <Image
             style={styles.imgStyle}
-            source={{
-              uri: item.conversationUsers[0].profilePicture.fileURL
-            }}
+            source={
+              item.conversationUsers[0].profilePicture?.fileURL !==
+              undefined
+                ? {
+                    uri: item.conversationUsers[0].profilePicture?.fileURL
+                  }
+                : require("assets/images/profile.png")
+            }
           />
 
           <NotifyIndic width={10} height={10} style={styles.indicator} />

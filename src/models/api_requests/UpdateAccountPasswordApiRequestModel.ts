@@ -1,5 +1,6 @@
 export type UpdateAccountPasswordApiRequestModel = {
-  oldPassword: string;
-  password: string;
-  confirmPassword: string;
+  secondaryEmail?: string;
+  oldPassword?: string;
+  password?: string;
+  confirmPassword?: string;
 };

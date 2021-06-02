@@ -10,7 +10,6 @@ export const ViewProfileStack = createStackNavigator<ViewProfileStackParamList>(
 export type UpdateProfileStackParamList = {
   UpdateProfile: {
     isFrom: EScreen;
-    options?: string[];
     list?: ConversationItem[];
     listKey?: string;
   };

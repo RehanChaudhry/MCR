@@ -1,4 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Strings from "config/Strings";
 import { FormikValues } from "formik";
@@ -15,13 +19,14 @@ import { CommunityStackParamList } from "routes/CommunityStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { CreatePostView } from "ui/screens/home/community/create_post/CreatePostView";
-import { AppLog } from "utils/Util";
-import { ImagePickerResponse } from "react-native-image-picker";
+import MyImagePickerResponse from "models/api_responses/MyImagePickerResponse";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
   "CreatePost"
 >;
+
+type CommunityRoutes = RouteProp<CommunityStackParamList, "CreatePost">;
 
 type Props = {};
 
@@ -29,6 +34,7 @@ const CreatePostController: FC<Props> = () => {
   const navigation = useNavigation<CommunityNavigationProp>();
   const theme = usePreferredTheme();
   const [showProgressBar, setShowProgressBar] = useState<boolean>(false);
+  const route = useRoute<CommunityRoutes>();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -57,7 +63,6 @@ const CreatePostController: FC<Props> = () => {
     CreatePostApiResponseModel
   >(CommunityAnnouncementApis.createPost);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleCreatePost = usePreventDoubleTap(async () => {
     if (requestModel.current === undefined) {
       return;
@@ -85,9 +90,9 @@ const CreatePostController: FC<Props> = () => {
     requestModel.current.embed =
       values.embed !== "" ? values.embed : undefined;
     requestModel.current.photos = values.images.reduce(
-      (newImage: Photo[], image: ImagePickerResponse) => (
+      (newImage: Photo[], image: MyImagePickerResponse) => (
         newImage.push({
-          fileURL: image.uri,
+          fileURL: image.s3Url,
           originalName: image.fileName
         } as Photo),
         newImage
@@ -95,14 +100,12 @@ const CreatePostController: FC<Props> = () => {
       []
     );
 
-    AppLog.logForcefully(
-      "create post request : " + JSON.stringify(values.images)
-    );
     handleCreatePost();
   };
 
   const closeScreen = usePreventDoubleTap(() => {
     navigation.goBack();
+    route.params?.postCreatedSuccessfully?.();
   });
 
   return (

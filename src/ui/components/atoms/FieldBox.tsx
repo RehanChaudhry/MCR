@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import {
   StyleProp,
   StyleSheet,
@@ -22,13 +22,17 @@ import { WelcomeStackParamList } from "routes/WelcomeStack";
 import EScreen from "models/enums/EScreen";
 import { FormikValues, useFormikContext } from "formik";
 import { SvgProp } from "utils/Util";
+import { ConversationItem } from "models/ConversationItem";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type Props = {
   name: string;
   viewStyle?: StyleProp<ViewStyle>;
-  title: string;
+  title: string | undefined;
   textStyle: StyleProp<TextStyle>;
   rightIcon: SvgProp | undefined;
+  initialList?: ConversationItem[];
+  isLocked: EIntBoolean;
 };
 
 type UpdateProfileNavigationProp = StackNavigationProp<
@@ -49,7 +53,9 @@ export const FieldBox: FC<Props> = ({
   viewStyle,
   title,
   textStyle,
-  rightIcon
+  rightIcon,
+  initialList,
+  isLocked = EIntBoolean.FALSE
 }) => {
   const theme = usePreferredTheme();
   const route = useRoute<UpdateProfileRouteProp>();
@@ -62,22 +68,31 @@ export const FieldBox: FC<Props> = ({
   );
   const [areOptionsAdded, setAreOptionsAdded] = useState(false);
 
+  const updateUi = useCallback(() => {
+    if (values[name]?.length > 0) {
+      setOptionsText(
+        `Added ${values[name].length} option${
+          values[name]?.length === 1 ? "" : "s"
+        }`
+      );
+      setAreOptionsAdded(true);
+    } else {
+      setOptionsText(Strings.profile.dropDownInitialValue.addOptions);
+      setAreOptionsAdded(false);
+    }
+  }, [name, values]);
+
+  useEffect(() => {
+    values[name] = initialList;
+    updateUi();
+  }, [updateUi, values, name, initialList]);
+
   useEffect(() => {
     if (route.params.listKey === name) {
       values[name] = route.params.list;
-      if (values[name]?.length > 0) {
-        setOptionsText(
-          `Added ${values[name].length} option${
-            values[name]?.length === 1 ? "" : "s"
-          }`
-        );
-        setAreOptionsAdded(true);
-      } else {
-        setOptionsText(Strings.profile.dropDownInitialValue.addOptions);
-        setAreOptionsAdded(false);
-      }
+      updateUi();
     }
-  }, [values, name, route.params.list, route.params.listKey]);
+  }, [updateUi, values, name, route.params.list, route.params.listKey]);
 
   return (
     <View>
@@ -85,24 +100,33 @@ export const FieldBox: FC<Props> = ({
       <TouchableWithoutFeedback
         onPress={() => {
           if (route.params.isFrom === EScreen.WELCOME) {
-            welcomeNavigation.navigate("AddInterests", {
-              list: values[name] ?? [],
-              listKey: name,
-              title: title
-            });
+            !isLocked &&
+              welcomeNavigation.navigate("AddInterests", {
+                list: values[name] ?? [],
+                listKey: name,
+                title: title
+              });
           } else {
-            updateNavigation.navigate("AddInterests", {
-              list: values[name] ?? [],
-              listKey: name,
-              title: title
-            });
+            !isLocked &&
+              updateNavigation.navigate("AddInterests", {
+                list: values[name] ?? [],
+                listKey: name,
+                title: title
+              });
           }
         }}>
         <View
           style={[
             styles.input,
             viewStyle,
-            { borderColor: theme.themedColors.border }
+            {
+              borderColor: !isLocked
+                ? theme.themedColors.border
+                : theme.themedColors.borderSecondary,
+              backgroundColor: !isLocked
+                ? theme.themedColors.background
+                : theme.themedColors.backgroundSecondary
+            }
           ]}>
           <AppLabel
             text={optionsText}

@@ -54,6 +54,14 @@ export const ReportContentView = React.memo<Props>(
       setProb((prevState) => [...prevState, checkedValue]);
     };
 
+    const removeParticularItem = (checkedValue: string) => {
+      setProb(
+        prob.filter((problem) => {
+          return problem !== checkedValue;
+        })
+      );
+    };
+
     return (
       <KeyboardAwareScrollView keyboardOpeningTime={50} extraHeight={200}>
         <Screen style={styles.mainContainer} shouldAddBottomInset={false}>
@@ -81,6 +89,10 @@ export const ReportContentView = React.memo<Props>(
                 onChange={(value) => {
                   if (value) {
                     updateState(Strings.reportContent.offensiveContent);
+                  } else {
+                    removeParticularItem(
+                      Strings.reportContent.offensiveContent
+                    );
                   }
                 }}
                 style={styles.marginTopLg}
@@ -90,6 +102,8 @@ export const ReportContentView = React.memo<Props>(
                 onChange={(value) => {
                   if (value) {
                     updateState(Strings.reportContent.harassment);
+                  } else {
+                    removeParticularItem(Strings.reportContent.harassment);
                   }
                 }}
               />
@@ -98,6 +112,8 @@ export const ReportContentView = React.memo<Props>(
                 onChange={(value) => {
                   if (value) {
                     updateState(Strings.reportContent.bullying);
+                  } else {
+                    removeParticularItem(Strings.reportContent.bullying);
                   }
                 }}
               />
@@ -106,6 +122,8 @@ export const ReportContentView = React.memo<Props>(
                 onChange={(value) => {
                   if (value) {
                     updateState(Strings.reportContent.spam);
+                  } else {
+                    removeParticularItem(Strings.reportContent.spam);
                   }
                 }}
               />
@@ -114,6 +132,8 @@ export const ReportContentView = React.memo<Props>(
                 onChange={(value) => {
                   if (value) {
                     updateState(Strings.reportContent.violence);
+                  } else {
+                    removeParticularItem(Strings.reportContent.violence);
                   }
                 }}
               />
@@ -122,6 +142,10 @@ export const ReportContentView = React.memo<Props>(
                 onChange={(value) => {
                   if (value) {
                     updateState(Strings.reportContent.concerningContent);
+                  } else {
+                    removeParticularItem(
+                      Strings.reportContent.concerningContent
+                    );
                   }
                 }}
               />
@@ -130,6 +154,8 @@ export const ReportContentView = React.memo<Props>(
                 onChange={(value) => {
                   if (value) {
                     updateState(Strings.reportContent.nudity);
+                  } else {
+                    removeParticularItem(Strings.reportContent.nudity);
                   }
                 }}
               />
@@ -138,6 +164,8 @@ export const ReportContentView = React.memo<Props>(
                 onChange={(value) => {
                   if (value) {
                     updateState(Strings.reportContent.threats);
+                  } else {
+                    removeParticularItem(Strings.reportContent.threats);
                   }
                 }}
               />
@@ -146,6 +174,8 @@ export const ReportContentView = React.memo<Props>(
                 onChange={(value) => {
                   if (value) {
                     updateState(Strings.reportContent.hateSpeech);
+                  } else {
+                    removeParticularItem(Strings.reportContent.hateSpeech);
                   }
                 }}
               />
@@ -154,6 +184,10 @@ export const ReportContentView = React.memo<Props>(
                 onChange={(value) => {
                   if (value) {
                     updateState(Strings.reportContent.somethingElse);
+                  } else {
+                    removeParticularItem(
+                      Strings.reportContent.somethingElse
+                    );
                   }
                 }}
               />

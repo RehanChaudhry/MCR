@@ -42,11 +42,14 @@ const Roommates: React.FC<Props> = ({
   const renderItem = ({ item }: { item: RelationModel }) => {
     return (
       <AnnouncementHeader
-        leftImageUrl={item.profilePicture}
-        title={item.userName ?? STRINGS.common.not_found}
-        subTitle={`${item.classLevel}, ${item.major}`}
+        leftImageUrl={item.user?.profilePicture?.fileURL}
+        title={
+          `${item.user?.firstName} ${item.user?.lastName}` ??
+          STRINGS.common.not_found
+        }
+        subTitle={`${item.user?.hometown}, ${item.user?.major}`}
         shouldShowRightImage={true}
-        onPress={() => {
+        onRightBtnClicked={() => {
           onChatClicked?.(item);
         }}
         rightIcon={() => (

@@ -1,19 +1,20 @@
+import { FONT_SIZE, SPACE } from "config";
 import { FormikValues, useFormikContext } from "formik";
 import { usePreferredTheme } from "hooks";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import {
   AppLabel,
   AppLabelProps
 } from "ui/components/atoms/app_label/AppLabel";
+import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import {
   AppInputField,
   AppInputFieldProps
 } from "../appinputfield/AppInputField";
 import { AppFormValidationLabel } from "./AppFormValidationLabel";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
-import { FONT_SIZE, SPACE } from "config";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 export interface AppFormFieldProps {
   fieldTestID?: string;
@@ -27,6 +28,8 @@ export interface AppFormFieldProps {
   linkLabelOnPress?: () => void;
   secureTextEntry?: boolean;
   shouldNotOptimize?: boolean;
+  customTextChanged?: (value: string) => void;
+  isLocked?: EIntBoolean;
 }
 
 type Props = AppFormFieldProps;
@@ -34,21 +37,22 @@ type Props = AppFormFieldProps;
 const AppFormField = optimizedMemo<Props>(
   ({
     name,
-    value,
     labelProps,
     fieldInputProps,
     fieldTestID,
     validationLabelTestID,
     linkLabelProps,
     linkLabelOnPress,
-    secureTextEntry
+    secureTextEntry,
+    customTextChanged,
+    isLocked = EIntBoolean.FALSE
   }) => {
     const {
       errors,
-      handleChange,
       setFieldTouched,
+      setFieldValue,
       touched,
-      values
+      initialValues
     } = useFormikContext<FormikValues>();
 
     const theme = usePreferredTheme();
@@ -57,6 +61,11 @@ const AppFormField = optimizedMemo<Props>(
       setFieldTouched,
       name
     ]);
+
+    useEffect(() => {
+      initialValues !== undefined && setFieldTouched(name, true);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialValues]);
 
     return (
       <>
@@ -83,13 +92,17 @@ const AppFormField = optimizedMemo<Props>(
         )}
         <AppInputField
           testID={fieldTestID}
-          value={value ? value : values[name]}
-          onChangeText={handleChange(name)}
+          valueToShowAtStart={initialValues[name]}
+          onChangeText={(text) => {
+            setFieldValue(name, text);
+            customTextChanged?.(text);
+          }}
           onBlur={_setFieldTouched}
           secureTextEntry={secureTextEntry}
           {...fieldInputProps}
+          editable={!isLocked}
         />
-        {errors[name] && touched[name] && (
+        {(errors[name] || touched[name]) && (
           <AppFormValidationLabel
             validationLabelTestID={validationLabelTestID}
             errorString={errors[name] as string}

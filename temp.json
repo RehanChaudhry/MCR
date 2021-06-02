@@ -1,38 +1,26 @@
 {
-  "duration": 1334,
+  "duration": 2124,
   "problem": null,
   "originalError": null,
   "ok": true,
   "status": 200,
   "headers": {
-    "cf-request-id": "09d77ba4c600001897e9001000000001",
-    "content-type": "application/json; charset=utf-8",
-    "x-content-type-options": "nosniff",
-    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
-    "strict-transport-security": "max-age=0; includeSubDomains",
-    "nel": "{\"max_age\":604800,\"report_to\":\"cf-nel\"}",
-    "report-to": "{\"group\":\"cf-nel\",\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report?s=ERFhnGAi2pZiWpLfpenyoYsyOxKRHqJXZTXDHOIaIMvG%2FCR7NBrMQI9hg9sin4cHbzeo7tbsAFR0Nh1bukUwmzhbiQ2VgNv3Sj6hEw8zxkaJFjk%3D\"}],\"max_age\":604800}",
-    "cf-ray": "649f621ad86a1897-SIN",
-    "x-powered-by": "Express",
-    "x-xss-protection": "1; mode=block",
-    "vary": "Accept-Encoding, Origin",
-    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400",
-    "cf-cache-status": "DYNAMIC",
-    "x-frame-options": "SAMEORIGIN",
-    "date": "Tue, 04 May 2021 05:38:30 GMT",
-    "server": "cloudflare",
-    "etag": "W/\"142-8b8Eb5uKqXy1mbs8WnjkunSUKOY\""
+    "content-length": "0",
+    "x-amz-id-2": "IU3CWG+YmtpfgXRJNxwaqS+eXXTkKkjp2BuNlOHjoJFe4obBdg2d/xbCIlM4Ox+VbNpzj1YRhmY=",
+    "etag": "\"c3ae81fa46ef13b34d60a5a59d2ccc17\"",
+    "date": "Mon, 31 May 2021 07:23:39 GMT",
+    "server": "AmazonS3",
+    "x-amz-request-id": "MF92H1QE9G2EBDF2"
   },
   "config": {
-    "url": "spam",
-    "method": "post",
-    "data": "{\"reason\":\"ffgfgf\",\"referenceId\":499,\"problems\":[\"Concerning Content\"],\"type\":\"post\"}",
+    "url": "https://my-college-roomie-dev.s3.us-west-2.amazonaws.com/rn_image_picker_lib_temp_36e3ebba-3661-4482-9bc5-37276df6f3e6.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIASPP6RDR5YIOL4WWC%2F20210531%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210531T072336Z&X-Amz-Expires=30&X-Amz-Signature=412b69f1bc9d186ed92e10bb3a24e6350fbccbaeaf740c2b0ae948c625089008&X-Amz-SignedHeaders=host%3Bx-amz-acl&x-amz-acl=public-read",
+    "method": "put",
+    "data": "file:///data/user/0/com.mycollegeroomie/cache/rn_image_picker_lib_temp_36e3ebba-3661-4482-9bc5-37276df6f3e6.jpg",
     "headers": {
       "Accept": "application/json",
-      "Content-Type": "application/json",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTk3LCJ1c2VySWQiOjIwNiwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiXSwiaWF0IjoxNjE5Njc5OTgxLCJleHAiOjE2MjIyNzE5ODF9._0F5hN1PRUfhE2of4jrLO2ySwrbjN2zgcSIvaqg8BgI"
+      "Content-Type": "application/json"
     },
-    "baseURL": "https://mcr-dev.cygnis.dev/api/",
+    "baseURL": "",
     "transformRequest": [
       null
     ],
@@ -45,22 +33,5 @@
     "maxContentLength": -1,
     "maxBodyLength": -1
   },
-  "data": {
-    "message": "Post has been marked as spam successfully.",
-    "data": {
-      "status": "active",
-      "id": 65,
-      "reason": null,
-      "referenceId": 499,
-      "problems": [
-        "Concerning Content"
-      ],
-      "type": "post",
-      "reportedBy": 206,
-      "reporterFirstName": "Clyde",
-      "reporterLastName": "Sakins",
-      "updatedAt": "2021-05-04T05:38:30.348Z",
-      "createdAt": "2021-05-04T05:38:30.348Z"
-    }
-  }
+  "data": null
 }

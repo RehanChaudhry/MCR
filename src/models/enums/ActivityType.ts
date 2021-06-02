@@ -1,14 +1,14 @@
 import { DropDownItem } from "models/DropDownItem";
 
 enum ActivityType {
-  ALL = "",
-  FRIEND_REQUEST_SENT = "matches",
-  ADDED_TO_DISMISSED = "dismissed",
+  ROMMATE_AGREEMENT = "roommate-agreement",
+  FRIEND_REQUEST = "friend-request",
+  DISMISSED = "dismissed",
+  UPDATED_PROFILE = "updated-profile",
   CREATED_CONVERSATION = "conversation",
   CREATED_POST = "post",
-  ROOMMATE_REQUEST_SENT = "roommate",
+  ROOMMATE_REQUEST = "roommate-request",
   UPDATED_QUESTIONNAIRE = "questionnare",
-  UPDATED_PROFILE = "profile",
   UPDATED_AGREEMENT = "agreement",
   COMMENT = "comment"
 }
@@ -17,21 +17,25 @@ export const getActivityTypeFilterData = () => {
   const filters: DropDownItem[] = [];
 
   filters.push({
-    title: "Filter by activity log",
-    id: ActivityType.ALL
+    text: ActivityType.ROMMATE_AGREEMENT,
+    value: "Roommate Agreement"
   });
 
   filters.push({
-    title: "Friend Request Sent",
-    id: ActivityType.FRIEND_REQUEST_SENT
+    text: ActivityType.FRIEND_REQUEST,
+    value: "Friend Request"
   });
   filters.push({
-    title: "Dismissed",
-    id: ActivityType.ADDED_TO_DISMISSED
+    text: ActivityType.DISMISSED,
+    value: "Dismissed"
   });
   filters.push({
-    title: "Conversation Created",
-    id: ActivityType.CREATED_CONVERSATION
+    text: ActivityType.ROOMMATE_REQUEST,
+    value: "Roommate Request"
+  });
+  filters.push({
+    text: ActivityType.UPDATED_PROFILE,
+    value: "Updated Profile"
   });
   return filters;
 };

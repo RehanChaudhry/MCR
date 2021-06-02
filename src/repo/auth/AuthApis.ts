@@ -8,8 +8,9 @@ import { apiClient, resetApiClient } from "repo/Client";
 import { UpdateAccountPasswordApiRequestModel } from "models/api_requests/UpdateAccountPasswordApiRequestModel";
 import { UpdateAccountPasswordApiResponseModel } from "models/api_responses/UpdateAccountPasswordApiResponseModel";
 import { CreatePasswordApiRequestModel } from "models/api_requests/CreatePasswordApiRequestModel";
-import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
+import { UpdateProfileUiResponseModel } from "models/api_responses/UpdateProfileUiResponseModel";
+import { UpdateProfileUiRequestModel } from "models/api_requests/UpdateProfileUiRequestModel";
 
 function signIn(requestModel: SignInApiRequestModel) {
   return apiClient.post<SignInApiResponseModel>(
@@ -47,15 +48,21 @@ function updateAccountPassword(
   requestModel: UpdateAccountPasswordApiRequestModel
 ) {
   return apiClient.put<UpdateAccountPasswordApiResponseModel>(
-    API.UPDATE_PROFILE_URL,
+    API.UPDATE_ACCOUNT_PASSWORD_URL,
     JSON.stringify(requestModel)
   );
 }
 
-function updateProfile(requestModel: UpdateProfileRequestModel) {
+function updateProfile(requestModel: UpdateProfileUiRequestModel) {
   return apiClient.put<UpdateProfileResponseModel>(
-    API.UPDATE_PROFILE + "/" + requestModel.id,
+    API.UPDATE_PROFILE + "/" + "me",
     JSON.stringify(requestModel)
+  );
+}
+
+function updateProfileUi() {
+  return apiClient.get<UpdateProfileUiResponseModel>(
+    API.UPDATE_PROFILE + "/" + "me?meta=true"
   );
 }
 
@@ -65,5 +72,6 @@ export default {
   forgotPassword,
   createOrResetPassword,
   updateAccountPassword,
-  updateProfile
+  updateProfile,
+  updateProfileUi
 };

@@ -1,29 +1,47 @@
 import { API } from "config";
+import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
+import { UpdateRelationApiResponseModel } from "models/api_responses/UpdateRelationApiResponseModel";
 import { apiClient } from "repo/Client";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
-import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 
-function relations(request: RelationApiRequestModel) {
+function relations(request: PaginationParamsModel) {
   return apiClient.get<RelationApiResponseModel>(API.RELATION, {
     ...request
   });
 }
 
-function postRelation(userId: number) {
-  return apiClient.post<ApiSuccessResponseModel>(API.POST_RELATION, {
-    receiverId: userId
-  });
+function sendFriendOrRoommateRequest(
+  requestModel: UpdateRelationApiRequestModel
+) {
+  return apiClient.post<UpdateRelationApiResponseModel>(
+    API.RELATION,
+    requestModel
+  );
 }
 
-function matchDismiss(userId: number) {
-  return apiClient.post<ApiSuccessResponseModel>(API.DISMISS_MATCH, {
-    userId: userId
-  });
+function relationDismissRestore(
+  requestModel: UpdateRelationApiRequestModel
+) {
+  return apiClient.put<ApiSuccessResponseModel>(
+    `${API.RELATION_DISMISS_RESTORE}/${requestModel.receiverId}`,
+    requestModel
+  );
+}
+
+function updateRelation(requestModel: UpdateRelationApiRequestModel) {
+  return apiClient.put<UpdateRelationApiResponseModel>(
+    requestModel.status === "dismissed"
+      ? `${API.RELATION_DISMISS_RESTORE}/${requestModel.receiverId}`
+      : `${API.RELATION}/${requestModel.receiverId}`,
+    requestModel
+  );
 }
 
 export default {
   relations,
-  postRelation,
-  matchDismiss
+  relationDismissRestore,
+  updateRelation,
+  sendFriendOrRoommateRequest
 };

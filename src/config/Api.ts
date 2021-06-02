@@ -13,24 +13,30 @@ export default {
   FETCH_MY_PROFILE_URL: "user/me?meta=true",
   FORGOT_PASS_URL: "password/request/",
   RESET_PASS_URL: "password/set/",
+  UPDATE_ACCOUNT_PASSWORD_URL: "user/me",
   UPDATE_PROFILE_URL: "profile",
-  NOTIFICATION_URL: "notifications",
+  NOTIFICATION_URL: "notification",
   AGREEMENT_DETAILS: "agreement_details",
   ROOMATE_AGREEMENT_FIELDS: "agreement-field",
+  UPDATE_ROOMATE_AGREEMENT: "agreement-answer",
+  FETCH_ROOMATE_AGREEMENT_ANSWERS: "agreement-answer",
 
   //Get universities
   UNIS: "university",
 
   // Profile
-  GET_QUESTIONS: "question/",
-  GET_ANSWERS: "answer/",
+  GET_QUESTIONS: "answer/",
   POST_ANSWERS: "answer/",
-  GET_ACTIVITY_LOGS: "activity-logs/",
+  // GET_ACTIVITY_LOGS: "activity-logs/",
   UPDATE_PROFILE: "user",
+  GET_ACTIVITY_LOGS: "log",
+  // UPDATE_PROFILE: "user/",
 
   // matches
-  DISMISS_MATCH: "dismiss-match",
+  DISMISS_MATCH: "relation/dismissed/",
   GET_MATCHES_FILTER_COUNT: "matches-count",
+  BLOCKED_MATCH: "relation/",
+  MATCH_INFO: "user/matching-information",
 
   //community, announcements
   CREATE_POST: "post",
@@ -46,10 +52,13 @@ export default {
 
   //relations
   RELATION: "relation",
-  POST_RELATION: "relation",
-  // MY_FRIENDS: "myfriends",
+  RELATION_DISMISS_RESTORE: "relation/dismissed",
   MY_ROOMMATES: "myroommates",
-  DISMISSED_OR_BLOCKED: "dismissedorblocked",
-  FRIEND_REQUESTS: "friendrequests",
-  ROOMMATE_REQUESTS: "roommaterequests"
+  DISMISSED_OR_BLOCKED: "relation/dismiss",
+  FRIEND_REQUESTS: "relation/pending/friends",
+  ROOMMATE_REQUESTS: "relation/pending/roommates",
+
+  // others
+  GET_STATIC_CONTENT: "static-content/",
+  GET_SIGNED_URL: "file/upload-image"
 };

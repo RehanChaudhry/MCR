@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   StyleProp,
@@ -11,16 +11,19 @@ import {
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel";
+import EIntBoolean from "models/enums/EIntBoolean";
 
-export type Choice = { id: number; label: string };
+export type Choice = { id: number; value: string };
 type Props = {
   style?: StyleProp<ViewStyle>;
-  values: Array<Choice>;
-  onChange?: (value: Choice, index: number) => void;
+  values: Array<OptionsData>;
+  onChange?: (value: OptionsData, index: number) => void;
   direction: DIRECTION_TYPE;
   byDefaultSelected?: number;
   itemsInRow?: number; //for horizontal buttons
   shouldNotOptimize?: boolean;
+  isLocked?: EIntBoolean;
 };
 
 export enum DIRECTION_TYPE {
@@ -35,25 +38,45 @@ export const RadioGroup = optimizedMemo<Props>(
     onChange,
     itemsInRow = 2,
     direction,
-    byDefaultSelected = 0
+    byDefaultSelected = 0,
+    isLocked = EIntBoolean.FALSE
   }) => {
     const theme = usePreferredTheme();
     const [selectedPosition, setSelectedPosition] = useState<number>(
-      values.length - 1 >= byDefaultSelected ? byDefaultSelected : 0
+      values.length - 1 >= byDefaultSelected && byDefaultSelected !== -1
+        ? byDefaultSelected
+        : 0
     );
 
+    //only used to sent default callback when byDefaultSelected is updated
+    useEffect(() => {
+      onChange?.(values[selectedPosition], selectedPosition);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [byDefaultSelected]);
+
     function buttonPressed(position: number) {
-      const oldSelectedOption = selectedPosition;
-      setSelectedPosition(position);
-      if (position !== oldSelectedOption) {
-        onChange?.(values[position], position);
+      if (position !== selectedPosition) {
+        setSelectedPosition(position);
+        onChange?.(values[selectedPosition], position);
       }
     }
 
     function getStyleAsPerSelectionStatus(position: number) {
       return selectedPosition === position
-        ? [{ backgroundColor: theme.themedColors.label }]
-        : [{ backgroundColor: theme.themedColors.background }];
+        ? [
+            {
+              backgroundColor: !isLocked
+                ? theme.themedColors.label
+                : theme.themedColors.labelSecondary
+            }
+          ]
+        : [
+            {
+              backgroundColor: !isLocked
+                ? theme.themedColors.background
+                : theme.themedColors.backgroundSecondary
+            }
+          ];
     }
 
     const getDirection = () => {
@@ -68,7 +91,7 @@ export const RadioGroup = optimizedMemo<Props>(
       <View
         style={[style, getDirection(), styles.radioButtonWrapper]}
         testID={"RADIO_GROUP"}>
-        {values.map((item, index) => (
+        {values?.map((item, index) => (
           <View
             style={[
               styles.radioButtonContainer,
@@ -76,17 +99,22 @@ export const RadioGroup = optimizedMemo<Props>(
                 width: Dimensions.get("window").width / (itemsInRow - 10)
               }
             ]}
-            key={item.label}>
+            key={item.value}>
             <TouchableOpacity
               testID={"RADIO_GROUP_BUTTON"}
+              activeOpacity={isLocked ? 1 : 0.2}
               style={[
                 styles.radioButton,
                 {
-                  borderColor: theme.themedColors.label,
-                  backgroundColor: theme.themedColors.background
+                  borderColor: !isLocked
+                    ? theme.themedColors.label
+                    : theme.themedColors.labelSecondary,
+                  backgroundColor: !isLocked
+                    ? theme.themedColors.background
+                    : theme.themedColors.backgroundSecondary
                 }
               ]}
-              onPress={() => buttonPressed(index)}>
+              onPress={() => !isLocked && buttonPressed(index)}>
               <View
                 style={[
                   styles.radioButtonIcon,
@@ -96,8 +124,8 @@ export const RadioGroup = optimizedMemo<Props>(
             </TouchableOpacity>
             <TouchableWithoutFeedback
               testID="RADIO_GROUP_LABEL"
-              onPress={() => buttonPressed(index)}>
-              <AppLabel style={styles.radioButtonText} text={item.label} />
+              onPress={() => !isLocked && buttonPressed(index)}>
+              <AppLabel style={styles.radioButtonText} text={item.value} />
             </TouchableWithoutFeedback>
           </View>
         ))}
@@ -110,7 +138,7 @@ const styles = StyleSheet.create({
   radioButtonContainer: {
     flexDirection: "row",
     alignSelf: "flex-start",
-    marginTop: 16
+    marginTop: 8
   },
   radioButtonWrapper: {
     flexWrap: "wrap",

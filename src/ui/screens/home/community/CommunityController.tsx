@@ -1,4 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import PencilAlt from "assets/images/pencil_alt.svg";
 import Strings from "config/Strings";
@@ -34,6 +38,8 @@ type CommunityNavigationProp = StackNavigationProp<
   "Community"
 >;
 
+type CommunityRoute = RouteProp<CommunityStackParamList, "Community">;
+
 type Props = {};
 
 const CommunityController: FC<Props> = () => {
@@ -45,6 +51,7 @@ const CommunityController: FC<Props> = () => {
   >(undefined);
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   const navigation = useNavigation<CommunityNavigationProp>();
+  const route = useRoute<CommunityRoute>();
   const theme = usePreferredTheme();
 
   useEffect(() => {
@@ -61,12 +68,22 @@ const CommunityController: FC<Props> = () => {
     });
   }, [navigation]);
 
+  //listen callback from create post screen
+  const postCreatedSuccessfully = useCallback(() => {
+    setCommunities(undefined); //to show loader in screen
+    requestModel.current.page = 1;
+    fetchCommunities().then().catch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <HeaderRightTextWithIcon
           onPress={() => {
-            navigation.navigate("CreatePost");
+            navigation.navigate("CreatePost", {
+              postCreatedSuccessfully: postCreatedSuccessfully
+            });
           }}
           text={Strings.createPost.title.createPost}
           icon={() => {
@@ -84,7 +101,7 @@ const CommunityController: FC<Props> = () => {
       headerTitleAlign: "center",
       headerTitle: () => <HeaderTitle text="Community" />
     });
-  }, [navigation, theme]);
+  }, [postCreatedSuccessfully, navigation, theme]);
 
   const requestModel = useRef<AnnouncementRequestModel>({
     paginate: true,
@@ -116,7 +133,7 @@ const CommunityController: FC<Props> = () => {
     setShouldShowProgressBar(false);
     isFetchingInProgress.current = false;
     if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to Sign In", errorBody);
+      Alert.alert("Unable to fetch posts", errorBody);
       return;
     } else {
       setCommunities((prevState) => {
@@ -197,6 +214,21 @@ const CommunityController: FC<Props> = () => {
   useEffect(() => {
     fetchCommunities().then().catch();
   }, [fetchCommunities]);
+
+  useEffect(() => {
+    if (route.params?.postId) {
+      setCommunities((prevState) => {
+        const spamUserIndex =
+          prevState?.findIndex(
+            (value) => value.id === route.params?.postId
+          ) ?? -1;
+        if (spamUserIndex > -1) {
+          prevState!.splice(spamUserIndex, 1);
+        }
+        return prevState;
+      });
+    }
+  }, [route.params?.postId]);
 
   return (
     <CommunityView

@@ -1,19 +1,26 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RelationApiRequestModel } from "models/api_requests/RelationApiRequestModel";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
 import RelationFilterType from "models/enums/RelationFilterType";
 import RelationModel from "models/RelationModel";
-import React, { FC, useEffect, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 import { FriendsRootStackParamList } from "routes/FriendsRootStack";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "../connect_requests/ConnectRequestsController";
 import MyFriendsView from "./MyFriendsView";
+import EScreen from "models/enums/EScreen";
 
 type Props = {};
-
 type FriendsNavigationProp = StackNavigationProp<
   FriendsRootStackParamList,
   "ConnectRequests"
@@ -21,24 +28,20 @@ type FriendsNavigationProp = StackNavigationProp<
 
 const MyFriendsController: FC<Props> = () => {
   const [
-    relationRequestModel,
-    setRelationRequestModel
-  ] = useState<RelationApiRequestModel>({
+    paginationRequestModel,
+    setPaginationRequestModel
+  ] = useState<PaginationParamsModel>({
     type: RelationFilterType.FRIENDS,
     page: 1,
-    limit: 2,
+    limit: 9,
     paginate: true
   });
 
   const navigation = useNavigation<FriendsNavigationProp>();
 
-  const [myFriends, setMyFriends] = useState<Array<RelationModel>>();
+  const [isLoading, setIsLoading] = useState(true);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(false);
-  const [isLoadingMyFriends, setLoadingMyFriends] = useState<boolean>(
-    false
-  );
 
-  const [, setIsRefreshing] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
 
   const [friendsCount, setFriendsCount] = useState<number>(0);
@@ -46,109 +49,150 @@ const MyFriendsController: FC<Props> = () => {
     0
   );
 
+  const {
+    myFriends,
+    setMyFriends,
+    addListenerOnResetData,
+    removeListenerOnResetData
+  } = useContext(MyFriendsContext);
+
   const myFriendsApi = useApi<
-    RelationApiRequestModel,
+    PaginationParamsModel,
     RelationApiResponseModel
   >(FriendsApis.getMyFriends);
 
-  useEffect(() => {
-    setLoadingMyFriends(myFriendsApi.loading);
-  }, [myFriendsApi.loading]);
-
-  const handleMyFriendsResponse = async (
-    isRefreshing: boolean,
-    requestModel: RelationApiRequestModel,
-    onComplete?: () => void
-  ) => {
-    const { hasError, dataBody, errorBody } = await myFriendsApi.request([
-      requestModel
-    ]);
-    if (hasError || dataBody === undefined) {
-      setErrorMessage(errorBody);
-      return;
-    } else {
-      setErrorMessage(undefined);
-      const data = dataBody.data ?? [];
-
-      if (isRefreshing) {
-        setMyFriends(data);
+  const handleMyFriendsResponse = useCallback(
+    async (
+      isFromPullToRefresh: boolean,
+      requestModel: PaginationParamsModel,
+      onComplete?: () => void
+    ) => {
+      const {
+        hasError,
+        dataBody,
+        errorBody
+      } = await myFriendsApi.request([requestModel]);
+      if (hasError || dataBody === undefined) {
+        setErrorMessage(errorBody);
+        setIsLoading(false);
+        return;
       } else {
-        setMyFriends([...(myFriends ?? []), ...data]);
+        setErrorMessage(undefined);
+        setIsLoading(false);
+        const data = dataBody.data ?? [];
+
+        if (isFromPullToRefresh) {
+          setMyFriends?.(data);
+        } else {
+          setMyFriends?.([...(myFriends ?? []), ...data]);
+        }
+
+        if (requestModel.page === 1) {
+          setFriendsCount(dataBody.count ?? 0);
+          setPendingFriendsCount(dataBody.pendingCount ?? 0);
+        }
+
+        setPaginationRequestModel({
+          ...requestModel,
+          page: requestModel.page + 1
+        });
+        setCanLoadMore(data.length >= requestModel.limit);
+
+        onComplete?.();
       }
+    },
+    [myFriends, myFriendsApi, setMyFriends]
+  );
 
-      if (requestModel.page == 1) {
-        setFriendsCount(dataBody.count ?? 0);
-        setPendingFriendsCount(dataBody.pendingCount ?? 0);
-      }
-
-      setRelationRequestModel({
-        ...requestModel,
-        page: requestModel.page + 1
-      });
-      setCanLoadMore(data.length >= requestModel.limit);
-
-      onComplete?.();
-    }
-
-    setIsRefreshing(false);
-  };
-
-  const onEndReached = () => {
-    if (myFriendsApi.loading || !canLoadMore) {
+  const onEndReached = useCallback(() => {
+    if (myFriendsApi.loading) {
       return;
     }
 
-    handleMyFriendsResponse(false, relationRequestModel);
-  };
+    handleMyFriendsResponse(false, paginationRequestModel);
+  }, [
+    handleMyFriendsResponse,
+    myFriendsApi.loading,
+    paginationRequestModel
+  ]);
 
-  const onPullToRefresh = (onComplete?: () => void) => {
-    if (isLoadingMyFriends) {
-    }
+  const onPullToRefresh = useCallback(
+    (onComplete?: () => void) => {
+      if (myFriendsApi.loading) {
+        onComplete?.();
+        return;
+      }
 
-    const myFriendRequestModel: RelationApiRequestModel = {
-      ...relationRequestModel,
-      page: 1
-    };
+      const myFriendRequestModel: PaginationParamsModel = {
+        ...paginationRequestModel,
+        page: 1
+      };
 
-    const refreshing: boolean = true;
+      setPaginationRequestModel(myFriendRequestModel);
 
-    setRelationRequestModel(myFriendRequestModel);
-    setIsRefreshing(refreshing);
+      handleMyFriendsResponse(true, myFriendRequestModel, () => {
+        onComplete?.();
+      });
+    },
+    [handleMyFriendsResponse, myFriendsApi, paginationRequestModel]
+  );
 
-    handleMyFriendsResponse(refreshing, myFriendRequestModel, () => {
-      onComplete?.();
-    });
-  };
+  const moveToProfileScreen = useCallback(
+    (_: RelationModel) => {
+      navigation.navigate("Profile", { isFrom: EScreen.MY_FRIENDS });
+    },
+    [navigation]
+  );
+
+  const moveToRoommateRequests = useCallback(
+    (_: RelationModel) => {
+      navigation.navigate("ConnectRequests", {
+        title: "Roommate Requests",
+        type: ConnectRequestType.ROOMMATE_REQUESTS
+      });
+    },
+    [navigation]
+  );
 
   useEffect(() => {
-    handleMyFriendsResponse(false, relationRequestModel);
+    handleMyFriendsResponse(false, paginationRequestModel);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onPressReceivedFriendRequests = () => {
+  const onPressReceivedFriendRequests = useCallback(() => {
     navigation.navigate("ConnectRequests", {
       title: "Friend Requests",
       type: ConnectRequestType.FRIEND_REQUESTS
     });
-  };
+  }, [navigation]);
+
+  useEffect(() => {
+    let listener = () => {
+      onPullToRefresh();
+    };
+    addListenerOnResetData(listener);
+    return () => {
+      removeListenerOnResetData(listener);
+    };
+  }, [onPullToRefresh, addListenerOnResetData, removeListenerOnResetData]);
 
   return (
-    <>
-      <MyFriendsView
-        friendsCount={friendsCount}
-        pendingFriendsCount={pendingFriendsCount}
-        data={myFriends}
-        isLoading={isLoadingMyFriends}
-        canLoadMore={canLoadMore}
-        error={errorMessage}
-        onEndReached={onEndReached}
-        onPullToRefresh={onPullToRefresh}
-        onPressChat={(item: RelationModel) => {
-          AppLog.log("onPressChat: ", item);
-        }}
-        onPressReceivedFriendRequests={onPressReceivedFriendRequests}
-      />
-    </>
+    <MyFriendsView
+      friendsCount={friendsCount}
+      pendingFriendsCount={pendingFriendsCount}
+      data={myFriends}
+      isLoading={isLoading}
+      canLoadMore={canLoadMore}
+      error={errorMessage}
+      onEndReached={onEndReached}
+      onPullToRefresh={onPullToRefresh}
+      onPressChat={(item: RelationModel) => {
+        AppLog.log("onPressChat: ", item);
+      }}
+      onPressReceivedFriendRequests={onPressReceivedFriendRequests}
+      moveToProfileScreen={moveToProfileScreen}
+      moveToRoommateRequests={moveToRoommateRequests}
+    />
   );
 };
 

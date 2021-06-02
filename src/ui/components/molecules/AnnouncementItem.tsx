@@ -59,9 +59,9 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
             announcementItem.postedByLastName
           }
           subTitle={new PrettyTimeFormat().getPrettyTime(
-            (announcementItem.updatedAt as unknown) as string
+            (announcementItem.createdAt as unknown) as string
           )}
-          leftImageUrl={announcementItem.postedByProfilePicture.fileURL}
+          leftImageUrl={announcementItem.postedByProfilePicture?.fileURL}
           shouldShowRightImage={false}
         />
         {announcementItem.content && (
