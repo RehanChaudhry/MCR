@@ -7,9 +7,11 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppSwitch } from "ui/components/atoms/app_switch/AppSwitch";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
 
-type Props = {};
+type Props = {
+  onSwitchValueChange: (isSwitched: boolean) => void;
+};
 
-const RoommateAgreementTerms: FC<Props> = () => {
+const RoommateAgreementTerms: FC<Props> = ({ onSwitchValueChange }) => {
   const theme = usePreferredTheme();
   return (
     <CardView style={styles.cardView}>
@@ -28,7 +30,9 @@ const RoommateAgreementTerms: FC<Props> = () => {
         />
         <AppSwitch
           defaultValue={false}
-          onValueChange={() => {}}
+          onValueChange={(isSwitched) => {
+            onSwitchValueChange(isSwitched);
+          }}
           showCustomThumb={true}
           style={styles.switchButton}
         />

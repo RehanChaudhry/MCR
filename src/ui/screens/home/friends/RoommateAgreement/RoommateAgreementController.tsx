@@ -217,15 +217,17 @@ const RoommateAgreementController: FC<Props> = () => {
   const agreementDialogCallback = (status: string) => {
     setAgreementDialog(false);
 
-    if (submitAnswerRequest.current.roommates === undefined) {
-      submitAnswerRequest.current.roommates = [];
-    }
-    submitAnswerRequest.current.roommates.push({
-      userId: user?.profile?.id,
-      status: status
-    });
+    // if (submitAnswerRequest.current.roommates === undefined) {
+    //   submitAnswerRequest.current.roommates = [];
+    // }
+    // submitAnswerRequest.current.roommates.push({
+    //   userId: user?.profile?.id,
+    //   status: status
+    // });
 
+    AppLog.logForcefully("userProfile: " + JSON.stringify(user?.profile));
     submitAnswerRequest.current.agreementId = user?.profile?.agreementId!!;
+    submitAnswerRequest.current.status = status;
 
     //call submit/update agreement api
     handleRoommateUpdateApi();

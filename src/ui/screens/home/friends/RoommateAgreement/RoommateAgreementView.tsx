@@ -35,6 +35,8 @@ const RoommateAgreementView: FC<Props> = ({
 }) => {
   const { themedColors } = usePreferredTheme();
 
+  let switchedValue: boolean = false;
+
   const yepSchema =
     roommateData !== undefined
       ? createYupSchema(roommateData!!)
@@ -52,8 +54,7 @@ const RoommateAgreementView: FC<Props> = ({
         agreementFieldId: Number(key),
         agreementFieldValue: value
       })),
-      roommates: [],
-      agreementAccepted: false
+      agreementAccepted: switchedValue
     });
   };
 
@@ -114,7 +115,11 @@ const RoommateAgreementView: FC<Props> = ({
               numberOfLines={0}
             />
           </View>
-          <RoommateAgreementTerms />
+          <RoommateAgreementTerms
+            onSwitchValueChange={(isSwitched) => {
+              switchedValue = isSwitched;
+            }}
+          />
 
           <CardView style={styles.cardView}>
             <View style={styles.innerCardView}>
