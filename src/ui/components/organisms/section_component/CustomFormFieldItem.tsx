@@ -178,7 +178,7 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
           <>
             <View style={styles.spacer} />
 
-            <UploadProfilePhoto />
+            <UploadProfilePhoto name={listData.id.toString()} />
           </>
         );
 

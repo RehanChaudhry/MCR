@@ -123,9 +123,6 @@ export const CreatePostView = React.memo<Props>((props) => {
   const openImageGallery = () => {
     if (images.length < 5) {
       imageGalleryResult((response: MyImagePickerResponse) => {
-        AppLog.log(
-          "Image Gallery image uplaod failed : " + JSON.stringify(response)
-        );
         if (response !== null && response !== undefined) {
           if (response.inProgress) {
             setImages((prevState) => {
