@@ -11,7 +11,7 @@ import TwoButtonsAlert, {
   Type
 } from "ui/screens/home/friends/MyFriends/TwoButtonsAlert";
 import InfoAlert from "./InfoAlert";
-import ProfileMatchItem from "ui/components/organisms/profile_match_item/ProfileMatchItem";
+import RelationItem from "ui/components/organisms/relation_item/RelationItem";
 
 type Props = {
   friendsCount: number;
@@ -84,8 +84,8 @@ const listItem = (
     />
   );*/
   return (
-    <ProfileMatchItem
-      profileMatch={_item}
+    <RelationItem
+      relationModel={_item}
       onCrossClicked={onPressCross}
       onChatButtonClicked={onPressChat}
       onImageClicked={moveToProfileScreen}
@@ -232,7 +232,7 @@ const MyFriendsView: FC<Props> = ({
         message={`Are you sure you want to remove ${
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         } from your friends list?`}
-        type={Type.FRIENDS_ROOMMATE_REQUEST}
+        type={Type.UNFRIEND}
         errorMessage="Unable to remove friend"
         firstButtonText="Yes, remove"
         isFromMatchScreen={false}

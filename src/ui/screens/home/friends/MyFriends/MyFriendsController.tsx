@@ -18,6 +18,7 @@ import { FriendsRootStackParamList } from "routes/FriendsRootStack";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "../connect_requests/ConnectRequestsController";
 import MyFriendsView from "./MyFriendsView";
+import EScreen from "models/enums/EScreen";
 
 type Props = {};
 type FriendsNavigationProp = StackNavigationProp<
@@ -136,9 +137,12 @@ const MyFriendsController: FC<Props> = () => {
     [handleMyFriendsResponse, myFriendsApi, paginationRequestModel]
   );
 
-  const moveToProfileScreen = useCallback((_: RelationModel) => {
-    // move to ViewProfileController
-  }, []);
+  const moveToProfileScreen = useCallback(
+    (_: RelationModel) => {
+      navigation.navigate("Profile", { isFrom: EScreen.MY_FRIENDS });
+    },
+    [navigation]
+  );
 
   const moveToRoommateRequests = useCallback(
     (_: RelationModel) => {

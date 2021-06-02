@@ -20,31 +20,32 @@ import getRelationStatus, {
   Eligible,
   RelationType
 } from "utils/RelationHelper";
+import RequestStateIcon from "assets/images/request_state_icon.svg";
 
 interface Props {
-  profileMatch: RelationModel;
-  onCrossClicked: (profileMatch: RelationModel) => void;
-  onChatButtonClicked: (profileMatch: RelationModel) => void;
-  onImageClicked: (profileMatch: RelationModel) => void;
-  onRoommateRequestClicked: (profileMatch: RelationModel) => void;
-  onCancelRequestClicked: (profileMatch: RelationModel) => void;
-  onRequestReceivedClicked: (profileMatch: RelationModel) => void;
-  onFriendRequestClicked?: (profileMatch: RelationModel) => void;
-  onNotEligibleClicked?: (profileMatch: RelationModel) => void;
+  relationModel: RelationModel;
+  onCrossClicked: (relationModel: RelationModel) => void;
+  onChatButtonClicked: (relationModel: RelationModel) => void;
+  onImageClicked: (relationModel: RelationModel) => void;
+  onRoommateRequestClicked: (relationModel: RelationModel) => void;
+  onCancelRequestClicked: (relationModel: RelationModel) => void;
+  onRequestReceivedClicked: (relationModel: RelationModel) => void;
+  onFriendRequestClicked?: (relationModel: RelationModel) => void;
+  onNotEligibleClicked?: (relationModel: RelationModel) => void;
 }
 
 function createActionButton(
-  profileMatch: RelationModel,
+  relationModel: RelationModel,
   themedColors: ColorPalette,
-  onCancelRequestClicked: (profileMatch: RelationModel) => void,
-  onRoommateRequestClicked: (profileMatch: RelationModel) => void,
-  onRequestReceivedClicked: (profileMatch: RelationModel) => void,
-  onFriendRequestClicked?: (profileMatch: RelationModel) => void,
-  onNotEligibleClicked?: (profileMatch: RelationModel) => void
+  onCancelRequestClicked: (relationModel: RelationModel) => void,
+  onRoommateRequestClicked: (relationModel: RelationModel) => void,
+  onRequestReceivedClicked: (relationModel: RelationModel) => void,
+  onFriendRequestClicked?: (relationModel: RelationModel) => void,
+  onNotEligibleClicked?: (relationModel: RelationModel) => void
 ) {
   let actionButton: React.ReactElement;
   const { relationType, actionPerformed, eligible } = getRelationStatus(
-    profileMatch
+    relationModel
   );
 
   if (relationType === RelationType.NONE) {
@@ -52,7 +53,7 @@ function createActionButton(
       actionButton = (
         <AppButton
           onPress={() => {
-            onFriendRequestClicked?.(profileMatch);
+            onFriendRequestClicked?.(relationModel);
           }}
           fontWeight={"semi-bold"}
           textStyle={[
@@ -70,7 +71,7 @@ function createActionButton(
       actionButton = (
         <AppButton
           onPress={() => {
-            onCancelRequestClicked(profileMatch);
+            onCancelRequestClicked(relationModel);
           }}
           fontWeight={"semi-bold"}
           textStyle={[
@@ -91,7 +92,7 @@ function createActionButton(
         actionButton = (
           <AppButton
             onPress={() => {
-              onNotEligibleClicked?.(profileMatch);
+              onNotEligibleClicked?.(relationModel);
             }}
             fontWeight={"semi-bold"}
             textStyle={[
@@ -109,7 +110,7 @@ function createActionButton(
         actionButton = (
           <AppButton
             onPress={() => {
-              onRoommateRequestClicked(profileMatch);
+              onRoommateRequestClicked(relationModel);
             }}
             fontWeight={"semi-bold"}
             textStyle={[
@@ -130,7 +131,7 @@ function createActionButton(
       actionButton = (
         <AppButton
           onPress={() => {
-            onRequestReceivedClicked(profileMatch);
+            onRequestReceivedClicked(relationModel);
           }}
           fontWeight={"semi-bold"}
           textStyle={[
@@ -148,7 +149,7 @@ function createActionButton(
       actionButton = (
         <AppButton
           onPress={() => {
-            onCancelRequestClicked(profileMatch);
+            onCancelRequestClicked(relationModel);
           }}
           fontWeight={"semi-bold"}
           textStyle={[
@@ -168,8 +169,8 @@ function createActionButton(
   return actionButton!;
 }
 
-const ProfileMatchItem = ({
-  profileMatch,
+const RelationItem = ({
+  relationModel,
   onCrossClicked,
   onChatButtonClicked,
   onImageClicked,
@@ -181,6 +182,8 @@ const ProfileMatchItem = ({
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
+  const { relationType, eligible } = getRelationStatus(relationModel);
+
   return (
     <View
       style={[
@@ -190,18 +193,18 @@ const ProfileMatchItem = ({
       <View style={styles.infoContainer}>
         <Pressable
           onPress={() => {
-            onImageClicked(profileMatch);
+            onImageClicked(relationModel);
           }}>
           <Image
             style={styles.profileImage}
-            source={{ uri: profileMatch.user?.profilePicture?.fileURL }}
+            source={{ uri: relationModel.user?.profilePicture?.fileURL }}
           />
         </Pressable>
         <View style={styles.infoTextContainer}>
           <AppLabel
             style={styles.userName}
             text={
-              profileMatch.user?.getFullName() ?? STRINGS.common.not_found
+              relationModel.user?.getFullName() ?? STRINGS.common.not_found
             }
           />
           <AppLabel
@@ -209,31 +212,48 @@ const ProfileMatchItem = ({
               styles.subtitle,
               { color: themedColors.interface[600] }
             ]}
-            text={profileMatch.user?.getSubtitle()}
+            text={relationModel.user?.getSubtitle()}
           />
-          {profileMatch.matchScore && (
+          {relationModel.matchScore && (
             <MatchScore
               style={styles.matchScore}
-              matchScore={`${profileMatch.matchScore}%`}
+              matchScore={`${relationModel.matchScore}%`}
             />
           )}
         </View>
       </View>
-      <Pressable
-        style={styles.icCross}
-        onPress={() => {
-          onCrossClicked(profileMatch);
-        }}>
-        <Cross
-          fill={themedColors.interface[400]}
-          width={moderateScale(20)}
-          height={moderateScale(20)}
-        />
-      </Pressable>
+      <View style={styles.topEndButtons}>
+        {relationType === RelationType.FRIEND && (
+          <Pressable
+            style={styles.icTopEndButtons}
+            onPress={() => {
+              onImageClicked(relationModel);
+            }}>
+            <RequestStateIcon
+              fill={
+                eligible === Eligible.NOT_ELIGIBLE
+                  ? themedColors.danger
+                  : themedColors.success
+              }
+            />
+          </Pressable>
+        )}
+        <Pressable
+          style={styles.icTopEndButtons}
+          onPress={() => {
+            onCrossClicked(relationModel);
+          }}>
+          <Cross
+            fill={themedColors.interface[400]}
+            width={moderateScale(20)}
+            height={moderateScale(20)}
+          />
+        </Pressable>
+      </View>
       <View style={styles.buttonContainer}>
         <AppImageBackground
           onPress={() => {
-            onChatButtonClicked(profileMatch);
+            onChatButtonClicked(relationModel);
           }}
           containerStyle={styles.btnChat}
           containerShape={CONTAINER_TYPES.SQUARE}
@@ -246,7 +266,7 @@ const ProfileMatchItem = ({
           )}
         />
         {createActionButton(
-          profileMatch,
+          relationModel,
           themedColors,
           onCancelRequestClicked,
           onRoommateRequestClicked,
@@ -301,12 +321,15 @@ const styles = StyleSheet.create({
     height: 36,
     width: 36
   },
-  icCross: {
+  icTopEndButtons: {
+    padding: SPACE.xs
+  },
+  topEndButtons: {
+    flexDirection: "row",
     position: "absolute",
     top: SPACE._2xs,
-    end: SPACE._2xs,
-    padding: SPACE.xs
+    end: SPACE._2xs
   }
 });
 
-export default ProfileMatchItem;
+export default RelationItem;
