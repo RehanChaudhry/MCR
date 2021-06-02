@@ -5,18 +5,22 @@ import {
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
-import {
-  FriendRequest,
-  FriendRequestsResponseModel
-} from "models/api_responses/FriendRequestsResponseModel";
-import React, { FC, useEffect, useLayoutEffect, useState } from "react";
+import { PendingRequestsResponseModel } from "models/api_responses/PendingRequestsResponseModel";
+import RelationModel from "models/RelationModel";
+import React, {
+  FC,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState
+} from "react";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
 import { ConnectionRequestStackParamList } from "routes/ConnectionRequestStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import { AppLog } from "utils/Util";
-import ConnectRequestsView from "./ConnectRequestsView";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
+import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
+import ConnectRequestsView from "./ConnectRequestsView";
 
 type Props = {};
 
@@ -38,7 +42,6 @@ export enum ConnectRequestType {
 const ConnectRequestsController: FC<Props> = () => {
   const route = useRoute<ConnectRequestRouteProp>();
   const { title, type } = route.params;
-  AppLog.log("showing connect for types: ", type);
 
   const [isLoading, setIsLoading] = useState(true);
   const [requestModel, setRequestModel] = useState<PaginationParamsModel>({
@@ -50,11 +53,16 @@ const ConnectRequestsController: FC<Props> = () => {
   const [canLoadMore, setCanLoadMore] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const [connectRequests, setConnectRequests] = useState<
-    Array<FriendRequest>
+    Array<RelationModel>
   >();
 
-  const connectRequestsApi = useApi<any, FriendRequestsResponseModel>(
-    FriendsApis.getFriendRequests
+  const connectRequestsApi = useApi<
+    PaginationParamsModel,
+    PendingRequestsResponseModel
+  >(
+    type === ConnectRequestType.FRIEND_REQUESTS
+      ? FriendsApis.getFriendsRequests
+      : FriendsApis.getRoommateRequests
   );
 
   const handleConnectRequestsResponse = async (
@@ -125,13 +133,13 @@ const ConnectRequestsController: FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onPressApproved = (item: FriendRequest) => {
-    AppLog.log("friend request item:", item);
-  };
-
-  const onPressDeclined = (item: FriendRequest) => {
-    AppLog.log("friend request item:", item);
-  };
+  const { resetMyFriends } = useContext(MyFriendsContext);
+  function removeItemFromList(_item: RelationModel) {
+    resetMyFriends?.();
+    setConnectRequests(
+      connectRequests?.filter((value) => value.id !== _item.id)
+    );
+  }
 
   const navigation = useNavigation<ConnectRequestsNavigationProp>();
 
@@ -157,8 +165,7 @@ const ConnectRequestsController: FC<Props> = () => {
       error={errorMessage}
       onEndReached={onEndReached}
       onPullToRefresh={onPullToRefresh}
-      onPressApproved={onPressApproved}
-      onPressDeclined={onPressDeclined}
+      removeItemFromList={removeItemFromList}
     />
   );
 };

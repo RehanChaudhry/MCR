@@ -23,6 +23,7 @@ import EScreen from "models/enums/EScreen";
 import { FormikValues, useFormikContext } from "formik";
 import { SvgProp } from "utils/Util";
 import { ConversationItem } from "models/ConversationItem";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type Props = {
   name: string;
@@ -31,6 +32,7 @@ type Props = {
   textStyle: StyleProp<TextStyle>;
   rightIcon: SvgProp | undefined;
   initialList?: ConversationItem[];
+  isLocked: EIntBoolean;
 };
 
 type UpdateProfileNavigationProp = StackNavigationProp<
@@ -52,7 +54,8 @@ export const FieldBox: FC<Props> = ({
   title,
   textStyle,
   rightIcon,
-  initialList
+  initialList,
+  isLocked = EIntBoolean.FALSE
 }) => {
   const theme = usePreferredTheme();
   const route = useRoute<UpdateProfileRouteProp>();
@@ -97,24 +100,33 @@ export const FieldBox: FC<Props> = ({
       <TouchableWithoutFeedback
         onPress={() => {
           if (route.params.isFrom === EScreen.WELCOME) {
-            welcomeNavigation.navigate("AddInterests", {
-              list: values[name] ?? [],
-              listKey: name,
-              title: title
-            });
+            !isLocked &&
+              welcomeNavigation.navigate("AddInterests", {
+                list: values[name] ?? [],
+                listKey: name,
+                title: title
+              });
           } else {
-            updateNavigation.navigate("AddInterests", {
-              list: values[name] ?? [],
-              listKey: name,
-              title: title
-            });
+            !isLocked &&
+              updateNavigation.navigate("AddInterests", {
+                list: values[name] ?? [],
+                listKey: name,
+                title: title
+              });
           }
         }}>
         <View
           style={[
             styles.input,
             viewStyle,
-            { borderColor: theme.themedColors.border }
+            {
+              borderColor: !isLocked
+                ? theme.themedColors.border
+                : theme.themedColors.borderSecondary,
+              backgroundColor: !isLocked
+                ? theme.themedColors.background
+                : theme.themedColors.backgroundSecondary
+            }
           ]}>
           <AppLabel
             text={optionsText}

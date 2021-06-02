@@ -50,18 +50,24 @@ export const WebViewComponent = React.memo<WebViewProps>(
             bounces={false}
             mediaPlaybackRequiresUserAction={true}
             dataDetectorTypes="link"
-            scalesPageToFit={false}
             scrollEnabled={false}
             coverScreen={false}
             renderLoading={loadingIndicatorView}
             automaticallyAdjustContentInsets={true}
             startInLoadingState={true}
-            allowsFullscreenVideo
             useWebKit
             javaScriptEnabled={true}
             domStorageEnabled={true}
+            allowsFullscreenVideo={true}
+            scalesPageToFit={true}
             source={
-              urlType === URL_TYPES.LINK ? { uri: url } : { html: html }
+              urlType === URL_TYPES.LINK
+                ? { uri: url }
+                : {
+                    html:
+                      `<style type="text/css">iframe{max-width: 100%; max-height: fit-content;}</style>` +
+                      html
+                  }
             }
             style={[
               style.webViewContainer,
@@ -78,12 +84,12 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    marginTop: SPACE.md,
-    height: 350
+    height: 315,
+    marginTop: SPACE.md
   },
   webViewContainer: {
     flex: 1,
     width: "100%",
-    height: 350
+    height: 320
   }
 });

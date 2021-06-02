@@ -9,20 +9,26 @@ import {
 import { View } from "react-native";
 import { CheckBoxGroup } from "ui/components/atoms/checkbox_group/CheckBoxGroup";
 import { AppLog } from "utils/Util";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type AppFormCheckBoxGroupProps = {
   name: string;
   labelProps?: AppLabelProps;
   listData: OptionsData[];
+  isLocked: EIntBoolean;
 };
 
 export const AppFormCheckBoxGroup: React.FC<AppFormCheckBoxGroupProps> = ({
   listData,
   labelProps,
-  name
+  name,
+  isLocked = EIntBoolean.FALSE
 }) => {
   const theme = usePreferredTheme();
-  const { setFieldValue, values } = useFormikContext<FormikValues>();
+  const {
+    setFieldValue,
+    initialValues
+  } = useFormikContext<FormikValues>();
   let result: React.MutableRefObject<OptionsData[]> = useRef([]);
 
   return (
@@ -37,7 +43,7 @@ export const AppFormCheckBoxGroup: React.FC<AppFormCheckBoxGroupProps> = ({
 
       <CheckBoxGroup
         listData={listData}
-        preSelected={values[name]}
+        preSelected={initialValues[name]}
         onChange={(checked: boolean, text?: string) => {
           AppLog.log(
             "Checkbox check changed : " +
@@ -59,6 +65,7 @@ export const AppFormCheckBoxGroup: React.FC<AppFormCheckBoxGroupProps> = ({
             setFieldValue(name, result.current);
           }
         }}
+        isLocked={isLocked}
       />
     </View>
   );

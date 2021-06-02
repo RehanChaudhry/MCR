@@ -26,7 +26,6 @@ import {
 } from "models/api_responses/UpdateProfileUiResponseModel";
 import { useApi } from "repo/Client";
 import AuthApis from "repo/auth/AuthApis";
-import { AppLog } from "utils/Util";
 import { Alert } from "react-native";
 
 type Props = {};
@@ -66,8 +65,6 @@ const ViewProfileController: FC<Props> = () => {
 
   //handle update profile ui api
   const fetchMyProfile = useCallback(async () => {
-    AppLog.log("handleSignIn: ");
-
     //setShouldShowPb(true);
 
     // authenticate user
@@ -81,8 +78,6 @@ const ViewProfileController: FC<Props> = () => {
       Alert.alert("Unable to fetch view profile ui", errorBody);
       return;
     } else {
-      AppLog.log("view profile data is fetched " + dataBody.data);
-
       //data modification for profile header
       let modifiedItem = dataBody.data.sections?.[0]?.formInputs?.[0]!!;
       modifiedItem.firstName = dataBody.data.sections![0].formInputs![1].userMeta![0].value;

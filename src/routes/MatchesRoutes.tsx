@@ -1,19 +1,19 @@
 import { useRoute } from "@react-navigation/native";
+import { FONT_SIZE, STRINGS } from "config";
 import React from "react";
 import { MatchesStack } from "routes/MatchesStack";
-import MatchesController from "ui/screens/home/matches/MatchesController";
-import MatchInfoController from "ui/screens/home/matches/match_info/MatchInfoController";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
-import { FONT_SIZE, STRINGS } from "config";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { ChatThreadController } from "ui/screens/chat/thread/ChatThreadController";
-import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
-import RoommateAgreementController from "ui/screens/home/friends/RoommateAgreement/RoommateAgreementController";
-import QuestionsController from "ui/screens/questions/QuestionsController";
-import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
 import AgreementDetailsController from "ui/screens/home/friends/agreement_details/AgreementDetailsController";
+import ConnectRequestsController from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
+import RoommateAgreementController from "ui/screens/home/friends/RoommateAgreement/RoommateAgreementController";
+import MatchInfoController from "ui/screens/home/matches/match_info/MatchInfoController";
+import MatchesController from "ui/screens/home/matches/MatchesController";
+import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
+import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
+import QuestionsController from "ui/screens/questions/QuestionsController";
 import EScreen from "models/enums/EScreen";
-import {ViewProfileStack} from "routes/ProfileStack";
 
 const MatchesRoutes = ({ navigation }: any) => {
   const route: any = useRoute();
@@ -81,10 +81,13 @@ const MatchesRoutes = ({ navigation }: any) => {
           )
         }}
       />
-
       <MatchesStack.Screen
         name="AgreementDetails"
         component={AgreementDetailsController}
+      />
+      <MatchesStack.Screen
+        name={"ConnectRequests"}
+        component={ConnectRequestsController}
       />
     </MatchesStack.Navigator>
   );

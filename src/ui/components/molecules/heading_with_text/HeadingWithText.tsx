@@ -27,7 +27,7 @@ export const HeadingWithText = optimizedMemoWithStyleProp<Props>(
   }) => {
     return (
       <View testID={"HEADING_WITH_TEXT"}>
-        {headingText && (
+        {headingText !== undefined && headingText !== "" && (
           <AppLabel
             text={headingText}
             weight={headingFontWeight}
@@ -35,7 +35,7 @@ export const HeadingWithText = optimizedMemoWithStyleProp<Props>(
             style={[{ fontSize: FONT_SIZE.base }, headingStyle]}
           />
         )}
-        {text && (
+        {text !== undefined && text !== "" && (
           <AppLabel
             text={text}
             numberOfLines={0}

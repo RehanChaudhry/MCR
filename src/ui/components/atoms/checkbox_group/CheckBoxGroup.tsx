@@ -3,6 +3,7 @@ import { StyleProp, View, ViewStyle } from "react-native";
 import CheckboxWithText from "ui/components/atoms/CheckboxWithText";
 import React from "react";
 import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type CheckBoxGroupProps = {
   listData: OptionsData[];
@@ -10,22 +11,24 @@ type CheckBoxGroupProps = {
   preSelected?: [string];
   style?: StyleProp<ViewStyle>;
   shouldNotOptimize?: boolean;
+  isLocked?: EIntBoolean;
 };
 
 export const CheckBoxGroup = optimizedMemo<CheckBoxGroupProps>(
-  ({ listData, onChange, preSelected }) => {
+  ({ listData, onChange, preSelected, isLocked = EIntBoolean.FALSE }) => {
     return (
       <View>
         {listData?.map((item) => (
           <CheckboxWithText
             text={item.value}
             onChange={(checked, text) => {
-              onChange?.(checked, text!!);
+              !isLocked && onChange?.(checked, text!!);
             }}
             preSelected={
               preSelected?.find((data) => data === item.value) !==
               undefined
             }
+            isLocked={isLocked}
           />
         ))}
       </View>

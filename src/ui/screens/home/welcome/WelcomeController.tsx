@@ -21,7 +21,10 @@ const WelcomeController: FC<Props> = () => {
   const theme = usePreferredTheme();
 
   const openUpdateProfileScreen = usePreventDoubleTap(() => {
-    navigation.navigate("UpdateProfile", { isFrom: EScreen.WELCOME });
+    navigation.navigate("UpdateProfile", {
+      isFrom: EScreen.WELCOME,
+      updateProfile: false
+    });
   });
 
   useLayoutEffect(() => {

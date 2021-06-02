@@ -13,6 +13,7 @@ import {
 import { FormikValues, useFormikContext } from "formik";
 import { AppFormValidationLabel } from "ui/components/molecules/app_form/AppFormValidationLabel";
 import { SvgProp } from "utils/Util";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type Props = {
   labelProps?: AppLabelProps;
@@ -22,13 +23,15 @@ type Props = {
   style?: StyleProp<ViewStyle>;
   dropDownIcon?: SvgProp;
   shouldShowCustomIcon?: boolean;
+  isLocked: EIntBoolean;
 };
 
 export const AppFormDropDown: React.FC<Props> = ({
   labelProps,
   name,
   appDropDownProps,
-  validationLabelTestID
+  validationLabelTestID,
+  isLocked = EIntBoolean.FALSE
   // style,
   // dropDownIcon,
   // shouldShowCustomIcon = false
@@ -37,8 +40,8 @@ export const AppFormDropDown: React.FC<Props> = ({
   const {
     errors,
     touched,
-    values,
-    setFieldValue
+    setFieldValue,
+    initialValues
   } = useFormikContext<FormikValues>();
 
   const { title, ...appDropDownPropsCopy } = appDropDownProps;
@@ -55,7 +58,8 @@ export const AppFormDropDown: React.FC<Props> = ({
       <AppDropdown
         {...appDropDownPropsCopy}
         title={title}
-        preselectedItemString={values[name]}
+        isLocked={isLocked}
+        preselectedItemString={initialValues[name]}
         selectedItemCallback={(item) => {
           setFieldValue(name, item);
         }}

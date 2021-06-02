@@ -12,7 +12,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 
 interface Props {
   style?: StyleProp<ViewStyle>;
-  image: string;
+  image?: string;
   name: string;
   subtitle: string;
 }
@@ -32,7 +32,14 @@ const UserHeader: React.FC<Props> = ({
         { backgroundColor: themedColors.background },
         style
       ]}>
-      <Image style={styles.profileImage} source={{ uri: image }} />
+      <Image
+        style={styles.profileImage}
+        source={
+          image !== undefined
+            ? { uri: image }
+            : require("assets/images/profile.png")
+        }
+      />
       <View style={styles.infoTextContainer}>
         <AppLabel style={styles.userName} text={name} weight={"bold"} />
         <AppLabel

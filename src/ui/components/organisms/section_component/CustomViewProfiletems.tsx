@@ -144,26 +144,27 @@ export const CustomViewProfileItems = React.memo<CustomViewProfileProps>(
               />
             </>
           );
+        } else {
+          return (
+            <>
+              <View style={styles.spacer} />
+              <HeadingWithText
+                headingText={listData.label}
+                text={
+                  listData.userMeta?.length === 0
+                    ? "N/A"
+                    : listData.userMeta![0].value
+                }
+                headingFontWeight={"semi-bold"}
+                textStyle={styles.textStyle}
+                headingStyle={[
+                  styles.headingStyle,
+                  { color: theme.themedColors.labelSecondary }
+                ]}
+              />
+            </>
+          );
         }
-        return (
-          <>
-            <View style={styles.spacer} />
-            <HeadingWithText
-              headingText={listData.label}
-              text={
-                listData.userMeta?.length === 0
-                  ? "N/A"
-                  : listData.userMeta![0].value
-              }
-              headingFontWeight={"semi-bold"}
-              textStyle={styles.textStyle}
-              headingStyle={[
-                styles.headingStyle,
-                { color: theme.themedColors.labelSecondary }
-              ]}
-            />
-          </>
-        );
 
       case "file":
         return (

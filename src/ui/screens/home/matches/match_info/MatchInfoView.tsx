@@ -55,18 +55,18 @@ export const MatchInfoView: React.FC<Props> = ({
             name={`${userProfile.firstName ?? STRINGS.common.not_found} ${
               userProfile.lastName ?? STRINGS.common.not_found
             }`}
-            image={userProfile.profilePicture.fileURL ?? ""}
+            image={userProfile.profilePicture.fileURL}
             subtitle={`${
               userProfile.matchGroupName ?? STRINGS.common.not_found
             }, ${userProfile.major ?? STRINGS.common.not_found}`}
           />
-          <AppLabel
-            style={styles.description}
-            text={
-              "<Required in 'user/me' API>" ?? STRINGS.common.not_found
-            }
-            numberOfLines={0}
-          />
+          {userProfile.about && (
+            <AppLabel
+              style={styles.description}
+              text={userProfile.about}
+              numberOfLines={0}
+            />
+          )}
           <AppProgressBar
             style={styles.progress}
             progressPercentage={

@@ -16,6 +16,7 @@ export const WelcomeRoutes: FC = () => {
       <WelcomeStack.Screen
         name="UpdateProfile"
         component={UpdateProfileController}
+        options={{ title: "Update Profile" }}
       />
       <WelcomeStack.Screen
         name="Questionnaire"

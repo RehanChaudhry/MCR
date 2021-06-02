@@ -37,4 +37,5 @@ export type Profile = {
   updatedAt: string;
   sections: Sections[];
   agreementId: number;
+  about?: string;
 };

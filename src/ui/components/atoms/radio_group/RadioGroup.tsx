@@ -12,6 +12,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 export type Choice = { id: number; value: string };
 type Props = {
@@ -22,6 +23,7 @@ type Props = {
   byDefaultSelected?: number;
   itemsInRow?: number; //for horizontal buttons
   shouldNotOptimize?: boolean;
+  isLocked?: EIntBoolean;
 };
 
 export enum DIRECTION_TYPE {
@@ -36,7 +38,8 @@ export const RadioGroup = optimizedMemo<Props>(
     onChange,
     itemsInRow = 2,
     direction,
-    byDefaultSelected = 0
+    byDefaultSelected = 0,
+    isLocked = EIntBoolean.FALSE
   }) => {
     const theme = usePreferredTheme();
     const [selectedPosition, setSelectedPosition] = useState<number>(
@@ -60,8 +63,20 @@ export const RadioGroup = optimizedMemo<Props>(
 
     function getStyleAsPerSelectionStatus(position: number) {
       return selectedPosition === position
-        ? [{ backgroundColor: theme.themedColors.label }]
-        : [{ backgroundColor: theme.themedColors.background }];
+        ? [
+            {
+              backgroundColor: !isLocked
+                ? theme.themedColors.label
+                : theme.themedColors.labelSecondary
+            }
+          ]
+        : [
+            {
+              backgroundColor: !isLocked
+                ? theme.themedColors.background
+                : theme.themedColors.backgroundSecondary
+            }
+          ];
     }
 
     const getDirection = () => {
@@ -87,14 +102,19 @@ export const RadioGroup = optimizedMemo<Props>(
             key={item.value}>
             <TouchableOpacity
               testID={"RADIO_GROUP_BUTTON"}
+              activeOpacity={isLocked ? 1 : 0.2}
               style={[
                 styles.radioButton,
                 {
-                  borderColor: theme.themedColors.label,
-                  backgroundColor: theme.themedColors.background
+                  borderColor: !isLocked
+                    ? theme.themedColors.label
+                    : theme.themedColors.labelSecondary,
+                  backgroundColor: !isLocked
+                    ? theme.themedColors.background
+                    : theme.themedColors.backgroundSecondary
                 }
               ]}
-              onPress={() => buttonPressed(index)}>
+              onPress={() => !isLocked && buttonPressed(index)}>
               <View
                 style={[
                   styles.radioButtonIcon,
@@ -104,7 +124,7 @@ export const RadioGroup = optimizedMemo<Props>(
             </TouchableOpacity>
             <TouchableWithoutFeedback
               testID="RADIO_GROUP_LABEL"
-              onPress={() => buttonPressed(index)}>
+              onPress={() => !isLocked && buttonPressed(index)}>
               <AppLabel style={styles.radioButtonText} text={item.value} />
             </TouchableWithoutFeedback>
           </View>

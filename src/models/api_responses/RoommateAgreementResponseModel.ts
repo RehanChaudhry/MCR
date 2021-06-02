@@ -19,6 +19,7 @@ export type FormInputFieldData = {
   order?: number;
   isLocked: EIntBoolean;
   isRequired: EIntBoolean;
+  icon?: string;
   isDefault?: number;
   content?: null;
   status?: string;

@@ -3,7 +3,7 @@ import RelationType from "models/enums/RelationType";
 import FilePath from "models/FilePath";
 
 export class RelationUser {
-  id?: string;
+  id?: number;
   firstName?: string;
   lastName?: string;
   profilePicture?: FilePath;

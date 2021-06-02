@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import CheckBox from "react-native-check-box";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 interface OwnProps extends ViewProps {
   text: string;
@@ -18,12 +19,19 @@ interface OwnProps extends ViewProps {
   preSelected: boolean;
   onChange: (checked: boolean, text?: string) => void;
   shouldNotOptimize?: boolean;
+  isLocked?: EIntBoolean;
 }
 
 type Props = OwnProps;
 
 const CheckboxWithText = optimizedMemo<Props>(
-  ({ text, style, preSelected, onChange }) => {
+  ({
+    text,
+    style,
+    preSelected,
+    onChange,
+    isLocked = EIntBoolean.FALSE
+  }) => {
     const [checked, setChecked] = useState(false);
     const theme = usePreferredTheme();
 
@@ -46,8 +54,16 @@ const CheckboxWithText = optimizedMemo<Props>(
           style={styles.checkBox}
           isChecked={checked}
           rightText={text}
-          checkedCheckBoxColor={theme.themedColors.primary}
-          uncheckedCheckBoxColor={theme.themedColors.interface["400"]}
+          checkedCheckBoxColor={
+            !isLocked
+              ? theme.themedColors.primary
+              : theme.themedColors.primaryShade
+          }
+          uncheckedCheckBoxColor={
+            !isLocked
+              ? theme.themedColors.interface["400"]
+              : theme.themedColors.interface["600"]
+          }
         />
       </View>
     );
