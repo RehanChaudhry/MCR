@@ -47,8 +47,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
           <Image
             style={styles.imgStyle}
             source={
-              item.conversationUsers[0].profilePicture?.fileURL !==
-              undefined
+              item.conversationUsers.length > 0
                 ? {
                     uri: item.conversationUsers[0].profilePicture?.fileURL
                   }
