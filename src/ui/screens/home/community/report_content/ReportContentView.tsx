@@ -201,6 +201,11 @@ export const ReportContentView = React.memo<Props>(
                 validationLabelTestID={"reasonValidationLabel"}
                 name="reason"
                 fieldInputProps={{
+                  multiline: true,
+                  numberOfLines: 6,
+                  textAlignVertical: "top",
+                  keyboardType: "default",
+                  returnKeyType: "next",
                   placeholder: STRINGS.reportContent.reasonPlaceholder,
                   autoCapitalize: "none",
                   placeholderTextColor: theme.themedColors.placeholder,
