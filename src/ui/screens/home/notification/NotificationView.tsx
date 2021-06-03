@@ -2,7 +2,11 @@ import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
-import { shadowStyleProps } from "utils/Util";
+import {
+  listContentContainerStyle,
+  listItemSeparator,
+  shadowStyleProps
+} from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config/Dimens";
 import Selector from "assets/images/selector.svg";
@@ -162,6 +166,13 @@ export const NotificationView = React.memo<Props>(
             onEndReached={onEndReached}
             isAllDataLoaded={isAllDataLoaded}
             pullToRefreshCallback={pullToRefreshCallback}
+            contentContainerStyle={[
+              listContentContainerStyle,
+              { paddingHorizontal: SPACE.lg }
+            ]}
+            ItemSeparatorComponent={({}) => (
+              <View style={listItemSeparator} />
+            )}
           />
         )}
       </Screen>
@@ -175,8 +186,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: FONT_SIZE.xs,
-    marginBottom: SPACE.lg,
-    marginLeft: SPACE.lg
+    marginBottom: SPACE.lg
   },
   mainContanier: { marginTop: SPACE.lg },
   dropDown: {
