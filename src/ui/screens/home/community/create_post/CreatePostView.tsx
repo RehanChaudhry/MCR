@@ -9,7 +9,6 @@ import { useAuth, usePreferredTheme } from "hooks";
 import React, { useCallback, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import * as ImagePicker from "react-native-image-picker";
 import { ImagePickerResponse } from "react-native-image-picker";
 import SimpleToast from "react-native-simple-toast";
 import { EmbedButton } from "ui/components/atoms/compact_buttons/EmbedButton";
@@ -28,6 +27,9 @@ import { ImageWithCross } from "ui/components/molecules/image_with_cross/ImageWi
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, iframePattern, pattern, SvgProp } from "utils/Util";
 import * as Yup from "yup";
+import { useImageUpload } from "hooks/useImageUpload";
+import MyImagePickerResponse from "models/api_responses/MyImagePickerResponse";
+import _ from "lodash";
 
 type Props = {
   shouldShowProgressBar?: boolean;
@@ -35,7 +37,9 @@ type Props = {
 };
 
 const validationSchema = Yup.object().shape({
-  message: Yup.string().required(Strings.createPost.requiredField.message),
+  message: Yup.string()
+    .min(10)
+    .required(Strings.createPost.requiredField.message),
   link: Yup.string().matches(
     pattern,
     Strings.createPost.fieldValidationMessage.invalidUrl
@@ -55,8 +59,9 @@ export enum POST_TYPES {
 
 export const CreatePostView = React.memo<Props>((props) => {
   const theme = usePreferredTheme();
-  const [images, setImages] = useState<ImagePickerResponse[]>([]);
+  const [images, setImages] = useState<MyImagePickerResponse[]>([]);
   const [postType, setPostType] = useState<POST_TYPES>(POST_TYPES.NONE);
+  const imageGalleryResult = useImageUpload();
 
   let initialValues: FormikValues = {
     message: String,
@@ -67,6 +72,7 @@ export const CreatePostView = React.memo<Props>((props) => {
 
   initialValues.link = "";
   initialValues.embed = "";
+  initialValues.message = "";
 
   const onSubmit = (_value: FormikValues) => {
     initialValues = _value;
@@ -98,10 +104,8 @@ export const CreatePostView = React.memo<Props>((props) => {
       <ImageWithCross
         imageResponse={item}
         onImageRemoved={(imageResponse) => {
-          AppLog.logForcefully(JSON.stringify(images));
-          AppLog.logForcefully(
-            "images length when item remove" + images.length
-          );
+          AppLog.log(JSON.stringify(images));
+          AppLog.log("images length when item remove" + images.length);
           setImages((prevState) => {
             return [
               ...prevState.filter((filteredImage) => {
@@ -115,31 +119,29 @@ export const CreatePostView = React.memo<Props>((props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+
   const openImageGallery = () => {
     if (images.length < 5) {
-      ImagePicker.launchImageLibrary(
-        {
-          mediaType: "photo",
-          includeBase64: false,
-          maxHeight: 200,
-          maxWidth: 200
-        },
-        (response) => {
-          if (
-            response !== null &&
-            response !== undefined &&
-            response.didCancel !== true
-          ) {
-            AppLog.logForcefully("response" + JSON.stringify(response));
+      imageGalleryResult((response: MyImagePickerResponse) => {
+        if (response !== null && response !== undefined) {
+          if (response.inProgress) {
             setImages((prevState) => {
               return [
                 ...(prevState === undefined ? [] : prevState),
                 response
               ];
             });
+          } else if (response.isFailed) {
+            SimpleToast.show("Image upload failed : " + response.fileName);
+            setImages((prevState) =>
+              _.remove(
+                prevState,
+                (item) => item.fileName !== response.fileName
+              )
+            );
           }
         }
-      );
+      });
     } else {
       SimpleToast.show(Strings.createPost.title.maxImageMessage);
     }
@@ -224,25 +226,37 @@ export const CreatePostView = React.memo<Props>((props) => {
                 <PhotosButton
                   isSelected={postType === POST_TYPES.PHOTOS}
                   onPress={() => {
-                    setImages([]);
-                    setPostType(POST_TYPES.PHOTOS);
-                    openImageGallery();
+                    if (
+                      !postType.includes(POST_TYPES.PHOTOS) ||
+                      images.length === 0
+                    ) {
+                      AppLog.logForcefully("if");
+                      setImages([]);
+                      setPostType(POST_TYPES.PHOTOS);
+                      openImageGallery();
+                    }
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
                 <LinkButton
                   isSelected={postType === POST_TYPES.LINK}
                   onPress={() => {
-                    setPostType(POST_TYPES.LINK);
-                    AppLog.logForcefully("postType: " + postType);
+                    if (!postType.includes(POST_TYPES.LINK)) {
+                      setPostType(POST_TYPES.LINK);
+                      setImages([]);
+                      AppLog.log("postType: " + postType);
+                    }
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
                 <EmbedButton
                   isSelected={postType === POST_TYPES.EMBED}
                   onPress={() => {
-                    setPostType(POST_TYPES.EMBED);
-                    AppLog.logForcefully("postType: " + postType);
+                    if (!postType.includes(POST_TYPES.EMBED)) {
+                      setPostType(POST_TYPES.EMBED);
+                      setImages([]);
+                      AppLog.log("postType: " + postType);
+                    }
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />

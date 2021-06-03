@@ -1,21 +1,18 @@
-import { DateUtils, timeAgo } from "utils/Util";
+import { timeAgo } from "utils/Util";
 import Actions from "models/enums/ActivityLogAction";
 import ActivityLogType from "models/enums/ActivityLogType";
 import { User } from "models/User";
+import { ChronologicalObject } from "utils/SectionListHelper";
 
-class ActivityLog {
+class ActivityLog implements ChronologicalObject {
   id!: number;
   type?: ActivityLogType;
   user?: User;
   action?: Actions;
-  createdAt?: Date;
+  createdAt!: Date;
 
   constructor(activityLog: ActivityLog) {
     Object.assign(this, activityLog);
-  }
-
-  getHoursDiff(): number {
-    return DateUtils.diffInHours(this.createdAt ?? new Date());
   }
 
   getDisplayTime(): string {

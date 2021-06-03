@@ -14,16 +14,18 @@ export default {
   FORGOT_PASS_URL: "password/request/",
   RESET_PASS_URL: "password/set/",
   UPDATE_ACCOUNT_PASSWORD_URL: "user/me",
-  NOTIFICATION_URL: "notifications",
+  UPDATE_PROFILE_URL: "profile",
+  NOTIFICATION_URL: "notification",
   AGREEMENT_DETAILS: "agreement_details",
   ROOMATE_AGREEMENT_FIELDS: "agreement-field",
+  UPDATE_ROOMATE_AGREEMENT: "agreement-answer",
+  FETCH_ROOMATE_AGREEMENT_ANSWERS: "agreement-answer",
 
   //Get universities
   UNIS: "university",
 
   // Profile
-  GET_QUESTIONS: "question/",
-  GET_ANSWERS: "answer/",
+  GET_QUESTIONS: "answer/",
   POST_ANSWERS: "answer/",
   // GET_ACTIVITY_LOGS: "activity-logs/",
   UPDATE_PROFILE: "user",
@@ -34,6 +36,7 @@ export default {
   DISMISS_MATCH: "relation/dismissed/",
   GET_MATCHES_FILTER_COUNT: "matches-count",
   BLOCKED_MATCH: "relation/",
+  MATCH_INFO: "user/matching-information",
 
   //community, announcements
   CREATE_POST: "post",
@@ -49,14 +52,13 @@ export default {
 
   //relations
   RELATION: "relation",
-  POST_RELATION: "relation",
-  // MY_FRIENDS: "myfriends",
+  RELATION_DISMISS_RESTORE: "relation/dismissed",
   MY_ROOMMATES: "myroommates",
-  REMOVE_FRIEND: "relation",
   DISMISSED_OR_BLOCKED: "relation/dismiss",
   FRIEND_REQUESTS: "relation/pending/friends",
   ROOMMATE_REQUESTS: "relation/pending/roommates",
 
   // others
-  GET_STATIC_CONTENT: "static-content/"
+  GET_STATIC_CONTENT: "static-content/",
+  GET_SIGNED_URL: "file/upload-image"
 };

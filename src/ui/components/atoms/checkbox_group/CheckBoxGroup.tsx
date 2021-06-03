@@ -1,46 +1,37 @@
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { StyleProp, View, ViewStyle } from "react-native";
 import CheckboxWithText from "ui/components/atoms/CheckboxWithText";
-import { AppLog } from "utils/Util";
 import React from "react";
-import { RoommateData } from "models/api_responses/RoommateAgreementResponseModel";
-import {
-  AppLabel,
-  AppLabelProps
-} from "ui/components/atoms/app_label/AppLabel";
-import { SPACE } from "config";
-import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel";
+import EIntBoolean from "models/enums/EIntBoolean";
 
-type Props = {
-  listData: RoommateData;
+type CheckBoxGroupProps = {
+  listData: OptionsData[];
+  onChange: (checked: boolean, text: string) => void;
+  preSelected?: [string];
   style?: StyleProp<ViewStyle>;
-  labelProps?: AppLabelProps;
-  onChange: (checked: boolean) => void;
   shouldNotOptimize?: boolean;
+  isLocked?: EIntBoolean;
 };
 
-export const CheckBoxGroup = optimizedMemo<Props>(
-  ({ listData, labelProps }) => {
-    const theme = usePreferredTheme();
+export const CheckBoxGroup = optimizedMemo<CheckBoxGroupProps>(
+  ({ listData, onChange, preSelected, isLocked = EIntBoolean.FALSE }) => {
     return (
       <View>
-        <AppLabel
-          style={[styles.label, { color: theme.themedColors.label }]}
-          {...labelProps}
-        />
-        {listData.options.map((item) => (
+        {listData?.map((item) => (
           <CheckboxWithText
-            text={item.text}
-            onChange={(value, text) => AppLog.log(value + "  " + text)}
+            text={item.value}
+            onChange={(checked, text) => {
+              !isLocked && onChange?.(checked, text!!);
+            }}
+            preSelected={
+              preSelected?.find((data) => data === item.value) !==
+              undefined
+            }
+            isLocked={isLocked}
           />
         ))}
       </View>
     );
   }
 );
-
-const styles = StyleSheet.create({
-  label: {
-    paddingBottom: SPACE.xs
-  }
-});

@@ -1,25 +1,31 @@
 import React from "react";
 import { View } from "react-native";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import { RoommateData } from "models/api_responses/RoommateAgreementResponseModel";
+import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
 import CustomFormFieldItem from "ui/components/organisms/section_component/CustomFormFieldItem";
+import { AppLog } from "utils/Util";
 
 type Props = {
-  listData: RoommateData[] | undefined;
+  listData: any[] | undefined;
+  showProgressBar?: boolean;
 };
 
-export const SectionComponent = React.memo<Props>(({ listData }) => {
-  const listItem = ({ item }: { item: RoommateData }) => {
-    return <CustomFormFieldItem listData={item} />;
-  };
+export const SectionComponent = React.memo<Props>(
+  ({ listData, showProgressBar }) => {
+    AppLog.logForcefully("creating element " + JSON.stringify(listData));
 
-  return (
-    <View>
-      <FlatListWithPb
-        shouldShowProgressBar={true}
-        data={listData}
-        renderItem={listItem}
-      />
-    </View>
-  );
-});
+    const listItem = ({ item }: { item: FormInputFieldData }) => {
+      return <CustomFormFieldItem listData={item} />;
+    };
+
+    return (
+      <View>
+        <FlatListWithPb
+          shouldShowProgressBar={showProgressBar}
+          data={listData}
+          renderItem={listItem}
+        />
+      </View>
+    );
+  }
+);

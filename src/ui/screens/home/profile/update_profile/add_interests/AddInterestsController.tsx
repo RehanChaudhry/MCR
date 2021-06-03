@@ -100,16 +100,16 @@ export const AddInterestsController: FC<Props> = () => {
     _setList(_list.filter((item) => item.id !== itemToDelete.id));
   };
   const addItem = (value: string) => {
+    AppLog.logForcefully("Adding Item: " + value);
     if (
       value &&
-      _list.filter((item) => item.name === value).length === 0
+      _list.filter((item) => item.value === value).length === 0
     ) {
-      AppLog.logForcefully("Adding Item: " + value);
+      AppLog.logForcefully("Adding Item: Success " + value);
 
       _list.push({
         id: _list.length + 1,
-        name: value,
-        userId: _list.length + 1
+        value: value
       });
       _setList([..._list]);
     }

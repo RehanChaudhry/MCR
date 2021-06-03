@@ -89,9 +89,11 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
             <View style={styles.userInfo}>
               <Image
                 style={styles.userImg}
-                source={{
-                  uri: auth.user?.profile?.profilePicture.fileURL
-                }}
+                source={
+                  auth.user?.profile?.profilePicture.fileURL !== undefined
+                    ? { uri: auth.user?.profile?.profilePicture.fileURL }
+                    : require("assets/images/profile.png")
+                }
               />
               <View style={styles.nameContainer}>
                 <AppLabel
@@ -146,6 +148,7 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
 
               return (
                 <TouchableNativeFeedback
+                  key={index}
                   onPress={() => {
                     setCurrentItem(route.name);
                     navigation.navigate(route.name);

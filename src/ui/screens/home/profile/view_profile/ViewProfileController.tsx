@@ -72,6 +72,17 @@ const ViewProfileController: FC<Props> = () => {
         headerTitleAlign: "center",
         headerTitle: () => <HeaderTitle text="My Profile" />
       });
+    } else if (route.params.isFrom === EScreen.MY_FRIENDS) {
+      navigation.setOptions({
+        headerLeft: () => (
+          <HeaderLeftTextWithIcon
+            onPress={() => navigationNotification.goBack()}
+          />
+        ),
+
+        headerTitleAlign: "center",
+        headerTitle: () => <HeaderTitle text="Profile" />
+      });
     }
   }, [
     navigation,

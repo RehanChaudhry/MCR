@@ -9,6 +9,7 @@ import ConnectionItem, {
   CONNECTION_ACTION_STATE
 } from "ui/components/organisms/friends/connection/ConnectionItem";
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
+import { SPACE } from "config";
 
 type Props = {
   data: MyRoomate[];
@@ -62,6 +63,7 @@ const MyRoommatesView: FC<Props> = ({
         shouldShowProgressBar={false}
         ListHeaderComponent={() => (
           <ConnectionListHeader
+            containerStyle={styles.header}
             title="Received 1 new roommate request"
             detail={
               "You have currently 2 roommates and received 1 new roommate request."
@@ -89,6 +91,12 @@ const styles = StyleSheet.create({
   list: {
     width: "100%",
     height: "100%"
+  },
+  header: {
+    paddingLeft: SPACE.lg,
+    paddingRight: SPACE.lg,
+    paddingTop: SPACE.lg,
+    paddingBottom: SPACE.sm
   }
 });
 

@@ -3,7 +3,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import InfoCircle from "assets/images/info_circle.svg";
 import { STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
-import { MatchDismissBlockCancelApiRequestModel } from "models/api_requests/MatchDismissBlockCancelApiRequestModel";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
@@ -15,10 +14,11 @@ import EScreen from "models/enums/EScreen";
 import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
 import RelationActionType from "models/enums/RelationActionType";
 import RelationFilterType from "models/enums/RelationFilterType";
-import RelationModel, { Criteria, Status } from "models/RelationModel";
+import RelationModel, { Status } from "models/RelationModel";
 import React, {
   FC,
   useCallback,
+  useContext,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -29,8 +29,10 @@ import { useApi } from "repo/Client";
 import RelationApis from "repo/home/RelationApis";
 import { MatchesStackParamList } from "routes/MatchesStack";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { AppLog } from "utils/Util";
+import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -80,6 +82,16 @@ const MatchesController: FC<Props> = () => {
     navigation.navigate("Profile", { isFrom: EScreen.MATCH_INFO });
   };
 
+  const moveToRoommateRequests = useCallback(
+    (_: RelationModel) => {
+      navigation.navigate("ConnectRequests", {
+        title: "Roommate Requests",
+        type: ConnectRequestType.ROOMMATE_REQUESTS
+      });
+    },
+    [navigation]
+  );
+
   // Matches API
   const relationsApi = useApi<
     PaginationParamsModel,
@@ -97,43 +109,6 @@ const MatchesController: FC<Props> = () => {
   });
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const isFetchingInProgress = useRef(false);
-  const [profileMatches, setProfileMatches] = useState<RelationModel[]>();
-  const [totalCount, setTotalCount] = useState<number>(0);
-
-  const getProfileMatches = useCallback(async () => {
-    if (isFetchingInProgress.current) {
-      return;
-    }
-    isFetchingInProgress.current = true;
-
-    // AppLog.log(
-    //   "in getProfileMatches(), fetching page: " +
-    //     JSON.stringify(requestModel.current)
-    // );
-
-    const { hasError, errorBody, dataBody } = await relationsApi.request([
-      requestModel.current
-    ]);
-
-    if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to fetch matches", errorBody);
-    } else {
-      setProfileMatches((prevState) => [
-        ...(prevState === undefined || requestModel.current.page === 1
-          ? []
-          : prevState),
-        ...(dataBody.data ?? [])
-      ]);
-      setTotalCount(dataBody.count ?? 0);
-      if (dataBody!.data?.length === 10) {
-        requestModel.current.page = requestModel.current.page + 1;
-      } else {
-        setIsAllDataLoaded(true);
-      }
-    }
-
-    isFetchingInProgress.current = false;
-  }, [relationsApi]);
 
   const refreshCallback = useCallback((onComplete?: () => void) => {
     if (isFetchingInProgress.current) {
@@ -151,15 +126,77 @@ const MatchesController: FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const {
+    addListenerOnResetData,
+    removeListenerOnResetData,
+    matches: profileMatches,
+    setMatches: setProfileMatches
+  } = useContext(MyFriendsContext);
+  useEffect(() => {
+    let listener = () => {
+      refreshCallback();
+    };
+
+    addListenerOnResetData(listener);
+
+    return () => {
+      removeListenerOnResetData(listener);
+    };
+  }, [refreshCallback, addListenerOnResetData, removeListenerOnResetData]);
+
+  const [totalCount, setTotalCount] = useState<number>(0);
+
+  const getProfileMatches = useCallback(async () => {
+    AppLog.logForcefully("in getProfileMatches()...");
+    if (isFetchingInProgress.current) {
+      return;
+    }
+    isFetchingInProgress.current = true;
+
+    // AppLog.log(
+    //   "in getProfileMatches(), fetching page: " +
+    //     JSON.stringify(requestModel.current)
+    // );
+
+    const { hasError, errorBody, dataBody } = await relationsApi.request([
+      requestModel.current
+    ]);
+
+    if (hasError || dataBody === undefined) {
+      Alert.alert("Unable to fetch matches", errorBody);
+    } else {
+      setProfileMatches?.([
+        ...(profileMatches ?? []),
+        ...(dataBody.data ?? [])
+      ]);
+
+      // setMyFriends?.((prevState) => [
+      //   ...(prevState === undefined || requestModel.current.page === 1
+      //     ? []
+      //     : prevState),
+      //   ...(dataBody.data ?? [])
+      // ]);
+
+      setTotalCount(dataBody.count ?? 0);
+      if (dataBody!.data?.length === 10) {
+        requestModel.current.page = requestModel.current.page + 1;
+      } else {
+        setIsAllDataLoaded(true);
+      }
+    }
+
+    isFetchingInProgress.current = false;
+  }, [relationsApi, profileMatches, setProfileMatches]);
+
   const onTypeChange = useCallback(
     (value?: MatchesTypeFilter) => {
-      setProfileMatches(undefined);
+      setProfileMatches?.(undefined);
       setTotalCount(0);
       requestModel.current.filterBy =
         value !== MatchesTypeFilter.MATCHES ? value : undefined;
       refreshCallback();
     },
-    [refreshCallback]
+    [refreshCallback, setProfileMatches]
   );
 
   const onFilterChange = useCallback(
@@ -186,12 +223,12 @@ const MatchesController: FC<Props> = () => {
     async (userId: number, type: RelationActionType) => {
       const { hasError, errorBody, dataBody } = await requestApi.request([
         {
-          receiverId: userId.toString()
+          receiverId: userId
         }
       ]);
 
       if (!hasError) {
-        setProfileMatches((prevState) => {
+        setProfileMatches?.((prevState) => {
           let requestedUserPosition =
             prevState?.findIndex((value) => value.userId === userId) ?? -1;
           if (requestedUserPosition !== -1) {
@@ -224,29 +261,29 @@ const MatchesController: FC<Props> = () => {
         }
       }
     },
-    [requestApi]
+    [requestApi, setProfileMatches]
   );
 
   // Match Dismiss API
-  const matchDismissApi = useApi<
-    MatchDismissBlockCancelApiRequestModel,
+  const relationDismissRestoreApi = useApi<
+    UpdateRelationApiRequestModel,
     ApiSuccessResponseModel
-  >(RelationApis.matchDismiss);
+  >(RelationApis.relationDismissRestore);
 
-  const postMatchDismiss = async (
-    request: MatchDismissBlockCancelApiRequestModel
+  const requestRelationDismissRestoreApi = async (
+    request: UpdateRelationApiRequestModel
   ) => {
     const {
       hasError,
       errorBody,
       dataBody
-    } = await matchDismissApi.request([request]);
+    } = await relationDismissRestoreApi.request([request]);
 
     if (!hasError) {
-      setProfileMatches((prevState) => {
+      setProfileMatches?.((prevState) => {
         const dismissedUserIndex =
           prevState?.findIndex(
-            (value) => value.userId === request.userId
+            (value) => value.userId === request.receiverId
           ) ?? -1;
         if (dismissedUserIndex > -1) {
           prevState!.splice(dismissedUserIndex, 1);
@@ -259,14 +296,14 @@ const MatchesController: FC<Props> = () => {
     }
   };
 
-  // Match Dismiss API
-  const matchBlockedApi = useApi<
-    MatchDismissBlockCancelApiRequestModel,
-    ApiSuccessResponseModel
-  >(RelationApis.matchBlocked);
+  // Update Relation API
+  const updateRelationApi = useApi<
+    UpdateRelationApiRequestModel,
+    UpdateRelationApiResponseModel
+  >(RelationApis.updateRelation);
 
-  const postMatchBlocked = async (
-    request: MatchDismissBlockCancelApiRequestModel,
+  const requestUpdateRelationApi = async (
+    request: UpdateRelationApiRequestModel,
     type: RelationActionType
   ) => {
     AppLog.log("type: " + type);
@@ -274,14 +311,15 @@ const MatchesController: FC<Props> = () => {
       hasError,
       errorBody,
       dataBody
-    } = await matchBlockedApi.request([request]);
+    } = await updateRelationApi.request([request]);
 
     if (!hasError) {
       if (type === RelationActionType.BLOCKED) {
-        setProfileMatches((prevState) => {
+        Alert.alert("User Blocked", dataBody!.message);
+        setProfileMatches?.((prevState) => {
           const dismissedUserIndex =
             prevState?.findIndex(
-              (value) => value.userId === request.userId
+              (value) => value.userId === request.receiverId
             ) ?? -1;
           if (dismissedUserIndex > -1) {
             prevState!.splice(dismissedUserIndex, 1);
@@ -291,13 +329,13 @@ const MatchesController: FC<Props> = () => {
       }
       if (
         type === RelationActionType.CANCEL_ROOMMATE_REQUEST ||
-        RelationActionType.CANCEL_FRIEND_REQUEST
+        type === RelationActionType.CANCEL_FRIEND_REQUEST
       ) {
         Alert.alert("Request Cancelled", dataBody!.message);
-        setProfileMatches((prevState) => {
+        setProfileMatches?.((prevState) => {
           let requestedUserPosition =
             prevState?.findIndex(
-              (value) => value.userId === request.userId
+              (value) => value.userId === request.receiverId
             ) ?? -1;
           if (requestedUserPosition !== -1) {
             const updatedUser = new RelationModel(
@@ -311,8 +349,7 @@ const MatchesController: FC<Props> = () => {
               updatedUser.isFriend = EIntBoolean.TRUE;
               updatedUser.isRoommate = EIntBoolean.FALSE;
               updatedUser.status = Status.ACCEPTED;
-              const actualCriteria: Criteria = { eligible: true };
-              updatedUser.criteria = actualCriteria;
+              updatedUser.criteria = { eligible: true };
             }
             prevState![requestedUserPosition] = updatedUser;
           }
@@ -348,12 +385,13 @@ const MatchesController: FC<Props> = () => {
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
       isAllDataLoaded={isAllDataLoaded}
-      isFriendRequestApiLoading={requestApi.loading}
-      postFriendRequest={postRequest}
-      postMatchDismiss={postMatchDismiss}
+      isRequestApiLoading={requestApi.loading}
+      postRequest={postRequest}
+      postMatchDismiss={requestRelationDismissRestoreApi}
+      postMatchBlocked={requestUpdateRelationApi}
       moveToChatScreen={moveToChatScreen}
       moveToProfileScreen={moveToProfileScreen}
-      postMatchBlocked={postMatchBlocked}
+      moveToRoommateRequests={moveToRoommateRequests}
     />
   );
 };

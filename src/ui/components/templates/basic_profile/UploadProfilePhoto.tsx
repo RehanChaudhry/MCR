@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import ProfileAvatar from "assets/images/profile_avatar.svg";
 import {
@@ -14,54 +14,78 @@ import { FONT_SIZE, SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { AppLog } from "utils/Util";
-import * as ImagePicker from "react-native-image-picker";
-import { ImagePickerResponse } from "react-native-image-picker";
 import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
+import { useImageUpload } from "hooks/useImageUpload";
+import MyImagePickerResponse from "models/api_responses/MyImagePickerResponse";
+import SimpleToast from "react-native-simple-toast";
+import { FormikValues, useFormikContext } from "formik";
 
-export const UploadProfilePhoto = optimizedMemo(() => {
-  const theme = usePreferredTheme();
-  const profileIcon = () => {
-    return (
-      <ProfileAvatar
-        //testID="icon"
-        width={50}
-        height={50}
-        //fill={color}
-      />
-    );
-  };
+type UpdateProfilePhotoProp = {
+  name: string;
+  shouldNotOptimize?: boolean;
+};
 
-  const [
-    imageResponse,
-    setImageResponse
-  ] = useState<ImagePickerResponse>();
+export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
+  ({ name }) => {
+    const theme = usePreferredTheme();
+    const imageGalleryResult = useImageUpload();
 
-  const pickImage = () => {
-    ImagePicker.launchImageLibrary(
-      {
-        mediaType: "photo",
-        includeBase64: false,
-        maxHeight: 200,
-        maxWidth: 200
-      },
-      (response) => {
-        if (
-          response !== null &&
-          response !== undefined &&
-          response.didCancel !== true
-        ) {
-          setImageResponse(response);
-        }
+    const {
+      setFieldValue,
+      initialValues
+    } = useFormikContext<FormikValues>();
+
+    useEffect(() => {
+      if (initialValues[name] !== undefined) {
+        setFieldValue(name, {
+          fileURL: JSON.parse(initialValues[name]).fileURL,
+          originalName: JSON.parse(initialValues[name]).originalName
+        });
       }
-    );
-  };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialValues]);
 
-  AppLog.log("image uri" + imageResponse?.uri);
-  return (
-    <View style={styles.container}>
-      <View style={styles.subContainer}>
-        <>
-          {!imageResponse && (
+    const profileIcon = () => {
+      return (
+        <ProfileAvatar
+          //testID="icon"
+          width={50}
+          height={50}
+          //fill={color}
+        />
+      );
+    };
+
+    const [
+      imageResponse,
+      setImageResponse
+    ] = useState<MyImagePickerResponse>();
+
+    const pickImage = () => {
+      imageGalleryResult((response: MyImagePickerResponse) => {
+        if (response !== null && response !== undefined) {
+          if (response.inProgress) {
+            setImageResponse(response);
+            setFieldValue(name, {
+              fileURL: response.s3Url,
+              originalName: response.fileName
+            });
+          } else if (response.isFailed) {
+            SimpleToast.show("Image upload failed : " + response.fileName);
+            setImageResponse(undefined);
+            setFieldValue(name, {});
+          }
+        }
+      });
+    };
+    initialValues[name] !== undefined &&
+      AppLog.log(
+        "upload Profile Photo : " + JSON.stringify(initialValues[name])
+      );
+    return (
+      <View style={styles.container}>
+        <View style={styles.subContainer}>
+          {!imageResponse && !initialValues[name] && (
             <AppImageBackground
               icon={profileIcon}
               containerShape={CONTAINER_TYPES.SQUARE}
@@ -70,48 +94,54 @@ export const UploadProfilePhoto = optimizedMemo(() => {
               // }}
             />
           )}
-
-          {imageResponse && (
+          <>
             <View style={styles.imageViewStyle}>
-              <Image
-                style={styles.image}
-                source={{ uri: imageResponse?.uri }}
-              />
+              {(imageResponse !== undefined || initialValues[name]) && (
+                <Image
+                  style={styles.image}
+                  source={{
+                    uri:
+                      imageResponse?.uri !== undefined
+                        ? imageResponse.uri
+                        : JSON.parse(initialValues[name]).fileURL
+                  }}
+                />
+              )}
             </View>
-          )}
-        </>
-        <AppButton
-          text={STRINGS.profile.buttonText.uploadProfilePhoto}
-          buttonStyle={[
-            styles.uploadButton,
-            { borderColor: theme.themedColors.interface["700"] }
+          </>
+          <AppButton
+            text={STRINGS.profile.buttonText.uploadProfilePhoto}
+            buttonStyle={[
+              styles.uploadButton,
+              { borderColor: theme.themedColors.interface["700"] }
+            ]}
+            buttonType={BUTTON_TYPES.BORDER}
+            textStyle={{
+              color: theme.themedColors.label,
+              borderColor: theme.themedColors.interface["700"],
+              fontSize: FONT_SIZE.md
+            }}
+            shouldShowError={false}
+            fontWeight={"semi-bold"}
+            onPress={pickImage}
+          />
+        </View>
+        <AppLabel
+          text={STRINGS.profile.basicProfile.uploadPhotoDescription}
+          numberOfLines={0}
+          style={[
+            styles.text,
+            {
+              fontSize: FONT_SIZE.md,
+              color: theme.themedColors.interface["700"],
+              lineHeight: FONT_SIZE_LINE_HEIGHT.sm
+            }
           ]}
-          buttonType={BUTTON_TYPES.BORDER}
-          textStyle={{
-            color: theme.themedColors.label,
-            borderColor: theme.themedColors.interface["700"],
-            fontSize: FONT_SIZE.md
-          }}
-          shouldShowError={false}
-          fontWeight={"semi-bold"}
-          onPress={pickImage}
         />
       </View>
-      <AppLabel
-        text={STRINGS.profile.basicProfile.uploadPhotoDescription}
-        numberOfLines={0}
-        style={[
-          styles.text,
-          {
-            fontSize: FONT_SIZE.md,
-            color: theme.themedColors.interface["700"],
-            lineHeight: FONT_SIZE_LINE_HEIGHT.sm
-          }
-        ]}
-      />
-    </View>
-  );
-});
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -127,7 +157,7 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACE.md
   },
   text: {
-    paddingVertical: SPACE.xl
+    paddingTop: SPACE.xl
   },
   imageViewStyle: {
     height: 50,

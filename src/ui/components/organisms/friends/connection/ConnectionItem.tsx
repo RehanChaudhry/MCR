@@ -88,7 +88,9 @@ const ConnectionItem: FC<Props> = ({
               styles.profileImage,
               { backgroundColor: theme.themedColors.interface[200] }
             ]}
-            source={{ uri: profileImage }}
+            source={{
+              uri: profileImage !== "" ? profileImage : undefined
+            }}
           />
           <View style={styles.mainContainer}>
             <View style={styles.titleAndIconContainer}>

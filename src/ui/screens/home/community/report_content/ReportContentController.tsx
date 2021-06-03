@@ -26,6 +26,7 @@ type ReportContentRoute = RouteProp<
   CommunityStackParamList,
   "ReportContent"
 >;
+type CommunityRoute = RouteProp<CommunityStackParamList, "Community">;
 
 type Props = {};
 
@@ -33,6 +34,8 @@ const ReportContentController: FC<Props> = () => {
   const navigation = useNavigation<CommunityNavigationProp>();
   const theme = usePreferredTheme();
   const route = useRoute<ReportContentRoute>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const communityRoute = useRoute<CommunityRoute>();
   const [pb, setPb] = useState(false);
 
   AppLog.log("communityid: " + route.params.postId);
@@ -42,7 +45,8 @@ const ReportContentController: FC<Props> = () => {
       headerLeft: () => (
         <HeaderLeftTextWithIcon
           onPress={() => {
-            navigation.pop();
+            navigation.goBack();
+            navigation.replace("Community", {});
           }}
         />
       ),
@@ -53,6 +57,7 @@ const ReportContentController: FC<Props> = () => {
 
   const closeScreen = () => {
     navigation.goBack();
+    navigation.replace("Community", { postId: route.params.postId });
   };
 
   const reportContentApi = useApi<

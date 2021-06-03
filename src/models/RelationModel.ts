@@ -3,7 +3,7 @@ import RelationType from "models/enums/RelationType";
 import FilePath from "models/FilePath";
 
 export class RelationUser {
-  id?: string;
+  id?: number;
   firstName?: string;
   lastName?: string;
   profilePicture?: FilePath;
@@ -45,6 +45,7 @@ export class RelationModel {
   isRoommate!: EIntBoolean;
   isFriend!: EIntBoolean;
   criteria?: Criteria;
+  acceptee?: number;
 
   constructor(relationModel: RelationModel) {
     Object.assign(this, relationModel);
@@ -52,21 +53,56 @@ export class RelationModel {
   }
 
   getType(): RelationType {
-    if (this.isRoommate === EIntBoolean.TRUE) {
-      return RelationType.ROOMMATE;
-    } else if (this.criteria?.eligible === false) {
-      return RelationType.NOT_ELIGIBLE;
-    } else if (this.status === Status.PENDING) {
-      return RelationType.FRIEND_REQUESTED;
-    } else if (this.isFriend === EIntBoolean.TRUE) {
-      return RelationType.FRIEND;
-    } else if (this.status === Status.DISMISSED) {
-      return RelationType.DISMISSED;
-    } else if (this.status === Status.BLOCKED) {
-      return RelationType.BLOCKED;
-    } else {
+    if (
+      !this.isFriend &&
+      !this.isRoommate &&
+      (!this.status || this.status === "rejected")
+    ) {
       return RelationType.NOT_FRIEND;
     }
+    if (!this.isFriend && !this.isRoommate && this.status === "pending") {
+      return RelationType.FRIEND_REQUESTED;
+    }
+    if (!this.isFriend && !this.isRoommate && this.status === "pending") {
+      return RelationType.FRIEND_REQUESTED;
+    }
+    if (
+      this.isFriend &&
+      !this.isRoommate &&
+      (this.status === "accepted" || this.status === "rejected") &&
+      this.criteria?.eligible
+    ) {
+      return RelationType.FRIEND;
+    }
+    if (this.isFriend && !this.isRoommate && this.status === "pending") {
+      return RelationType.REQUEST_RECEIVED;
+    }
+    if (
+      this.isFriend &&
+      !this.isRoommate &&
+      !this.criteria?.eligible &&
+      (this.status === "accepted" || this.status === "rejected")
+    ) {
+      return RelationType.NOT_ELIGIBLE;
+    } else {
+      return RelationType.FRIEND;
+    }
+
+    // if (this.isRoommate === EIntBoolean.TRUE) {
+    //   return RelationType.ROOMMATE;
+    // } else if (this.criteria?.eligible === false) {
+    //   return RelationType.NOT_ELIGIBLE;
+    // } else if (this.status === Status.PENDING) {
+    //   return RelationType.FRIEND_REQUESTED;
+    // } else if (this.isFriend === EIntBoolean.TRUE) {
+    //   return RelationType.FRIEND;
+    // } else if (this.status === Status.DISMISSED) {
+    //   return RelationType.DISMISSED;
+    // } else if (this.status === Status.BLOCKED) {
+    //   return RelationType.BLOCKED;
+    // } else {
+    //   return RelationType.NOT_FRIEND;
+    // }
   }
 }
 

@@ -2,27 +2,39 @@ import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
-import { NotificationData } from "models/api_responses/NotificationsResponseModel";
-import { AppLog, shadowStyleProps } from "utils/Util";
+import { shadowStyleProps } from "utils/Util";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config/Dimens";
 import Selector from "assets/images/selector.svg";
 import { usePreferredTheme } from "hooks";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
-import useLazyLoadInterface from "hooks/useLazyLoadInterface";
+import NotificationData from "models/NotificationData";
 
 type Props = {
   openMyProfileScreen: () => void;
-  notifications: NotificationData[];
+  notifications?: NotificationData[];
+  shouldShowProgressBar: boolean;
+  onEndReached: () => void;
+  isAllDataLoaded: boolean;
+  pullToRefreshCallback: (onComplete: () => void) => void;
+  selectedItem: (textToFilter: string) => void;
 };
 
 export const NotificationView = React.memo<Props>(
-  ({ notifications, openMyProfileScreen }) => {
+  ({
+    notifications,
+    openMyProfileScreen,
+    shouldShowProgressBar,
+    pullToRefreshCallback,
+    onEndReached,
+    isAllDataLoaded,
+    selectedItem
+  }) => {
     let previousItemHours = "";
     const theme = usePreferredTheme();
 
-    const getHours = (prevDate: string) => {
+    const getHours = (prevDate: Date) => {
       const currDate1 = new Date();
       let d1: any = new Date(currDate1); //firstDate
       let d2: any = new Date(prevDate); //SecondDate
@@ -78,17 +90,13 @@ export const NotificationView = React.memo<Props>(
       item: NotificationData;
       index: number;
     }) => {
+      // @ts-ignore
       return (
         <View>
-          {getSortedItems(getHours(notifications[index].date))}
+          {getSortedItems(getHours(notifications[index].createdAt))}
           <CircleImageWithText
             key={index}
-            type={item.type}
-            boldText={item.boldText}
-            imageUrl={item.profileUrl}
-            username={item.name + " "}
-            message={item.message}
-            onPress={() => AppLog.log("Button pressed")}
+            notifications={new NotificationData(item)}
             userNameOnPress={openMyProfileScreen}
           />
         </View>
@@ -104,14 +112,25 @@ export const NotificationView = React.memo<Props>(
           ]}>
           <AppDropdown
             items={[
-              { id: "-1", title: "Filter by notification type" },
-              { id: "0", title: "View Friend Request" },
-              { id: "1", title: "View Profile" },
-              { id: "2", title: "View Roommate Request" },
-              { id: "3", title: "View Announcement" },
-              { id: "4", title: "View Message" },
-              { id: "5", title: "View Post" },
-              { id: "6", title: "View Roommate Request" }
+              {
+                value: "Filter by notification type",
+                text: "Filter by notification type"
+              },
+              {
+                value: "View Friend Request",
+                text: "friend-request"
+              },
+              {
+                value: "View Roommate Request",
+                text: "roommate-request"
+              },
+              { value: "View Chat", text: "View Message" },
+              { value: "View Conversation", text: "new-conversation" },
+              { value: "View Disagreed", text: "disagreed" },
+              { value: "View Agreed", text: "agreed" },
+              { value: "View Comment", text: "comment" },
+              { value: "View Announcement", text: "announcement" },
+              { value: "View Like", text: "like" }
             ]}
             title={"Filter by notification type"}
             textStyle={styles.filterText}
@@ -126,22 +145,24 @@ export const NotificationView = React.memo<Props>(
               styles.dropDown,
               { backgroundColor: theme.themedColors.interface["100"] }
             ]}
-            selectedItemCallback={(item) =>
-              AppLog.log("Selected Item" + item)
-            }
+            selectedItemCallback={(item) => {
+              selectedItem(item.text!);
+            }}
             shouldShowCustomIcon={true}
           />
         </View>
-        {useLazyLoadInterface(
-          <>
-            <FlatListWithPb
-              shouldShowProgressBar={false}
-              data={notifications}
-              keyExtractor={(item) => item.id}
-              renderItem={listItem}
-              style={styles.list}
-            />
-          </>
+
+        {notifications && (
+          <FlatListWithPb
+            shouldShowProgressBar={shouldShowProgressBar}
+            data={notifications}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={listItem}
+            style={styles.list}
+            onEndReached={onEndReached}
+            isAllDataLoaded={isAllDataLoaded}
+            pullToRefreshCallback={pullToRefreshCallback}
+          />
         )}
       </Screen>
     );
@@ -171,5 +192,10 @@ const styles = StyleSheet.create({
   filterText: { fontSize: FONT_SIZE.sm },
   list: {
     flex: 1
+  },
+  loadMore: {
+    height: 30,
+    justifyContent: "center",
+    flexDirection: "column"
   }
 });

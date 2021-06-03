@@ -1,25 +1,25 @@
 import { FONT_SIZE, SPACE, STRINGS } from "config";
-import { usePreferredTheme } from "hooks";
-import { MatchDismissBlockCancelApiRequestModel } from "models/api_requests/MatchDismissBlockCancelApiRequestModel";
+import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 import EGender from "models/enums/EGender";
-import EIntBoolean from "models/enums/EIntBoolean";
 import MatchesTypeFilter, {
   getMatchesTypeFilterData
 } from "models/enums/MatchesTypeFilter";
 import RelationActionType from "models/enums/RelationActionType";
-import RelationFilterType from "models/enums/RelationFilterType";
 import RelationModel from "models/RelationModel";
 import React, { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import MatchesFilter from "ui/components/molecules/matches_filter/MatchesFilter";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import AppPopUp from "ui/components/organisms/popup/AppPopUp";
-import ProfileMatchItem from "ui/components/organisms/profile_match_item/ProfileMatchItem";
+import RelationItem from "ui/components/organisms/relation_item/RelationItem";
 import OptimizedBottomBreadCrumbs, {
   OptimizedBBCItem
 } from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
-import { AppLog, capitalizeWords } from "utils/Util";
+import ThreeButtonsAlert from "ui/screens/home/friends/MyFriends/ThreeButtonsAlert";
+import TwoButtonsAlert, {
+  Type
+} from "ui/screens/home/friends/MyFriends/TwoButtonsAlert";
+import { capitalizeWords } from "utils/Util";
 
 type Props = {
   isLoading: boolean;
@@ -30,18 +30,17 @@ type Props = {
   pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
-  isFriendRequestApiLoading: boolean;
-  postFriendRequest: (userId: number, action: RelationActionType) => void;
-  postMatchDismiss: (
-    requestModel: MatchDismissBlockCancelApiRequestModel
-  ) => void;
+  isRequestApiLoading: boolean;
+  postRequest: (userId: number, action: RelationActionType) => void;
+  postMatchDismiss: (requestModel: UpdateRelationApiRequestModel) => void;
   selectedTotalCount: number;
   moveToChatScreen: (profileMatch: RelationModel) => void;
   moveToProfileScreen: (profileMatch: RelationModel) => void;
   postMatchBlocked: (
-    requestModel: MatchDismissBlockCancelApiRequestModel,
+    requestModel: UpdateRelationApiRequestModel,
     action: RelationActionType
   ) => void;
+  moveToRoommateRequests: (profileMatch: RelationModel) => void;
 };
 
 export const MatchesView: React.FC<Props> = ({
@@ -53,23 +52,19 @@ export const MatchesView: React.FC<Props> = ({
   pullToRefreshCallback,
   onEndReached,
   isAllDataLoaded,
-  isFriendRequestApiLoading,
-  postFriendRequest,
-  postMatchDismiss,
+  isRequestApiLoading,
   selectedTotalCount,
   moveToChatScreen,
   moveToProfileScreen,
-  postMatchBlocked
+  moveToRoommateRequests
 }: Props) => {
-  const { themedColors } = usePreferredTheme();
-
   const [filterType, setFilterType] = useState<MatchesTypeFilter>(
     MatchesTypeFilter.MATCHES
   );
 
   const [
-    isRequestDialogVisible,
-    setRequestDialogVisible
+    isFriendRequestDialogVisible,
+    setFriendRequestDialogVisible
   ] = useState<boolean>(false);
 
   const [
@@ -87,25 +82,31 @@ export const MatchesView: React.FC<Props> = ({
     setCancelRequestDialogVisible
   ] = useState<boolean>(false);
 
+  const hideRommateRequestAlert = useCallback(() => {
+    setRoommateDialogVisible(false);
+  }, []);
+
+  const hideFriendRequestAlert = useCallback(() => {
+    setFriendRequestDialogVisible(false);
+  }, []);
+
+  const hideCancelRequestAlert = useCallback(() => {
+    setCancelRequestDialogVisible(false);
+  }, []);
+
+  const hideDismissBlockAlert = useCallback(() => {
+    setDismissDialogVisible(false);
+  }, []);
+
   const profileMatch = useRef<RelationModel>();
 
   const renderItem = useCallback(
     ({ item }: { item: RelationModel }) => {
       const _item = new RelationModel(item);
       return (
-        <ProfileMatchItem
-          profileMatch={_item}
-          isFriendRequestApiLoading={
-            profileMatch.current?.userId === _item.userId
-              ? isFriendRequestApiLoading
-              : false
-          }
-          onFriendRequestClicked={() => {
-            profileMatch.current = _item;
-            setRequestDialogVisible(true);
-          }}
+        <RelationItem
+          relationModel={_item}
           onCrossClicked={() => {
-            AppLog.log("onCrossClicked()");
             profileMatch.current = _item;
             setDismissDialogVisible(true);
           }}
@@ -119,11 +120,20 @@ export const MatchesView: React.FC<Props> = ({
             profileMatch.current = _item;
             setCancelRequestDialogVisible(true);
           }}
+          onRequestReceivedClicked={moveToRoommateRequests}
+          onFriendRequestClicked={() => {
+            profileMatch.current = _item;
+            setFriendRequestDialogVisible(true);
+          }}
         />
       );
     },
-    [moveToProfileScreen, moveToChatScreen, isFriendRequestApiLoading]
+    [moveToProfileScreen, moveToChatScreen, moveToRoommateRequests]
   );
+
+  const getSelectedItem = useCallback(() => {
+    return profileMatch.current;
+  }, []);
 
   function filter(): OptimizedBBCItem<MatchesTypeFilter>[] {
     return getMatchesTypeFilterData().map((value) => {
@@ -140,191 +150,6 @@ export const MatchesView: React.FC<Props> = ({
     });
   }
 
-  const requestDialog = () => (
-    <AppPopUp
-      isVisible={isRequestDialogVisible}
-      title={STRINGS.dialogs.friend_request.title}
-      titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
-      messageStyle={{ style: styles.dialogMessageStyle }}
-      message={`Are you sure you want to send friend request to ${profileMatch.current?.user?.getFullName()}?`}
-      actions={[
-        {
-          title: STRINGS.dialogs.friend_request.success,
-          onPress: () => {
-            setRequestDialogVisible(false);
-            postFriendRequest(
-              profileMatch.current!.userId,
-              RelationActionType.FRIEND_REQUEST
-            );
-          },
-          style: {
-            weight: "semi-bold",
-            style: [
-              { color: themedColors.primary },
-              styles.dialogButtonStyle
-            ]
-          }
-        },
-        {
-          title: STRINGS.dialogs.cancel,
-          style: {
-            style: styles.dialogButtonStyle
-          },
-          onPress: () => {
-            setRequestDialogVisible(false);
-          }
-        }
-      ]}
-    />
-  );
-
-  const roommateRequestDialog = () => (
-    <AppPopUp
-      isVisible={isRoommateDialogVisible}
-      title={STRINGS.dialogs.roommate_request.title}
-      titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
-      messageStyle={{ style: styles.dialogMessageStyle }}
-      message={`Are you sure you want to send roommate request to ${profileMatch.current?.user?.getFullName()}?`}
-      actions={[
-        {
-          title: STRINGS.dialogs.roommate_request.success,
-          onPress: () => {
-            setRoommateDialogVisible(false);
-            postFriendRequest(
-              profileMatch.current!.userId,
-              RelationActionType.ROOMMATE_REQUEST
-            );
-          },
-          style: {
-            weight: "semi-bold",
-            style: [
-              { color: themedColors.primary },
-              styles.dialogButtonStyle
-            ]
-          }
-        },
-        {
-          title: STRINGS.dialogs.cancel,
-          style: {
-            style: styles.dialogButtonStyle
-          },
-          onPress: () => {
-            setRoommateDialogVisible(false);
-          }
-        }
-      ]}
-    />
-  );
-
-  const dismissDialog = () => (
-    <AppPopUp
-      isVisible={isDismissDialogVisible}
-      title={STRINGS.dialogs.dismiss_block.title}
-      titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
-      messageStyle={{ style: styles.dialogMessageStyle }}
-      message={`Do you want to add ${profileMatch.current?.user?.getFullName()} in your dismissed list or blocked list?`}
-      actions={[
-        {
-          title: STRINGS.dialogs.dismiss_block.dismiss,
-          onPress: () => {
-            setDismissDialogVisible(false);
-            postMatchDismiss({
-              userId: profileMatch.current!.userId,
-              status: RelationFilterType.DISMISSED
-            });
-          },
-          style: {
-            weight: "semi-bold",
-            style: [{ color: themedColors.warn }, styles.dialogButtonStyle]
-          }
-        },
-        {
-          title: STRINGS.dialogs.dismiss_block.block,
-          onPress: () => {
-            setDismissDialogVisible(false);
-            postMatchBlocked(
-              {
-                userId: profileMatch.current!.userId,
-                status: RelationFilterType.BLOCKED
-              },
-              RelationActionType.BLOCKED
-            );
-            profileMatch.current = undefined;
-          },
-          style: {
-            weight: "semi-bold",
-            style: [
-              { color: themedColors.danger },
-              styles.dialogButtonStyle
-            ]
-          }
-        },
-        {
-          title: STRINGS.dialogs.cancel,
-          style: {
-            style: styles.dialogButtonStyle
-          },
-          onPress: () => {
-            setDismissDialogVisible(false);
-          }
-        }
-      ]}
-    />
-  );
-
-  const getTypeOfCancelRequest = () => {
-    AppLog.log("profile match: " + JSON.stringify(profileMatch));
-    if (
-      profileMatch?.current?.isFriend === EIntBoolean.FALSE &&
-      profileMatch.current.isRoommate === EIntBoolean.FALSE
-    ) {
-      return RelationActionType.CANCEL_FRIEND_REQUEST;
-    } else {
-      return RelationActionType.CANCEL_ROOMMATE_REQUEST;
-    }
-  };
-
-  const cancelRequestDialog = () => (
-    <AppPopUp
-      isVisible={isCancelRequestDialogVisible}
-      title={STRINGS.dialogs.cancel_request.title}
-      titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
-      messageStyle={{ style: styles.dialogMessageStyle }}
-      message={`Are you sure you want to cancel request to ${profileMatch.current?.user?.getFullName()}?`}
-      actions={[
-        {
-          title: STRINGS.dialogs.cancel_request.success,
-          onPress: () => {
-            setCancelRequestDialogVisible(false);
-            postMatchBlocked(
-              {
-                userId: profileMatch.current!.userId,
-                status: RelationFilterType.CANCEL
-              },
-              getTypeOfCancelRequest()
-            );
-          },
-          style: {
-            weight: "semi-bold",
-            style: [
-              { color: themedColors.primary },
-              styles.dialogButtonStyle
-            ]
-          }
-        },
-        {
-          title: STRINGS.dialogs.cancel,
-          style: {
-            style: styles.dialogButtonStyle
-          },
-          onPress: () => {
-            setCancelRequestDialogVisible(false);
-          }
-        }
-      ]}
-    />
-  );
-
   return (
     <Screen style={styles.container}>
       <MatchesFilter onFilterChange={onFilterChange} />
@@ -340,15 +165,57 @@ export const MatchesView: React.FC<Props> = ({
         onEndReached={onEndReached}
         pullToRefreshCallback={pullToRefreshCallback}
         isAllDataLoaded={isAllDataLoaded}
-        keyExtractor={(item) => item.userId?.toString()}
+        keyExtractor={(item) => item.id?.toString()}
         error={error}
         retryCallback={pullToRefreshCallback}
-        extraData={isFriendRequestApiLoading}
+        extraData={isRequestApiLoading}
       />
-      {requestDialog()}
-      {dismissDialog()}
-      {roommateRequestDialog()}
-      {cancelRequestDialog()}
+      <TwoButtonsAlert
+        shouldShow={isRoommateDialogVisible}
+        getSelectedItem={getSelectedItem}
+        hideSelf={hideRommateRequestAlert}
+        title="Roommate Request"
+        message={`Are you sure you want to send roommate request to ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        }?`}
+        type={Type.MATCHES_ROOMMATE_REQUEST}
+        errorMessage="Unable to send roommate request"
+        firstButtonText="Yes, send request"
+        isFromMatchScreen={true}
+      />
+      <TwoButtonsAlert
+        shouldShow={isFriendRequestDialogVisible}
+        getSelectedItem={getSelectedItem}
+        hideSelf={hideFriendRequestAlert}
+        title="Friend Request"
+        message={`Are you sure you want to send friend request to ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        }?`}
+        type={Type.FRIEND_REQUEST}
+        errorMessage="Unable to send friend request"
+        firstButtonText="Yes, send request"
+        isFromMatchScreen={true}
+      />
+      <TwoButtonsAlert
+        shouldShow={isCancelRequestDialogVisible}
+        getSelectedItem={getSelectedItem}
+        hideSelf={hideCancelRequestAlert}
+        title={STRINGS.dialogs.cancel_request.title}
+        message={`Are you sure you want to cancel request to ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        }?`}
+        firstButtonText={STRINGS.dialogs.cancel_request.success}
+        type={Type.CANCEL}
+        errorMessage="Unable to send cancel request"
+        isFromMatchScreen={true}
+      />
+      <ThreeButtonsAlert
+        shouldShow={isDismissDialogVisible}
+        getSelectedItem={getSelectedItem}
+        hideSelf={hideDismissBlockAlert}
+        title={STRINGS.dialogs.dismiss_block.title}
+        message={`Do you want to add ${getSelectedItem()?.user?.getFullName()} in your dismissed list or blocked list?`}
+      />
       <OptimizedBottomBreadCrumbs<MatchesTypeFilter>
         data={filter()}
         onPress={(value) => {

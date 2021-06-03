@@ -13,15 +13,17 @@ import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb
 import { usePreferredTheme } from "hooks";
 import { DropDownItem } from "models/DropDownItem";
 import { FONT_SIZE } from "config";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 export interface DropDownModalProps {
   isVisible: boolean;
   closeModal: () => void;
-  items: DropDownItem[];
+  items: DropDownItem[] | undefined;
   selectedItemCallback: (item: DropDownItem) => void;
   dropDownBgColor?: string;
   dialogCloseIconStyle?: StyleProp<ImageStyle>;
   selectedItemPosition: number;
+  isLocked?: EIntBoolean;
 }
 
 export const DropdownModal = React.memo<DropDownModalProps>(
@@ -56,7 +58,7 @@ export const DropdownModal = React.memo<DropDownModalProps>(
           testID="dropdown-item-click"
           onPress={() => selectedItemCallback(item)}>
           <AppLabel
-            text={item.title}
+            text={item.value}
             style={[styles.flatListItem, { color: getItemColor(index) }]}
           />
         </Pressable>
@@ -86,7 +88,7 @@ export const DropdownModal = React.memo<DropDownModalProps>(
                 style={styles.flatList}
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
-                initialNumToRender={items.length}
+                initialNumToRender={items?.length}
                 removeClippedSubviews={true}
               />
             </View>

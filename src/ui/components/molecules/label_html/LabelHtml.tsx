@@ -8,12 +8,14 @@ interface Props {
   containerStyle?: StyleProp<ViewStyle>;
   text: string;
   style: StyleProp<TextStyle>;
+  onBoldTextPress?: () => void;
 }
 
 const LabelHtml: React.FC<Props> = ({
   containerStyle,
   text,
-  style
+  style,
+  onBoldTextPress
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -29,6 +31,7 @@ const LabelHtml: React.FC<Props> = ({
       let appLabelProp: AppLabelProps;
       if (index % 2 !== 0) {
         appLabelProp = {
+          onPress: onBoldTextPress,
           style: [
             {
               color: themedColors.primary

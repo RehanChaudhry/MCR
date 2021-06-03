@@ -40,6 +40,7 @@ const SocialDetailForm: FC<Props> = ({
         { color: theme.themedColors.primary },
         titleStyle
       ]}
+      numberOfLines={0}
     />
   );
   return (
