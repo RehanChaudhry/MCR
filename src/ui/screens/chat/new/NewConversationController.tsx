@@ -72,6 +72,7 @@ export const NewConversationController: FC<Props> = () => {
   >(ChatApis.getSuggestions);
 
   const handleGetSuggestionApi = async (keyword: string) => {
+    AppLog.logForcefully("Handle suggestions APi.");
     setShowProgressbar(true);
     const { hasError, dataBody, errorBody } = await getSuggestions.request(
       [

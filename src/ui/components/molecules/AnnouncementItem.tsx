@@ -1,7 +1,7 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, TouchableOpacityProps, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
@@ -12,13 +12,16 @@ import { AnnouncementFooter } from "ui/components/molecules/announcement_footer/
 import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
 import { ImagesSlideShow } from "ui/components/molecules/image_slide_show/ImagesSlideShow";
 import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
-import { shadowStyleProps } from "utils/Util";
+import { shadowStyleProps, SvgProp } from "utils/Util";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
+import Shield from "assets/images/shield.svg";
 
 export interface AnnouncementItemProps extends TouchableOpacityProps {
   announcementItem: CommunityAnnouncement;
   openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
+  shouldShowRightIcon?: boolean;
+  openReportContentScreen?: (postId: number) => void;
 }
 
 function showAttachedItemsIfAny(
@@ -43,8 +46,25 @@ function showAttachedItemsIfAny(
 }
 
 export const AnnouncementItem = React.memo<AnnouncementItemProps>(
-  ({ announcementItem, openCommentsScreen, shouldPlayVideo }) => {
+  ({
+    announcementItem,
+    openCommentsScreen,
+    shouldPlayVideo,
+    shouldShowRightIcon = false,
+    openReportContentScreen
+  }) => {
     const theme = usePreferredTheme();
+
+    const rightImage: SvgProp = useCallback(() => {
+      return (
+        <Shield
+          testID="right-icon"
+          width={23}
+          height={23}
+          fill={theme.themedColors.interface["700"]}
+        />
+      );
+    }, [theme.themedColors]);
 
     return (
       <View
@@ -62,7 +82,11 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
             (announcementItem.createdAt as unknown) as string
           )}
           leftImageUrl={announcementItem.postedByProfilePicture?.fileURL}
-          shouldShowRightImage={false}
+          shouldShowRightImage={shouldShowRightIcon}
+          rightIcon={rightImage}
+          onRightBtnClicked={() => {
+            openReportContentScreen?.(announcementItem.id);
+          }}
         />
         {announcementItem.content && (
           <AppLabel

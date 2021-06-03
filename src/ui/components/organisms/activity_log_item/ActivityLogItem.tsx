@@ -115,8 +115,7 @@ const ActivityLogItem = ({ activityLog }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    paddingHorizontal: SPACE.md
+    flexDirection: "row"
   },
   startContainer: {},
   imageContainer: {
@@ -143,7 +142,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 2,
     height: "100%",
-    start: 31
+    start: 18
   },
   iconContainer: {
     width: 32,

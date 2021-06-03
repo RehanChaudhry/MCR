@@ -6,6 +6,8 @@ export type RoommateAgreementResponseModel = {
 };
 
 export type FormInputFieldData = {
+  firstName?: string;
+  lastName?: string;
   fieldName?: string;
   id: number;
   name: string;
@@ -17,6 +19,7 @@ export type FormInputFieldData = {
   order?: number;
   isLocked: EIntBoolean;
   isRequired: EIntBoolean;
+  icon?: string;
   isDefault?: number;
   content?: null;
   status?: string;

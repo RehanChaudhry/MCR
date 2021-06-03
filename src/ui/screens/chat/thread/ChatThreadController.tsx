@@ -131,7 +131,8 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     page: 1,
     limit: 10,
     orderBy: ESortBy.UPDATED_AT,
-    order: ESortOrder.DSC
+    order: ESortOrder.DSC,
+    id: conversationId
   });
 
   const handleLoadMessagesApi = useCallback(
@@ -203,6 +204,25 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     [conversationId, sentMessageApi]
   );
 
+  const refreshCallback = useCallback(
+    async (onComplete?: () => void) => {
+      requestModel.current.page = 1;
+      handleLoadMessagesApi()
+        .then(() => {
+          onComplete?.();
+        })
+        .catch(() => {
+          onComplete?.();
+        });
+    },
+    [handleLoadMessagesApi]
+  );
+
+  const onEndReached = useCallback(async () => {
+    AppLog.log("ChatThread => onEndReached is called");
+    await handleLoadMessagesApi();
+  }, [handleLoadMessagesApi]);
+
   function updateMessagesList(text: string) {
     sentMessage(text).then().catch();
 
@@ -224,6 +244,8 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       shouldShowProgressBar={shouldShowProgressBar}
       error={loadMessages.error}
       isAllDataLoaded={isAllDataLoaded}
+      pullToRefreshCallback={refreshCallback}
+      onEndReached={onEndReached}
     />
   );
 };

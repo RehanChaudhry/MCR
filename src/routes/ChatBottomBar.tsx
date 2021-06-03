@@ -1,8 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 export type ChatBottomBarParamsList = {
-  Active: undefined;
-  Archive: undefined;
+  Active: { status: string };
+  Archive: { status: string };
 };
 
 export const ChatBottomBar = createBottomTabNavigator<ChatBottomBarParamsList>();

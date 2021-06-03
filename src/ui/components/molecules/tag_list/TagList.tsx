@@ -8,7 +8,7 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE } from "config";
 
 type Props = {
-  labelTitle: string;
+  labelTitle: string | undefined;
   data: TagDataItem[];
 };
 
@@ -28,7 +28,7 @@ const TagList: FC<Props> = ({ data, labelTitle }) => {
       <View style={styles.chipView}>
         {data.length > 0 &&
           data.map((item) => {
-            return <TagListItem key={item.id} title={item.titleTag} />;
+            return <TagListItem title={item.value} />;
           })}
 
         {data.length === 0 && (

@@ -3,7 +3,7 @@ import EScreen from "models/enums/EScreen";
 
 export type NotificationParamList = {
   Notification: undefined;
-  ViewProfile: { isFrom: EScreen };
+  ViewProfile: { isFrom: EScreen; updateProfile: boolean };
 };
 
 export const NotificationStack = createStackNavigator<NotificationParamList>();

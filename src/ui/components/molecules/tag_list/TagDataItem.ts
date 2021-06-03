@@ -1,4 +1,3 @@
 export type TagDataItem = {
-  id: string;
-  titleTag: string;
+  value?: string | undefined;
 };
