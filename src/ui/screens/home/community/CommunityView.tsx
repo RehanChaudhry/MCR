@@ -1,15 +1,15 @@
 import { SPACE } from "config";
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import { FilterCount } from "models/enums/FeedsTypeFilter";
 import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
-import { CommunityItem } from "ui/components/molecules/community_item/CommunityItem";
+import { AnnouncementItem } from "ui/components/molecules/AnnouncementItem";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import BottomBreadCrumbs, {
   Item
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
-import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { listContentContainerStyle, listItemSeparator } from "utils/Util";
 
 type Props = {
@@ -47,11 +47,12 @@ export const CommunityView = React.memo<Props>(
 
     const listItem = useCallback(
       ({ item }: { item: CommunityAnnouncement }) => (
-        <CommunityItem
-          communityItem={item}
+        <AnnouncementItem
+          announcementItem={item}
           openCommentsScreen={openCommentsScreen}
           shouldPlayVideo={shouldPlayVideo}
           openReportContentScreen={openReportContentScreen}
+          shouldShowRightIcon={true}
         />
       ),
       [openCommentsScreen, shouldPlayVideo, openReportContentScreen]
