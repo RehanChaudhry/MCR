@@ -15,7 +15,10 @@ export const SectionComponent = React.memo<Props>(
   ({ listData, showProgressBar }) => {
     const updateProfileRoute = useRoute<any>();
     const listItem = ({ item }: { item: FormInputFieldData }) => {
-      if (updateProfileRoute.params.updateProfile === true) {
+      if (
+        updateProfileRoute.params.updateProfile === undefined ||
+        updateProfileRoute.params.updateProfile === true
+      ) {
         return <CustomFormFieldItem listData={item} />;
       } else {
         return <CustomViewProfileItems listData={item} />;
