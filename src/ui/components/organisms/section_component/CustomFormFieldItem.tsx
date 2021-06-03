@@ -173,6 +173,43 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
           </>
         );
 
+      case "url":
+        return (
+          <>
+            <View style={styles.spacer} />
+            <AppFormField
+              name={listData.id.toString()}
+              labelProps={{
+                text: listData?.label,
+                weight: "semi-bold"
+              }}
+              fieldInputProps={{
+                textContentType: "name",
+                keyboardType: "default",
+                returnKeyType: "next",
+                placeholder: listData?.placeholder,
+                /* value: text,
+                            onChangeText: (value) => setText(value),*/
+                autoCapitalize: "none",
+                placeholderTextColor: theme.themedColors.placeholder,
+                style: { color: theme.themedColors.label },
+                viewStyle: [
+                  styles.textFieldStyle,
+                  {
+                    backgroundColor: !listData.isLocked
+                      ? theme.themedColors.background
+                      : theme.themedColors.backgroundSecondary,
+                    borderColor: !listData.isLocked
+                      ? theme.themedColors.border
+                      : theme.themedColors.borderSecondary
+                  }
+                ]
+              }}
+              isLocked={listData.isLocked}
+            />
+          </>
+        );
+
       case "file":
         return (
           <>

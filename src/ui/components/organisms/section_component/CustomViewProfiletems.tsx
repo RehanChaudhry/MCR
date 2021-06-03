@@ -125,46 +125,45 @@ export const CustomViewProfileItems = React.memo<CustomViewProfileProps>(
         );
 
       case "text":
+        return (
+          <>
+            <View style={styles.spacer} />
+            <HeadingWithText
+              headingText={listData.label}
+              text={
+                listData.userMeta?.length === 0
+                  ? "N/A"
+                  : listData.userMeta![0].value
+              }
+              headingFontWeight={"semi-bold"}
+              textStyle={styles.textStyle}
+              headingStyle={[
+                styles.headingStyle,
+                { color: theme.themedColors.labelSecondary }
+              ]}
+            />
+          </>
+        );
+
+      case "url":
         const userMetaLinks =
           listData.userMeta?.length === 0
             ? "N/A"
             : listData.userMeta![0].value;
-        if (userMetaLinks?.match(".com")) {
-          return (
-            <>
-              <View style={styles.spacer} />
-              <SocialDetailForm
-                heading={listData.label}
-                title={userMetaLinks}
-                headingStyle={{ color: grayShades.warmGray["700"] }}
-                onPress={() => {
-                  // Alert.alert("Facebook profile link is pressed");
-                  Linking.openURL(userMetaLinks);
-                }}
-              />
-            </>
-          );
-        } else {
-          return (
-            <>
-              <View style={styles.spacer} />
-              <HeadingWithText
-                headingText={listData.label}
-                text={
-                  listData.userMeta?.length === 0
-                    ? "N/A"
-                    : listData.userMeta![0].value
-                }
-                headingFontWeight={"semi-bold"}
-                textStyle={styles.textStyle}
-                headingStyle={[
-                  styles.headingStyle,
-                  { color: theme.themedColors.labelSecondary }
-                ]}
-              />
-            </>
-          );
-        }
+        return (
+          <>
+            <View style={styles.spacer} />
+            <SocialDetailForm
+              heading={listData.label}
+              title={userMetaLinks!}
+              headingStyle={{ color: grayShades.warmGray["700"] }}
+              onPress={() => {
+                // Alert.alert("Facebook profile link is pressed");
+                Linking.openURL(userMetaLinks!);
+              }}
+            />
+          </>
+        );
 
       case "file":
         return (
