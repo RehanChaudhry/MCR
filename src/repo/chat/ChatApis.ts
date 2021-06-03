@@ -28,6 +28,18 @@ function createConversations(request: CreateConversationRequestModel) {
   );
 }
 
+function updateConversation(request: {
+  status: string;
+  conversationId: number;
+}) {
+  return apiClient.put<CreateConversationResponseModel>(
+    API.CONVERSATION + request.conversationId,
+    {
+      status: request.status
+    }
+  );
+}
+
 function sentMessage(request: Object) {
   return apiClient.post<ChatResponseModel>(API.MESSAGE, request);
 }
@@ -43,5 +55,6 @@ export default {
   getSuggestions: getSuggestions,
   createConversations: createConversations,
   sentMessage: sentMessage,
-  getMessages: getMessages
+  getMessages: getMessages,
+  updateConversation: updateConversation
 };

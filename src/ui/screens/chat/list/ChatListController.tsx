@@ -136,14 +136,16 @@ export const ChatListController: FC<Props> = ({
     handleLoadChatsApi().then().catch();
   }, [handleLoadChatsApi]);
 
-  function performSearch(textToSearch: string) {
-    setChats(
-      chats!!.filter((obj: Conversation) => {
-        return Object.values(obj).some((v) =>
-          `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
-        );
-      })
-    );
+  // eslint-disable-next-line no-undef
+  let timeOutId: NodeJS.Timeout;
+  async function performSearch(textToSearch: string) {
+    clearTimeout(timeOutId);
+    timeOutId = setTimeout(() => {
+      requestModel.current.page = 1;
+      requestModel.current.keyword = textToSearch;
+      setChats(undefined);
+      handleLoadChatsApi();
+    }, 10);
   }
 
   return (

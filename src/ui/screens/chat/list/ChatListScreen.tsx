@@ -43,16 +43,13 @@ export const ChatListScreen = React.memo<ChatListProps>(
     AppLog.log("Rendering chat screen...");
     const { themedColors } = usePreferredTheme();
 
-    const handleClick = useCallback(
-      (textToSearch?: string) => {
+    const handleClick = useCallback((textToSearch?: string) => {
+      if (textToSearch !== undefined) {
         lastHeaderTitle = "";
-
-        textToSearch !== "" &&
-          textToSearch !== undefined &&
-          performSearch(textToSearch);
-      },
-      [performSearch]
-    );
+        performSearch(textToSearch);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const renderItem = ({
       item,

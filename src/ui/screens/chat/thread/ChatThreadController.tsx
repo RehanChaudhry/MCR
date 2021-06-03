@@ -33,6 +33,7 @@ import ChatRequestModel, {
 } from "models/api_requests/chatRequestModel";
 import MessagesResponseModel from "models/api_responses/MessagesResponseModel";
 import Message from "models/Message";
+import SimpleToast from "react-native-simple-toast";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -104,9 +105,10 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       headerRight: () => (
         <HeaderRightTextWithIcon
           text={Strings.chatThreadScreen.titleRight}
-          onPress={() => {
-            navigation.goBack();
+          onPress={async () => {
+            await handleUpdateConversationApi();
           }}
+          shouldSHowLoader={updateConversationApi.loading}
           textStyle={{ color: COLORS.red }}
           icon={() => (
             <Archive
@@ -125,6 +127,31 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
   const loadMessages = useApi<ChatRequestModel, MessagesResponseModel>(
     ChatApis.getMessages
   );
+
+  const updateConversationApi = useApi<
+    { status: string; conversationId: number },
+    any
+  >(ChatApis.updateConversation);
+
+  async function handleUpdateConversationApi() {
+    const {
+      hasError,
+      dataBody,
+      errorBody
+    } = await updateConversationApi.request([
+      { status: "archived", conversationId: conversationId }
+    ]);
+
+    if (hasError || dataBody === undefined) {
+      AppLog.logForcefully("Chat archive failed :  " + errorBody);
+      SimpleToast.show(
+        "Archive failed for conversation : " + conversationId
+      );
+      return;
+    } else {
+      navigation.goBack();
+    }
+  }
 
   const requestModel = useRef<ChatRequestModel>({
     paginate: true,
