@@ -3,7 +3,12 @@ import { StyleSheet, View } from "react-native";
 import React, { useCallback } from "react";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import { AppLog, shadowStyleProps } from "utils/Util";
+import {
+  AppLog,
+  listContentContainerStyle,
+  listItemSeparator,
+  shadowStyleProps
+} from "utils/Util";
 import { ItemChatList } from "ui/components/molecules/item_chat/ItemChatList";
 import { ChatHeader } from "ui/components/molecules/item_chat/ChatHeader";
 import SearchField from "ui/components/atoms/search_field/SearchField";
@@ -110,7 +115,10 @@ export const ChatListScreen = React.memo<ChatListProps>(
               pullToRefreshCallback={pullToRefreshCallback}
               onEndReached={onEndReached}
               isAllDataLoaded={isAllDataLoaded}
-              contentContainerStyle={{ paddingBottom: SPACE.md }}
+              contentContainerStyle={listContentContainerStyle}
+              ItemSeparatorComponent={({}) => (
+                <View style={listItemSeparator} />
+              )}
             />
           </>
         )}

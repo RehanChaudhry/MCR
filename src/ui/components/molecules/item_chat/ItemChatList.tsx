@@ -124,14 +124,13 @@ const styles = StyleSheet.create({
       borderStartColor: shouldShowBorder
         ? themedColors.primary
         : themedColors.backgroundSecondary,
-      borderStartWidth: 4,
-      marginTop: SPACE.md
+      borderStartWidth: 4
     };
   },
   indicator: {
     position: "absolute",
     start: 40,
-    top: 0,
+    top: 10,
     left: 40
   },
   imgStyle: {
