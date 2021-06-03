@@ -211,21 +211,13 @@ const RoommateAgreementController: FC<Props> = () => {
     submitAnswerRequest.current = data;
     setAgreementDialog(true);
 
-    AppLog.logForcefully("resuled values " + JSON.stringify(data));
+    AppLog.log("submitted values " + JSON.stringify(data));
   };
 
   const agreementDialogCallback = (status: string) => {
     setAgreementDialog(false);
 
-    // if (submitAnswerRequest.current.roommates === undefined) {
-    //   submitAnswerRequest.current.roommates = [];
-    // }
-    // submitAnswerRequest.current.roommates.push({
-    //   userId: user?.profile?.id,
-    //   status: status
-    // });
-
-    AppLog.logForcefully("userProfile: " + JSON.stringify(user?.profile));
+    AppLog.log("userProfile: " + JSON.stringify(user?.profile));
     submitAnswerRequest.current.agreementId = user?.profile?.agreementId!!;
     submitAnswerRequest.current.status = status;
 

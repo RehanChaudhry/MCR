@@ -39,8 +39,8 @@ const CheckboxWithText = optimizedMemo<Props>(
     useEffect(() => {
       if (preSelected) {
         setChecked(true);
+        onChange?.(true, text);
       }
-      /* onChange?.(true, text);*/
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [preSelected]);
 

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import Screen from "ui/components/atoms/Screen";
 import RoommateAgreementTerms from "ui/components/templates/roommate_agreement/RoommateAgreementTerms";
 import AppForm from "ui/components/molecules/app_form/AppForm";
-import { FormikValues } from "formik";
+import { FormikValues, isObject } from "formik";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
@@ -46,13 +46,29 @@ const RoommateAgreementView: FC<Props> = ({
     // @ts-ignore
     initialValues[item.id] = "";
   });
+
+  function getData(value: any) {
+    if (Array.isArray(value)) {
+      return value.reduce(
+        (newArray: string[], _item: any) => (
+          newArray.push(isObject(_item) ? _item.value : _item), newArray
+        ),
+        []
+      );
+    } else if (isObject(value)) {
+      return value.value;
+    } else {
+      return value;
+    }
+  }
+
   const onSubmit = (_value: FormikValues) => {
     initialValues = _value;
     AppLog.log("Button Pressed" + JSON.stringify(initialValues));
     handleSaveAndContinue({
       agreementUserAnswers: Object.entries(_value).map(([key, value]) => ({
         agreementFieldId: Number(key),
-        agreementFieldValue: value
+        agreementFieldValue: getData(value)
       })),
       agreementAccepted: switchedValue
     });
