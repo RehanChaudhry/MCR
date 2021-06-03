@@ -13,6 +13,7 @@ import MatchesController from "ui/screens/home/matches/MatchesController";
 import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
 import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
 import QuestionsController from "ui/screens/questions/QuestionsController";
+import EScreen from "models/enums/EScreen";
 
 const MatchesRoutes = ({ navigation }: any) => {
   const route: any = useRoute();
@@ -52,6 +53,8 @@ const MatchesRoutes = ({ navigation }: any) => {
       <MatchesStack.Screen
         name="Profile"
         component={ViewProfileController}
+        initialParams={{ isFrom: EScreen.HOME, updateProfile: false }}
+        options={{ title: "View Profile" }}
       />
       <MatchesStack.Screen
         name="RoommateAgreement"

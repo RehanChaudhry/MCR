@@ -39,8 +39,8 @@ const ViewProfileRoutes: FC<ViewProfileRoutesProps> = () => {
     <ViewProfileStack.Navigator>
       <ViewProfileStack.Screen
         name="ViewProfile"
-        initialParams={{ isFrom: EScreen.HOME }}
         component={ViewProfileController}
+        initialParams={{ isFrom: EScreen.HOME, updateProfile: false }}
         options={{ title: "View Profile" }}
       />
     </ViewProfileStack.Navigator>
@@ -53,7 +53,7 @@ const UpdateProfileRoutes: FC<UpdateProfileRoutesProps> = () => {
     <UpdateProfileStack.Navigator>
       <UpdateProfileStack.Screen
         name="UpdateProfile"
-        initialParams={{ isFrom: EScreen.HOME }}
+        initialParams={{ isFrom: EScreen.HOME, updateProfile: true }}
         component={UpdateProfileController}
         options={{ title: "Update Profile" }}
       />

@@ -17,7 +17,6 @@ import { UpdateProfileUiRequestModel } from "models/api_requests/UpdateProfileUi
 import { createYupSchema } from "utils/YupSchemaCreator";
 import _ from "lodash";
 import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
-import { AppLog } from "utils/Util";
 
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
@@ -28,7 +27,7 @@ type Props = {
 };
 
 export const UpdateProfileView: React.FC<Props> = ({
-  openUpdateQuestionnaireScreen,
+  //openUpdateQuestionnaireScreen,
   infoTextShown,
   handleUpdateProfile,
   updateProfileUiData,
@@ -36,11 +35,8 @@ export const UpdateProfileView: React.FC<Props> = ({
 }) => {
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
-
-  AppLog.logForcefully("remove warning: " + openUpdateQuestionnaireScreen);
   //dynamic form validation on submit
   let onSubmit = (_value: FormikValues) => {
-    AppLog.log("in onSubmit");
     updateProfileUiData?.sections?.forEach((section) => {
       section.formInputs?.forEach((formInput) => {
         const val = _value[formInput.id.toString()];
@@ -81,10 +77,6 @@ export const UpdateProfileView: React.FC<Props> = ({
     handleUpdateProfile({
       sections: updateProfileUiData?.sections!
     });
-    AppLog.log(
-      "Update Profile Request Model Data = " +
-        JSON.stringify(updateProfileUiData?.sections)
-    );
   };
 
   let yepSchema = useRef({});
@@ -117,7 +109,6 @@ export const UpdateProfileView: React.FC<Props> = ({
         initialValues.current[formInput.id] =
           formInput.userMeta?.[0]?.value;
       });
-      AppLog.log("initialValues : " + JSON.stringify(initialValues));
     });
   }, [updateProfileUiData]);
 

@@ -11,6 +11,7 @@ export type WelcomeStackParamList = {
     isFrom: EScreen;
     list?: ConversationItem[];
     listKey?: string;
+    updateProfile: boolean;
   };
   AddInterests: {
     list: ConversationItem[];

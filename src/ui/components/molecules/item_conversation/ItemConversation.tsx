@@ -25,7 +25,7 @@ export interface ItemConversationProps extends ViewStyle {
 export const ItemConversation = optimizedMemo<ItemConversationProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
-
+    AppLog.logForcefully("item user : " + JSON.stringify(item));
     const defaultIcon: SvgProp = (
       color?: Color,
       width?: NumberProp,
@@ -46,9 +46,9 @@ export const ItemConversation = optimizedMemo<ItemConversationProps>(
       <CardView style={styles.card(themedColors)}>
         <AppLabel
           text={
-            item instanceof User
-              ? item?.firstName!! + item?.lastName!!
-              : item?.value!!
+            item.hasOwnProperty("firstName")
+              ? item?.firstName + " " + item?.lastName
+              : item?.value
           }
           style={styles.txt}
         />

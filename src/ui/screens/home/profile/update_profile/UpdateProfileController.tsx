@@ -24,7 +24,6 @@ import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_w
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
-import { AppLog } from "utils/Util";
 import { Alert } from "react-native";
 import { useApi } from "repo/Client";
 import AuthApis from "repo/auth/AuthApis";
@@ -75,8 +74,6 @@ const UpdateProfileController: FC<Props> = () => {
 
   //handle update profile ui api
   const fetchMyProfile = useCallback(async () => {
-    AppLog.log("handleSignIn: ");
-
     //setShouldShowPb(true);
 
     // authenticate user
@@ -90,7 +87,6 @@ const UpdateProfileController: FC<Props> = () => {
       Alert.alert("Unable to fetch update profile ui", errorBody);
       return;
     } else {
-      AppLog.log("Update profile data is updated " + dataBody.data);
       setUpdateProfileUiData(dataBody.data);
     }
   }, [updateProfileUiApi]);
@@ -185,7 +181,6 @@ const UpdateProfileController: FC<Props> = () => {
         Alert.alert("Unable to update your profile", errorBody);
         return;
       } else {
-        AppLog.log("Update profile data is updated " + dataBody.message);
         Alert.alert(
           "Your profile has been updated successfully.",
           dataBody.message

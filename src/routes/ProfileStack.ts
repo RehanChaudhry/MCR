@@ -3,7 +3,7 @@ import EScreen from "models/enums/EScreen";
 import { ConversationItem } from "models/ConversationItem";
 
 export type ViewProfileStackParamList = {
-  ViewProfile: { isFrom: EScreen };
+  ViewProfile: { isFrom: EScreen; updateProfile: boolean };
 };
 export const ViewProfileStack = createStackNavigator<ViewProfileStackParamList>();
 
@@ -12,6 +12,7 @@ export type UpdateProfileStackParamList = {
     isFrom: EScreen;
     list?: ConversationItem[];
     listKey?: string;
+    updateProfile: boolean;
   };
   AddInterests: {
     list: ConversationItem[];

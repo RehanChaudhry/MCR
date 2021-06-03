@@ -6,6 +6,7 @@ import Screen from "ui/components/atoms/Screen";
 import { AnnouncementItem } from "ui/components/molecules/AnnouncementItem";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
+import { listContentContainerStyle, listItemSeparator } from "utils/Util";
 
 type Props = {
   data: CommunityAnnouncement[] | undefined;
@@ -47,11 +48,6 @@ export const AnnouncementView = React.memo<Props>(
       [openCommentsScreen, shouldPlayVideo]
     );
 
-    const itemSeperatorComponent = useCallback(
-      () => <View style={styles.itemSeparator} />,
-      []
-    );
-
     return (
       <Screen style={styles.container}>
         {useLazyLoadInterface(
@@ -63,8 +59,13 @@ export const AnnouncementView = React.memo<Props>(
             shouldShowProgressBar={shouldShowProgressBar}
             data={data}
             style={styles.list}
-            contentContainerStyle={styles.listContainer}
-            ItemSeparatorComponent={itemSeperatorComponent}
+            contentContainerStyle={[
+              listContentContainerStyle,
+              { paddingHorizontal: SPACE.lg }
+            ]}
+            ItemSeparatorComponent={({}) => (
+              <View style={listItemSeparator} />
+            )}
             error={error}
             renderItem={listItem}
             keyExtractor={keyExtractor}
@@ -83,7 +84,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  listContainer: { padding: SPACE.lg },
   list: {
     flex: 1
   },

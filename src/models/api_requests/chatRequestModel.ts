@@ -7,6 +7,8 @@ type ChatRequestModel = {
   orderBy?: ESortBy;
   order?: ESortOrder;
   keyword?: string;
+  status?: string;
+  id?: number;
 };
 
 export enum ESortOrder {

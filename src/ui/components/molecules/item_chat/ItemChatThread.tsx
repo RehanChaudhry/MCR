@@ -68,7 +68,8 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row"
+    flexDirection: "row",
+    marginTop: SPACE.lg
   },
   imgStyle: {
     width: 48,
