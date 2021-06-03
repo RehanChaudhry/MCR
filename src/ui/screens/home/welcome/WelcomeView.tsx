@@ -23,6 +23,11 @@ export const WelcomeView = React.memo<Props>(
     const theme = usePreferredTheme();
     const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
 
+    // function matchYoutubeUrl(url: string) {
+    //   var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    //   return url.match(p) ? RegExp.$1 : false;
+    // }
+
     // @ts-ignore
     return (
       <Screen>
@@ -43,13 +48,10 @@ export const WelcomeView = React.memo<Props>(
 
             <YouTube
               apiKey="AIzaSyCce0TNBZDyCCP62B2P8EkTfgjgp20ZqOA"
-              videoId="yR9ZW4mS_EA"
+              videoId={"4WCu9-AZXBw"}
               play={shouldPlayVideo}
               controls={0}
-              style={{
-                //alignSelf: "stretch",
-                aspectRatio: 18 / 10
-              }}
+              style={styles.image}
             />
             <View style={styles.buttonViewStyle}>
               <AppButton
@@ -173,17 +175,29 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 200,
-    marginTop: SPACE.lg
+    marginTop: SPACE.lg,
+    aspectRatio: 18 / 10
   },
   buttonText: {
     fontSize: FONT_SIZE.lg
   },
-  h3: {
+  b: {
     fontSize: FONT_SIZE.lg,
     fontWeight: "bold"
   },
+  h1: {
+    fontSize: FONT_SIZE.xl,
+    fontWeight: "bold"
+  },
+  h2: {
+    fontSize: FONT_SIZE.lg,
+    fontWeight: "bold"
+  },
+  h3: {
+    fontSize: FONT_SIZE.sm,
+    fontWeight: "bold"
+  },
   br: {
-    lineHeight: -20
+    lineHeight: -12
   }
 });
