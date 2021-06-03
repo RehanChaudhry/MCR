@@ -75,9 +75,9 @@ const styles = StyleSheet.create({
   listHeader: (themedColors: ColorPalette) => {
     return {
       paddingStart: SPACE.lg,
-      paddingTop: SPACE.lg,
       fontSize: FONT_SIZE.xs,
-      color: themedColors.interface["600"]
+      color: themedColors.interface["600"],
+      marginBottom: SPACE.md
     };
   }
 });

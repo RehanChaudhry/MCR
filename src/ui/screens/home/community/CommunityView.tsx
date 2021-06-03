@@ -10,6 +10,7 @@ import BottomBreadCrumbs, {
   Item
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
+import { listContentContainerStyle, listItemSeparator } from "utils/Util";
 
 type Props = {
   data: CommunityAnnouncement[] | undefined;
@@ -67,11 +68,6 @@ export const CommunityView = React.memo<Props>(
       });
     }
 
-    const itemSeperatorComponent = useCallback(
-      () => <View style={styles.itemSeparator} />,
-      []
-    );
-
     return (
       <Screen style={styles.container}>
         {useLazyLoadInterface(
@@ -87,8 +83,13 @@ export const CommunityView = React.memo<Props>(
               renderItem={listItem}
               keyExtractor={keyExtractor}
               error={error}
-              contentContainerStyle={styles.listContainer}
-              ItemSeparatorComponent={itemSeperatorComponent}
+              contentContainerStyle={[
+                listContentContainerStyle,
+                { paddingHorizontal: SPACE.lg }
+              ]}
+              ItemSeparatorComponent={({}) => (
+                <View style={listItemSeparator} />
+              )}
               onEndReached={onEndReached}
               isAllDataLoaded={isAllDataLoaded}
               pullToRefreshCallback={pullToRefreshCallback}
@@ -108,8 +109,5 @@ const styles = StyleSheet.create({
   listContainer: { padding: SPACE.lg },
   list: {
     flex: 1
-  },
-  itemSeparator: {
-    height: SPACE.lg
   }
 });

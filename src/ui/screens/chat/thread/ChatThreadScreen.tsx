@@ -1,10 +1,10 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
 import { ItemChatThread } from "ui/components/molecules/item_chat/ItemChatThread";
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import { AppLog } from "utils/Util";
+import { AppLog, listContentContainerStyle } from "utils/Util";
 import Strings from "config/Strings";
 import { SPACE } from "config";
 import Message from "models/Message";
@@ -42,10 +42,6 @@ export const ChatThreadScreen = React.memo<Props>(
       <Screen style={styles.container}>
         <FlatListWithPb
           data={data}
-          ItemSeparatorComponent={() => (
-            <View style={styles.itemSeparator} />
-          )}
-          contentContainerStyle={styles.listContainer}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
           style={[styles.list]}
@@ -56,6 +52,10 @@ export const ChatThreadScreen = React.memo<Props>(
           onEndReached={onEndReached}
           pullToRefreshCallback={pullToRefreshCallback}
           keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={[
+            listContentContainerStyle,
+            { paddingHorizontal: SPACE.lg, paddingBottom: 0 }
+          ]}
         />
         <WriteMessage
           btnPressCallback={sentMessage}
@@ -75,9 +75,5 @@ const styles = StyleSheet.create({
   list: {
     flex: 1
   },
-  messageContainer: {},
-  listContainer: { padding: SPACE.lg },
-  itemSeparator: {
-    height: SPACE.lg
-  }
+  messageContainer: {}
 });
