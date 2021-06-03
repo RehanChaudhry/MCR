@@ -7,7 +7,11 @@ import React, {
 } from "react";
 import { ChatListScreen } from "ui/screens/chat/list/ChatListScreen";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { useApi } from "repo/Client";
 import ChatApis from "repo/chat/ChatApis";
 import { AppLog } from "utils/Util";
@@ -19,13 +23,26 @@ import ChatRequestModel, {
   ESortBy,
   ESortOrder
 } from "models/api_requests/chatRequestModel";
+import { ChatBottomBarParamsList } from "routes/ChatBottomBar";
 
 type ChatRootNavigationProp = StackNavigationProp<ChatRootStackParamList>;
 
-type Props = {};
+type ChatBottomBarNavigationProp = RouteProp<
+  ChatBottomBarParamsList,
+  "Active" | "Archive"
+>;
 
-export const ChatListController: FC<Props> = () => {
-  const navigation = useNavigation<ChatRootNavigationProp>();
+type Props = {
+  route: ChatBottomBarNavigationProp;
+  chatRootNavigation: ChatRootNavigationProp;
+};
+
+export const ChatListController: FC<Props> = ({
+  route,
+  chatRootNavigation
+}) => {
+  const navigation = useNavigation<typeof chatRootNavigation>();
+  const { params }: any = useRoute<typeof route>();
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(true);
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
     false
@@ -44,7 +61,8 @@ export const ChatListController: FC<Props> = () => {
     page: 1,
     limit: 10,
     orderBy: ESortBy.UPDATED_AT,
-    order: ESortOrder.DSC
+    order: ESortOrder.DSC,
+    status: params.status
   });
 
   const handleLoadChatsApi = useCallback(async () => {
@@ -60,7 +78,7 @@ export const ChatListController: FC<Props> = () => {
       dataBody === undefined ||
       dataBody.data === undefined
     ) {
-      AppLog.log("Unable to find chats " + errorBody);
+      AppLog.log("ChatList => Unable to find chats " + errorBody);
       return;
     } else {
       setChats((prevState) => {
@@ -98,7 +116,6 @@ export const ChatListController: FC<Props> = () => {
   const refreshCallback = useCallback(
     async (onComplete?: () => void) => {
       requestModel.current.page = 1;
-      onComplete?.();
       handleLoadChatsApi()
         .then(() => {
           onComplete?.();
@@ -111,7 +128,7 @@ export const ChatListController: FC<Props> = () => {
   );
 
   const onEndReached = useCallback(async () => {
-    requestModel.current.page = requestModel.current.page!! + 1;
+    AppLog.log("ChatList => onEndReached is called");
     await handleLoadChatsApi();
   }, [handleLoadChatsApi]);
 

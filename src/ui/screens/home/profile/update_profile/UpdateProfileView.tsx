@@ -47,6 +47,13 @@ export const UpdateProfileView: React.FC<Props> = ({
               return { value: obj.value };
             });
             formInput.userMeta = meta;
+          } else if (val.hasOwnProperty("fileURL")) {
+            const meta = [
+              {
+                value: val
+              }
+            ];
+            formInput.userMeta = meta;
           } else if (isObject(val)) {
             const meta = [
               {

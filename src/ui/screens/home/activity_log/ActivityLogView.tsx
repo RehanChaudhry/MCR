@@ -7,15 +7,15 @@ import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import Selector from "assets/images/selector.svg";
 import ActivityLogItem from "ui/components/organisms/activity_log_item/ActivityLogItem";
 import { getActivityTypeFilterData } from "models/enums/ActivityType";
-import { ActivityLogSection } from "utils/SectionListHelper";
+import { Section } from "utils/SectionListHelper";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { AppLog, shadowStyleProps } from "utils/Util";
+import { shadowStyleProps } from "utils/Util";
 import ActivityLog from "models/ActivityLog";
 import { AppLoadMore } from "ui/components/atoms/app_load_more/AppLoadMore";
 
 type Props = {
   isApiLoading: boolean;
-  activityLogs?: ActivityLogSection[];
+  activityLogs?: Section<ActivityLog>[];
   pullToRefreshCallback: (onComplete: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
@@ -36,9 +36,7 @@ export const ActivityLogView: React.FC<Props> = ({
     <ActivityLogItem activityLog={new ActivityLog(item)} />
   );
 
-  AppLog.log("loading" + isApiLoading);
-
-  const headerView = ({ section }: { section: ActivityLogSection }) => {
+  const headerView = ({ section }: { section: Section<ActivityLog> }) => {
     // AppLog.log(`rendering HeaderView ${section.header.key()}`);
 
     return (
@@ -94,10 +92,10 @@ export const ActivityLogView: React.FC<Props> = ({
               height={20}
             />
           )}
-          title={getActivityTypeFilterData()[0].title}
+          title={getActivityTypeFilterData()[0].value}
           items={getActivityTypeFilterData()}
           selectedItemCallback={(item) => {
-            selectedItem(item.id!);
+            selectedItem(item.text!);
           }}
         />
       </View>
@@ -118,7 +116,6 @@ export const ActivityLogView: React.FC<Props> = ({
           }}
           refreshing={isRefreshing}
           keyExtractor={(item) => item.id.toString()}
-          stickySectionHeadersEnabled={true}
           renderSectionFooter={footerWrapper}
         />
       )}

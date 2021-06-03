@@ -1,9 +1,9 @@
-import { FONT_SIZE, SPACE } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import RelationModel from "models/RelationModel";
 import React, { FC, useCallback, useContext } from "react";
 import { StyleSheet, View } from "react-native";
-import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
@@ -12,39 +12,54 @@ type Props = {
   shouldShow: boolean;
   getSelectedItem: () => RelationModel | undefined;
   hideSelf: () => void;
+  title?: string;
+  message?: string;
 };
 
-const RemoveFriendAlert: FC<Props> = React.memo(
-  ({ shouldShow, getSelectedItem, hideSelf }) => {
+const ThreeButtonsAlert: FC<Props> = React.memo(
+  ({ shouldShow, getSelectedItem, hideSelf, title, message }) => {
     const theme = usePreferredTheme();
-    const { myFriends, setMyFriends } = useContext(MyFriendsContext);
+    const { matches, setMatches, resetData } = useContext(
+      MyFriendsContext
+    );
 
-    const onFriendRemoved = useCallback(
+    const onMatchRemoved = useCallback(
       (id: number) => {
-        setMyFriends?.(myFriends?.filter((value) => value.id !== id));
+        setMatches?.(matches?.filter((value) => value.id !== id));
+        resetData();
       },
-      [myFriends, setMyFriends]
+      [matches, setMatches, resetData]
     );
 
     const {
-      shouldShowRelationUpdatePb,
-      updateRelation
+      shouldShowPb: shouldShowDismissedPb,
+      updateRelation: updateRelationDismissed
     } = useUpdateRelation(
-      "unfriend",
-      "Unable to remove friend",
+      "dismissed",
+      "Unable to dismissed the match",
       hideSelf,
       () => {
-        onFriendRemoved(getSelectedItem()?.id ?? -1);
+        onMatchRemoved(getSelectedItem()?.id ?? -1);
+      }
+    );
+
+    const {
+      shouldShowPb: shouldShowBlockedPb,
+      updateRelation: updateRelationBlocked
+    } = useUpdateRelation(
+      "blocked",
+      "Unable to blocked friend",
+      hideSelf,
+      () => {
+        onMatchRemoved(getSelectedItem()?.id ?? -1);
       }
     );
 
     return (
       <AppPopUp
         isVisible={shouldShow}
-        title="Remove Friend"
-        message={`Are you sure you want to remove ${
-          getSelectedItem()?.user?.getFullName() ?? "N/A"
-        } from your friends list?`}
+        title={title}
+        message={message}
         customActionButtons={
           <View>
             <View
@@ -54,11 +69,34 @@ const RemoveFriendAlert: FC<Props> = React.memo(
               ]}
             />
             <AppButton
-              text="Yes, remove"
+              text={STRINGS.dialogs.dismiss_block.dismiss}
               style={styles.actionContainer}
-              shouldShowProgressBar={shouldShowRelationUpdatePb}
+              shouldShowProgressBar={shouldShowDismissedPb}
               onPress={() => {
-                updateRelation(getSelectedItem());
+                updateRelationDismissed(getSelectedItem());
+              }}
+              textStyle={[
+                styles.actionStyle,
+                {
+                  color: theme.themedColors.warn,
+                  textAlign: "center",
+                  fontSize: FONT_SIZE.base
+                }
+              ]}
+              fontWeight="semi-bold"
+            />
+            <View
+              style={[
+                styles.separator,
+                { backgroundColor: theme.themedColors.separator }
+              ]}
+            />
+            <AppButton
+              text={STRINGS.dialogs.dismiss_block.block}
+              style={styles.actionContainer}
+              shouldShowProgressBar={shouldShowBlockedPb}
+              onPress={() => {
+                updateRelationBlocked(getSelectedItem());
               }}
               textStyle={[
                 styles.actionStyle,
@@ -109,4 +147,4 @@ const styles = StyleSheet.create({
     height: 0.5
   }
 });
-export default RemoveFriendAlert;
+export default ThreeButtonsAlert;

@@ -5,7 +5,7 @@ import { HomeDrawer } from "routes/HomeDrawer";
 import MatchesRoutes from "routes/MatchesRoutes";
 import { NotificationRoutes } from "routes/NotificationRoutes";
 import { CustomDrawer } from "ui/components/templates/drawer/CustomDrawer";
-import MyFriendsProvider from "ui/screens/home/friends/MyFriendsProvider";
+import AppDataProvider from "ui/screens/home/friends/AppDataProvider";
 import FriendsRootRoutes from "./FriendsRootRoutes";
 import SettingsRoutes from "./SettingsRoutes";
 import ActivityLogRoutes from "routes/ActivityLogRoutes";
@@ -16,7 +16,7 @@ export const HomeRoutes = () => {
   let [currentItem, setCurrentItem] = useState<string>("Matches");
 
   return (
-    <MyFriendsProvider>
+    <AppDataProvider>
       <HomeDrawer.Navigator
         initialRouteName="Matches"
         backBehavior="initialRoute"
@@ -57,6 +57,6 @@ export const HomeRoutes = () => {
         />
         <HomeDrawer.Screen name="Settings" component={SettingsRoutes} />
       </HomeDrawer.Navigator>
-    </MyFriendsProvider>
+    </AppDataProvider>
   );
 };

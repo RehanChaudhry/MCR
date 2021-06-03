@@ -15,6 +15,8 @@ type Props = {
   shouldShowProgressBar: boolean;
   isAllDataLoaded: boolean;
   error: string | undefined;
+  onEndReached: () => void;
+  pullToRefreshCallback: (onComplete?: () => void) => void;
 };
 
 export const ChatThreadScreen = React.memo<Props>(
@@ -23,7 +25,9 @@ export const ChatThreadScreen = React.memo<Props>(
     sentMessageApi,
     shouldShowProgressBar,
     isAllDataLoaded,
-    error
+    error,
+    onEndReached,
+    pullToRefreshCallback
   }) => {
     const renderItem = ({ item }: { item: Message | undefined }) => {
       AppLog.log("rendering list item : " + JSON.stringify(item));
@@ -49,6 +53,8 @@ export const ChatThreadScreen = React.memo<Props>(
           shouldShowProgressBar={shouldShowProgressBar}
           error={error}
           isAllDataLoaded={isAllDataLoaded}
+          onEndReached={onEndReached}
+          pullToRefreshCallback={pullToRefreshCallback}
           keyExtractor={(item, index) => index.toString()}
         />
         <WriteMessage

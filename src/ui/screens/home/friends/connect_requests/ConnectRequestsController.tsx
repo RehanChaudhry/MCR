@@ -19,7 +19,7 @@ import FriendsApis from "repo/friends/FriendsApis";
 import { ConnectionRequestStackParamList } from "routes/ConnectionRequestStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
-import { MyFriendsContext } from "ui/screens/home/friends/MyFriendsProvider";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 import ConnectRequestsView from "./ConnectRequestsView";
 
 type Props = {};
@@ -133,9 +133,9 @@ const ConnectRequestsController: FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { resetMyFriends } = useContext(MyFriendsContext);
+  const { resetData } = useContext(MyFriendsContext);
   function removeItemFromList(_item: RelationModel) {
-    resetMyFriends?.();
+    resetData?.();
     setConnectRequests(
       connectRequests?.filter((value) => value.id !== _item.id)
     );
