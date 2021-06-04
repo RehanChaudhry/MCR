@@ -28,11 +28,11 @@ import { Alert } from "react-native";
 import { useApi } from "repo/Client";
 import AuthApis from "repo/auth/AuthApis";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
+import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 import {
-  ProfileData,
-  UpdateProfileUiResponseModel
-} from "models/api_responses/UpdateProfileUiResponseModel";
-import { UpdateProfileUiRequestModel } from "models/api_requests/UpdateProfileUiRequestModel";
+  FetchMyProfileResponseModel,
+  Profile
+} from "models/api_responses/FetchMyProfileResponseModel";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -64,12 +64,12 @@ const UpdateProfileController: FC<Props> = () => {
   const [
     updateProfileUiData,
     setUpdateProfileUiData
-  ] = useState<ProfileData>();
+  ] = useState<Profile>();
 
   //update profile UI integration
 
-  const updateProfileUiApi = useApi<any, UpdateProfileUiResponseModel>(
-    AuthApis.updateProfileUi
+  const updateProfileUiApi = useApi<any, FetchMyProfileResponseModel>(
+    AuthApis.fetchMyProfile
   );
 
   //handle update profile ui api
@@ -93,7 +93,7 @@ const UpdateProfileController: FC<Props> = () => {
 
   //update profile api integration
   const updateProfileApi = useApi<
-    UpdateProfileUiRequestModel,
+    UpdateProfileRequestModel,
     UpdateProfileResponseModel
   >(AuthApis.updateProfile);
 
@@ -165,7 +165,7 @@ const UpdateProfileController: FC<Props> = () => {
 
   //handle update profile api
   const handleUpdateProfile = usePreventDoubleTap(
-    async (apiRequestModel: UpdateProfileUiRequestModel) => {
+    async (apiRequestModel: UpdateProfileRequestModel) => {
       // AppLog.log("handleSignIn: ");
 
       //setShouldShowPb(true);

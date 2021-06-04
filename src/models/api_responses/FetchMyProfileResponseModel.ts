@@ -1,4 +1,4 @@
-import { Sections } from "models/ViewProfileSections";
+import { SectionsType } from "models/api_responses/DynamicFormSections";
 
 export enum EWelcomeFlowStatus {
   PENDING = "pending",
@@ -43,7 +43,7 @@ export type Profile = {
   isFlagged: number;
   createdAt: string;
   updatedAt: string;
-  sections: Sections[];
+  sections: SectionsType[];
   agreementId: number;
   about?: string;
 };
