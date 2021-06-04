@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import RightArrow from "assets/images/right.svg";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { useApi } from "repo/Client";
@@ -20,6 +20,9 @@ const WelcomeSkipTitleButton: React.FC<Props> = ({
   onPress
 }: Props) => {
   const { themedColors } = usePreferredTheme();
+
+  const { saveProfile } = useAuth();
+
   const updateProfile = useApi<
     UpdateProfileRequestModel,
     UpdateProfileResponseModel
@@ -40,9 +43,12 @@ const WelcomeSkipTitleButton: React.FC<Props> = ({
       );
       return;
     } else {
+      if (dataBody.data) {
+        await saveProfile(dataBody.data);
+      }
       onPress?.();
     }
-  }, [updateProfile, updateProfileRequest, onPress]);
+  }, [updateProfile, updateProfileRequest, onPress, saveProfile]);
 
   const _onPress = useCallback(() => {
     requestUpdateProfile();

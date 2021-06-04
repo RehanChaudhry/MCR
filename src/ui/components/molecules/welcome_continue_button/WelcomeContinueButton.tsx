@@ -10,6 +10,7 @@ import {
   AppButton,
   AppButtonProps
 } from "ui/components/molecules/app_button/AppButton";
+import { useAuth } from "hooks";
 
 interface Props extends AppButtonProps {
   updateProfileRequest?: UpdateProfileRequestModel;
@@ -21,6 +22,8 @@ const WelcomeContinueButton: React.FC<Props> = ({
   onPress,
   ...rest
 }: Props) => {
+  const { saveProfile } = useAuth();
+
   const updateProfile = useApi<
     UpdateProfileRequestModel,
     UpdateProfileResponseModel
@@ -41,9 +44,12 @@ const WelcomeContinueButton: React.FC<Props> = ({
       );
       return;
     } else {
+      if (dataBody.data) {
+        await saveProfile(dataBody.data);
+      }
       onPress?.();
     }
-  }, [updateProfile, updateProfileRequest, onPress]);
+  }, [updateProfile, updateProfileRequest, onPress, saveProfile]);
 
   const _onPress = useCallback(() => {
     requestUpdateProfile();
