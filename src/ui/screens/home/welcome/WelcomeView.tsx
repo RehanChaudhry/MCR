@@ -11,6 +11,8 @@ import { HeadingWithText } from "ui/components/molecules/heading_with_text/Headi
 import { StaticContent } from "models/api_responses/StaticContentResponseModel";
 import HtmlView from "react-native-htmlview";
 import YouTube from "react-native-youtube";
+import WelcomeContinueButton from "ui/components/molecules/welcome_continue_button/WelcomeContinueButton";
+import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseModel";
 
 type Props = {
   openUpdateProfileScreen: () => void;
@@ -50,7 +52,7 @@ export const WelcomeView = React.memo<Props>(
               apiKey="AIzaSyCce0TNBZDyCCP62B2P8EkTfgjgp20ZqOA"
               videoId={"4WCu9-AZXBw"}
               play={shouldPlayVideo}
-              controls={0}
+              controls={2}
               style={styles.image}
             />
             <View style={styles.buttonViewStyle}>
@@ -94,7 +96,10 @@ export const WelcomeView = React.memo<Props>(
             </CardView>
 
             <View style={styles.continue}>
-              <AppButton
+              <WelcomeContinueButton
+                updateProfileRequest={{
+                  welcomeVideoStatus: EWelcomeFlowStatus.COMPLETED
+                }}
                 text={STRINGS.welcome.continue}
                 buttonStyle={{
                   backgroundColor: theme.themedColors.primary
@@ -111,10 +116,8 @@ export const WelcomeView = React.memo<Props>(
                 onPress={() => {
                   if (shouldPlayVideo) {
                     setShouldPlayVideo(false);
-                    openUpdateProfileScreen();
-                  } else {
-                    openUpdateProfileScreen();
                   }
+                  openUpdateProfileScreen();
                 }}
               />
             </View>
