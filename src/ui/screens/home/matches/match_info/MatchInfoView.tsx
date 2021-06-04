@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
   firstCard: { marginTop: SPACE.lg },
   heading: { includeFontPadding: false, fontSize: FONT_SIZE.base },
   socialDetailContainer: {
-    paddingTop: SPACE.lg
+    paddingVertical: SPACE.lg
   },
   bottomPadding: {
     paddingBottom: 0
