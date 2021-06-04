@@ -1,81 +1,74 @@
-import ActivityLogType from "models/enums/ActivityLogType";
+import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
 import { timeAgo } from "utils/Util";
 import NotificationSenderData from "models/NotificationSenderData";
-import { ChronologicalObject } from "utils/SectionListHelper";
 
-class NotificationData implements ChronologicalObject {
-  id!: number;
+type NotificationData = {
+  id: number;
   senderId?: number;
   receiverId?: number;
   referenceId?: number;
-  type?: ActivityLogType;
-  createdAt!: Date;
+  type?: NotificationAndActivityLogFilterType;
+  isTitle?: boolean;
+  titleText?: string;
+  createdAt?: Date;
   sender?: NotificationSenderData;
+};
 
-  constructor(notificationData: NotificationData) {
-    Object.assign(this, notificationData);
+export function getDisplayTime(notification: NotificationData): string {
+  return timeAgo(
+    notification.createdAt ?? new Date(),
+    "day",
+    "MMM DD, YYYY hh:mm A"
+  );
+}
+
+export function getMessage(notification: NotificationData): string {
+  switch (notification.type) {
+    case NotificationAndActivityLogFilterType.FRIEND_REQUEST:
+      return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has sent you a friend request`;
+    case NotificationAndActivityLogFilterType.ROOMMATE_REQUEST:
+      return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has sent you a roommate request`;
+    case NotificationAndActivityLogFilterType.CHAT:
+      return "View Chat";
+    case NotificationAndActivityLogFilterType.NEW_CONVERSATION:
+      return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> Started a new conversation with`;
+    case NotificationAndActivityLogFilterType.DISAGREED:
+      return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> Disagreed your `;
+    case NotificationAndActivityLogFilterType.AGREED:
+      return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> Agreed your `;
+    case NotificationAndActivityLogFilterType.COMMENT:
+      return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> Comment your `;
+    case NotificationAndActivityLogFilterType.ANNOUNCEMENT:
+      return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has posted a new announcement`;
+    case NotificationAndActivityLogFilterType.LIKE:
+      return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> Like your `;
+    default:
+      return `<b>Message not found</b>`;
   }
+}
 
-  getDisplayTime(): string {
-    return timeAgo(
-      this.createdAt ?? new Date(),
-      "day",
-      "MMM DD, YYYY hh:mm A"
-    );
-  }
-
-  // @ts-ignore
-  getMessage(): string {
-    if (this.type != null) {
-      if (this.type === ActivityLogType.FRIEND_REQUEST) {
-        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> has sent you a friend request`;
-      } else if (this.type === ActivityLogType.ROOMMATE_REQUEST) {
-        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> has sent you a roommate request`;
-      } else if (this.type === ActivityLogType.CHAT) {
-        return "View Chat";
-      } else if (this.type === ActivityLogType.NEW_CONVERSATION) {
-        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> Started a new conversation with`;
-      } else if (this.type === ActivityLogType.DISAGREED) {
-        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> Disagreed your `;
-      } else if (this.type === ActivityLogType.AGREED) {
-        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> Agreed your `;
-      } else if (this.type === ActivityLogType.COMMENT) {
-        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> Comment your `;
-      } else if (this.type === ActivityLogType.ANNOUNCEMENT) {
-        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> has posted a new announcement`;
-      } else if (this.type === ActivityLogType.LIKE) {
-        return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> Like your `;
-      }
-    } else {
-      return `<b>${this?.sender?.firstName} ${this?.sender?.lastName}</b> never`;
-    }
-  }
-
-  // @ts-ignore
-  getButtonText(): string {
-    if (this.type != null) {
-      if (this.type === ActivityLogType.FRIEND_REQUEST) {
-        return "View Friend Request";
-      } else if (this.type === ActivityLogType.ROOMMATE_REQUEST) {
-        return "View Roommate Request";
-      } else if (this.type === ActivityLogType.CHAT) {
-        return "View Chat";
-      } else if (this.type === ActivityLogType.NEW_CONVERSATION) {
-        return "View New Conversation";
-      } else if (this.type === ActivityLogType.DISAGREED) {
-        return "View Disagreed";
-      } else if (this.type === ActivityLogType.AGREED) {
-        return "Agreed";
-      } else if (this.type === ActivityLogType.COMMENT) {
-        return "View Comment";
-      } else if (this.type === ActivityLogType.ANNOUNCEMENT) {
-        return "View Announcement";
-      } else if (this.type === ActivityLogType.LIKE) {
-        return "View Like";
-      }
-    } else {
-      return "";
-    }
+export function getButtonText(notification: NotificationData): string {
+  switch (notification.type) {
+    case NotificationAndActivityLogFilterType.FRIEND_REQUEST:
+      return "View Friend Request";
+    case NotificationAndActivityLogFilterType.ROOMMATE_REQUEST:
+      return "View Roommate Request";
+    case NotificationAndActivityLogFilterType.CHAT:
+      return "View Chat";
+    case NotificationAndActivityLogFilterType.NEW_CONVERSATION:
+      return "View New Conversation";
+    case NotificationAndActivityLogFilterType.DISAGREED:
+      return "View Disagreed";
+    case NotificationAndActivityLogFilterType.AGREED:
+      return "Agreed";
+    case NotificationAndActivityLogFilterType.COMMENT:
+      return "View Comment";
+    case NotificationAndActivityLogFilterType.ANNOUNCEMENT:
+      return "View Announcement";
+    case NotificationAndActivityLogFilterType.LIKE:
+      return "View Like";
+    default:
+      return "N/A";
   }
 }
 

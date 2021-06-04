@@ -7,7 +7,7 @@ export interface Section<T> {
 }
 
 export interface ChronologicalObject {
-  createdAt: Date;
+  createdAt?: Date;
 }
 
 export function toSectionList<T extends ChronologicalObject>(list: T[]) {

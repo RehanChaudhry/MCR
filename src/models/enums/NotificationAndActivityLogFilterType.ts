@@ -1,4 +1,4 @@
-enum ActivityLogType {
+enum NotificationAndActivityLogFilterType {
   FRIEND_REQUEST = "friend-request",
   DISMISSED_LIST = "dismissed",
   POST = "POST",
@@ -19,4 +19,4 @@ enum ActivityLogType {
   COMMENT = "comment"
 }
 
-export default ActivityLogType;
+export default NotificationAndActivityLogFilterType;

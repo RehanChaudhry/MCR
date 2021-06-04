@@ -2,7 +2,11 @@ import { FONT_SIZE, SPACE, STRINGS } from "config";
 import Colors from "config/Colors";
 import Fonts from "config/Fonts";
 import { usePreferredTheme } from "hooks";
-import NotificationData from "models/NotificationData";
+import NotificationData, {
+  getButtonText,
+  getMessage,
+  getDisplayTime
+} from "models/NotificationData";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
@@ -11,39 +15,36 @@ import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
 
 type Props = {
-  notifications?: NotificationData;
-
+  notification: NotificationData;
   userNameOnPress?: () => void;
 };
 
 export const CircleImageWithText = React.memo<Props>(
-  ({ userNameOnPress, notifications }) => {
+  ({ userNameOnPress, notification }) => {
     const theme = usePreferredTheme();
 
     return (
       <View style={styles.mainContainer}>
         <CircleImageBorder
-          imageUrl={notifications?.sender?.profilePicture?.fileURL!}
+          imageUrl={notification?.sender?.profilePicture?.fileURL!}
         />
         <View style={styles.viewRequest}>
           <View style={styles.circleWithText}>
             <LabelHtml
               style={styles.messageText}
-              text={
-                notifications?.getMessage() ?? STRINGS.common.not_found
-              }
+              text={getMessage(notification) ?? STRINGS.common.not_found}
             />
           </View>
           <View style={styles.requestButtonWithText}>
             <AppLabel
-              text={notifications?.getDisplayTime()}
+              text={getDisplayTime(notification)}
               style={[
                 styles.time,
                 { color: theme.themedColors.interface["700"] }
               ]}
             />
             <LinkButton
-              text={notifications?.getButtonText()!}
+              text={getButtonText(notification)!}
               viewStyle={[
                 styles.buttonStyle,
                 { backgroundColor: theme.themedColors.primaryShade }
