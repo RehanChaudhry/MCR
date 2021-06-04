@@ -1,6 +1,6 @@
 // A utility class
 
-import { Constants } from "config";
+import { Constants, SPACE } from "config";
 import Env from "envs/env";
 import { Color, NumberProp } from "react-native-svg";
 import React from "react";
@@ -186,4 +186,12 @@ export const shadowStyleProps: ViewStyle = {
   shadowOpacity: 0.3,
   shadowRadius: 2,
   elevation: 2
+};
+
+export const listItemSeparator: ViewStyle = {
+  height: SPACE.lg
+};
+
+export const listContentContainerStyle: ViewStyle = {
+  paddingVertical: SPACE.lg
 };

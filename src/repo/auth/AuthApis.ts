@@ -5,12 +5,9 @@ import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfile
 import { ForgotPasswordApiResponseModel } from "models/api_responses/ForgotPasswordApiResponseModel";
 import { SignInApiResponseModel } from "models/api_responses/SignInApiResponseModel";
 import { apiClient, resetApiClient } from "repo/Client";
-import { UpdateAccountPasswordApiRequestModel } from "models/api_requests/UpdateAccountPasswordApiRequestModel";
-import { UpdateAccountPasswordApiResponseModel } from "models/api_responses/UpdateAccountPasswordApiResponseModel";
+import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 import { CreatePasswordApiRequestModel } from "models/api_requests/CreatePasswordApiRequestModel";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
-import { UpdateProfileUiResponseModel } from "models/api_responses/UpdateProfileUiResponseModel";
-import { UpdateProfileUiRequestModel } from "models/api_requests/UpdateProfileUiRequestModel";
 
 function signIn(requestModel: SignInApiRequestModel) {
   return apiClient.post<SignInApiResponseModel>(
@@ -44,30 +41,10 @@ function createOrResetPassword(
   );
 }
 
-function updateAccountPassword(
-  requestModel: UpdateAccountPasswordApiRequestModel
-) {
-  return apiClient.put<UpdateAccountPasswordApiResponseModel>(
-    API.UPDATE_ACCOUNT_PASSWORD_URL,
-    JSON.stringify(requestModel)
-  );
-}
-
-function updateProfile(requestModel: UpdateProfileUiRequestModel) {
+function updateProfile(requestModel: UpdateProfileRequestModel) {
   return apiClient.put<UpdateProfileResponseModel>(
-    API.UPDATE_PROFILE + "/" + "me",
+    API.MY_PROFILE,
     JSON.stringify(requestModel)
-  );
-}
-
-function getUpdateProfileUI() {
-  return apiClient.get<UpdateProfileUiResponseModel>(
-    API.UPDATE_PROFILE + "/" + "me?meta=true"
-  );
-}
-function getViewProfileUI() {
-  return apiClient.get<UpdateProfileUiResponseModel>(
-    API.UPDATE_PROFILE + "/" + "me?meta=true&isViewing=true"
   );
 }
 
@@ -76,8 +53,5 @@ export default {
   fetchMyProfile,
   forgotPassword,
   createOrResetPassword,
-  updateAccountPassword,
-  updateProfile,
-  getUpdateProfileUI,
-  getViewProfileUI
+  updateProfile
 };

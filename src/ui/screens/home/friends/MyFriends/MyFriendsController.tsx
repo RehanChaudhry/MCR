@@ -94,9 +94,9 @@ const MyFriendsController: FC<Props> = () => {
 
         setPaginationRequestModel({
           ...requestModel,
-          page: requestModel.page + 1
+          page: requestModel.page! + 1
         });
-        setCanLoadMore(data.length >= requestModel.limit);
+        setCanLoadMore(data.length >= requestModel.limit!);
 
         onComplete?.();
       }

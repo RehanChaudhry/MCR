@@ -21,14 +21,14 @@ import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_wit
 import { NotificationParamList } from "routes/NotificationParams";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { ProfileRootStackParamList } from "routes/ProfileRootStack";
-import {
-  ProfileData,
-  UpdateProfileUiResponseModel
-} from "models/api_responses/UpdateProfileUiResponseModel";
 import { useApi } from "repo/Client";
 import AuthApis from "repo/auth/AuthApis";
 import { Alert } from "react-native";
 import { NotifyContext } from "routes/ProfileRoutes";
+import {
+  FetchMyProfileResponseModel,
+  Profile
+} from "models/api_responses/FetchMyProfileResponseModel";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -55,16 +55,12 @@ type ProfileRouteProp = RouteProp<ProfileStackParamList, "ViewProfile">;
 
 const ViewProfileController: FC<Props> = () => {
   const { timeStamp } = useContext(NotifyContext);
-
-  const [
-    viewProfileUiData,
-    setViewProfileUiData
-  ] = useState<ProfileData>();
+  const [viewProfileUiData, setViewProfileUiData] = useState<Profile>();
 
   //update profile UI integration
 
-  const updateProfileUiApi = useApi<any, UpdateProfileUiResponseModel>(
-    AuthApis.getViewProfileUI
+  const updateProfileUiApi = useApi<any, FetchMyProfileResponseModel>(
+    AuthApis.fetchMyProfile
   );
 
   //handle update profile ui api

@@ -1,4 +1,4 @@
-import { FONT_SIZE, STRINGS } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import React, { useCallback, useState } from "react";
 import {
@@ -79,7 +79,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
   const footerWrapper = React.memo<Props<any>>(() => {
     return (
       <>
-        {!isAllDataLoaded && shouldShowProgressBar && data !== undefined && (
+        {!isAllDataLoaded && data !== undefined && (
           <View style={styles.loadMore}>
             <AppLoadMore testID="loader" />
           </View>
@@ -174,8 +174,10 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   loadMore: {
-    height: 30,
+    marginTop: SPACE.lg,
+    height: SPACE._3xl,
     justifyContent: "center",
-    flexDirection: "column"
+    flexDirection: "column",
+    alignItems: "center"
   }
 });
