@@ -1,6 +1,7 @@
 import React, {
   FC,
   useCallback,
+  useContext,
   useEffect,
   useLayoutEffect,
   useState
@@ -33,6 +34,7 @@ import {
   UpdateProfileUiResponseModel
 } from "models/api_responses/UpdateProfileUiResponseModel";
 import { UpdateProfileUiRequestModel } from "models/api_requests/UpdateProfileUiRequestModel";
+import { NotifyContext } from "routes/ProfileRoutes";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -50,6 +52,8 @@ type welcomeNavigationProp = StackNavigationProp<
 >;
 
 const UpdateProfileController: FC<Props> = () => {
+  const { setTimeStamp } = useContext(NotifyContext);
+
   const navigation = useNavigation<ProfileNavigationProp>();
   const welcomeNavigation = useNavigation<welcomeNavigationProp>();
   const route = useRoute<UpdateProfileRouteProp>();
@@ -69,7 +73,7 @@ const UpdateProfileController: FC<Props> = () => {
   //update profile UI integration
 
   const updateProfileUiApi = useApi<any, UpdateProfileUiResponseModel>(
-    AuthApis.updateProfileUi
+    AuthApis.getUpdateProfileUI
   );
 
   //handle update profile ui api
@@ -185,6 +189,8 @@ const UpdateProfileController: FC<Props> = () => {
           "Your profile has been updated successfully.",
           dataBody.message
         );
+        const newTimeStamp = new Date().getTime();
+        setTimeStamp(newTimeStamp);
       }
     }
   );

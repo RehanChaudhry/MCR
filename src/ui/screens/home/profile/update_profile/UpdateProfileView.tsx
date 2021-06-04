@@ -106,8 +106,19 @@ export const UpdateProfileView: React.FC<Props> = ({
     updateProfileUiData?.sections?.forEach((section) => {
       section.formInputs?.forEach((formInput) => {
         // @ts-ignore
-        initialValues.current[formInput.id] =
-          formInput.userMeta?.[0]?.value;
+        if (
+          formInput.inputType === "multiselect" ||
+          formInput.inputType === "checkbox"
+        ) {
+          // @ts-ignore
+          initialValues.current[formInput.id] = formInput.userMeta?.map(
+            (value) => value.value
+          );
+        } else {
+          // @ts-ignore
+          initialValues.current[formInput.id] =
+            formInput.userMeta?.[0]?.value;
+        }
       });
     });
   }, [updateProfileUiData]);

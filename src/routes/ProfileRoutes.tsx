@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { Dispatch, FC, SetStateAction, useState } from "react";
 import { ProfileBottomBar } from "routes/ProfileBottomBar";
 import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
 import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
@@ -14,22 +14,36 @@ import { STRINGS } from "config";
 import EScreen from "models/enums/EScreen";
 import { AddInterestsController } from "ui/screens/home/profile/update_profile/add_interests/AddInterestsController";
 
+type notifyData = {
+  timeStamp?: number;
+  setTimeStamp: Dispatch<SetStateAction<number | undefined>>;
+};
+// @ts-ignore
+export const NotifyContext = React.createContext<notifyData>({});
+
 export const ProfileRoutes = () => {
+  const [timeStamp, setTimeStamp] = useState<number>();
   return (
-    <ProfileBottomBar.Navigator tabBar={() => null}>
-      <ProfileBottomBar.Screen
-        name="ViewProfile"
-        component={ViewProfileRoutes}
-      />
-      <ProfileBottomBar.Screen
-        name="UpdateProfile"
-        component={UpdateProfileRoutes}
-      />
-      <ProfileBottomBar.Screen
-        name="UpdateQuestionnaire"
-        component={UpdateQuestionnaireRoutes}
-      />
-    </ProfileBottomBar.Navigator>
+    <NotifyContext.Provider
+      value={{
+        timeStamp: timeStamp,
+        setTimeStamp: setTimeStamp
+      }}>
+      <ProfileBottomBar.Navigator tabBar={() => null}>
+        <ProfileBottomBar.Screen
+          name="ViewProfile"
+          component={ViewProfileRoutes}
+        />
+        <ProfileBottomBar.Screen
+          name="UpdateProfile"
+          component={UpdateProfileRoutes}
+        />
+        <ProfileBottomBar.Screen
+          name="UpdateQuestionnaire"
+          component={UpdateQuestionnaireRoutes}
+        />
+      </ProfileBottomBar.Navigator>
+    </NotifyContext.Provider>
   );
 };
 
@@ -53,13 +67,15 @@ const UpdateProfileRoutes: FC<UpdateProfileRoutesProps> = () => {
     <UpdateProfileStack.Navigator>
       <UpdateProfileStack.Screen
         name="UpdateProfile"
-        initialParams={{ isFrom: EScreen.HOME, updateProfile: true }}
+        initialParams={{
+          isFrom: EScreen.HOME,
+          updateProfile: true
+        }}
         component={UpdateProfileController}
         options={{ title: "Update Profile" }}
       />
       <UpdateProfileStack.Screen
         name="AddInterests"
-        //initialParams={{ isFrom: EScreen.HOME }}
         component={AddInterestsController}
         options={{ title: "Update Profile" }}
       />

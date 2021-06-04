@@ -1,6 +1,7 @@
 import React, {
   FC,
   useCallback,
+  useContext,
   useEffect,
   useLayoutEffect,
   useState
@@ -27,6 +28,7 @@ import {
 import { useApi } from "repo/Client";
 import AuthApis from "repo/auth/AuthApis";
 import { Alert } from "react-native";
+import { NotifyContext } from "routes/ProfileRoutes";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -52,6 +54,8 @@ type NotificationNavigationProp = StackNavigationProp<
 type ProfileRouteProp = RouteProp<ProfileStackParamList, "ViewProfile">;
 
 const ViewProfileController: FC<Props> = () => {
+  const { timeStamp } = useContext(NotifyContext);
+
   const [
     viewProfileUiData,
     setViewProfileUiData
@@ -60,7 +64,7 @@ const ViewProfileController: FC<Props> = () => {
   //update profile UI integration
 
   const updateProfileUiApi = useApi<any, UpdateProfileUiResponseModel>(
-    AuthApis.updateProfileUi
+    AuthApis.getViewProfileUI
   );
 
   //handle update profile ui api
@@ -86,7 +90,8 @@ const ViewProfileController: FC<Props> = () => {
 
       setViewProfileUiData(dataBody.data);
     }
-  }, [updateProfileUiApi]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateProfileUiApi, timeStamp]);
 
   useEffect(() => {
     fetchMyProfile();

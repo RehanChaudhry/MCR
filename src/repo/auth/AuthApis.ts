@@ -60,9 +60,14 @@ function updateProfile(requestModel: UpdateProfileUiRequestModel) {
   );
 }
 
-function updateProfileUi() {
+function getUpdateProfileUI() {
   return apiClient.get<UpdateProfileUiResponseModel>(
     API.UPDATE_PROFILE + "/" + "me?meta=true"
+  );
+}
+function getViewProfileUI() {
+  return apiClient.get<UpdateProfileUiResponseModel>(
+    API.UPDATE_PROFILE + "/" + "me?meta=true&isViewing=true"
   );
 }
 
@@ -73,5 +78,6 @@ export default {
   createOrResetPassword,
   updateAccountPassword,
   updateProfile,
-  updateProfileUi
+  getUpdateProfileUI,
+  getViewProfileUI
 };

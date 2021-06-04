@@ -38,12 +38,8 @@ export const AddInterestsController: FC<Props> = () => {
   const { themedColors } = usePreferredTheme();
 
   const goBack = () => {
-    AppLog.logForcefully(
-      "Going back from AddInterestContorller: list: " +
-        JSON.stringify(_list)
-    );
     navigation.navigate("UpdateProfile", {
-      isFrom: EScreen.WELCOME,
+      isFrom: EScreen.HOME,
       list: _list,
       listKey: route.params.listKey
     });
