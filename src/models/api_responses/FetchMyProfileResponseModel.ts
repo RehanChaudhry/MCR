@@ -1,5 +1,11 @@
 import { Sections } from "models/ViewProfileSections";
 
+export enum EWelcomeFlowStatus {
+  PENDING = "pending",
+  SKIPPED = "skipped",
+  COMPLETED = "completed"
+}
+
 export type FetchMyProfileResponseModel = {
   message: string;
   data: Profile;
@@ -29,7 +35,9 @@ export type Profile = {
   floorPlanRoomId: number;
   building: string;
   roomNumber: string;
-  welcomeVideoStatus: string;
+  welcomeVideoStatus: EWelcomeFlowStatus;
+  questionnaireStatus: EWelcomeFlowStatus;
+  profileCompletedAt?: Date;
   totalQuestions: number;
   totalQuestionsAnswered: number;
   isFlagged: number;
