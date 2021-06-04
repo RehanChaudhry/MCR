@@ -2,6 +2,7 @@ import { SPACE } from "config";
 import { FormikValues } from "formik";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
+import EIntBoolean from "models/enums/EIntBoolean";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -88,8 +89,8 @@ export const SettingsView = React.memo<Props>(
         request.secondaryEmail = secEmail;
       }
       if (oldPassword !== "" && newPassword !== "" && conPassword !== "") {
-        request.oldPassword = oldPassword;
-        request.password = newPassword;
+        request.currentPassword = oldPassword;
+        request.newPassword = newPassword;
         request.confirmPassword = conPassword;
       }
       AppLog.log("form values request" + JSON.stringify(request));
@@ -107,6 +108,7 @@ export const SettingsView = React.memo<Props>(
               onSubmit={onSubmit}
               validationSchema={validationSchema}>
               <AppFormField
+                isLocked={EIntBoolean.TRUE}
                 fieldTestID="primaryEmailAddress"
                 validationLabelTestID={
                   "primaryEmailAddressValidationLabel"
@@ -118,6 +120,8 @@ export const SettingsView = React.memo<Props>(
                 }}
                 readOnly={true}
                 fieldInputProps={{
+                  editable: false,
+                  selectTextOnFocus: false,
                   textContentType: "name",
                   keyboardType: "default",
                   returnKeyType: "next",

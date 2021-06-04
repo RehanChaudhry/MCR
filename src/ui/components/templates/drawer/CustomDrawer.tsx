@@ -90,7 +90,7 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
               <Image
                 style={styles.userImg}
                 source={
-                  auth.user?.profile?.profilePicture.fileURL !== undefined
+                  auth.user?.profile?.profilePicture?.fileURL !== undefined
                     ? { uri: auth.user?.profile?.profilePicture.fileURL }
                     : require("assets/images/profile.png")
                 }
