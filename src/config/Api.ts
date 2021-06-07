@@ -13,6 +13,7 @@ export default {
   FETCH_MY_PROFILE_URL: "user/me?meta=true",
   FORGOT_PASS_URL: "password/request/",
   RESET_PASS_URL: "password/set/",
+  COMPLETE_PROFILE_QUERY_PARAMS: "completingProfile=true",
   MY_PROFILE: "user/me",
   NOTIFICATION_URL: "notification",
   AGREEMENT_DETAILS: "agreement_details",

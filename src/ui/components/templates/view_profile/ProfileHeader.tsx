@@ -58,7 +58,7 @@ const ProfileHeader: FC<Props> = ({ firstName, lastName }) => {
         //fontWeight={"bold"}
         leftIcon={watchVideo}
         shouldAlignTextWithLeftIconWithFullWidth={true}
-        fontWeight={"semi_bold"}
+        fontWeight={"semi-bold"}
       />
     </View>
   );

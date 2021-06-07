@@ -1,26 +1,27 @@
 import React, { useCallback } from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
-import { useAuth, usePreferredTheme } from "hooks";
-import RightArrow from "assets/images/right.svg";
-import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
+import { StyleSheet } from "react-native";
 import { useApi } from "repo/Client";
 import AuthApis from "repo/auth/AuthApis";
 import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
 import SimpleToast from "react-native-simple-toast";
-import { SPACE, STRINGS } from "config";
+import { STRINGS } from "config";
+import {
+  AppButton,
+  AppButtonProps
+} from "ui/components/molecules/app_button/AppButton";
+import { useAuth } from "hooks";
 
-interface Props {
+interface Props extends AppButtonProps {
   updateProfileRequest?: UpdateProfileRequestModel;
   onPress?: () => void;
 }
 
-const WelcomeSkipTitleButton: React.FC<Props> = ({
+const WelcomeContinueButton: React.FC<Props> = ({
   updateProfileRequest,
-  onPress
+  onPress,
+  ...rest
 }: Props) => {
-  const { themedColors } = usePreferredTheme();
-
   const { saveProfile } = useAuth();
 
   const updateProfile = useApi<
@@ -54,35 +55,19 @@ const WelcomeSkipTitleButton: React.FC<Props> = ({
     requestUpdateProfile();
   }, [requestUpdateProfile]);
 
-  return updateProfile.loading ? (
-    <ActivityIndicator
-      testID="loader"
-      style={[styles.loader]}
-      size={25}
-      color={themedColors.interface["700"]}
-    />
-  ) : (
-    <HeaderRightTextWithIcon
-      text="Skip"
-      fontWeight={"normal"}
-      textStyle={{ color: themedColors.interface["700"] }}
-      icon={() => {
-        return (
-          <RightArrow
-            width={20}
-            height={20}
-            fill={themedColors.interface["700"]}
-          />
-        );
-      }}
+  return (
+    <AppButton
+      {...rest}
+      shouldShowProgressBar={updateProfile.loading}
+      shouldShowError={updateProfile.error !== null}
       onPress={_onPress}
     />
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const styles = StyleSheet.create({
-  container: {},
-  loader: { marginRight: SPACE.lg }
+  container: {}
 });
 
-export default WelcomeSkipTitleButton;
+export default WelcomeContinueButton;

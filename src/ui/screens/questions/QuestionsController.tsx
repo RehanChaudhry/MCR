@@ -35,10 +35,8 @@ import { UpdateQuestionnaireStackParamList } from "routes/ProfileStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import EScreen from "models/enums/EScreen";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { MatchesStackParamList } from "routes/MatchesStack";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
-import RightArrow from "assets/images/right.svg";
 import LeftArrow from "assets/images/left.svg";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { HomeDrawerParamList } from "routes";
@@ -52,6 +50,8 @@ import OtherApis from "repo/home/OtherApis";
 import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import { ProfileRootStackParamList } from "routes/ProfileRootStack";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseModel";
+import WelcomeSkipTitleButton from "ui/components/molecules/welcome_skip_title_button/WelcomeSkipTitleButton";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -119,21 +119,10 @@ const QuestionsController: FC<Props> = () => {
           />
         ),
         headerRight: () => (
-          <HeaderRightTextWithIcon
-            text="Skip"
-            fontWeight={"normal"}
-            textStyle={{ color: themedColors.interface["700"] }}
-            icon={() => {
-              return (
-                <RightArrow
-                  width={20}
-                  height={20}
-                  fill={themedColors.interface["700"]}
-                />
-              );
-            }}
-            onPress={() => {
-              moveToHomeScreen();
+          <WelcomeSkipTitleButton
+            onPress={moveToHomeScreen}
+            updateProfileRequest={{
+              questionnaireStatus: EWelcomeFlowStatus.SKIPPED
             }}
           />
         )

@@ -2,10 +2,8 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { WelcomeView } from "ui/screens/home/welcome/WelcomeView";
-import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
-import RightArrow from "assets/images/right.svg";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import EScreen from "models/enums/EScreen";
 import { useApi } from "repo/Client";
@@ -16,6 +14,8 @@ import { StaticContentType } from "models/api_requests/StaticContentRequestModel
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { View } from "react-native";
+import WelcomeSkipTitleButton from "ui/components/molecules/welcome_skip_title_button/WelcomeSkipTitleButton";
+import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseModel";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -44,25 +44,17 @@ const WelcomeController: FC<Props> = () => {
   const openUpdateProfileScreen = usePreventDoubleTap(() => {
     navigation.navigate("UpdateProfile", {
       isFrom: EScreen.WELCOME,
-      updateProfile: false
+      updateProfile: true
     });
   });
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <HeaderRightTextWithIcon
+        <WelcomeSkipTitleButton
           onPress={openUpdateProfileScreen}
-          text="Skip"
-          textStyle={{ color: theme.themedColors.interface["700"] }}
-          icon={() => {
-            return (
-              <RightArrow
-                width={20}
-                height={20}
-                fill={theme.themedColors.interface["700"]}
-              />
-            );
+          updateProfileRequest={{
+            welcomeVideoStatus: EWelcomeFlowStatus.SKIPPED
           }}
         />
       ),
