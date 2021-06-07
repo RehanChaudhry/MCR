@@ -2,6 +2,7 @@ import * as Yup from "yup";
 import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
 import { SchemaOf } from "yup";
 import { AppLog } from "utils/Util";
+import { AgreementField } from "models/api_requests/GetAgreementApi";
 
 let FieldTypes = {
   dropdown: (field: FormInputFieldData): SchemaOf<any> =>
@@ -26,8 +27,13 @@ let FieldTypes = {
     Yup.string().notRequired()
 };
 
-export const createYupSchema = (fields: FormInputFieldData[]) => {
-  const schema = fields.reduce((_schema, field) => {
+export const createYupSchema = (
+  fields: FormInputFieldData[] | AgreementField[]
+) => {
+  const schema = (fields as (
+    | FormInputFieldData
+    | AgreementField
+  )[]).reduce<FormInputFieldData | AgreementField>((_schema, field) => {
     return field.isRequired === 1
       ? {
           ..._schema,
@@ -35,7 +41,7 @@ export const createYupSchema = (fields: FormInputFieldData[]) => {
           [field.id]: FieldTypes[field.inputType](field)
         }
       : _schema;
-  }, {});
+  }, {} as any);
 
-  return Yup.object().shape(schema);
+  return Yup.object().shape(schema as any);
 };

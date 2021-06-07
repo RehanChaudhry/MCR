@@ -17,6 +17,7 @@ import ChevronRight from "assets/images/chevron_right.svg";
 import { FieldBox } from "ui/components/atoms/FieldBox";
 import { UploadProfilePhoto } from "ui/components/templates/basic_profile/UploadProfilePhoto";
 import { AppFormCheckBoxGroup } from "ui/components/molecules/app_form/AppFormCheckBoxGroup";
+import RoommateAgreementTerms from "ui/components/templates/roommate_agreement/RoommateAgreementTerms";
 
 type CustomFormFieldProps = {
   listData: FormInputFieldData;
@@ -41,69 +42,70 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
 
     switch (listData.inputType) {
       case "agreement":
-        return <AppLabel text={"Agreement"} />;
+        return <RoommateAgreementTerms name={listData.id.toString()} />;
       case "textarea":
         return (
-          <>
-            <View style={styles.spacer} />
-
+          <View style={styles.spacer}>
             <DynamicAppFormField
               label={listData?.label}
               placeHolder={listData?.placeholder}
               name={listData?.id.toString()}
               isLocked={listData.isLocked}
             />
-          </>
+          </View>
         );
       case "dropdown":
         return (
-          <AppFormDropDown
-            name={listData.id.toString()}
-            validationLabelTestID={"genderValidationTestID"}
-            labelProps={{
-              text: listData.label,
-              weight: "semi-bold"
-            }}
-            isLocked={listData.isLocked}
-            appDropDownProps={{
-              title: STRINGS.profile.dropDownInitialValue.gender,
-              items: listData.options!,
-              selectedItemCallback: () => {
-                //setTitle(item.title);
-              },
-              style: [
-                styles.dropDown,
-                {
-                  borderColor: !listData.isLocked
-                    ? theme.themedColors.border
-                    : theme.themedColors.borderSecondary,
-                  backgroundColor: !listData.isLocked
-                    ? theme.themedColors.background
-                    : theme.themedColors.backgroundSecondary
-                }
-              ]
-            }}
-          />
+          <View style={styles.spacer}>
+            <AppFormDropDown
+              name={listData.id.toString()}
+              validationLabelTestID={"genderValidationTestID"}
+              labelProps={{
+                text: listData.label,
+                weight: "semi-bold"
+              }}
+              isLocked={listData.isLocked}
+              appDropDownProps={{
+                title: STRINGS.profile.dropDownInitialValue.gender,
+                items: listData.options!,
+                selectedItemCallback: () => {
+                  //setTitle(item.title);
+                },
+                style: [
+                  styles.dropDown,
+                  {
+                    borderColor: !listData.isLocked
+                      ? theme.themedColors.border
+                      : theme.themedColors.borderSecondary,
+                    backgroundColor: !listData.isLocked
+                      ? theme.themedColors.background
+                      : theme.themedColors.backgroundSecondary
+                  }
+                ]
+              }}
+            />
+          </View>
         );
 
       case "checkbox":
         return (
-          <AppFormCheckBoxGroup
-            listData={listData.options!!}
-            labelProps={{
-              text: listData.label,
-              weight: "semi-bold",
-              numberOfLines: 0
-            }}
-            name={listData.id.toString()}
-            isLocked={listData.isLocked}
-            // onChange={(value) => AppLog.log(value)}
-          />
+          <View style={styles.spacer}>
+            <AppFormCheckBoxGroup
+              listData={listData.options!!}
+              labelProps={{
+                text: listData.label,
+                weight: "semi-bold",
+                numberOfLines: 0
+              }}
+              name={listData.id.toString()}
+              isLocked={listData.isLocked}
+              // onChange={(value) => AppLog.log(value)}
+            />
+          </View>
         );
       case "radio":
         return (
-          <>
-            <View style={styles.spacer} />
+          <View style={styles.spacer}>
             <AppFormRadioButton
               name={listData.id.toString()}
               labelProps={{
@@ -114,15 +116,17 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               direction={DIRECTION_TYPE.HORIZONTAL}
               isLocked={listData.isLocked}
             />
-          </>
+          </View>
         );
       case "date":
-        return <AppLabel text={"date"} />;
+        return (
+          <View style={styles.spacer}>
+            <AppLabel text={"date"} />
+          </View>
+        );
       case "multiselect":
         return (
-          <>
-            <View style={styles.spacer} />
-
+          <View style={styles.spacer}>
             <FieldBox
               name={listData.id.toString()}
               title={listData.label}
@@ -133,13 +137,12 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               )}
               isLocked={listData.isLocked}
             />
-          </>
+          </View>
         );
 
       case "text":
         return (
-          <>
-            <View style={styles.spacer} />
+          <View style={styles.spacer}>
             <AppFormField
               name={listData.id.toString()}
               labelProps={{
@@ -170,13 +173,12 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               }}
               isLocked={listData.isLocked}
             />
-          </>
+          </View>
         );
 
       case "url":
         return (
-          <>
-            <View style={styles.spacer} />
+          <View style={styles.spacer}>
             <AppFormField
               name={listData.id.toString()}
               labelProps={{
@@ -207,16 +209,14 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               }}
               isLocked={listData.isLocked}
             />
-          </>
+          </View>
         );
 
       case "file":
         return (
-          <>
-            <View style={styles.spacer} />
-
+          <View style={styles.spacer}>
             <UploadProfilePhoto name={listData.id.toString()} />
-          </>
+          </View>
         );
 
       default:
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   spacer: {
-    paddingTop: SPACE.lg
+    paddingBottom: SPACE.lg
   }
 });
 export default CustomFormFieldItem;

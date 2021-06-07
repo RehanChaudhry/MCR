@@ -6,20 +6,28 @@ import { SectionsType } from "models/api_responses/DynamicFormSections";
 
 type Props = {
   sectionsData: SectionsType[] | undefined;
+  showProgressBar?: boolean;
 };
 
-export const DynamicCardView = React.memo<Props>(({ sectionsData }) => {
-  const listItem = ({ item }: { item: SectionsType }) => {
-    return <DynamicCardViewItem sections={item} />;
-  };
+export const DynamicCardView = React.memo<Props>(
+  ({ sectionsData, showProgressBar }) => {
+    const listItem = ({ item }: { item: SectionsType }) => {
+      return (
+        <DynamicCardViewItem
+          sections={item}
+          showProgressBar={showProgressBar}
+        />
+      );
+    };
 
-  return (
-    <View>
-      <FlatListWithPb
-        shouldShowProgressBar={true}
-        data={sectionsData}
-        renderItem={listItem}
-      />
-    </View>
-  );
-});
+    return (
+      <View>
+        <FlatListWithPb
+          shouldShowProgressBar={showProgressBar ?? true}
+          data={sectionsData}
+          renderItem={listItem}
+        />
+      </View>
+    );
+  }
+);

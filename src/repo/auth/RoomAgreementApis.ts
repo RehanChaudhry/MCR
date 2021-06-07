@@ -4,8 +4,9 @@ import { RoommateAgreementResponseModel } from "models/api_responses/RoommateAgr
 import { RoommateAgreementRequestModel } from "models/api_requests/RoommateAgreementRequestModel";
 import { AgreementAnswersRequestModel } from "models/api_requests/AgreementAnswersRequestModel";
 import { AgreementAnswerResponseModel } from "models/api_responses/AgreementAnswerResponseModel";
+import { GetAgreementApi } from "models/api_requests/GetAgreementApi";
 
-function fetchRoomAgreementFileds(
+function fetchRoomAgreementFields(
   requestModel: RoommateAgreementRequestModel
 ) {
   return apiClient.get<RoommateAgreementResponseModel>(
@@ -25,6 +26,12 @@ async function updateAgreement(
   );
 }
 
+async function getAgreement(agreementId: number) {
+  return apiClient.get<GetAgreementApi>(
+    API.UPDATE_ROOMATE_AGREEMENT + "/" + agreementId
+  );
+}
+
 async function fetchRoomAgreementAnswers(
   requestModel: RoommateAgreementRequestModel
 ) {
@@ -37,7 +44,8 @@ async function fetchRoomAgreementAnswers(
 }
 
 export default {
-  fetchRoomAgreementFileds,
+  fetchRoomAgreementFields,
   updateAgreement,
-  fetchRoomAgreementAnswers
+  fetchRoomAgreementAnswers,
+  getAgreement
 };

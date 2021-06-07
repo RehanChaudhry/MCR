@@ -27,10 +27,17 @@ import { MatchesStackParamList } from "routes/MatchesStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { ProfileRootStackParamList } from "routes/ProfileRootStack";
 import { useApi } from "repo/Client";
-import { RoommateAgreementResponseModel } from "models/api_responses/RoommateAgreementResponseModel";
-import { RoommateAgreementRequestModel } from "models/api_requests/RoommateAgreementRequestModel";
 import { AgreementAnswersRequestModel } from "models/api_requests/AgreementAnswersRequestModel";
-import { AgreementAnswerResponseModel } from "models/api_responses/AgreementAnswerResponseModel";
+import {
+  AgreementAnswerResponseModel,
+  AgreementData
+} from "models/api_responses/AgreementAnswerResponseModel";
+import {
+  AgreementField,
+  GetAgreementApi
+} from "models/api_requests/GetAgreementApi";
+import SimpleToast from "react-native-simple-toast";
+import { STRINGS } from "config";
 
 type Props = {};
 
@@ -68,104 +75,67 @@ const RoommateAgreementController: FC<Props> = () => {
   const [agreementDialog, setAgreementDialog] = useState<boolean>(false);
   const { user } = useAuth();
   const { themedColors } = usePreferredTheme();
-  const roommateApi = useApi<
-    RoommateAgreementRequestModel,
-    RoommateAgreementResponseModel
-  >(RoomAgreementApis.fetchRoomAgreementFileds);
   const submitAnswerRequest = useRef<AgreementAnswersRequestModel>({});
-  const [
-    roommateData,
-    setRoommateData
-  ] = useState<RoommateAgreementResponseModel>();
+  const [roommateData, setRoommateData] = useState<AgreementField[]>();
+  const agreementPartiesData = useRef<AgreementData>({});
 
   const roommateUpdateApi = useApi<
     AgreementAnswersRequestModel,
     AgreementAnswerResponseModel
   >(RoomAgreementApis.updateAgreement);
 
+  const getAgreementApi = useApi<number, GetAgreementApi>(
+    RoomAgreementApis.getAgreement
+  );
+
   useLayoutEffect(() => {
-    if (route.params.isFrom === EScreen.MATCH_INFO) {
-      navigation.setOptions({
-        headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text="Roommate Agreement" />,
-        headerLeft: () => (
+    navigation.setOptions({
+      headerTitleAlign: "center",
+      headerTitle: () => <HeaderTitle text="Roommate Agreement" />,
+      headerLeft: () =>
+        route.params.isFrom !== EScreen.HOME ? (
           <HeaderLeftTextWithIcon
             onPress={() => {
               navigation.pop();
             }}
           />
+        ) : (
+          <Hamburger />
         ),
-        headerRight: () => (
-          <HeaderRightTextWithIcon
-            text={"More"}
-            onPress={() => matchesNavigation.navigate("AgreementDetails")}
-            icon={(color, width, height) => {
-              AppLog.log(color);
-              return (
-                <InfoCircle
-                  width={width}
-                  height={height}
-                  fill={themedColors.primary}
-                />
+      headerRight: () => (
+        <HeaderRightTextWithIcon
+          text={"More"}
+          onPress={() => {
+            if (
+              agreementPartiesData.current.roommateAgreementParties !==
+                undefined &&
+              agreementPartiesData.current.roommateAgreementParties!!
+                .length > 0
+            ) {
+              matchesNavigation.navigate("AgreementDetails", {
+                agreementData: agreementPartiesData.current
+              });
+            } else {
+              SimpleToast.show(
+                STRINGS.roommateAgreementDetails.no_agreement_found
               );
-            }}
-          />
-        )
-      });
-    } else if (route.params.isFrom === EScreen.HOME) {
-      navigation.setOptions({
-        headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text="Roommate Agreement" />,
-        headerLeft: () => <Hamburger />,
-        headerRight: () => (
-          <HeaderRightTextWithIcon
-            text={"More"}
-            onPress={() => friendsNavigation.navigate("AgreementDetails")}
-            icon={(color, width, height) => {
-              AppLog.log(color);
-              return (
-                <InfoCircle
-                  width={width}
-                  height={height}
-                  fill={themedColors.primary}
-                />
-              );
-            }}
-          />
-        )
-      });
-    } else if (route.params.isFrom === EScreen.MY_PROFILE) {
-      navigation.setOptions({
-        headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text="Roommate Agreement" />,
-        headerLeft: () => (
-          <HeaderLeftTextWithIcon
-            onPress={() => {
-              navigation.pop();
-            }}
-          />
-        ),
-        headerRight: () => (
-          <HeaderRightTextWithIcon
-            text={"More"}
-            onPress={() =>
-              navigationViewProfile.navigate("AgreementDetails")
             }
-            icon={(color, width, height) => {
-              AppLog.log(color);
-              return (
-                <InfoCircle
-                  width={width}
-                  height={height}
-                  fill={themedColors.primary}
-                />
-              );
-            }}
-          />
-        )
-      });
-    }
+          }}
+          icon={(color, width, height) => {
+            AppLog.log(color);
+            return (
+              <InfoCircle
+                width={width}
+                height={height}
+                fill={themedColors.primary}
+              />
+            );
+          }}
+        />
+      )
+    });
   }, [
+    roommateData,
     navigation,
     navigationViewProfile,
     friendsNavigation,
@@ -181,31 +151,32 @@ const RoommateAgreementController: FC<Props> = () => {
       errorBody
     } = await roommateUpdateApi.request([submitAnswerRequest.current!!]);
     if (hasError || dataBody === undefined) {
-      // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.log("UpdateRespone: " + errorBody);
+      AppLog.log("submit agreement Response : " + errorBody);
       return;
     } else {
-      AppLog.log("UpdateRespone: " + dataBody.message);
+      AppLog.log("submit agreement Response : " + dataBody.message);
     }
   }, [roommateUpdateApi]);
 
-  const fetchAgreementFormAPi = useCallback(async () => {
-    const { hasError, dataBody, errorBody } = await roommateApi.request([
-      {}
-    ]);
-    if (hasError || dataBody === undefined) {
-      // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.log("Unable to find Fields " + errorBody);
-      return;
-    } else {
-      setRoommateData(dataBody);
+  const handleGetAgreementApi = useCallback(async () => {
+    if (user?.profile?.agreementId !== undefined) {
+      const {
+        hasError,
+        dataBody,
+        errorBody
+      } = await getAgreementApi.request([user?.profile?.agreementId]);
+      if (hasError || dataBody === undefined) {
+        AppLog.log("Unable to find agreement answers " + errorBody);
+        SimpleToast.show(
+          STRINGS.roommateAgreementDetails.no_agreement_found
+        );
+        return;
+      } else {
+        agreementPartiesData.current = dataBody.data;
+        setRoommateData(dataBody.data.agreementFields);
+      }
     }
-  }, [roommateApi]);
-
-  useEffect(() => {
-    fetchAgreementFormAPi();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user, getAgreementApi]);
 
   const submitAgreement = (data: AgreementAnswersRequestModel) => {
     submitAnswerRequest.current = data;
@@ -214,7 +185,7 @@ const RoommateAgreementController: FC<Props> = () => {
     AppLog.log("submitted values " + JSON.stringify(data));
   };
 
-  const agreementDialogCallback = (status: string) => {
+  const agreementDialogCallback = async (status: string) => {
     setAgreementDialog(false);
 
     AppLog.log("userProfile: " + JSON.stringify(user?.profile));
@@ -222,16 +193,22 @@ const RoommateAgreementController: FC<Props> = () => {
     submitAnswerRequest.current.status = status;
 
     //call submit/update agreement api
-    handleRoommateUpdateApi();
+    await handleRoommateUpdateApi();
   };
+
+  useEffect(() => {
+    handleGetAgreementApi().then().catch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <RoommateAgreementView
-      roommateData={roommateData?.data}
-      showProgressBar={roommateApi.loading}
+      roommateData={roommateData}
+      showProgressBar={getAgreementApi.loading}
       handleSaveAndContinue={submitAgreement}
       showAgreementDialog={agreementDialog}
       agreementDialogCallback={agreementDialogCallback}
+      progressBarBtn={roommateUpdateApi.loading}
     />
   );
 };

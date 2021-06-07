@@ -1,15 +1,17 @@
-import React, { FC } from "react";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import Screen from "ui/components/atoms/Screen";
-import RoommateAgreementTerms from "ui/components/templates/roommate_agreement/RoommateAgreementTerms";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import { FormikValues, isObject } from "formik";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
-import { CardView } from "ui/components/atoms/CardView";
-import { SectionComponent } from "ui/components/organisms/section_component/SectionComponent";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import { AppLog } from "utils/Util";
@@ -17,13 +19,17 @@ import { createYupSchema } from "utils/YupSchemaCreator";
 import * as Yup from "yup";
 import { AgreementAnswersRequestModel } from "models/api_requests/AgreementAnswersRequestModel";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
+import { AgreementField } from "models/api_requests/GetAgreementApi";
+import { SectionsType } from "models/api_responses/DynamicFormSections";
+import { DynamicCardView } from "ui/components/templates/dynamic_card_view/DynamicCardView";
 
 type Props = {
-  roommateData: FormInputFieldData[] | undefined;
+  roommateData: AgreementField[] | undefined;
   showProgressBar: boolean;
   handleSaveAndContinue: (values: AgreementAnswersRequestModel) => void;
   showAgreementDialog: boolean;
   agreementDialogCallback: (status: string) => void;
+  progressBarBtn: boolean;
 };
 
 const RoommateAgreementView: FC<Props> = ({
@@ -31,24 +37,71 @@ const RoommateAgreementView: FC<Props> = ({
   showProgressBar,
   handleSaveAndContinue,
   showAgreementDialog,
-  agreementDialogCallback
+  agreementDialogCallback,
+  progressBarBtn
 }) => {
   const { themedColors } = usePreferredTheme();
+  let myInitialValues = useRef<FormikValues>({});
+  let yupSchema = useRef({});
+  const [formFields, setFormFields] = useState<SectionsType[] | undefined>(
+    undefined
+  );
 
-  let switchedValue: boolean = false;
+  const init = useCallback(() => {
+    let counter = 0;
+    let section: SectionsType[] = [];
 
-  const yepSchema =
-    roommateData !== undefined
-      ? createYupSchema(roommateData!!)
-      : Yup.string().notRequired();
-  let initialValues = {};
-  roommateData?.forEach((item) => {
-    // @ts-ignore
-    initialValues[item.id] = "";
-  });
+    if (roommateData !== undefined && roommateData.length > 0) {
+      //Create section ourselves
+      let firstElement = (roommateData as AgreementField[]).find(
+        (item) => item.id === 1
+      );
 
-  function getData(value: any) {
-    if (Array.isArray(value)) {
+      if (firstElement !== undefined) {
+        section[counter] = {
+          // @ts-ignore
+          formInputs: [firstElement as AgreementField]
+        };
+        counter++;
+      }
+
+      section[counter] = {
+        // @ts-ignore
+        formInputs: roommateData.slice(1) as AgreementField[]
+      };
+
+      setFormFields(section);
+
+      yupSchema.current = createYupSchema(roommateData);
+
+      myInitialValues.current = roommateData.reduce(
+        (map, obj: AgreementField) => {
+          // @ts-ignore
+          map[obj.id] = dataManipulation(
+            obj.agreementUserAnswers.map(
+              (data) => data.agreementFieldValue
+            ),
+            obj.inputType
+          );
+          return map;
+        },
+        {}
+      );
+
+      /*myInitialValues.current["1"] = roommateData.*/
+    } else {
+      yupSchema.current = Yup.string().notRequired();
+    }
+  }, [roommateData]);
+
+  useEffect(() => {
+    init();
+  }, [init]);
+
+  function dataManipulation(value: any, inputType?: string) {
+    if (Array.isArray(value) && value.length === 1) {
+      return (inputType ?? "") === "checkbox" ? [value[0]] : value[0];
+    } else if (Array.isArray(value) && value.length > 1) {
       return value.reduce(
         (newArray: string[], _item: any) => (
           newArray.push(isObject(_item) ? _item.value : _item), newArray
@@ -63,14 +116,14 @@ const RoommateAgreementView: FC<Props> = ({
   }
 
   const onSubmit = (_value: FormikValues) => {
-    initialValues = _value;
-    AppLog.log("Button Pressed" + JSON.stringify(initialValues));
+    AppLog.log("Button Pressed" + JSON.stringify(_value));
     handleSaveAndContinue({
       agreementUserAnswers: Object.entries(_value).map(([key, value]) => ({
         agreementFieldId: Number(key),
-        agreementFieldValue: getData(value)
+        agreementFieldValue: dataManipulation(value)
       })),
-      agreementAccepted: switchedValue
+      agreementAccepted:
+        _value[roommateData?.find((item) => item.id === 1)?.id ?? "0"]
     });
   };
 
@@ -120,9 +173,10 @@ const RoommateAgreementView: FC<Props> = ({
     <Screen shouldAddBottomInset={false}>
       <ScrollView>
         <AppForm
-          initialValues={initialValues}
+          initialValues={myInitialValues.current}
           onSubmit={onSubmit}
-          validationSchema={yepSchema}>
+          /* validateOnMount={myInitialValues.current !== {}}*/
+          validationSchema={yupSchema.current}>
           <View style={styles.labelViewStyle}>
             <AppLabel
               text={
@@ -131,20 +185,11 @@ const RoommateAgreementView: FC<Props> = ({
               numberOfLines={0}
             />
           </View>
-          <RoommateAgreementTerms
-            onSwitchValueChange={(isSwitched) => {
-              switchedValue = isSwitched;
-            }}
-          />
 
-          <CardView style={styles.cardView}>
-            <View style={styles.innerCardView}>
-              <SectionComponent
-                listData={roommateData}
-                showProgressBar={showProgressBar}
-              />
-            </View>
-          </CardView>
+          <DynamicCardView
+            sectionsData={formFields}
+            showProgressBar={showProgressBar}
+          />
           {agreementDialog()}
           <View style={styles.button}>
             <AppFormFormSubmit
@@ -152,6 +197,7 @@ const RoommateAgreementView: FC<Props> = ({
               buttonType={BUTTON_TYPES.NORMAL}
               fontWeight={"semi-bold"}
               textStyle={{ color: themedColors.background }}
+              shouldShowProgressBar={progressBarBtn}
               buttonStyle={[
                 styles.buttonStyle,
                 { backgroundColor: themedColors.primary }
@@ -190,7 +236,11 @@ const styles = StyleSheet.create({
     marginTop: SPACE.lg,
     marginBottom: SPACE.lg
   },
-  button: { marginHorizontal: SPACE.lg, marginBottom: SPACE.lg },
+  button: {
+    marginHorizontal: SPACE.lg,
+    marginBottom: SPACE.lg,
+    marginTop: SPACE.lg
+  },
   dialogButtonStyle: {
     textAlign: "center",
     fontSize: FONT_SIZE.base

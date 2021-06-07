@@ -1,13 +1,13 @@
 export interface AgreementAnswerResponseModel {
   message: string;
-  data: Data;
+  data: AgreementData;
 }
 
-export interface Data {
-  agreementStatus: string;
-  agreementAccepted: null;
-  approvalInformation: ApprovalInformation;
-  roommateAgreementParties: RoommateAgreementParty[];
+export interface AgreementData {
+  agreementStatus?: string;
+  agreementAccepted?: null;
+  approvalInformation?: ApprovalInformation;
+  roommateAgreementParties?: RoommateAgreementParty[];
 }
 
 export interface ApprovalInformation {

@@ -31,6 +31,7 @@ export const SectionComponent = React.memo<Props>(
           shouldShowProgressBar={showProgressBar}
           data={listData}
           renderItem={listItem}
+          keyExtractor={(item) => item.id.toString()}
         />
       </View>
     );

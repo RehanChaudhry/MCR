@@ -1,6 +1,5 @@
 import React from "react";
 import { FlatList, ScrollView, StyleSheet, View } from "react-native";
-import { AgreementDetailsData } from "models/api_responses/AgreementDetailsResponseModel";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import { CardView } from "ui/components/atoms/CardView";
@@ -16,21 +15,23 @@ import {
 } from "ui/components/molecules/app_button/AppButton";
 import Screen from "ui/components/atoms/Screen";
 import { AgreementDetailsListItem } from "ui/components/molecules/agreement_details_item/AgreementDetailsListItem";
+import { AgreementData } from "models/api_responses/AgreementAnswerResponseModel";
+import { RoommateAgreementParty } from "models/api_requests/GetAgreementApi";
 
 type Props = {
-  agreementDetailsData: AgreementDetailsData[];
+  agreementDetailsData: AgreementData;
 };
 
 export const AgreementDetailsView = React.memo<Props>(
   ({ agreementDetailsData }) => {
     const theme = usePreferredTheme();
-    const listItem = ({ item }: { item: AgreementDetailsData }) => {
+    const listItem = ({ item }: { item: RoommateAgreementParty }) => {
       return (
         <AgreementDetailsListItem
-          username={item.username}
+          username={item.firstName + "" + item.lastName}
           status={item.status}
           updateAt={item.updated_At}
-          profileUrl={item.profileUrl}
+          profileUrl={item.profilePicture?.fileURL}
         />
       );
     };
@@ -40,13 +41,17 @@ export const AgreementDetailsView = React.memo<Props>(
         <ScrollView>
           <CardView style={styles.cardView}>
             <AppLabel
-              text={"Room Agreement Parties (3)"}
+              text={
+                "Room Agreement Parties (" +
+                agreementDetailsData.roommateAgreementParties?.length +
+                ")"
+              }
               weight={"semi-bold"}
               style={styles.heading}
             />
             <FlatList
-              data={agreementDetailsData}
-              keyExtractor={(item) => item.id.toString()}
+              data={agreementDetailsData.roommateAgreementParties}
+              keyExtractor={(item) => item.userID?.toString()}
               renderItem={listItem}
               ItemSeparatorComponent={() => (
                 <View
@@ -87,7 +92,12 @@ export const AgreementDetailsView = React.memo<Props>(
                 ]}
               />
 
-              <AppLabel text={"Pending"} style={styles.pending} />
+              <AppLabel
+                text={
+                  agreementDetailsData.approvalInformation?.approvalStatus
+                }
+                style={styles.pending}
+              />
 
               <View
                 style={[
@@ -118,7 +128,13 @@ export const AgreementDetailsView = React.memo<Props>(
                 ]}
               />
 
-              <AppLabel text={"N/A"} style={styles.pending} />
+              <AppLabel
+                text={
+                  agreementDetailsData.approvalInformation?.approvalDate ??
+                  "N/A"
+                }
+                style={styles.pending}
+              />
 
               <View
                 style={[
@@ -149,7 +165,13 @@ export const AgreementDetailsView = React.memo<Props>(
                 ]}
               />
 
-              <AppLabel text={"N/A"} style={styles.pending} />
+              <AppLabel
+                text={
+                  agreementDetailsData.approvalInformation?.approvalDate ??
+                  "N/A"
+                }
+                style={styles.pending}
+              />
 
               <View
                 style={[
@@ -161,7 +183,7 @@ export const AgreementDetailsView = React.memo<Props>(
               />
 
               <AppButton
-                text={STRINGS.roommateAgreementdetails.export_agreement}
+                text={STRINGS.roommateAgreementDetails.export_agreement}
                 buttonStyle={[
                   styles.exportRoommateAgreement,
                   {

@@ -4,4 +4,5 @@ export type RoommateAgreementRequestModel = {
   order?: string;
   classLevelId?: number;
   isDefault?: number;
+  matchGroupId: number | null;
 };

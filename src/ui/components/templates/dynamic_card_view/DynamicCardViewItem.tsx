@@ -9,10 +9,11 @@ import { useRoute } from "@react-navigation/native";
 
 type DynamicCardViewItemProps = {
   sections: SectionsType;
+  showProgressBar?: boolean;
 };
 
 export const DynamicCardViewItem = React.memo<DynamicCardViewItemProps>(
-  ({ sections }) => {
+  ({ sections, showProgressBar }) => {
     const updateProfileRoute = useRoute<any>();
     return (
       <CardView style={styles.cardView}>
@@ -42,7 +43,7 @@ export const DynamicCardViewItem = React.memo<DynamicCardViewItemProps>(
         )}
         <SectionComponent
           listData={sections.formInputs}
-          showProgressBar={true}
+          showProgressBar={showProgressBar ?? true}
         />
       </CardView>
     );
