@@ -18,10 +18,15 @@ const AppForm: React.FC<Props> = ({
   validateOnMount,
   children
 }) => {
+  /*  AppLog.logForcefully(
+    "AppForm => initialValues " + JSON.stringify(initialValues)
+  );*/
+
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
+      enableReinitialize
       validateOnMount={validateOnMount}
       validationSchema={validationSchema}>
       {() => <>{children}</>}

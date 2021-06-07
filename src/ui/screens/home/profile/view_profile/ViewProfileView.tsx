@@ -1,28 +1,24 @@
 import React from "react";
 import { ScrollView, View } from "react-native";
-import AboutMe from "ui/components/templates/about_me/AboutMe";
-import InterestsTagsList from "ui/components/templates/InterestsTagsList";
-import ViewProfileDemoGraphics from "ui/components/templates/ViewProfileDemoGraphics";
-import EducationalInformation from "ui/components/templates/EducationalInformation";
 import MyRoommates from "ui/components/templates/my_roommates/MyRoommates";
 import Screen from "ui/components/atoms/Screen";
+import { DynamicCardView } from "ui/components/templates/dynamic_card_view/DynamicCardView";
+import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 
 type Props = {
   openRoommateAgreementScreen: () => void;
+  viewProfileUiData: Profile | undefined;
 };
 
 export const ViewProfileView: React.FC<Props> = ({
-  openRoommateAgreementScreen
+  openRoommateAgreementScreen,
+  viewProfileUiData
 }) => {
-  //const { user } = useAuth();
   return (
     <Screen shouldAddBottomInset={false}>
       <ScrollView>
         <View>
-          <AboutMe />
-          <ViewProfileDemoGraphics />
-          <InterestsTagsList />
-          <EducationalInformation />
+          <DynamicCardView sectionsData={viewProfileUiData?.sections} />
           <MyRoommates openAgreementScreen={openRoommateAgreementScreen} />
         </View>
       </ScrollView>

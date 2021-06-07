@@ -5260,7 +5260,7 @@ html-escaper@^2.0.0:
   resolved "https://registry.yarnpkg.com/html-escaper/-/html-escaper-2.0.2.tgz#dfd60027da36a36dfcbe236262c00a5822681453"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
 
-htmlparser2-without-node-native@^3.9.0:
+htmlparser2-without-node-native@^3.9.0, htmlparser2-without-node-native@^3.9.2:
   version "3.9.2"
   resolved "https://registry.yarnpkg.com/htmlparser2-without-node-native/-/htmlparser2-without-node-native-3.9.2.tgz#b3ed050d877d0ff3465969e339877b7f9f6631f6"
   integrity sha1-s+0FDYd9D/NGWWnjOYd7f59mMfY=
@@ -8068,7 +8068,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.5.7, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.0, prop-types@^15.5.7, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -8227,6 +8227,14 @@ react-native-gesture-handler@1.9.0:
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
     prop-types "^15.7.2"
+
+react-native-htmlview@^0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/react-native-htmlview/-/react-native-htmlview-0.16.0.tgz#4a70d7c02ab3ab18e1cb708c0dcf0d99bc6c1cdc"
+  integrity sha512-yUrzXje+kKKLkWkccKNBeg3CbvrodA7f4+1d/XRrrg0SDFfIdj7NnjRdH+WXqGze6R501bfRZOPaZx/M5HTz3A==
+  dependencies:
+    entities "^1.1.1"
+    htmlparser2-without-node-native "^3.9.2"
 
 react-native-image-picker@^3.3.2:
   version "3.3.2"
@@ -8406,6 +8414,13 @@ react-native-webview@^11.2.5:
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
+
+react-native-youtube@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-youtube/-/react-native-youtube-2.0.1.tgz#1b6275ca2c1db8e13539a59ccfda8ae8479b1590"
+  integrity sha512-CVzJyynKoEEMXHv/Nx+s8HdovnfVIZs0DIUjWUQsgEd+kbBubXJZTguCKj4WigI8SI1LJ0thF8SEGbdqW8oJkw==
+  dependencies:
+    prop-types "^15.5.0"
 
 react-native@0.63.4:
   version "0.63.4"

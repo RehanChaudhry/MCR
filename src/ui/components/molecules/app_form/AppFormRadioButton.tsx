@@ -52,8 +52,13 @@ export const AppFormRadioButton: React.FC<Props> = ({
         itemsInRow={3}
         isLocked={isLocked}
         onChange={(value: OptionsData, index: number) => {
-          AppLog.log("Selected radio button index : " + index);
-          setFieldValue(name, value.value);
+          AppLog.log(
+            "Selected radio button index : " +
+              JSON.stringify(value) +
+              "index : " +
+              index
+          );
+          value !== undefined && setFieldValue(name, value.value);
         }}
         byDefaultSelected={radioData.findIndex(
           (item) =>

@@ -13,7 +13,6 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel";
 import EIntBoolean from "models/enums/EIntBoolean";
-
 export type Choice = { id: number; value: string };
 type Props = {
   style?: StyleProp<ViewStyle>;
@@ -57,7 +56,7 @@ export const RadioGroup = optimizedMemo<Props>(
     function buttonPressed(position: number) {
       if (position !== selectedPosition) {
         setSelectedPosition(position);
-        onChange?.(values[selectedPosition], position);
+        onChange?.(values[position], position);
       }
     }
 

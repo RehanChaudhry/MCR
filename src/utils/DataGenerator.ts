@@ -5,8 +5,6 @@ import MatchInfo from "models/MatchInfo";
 import { MyRoommatesResponseModel } from "models/api_responses/MyRoommatesResponseModel";
 import { DismissedOrBlockedResponseModel } from "models/api_responses/DismissedOrBlockedResponseModel";
 import { RoommateRequestsResponseModel } from "models/api_responses/RoommateRequestsResponseModel";
-import AgreementStatus from "models/enums/AgreementStatusType";
-import { AgreementDetailsResponseModel } from "models/api_responses/AgreementDetailsResponseModel";
 
 const getNotifications = () => {
   const date = new Date();
@@ -124,39 +122,6 @@ const getNotifications = () => {
   return response;
 };
 
-const getAgreementDetails = () => {
-  const response: AgreementDetailsResponseModel = {
-    message: "",
-    data: [
-      {
-        id: 1,
-        username: "Kinslee Fink",
-        profileUrl:
-          "https://www.law.uchicago.edu/files/styles/extra_large/public/2018-03/theisen_tarra.jpg?itok=5iSSWAci",
-        updated_At: "on Feb 10, 2021",
-        status: AgreementStatus.AGREED
-      },
-      {
-        id: 2,
-        username: "Rosa Lawson",
-        profileUrl:
-          "https://harris.uchicago.edu/files/styles/square/public/2019-10/emileigh_harrison_cropped.jpg?itok=zL13vTOG",
-        updated_At: "on Feb 11, 2021",
-        status: AgreementStatus.DISAGREED
-      },
-      {
-        id: 3,
-        username: "Zane Mayes",
-        profileUrl:
-          "https://www.bc.edu/content/dam/files/schools/cas_sites/cs/profiles/Student_Profile.jpg",
-        updated_At: "",
-        status: AgreementStatus.PENDING
-      }
-    ]
-  };
-  return response;
-};
-
 const getMyRoommates = () => {
   const response: MyRoommatesResponseModel = {
     message: "",
@@ -253,6 +218,5 @@ export default {
   getMatchInfo,
   getMyRoommates,
   getDismissedOrBlocked,
-  getRoommateRequests,
-  getAgreementDetails
+  getRoommateRequests
 };

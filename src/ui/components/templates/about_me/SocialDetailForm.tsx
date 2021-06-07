@@ -16,8 +16,8 @@ type Props = {
   mainContainerStyle?: StyleProp<ViewStyle>;
   headingStyle?: StyleProp<TextStyle>;
   titleStyle?: StyleProp<TextStyle>;
-  icon: SvgProp;
-  heading: string;
+  icon?: SvgProp;
+  heading?: string;
   title: string;
   onPress?: () => void;
 };
@@ -72,8 +72,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACE.sm
   },
   titleStyle: {
-    marginTop: SPACE.sm,
-    marginBottom: SPACE.lg
+    marginTop: SPACE.sm
   }
 });
 

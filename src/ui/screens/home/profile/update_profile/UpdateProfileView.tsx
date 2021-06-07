@@ -12,23 +12,22 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
 import { DynamicCardView } from "ui/components/templates/dynamic_card_view/DynamicCardView";
-import { ProfileData } from "models/api_responses/UpdateProfileUiResponseModel";
-import { UpdateProfileUiRequestModel } from "models/api_requests/UpdateProfileUiRequestModel";
 import { createYupSchema } from "utils/YupSchemaCreator";
 import _ from "lodash";
 import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
-import { AppLog } from "utils/Util";
+import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
+import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
   infoTextShown: boolean;
-  handleUpdateProfile: (values: UpdateProfileUiRequestModel) => void;
-  updateProfileUiData: ProfileData | undefined;
+  handleUpdateProfile: (values: UpdateProfileRequestModel) => void;
+  updateProfileUiData: Profile | undefined;
   shouldShowProgressBar: boolean;
 };
 
 export const UpdateProfileView: React.FC<Props> = ({
-  openUpdateQuestionnaireScreen,
+  //openUpdateQuestionnaireScreen,
   infoTextShown,
   handleUpdateProfile,
   updateProfileUiData,
@@ -36,11 +35,8 @@ export const UpdateProfileView: React.FC<Props> = ({
 }) => {
   const theme = usePreferredTheme();
   const rightArrowIcon = () => <RightArrow width={20} height={20} />;
-
-  AppLog.logForcefully("remove warning: " + openUpdateQuestionnaireScreen);
   //dynamic form validation on submit
   let onSubmit = (_value: FormikValues) => {
-    AppLog.log("in onSubmit");
     updateProfileUiData?.sections?.forEach((section) => {
       section.formInputs?.forEach((formInput) => {
         const val = _value[formInput.id.toString()];
@@ -81,10 +77,6 @@ export const UpdateProfileView: React.FC<Props> = ({
     handleUpdateProfile({
       sections: updateProfileUiData?.sections!
     });
-    AppLog.log(
-      "Update Profile Request Model Data = " +
-        JSON.stringify(updateProfileUiData?.sections)
-    );
   };
 
   let yepSchema = useRef({});
@@ -117,7 +109,6 @@ export const UpdateProfileView: React.FC<Props> = ({
         initialValues.current[formInput.id] =
           formInput.userMeta?.[0]?.value;
       });
-      AppLog.log("initialValues : " + JSON.stringify(initialValues));
     });
   }, [updateProfileUiData]);
 

@@ -15,9 +15,9 @@ import AgreementStatus from "models/enums/AgreementStatusType";
 
 type Props = {
   username: string;
-  updateAt: string;
   status: string;
-  profileUrl: string;
+  updateAt?: string;
+  profileUrl?: string | undefined;
 };
 
 export const AgreementDetailsListItem = React.memo<Props>(
@@ -28,7 +28,14 @@ export const AgreementDetailsListItem = React.memo<Props>(
       <View>
         <View style={styles.mainContainer}>
           <View style={styles.innerContainerLeft}>
-            <Image source={{ uri: profileUrl }} style={styles.image} />
+            <Image
+              source={
+                profileUrl !== undefined
+                  ? { uri: profileUrl }
+                  : require("assets/images/profile.png")
+              }
+              style={styles.image}
+            />
 
             <View style={styles.userNameAndTime}>
               <AppLabel

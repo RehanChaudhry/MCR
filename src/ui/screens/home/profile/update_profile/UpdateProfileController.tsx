@@ -18,22 +18,21 @@ import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { UpdateProfileStackParamList } from "routes/ProfileStack";
 import EScreen from "models/enums/EScreen";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import RightArrow from "assets/images/right.svg";
 import LeftArrow from "assets/images/left.svg";
-import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
-import { AppLog } from "utils/Util";
 import { Alert } from "react-native";
 import { useApi } from "repo/Client";
 import AuthApis from "repo/auth/AuthApis";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
+import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 import {
-  ProfileData,
-  UpdateProfileUiResponseModel
-} from "models/api_responses/UpdateProfileUiResponseModel";
-import { UpdateProfileUiRequestModel } from "models/api_requests/UpdateProfileUiRequestModel";
+  FetchMyProfileResponseModel,
+  Profile
+} from "models/api_responses/FetchMyProfileResponseModel";
+import WelcomeSkipTitleButton from "ui/components/molecules/welcome_skip_title_button/WelcomeSkipTitleButton";
+import Api from "config/Api";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -65,18 +64,16 @@ const UpdateProfileController: FC<Props> = () => {
   const [
     updateProfileUiData,
     setUpdateProfileUiData
-  ] = useState<ProfileData>();
+  ] = useState<Profile>();
 
   //update profile UI integration
 
-  const updateProfileUiApi = useApi<any, UpdateProfileUiResponseModel>(
-    AuthApis.updateProfileUi
+  const updateProfileUiApi = useApi<any, FetchMyProfileResponseModel>(
+    AuthApis.fetchMyProfile
   );
 
   //handle update profile ui api
   const fetchMyProfile = useCallback(async () => {
-    AppLog.log("handleSignIn: ");
-
     //setShouldShowPb(true);
 
     // authenticate user
@@ -90,14 +87,13 @@ const UpdateProfileController: FC<Props> = () => {
       Alert.alert("Unable to fetch update profile ui", errorBody);
       return;
     } else {
-      AppLog.log("Update profile data is updated " + dataBody.data);
       setUpdateProfileUiData(dataBody.data);
     }
   }, [updateProfileUiApi]);
 
   //update profile api integration
   const updateProfileApi = useApi<
-    UpdateProfileUiRequestModel,
+    UpdateProfileRequestModel,
     UpdateProfileResponseModel
   >(AuthApis.updateProfile);
 
@@ -143,19 +139,11 @@ const UpdateProfileController: FC<Props> = () => {
           />
         ),
         headerRight: () => (
-          <HeaderRightTextWithIcon
-            text="Skip"
-            textStyle={{ color: themedColors.interface["700"] }}
-            icon={() => {
-              return (
-                <RightArrow
-                  width={20}
-                  height={20}
-                  fill={themedColors.interface["700"]}
-                />
-              );
-            }}
+          <WelcomeSkipTitleButton
             onPress={openQuestionnaireScreen}
+            updateProfileRequest={{
+              queryParams: Api.COMPLETE_PROFILE_QUERY_PARAMS
+            }}
           />
         )
       });
@@ -169,10 +157,13 @@ const UpdateProfileController: FC<Props> = () => {
 
   //handle update profile api
   const handleUpdateProfile = usePreventDoubleTap(
-    async (apiRequestModel: UpdateProfileUiRequestModel) => {
+    async (apiRequestModel: UpdateProfileRequestModel) => {
       // AppLog.log("handleSignIn: ");
 
       //setShouldShowPb(true);
+      if (route.params.isFrom === EScreen.WELCOME) {
+        apiRequestModel.queryParams = Api.COMPLETE_PROFILE_QUERY_PARAMS;
+      }
 
       // authenticate user
       const {
@@ -185,7 +176,6 @@ const UpdateProfileController: FC<Props> = () => {
         Alert.alert("Unable to update your profile", errorBody);
         return;
       } else {
-        AppLog.log("Update profile data is updated " + dataBody.message);
         Alert.alert(
           "Your profile has been updated successfully.",
           dataBody.message

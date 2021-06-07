@@ -3,22 +3,37 @@ import Play from "assets/images/play.svg";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
 import React, { useState } from "react";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { CardView } from "ui/components/atoms/CardView";
 import Screen from "ui/components/atoms/Screen";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
+import { StaticContent } from "models/api_responses/StaticContentResponseModel";
+import HtmlView from "react-native-htmlview";
+import YouTube from "react-native-youtube";
+import { AppLog } from "utils/Util";
+import WelcomeContinueButton from "ui/components/molecules/welcome_continue_button/WelcomeContinueButton";
+import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseModel";
 
 type Props = {
   openUpdateProfileScreen: () => void;
   shouldShowProgressBar?: boolean;
+  staticContent: StaticContent;
 };
 
 export const WelcomeView = React.memo<Props>(
-  ({ openUpdateProfileScreen }) => {
+  ({ openUpdateProfileScreen, staticContent }) => {
     const theme = usePreferredTheme();
     const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
 
+    // function matchYoutubeUrl(url: string) {
+    //   var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    //   return url.match(p) ? RegExp.$1 : false;
+    // }
+
+    AppLog.logForcefully("video: " + shouldPlayVideo);
+
+    // @ts-ignore
     return (
       <Screen>
         <ScrollView>
@@ -30,14 +45,38 @@ export const WelcomeView = React.memo<Props>(
               text={STRINGS.welcome.welcome_text}
               textStyle={styles.text}
             />
-            <Image
-              source={require("assets/images/video_image.png")}
-              resizeMode="cover"
-              style={styles.image}
-            />
+            {/*<Image*/}
+            {/*  source={require("assets/images/video_image.png")}*/}
+            {/*  resizeMode="cover"*/}
+            {/*  style={styles.image}*/}
+            {/*/>*/}
+
+            <View>
+              <YouTube
+                apiKey="AIzaSyCce0TNBZDyCCP62B2P8EkTfgjgp20ZqOA"
+                videoId={"4WCu9-AZXBw"}
+                play={shouldPlayVideo}
+                controls={2}
+                modestbranding={true}
+                style={styles.image}
+              />
+
+              {/*<View style={styles.playButton}>*/}
+              {/*  <Play*/}
+              {/*    width={60}*/}
+              {/*    height={60}*/}
+              {/*    fill={theme.themedColors.black}*/}
+              {/*  />*/}
+              {/*</View>*/}
+            </View>
+
             <View style={styles.buttonViewStyle}>
               <AppButton
-                text={STRINGS.welcome.play_video}
+                text={
+                  !shouldPlayVideo
+                    ? STRINGS.welcome.play_video
+                    : "Pause this video"
+                }
                 buttonStyle={{
                   backgroundColor: theme.themedColors.primary
                 }}
@@ -53,63 +92,33 @@ export const WelcomeView = React.memo<Props>(
                     fill={theme.themedColors.background}
                   />
                 )}
-                onPress={() => setShouldPlayVideo(true)}
+                onPress={() => setShouldPlayVideo(!shouldPlayVideo)}
               />
             </View>
 
             <HeadingWithText
-              headingText={STRINGS.welcome.learn_about_heading}
+              headingText={staticContent.title ?? ""}
               headingFontWeight={"bold"}
               headingNumberOfLines={0}
               headingStyle={styles.learnAboutHeading}
-              text={STRINGS.welcome.learn_about_text}
+              text={staticContent.description ?? ""}
               textStyle={styles.learnAboutText}
             />
 
             <CardView style={styles.cardView}>
               <View style={styles.cardViewMainContainer}>
-                <HeadingWithText
-                  headingText={STRINGS.welcome.roommate_selection_heading}
-                  headingFontWeight={"bold"}
-                  headingStyle={styles.roommate_heading}
-                  text={STRINGS.welcome.roommate_selection}
-                  textStyle={styles.roommate_text}
-                />
-
-                <HeadingWithText
-                  headingText={STRINGS.welcome.socail_network_heading}
-                  headingFontWeight={"bold"}
-                  headingStyle={styles.heading}
-                  text={STRINGS.welcome.socail_network_text}
-                  textStyle={styles.roommate_text}
-                />
-
-                <HeadingWithText
-                  headingText={STRINGS.welcome.roommate_designer}
-                  headingFontWeight={"bold"}
-                  headingStyle={styles.heading}
-                  text={STRINGS.welcome.roommate_designer_text}
-                  textStyle={styles.roommate_text}
-                />
-                <HeadingWithText
-                  headingText={STRINGS.welcome.accurate_matches}
-                  headingFontWeight={"bold"}
-                  headingStyle={styles.heading}
-                  text={STRINGS.welcome.accurate_matches_text}
-                  textStyle={styles.roommate_text}
-                />
-                <HeadingWithText
-                  headingText={STRINGS.welcome.friends_messages}
-                  headingFontWeight={"bold"}
-                  headingStyle={styles.heading}
-                  text={STRINGS.welcome.friends_messages_text}
-                  textStyle={styles.roommate_text}
+                <HtmlView
+                  value={staticContent.content!}
+                  stylesheet={styles}
                 />
               </View>
             </CardView>
 
             <View style={styles.continue}>
-              <AppButton
+              <WelcomeContinueButton
+                updateProfileRequest={{
+                  welcomeVideoStatus: EWelcomeFlowStatus.COMPLETED
+                }}
                 text={STRINGS.welcome.continue}
                 buttonStyle={{
                   backgroundColor: theme.themedColors.primary
@@ -126,10 +135,8 @@ export const WelcomeView = React.memo<Props>(
                 onPress={() => {
                   if (shouldPlayVideo) {
                     setShouldPlayVideo(false);
-                    openUpdateProfileScreen();
-                  } else {
-                    openUpdateProfileScreen();
                   }
+                  openUpdateProfileScreen();
                 }}
               />
             </View>
@@ -190,10 +197,33 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 200,
-    marginTop: SPACE.lg
+    marginTop: SPACE.lg,
+    height: 200
+  },
+  playButton: {
+    position: "absolute"
   },
   buttonText: {
     fontSize: FONT_SIZE.lg
+  },
+  b: {
+    fontSize: FONT_SIZE.lg,
+    fontWeight: "bold"
+  },
+
+  h1: {
+    fontSize: FONT_SIZE.xl,
+    fontWeight: "bold"
+  },
+  h2: {
+    fontSize: FONT_SIZE.lg,
+    fontWeight: "bold"
+  },
+  h3: {
+    fontSize: FONT_SIZE.sm,
+    fontWeight: "bold"
+  },
+  br: {
+    lineHeight: -12
   }
 });

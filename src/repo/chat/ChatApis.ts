@@ -16,7 +16,7 @@ function getChats(request: ChatRequestModel) {
 
 function getSuggestions(request: ConversationSuggestionsRequestModel) {
   return apiClient.get<ConversationSuggestionsResponseModel>(
-    API.UPDATE_PROFILE,
+    API.GET_USERS,
     { ...request }
   );
 }

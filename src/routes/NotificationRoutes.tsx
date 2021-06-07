@@ -3,6 +3,7 @@ import React from "react";
 import NotificationController from "ui/screens/home/notification/NotificationController";
 import { NotificationStack } from "routes/NotificationParams";
 import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
+import EScreen from "models/enums/EScreen";
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,8 @@ export const NotificationRoutes = () => {
       <NotificationStack.Screen
         name="ViewProfile"
         component={ViewProfileController}
+        initialParams={{ isFrom: EScreen.HOME, updateProfile: false }}
+        options={{ title: "View Profile" }}
       />
     </Stack.Navigator>
   );

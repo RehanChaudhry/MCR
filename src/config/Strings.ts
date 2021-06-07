@@ -352,8 +352,9 @@ export default {
     submitSpamReport: "Submit Spam Report",
     enter_reason_validation: "Please enter a reason."
   },
-  roommateAgreementdetails: {
-    export_agreement: "Export Roommate Agreement"
+  roommateAgreementDetails: {
+    export_agreement: "Export Roommate Agreement",
+    no_agreement_found: "No agreement found."
   },
   somethingWentWrong: "Something went wrong!",
   staticContent: {}

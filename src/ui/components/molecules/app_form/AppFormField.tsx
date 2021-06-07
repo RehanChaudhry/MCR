@@ -55,6 +55,13 @@ const AppFormField = optimizedMemo<Props>(
       initialValues
     } = useFormikContext<FormikValues>();
 
+    /*  AppLog.logForcefully(
+      "AppFormField => initialValues " +
+        JSON.stringify(initialValues[name]) +
+        " field name is : " +
+        name
+    );*/
+
     const theme = usePreferredTheme();
 
     const _setFieldTouched = useCallback(() => setFieldTouched(name), [

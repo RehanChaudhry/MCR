@@ -16,7 +16,7 @@ interface OwnProps extends ViewProps {
   text: string;
   isBold?: boolean;
   style?: StyleProp<ViewStyle>;
-  preSelected: boolean;
+  preSelected?: boolean;
   onChange: (checked: boolean, text?: string) => void;
   shouldNotOptimize?: boolean;
   isLocked?: EIntBoolean;
@@ -39,8 +39,8 @@ const CheckboxWithText = optimizedMemo<Props>(
     useEffect(() => {
       if (preSelected) {
         setChecked(true);
+        onChange?.(true, text);
       }
-      onChange?.(true, text);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [preSelected]);
 

@@ -68,8 +68,6 @@ export const CircleImageWithText = React.memo<Props>(
 const styles = StyleSheet.create({
   mainContainer: {
     flexDirection: "row",
-    marginLeft: SPACE.lg,
-    marginRight: SPACE.lg,
     flexBasis: 0.1
   },
   circleWithText: {
@@ -94,8 +92,7 @@ const styles = StyleSheet.create({
     height: 0.5,
     width: "100%",
     alignSelf: "flex-end",
-    marginTop: SPACE.md,
-    marginBottom: SPACE.lg
+    marginTop: SPACE.md
   },
   name: { fontFamily: Fonts.bold, fontSize: FONT_SIZE.sm },
   message: { fontSize: FONT_SIZE.sm },

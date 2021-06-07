@@ -1,7 +1,7 @@
 export interface AgreementAnswersRequestModel {
   agreementUserAnswers?: AgreementUserAnswer[];
-  roommates?: Roommate[] | undefined;
   agreementAccepted?: boolean;
+  status?: string;
   agreementId?: number;
 }
 
@@ -15,7 +15,7 @@ export interface AgreementFieldValueElement {
   value: string;
 }
 
-export interface Roommate {
-  userId: number | undefined;
-  status: string;
-}
+// export interface Roommate {
+//   userId: number | undefined;
+//   status: string;
+// }

@@ -117,6 +117,7 @@ export const ActivityLogView: React.FC<Props> = ({
           refreshing={isRefreshing}
           keyExtractor={(item) => item.id.toString()}
           renderSectionFooter={footerWrapper}
+          contentContainerStyle={[{ paddingHorizontal: SPACE.lg }]}
         />
       )}
     </Screen>
@@ -138,11 +139,13 @@ const styles = StyleSheet.create({
   },
   filterText: { fontSize: FONT_SIZE.sm },
   separator: { height: SPACE.md },
-  headerContainer: { padding: SPACE.lg },
+  headerContainer: { paddingVertical: SPACE.lg },
   headerText: { fontSize: FONT_SIZE.xs },
   loadMore: {
-    height: 30,
+    marginTop: SPACE.lg,
+    height: SPACE._3xl,
     justifyContent: "center",
-    flexDirection: "column"
+    flexDirection: "column",
+    alignItems: "center"
   }
 });

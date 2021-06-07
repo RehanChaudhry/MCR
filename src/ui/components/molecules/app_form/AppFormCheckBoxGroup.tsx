@@ -31,6 +31,13 @@ export const AppFormCheckBoxGroup: React.FC<AppFormCheckBoxGroupProps> = ({
   } = useFormikContext<FormikValues>();
   let result: React.MutableRefObject<OptionsData[]> = useRef([]);
 
+  /*AppLog.logForcefully(
+    "AppFormCheckboxGroup => initialValues " +
+      JSON.stringify(initialValues[name]) +
+      " field name is : " +
+      name
+  );*/
+
   return (
     <View>
       {labelProps && (
