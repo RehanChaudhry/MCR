@@ -42,9 +42,10 @@ function createOrResetPassword(
 }
 
 function updateProfile(requestModel: UpdateProfileRequestModel) {
+  let { queryParams, ...body } = requestModel;
   return apiClient.put<UpdateProfileResponseModel>(
-    API.MY_PROFILE,
-    JSON.stringify(requestModel)
+    API.MY_PROFILE + (queryParams ? `?${queryParams}` : ""),
+    JSON.stringify(body)
   );
 }
 
