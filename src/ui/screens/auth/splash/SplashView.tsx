@@ -1,7 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { COLORS, Constants, SPACE } from "config";
 import { AuthContext } from "hooks/useAuth";
-import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
+import {
+  EWelcomeFlowStatus,
+  FetchMyProfileResponseModel
+} from "models/api_responses/FetchMyProfileResponseModel";
 import { Uni } from "models/api_responses/UniSelectionResponseModel";
 import { UserModel } from "models/api_responses/UserModel";
 import React, { useEffect, useState } from "react";
@@ -17,7 +20,7 @@ import AuthApis from "repo/auth/AuthApis";
 import AuthStorage from "repo/auth/AuthStorage";
 import { useApi } from "repo/Client";
 import { AuthRoutes, HomeRoutes } from "routes";
-import { WelcomeRoutes } from "routes/WelcomeRoutes";
+import { WelcomeRoutes, WelcomeScreens } from "routes/WelcomeRoutes";
 import { AppLog, shadowStyleProps } from "utils/Util";
 import VersionCheck from "react-native-version-check";
 import Screen from "ui/components/atoms/Screen";
@@ -32,8 +35,46 @@ function isLoggedIn(_user?: UserModel) {
   );
 }
 
-function hasCompletedWelcomeJourney(_user?: UserModel) {
-  return _user?.profile?.welcomeVideoStatus === "skipped";
+type HasCompletedWelcomeJourneyReturnType =
+  | {
+      isWelcomeJourneyCompleted: false;
+      welcomeScreen?: WelcomeScreens;
+    }
+  | {
+      isWelcomeJourneyCompleted: true;
+      welcomeScreen?: null;
+    };
+
+function hasCompletedWelcomeJourney(
+  _user?: UserModel
+): HasCompletedWelcomeJourneyReturnType {
+  if (_user?.profile) {
+    const userProfile = _user?.profile;
+    return userProfile.welcomeVideoStatus === EWelcomeFlowStatus.PENDING
+      ? {
+          isWelcomeJourneyCompleted: false,
+          welcomeScreen: "Welcome"
+        }
+      : userProfile.profileCompletedAt === null
+      ? {
+          isWelcomeJourneyCompleted: false,
+          welcomeScreen: "UpdateProfile"
+        }
+      : userProfile.questionnaireStatus === EWelcomeFlowStatus.PENDING
+      ? {
+          isWelcomeJourneyCompleted: false,
+          welcomeScreen: "Questionnaire"
+        }
+      : {
+          isWelcomeJourneyCompleted: true,
+          welcomeScreen: null
+        };
+  } else {
+    return {
+      isWelcomeJourneyCompleted: false,
+      welcomeScreen: "Welcome"
+    };
+  }
 }
 
 async function versionCheckLibraryImpl(): Promise<{
@@ -192,10 +233,14 @@ export const SplashView = React.memo<Props>(() => {
         )}
 
         {isLoggedIn(user) ? (
-          hasCompletedWelcomeJourney(user) ? (
+          hasCompletedWelcomeJourney(user).isWelcomeJourneyCompleted ? (
             <HomeRoutes />
           ) : (
-            <WelcomeRoutes />
+            <WelcomeRoutes
+              initialRouteName={
+                hasCompletedWelcomeJourney(user).welcomeScreen!
+              }
+            />
           )
         ) : (
           <AuthRoutes initialRouteName={"UniSelection"} />

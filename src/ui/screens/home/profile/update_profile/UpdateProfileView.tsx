@@ -12,17 +12,17 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
 import { DynamicCardView } from "ui/components/templates/dynamic_card_view/DynamicCardView";
-import { ProfileData } from "models/api_responses/UpdateProfileUiResponseModel";
-import { UpdateProfileUiRequestModel } from "models/api_requests/UpdateProfileUiRequestModel";
 import { createYupSchema } from "utils/YupSchemaCreator";
 import _ from "lodash";
 import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
+import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
+import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
   infoTextShown: boolean;
-  handleUpdateProfile: (values: UpdateProfileUiRequestModel) => void;
-  updateProfileUiData: ProfileData | undefined;
+  handleUpdateProfile: (values: UpdateProfileRequestModel) => void;
+  updateProfileUiData: Profile | undefined;
   shouldShowProgressBar: boolean;
 };
 
