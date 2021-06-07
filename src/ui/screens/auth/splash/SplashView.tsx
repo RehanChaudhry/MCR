@@ -50,7 +50,7 @@ function hasCompletedWelcomeJourney(
 ): HasCompletedWelcomeJourneyReturnType {
   if (_user?.profile) {
     const userProfile = _user?.profile;
-    return userProfile.welcomeVideoStatus !== EWelcomeFlowStatus.COMPLETED
+    return userProfile.welcomeVideoStatus === EWelcomeFlowStatus.PENDING
       ? {
           isWelcomeJourneyCompleted: false,
           welcomeScreen: "Welcome"
@@ -60,7 +60,7 @@ function hasCompletedWelcomeJourney(
           isWelcomeJourneyCompleted: false,
           welcomeScreen: "UpdateProfile"
         }
-      : userProfile.questionnaireStatus !== EWelcomeFlowStatus.COMPLETED
+      : userProfile.questionnaireStatus === EWelcomeFlowStatus.PENDING
       ? {
           isWelcomeJourneyCompleted: false,
           welcomeScreen: "Questionnaire"

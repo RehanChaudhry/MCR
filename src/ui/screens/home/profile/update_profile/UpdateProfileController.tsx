@@ -18,9 +18,7 @@ import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { UpdateProfileStackParamList } from "routes/ProfileStack";
 import EScreen from "models/enums/EScreen";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import RightArrow from "assets/images/right.svg";
 import LeftArrow from "assets/images/left.svg";
-import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
@@ -33,6 +31,8 @@ import {
   FetchMyProfileResponseModel,
   Profile
 } from "models/api_responses/FetchMyProfileResponseModel";
+import WelcomeSkipTitleButton from "ui/components/molecules/welcome_skip_title_button/WelcomeSkipTitleButton";
+import Api from "config/Api";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -139,19 +139,11 @@ const UpdateProfileController: FC<Props> = () => {
           />
         ),
         headerRight: () => (
-          <HeaderRightTextWithIcon
-            text="Skip"
-            textStyle={{ color: themedColors.interface["700"] }}
-            icon={() => {
-              return (
-                <RightArrow
-                  width={20}
-                  height={20}
-                  fill={themedColors.interface["700"]}
-                />
-              );
-            }}
+          <WelcomeSkipTitleButton
             onPress={openQuestionnaireScreen}
+            updateProfileRequest={{
+              queryParams: Api.COMPLETE_PROFILE_QUERY_PARAMS
+            }}
           />
         )
       });
@@ -169,6 +161,9 @@ const UpdateProfileController: FC<Props> = () => {
       // AppLog.log("handleSignIn: ");
 
       //setShouldShowPb(true);
+      if (route.params.isFrom === EScreen.WELCOME) {
+        apiRequestModel.queryParams = Api.COMPLETE_PROFILE_QUERY_PARAMS;
+      }
 
       // authenticate user
       const {
