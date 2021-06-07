@@ -5,7 +5,6 @@ import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { FriendsRootStackParamList } from "routes/FriendsRootStack";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { AppLog } from "utils/Util";
 
 type Props = {};
 
@@ -32,9 +31,6 @@ const AgreementDetailsController: FC<Props> = () => {
     })
   );
 
-  AppLog.logForcefully(
-    "data " + JSON.stringify(route.params.agreementData)
-  );
   return (
     <AgreementDetailsView
       agreementDetailsData={route.params.agreementData}
