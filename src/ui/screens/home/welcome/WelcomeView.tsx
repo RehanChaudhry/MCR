@@ -11,6 +11,7 @@ import { HeadingWithText } from "ui/components/molecules/heading_with_text/Headi
 import { StaticContent } from "models/api_responses/StaticContentResponseModel";
 import HtmlView from "react-native-htmlview";
 import YouTube from "react-native-youtube";
+import { AppLog } from "utils/Util";
 
 type Props = {
   openUpdateProfileScreen: () => void;
@@ -27,6 +28,8 @@ export const WelcomeView = React.memo<Props>(
     //   var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
     //   return url.match(p) ? RegExp.$1 : false;
     // }
+
+    AppLog.logForcefully("video: " + shouldPlayVideo);
 
     // @ts-ignore
     return (
@@ -46,16 +49,32 @@ export const WelcomeView = React.memo<Props>(
             {/*  style={styles.image}*/}
             {/*/>*/}
 
-            <YouTube
-              apiKey="AIzaSyCce0TNBZDyCCP62B2P8EkTfgjgp20ZqOA"
-              videoId={"4WCu9-AZXBw"}
-              play={shouldPlayVideo}
-              controls={0}
-              style={styles.image}
-            />
+            <View>
+              <YouTube
+                apiKey="AIzaSyCce0TNBZDyCCP62B2P8EkTfgjgp20ZqOA"
+                videoId={"4WCu9-AZXBw"}
+                play={shouldPlayVideo}
+                controls={2}
+                modestbranding={true}
+                style={styles.image}
+              />
+
+              {/*<View style={styles.playButton}>*/}
+              {/*  <Play*/}
+              {/*    width={60}*/}
+              {/*    height={60}*/}
+              {/*    fill={theme.themedColors.black}*/}
+              {/*  />*/}
+              {/*</View>*/}
+            </View>
+
             <View style={styles.buttonViewStyle}>
               <AppButton
-                text={STRINGS.welcome.play_video}
+                text={
+                  !shouldPlayVideo
+                    ? STRINGS.welcome.play_video
+                    : "Pause this video"
+                }
                 buttonStyle={{
                   backgroundColor: theme.themedColors.primary
                 }}
@@ -176,7 +195,10 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     marginTop: SPACE.lg,
-    aspectRatio: 18 / 10
+    height: 200
+  },
+  playButton: {
+    position: "absolute"
   },
   buttonText: {
     fontSize: FONT_SIZE.lg
@@ -185,6 +207,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.lg,
     fontWeight: "bold"
   },
+
   h1: {
     fontSize: FONT_SIZE.xl,
     fontWeight: "bold"
