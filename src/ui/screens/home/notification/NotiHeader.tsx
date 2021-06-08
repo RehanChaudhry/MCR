@@ -4,7 +4,6 @@ import NotificationData from "models/NotificationData";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { AppLog } from "utils/Util";
 
 export const NotiHeader = React.memo(
   ({
@@ -32,8 +31,6 @@ export const NotiHeader = React.memo(
       if (sharedDataRef.current === tag) {
         return undefined;
       }
-
-      AppLog.log("Setting new header: " + label);
       sharedDataRef.current = tag;
       return label;
     }
@@ -61,7 +58,6 @@ export const NotiHeader = React.memo(
     const theme = usePreferredTheme();
 
     let label = getLabel(item);
-
     if (label === undefined) {
       return null;
     }
