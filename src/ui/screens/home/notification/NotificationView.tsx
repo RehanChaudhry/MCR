@@ -64,8 +64,8 @@ export const NotificationView = React.memo<Props>(
           <AppDropdown
             items={[
               {
-                value: "Filter by notification type",
-                text: "Filter by notification type"
+                value: "View All",
+                text: ""
               },
               {
                 value: "View Friend Request",

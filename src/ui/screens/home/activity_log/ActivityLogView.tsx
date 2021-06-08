@@ -114,9 +114,10 @@ export const ActivityLogView: React.FC<Props> = ({
               setRefreshing(false);
             });
           }}
+          stickySectionHeadersEnabled={false}
           refreshing={isRefreshing}
           keyExtractor={(item) => item.id.toString()}
-          renderSectionFooter={footerWrapper}
+          ListFooterComponent={footerWrapper}
           contentContainerStyle={[{ paddingHorizontal: SPACE.lg }]}
         />
       )}
