@@ -45,7 +45,7 @@ export const AgreementDetailsListItem = React.memo<Props>(
                 ellipsizeMode="tail"
               />
               <AppLabel
-                text={status + " " + updateAt}
+                text={status + " on " + updateAt}
                 style={[
                   styles.time,
                   { color: theme.themedColors.interface["700"] }

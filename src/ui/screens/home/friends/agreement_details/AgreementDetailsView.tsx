@@ -9,6 +9,7 @@ import Lock from "assets/images/lock-closed.svg";
 import Calender from "assets/images/calendar.svg";
 import UserGroup from "assets/images/user-group.svg";
 import DownArrow from "assets/images/download.svg";
+import moment from "moment";
 import {
   AppButton,
   BUTTON_TYPES
@@ -30,7 +31,7 @@ export const AgreementDetailsView = React.memo<Props>(
         <AgreementDetailsListItem
           username={item.firstName + "" + item.lastName}
           status={item.status}
-          updateAt={item.updated_At}
+          updateAt={moment(item.submittedAt).format("MMM DD, YYYY")}
           profileUrl={item.profilePicture?.fileURL}
         />
       );
