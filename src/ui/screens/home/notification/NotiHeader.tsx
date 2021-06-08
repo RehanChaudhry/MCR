@@ -1,16 +1,19 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import NotificationData from "models/NotificationData";
-import React, { useRef } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppLog } from "utils/Util";
 
 export const NotiHeader = React.memo(
-  ({ item }: { item: NotificationData }) => {
-    AppLog.logForcefully("From NotiHeader: " + JSON.stringify(item));
-    let previousItemHours = useRef("");
-
+  ({
+    item,
+    setSharedDataRef: sharedDataRef
+  }: {
+    item: NotificationData;
+    setSharedDataRef: React.MutableRefObject<string>;
+  }) => {
     const getHours = (prevDate?: Date) => {
       if (!prevDate) {
         return 0;
@@ -21,19 +24,17 @@ export const NotiHeader = React.memo(
       let diff = Math.abs(d1 - d2);
       const hours = diff / (1000 * 60 * 60); //in milliseconds
 
+      // eslint-disable-next-line radix
       return parseInt(hours.toFixed(0));
     };
 
     function skipIfTagIsSameAsPrevious(label: string, tag: string) {
-      AppLog.logForcefully("In skipIfTagIsSameAsPrevious, Tag: " + tag);
-      AppLog.logForcefully(
-        "In skipIfTagIsSameAsPrevious, previousItemHours.current: " +
-          previousItemHours.current
-      );
-      if (previousItemHours.current === tag) {
+      if (sharedDataRef.current === tag) {
         return undefined;
       }
-      previousItemHours.current = tag;
+
+      AppLog.log("Setting new header: " + label);
+      sharedDataRef.current = tag;
       return label;
     }
     const getLabel = (data: NotificationData) => {
@@ -55,27 +56,11 @@ export const NotiHeader = React.memo(
       } else if (tag === "3") {
         return skipIfTagIsSameAsPrevious("YESTERDAY", tag);
       }
-
-      // if (previousItemHours.current !== tag && tag === "1") {
-      //   previousItemHours.current = tag;
-      //   return label;
-      // } else if (previousItemHours.current !== tag && tag === "3") {
-      //   previousItemHours.current = tag;
-      //   label = "OLDER NOTIFICATIONS";
-      //   return label;
-      // } else if (previousItemHours.current !== tag && tag === "2") {
-      //   previousItemHours.current = tag;
-      //   label = "YESTERDAY";
-      //   return label;
-      // } else {
-      //   return undefined;
-      // }
     };
 
     const theme = usePreferredTheme();
 
     let label = getLabel(item);
-    AppLog.logForcefully("Label: " + label);
 
     if (label === undefined) {
       return null;

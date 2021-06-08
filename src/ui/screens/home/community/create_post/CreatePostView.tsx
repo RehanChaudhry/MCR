@@ -77,6 +77,8 @@ export const CreatePostView = React.memo<Props>((props) => {
   const onSubmit = (_value: FormikValues) => {
     initialValues = _value;
     initialValues.images = images;
+    // trim whitespaces from message
+    initialValues.message = initialValues.message.trim();
     props.createPost(initialValues);
   };
 

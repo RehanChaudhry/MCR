@@ -51,7 +51,10 @@ const NotificationController: FC<Props> = () => {
   });
 
   const openMyProfileScreen = usePreventDoubleTap(() => {
-    navigation.push("ViewProfile", { isFrom: EScreen.NOTIFICATION });
+    navigation.push("ViewProfile", {
+      isFrom: EScreen.NOTIFICATION,
+      updateProfile: false
+    });
   });
 
   useLayoutEffect(() => {
@@ -85,7 +88,10 @@ const NotificationController: FC<Props> = () => {
       setNotifications((prevState) => {
         return {
           message: dataBody?.message ?? "",
-          data: [...(prevState?.data ?? []), ...dataBody!.data]
+          data: [
+            ...(!isFromPullToRefresh ? prevState?.data ?? [] : []),
+            ...dataBody!.data
+          ]
         };
       });
       setPaginationRequestModel({
@@ -117,34 +123,23 @@ const NotificationController: FC<Props> = () => {
     };
 
     setPaginationRequestModel(myFriendRequestModel);
-    handleGetNotificationApi(true, paginationRequestModel).then(() => {
+    handleGetNotificationApi(true, myFriendRequestModel).then(() => {
       onComplete();
     });
   };
 
-  const clearActivityLogList = useCallback(() => {
-    setPaginationRequestModel({
-      ...paginationRequestModel,
-      page: 1
-    });
-    setNotifications(undefined);
-  }, [paginationRequestModel]);
-
   const searchText = useCallback(
     (textToSearch: string) => {
-      clearActivityLogList();
-
-      setPaginationRequestModel({
+      const updatedRequestModel = {
         ...paginationRequestModel,
+        page: 1,
         type: textToSearch
-      });
-      handleGetNotificationApi(false, paginationRequestModel);
+      };
+      setPaginationRequestModel(updatedRequestModel);
+      setNotifications(undefined);
+      handleGetNotificationApi(false, updatedRequestModel);
     },
-    [
-      clearActivityLogList,
-      paginationRequestModel,
-      handleGetNotificationApi
-    ]
+    [paginationRequestModel, handleGetNotificationApi]
   );
 
   useEffect(() => {
@@ -160,7 +155,7 @@ const NotificationController: FC<Props> = () => {
       shouldShowProgressBar={notificationApi.loading}
       notifications={notifications?.data}
       openMyProfileScreen={openMyProfileScreen}
-      selectedItem={searchText}
+      onChangeFilter={searchText}
     />
   );
 };

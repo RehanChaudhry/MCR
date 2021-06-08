@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
@@ -22,7 +22,7 @@ type Props = {
   onEndReached: () => void;
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete: () => void) => void;
-  selectedItem: (textToFilter: string) => void;
+  onChangeFilter: (textToFilter: string) => void;
 };
 
 export const NotificationView = React.memo<Props>(
@@ -33,15 +33,16 @@ export const NotificationView = React.memo<Props>(
     pullToRefreshCallback,
     onEndReached,
     isAllDataLoaded,
-    selectedItem
+    onChangeFilter
   }) => {
     const theme = usePreferredTheme();
+    let sharedDataRef = useRef("");
 
     const listItem = useCallback(
       ({ item, index }: { item: NotificationData; index: number }) => {
         return (
           <>
-            <NotiHeader item={item} />
+            <NotiHeader item={item} setSharedDataRef={sharedDataRef} />
             <CircleImageWithText
               key={index}
               notification={item}
@@ -96,7 +97,8 @@ export const NotificationView = React.memo<Props>(
               { backgroundColor: theme.themedColors.interface["100"] }
             ]}
             selectedItemCallback={(item) => {
-              selectedItem(item.text!);
+              sharedDataRef.current = "";
+              onChangeFilter(item.text!);
             }}
             shouldShowCustomIcon={true}
           />
@@ -111,7 +113,10 @@ export const NotificationView = React.memo<Props>(
             style={styles.list}
             onEndReached={onEndReached}
             isAllDataLoaded={isAllDataLoaded}
-            pullToRefreshCallback={pullToRefreshCallback}
+            pullToRefreshCallback={(_onComplete) => {
+              sharedDataRef.current = "";
+              pullToRefreshCallback(_onComplete);
+            }}
             contentContainerStyle={[
               listContentContainerStyle,
               { paddingHorizontal: SPACE.lg }
