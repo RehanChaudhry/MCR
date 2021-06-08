@@ -1,11 +1,4 @@
-import React, {
-  FC,
-  useCallback,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useState
-} from "react";
+import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import { ViewProfileView } from "ui/screens/home/profile/view_profile/ViewProfileView";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ProfileStackParamList } from "routes/ProfileBottomBar";
@@ -21,15 +14,8 @@ import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_wit
 import { NotificationParamList } from "routes/NotificationParams";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { ProfileRootStackParamList } from "routes/ProfileRootStack";
-import { useApi } from "repo/Client";
-import AuthApis from "repo/auth/AuthApis";
-import { Alert } from "react-native";
-import { NotifyContext } from "routes/ProfileRoutes";
-import {
-  FetchMyProfileResponseModel,
-  Profile
-} from "models/api_responses/FetchMyProfileResponseModel";
-
+import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
+import { useAuth } from "hooks";
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
   ProfileStackParamList,
@@ -54,44 +40,34 @@ type NotificationNavigationProp = StackNavigationProp<
 type ProfileRouteProp = RouteProp<ProfileStackParamList, "ViewProfile">;
 
 const ViewProfileController: FC<Props> = () => {
-  const { timeStamp } = useContext(NotifyContext);
+  const auth = useAuth();
   const [viewProfileUiData, setViewProfileUiData] = useState<Profile>();
 
-  //update profile UI integration
-
-  const updateProfileUiApi = useApi<any, FetchMyProfileResponseModel>(
-    AuthApis.fetchMyProfile
-  );
-
-  //handle update profile ui api
-  const fetchMyProfile = useCallback(async () => {
-    //setShouldShowPb(true);
-
-    // authenticate user
-    const {
-      hasError,
-      errorBody,
-      dataBody
-    } = await updateProfileUiApi.request([]);
-
-    if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to fetch view profile ui", errorBody);
-      return;
-    } else {
-      //data modification for profile header
-      let modifiedItem = dataBody.data.sections?.[0]?.formInputs?.[0]!!;
-      modifiedItem.firstName = dataBody.data.sections![0].formInputs![1].userMeta![0].value;
-      modifiedItem.lastName = dataBody.data.sections![0].formInputs![2].userMeta![0].value;
-      dataBody.data.sections?.[0].formInputs?.splice(0, 3, modifiedItem);
-
-      setViewProfileUiData(dataBody.data);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateProfileUiApi, timeStamp]);
-
+  //view  profile UI integration and modification in data for profile header
   useEffect(() => {
-    fetchMyProfile();
-  }, [fetchMyProfile]);
+    //data modification for profile header
+    let modifiedItem = auth.user?.profile?.sections?.[0]
+      ?.formInputs?.[0]!!;
+    modifiedItem.firstName =
+      auth.user?.profile?.sections![0].formInputs![1].userMeta?.length ===
+      0
+        ? "N/A"
+        : auth.user?.profile?.sections![0].formInputs![1].userMeta![0]
+            .value;
+    modifiedItem.lastName =
+      auth.user?.profile?.sections![0].formInputs![2].userMeta?.length ===
+      0
+        ? "N/A"
+        : auth.user?.profile?.sections![0].formInputs![2].userMeta![0]
+            .value;
+    auth.user?.profile?.sections?.[0].formInputs?.splice(
+      0,
+      3,
+      modifiedItem
+    );
+
+    setViewProfileUiData(auth.user?.profile);
+  }, [auth.user]);
 
   const navigation = useNavigation<ProfileNavigationProp>();
   const navigationViewProfile = useNavigation<ViewProfileNavigationProp>();

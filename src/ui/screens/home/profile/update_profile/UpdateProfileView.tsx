@@ -17,6 +17,7 @@ import _ from "lodash";
 import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
 import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
+import { AppLog } from "utils/Util";
 
 type Props = {
   openUpdateQuestionnaireScreen: () => void;
@@ -79,7 +80,7 @@ export const UpdateProfileView: React.FC<Props> = ({
     });
   };
 
-  let yepSchema = useRef({});
+  let yepSchema = useRef(Yup.object().shape({}));
   let initialValues = useRef({});
   let fieldToGetValidation = useRef<FormInputFieldData[]>([]);
 
@@ -99,7 +100,9 @@ export const UpdateProfileView: React.FC<Props> = ({
     yepSchema.current =
       updateProfileUiData !== undefined
         ? createYupSchema(fieldToGetValidation.current)
-        : Yup.string().notRequired();
+        : Yup.object().shape({});
+
+    AppLog.log("create schema : " + JSON.stringify(yepSchema.current));
 
     // FieldBox's initial state is being handled here.
     // it is being handled in CustomForFieldItem
@@ -122,6 +125,10 @@ export const UpdateProfileView: React.FC<Props> = ({
       });
     });
   }, [updateProfileUiData]);
+
+  AppLog.log(
+    "UpdateProfile Ui Data = " + JSON.stringify(updateProfileUiData)
+  );
 
   useEffect(() => {
     init();
