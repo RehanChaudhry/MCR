@@ -4,11 +4,12 @@ import CheckboxWithText from "ui/components/atoms/CheckboxWithText";
 import React from "react";
 import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel";
 import EIntBoolean from "models/enums/EIntBoolean";
+import { AppLog } from "utils/Util";
 
 type CheckBoxGroupProps = {
   listData: OptionsData[];
   onChange: (checked: boolean, text: string) => void;
-  preSelected?: [string];
+  preSelected?: [string] | undefined;
   style?: StyleProp<ViewStyle>;
   shouldNotOptimize?: boolean;
   isLocked?: EIntBoolean;
@@ -16,6 +17,7 @@ type CheckBoxGroupProps = {
 
 export const CheckBoxGroup = optimizedMemo<CheckBoxGroupProps>(
   ({ listData, onChange, preSelected, isLocked = EIntBoolean.FALSE }) => {
+    AppLog.log("PreSelected = " + preSelected);
     return (
       <View>
         {listData?.map((item) => (
@@ -25,8 +27,9 @@ export const CheckBoxGroup = optimizedMemo<CheckBoxGroupProps>(
               !isLocked && onChange?.(checked, text!!);
             }}
             preSelected={
+              preSelected !== undefined &&
               preSelected?.find((data) => data === item.value) !==
-              undefined
+                undefined
             }
             isLocked={isLocked}
           />
