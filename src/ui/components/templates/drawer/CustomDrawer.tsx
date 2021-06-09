@@ -29,6 +29,7 @@ import Colors from "config/Colors";
 import { SvgProps } from "react-native-svg";
 import { HomeDrawerParamList } from "routes";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { profileCompletedPercentage } from "models/api_responses/FetchMyProfileResponseModel";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
   currentItem: string;
@@ -127,11 +128,9 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
               </View>
             </View>
             <AppProgressBar
-              progressPercentage={
-                (auth.user?.profile?.totalQuestionsAnswered!! /
-                  auth.user?.profile?.totalQuestions!!) *
-                100
-              }
+              progressPercentage={profileCompletedPercentage(
+                auth.user?.profile
+              )}
               style={styles.userProgress}
             />
           </View>
