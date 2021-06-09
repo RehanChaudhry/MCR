@@ -226,7 +226,9 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       userType: "Student"
     };
 
-    socket.current.emit("sendMessage", prepareMessage);
+    if (socket?.current?.connected ?? false) {
+      socket!!.current!!.emit("sendMessage", prepareMessage);
+    }
 
     loadMessagesRequestModel.current.limit =
       loadMessagesRequestModel.current.limit + 1;
@@ -241,7 +243,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
 
   useEffect(() => {
     handleLoadMessagesApi().then().catch();
-    connectSocket();
+    connectSocket().then().catch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleLoadMessagesApi]);
 
@@ -261,10 +263,6 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
         ];
       });
     });
-
-    /*socket.emit("readByUser", () => {
-      AppLog.log("readByUser");
-    });*/
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

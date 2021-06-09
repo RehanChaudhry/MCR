@@ -11,10 +11,8 @@ export class Conversation {
   updatedAt!: Date;
   conversationUsers!: User[];
   message!: Message[];
-  isRead!: boolean;
 
   constructor(activityLog: Conversation) {
-    this.isRead = false;
     Object.assign(this, activityLog);
   }
 

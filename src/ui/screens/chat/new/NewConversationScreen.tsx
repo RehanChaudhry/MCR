@@ -52,6 +52,7 @@ export const NewConversationScreen = React.memo<Props>(
       return (
         <ItemConversation
           item={item}
+          // @ts-ignore
           onPress={(_item: User) => {
             removeItem(_item);
           }}

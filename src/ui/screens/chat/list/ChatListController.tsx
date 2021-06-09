@@ -24,6 +24,10 @@ import ChatRequestModel, {
   ESortOrder
 } from "models/api_requests/chatRequestModel";
 import { ChatBottomBarParamsList } from "routes/ChatBottomBar";
+import { Socket } from "socket.io-client";
+import { SocketHelper } from "utils/SocketHelper";
+import { useAuth } from "hooks";
+import _ from "lodash";
 
 type ChatRootNavigationProp = StackNavigationProp<ChatRootStackParamList>;
 
@@ -52,6 +56,7 @@ export const ChatListController: FC<Props> = ({
     undefined
   );
 
+  const { user } = useAuth();
   const loadChatsApi = useApi<ChatRequestModel, ChatResponseModel>(
     ChatApis.getChats
   );
@@ -102,6 +107,34 @@ export const ChatListController: FC<Props> = ({
   }, [loadChatsApi]);
 
   const openChatThread = (item: Conversation) => {
+    if (
+      item.message.length > 0 &&
+      item.message[0].readBy.find((id) => id === user?.profile?.id!!) ===
+        undefined
+    ) {
+      if (socket?.current?.connected ?? false) {
+        AppLog.logForcefully("inside socket");
+        socket!!.current!!.emit("readByUser", {
+          conversationId: item.id
+        });
+      }
+
+      // @ts-ignore
+      setChats((prevState) => {
+        let chatsCopy = _.clone(prevState);
+
+        _.each(chatsCopy, (p) => {
+          if (p.message.length > 0) {
+            p.message[0].readBy.length > 0
+              ? p.message[0].readBy.push(user?.profile?.id!!)
+              : (p.message[0].readBy = [user?.profile?.id!!]);
+          }
+        });
+
+        return chatsCopy;
+      });
+    }
+
     navigation.navigate("ChatThread", {
       title: item.conversationUsers!!.reduce(
         (newArray: string[], _item) => (
@@ -116,6 +149,7 @@ export const ChatListController: FC<Props> = ({
   const refreshCallback = useCallback(
     async (onComplete?: () => void) => {
       requestModel.current.page = 1;
+      requestModel.current.limit = 10;
       handleLoadChatsApi()
         .then(() => {
           onComplete?.();
@@ -132,9 +166,46 @@ export const ChatListController: FC<Props> = ({
     await handleLoadChatsApi();
   }, [handleLoadChatsApi]);
 
+  let socket = useRef<Socket>();
+  const connectSocket = useCallback(async () => {
+    socket.current = await SocketHelper.startConnection(
+      "Bearer " + user?.authentication?.accessToken
+    );
+
+    socket.current.on("receiveMessage", (data) => {
+      setChats((prevState) => {
+        let chatsCopy = _.cloneDeep(prevState);
+        if (chatsCopy?.length ?? -1 > 0) {
+          let findIndex = chatsCopy?.findIndex(
+            (item) => item.id === data.id
+          );
+
+          if (findIndex !== -1) {
+            //remove item at index
+            chatsCopy?.splice(findIndex!!, 1);
+
+            //add item at index 0
+            chatsCopy?.splice(0, 0, data);
+
+            return chatsCopy;
+          } else {
+            requestModel.current.limit = requestModel.current.limit + 1;
+            return [data, ...chatsCopy!!];
+          }
+        } else {
+          requestModel.current.limit = requestModel.current.limit + 1;
+          return [data];
+        }
+      });
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     handleLoadChatsApi().then().catch();
-  }, [handleLoadChatsApi]);
+    connectSocket().then().catch();
+  }, [handleLoadChatsApi, connectSocket]);
 
   // eslint-disable-next-line no-undef
   let timeOutId: NodeJS.Timeout;
@@ -142,6 +213,7 @@ export const ChatListController: FC<Props> = ({
     clearTimeout(timeOutId);
     timeOutId = setTimeout(() => {
       requestModel.current.page = 1;
+      requestModel.current.limit = 10;
       requestModel.current.keyword = textToSearch;
       setChats(undefined);
       handleLoadChatsApi();

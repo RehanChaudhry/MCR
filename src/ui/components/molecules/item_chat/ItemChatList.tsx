@@ -11,7 +11,7 @@ import { FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import NotifyIndic from "assets/images/notification-indicator.svg";
 import NotifyIndicInActive from "assets/images/notification-indicator-inactive.svg";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { SenderType } from "models/ChatItem";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
@@ -28,7 +28,7 @@ export interface ItemChatListProps extends ViewStyle {
 export const ItemChatList = React.memo<ItemChatListProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
-
+    const { user } = useAuth();
     let prettyTime = new PrettyTimeFormat(
       "m ago",
       "s ago",
@@ -36,6 +36,12 @@ export const ItemChatList = React.memo<ItemChatListProps>(
       "d ago",
       "h ago"
     ).getPrettyTime(item.lastMessagedAt.toString());
+
+    const isMessageRead =
+      item.message.length > 0 &&
+      item.message[0].readBy.find(
+        (userId) => userId === user?.profile?.id
+      ) !== undefined;
 
     return (
       <TouchableOpacity onPress={onPress}>
@@ -68,7 +74,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
                 style={styles.nameText(
                   themedColors,
                   item.conversationUsers.length,
-                  item.isRead
+                  isMessageRead
                 )}
                 text={
                   item.conversationUsers.length === 1
@@ -82,7 +88,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
                       (item.conversationUsers.length - 1) +
                       " more"
                 }
-                weight={item.isRead ? "normal" : "semi-bold"}
+                weight={isMessageRead ? "normal" : "semi-bold"}
               />
               <AppLabel
                 style={styles.timeText(themedColors)}
@@ -94,7 +100,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
               style={styles.messageText(
                 themedColors,
                 item.userType === SenderType.STAFF,
-                item.isRead
+                isMessageRead
               )}
               text={
                 item.message[0] !== undefined ? item.message[0].text : ""
