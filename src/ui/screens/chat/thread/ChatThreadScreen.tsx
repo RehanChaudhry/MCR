@@ -4,7 +4,7 @@ import { ItemChatThread } from "ui/components/molecules/item_chat/ItemChatThread
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import { AppLog, listContentContainerStyle } from "utils/Util";
+import { listContentContainerStyle } from "utils/Util";
 import Strings from "config/Strings";
 import { SPACE } from "config";
 import Message from "models/Message";
@@ -16,7 +16,6 @@ type Props = {
   isAllDataLoaded: boolean;
   error: string | undefined;
   onEndReached: () => void;
-  pullToRefreshCallback: (onComplete?: () => void) => void;
 };
 
 export const ChatThreadScreen = React.memo<Props>(
@@ -26,11 +25,10 @@ export const ChatThreadScreen = React.memo<Props>(
     shouldShowProgressBar,
     isAllDataLoaded,
     error,
-    onEndReached,
-    pullToRefreshCallback
+    onEndReached
   }) => {
     const renderItem = ({ item }: { item: Message | undefined }) => {
-      AppLog.log("rendering list item : " + JSON.stringify(item));
+      /* AppLog.log("rendering list item : " + JSON.stringify(item));*/
       return <ItemChatThread item={item} />;
     };
 
@@ -50,7 +48,6 @@ export const ChatThreadScreen = React.memo<Props>(
           error={error}
           isAllDataLoaded={isAllDataLoaded}
           onEndReached={onEndReached}
-          pullToRefreshCallback={pullToRefreshCallback}
           keyExtractor={(item, index) => index.toString()}
           contentContainerStyle={[
             listContentContainerStyle,

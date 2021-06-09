@@ -69,6 +69,7 @@
     "react-native-youtube": "^2.0.1",
     "react-navigation": "latest",
     "rn-fetch-blob": "^0.12.0",
+    "socket.io-client": "^4.1.2",
     "toggle-switch-react-native": "^3.2.0",
     "v8-android-jit": "^9.88.0",
     "yup": "^0.32.8"

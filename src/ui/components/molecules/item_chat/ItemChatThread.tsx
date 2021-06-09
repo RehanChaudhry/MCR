@@ -31,15 +31,17 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
       <View style={[styles.container, style]}>
         <Image
           style={styles.imgStyle}
-          source={{
-            uri: item?.profilePicture.fileURL
-          }}
+          source={
+            item?.profilePicture?.fileURL !== undefined
+              ? { uri: item?.profilePicture?.fileURL }
+              : require("assets/images/profile.png")
+          }
         />
 
         <View
           style={styles.textWrapper(
             themedColors,
-            item?.id === currentUser.user?.profile?.id
+            item?.userId === currentUser.user?.profile?.id
           )}>
           <View style={styles.nameContainer}>
             <AppLabel

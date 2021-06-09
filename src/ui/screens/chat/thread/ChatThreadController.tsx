@@ -14,11 +14,10 @@ import {
   useRoute
 } from "@react-navigation/native";
 import { useApi } from "repo/Client";
-import ChatResponseModel from "models/api_responses/ChatsResponseModel";
 import ChatApis from "repo/chat/ChatApis";
 import { AppLog } from "utils/Util";
 import { COLORS, SPACE } from "config";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import Archive from "assets/images/archive.svg";
 import Close from "assets/images/close.svg";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
@@ -34,6 +33,8 @@ import ChatRequestModel, {
 import MessagesResponseModel from "models/api_responses/MessagesResponseModel";
 import Message from "models/Message";
 import SimpleToast from "react-native-simple-toast";
+import { SocketHelper } from "utils/SocketHelper";
+import { Socket } from "socket.io-client";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -64,7 +65,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
   );
   const isFetchingInProgress = useRef(false);
 
-  AppLog.log("remove warning " + conversationId);
+  const { user } = useAuth();
 
   const getTitle = (): string => {
     const title = params?.title ?? "N/A";
@@ -128,6 +129,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     ChatApis.getMessages
   );
 
+  //archive chat api
   const updateConversationApi = useApi<
     { status: string; conversationId: number },
     any
@@ -153,11 +155,11 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     }
   }
 
-  const requestModel = useRef<ChatRequestModel>({
+  const loadMessagesRequestModel = useRef<ChatRequestModel>({
     paginate: true,
     page: 1,
     limit: 10,
-    orderBy: ESortBy.UPDATED_AT,
+    orderBy: ESortBy.CREATED_AT,
     order: ESortOrder.DSC,
     id: conversationId
   });
@@ -166,11 +168,15 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     async (onComplete?: () => void) => {
       setShouldShowProgressBar(true);
       isFetchingInProgress.current = true;
+
+      AppLog.logForcefully(
+        "current limit is : " + loadMessagesRequestModel.current.limit
+      );
       const {
         hasError,
         dataBody,
         errorBody
-      } = await loadMessages.request([requestModel.current]);
+      } = await loadMessages.request([loadMessagesRequestModel.current]);
       if (hasError || dataBody === undefined) {
         AppLog.logForcefully("Unable to find messages " + errorBody);
         setShouldShowProgressBar(false);
@@ -178,7 +184,8 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       } else {
         setMessages((prevState) => {
           return [
-            ...(prevState === undefined || requestModel.current.page === 1
+            ...(prevState === undefined ||
+            loadMessagesRequestModel.current.page === 1
               ? []
               : prevState),
             ...dataBody.data!!
@@ -186,11 +193,12 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
         });
 
         setIsAllDataLoaded(
-          dataBody.data!!.length < requestModel.current.limit
+          dataBody.data!!.length < loadMessagesRequestModel.current.limit
         );
 
         onComplete?.();
-        requestModel.current.page = (requestModel?.current?.page ?? 0) + 1;
+        loadMessagesRequestModel.current.page =
+          (loadMessagesRequestModel?.current?.page ?? 0) + 1;
 
         isFetchingInProgress.current = false;
         setShouldShowProgressBar(false);
@@ -199,79 +207,74 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     [loadMessages]
   );
 
-  const sentMessageApi = useApi<Object, ChatResponseModel>(
-    ChatApis.sentMessage
-  );
-
-  const sentMessage = useCallback(
-    async (message: string) => {
-      AppLog.log("message to sent : " + JSON.stringify(message));
-
-      const {
-        hasError,
-        dataBody,
-        errorBody
-      } = await sentMessageApi.request([
-        {
-          conversationId: conversationId,
-          text: message
-        }
-      ]);
-
-      if (
-        hasError ||
-        dataBody === undefined ||
-        dataBody.data === undefined
-      ) {
-        AppLog.log("Unable to sent message " + errorBody);
-        return;
-      } else {
-      }
-    },
-    [conversationId, sentMessageApi]
-  );
-
-  const refreshCallback = useCallback(
-    async (onComplete?: () => void) => {
-      requestModel.current.page = 1;
-      handleLoadMessagesApi()
-        .then(() => {
-          onComplete?.();
-        })
-        .catch(() => {
-          onComplete?.();
-        });
-    },
-    [handleLoadMessagesApi]
-  );
-
   const onEndReached = useCallback(async () => {
     AppLog.log("ChatThread => onEndReached is called");
     await handleLoadMessagesApi();
   }, [handleLoadMessagesApi]);
 
-  function updateMessagesList(text: string) {
-    sentMessage(text).then().catch();
+  function sentMessageToSocket(text: string) {
+    let prepareMessage = {
+      userId: user?.profile?.id,
+      firstName: user?.profile?.firstName,
+      lastName: user?.profile?.lastName,
+      profilePicture: user?.profile?.profilePicture,
+      conversationId: conversationId,
+      text: text,
+      readBy: [user?.profile?.id],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      userType: "Student"
+    };
 
-    let newList: Message[] | undefined = [];
+    socket.current.emit("sendMessage", prepareMessage);
 
-    // newList.push(messages);
-    // newList.push(messages);
-    setMessages(newList);
+    loadMessagesRequestModel.current.limit =
+      loadMessagesRequestModel.current.limit + 1;
+    // @ts-ignore
+    setMessages((prevState) => {
+      return [
+        ...[prepareMessage],
+        ...(prevState === undefined ? [] : prevState)
+      ];
+    });
   }
 
   useEffect(() => {
     handleLoadMessagesApi().then().catch();
+    connectSocket();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleLoadMessagesApi]);
+
+  let socket = useRef<Socket>();
+  const connectSocket = useCallback(async () => {
+    socket.current = await SocketHelper.startConnection(
+      "Bearer " + user?.authentication?.accessToken
+    );
+
+    socket.current.on("receiveMessage", (data) => {
+      loadMessagesRequestModel.current.limit =
+        loadMessagesRequestModel.current.limit + 1;
+      setMessages((prevState) => {
+        return [
+          ...data.message,
+          ...(prevState === undefined ? [] : prevState)
+        ];
+      });
+    });
+
+    /*socket.emit("readByUser", () => {
+      AppLog.log("readByUser");
+    });*/
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ChatThreadScreen
       data={messages}
-      sentMessageApi={updateMessagesList}
+      sentMessageApi={sentMessageToSocket}
       shouldShowProgressBar={shouldShowProgressBar}
       error={loadMessages.error}
       isAllDataLoaded={isAllDataLoaded}
-      pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
     />
   );
