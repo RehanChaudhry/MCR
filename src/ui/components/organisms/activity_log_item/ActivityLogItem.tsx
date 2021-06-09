@@ -15,7 +15,10 @@ import RoommateRequest from "assets/images/request_state_icon.svg";
 import Dismissed from "assets/images/folder-remove.svg";
 import { Divider } from "react-native-elements";
 import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
-import ActivityLog from "models/ActivityLog";
+import ActivityLog, {
+  getDisplayTime,
+  getMessage
+} from "models/ActivityLog";
 import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
 import Actions from "models/enums/ActivityLogAction";
 
@@ -109,11 +112,11 @@ const ActivityLogItem = ({ activityLog }: Props) => {
         <LabelHtml
           containerStyle={styles.message}
           style={styles.messageText}
-          text={activityLog.getMessage() ?? STRINGS.common.not_found}
+          text={getMessage(activityLog) ?? STRINGS.common.not_found}
         />
         <AppLabel
           style={[styles.date, { color: themedColors.interface[600] }]}
-          text={activityLog.getDisplayTime()}
+          text={getDisplayTime(activityLog)}
         />
       </View>
     </View>
