@@ -34,6 +34,7 @@ export type Profile = {
   matchGroupName: string;
   floorPlanRoomId: number;
   building: string;
+  hometown?: string;
   roomNumber: string;
   welcomeVideoStatus: EWelcomeFlowStatus;
   questionnaireStatus: EWelcomeFlowStatus;
@@ -50,6 +51,9 @@ export type Profile = {
   about?: string;
 };
 
+export function getSubtitle(profile: Profile): string {
+  return profile.major + (profile.hometown ? ", " + profile.hometown : "");
+}
 export const profileCompletedPercentage = (profile?: Profile) => {
   return profile
     ? ((profile.totalQuestionsAnswered +

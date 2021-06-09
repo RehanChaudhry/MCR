@@ -19,6 +19,7 @@ import UserHeader from "ui/components/organisms/user_header/UserHeader";
 import Roommates from "ui/components/organisms/roommates/Roommates";
 import RelationModel from "models/RelationModel";
 import {
+  getSubtitle,
   Profile,
   profileCompletedPercentage
 } from "models/api_responses/FetchMyProfileResponseModel";
@@ -61,9 +62,7 @@ export const MatchInfoView: React.FC<Props> = ({
               userProfile.lastName ?? STRINGS.common.not_found
             }`}
             image={userProfile.profilePicture?.fileURL}
-            subtitle={`${
-              userProfile.matchGroupName ?? STRINGS.common.not_found
-            }, ${userProfile.major ?? STRINGS.common.not_found}`}
+            subtitle={getSubtitle(userProfile)}
           />
           {userProfile.about && (
             <AppLabel

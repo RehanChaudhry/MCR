@@ -121,6 +121,12 @@ export function getMessage(activityLog: ActivityLog): string {
         activityLog.action === Actions.LOGIN)
     ) {
       return `Logged in to your <b>Profile</b>`;
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
+      activityLog.action === Actions.REJECTED
+    ) {
+      return `Rejected <b>Roommate Agreement</b>`;
     }
   } else {
     return "Commented on any post";

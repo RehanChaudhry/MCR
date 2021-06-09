@@ -1,7 +1,7 @@
 enum Actions {
   SENT = "Sent",
   ACCEPTED = "accept",
-  REJECTED = "rejected",
+  REJECTED = "reject",
   ADDED = "added",
   REMOVED = "removed",
   CREATE = "create",
