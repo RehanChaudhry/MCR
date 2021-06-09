@@ -216,7 +216,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                   styles.descriptionView,
                   {
                     backgroundColor: theme.themedColors.background,
-                    borderColor: theme.themedColors.secondary
+                    borderColor: theme.themedColors.border
                   }
                 ]
               }}
