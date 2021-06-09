@@ -4,7 +4,7 @@ import {
   DismissedOrBlocked,
   DismissedOrBlockedResponseModel
 } from "models/api_responses/DismissedOrBlockedResponseModel";
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
@@ -16,12 +16,27 @@ import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 import DataGenerator from "utils/DataGenerator";
 import { AppLog } from "utils/Util";
 import DismissedOrBlockedView from "./DismissedOrBlockedView";
+import StaticContentResponseModel, {
+  StaticContent
+} from "models/api_responses/StaticContentResponseModel";
+import StaticContentRequestModel, {
+  StaticContentType
+} from "models/api_requests/StaticContentRequestModel";
+import OtherApis from "repo/home/OtherApis";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { DismissedOrBlockStackParamList } from "routes/FriendsStack";
+import { useNavigation } from "@react-navigation/native";
+import EScreen from "models/enums/EScreen";
 
 type Props = {};
+
+type DismissBlockNavigationProp = StackNavigationProp<DismissedOrBlockStackParamList>;
 
 const DismissedOrBlockedController: FC<Props> = () => {
   const [showRestoreAlert, setShowRestoreAlert] = useState<boolean>(false);
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
+
+  const dismissBlockRootNavigation = useNavigation<DismissBlockNavigationProp>();
 
   const [dismissed, setDismissed] = useState<Array<DismissedOrBlocked>>(
     DataGenerator.getDismissedOrBlocked().data
@@ -38,6 +53,37 @@ const DismissedOrBlockedController: FC<Props> = () => {
   const blockedApi = useApi<any, DismissedOrBlockedResponseModel>(
     FriendsApis.getDismissedOrBlocked
   );
+
+  // static content
+  const [headerContent, setHeaderContent] = useState<StaticContent>();
+
+  const staticContentApi = useApi<
+    StaticContentRequestModel,
+    StaticContentResponseModel
+  >(OtherApis.staticContent);
+
+  const getHeaderContent = useCallback(async () => {
+    const {
+      hasError,
+      dataBody,
+      errorBody
+    } = await staticContentApi.request([
+      { type: StaticContentType.DISMISSED_LIST }
+    ]);
+    if (hasError || dataBody === undefined) {
+      AppLog.log("Unable to find header content " + errorBody);
+      return;
+    } else {
+      setHeaderContent(dataBody.data);
+    }
+  }, [staticContentApi]);
+
+  const moveToHeaderContent = useCallback(() => {
+    dismissBlockRootNavigation.navigate("StaticContent", {
+      isFrom: EScreen.MY_FRIENDS,
+      staticContent: headerContent!
+    });
+  }, [dismissBlockRootNavigation, headerContent]);
 
   const handleDismissedResponse = async (onComplete?: () => void) => {
     const { hasError, dataBody, errorBody } = await dismissedApi.request(
@@ -70,9 +116,6 @@ const DismissedOrBlockedController: FC<Props> = () => {
   );
 
   const theme = usePreferredTheme();
-
-  const onPressDismissedLearnMore = () => {};
-  const onPressBlockedLearnMore = () => {};
 
   const onTabChanged = (value: Choice, index: number) => {
     setSelectedTabIndex(index);
@@ -112,6 +155,11 @@ const DismissedOrBlockedController: FC<Props> = () => {
     );
   };
 
+  useEffect(() => {
+    getHeaderContent();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <View style={styles.container}>
@@ -134,12 +182,10 @@ const DismissedOrBlockedController: FC<Props> = () => {
         </View>
         {selectedTabIndex === 0 ? (
           <DismissedOrBlockedView
-            headerTitle={"How does it work?"}
-            headerSubtitle={
-              "Dismissed list users will be hide from your matches."
-            }
+            headerTitle={headerContent?.title!}
+            headerSubtitle={headerContent?.description!}
             learnMoreTitle={"Learnmore about dismissed list"}
-            learnMoreAction={onPressDismissedLearnMore}
+            learnMoreAction={moveToHeaderContent}
             data={dismissed}
             onPressAction={(item: DismissedOrBlocked) => {
               AppLog.log("items: ", item);
@@ -154,12 +200,10 @@ const DismissedOrBlockedController: FC<Props> = () => {
           />
         ) : (
           <DismissedOrBlockedView
-            headerTitle={"How does it work?"}
-            headerSubtitle={
-              "Blocked list users will be hide from your matches and cannot send you messages either."
-            }
+            headerTitle={headerContent?.title!}
+            headerSubtitle={headerContent?.description!}
             learnMoreTitle={"Learnmore about blocked list"}
-            learnMoreAction={onPressBlockedLearnMore}
+            learnMoreAction={moveToHeaderContent}
             data={blocked}
             onPressAction={(item: DismissedOrBlocked) => {
               AppLog.log("items: ", item);
