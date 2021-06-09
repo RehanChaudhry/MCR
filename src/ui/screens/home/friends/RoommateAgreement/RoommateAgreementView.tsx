@@ -121,9 +121,9 @@ const RoommateAgreementView: FC<Props> = ({
       agreementUserAnswers: Object.entries(_value).map(([key, value]) => ({
         agreementFieldId: Number(key),
         agreementFieldValue: dataManipulation(value)
-      })),
-      agreementAccepted:
-        _value[roommateData?.find((item) => item.id === 1)?.id ?? "0"]
+      }))
+      /* agreementAccepted:
+        _value[roommateData?.find((item) => item.id === 1)?.id ?? "0"]*/
     });
   };
 
@@ -175,7 +175,7 @@ const RoommateAgreementView: FC<Props> = ({
         <AppForm
           initialValues={myInitialValues.current}
           onSubmit={onSubmit}
-          /* validateOnMount={myInitialValues.current !== {}}*/
+          validateOnMount={false}
           validationSchema={yupSchema.current}>
           <View style={styles.labelViewStyle}>
             <AppLabel

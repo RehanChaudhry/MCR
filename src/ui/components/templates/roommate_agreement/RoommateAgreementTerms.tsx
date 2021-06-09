@@ -40,7 +40,11 @@ const RoommateAgreementTerms: FC<Props> = ({ name }) => {
         textStyle={[styles.textStyle]}
       />
       <AppSwitch
-        defaultValue={initialValues[name] ?? false}
+        defaultValue={
+          initialValues[name] !== undefined
+            ? initialValues[name].includes("1")
+            : false
+        }
         onValueChange={(isSwitched) => {
           setFieldValue(name, isSwitched);
         }}

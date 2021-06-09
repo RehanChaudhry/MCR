@@ -21,7 +21,7 @@ export interface AppButtonProps extends SwitchProps {
 
 export const AppSwitch = optimizedMemo<AppButtonProps>(
   ({
-    defaultValue,
+    defaultValue = false,
     onValueChange,
     showCustomThumb = false,
     style,
@@ -34,8 +34,9 @@ export const AppSwitch = optimizedMemo<AppButtonProps>(
     // notify parent component about default state upon creation
     useEffect(() => {
       onValueChange(defaultValue);
+      setIsEnabled(defaultValue);
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [defaultValue]);
 
     const toggleSwitch = () => {
       // AppLog.log("AppSwitch() => toggle working");
