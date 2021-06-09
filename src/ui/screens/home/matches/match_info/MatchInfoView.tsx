@@ -18,7 +18,10 @@ import moment from "moment";
 import UserHeader from "ui/components/organisms/user_header/UserHeader";
 import Roommates from "ui/components/organisms/roommates/Roommates";
 import RelationModel from "models/RelationModel";
-import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
+import {
+  Profile,
+  profileCompletedPercentage
+} from "models/api_responses/FetchMyProfileResponseModel";
 import { MatchInfoData } from "models/api_responses/MatchInfoApiResponseModel";
 
 type Props = {
@@ -71,11 +74,7 @@ export const MatchInfoView: React.FC<Props> = ({
           )}
           <AppProgressBar
             style={styles.progress}
-            progressPercentage={
-              (userProfile.totalQuestionsAnswered /
-                userProfile.totalQuestions) *
-                100 ?? 0
-            }
+            progressPercentage={profileCompletedPercentage(userProfile)}
             filledColor={themedColors.secondary}
             bottomTextStyle={{ color: themedColors.interface[600] }}
           />

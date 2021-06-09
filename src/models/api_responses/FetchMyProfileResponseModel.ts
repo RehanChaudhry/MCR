@@ -40,10 +40,21 @@ export type Profile = {
   profileCompletedAt?: Date;
   totalQuestions: number;
   totalQuestionsAnswered: number;
+  totalProfileQuestions: number;
+  totalProfileQuestionsAnswered: number;
   isFlagged: number;
   createdAt: string;
   updatedAt: string;
   sections: SectionsType[];
   agreementId: number;
   about?: string;
+};
+
+export const profileCompletedPercentage = (profile?: Profile) => {
+  return profile
+    ? ((profile.totalQuestionsAnswered +
+        profile.totalProfileQuestionsAnswered) /
+        (profile.totalQuestions + profile.totalProfileQuestions)) *
+        100
+    : 0;
 };
