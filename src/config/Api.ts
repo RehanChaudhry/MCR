@@ -52,6 +52,7 @@ export default {
 
   //relations
   RELATION: "relation",
+  MATCHES: "/matches",
   RELATION_DISMISS_RESTORE: "relation/dismissed",
   MY_ROOMMATES: "myroommates",
   DISMISSED_OR_BLOCKED: "relation/dismiss",

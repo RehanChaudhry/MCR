@@ -28,7 +28,7 @@ import { MatchInfoData } from "models/api_responses/MatchInfoApiResponseModel";
 type Props = {
   userProfile: Profile;
   matchInfo: MatchInfoData;
-  relationModel: RelationModel[];
+  roommates?: RelationModel[];
   moveToChatScreen: (profileMatch: RelationModel) => void;
   moveToProfileScreen: (profileMatch: RelationModel) => void;
   moveToRoommateAgreementScreen: () => void;
@@ -43,7 +43,7 @@ export const MatchInfoView: React.FC<Props> = ({
   moveToRoommateAgreementScreen,
   moveToUpdateProfileScreen,
   moveToQuestionnaireScreen,
-  relationModel
+  roommates
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -214,10 +214,10 @@ export const MatchInfoView: React.FC<Props> = ({
             }`}
           />
         </View>
-        {relationModel && relationModel.length > 0 && (
+        {roommates && roommates.length > 0 && (
           <Roommates
             style={styles.card}
-            roommates={relationModel}
+            roommates={roommates}
             onChatClicked={moveToChatScreen}
             onRoommateAgreementClicked={moveToRoommateAgreementScreen}
           />
