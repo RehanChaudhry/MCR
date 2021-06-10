@@ -61,12 +61,18 @@ export const ItemChatList = React.memo<ItemChatListProps>(
             }
           />
 
-          <NotifyIndic width={10} height={10} style={styles.indicator} />
-          <NotifyIndicInActive
-            width={10}
-            height={10}
-            style={styles.indicator}
-          />
+          {item.conversationUsers.length > 0 &&
+          item.conversationUsers.find(
+            (value: User) => value.online === 1
+          ) !== undefined ? (
+            <NotifyIndic width={10} height={10} style={styles.indicator} />
+          ) : (
+            <NotifyIndicInActive
+              width={10}
+              height={10}
+              style={styles.indicator}
+            />
+          )}
 
           <View style={styles.textWrapper(themedColors)}>
             <View style={styles.nameContainer}>
@@ -136,8 +142,8 @@ const styles = StyleSheet.create({
   indicator: {
     position: "absolute",
     start: 40,
-    top: 10,
-    left: 40
+    top: 0,
+    left: 43
   },
   imgStyle: {
     width: 40,
