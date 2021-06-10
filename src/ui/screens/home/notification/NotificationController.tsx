@@ -1,24 +1,24 @@
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { usePreventDoubleTap } from "hooks";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
+import { NotificationsResponseModel } from "models/api_responses/NotificationsResponseModel";
+import EScreen from "models/enums/EScreen";
 import React, {
   FC,
   useCallback,
   useEffect,
   useLayoutEffect,
-  useRef,
   useState
 } from "react";
-import { NotificationView } from "ui/screens/home/notification/NotificationView";
-import { useApi } from "repo/Client";
+import { Alert } from "react-native";
 import ProfileApis from "repo/auth/ProfileApis";
-import { NotificationsResponseModel } from "models/api_responses/NotificationsResponseModel";
-import { AppLog } from "utils/Util";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { usePreventDoubleTap } from "hooks";
+import { useApi } from "repo/Client";
+import { NotificationParamList } from "routes/NotificationParams";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
-import { NotificationParamList } from "routes/NotificationParams";
-import EScreen from "models/enums/EScreen";
-import { NotificationApiRequestModel } from "models/api_requests/NotificationApiRequestModel";
+import { NotificationView } from "ui/screens/home/notification/NotificationView";
+import { AppLog } from "utils/Util";
 
 type NotificationNavigationProp = StackNavigationProp<
   NotificationParamList,
@@ -38,22 +38,23 @@ const NotificationController: FC<Props> = () => {
   const notificationApi = useApi<any, NotificationsResponseModel>(
     ProfileApis.getNotifications
   );
-  const isFetchingInProgress = useRef(false);
-  const LIMIT = 10;
-  const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
-    false
-  );
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
 
-  const requestModel = useRef<NotificationApiRequestModel>({
-    paginate: true,
-    limit: LIMIT,
+  const [
+    paginationRequestModel,
+    setPaginationRequestModel
+  ] = useState<PaginationParamsModel>({
+    type: "friend-request",
     page: 1,
-    type: "friend-request"
+    limit: 9,
+    paginate: true
   });
 
   const openMyProfileScreen = usePreventDoubleTap(() => {
-    navigation.push("ViewProfile", { isFrom: EScreen.NOTIFICATION });
+    navigation.push("ViewProfile", {
+      isFrom: EScreen.NOTIFICATION,
+      updateProfile: false
+    });
   });
 
   useLayoutEffect(() => {
@@ -65,81 +66,84 @@ const NotificationController: FC<Props> = () => {
     });
   }, [navigation]);
 
-  const handleGetNotificationApi = useCallback(async () => {
-    if (isFetchingInProgress.current) {
-      return;
-    }
-    isFetchingInProgress.current = true;
+  const handleGetNotificationApi = useCallback(
+    async (
+      isFromPullToRefresh: boolean,
+      requestModel: PaginationParamsModel
+    ) => {
+      if (notificationApi.loading) {
+        return;
+      }
+      const { hasError, dataBody } = await notificationApi.request([
+        requestModel
+      ]);
 
-    const currentPageToReload = requestModel.current.page;
-
-    if (currentPageToReload === 0) {
-      AppLog.log("No data left to fetch");
-      isFetchingInProgress.current = false;
-      setIsAllDataLoaded(true);
-      return;
-    }
-
-    requestModel.current.page!! > 1 && setShouldShowProgressBar(true);
-    const { hasError, dataBody } = await notificationApi.request([
-      requestModel.current
-    ]);
-
-    setShouldShowProgressBar(false);
-    if (!hasError) {
+      if (hasError) {
+        Alert.alert(
+          "Unable to fetch notifications",
+          "Please try again later"
+        );
+        return;
+      }
       setNotifications((prevState) => {
         return {
-          message: dataBody!.message,
+          message: dataBody?.message ?? "",
           data: [
-            ...(requestModel.current.page!! === 1 ||
-            prevState === undefined
-              ? []
-              : prevState.data),
+            ...(!isFromPullToRefresh ? prevState?.data ?? [] : []),
             ...dataBody!.data
           ]
         };
       });
+      setPaginationRequestModel({
+        ...requestModel,
+        page: (requestModel.page ?? 0) + 1
+      });
 
-      if ((dataBody?.data.length ?? 0) < LIMIT) {
-        // All data has been loaded
-        requestModel.current.page = 0;
-      }
-
-      requestModel.current.page = requestModel.current.page!! + 1;
-    }
-
-    isFetchingInProgress.current = false;
-  }, [notificationApi]);
+      setIsAllDataLoaded(
+        (dataBody?.data?.length ?? 0) < requestModel.limit!
+      );
+    },
+    [notificationApi]
+  );
 
   const onEndReached = useCallback(() => {
     AppLog.log("onEndReachedcall");
-    handleGetNotificationApi();
-  }, [handleGetNotificationApi]);
+    handleGetNotificationApi(false, paginationRequestModel);
+  }, [paginationRequestModel, handleGetNotificationApi]);
 
   const refreshCallback = async (onComplete: () => void) => {
-    setIsAllDataLoaded(false);
-    requestModel.current.page = 1;
-    handleGetNotificationApi().then(() => {
+    if (notificationApi.loading) {
+      onComplete?.();
+      return;
+    }
+
+    const myFriendRequestModel: PaginationParamsModel = {
+      ...paginationRequestModel,
+      page: 1
+    };
+
+    setPaginationRequestModel(myFriendRequestModel);
+    handleGetNotificationApi(true, myFriendRequestModel).then(() => {
       onComplete();
     });
   };
 
-  function clearActivityLogList() {
-    requestModel.current.page = 1;
-    setNotifications(undefined);
-  }
-
   const searchText = useCallback(
     (textToSearch: string) => {
-      clearActivityLogList();
-      requestModel.current.type = textToSearch;
-      handleGetNotificationApi();
+      const updatedRequestModel = {
+        ...paginationRequestModel,
+        page: 1,
+        type: textToSearch
+      };
+      setPaginationRequestModel(updatedRequestModel);
+      setNotifications(undefined);
+      handleGetNotificationApi(false, updatedRequestModel);
     },
-    [handleGetNotificationApi]
+    [paginationRequestModel, handleGetNotificationApi]
   );
 
   useEffect(() => {
-    handleGetNotificationApi();
+    handleGetNotificationApi(false, paginationRequestModel);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -148,10 +152,10 @@ const NotificationController: FC<Props> = () => {
       isAllDataLoaded={isAllDataLoaded}
       onEndReached={onEndReached}
       pullToRefreshCallback={refreshCallback}
-      shouldShowProgressBar={shouldShowProgressBar}
+      shouldShowProgressBar={notificationApi.loading}
       notifications={notifications?.data}
       openMyProfileScreen={openMyProfileScreen}
-      selectedItem={searchText}
+      onChangeFilter={searchText}
     />
   );
 };

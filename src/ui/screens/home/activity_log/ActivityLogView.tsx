@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { SectionList, StyleSheet, View } from "react-native";
+import React, { useCallback, useRef } from "react";
+import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
@@ -7,122 +7,106 @@ import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import Selector from "assets/images/selector.svg";
 import ActivityLogItem from "ui/components/organisms/activity_log_item/ActivityLogItem";
 import { getActivityTypeFilterData } from "models/enums/ActivityType";
-import { Section } from "utils/SectionListHelper";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { shadowStyleProps } from "utils/Util";
 import ActivityLog from "models/ActivityLog";
-import { AppLoadMore } from "ui/components/atoms/app_load_more/AppLoadMore";
+import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
+import { ActivityLogHeader } from "ui/screens/home/activity_log/ActivityLogHeader";
 
 type Props = {
-  isApiLoading: boolean;
-  activityLogs?: Section<ActivityLog>[];
+  shouldShowProgressBar: boolean;
+  activityLogs?: ActivityLog[];
   pullToRefreshCallback: (onComplete: () => void) => void;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
-  selectedItem: (textToFilter: string) => void;
+  onChangeFilter: (textToFilter: string) => void;
 };
 
-export const ActivityLogView: React.FC<Props> = ({
-  isApiLoading,
-  activityLogs,
-  pullToRefreshCallback,
-  onEndReached,
-  selectedItem
-}: Props) => {
-  const { themedColors } = usePreferredTheme();
-  const [isRefreshing, setRefreshing] = useState<boolean>(false);
+export const ActivityLogView = React.memo<Props>(
+  ({
+    shouldShowProgressBar,
+    activityLogs,
+    pullToRefreshCallback,
+    onEndReached,
+    onChangeFilter
+  }) => {
+    const { themedColors } = usePreferredTheme();
+    let sharedDataRef = useRef("");
 
-  const renderItem = ({ item }: { item: ActivityLog }) => (
-    <ActivityLogItem activityLog={new ActivityLog(item)} />
-  );
-
-  const headerView = ({ section }: { section: Section<ActivityLog> }) => {
-    // AppLog.log(`rendering HeaderView ${section.header.key()}`);
+    const listItem = useCallback(({ item }: { item: ActivityLog }) => {
+      return (
+        <>
+          <ActivityLogHeader
+            item={item}
+            setSharedDataRef={sharedDataRef}
+          />
+          <ActivityLogItem activityLog={item} />
+        </>
+      );
+    }, []);
 
     return (
-      <View
-        style={[
-          styles.headerContainer,
-          { backgroundColor: themedColors.backgroundSecondary }
-        ]}>
-        <AppLabel
-          text={section.title}
+      <Screen
+        style={styles.container}
+        bottomSafeAreaColor={themedColors.backgroundSecondary}>
+        <View
           style={[
-            styles.headerText,
-            { color: themedColors.interface[600] }
-          ]}
-          weight={"semi-bold"}
-        />
-      </View>
-    );
-  };
+            styles.dropdownContainer,
+            { backgroundColor: themedColors.background }
+          ]}>
+          <AppDropdown
+            style={[
+              styles.dropDown,
+              { backgroundColor: themedColors.interface[100] }
+            ]}
+            textStyle={styles.filterText}
+            shouldShowCustomIcon={true}
+            dropDownIcon={() => (
+              <Selector
+                fill={themedColors.interface[500]}
+                width={20}
+                height={20}
+              />
+            )}
+            title={getActivityTypeFilterData()[0].value}
+            items={[
+              {
+                value: "View All",
+                text: ""
+              },
+              {
+                value: "View Friend Request",
+                text: "friend-request"
+              },
+              {
+                value: "View Roommate Request",
+                text: "roommate-request"
+              }
+            ]}
+            selectedItemCallback={(item) => {
+              onChangeFilter(item.text!);
+            }}
+          />
+        </View>
 
-  const footerWrapper = useCallback(() => {
-    return (
-      <>
-        {isApiLoading && activityLogs !== undefined && (
-          <View style={styles.loadMore}>
-            <AppLoadMore testID="loader" />
-          </View>
+        {activityLogs && (
+          <FlatListWithPb
+            shouldShowProgressBar={shouldShowProgressBar}
+            data={activityLogs}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={listItem}
+            style={styles.list}
+            onEndReached={onEndReached}
+            pullToRefreshCallback={(_onComplete) => {
+              sharedDataRef.current = "";
+              pullToRefreshCallback(_onComplete);
+            }}
+            contentContainerStyle={[{ paddingHorizontal: SPACE.lg }]}
+          />
         )}
-      </>
+      </Screen>
     );
-  }, [isApiLoading, activityLogs]);
-
-  return (
-    <Screen
-      style={styles.container}
-      bottomSafeAreaColor={themedColors.backgroundSecondary}>
-      <View
-        style={[
-          styles.dropdownContainer,
-          { backgroundColor: themedColors.background }
-        ]}>
-        <AppDropdown
-          style={[
-            styles.dropDown,
-            { backgroundColor: themedColors.interface[100] }
-          ]}
-          textStyle={styles.filterText}
-          shouldShowCustomIcon={true}
-          dropDownIcon={() => (
-            <Selector
-              fill={themedColors.interface[500]}
-              width={20}
-              height={20}
-            />
-          )}
-          title={getActivityTypeFilterData()[0].value}
-          items={getActivityTypeFilterData()}
-          selectedItemCallback={(item) => {
-            selectedItem(item.text!);
-          }}
-        />
-      </View>
-      {activityLogs && (
-        <SectionList
-          initialNumToRender={10}
-          onEndReachedThreshold={0.5}
-          style={styles.activityLogList}
-          sections={activityLogs}
-          renderSectionHeader={headerView}
-          renderItem={renderItem}
-          onEndReached={onEndReached}
-          onRefresh={() => {
-            setRefreshing(true);
-            pullToRefreshCallback?.(() => {
-              setRefreshing(false);
-            });
-          }}
-          refreshing={isRefreshing}
-          keyExtractor={(item) => item.id.toString()}
-          renderSectionFooter={footerWrapper}
-          contentContainerStyle={[{ paddingHorizontal: SPACE.lg }]}
-        />
-      )}
-    </Screen>
-  );
-};
+  }
+);
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
@@ -147,5 +131,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "column",
     alignItems: "center"
+  },
+  list: {
+    flex: 1
   }
 });

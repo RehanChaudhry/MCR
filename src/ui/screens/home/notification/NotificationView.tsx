@@ -1,13 +1,13 @@
-import React from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import React, { useCallback, useRef } from "react";
+import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
+import { NotiHeader } from "ui/screens/home/notification/NotiHeader";
 import {
   listContentContainerStyle,
   listItemSeparator,
   shadowStyleProps
 } from "utils/Util";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE } from "config/Dimens";
 import Selector from "assets/images/selector.svg";
 import { usePreferredTheme } from "hooks";
@@ -22,7 +22,7 @@ type Props = {
   onEndReached: () => void;
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete: () => void) => void;
-  selectedItem: (textToFilter: string) => void;
+  onChangeFilter: (textToFilter: string) => void;
 };
 
 export const NotificationView = React.memo<Props>(
@@ -33,79 +33,26 @@ export const NotificationView = React.memo<Props>(
     pullToRefreshCallback,
     onEndReached,
     isAllDataLoaded,
-    selectedItem
+    onChangeFilter
   }) => {
-    let previousItemHours = "";
     const theme = usePreferredTheme();
+    let sharedDataRef = useRef("");
 
-    const getHours = (prevDate: Date) => {
-      const currDate1 = new Date();
-      let d1: any = new Date(currDate1); //firstDate
-      let d2: any = new Date(prevDate); //SecondDate
-      let diff = Math.abs(d1 - d2);
-      const hours = diff / (1000 * 60 * 60); //in milliseconds
-
-      return parseInt(hours.toFixed(0));
-    };
-
-    const getHeader = (label: string, style?: StyleProp<ViewStyle>) => {
-      return (
-        <AppLabel
-          text={label}
-          style={[
-            styles.header,
-            style,
-            { color: theme.themedColors.interface["600"] }
-          ]}
-          weight={"semi-bold"}
-        />
-      );
-    };
-
-    const getSortedItems = (hours: number) => {
-      let label = "NEW NOTIFICATIONS";
-      let tag = "3";
-      if (hours > 48) {
-        tag = "3";
-      } else if (hours >= 0 && hours <= 24) {
-        tag = "1";
-      } else if (hours > 24 || hours < 48) {
-        tag = "2";
-      }
-
-      if (previousItemHours !== tag && tag === "1") {
-        previousItemHours = tag;
-        return getHeader(label, styles.mainContanier);
-      } else if (previousItemHours !== tag && tag === "3") {
-        previousItemHours = tag;
-        label = "OLDER NOTIFICATIONS";
-        return getHeader(label);
-      } else if (previousItemHours !== tag && tag === "2") {
-        previousItemHours = tag;
-        label = "YESTERDAY";
-        return getHeader(label);
-      }
-    };
-
-    const listItem = ({
-      item,
-      index
-    }: {
-      item: NotificationData;
-      index: number;
-    }) => {
-      // @ts-ignore
-      return (
-        <View>
-          {getSortedItems(getHours(notifications[index].createdAt))}
-          <CircleImageWithText
-            key={index}
-            notifications={new NotificationData(item)}
-            userNameOnPress={openMyProfileScreen}
-          />
-        </View>
-      );
-    };
+    const listItem = useCallback(
+      ({ item, index }: { item: NotificationData; index: number }) => {
+        return (
+          <>
+            <NotiHeader item={item} setSharedDataRef={sharedDataRef} />
+            <CircleImageWithText
+              key={index}
+              notification={item}
+              userNameOnPress={openMyProfileScreen}
+            />
+          </>
+        );
+      },
+      [openMyProfileScreen]
+    );
 
     return (
       <Screen style={styles.container}>
@@ -117,8 +64,8 @@ export const NotificationView = React.memo<Props>(
           <AppDropdown
             items={[
               {
-                value: "Filter by notification type",
-                text: "Filter by notification type"
+                value: "View All",
+                text: ""
               },
               {
                 value: "View Friend Request",
@@ -150,7 +97,8 @@ export const NotificationView = React.memo<Props>(
               { backgroundColor: theme.themedColors.interface["100"] }
             ]}
             selectedItemCallback={(item) => {
-              selectedItem(item.text!);
+              sharedDataRef.current = "";
+              onChangeFilter(item.text!);
             }}
             shouldShowCustomIcon={true}
           />
@@ -165,12 +113,15 @@ export const NotificationView = React.memo<Props>(
             style={styles.list}
             onEndReached={onEndReached}
             isAllDataLoaded={isAllDataLoaded}
-            pullToRefreshCallback={pullToRefreshCallback}
+            pullToRefreshCallback={(_onComplete) => {
+              sharedDataRef.current = "";
+              pullToRefreshCallback(_onComplete);
+            }}
             contentContainerStyle={[
               listContentContainerStyle,
               { paddingHorizontal: SPACE.lg }
             ]}
-            ItemSeparatorComponent={({}) => (
+            ItemSeparatorComponent={() => (
               <View style={listItemSeparator} />
             )}
           />

@@ -15,8 +15,11 @@ import RoommateRequest from "assets/images/request_state_icon.svg";
 import Dismissed from "assets/images/folder-remove.svg";
 import { Divider } from "react-native-elements";
 import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
-import ActivityLog from "models/ActivityLog";
-import ActivityLogType from "models/enums/ActivityLogType";
+import ActivityLog, {
+  getDisplayTime,
+  getMessage
+} from "models/ActivityLog";
+import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
 import Actions from "models/enums/ActivityLogAction";
 
 interface Props {
@@ -30,40 +33,47 @@ const ActivityLogItem = ({ activityLog }: Props) => {
   const icon: any = () => {
     if (activityLog.type != null) {
       if (
-        activityLog.type === ActivityLogType.LOGIN_STUDENT ||
-        (ActivityLogType.LOGIN_STAFF &&
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.LOGIN_STUDENT ||
+        (NotificationAndActivityLogFilterType.LOGIN_STAFF &&
           activityLog.action === Actions.LOGIN)
       ) {
         return <Profile width={20} fill={themedColors.background} />;
       } else if (
-        activityLog.type === ActivityLogType.QUESTIONAIRE &&
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.QUESTIONAIRE &&
         activityLog.action === Actions.CREATE
       ) {
         return <Questionnaire width={20} fill={themedColors.background} />;
       } else if (
-        activityLog.type === ActivityLogType.PROFILE &&
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.PROFILE &&
         activityLog.action === Actions.UPDATED
       ) {
         return <Settings width={20} fill={themedColors.background} />;
       } else if (
-        activityLog.type === ActivityLogType.FRIEND_REQUEST &&
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
         activityLog.action === Actions.CREATE
       ) {
         return <UserAdd width={20} fill={themedColors.background} />;
       } else if (
-        activityLog.type === ActivityLogType.ROOMMATE_REQUEST &&
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
         activityLog.action === Actions.CREATE
       ) {
         return (
           <RoommateRequest width={20} fill={themedColors.background} />
         );
       } else if (
-        activityLog.type === ActivityLogType.DISMISSED_LIST &&
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.DISMISSED_LIST &&
         activityLog.action === Actions.CREATE
       ) {
         return <Dismissed width={20} fill={themedColors.background} />;
       } else if (
-        activityLog.type === ActivityLogType.ROOMMATE_AGREEMENT &&
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
         activityLog.action === Actions.UPDATED_AND_AGREED
       ) {
         return <Dismissed width={20} fill={themedColors.background} />;
@@ -102,11 +112,11 @@ const ActivityLogItem = ({ activityLog }: Props) => {
         <LabelHtml
           containerStyle={styles.message}
           style={styles.messageText}
-          text={activityLog.getMessage() ?? STRINGS.common.not_found}
+          text={getMessage(activityLog) ?? STRINGS.common.not_found}
         />
         <AppLabel
           style={[styles.date, { color: themedColors.interface[600] }]}
-          text={activityLog.getDisplayTime()}
+          text={getDisplayTime(activityLog)}
         />
       </View>
     </View>

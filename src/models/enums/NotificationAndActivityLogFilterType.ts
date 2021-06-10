@@ -1,4 +1,4 @@
-enum ActivityLogType {
+enum NotificationAndActivityLogFilterType {
   FRIEND_REQUEST = "friend-request",
   DISMISSED_LIST = "dismissed",
   POST = "POST",
@@ -6,8 +6,8 @@ enum ActivityLogType {
   ROOMMATE_REQUEST = "roommate-request",
   QUESTIONAIRE = "updated-questionnaire",
   PROFILE = "updated-profile",
-  ROOMMATE_AGREEMENT = "Roommate Agreement",
-  LOGIN_STUDENT = "login-student",
+  ROOMMATE_AGREEMENT = "roommate-agreement",
+  LOGIN_STUDENT = "student",
   LOGIN_STAFF = "login-staff",
   ANNOUNCEMENT = "announcement",
   MESSAGE = "message",
@@ -19,4 +19,4 @@ enum ActivityLogType {
   COMMENT = "comment"
 }
 
-export default ActivityLogType;
+export default NotificationAndActivityLogFilterType;

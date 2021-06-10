@@ -8,7 +8,6 @@ target 'MyCollegeRoomie' do
 
   use_react_native!(:path => config["reactNativePath"])
 
-  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
   target 'MyCollegeRoomieTests' do
     inherit! :complete

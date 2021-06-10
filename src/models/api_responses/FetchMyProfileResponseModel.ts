@@ -34,16 +34,31 @@ export type Profile = {
   matchGroupName: string;
   floorPlanRoomId: number;
   building: string;
+  hometown?: string;
   roomNumber: string;
   welcomeVideoStatus: EWelcomeFlowStatus;
   questionnaireStatus: EWelcomeFlowStatus;
   profileCompletedAt?: Date;
   totalQuestions: number;
   totalQuestionsAnswered: number;
+  totalProfileQuestions: number;
+  totalProfileQuestionsAnswered: number;
   isFlagged: number;
   createdAt: string;
   updatedAt: string;
   sections: SectionsType[];
   agreementId: number;
   about?: string;
+};
+
+export function getSubtitle(profile: Profile): string {
+  return profile.major + (profile.hometown ? ", " + profile.hometown : "");
+}
+export const profileCompletedPercentage = (profile?: Profile) => {
+  return profile
+    ? ((profile.totalQuestionsAnswered +
+        profile.totalProfileQuestionsAnswered) /
+        (profile.totalQuestions + profile.totalProfileQuestions)) *
+        100
+    : 0;
 };

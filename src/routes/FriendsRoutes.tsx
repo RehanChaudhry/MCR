@@ -13,6 +13,7 @@ import {
   RoommateAgreementStack
 } from "./FriendsStack";
 import EScreen from "models/enums/EScreen";
+import StaticContentController from "ui/screens/static_content/StaticContentController";
 
 export const FriendsRoutes = () => {
   return (
@@ -100,6 +101,10 @@ const DismissedOrBlockedRoutes: FC<DismissedOrBlockedRoutesProps> = () => {
           },
           headerLeft: () => <Hamburger />
         }}
+      />
+      <DismissedOrBlockStack.Screen
+        name="StaticContent"
+        component={StaticContentController}
       />
     </DismissedOrBlockStack.Navigator>
   );

@@ -1,121 +1,135 @@
 import { timeAgo } from "utils/Util";
 import Actions from "models/enums/ActivityLogAction";
-import ActivityLogType from "models/enums/ActivityLogType";
+import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
 import { User } from "models/User";
-import { ChronologicalObject } from "utils/SectionListHelper";
 
-class ActivityLog implements ChronologicalObject {
-  id!: number;
-  type?: ActivityLogType;
+type ActivityLog = {
+  id: number;
+  type?: NotificationAndActivityLogFilterType;
   user?: User;
   action?: Actions;
-  createdAt!: Date;
+  createdAt: Date;
+};
 
-  constructor(activityLog: ActivityLog) {
-    Object.assign(this, activityLog);
-  }
+export function getDisplayTime(activityLog: ActivityLog): string {
+  return timeAgo(
+    activityLog.createdAt ?? new Date(),
+    "day",
+    "MMM DD, YYYY hh:mm A"
+  );
+}
 
-  getDisplayTime(): string {
-    return timeAgo(
-      this.createdAt ?? new Date(),
-      "day",
-      "MMM DD, YYYY hh:mm A"
-    );
-  }
-
-  // @ts-ignore
-  getMessage(): string {
-    if (this.action != null) {
-      if (
-        this.type === ActivityLogType.FRIEND_REQUEST &&
-        this.action === Actions.CREATE
-      ) {
-        return `Sent a friend request to <b>${this.user?.firstName}${
-          " " + this.user?.lastName
-        }</b>`;
-      } else if (
-        this.type === ActivityLogType.FRIEND_REQUEST &&
-        this.action === Actions.ACCEPTED
-      ) {
-        return "Accepted friend request";
-      } else if (
-        (this.type === ActivityLogType.FRIEND_REQUEST && this.action) ===
-        Actions.REJECTED
-      ) {
-        return "Rejected friend request";
-      } else if (
-        this.type === ActivityLogType.ROOMMATE_REQUEST &&
-        this.action === Actions.CREATE
-      ) {
-        return `Sent a roommate request to <b>${this.user?.firstName}${
-          " " + this.user?.lastName
-        }</b>`;
-      } else if (
-        this.type === ActivityLogType.ROOMMATE_REQUEST &&
-        this.action === Actions.ACCEPTED
-      ) {
-        return `Accepted a roommate request from <b>${
-          this.user?.firstName
-        }${" " + this.user?.lastName}</b>`;
-      } else if (
-        (this.type === ActivityLogType.ROOMMATE_REQUEST && this.action) ===
-        Actions.REJECTED
-      ) {
-        return "Rejected roommate request";
-      } else if (
-        this.type === ActivityLogType.DISMISSED_LIST &&
-        this.action === Actions.CREATE
-      ) {
-        return `Added <b>${this.user?.firstName}${
-          " " + this.user?.lastName
-        }</b> to dismiss list`;
-      } else if (
-        this.type === ActivityLogType.DISMISSED_LIST &&
-        this.action === Actions.REMOVED
-      ) {
-        return `Removed <b>${this.user?.firstName}${
-          " " + this.user?.lastName
-        }</b> from dismiss list`;
-      } else if (
-        this.type === ActivityLogType.POST &&
-        this.action === Actions.CREATE
-      ) {
-        return "Created a new post in commmunity";
-      } else if (
-        this.type === ActivityLogType.POST &&
-        this.action === Actions.COMMENTED
-      ) {
-        return "Commented on any post";
-      } else if (
-        this.type === ActivityLogType.CONVERSATION &&
-        this.action === Actions.STARTED
-      ) {
-        return "Started a new conversation with";
-      } else if (
-        this.type === ActivityLogType.QUESTIONAIRE &&
-        this.action === Actions.CREATE
-      ) {
-        return `Update your <b>Questionaire</b>`;
-      } else if (
-        this.type === ActivityLogType.PROFILE &&
-        this.action === Actions.UPDATED
-      ) {
-        return `Update your <b>Profile</b>`;
-      } else if (
-        this.type === ActivityLogType.ROOMMATE_AGREEMENT &&
-        this.action === Actions.UPDATED_AND_AGREED
-      ) {
-        return `Updated and agreed on <b>Rommate Agreement</b>`;
-      } else if (
-        this.type === ActivityLogType.LOGIN_STUDENT ||
-        (this.type === ActivityLogType.LOGIN_STAFF &&
-          this.action === Actions.LOGIN)
-      ) {
-        return `Logged in to your <b>Profile</b>`;
-      }
-    } else {
+// @ts-ignore
+export function getMessage(activityLog: ActivityLog): string {
+  if (activityLog.type != null) {
+    if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+      activityLog.action === Actions.CREATE
+    ) {
+      return `Sent a friend request to <b>${activityLog.user?.firstName}${
+        " " + activityLog.user?.lastName
+      }</b>`;
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+      activityLog.action === Actions.ACCEPTED
+    ) {
+      return "Accepted friend request";
+    } else if (
+      (activityLog.type ===
+        NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+        activityLog.action) === Actions.REJECTED
+    ) {
+      return "Rejected friend request";
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+      activityLog.action === Actions.CREATE
+    ) {
+      return `Sent a roommate request to <b>${
+        activityLog.user?.firstName
+      }${" " + activityLog.user?.lastName}</b>`;
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+      activityLog.action === Actions.ACCEPTED
+    ) {
+      return `Accepted a roommate request from <b>${
+        activityLog.user?.firstName
+      }${" " + activityLog.user?.lastName}</b>`;
+    } else if (
+      (activityLog.type ===
+        NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+        activityLog.action) === Actions.REJECTED
+    ) {
+      return "Rejected roommate request";
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.DISMISSED_LIST &&
+      activityLog.action === Actions.CREATE
+    ) {
+      return `Added <b>${activityLog.user?.firstName}${
+        " " + activityLog.user?.lastName
+      }</b> to dismiss list`;
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.DISMISSED_LIST &&
+      activityLog.action === Actions.REMOVED
+    ) {
+      return `Removed <b>${activityLog.user?.firstName}${
+        " " + activityLog.user?.lastName
+      }</b> from dismiss list`;
+    } else if (
+      activityLog.type === NotificationAndActivityLogFilterType.POST &&
+      activityLog.action === Actions.CREATE
+    ) {
+      return "Created a new post in commmunity";
+    } else if (
+      activityLog.type === NotificationAndActivityLogFilterType.POST &&
+      activityLog.action === Actions.COMMENTED
+    ) {
       return "Commented on any post";
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.CONVERSATION &&
+      activityLog.action === Actions.STARTED
+    ) {
+      return "Started a new conversation with";
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.QUESTIONAIRE &&
+      activityLog.action === Actions.CREATE
+    ) {
+      return `Update your <b>Questionaire</b>`;
+    } else if (
+      activityLog.type === NotificationAndActivityLogFilterType.PROFILE &&
+      activityLog.action === Actions.UPDATED
+    ) {
+      return `Update your <b>Profile</b>`;
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
+      activityLog.action === Actions.UPDATED_AND_AGREED
+    ) {
+      return `Updated and agreed on <b>Rommate Agreement</b>`;
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.LOGIN_STUDENT ||
+      (activityLog.type ===
+        NotificationAndActivityLogFilterType.LOGIN_STAFF &&
+        activityLog.action === Actions.LOGIN)
+    ) {
+      return `Logged in to your <b>Profile</b>`;
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
+      activityLog.action === Actions.REJECTED
+    ) {
+      return `Rejected <b>Roommate Agreement</b>`;
     }
+  } else {
+    return "Commented on any post";
   }
 }
 

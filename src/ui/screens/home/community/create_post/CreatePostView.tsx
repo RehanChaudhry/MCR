@@ -77,6 +77,8 @@ export const CreatePostView = React.memo<Props>((props) => {
   const onSubmit = (_value: FormikValues) => {
     initialValues = _value;
     initialValues.images = images;
+    // trim whitespaces from message
+    initialValues.message = initialValues.message.trim();
     props.createPost(initialValues);
   };
 
@@ -214,7 +216,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                   styles.descriptionView,
                   {
                     backgroundColor: theme.themedColors.background,
-                    borderColor: theme.themedColors.secondary
+                    borderColor: theme.themedColors.border
                   }
                 ]
               }}
