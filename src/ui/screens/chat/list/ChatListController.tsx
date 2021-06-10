@@ -149,9 +149,8 @@ export const ChatListController: FC<Props> = ({
       // @ts-ignore
       setChatsData((prevState) => {
         let chatsCopy = _.clone(prevState) as Conversation[];
-
-        _.each(chatsCopy, (p) => {
-          if (p.message.length > 0) {
+        _.forEach(chatsCopy, (p) => {
+          if (p.id === item.id && p.message.length > 0) {
             p.message[0].readBy.length > 0
               ? p.message[0].readBy.push(user?.profile?.id!!)
               : (p.message[0].readBy = [user?.profile?.id!!]);
