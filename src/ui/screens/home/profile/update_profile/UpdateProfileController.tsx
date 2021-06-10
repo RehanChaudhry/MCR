@@ -1,10 +1,4 @@
-import React, {
-  FC,
-  useCallback,
-  //useContext,
-  useLayoutEffect,
-  useState
-} from "react";
+import React, { FC, useCallback, useLayoutEffect, useState } from "react";
 import { UpdateProfileView } from "ui/screens/home/profile/update_profile/UpdateProfileView";
 import {
   RouteProp,
