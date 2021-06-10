@@ -104,7 +104,6 @@ export const NewConversationController: FC<Props> = () => {
   }, [createConversationAPi]);
 
   const headerRightClick = useCallback(() => {
-    AppLog.logForcefully("dats  : " + JSON.stringify(newConversations));
     if (newConversations !== undefined && newConversations.length > 0) {
       handleCreateConversationApi()
         .then((result) => {

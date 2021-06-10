@@ -64,7 +64,6 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     false
   );
   const isFetchingInProgress = useRef(false);
-
   const { user } = useAuth();
 
   const getTitle = (): string => {
@@ -151,6 +150,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       );
       return;
     } else {
+      params?.callback(true, conversationId);
       navigation.goBack();
     }
   }
@@ -169,9 +169,6 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       setShouldShowProgressBar(true);
       isFetchingInProgress.current = true;
 
-      AppLog.logForcefully(
-        "current limit is : " + loadMessagesRequestModel.current.limit
-      );
       const {
         hasError,
         dataBody,
@@ -239,6 +236,10 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
         ...(prevState === undefined ? [] : prevState)
       ];
     });
+
+    if (params?.isArchived) {
+      params?.callback(false, conversationId, prepareMessage);
+    }
   }
 
   useEffect(() => {

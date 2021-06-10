@@ -135,6 +135,7 @@ const MatchesController: FC<Props> = () => {
     matches: profileMatches,
     setMatches: setProfileMatches
   } = useContext(MyFriendsContext);
+
   useEffect(() => {
     let listener = () => {
       refreshCallback();
