@@ -105,6 +105,19 @@ const UpdateProfileController: FC<Props> = () => {
           />
         )
       });
+    } else if (route.params.isFrom === EScreen.MATCH_INFO) {
+      setInfoTextShown(true);
+      navigation.setOptions({
+        headerTitleAlign: "center",
+        headerTitle: () => <HeaderTitle text="Update Profile" />,
+        headerLeft: () => (
+          <HeaderLeftTextWithIcon
+            onPress={() => {
+              navigation.pop();
+            }}
+          />
+        )
+      });
     }
   }, [
     navigation,
