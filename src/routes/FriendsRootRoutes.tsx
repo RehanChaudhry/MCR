@@ -4,6 +4,7 @@ import FriendsController from "ui/screens/home/friends/FriendsController";
 import ConnectionRequestRoutes from "./ConnectionRequestRoutes";
 import { FriendsRootStack } from "./FriendsRootStack";
 import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
+import { ChatThreadController } from "ui/screens/chat/thread/ChatThreadController";
 
 type Props = {};
 
@@ -25,6 +26,11 @@ const FriendsRootRoutes: FC<Props> = () => {
         options={{ headerShown: true }}
         name="Profile"
         component={ViewProfileController}
+      />
+      <FriendsRootStack.Screen
+        name="Chat"
+        component={ChatThreadController}
+        options={{ headerShown: true }}
       />
     </FriendsRootStack.Navigator>
   );

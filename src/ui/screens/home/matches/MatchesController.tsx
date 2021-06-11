@@ -33,12 +33,7 @@ import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
-import { CreateConversationRequestModel } from "models/api_requests/CreateConversationRequestModel";
-import { CreateConversationResponseModel } from "models/api_responses/CreateConversationResponseModel";
-import ChatApis from "repo/chat/ChatApis";
-import SimpleToast from "react-native-simple-toast";
-import _ from "lodash";
-import { Conversation } from "models/api_responses/ChatsResponseModel";
+import { useCreateConversation } from "hooks/useCreateConversation";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -52,11 +47,8 @@ const MatchesController: FC<Props> = () => {
   const { themedColors } = usePreferredTheme();
   const navigation = useNavigation<MatchesNavigationProp>();
 
+  const createConversation = useCreateConversation();
   const { user } = useAuth();
-  const createConversationAPi = useApi<
-    CreateConversationRequestModel,
-    CreateConversationResponseModel
-  >(ChatApis.createConversations);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -79,44 +71,23 @@ const MatchesController: FC<Props> = () => {
   }, [navigation, themedColors]);
 
   const moveToChatScreen = async (profileMatch: RelationModel) => {
-    const { hasError, dataBody } = await createConversationAPi.request([
-      { userIds: [user?.profile?.id!!, profileMatch.user?.id!] }
-    ]);
+    const createConversationResult = await createConversation(
+      [user?.profile?.id!!, profileMatch.user?.id!],
+      setActiveConversations,
+      inActiveConversations
+    );
 
-    if (!hasError) {
-      //update active chat list context
-
-      //update active conversations list, only when new created chat is not present in archive chat list
-      //since, api will return previous chat if its already created
-      if (
-        !inActiveConversations?.find(
-          (item) => item.id === dataBody!.data.id
-        )
-      ) {
-        // @ts-ignore
-        setActiveConversations?.((prevState) => {
-          if (prevState !== undefined) {
-            return [
-              dataBody!.data,
-              ..._.without(
-                prevState as Conversation[],
-                prevState?.find((item) => item.id === dataBody!!.data.id)
-              )
-            ];
-          } else {
-            return [dataBody!.data];
-          }
-        });
-      }
-
+    AppLog.logForcefully(
+      "create conversation : " + JSON.stringify(createConversationResult)
+    );
+    if (createConversationResult !== undefined) {
       navigation.navigate("Chat", {
         title: [
           profileMatch.user?.getFullName() ?? STRINGS.common.not_found
         ],
-        conversationId: dataBody!.data.id!
+        conversationId: createConversationResult?.id!,
+        isArchived: createConversationResult.status === "active"
       });
-    } else {
-      SimpleToast.show("Something went wrong!");
     }
   };
 

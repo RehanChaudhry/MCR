@@ -12,6 +12,7 @@ export class Conversation {
   currentUser!: User[];
   conversationUsers!: User[];
   message!: Message[];
+  status!: string;
 
   constructor(activityLog: Conversation) {
     Object.assign(this, activityLog);

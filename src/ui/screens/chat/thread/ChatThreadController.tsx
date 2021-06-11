@@ -1,6 +1,7 @@
 import React, {
   FC,
   useCallback,
+  useContext,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -35,6 +36,9 @@ import Message from "models/Message";
 import SimpleToast from "react-native-simple-toast";
 import { SocketHelper } from "utils/SocketHelper";
 import { Socket } from "socket.io-client";
+import { ChatHelper } from "utils/ChatHelper";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
+import _ from "lodash";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -134,6 +138,13 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     any
   >(ChatApis.updateConversation);
 
+  const {
+    activeConversations,
+    setActiveConversations,
+    inActiveConversations,
+    setInActiveConversations
+  } = useContext(MyFriendsContext);
+
   async function handleUpdateConversationApi() {
     const {
       hasError,
@@ -150,7 +161,14 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       );
       return;
     } else {
-      params?.callback(true, conversationId);
+      ChatHelper.manipulateChatLists(
+        setActiveConversations,
+        inActiveConversations,
+        setInActiveConversations,
+        activeConversations,
+        true,
+        conversationId
+      );
       navigation.goBack();
     }
   }
@@ -179,14 +197,21 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
         setShouldShowProgressBar(false);
         return;
       } else {
+        AppLog.logForcefully(
+          "Just before my messages wrapper : " +
+            JSON.stringify(dataBody.data)
+        );
         setMessages((prevState) => {
-          return [
-            ...(prevState === undefined ||
-            loadMessagesRequestModel.current.page === 1
-              ? []
-              : prevState),
-            ...dataBody.data!!
-          ];
+          return _.uniqBy(
+            [
+              ...(prevState === undefined ||
+              loadMessagesRequestModel.current.page === 1
+                ? []
+                : (prevState as Message[])),
+              ...dataBody.data!!
+            ],
+            (item) => item.id
+          );
         });
 
         setIsAllDataLoaded(
@@ -227,18 +252,25 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       socket!!.current!!.emit("sendMessage", prepareMessage);
     }
 
-    loadMessagesRequestModel.current.limit =
-      loadMessagesRequestModel.current.limit + 1;
     // @ts-ignore
     setMessages((prevState) => {
-      return [
-        ...[prepareMessage],
-        ...(prevState === undefined ? [] : prevState)
-      ];
+      return _.uniqBy(
+        [...[prepareMessage], ...(prevState || [])] as Message[],
+        (item: Message) => item.id
+      );
     });
 
     if (params?.isArchived) {
-      params?.callback(false, conversationId, prepareMessage);
+      //if chat is in archive and you message, the conversation has to move into active chats
+      ChatHelper.manipulateChatLists(
+        setActiveConversations,
+        inActiveConversations,
+        setInActiveConversations,
+        activeConversations,
+        false,
+        conversationId,
+        (prepareMessage as unknown) as Message
+      );
     }
   }
 
@@ -255,13 +287,11 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     );
 
     socket.current.on("receiveMessage", (data) => {
-      loadMessagesRequestModel.current.limit =
-        loadMessagesRequestModel.current.limit + 1;
       setMessages((prevState) => {
-        return [
-          ...data.message,
-          ...(prevState === undefined ? [] : prevState)
-        ];
+        return _.uniqBy(
+          [...data.message, ...(prevState === undefined ? [] : prevState)],
+          (item) => item.id
+        );
       });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -7,7 +7,6 @@ export type ChatRootStackParamList = {
     title: string[];
     conversationId: number;
     isArchived?: boolean;
-    callback?: (isArchived: boolean, conversationId: number) => void;
   };
 };
 

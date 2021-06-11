@@ -1,4 +1,10 @@
-import React, { FC, useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  FC,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState
+} from "react";
 import { ViewProfileView } from "ui/screens/home/profile/view_profile/ViewProfileView";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ProfileStackParamList } from "routes/ProfileBottomBar";
@@ -16,6 +22,8 @@ import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { ProfileRootStackParamList } from "routes/ProfileRootStack";
 import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 import { useAuth } from "hooks";
+import { useCreateConversation } from "hooks/useCreateConversation";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
   ProfileStackParamList,
@@ -42,6 +50,9 @@ type ProfileRouteProp = RouteProp<ProfileStackParamList, "ViewProfile">;
 const ViewProfileController: FC<Props> = () => {
   const auth = useAuth();
   const [viewProfileUiData, setViewProfileUiData] = useState<Profile>();
+
+  const createConversation = useCreateConversation();
+  const { user } = useAuth();
 
   //view  profile UI integration and modification in data for profile header
   useEffect(() => {
@@ -80,6 +91,27 @@ const ViewProfileController: FC<Props> = () => {
     navigationViewProfile.navigate("RoommateAgreement", {
       isFrom: EScreen.MY_PROFILE
     });
+  };
+  const { setActiveConversations, inActiveConversations } = useContext(
+    MyFriendsContext
+  );
+
+  const moveToChatScreen = async (userId: number) => {
+    const createConversationResult = await createConversation(
+      [user?.profile?.id!!, userId],
+      setActiveConversations,
+      inActiveConversations
+    );
+
+    if (createConversationResult !== undefined) {
+      //TODO OPEN CHAT SCREEN FROM HERE
+      /*navigation.navigate("Chat", {
+        title: [
+          profileMatch.user?.getFullName() ?? STRINGS.common.not_found
+        ],
+        conversationId: createConversationResult?.id!
+      });*/
+    }
   };
 
   useLayoutEffect(() => {
@@ -125,6 +157,7 @@ const ViewProfileController: FC<Props> = () => {
         <ViewProfileView
           openRoommateAgreementScreen={openRoommateAgreementScreen}
           viewProfileUiData={viewProfileUiData}
+          moveToChatScreen={moveToChatScreen}
         />
       )}
     </>
