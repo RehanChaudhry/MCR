@@ -25,7 +25,7 @@ const ThreeButtonsAlert: FC<Props> = React.memo(
 
     const onMatchRemoved = useCallback(
       (id: number) => {
-        setMatches?.(matches?.filter((value) => value.id !== id));
+        setMatches?.(matches?.filter((value) => value.userId !== id));
         resetData();
       },
       [matches, setMatches, resetData]
@@ -39,7 +39,7 @@ const ThreeButtonsAlert: FC<Props> = React.memo(
       "Unable to dismissed the match",
       hideSelf,
       () => {
-        onMatchRemoved(getSelectedItem()?.id ?? -1);
+        onMatchRemoved(getSelectedItem()?.userId ?? -1);
       }
     );
 
@@ -51,7 +51,7 @@ const ThreeButtonsAlert: FC<Props> = React.memo(
       "Unable to blocked friend",
       hideSelf,
       () => {
-        onMatchRemoved(getSelectedItem()?.id ?? -1);
+        onMatchRemoved(getSelectedItem()?.userId ?? -1);
       }
     );
 

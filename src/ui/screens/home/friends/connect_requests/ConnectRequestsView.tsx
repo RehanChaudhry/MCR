@@ -41,7 +41,7 @@ const ConnectRequestsView: FC<Props> = ({
   return (
     <Screen style={styles.container}>
       <FlatListWithPb
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.userId.toString()}
         ListHeaderComponent={() => {
           return <View style={styles.header} />;
         }}

@@ -75,7 +75,7 @@ const TwoButtonsAlert: FC<Props> = React.memo(
 
         let _relations = [...relations];
         let index = _relations.findIndex(
-          (value) => value.id === relation.id
+          (value) => value.userId === relation.userId
         );
         let updatedRelation: RelationModel = Object.assign(
           Object.create(relation),
@@ -94,7 +94,7 @@ const TwoButtonsAlert: FC<Props> = React.memo(
 
     const onFriendRemoved = useCallback(
       (id: number) => {
-        setRelations?.(relations?.filter((value) => value.id !== id));
+        setRelations?.(relations?.filter((value) => value.userId !== id));
         resetData();
       },
       [relations, setRelations, resetData]
@@ -128,7 +128,7 @@ const TwoButtonsAlert: FC<Props> = React.memo(
         if (type === Type.CANCEL) {
           changedRelationStatus(getSelectedItem(), undefined);
         } else {
-          onFriendRemoved(getSelectedItem()?.id ?? -1);
+          onFriendRemoved(getSelectedItem()?.userId ?? -1);
         }
       }
     );

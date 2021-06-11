@@ -93,10 +93,10 @@ const ConnectRequestsController: FC<Props> = () => {
 
       setRequestModel({
         ..._requestModel,
-        page: _requestModel.page + 1
+        page: _requestModel.page! + 1
       });
 
-      setCanLoadMore(data.length >= _requestModel.limit);
+      setCanLoadMore(data.length >= _requestModel.limit!);
 
       onComplete?.();
     }
@@ -137,7 +137,7 @@ const ConnectRequestsController: FC<Props> = () => {
   function removeItemFromList(_item: RelationModel) {
     resetData?.();
     setConnectRequests(
-      connectRequests?.filter((value) => value.id !== _item.id)
+      connectRequests?.filter((value) => value.userId !== _item.userId)
     );
   }
 
