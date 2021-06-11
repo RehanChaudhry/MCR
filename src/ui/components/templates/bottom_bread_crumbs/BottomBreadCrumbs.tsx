@@ -7,6 +7,7 @@ import { SPACE } from "config";
 
 export type Item = {
   title: string;
+  isDisable?: boolean;
   onPress: () => void;
 };
 
@@ -31,8 +32,10 @@ const BottomBreadCrumbs: FC<Props> = ({ data }) => {
       <BottomBreadCrumbsItem
         title={item.title}
         onPress={() => {
-          setSelectedId(item.title);
-          item.onPress();
+          if (!item.isDisable) {
+            setSelectedId(item.title);
+            item.onPress();
+          }
         }}
         style={{ backgroundColor }}
         textStyle={{ color: textColor }}

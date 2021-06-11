@@ -1,6 +1,6 @@
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import React, { FC, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -16,6 +16,8 @@ type Props = {};
 
 const FriendsController: FC<Props> = () => {
   const navigation = useNavigation<FriendsNavigationProp>();
+  const { user } = useAuth();
+  const isAgreementId = user?.profile?.agreementId !== null;
 
   const _items: Item[] = [
     {
@@ -26,12 +28,14 @@ const FriendsController: FC<Props> = () => {
     },
     {
       title: "My Roommates",
+
       onPress: () => {
         navigation.jumpTo("MyRoommates");
       }
     },
     {
       title: "Roommate Agreement",
+      isDisable: !isAgreementId,
       onPress: () => {
         navigation.jumpTo("RoommateAgreement");
       }
@@ -52,7 +56,9 @@ const FriendsController: FC<Props> = () => {
   return (
     <View style={styles.container}>
       <FriendsRoutes />
+
       <BottomBreadCrumbs data={itemsRef.current} />
+
       <View
         style={[
           styles.bottomSafeArea,
