@@ -20,7 +20,7 @@ export interface HeaderRightTextWithIconProps
   onPress?: () => void;
   textStyle?: StyleProp<TextStyle>;
   fontWeight?: Weight;
-  shouldSHowLoader?: boolean;
+  shouldShowLoader?: boolean;
 }
 
 const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
@@ -30,13 +30,13 @@ const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
     onPress,
     textStyle,
     fontWeight = "normal",
-    shouldSHowLoader = false
+    shouldShowLoader = false
   }) => {
     const theme = usePreferredTheme();
 
     return (
       <>
-        {shouldSHowLoader && (
+        {shouldShowLoader && (
           <View style={style.loadMore}>
             <ActivityIndicator
               size="small"
@@ -45,7 +45,7 @@ const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
           </View>
         )}
 
-        {!shouldSHowLoader && (
+        {!shouldShowLoader && (
           <LinkButton
             text={text}
             onPress={onPress}

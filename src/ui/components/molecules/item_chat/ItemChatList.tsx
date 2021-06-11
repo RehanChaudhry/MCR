@@ -30,16 +30,19 @@ export const ItemChatList = React.memo<ItemChatListProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
     const { user } = useAuth();
-    let prettyTime = new PrettyTimeFormat(
-      "m ago",
-      "s ago",
-      "y ago",
-      "d ago",
-      "h ago"
-    ).getPrettyTime(item.lastMessagedAt.toString());
+    let prettyTime =
+      item.lastMessagedAt !== undefined
+        ? new PrettyTimeFormat(
+            "m ago",
+            "s ago",
+            "y ago",
+            "d ago",
+            "h ago"
+          ).getPrettyTime(item.lastMessagedAt.toString())
+        : "";
 
-    let isMessageRead = false;
-    isMessageRead =
+    //message will come null in case of create conversation
+    let isMessageRead =
       _.isArray(item.message) &&
       item.message.length > 0 &&
       item.message[0].readBy.find(

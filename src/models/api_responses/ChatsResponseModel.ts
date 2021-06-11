@@ -11,7 +11,7 @@ export class Conversation {
   updatedAt!: Date;
   currentUser!: User[];
   conversationUsers!: User[];
-  message!: Message[] | null;
+  message!: Message[];
 
   constructor(activityLog: Conversation) {
     Object.assign(this, activityLog);
@@ -22,7 +22,10 @@ export class Conversation {
     /* this.isRead = prettyDateTime.isOneDayAgo(
       this.lastMessagedAt.toString()
     );*/
-    return prettyDateTime.isOneDayAgo(this.lastMessagedAt.toString());
+    return (
+      this.lastMessagedAt !== undefined &&
+      prettyDateTime.isOneDayAgo(this.lastMessagedAt.toString())
+    );
   };
 }
 

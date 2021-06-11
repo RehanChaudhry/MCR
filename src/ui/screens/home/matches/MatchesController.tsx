@@ -37,6 +37,8 @@ import { CreateConversationRequestModel } from "models/api_requests/CreateConver
 import { CreateConversationResponseModel } from "models/api_responses/CreateConversationResponseModel";
 import ChatApis from "repo/chat/ChatApis";
 import SimpleToast from "react-native-simple-toast";
+import _ from "lodash";
+import { Conversation } from "models/api_responses/ChatsResponseModel";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -77,15 +79,41 @@ const MatchesController: FC<Props> = () => {
   }, [navigation, themedColors]);
 
   const moveToChatScreen = async (profileMatch: RelationModel) => {
-    const { hasError } = await createConversationAPi.request([
-      { userIds: [user?.profile?.id!!, profileMatch.id] }
+    const { hasError, dataBody } = await createConversationAPi.request([
+      { userIds: [user?.profile?.id!!, profileMatch.user?.id!] }
     ]);
 
     if (!hasError) {
+      //update active chat list context
+
+      //update active conversations list, only when new created chat is not present in archive chat list
+      //since, api will return previous chat if its already created
+      if (
+        !inActiveConversations?.find(
+          (item) => item.id === dataBody!.data.id
+        )
+      ) {
+        // @ts-ignore
+        setActiveConversations?.((prevState) => {
+          if (prevState !== undefined) {
+            return [
+              dataBody!.data,
+              ..._.without(
+                prevState as Conversation[],
+                prevState?.find((item) => item.id === dataBody!!.data.id)
+              )
+            ];
+          } else {
+            return [dataBody!.data];
+          }
+        });
+      }
+
       navigation.navigate("Chat", {
         title: [
           profileMatch.user?.getFullName() ?? STRINGS.common.not_found
-        ]
+        ],
+        conversationId: dataBody!.data.id!
       });
     } else {
       SimpleToast.show("Something went wrong!");
@@ -103,6 +131,7 @@ const MatchesController: FC<Props> = () => {
   };
 
   const moveToRoommateRequests = useCallback(
+    //@typescript-eslint/no-shadow
     (_: RelationModel) => {
       navigation.navigate("ConnectRequests", {
         title: "Roommate Requests",
@@ -150,7 +179,9 @@ const MatchesController: FC<Props> = () => {
     addListenerOnResetData,
     removeListenerOnResetData,
     matches: profileMatches,
-    setMatches: setProfileMatches
+    setMatches: setProfileMatches,
+    setActiveConversations,
+    inActiveConversations
   } = useContext(MyFriendsContext);
 
   useEffect(() => {

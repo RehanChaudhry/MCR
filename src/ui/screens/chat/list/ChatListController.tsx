@@ -134,6 +134,7 @@ export const ChatListController: FC<Props> = ({
     //check if conversation is read by current user if not fire  event to notify
     // other users you have read the message
     if (
+      _.isArray(item.message) &&
       item.message.length > 0 &&
       item.message[0].readBy.find((id) => id === user?.profile?.id!!) ===
         undefined
@@ -189,14 +190,10 @@ export const ChatListController: FC<Props> = ({
         );
 
         if (findItem !== undefined) {
-          if ([findItem, ...prevState].length < 10) {
-            setIsAllDataLoaded(true);
-          }
-
-          setIsAllDataLoaded([findItem, ...prevState].length < 10);
+          setIsAllDataLoaded([findItem, ...(prevState || [])].length < 10);
 
           // @ts-ignore
-          return [findItem, ...prevState];
+          return [findItem, ...(prevState || [])];
         }
 
         return prevState;

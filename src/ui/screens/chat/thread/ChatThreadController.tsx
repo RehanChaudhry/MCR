@@ -108,7 +108,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
           onPress={async () => {
             await handleUpdateConversationApi();
           }}
-          shouldSHowLoader={updateConversationApi.loading}
+          shouldShowLoader={updateConversationApi.loading}
           textStyle={{ color: COLORS.red }}
           icon={() => (
             <Archive
