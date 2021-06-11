@@ -5,11 +5,16 @@ import { apiClient } from "repo/Client";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
+import RelationFilterType from "models/enums/RelationFilterType";
 
 function relations(request: PaginationParamsModel) {
-  return apiClient.get<RelationApiResponseModel>(API.RELATION, {
-    ...request
-  });
+  return apiClient.get<RelationApiResponseModel>(
+    API.RELATION +
+      (request.type === RelationFilterType.MATCHES ? API.MATCHES : ""),
+    {
+      ...request
+    }
+  );
 }
 
 function sendFriendOrRoommateRequest(

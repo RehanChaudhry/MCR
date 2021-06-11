@@ -1,4 +1,5 @@
 import { SPACE } from "config";
+import { useAuth } from "hooks";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import { FilterCount } from "models/enums/FeedsTypeFilter";
@@ -40,6 +41,7 @@ export const CommunityView = React.memo<Props>(
     error,
     filterDataBy
   }) => {
+    const auth = useAuth();
     const keyExtractor = useCallback(
       (item: CommunityAnnouncement) => item.id.toString(),
       []
@@ -52,10 +54,10 @@ export const CommunityView = React.memo<Props>(
           openCommentsScreen={openCommentsScreen}
           shouldPlayVideo={shouldPlayVideo}
           openReportContentScreen={openReportContentScreen}
-          shouldShowRightIcon={true}
+          shouldShowRightIcon={item.postedBy !== auth.user?.profile?.id}
         />
       ),
-      [openCommentsScreen, shouldPlayVideo, openReportContentScreen]
+      [openCommentsScreen, shouldPlayVideo, openReportContentScreen, auth]
     );
     function getFeedsFilterData(): Item[] {
       return feedsFilterData.map((value) => {

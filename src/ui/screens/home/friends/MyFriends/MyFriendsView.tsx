@@ -180,7 +180,7 @@ const MyFriendsView: FC<Props> = ({
     <>
       <Screen shouldAddBottomInset={false}>
         <FlatListWithPb
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item.userId.toString()}
           style={styles.list}
           shouldShowProgressBar={isLoading}
           isAllDataLoaded={!canLoadMore}

@@ -214,7 +214,7 @@ const RelationItem = ({
             ]}
             text={relationModel.user?.getSubtitle()}
           />
-          {relationModel.matchScore && (
+          {relationModel.matchScore !== undefined && (
             <MatchScore
               style={styles.matchScore}
               matchScore={`${relationModel.matchScore}%`}

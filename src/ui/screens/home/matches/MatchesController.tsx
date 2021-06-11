@@ -200,7 +200,7 @@ const MatchesController: FC<Props> = () => {
 
       setTotalCount(dataBody.count ?? 0);
       if (dataBody!.data?.length === 10) {
-        requestModel.current.page = requestModel.current.page!! + 1;
+        requestModel.current.page = requestModel.current.page! + 1;
       } else {
         setIsAllDataLoaded(true);
       }

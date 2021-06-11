@@ -1,10 +1,4 @@
-import React, {
-  FC,
-  useCallback,
-  //useContext,
-  useLayoutEffect,
-  useState
-} from "react";
+import React, { FC, useCallback, useLayoutEffect, useState } from "react";
 import { UpdateProfileView } from "ui/screens/home/profile/update_profile/UpdateProfileView";
 import {
   RouteProp,
@@ -101,6 +95,19 @@ const UpdateProfileController: FC<Props> = () => {
             onPress={openQuestionnaireScreen}
             updateProfileRequest={{
               queryParams: Api.COMPLETE_PROFILE_QUERY_PARAMS
+            }}
+          />
+        )
+      });
+    } else if (route.params.isFrom === EScreen.MATCH_INFO) {
+      setInfoTextShown(true);
+      navigation.setOptions({
+        headerTitleAlign: "center",
+        headerTitle: () => <HeaderTitle text="Update Profile" />,
+        headerLeft: () => (
+          <HeaderLeftTextWithIcon
+            onPress={() => {
+              navigation.pop();
             }}
           />
         )

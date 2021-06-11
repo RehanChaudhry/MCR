@@ -61,7 +61,6 @@ const MatchInfoController: FC<Props> = () => {
     RelationApiResponseModel
   >(RelationApis.relations);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [matchInfo, setMatchInfo] = useState<MatchInfoApiResponseModel>();
   const [roommate, setRoommate] = useState<RelationApiResponseModel>();
 
@@ -82,7 +81,10 @@ const MatchInfoController: FC<Props> = () => {
     AppLog.log(
       "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
     );
-    navigation.navigate("Profile", { isFrom: EScreen.MATCH_INFO });
+    navigation.navigate("Profile", {
+      isFrom: EScreen.MATCH_INFO,
+      updateProfile: true
+    });
   };
 
   const moveToRoommateAgreementScreen = () => {
@@ -148,8 +150,8 @@ const MatchInfoController: FC<Props> = () => {
 
   return (
     <ProgressErrorView
-      isLoading={false}
-      error={undefined}
+      isLoading={matchInfoApi.loading || roommatesApi.loading}
+      error={matchInfoApi.error || roommatesApi.error}
       errorView={(message) => {
         return (
           <View>
@@ -157,19 +159,17 @@ const MatchInfoController: FC<Props> = () => {
           </View>
         );
       }}
-      data={matchInfo}>
-      {matchInfo && roommate && (
-        <MatchInfoView
-          userProfile={user?.profile!}
-          matchInfo={matchInfo?.data!!}
-          moveToChatScreen={moveToChatScreen}
-          moveToProfileScreen={moveToProfileScreen}
-          moveToRoommateAgreementScreen={moveToRoommateAgreementScreen}
-          moveToUpdateProfileScreen={moveToUpdateProfileScreen}
-          moveToQuestionnaireScreen={moveToQuestionnaireScreen}
-          relationModel={roommate.data!!}
-        />
-      )}
+      data={matchInfo && roommate}>
+      <MatchInfoView
+        userProfile={user?.profile!}
+        matchInfo={matchInfo?.data!!}
+        moveToChatScreen={moveToChatScreen}
+        moveToProfileScreen={moveToProfileScreen}
+        moveToRoommateAgreementScreen={moveToRoommateAgreementScreen}
+        moveToUpdateProfileScreen={moveToUpdateProfileScreen}
+        moveToQuestionnaireScreen={moveToQuestionnaireScreen}
+        roommates={roommate?.data}
+      />
     </ProgressErrorView>
   );
 };
