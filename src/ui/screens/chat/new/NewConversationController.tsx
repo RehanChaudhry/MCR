@@ -1,6 +1,7 @@
 import React, {
   FC,
   useCallback,
+  useContext,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -27,6 +28,7 @@ import { CreateConversationRequestModel } from "models/api_requests/CreateConver
 import SimpleToast from "react-native-simple-toast";
 import { CreateConversationResponseModel } from "models/api_responses/CreateConversationResponseModel";
 import { User } from "models/User";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 
 type ConversationNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -48,6 +50,8 @@ export const NewConversationController: FC<Props> = () => {
   >(undefined);
   const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
   const [clearInputField, setClearInputField] = useState<boolean>(false);
+
+  const { setActiveConversations } = useContext(MyFriendsContext);
 
   const openChatThreadScreen = useCallback(
     (conversationId: number) => {
@@ -112,6 +116,15 @@ export const NewConversationController: FC<Props> = () => {
               result.errorBody ?? Strings.somethingWentWrong
             );
           } else {
+            //update active chat list context
+            setActiveConversations?.((prevState) => {
+              if (prevState !== undefined) {
+                return [result.dataBody!.data, ...prevState];
+              } else {
+                return [result.dataBody!.data];
+              }
+            });
+
             openChatThreadScreen(result.dataBody!!.data.id);
           }
         })
@@ -125,7 +138,8 @@ export const NewConversationController: FC<Props> = () => {
     navigation,
     openChatThreadScreen,
     newConversations,
-    handleCreateConversationApi
+    handleCreateConversationApi,
+    setActiveConversations
   ]);
 
   useLayoutEffect(() => {

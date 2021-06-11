@@ -9,8 +9,9 @@ export class Conversation {
   createdBy!: number;
   createdAt!: Date;
   updatedAt!: Date;
+  currentUser!: User[];
   conversationUsers!: User[];
-  message!: Message[];
+  message!: Message[] | null;
 
   constructor(activityLog: Conversation) {
     Object.assign(this, activityLog);

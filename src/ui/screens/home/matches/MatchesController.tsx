@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import InfoCircle from "assets/images/info_circle.svg";
 import { STRINGS } from "config";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
@@ -33,6 +33,10 @@ import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
+import { CreateConversationRequestModel } from "models/api_requests/CreateConversationRequestModel";
+import { CreateConversationResponseModel } from "models/api_responses/CreateConversationResponseModel";
+import ChatApis from "repo/chat/ChatApis";
+import SimpleToast from "react-native-simple-toast";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -45,6 +49,12 @@ const MatchesController: FC<Props> = () => {
   AppLog.log("Opening MatchesController");
   const { themedColors } = usePreferredTheme();
   const navigation = useNavigation<MatchesNavigationProp>();
+
+  const { user } = useAuth();
+  const createConversationAPi = useApi<
+    CreateConversationRequestModel,
+    CreateConversationResponseModel
+  >(ChatApis.createConversations);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -66,13 +76,20 @@ const MatchesController: FC<Props> = () => {
     });
   }, [navigation, themedColors]);
 
-  const moveToChatScreen = (profileMatch: RelationModel) => {
-    // AppLog.log(
-    //   "moveToChatScreen(), profile: " + JSON.stringify(profileMatch)
-    // );
-    navigation.navigate("Chat", {
-      title: [profileMatch.user?.getFullName() ?? STRINGS.common.not_found]
-    });
+  const moveToChatScreen = async (profileMatch: RelationModel) => {
+    const { hasError } = await createConversationAPi.request([
+      { userIds: [user?.profile?.id!!, profileMatch.id] }
+    ]);
+
+    if (!hasError) {
+      navigation.navigate("Chat", {
+        title: [
+          profileMatch.user?.getFullName() ?? STRINGS.common.not_found
+        ]
+      });
+    } else {
+      SimpleToast.show("Something went wrong!");
+    }
   };
 
   const moveToProfileScreen = (profileMatch: RelationModel) => {
@@ -183,7 +200,7 @@ const MatchesController: FC<Props> = () => {
 
       setTotalCount(dataBody.count ?? 0);
       if (dataBody!.data?.length === 10) {
-        requestModel.current.page = requestModel.current.page + 1;
+        requestModel.current.page = requestModel.current.page!! + 1;
       } else {
         setIsAllDataLoaded(true);
       }

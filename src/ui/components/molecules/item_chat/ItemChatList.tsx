@@ -18,6 +18,7 @@ import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
 import { User } from "models/User";
+import _ from "lodash";
 
 export interface ItemChatListProps extends ViewStyle {
   onPress: () => void;
@@ -37,7 +38,9 @@ export const ItemChatList = React.memo<ItemChatListProps>(
       "h ago"
     ).getPrettyTime(item.lastMessagedAt.toString());
 
-    const isMessageRead =
+    let isMessageRead = false;
+    isMessageRead =
+      _.isArray(item.message) &&
       item.message.length > 0 &&
       item.message[0].readBy.find(
         (userId) => userId === user?.profile?.id
@@ -109,7 +112,9 @@ export const ItemChatList = React.memo<ItemChatListProps>(
                 isMessageRead
               )}
               text={
-                item.message[0] !== undefined ? item.message[0].text : ""
+                _.isArray(item.message) && item.message[0] !== undefined
+                  ? item.message[0].text
+                  : ""
               }
               numberOfLines={2}
               ellipsizeMode="tail"
