@@ -321,7 +321,8 @@ export default {
       success: "Yes, send request"
     },
     cancel_request: {
-      title: "Cancel Request",
+      title_cancel_friend_request: "Cancel Friend Request",
+      title_cancel_roommate_request: "Cancel Roommate Request",
       success: "Yes, cancel request"
     }
   },

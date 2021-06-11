@@ -1,4 +1,5 @@
 import { FONT_SIZE, SPACE, STRINGS } from "config";
+import Strings from "config/Strings";
 import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 import EGender from "models/enums/EGender";
 import MatchesTypeFilter, {
@@ -200,10 +201,14 @@ export const MatchesView: React.FC<Props> = ({
         shouldShow={isCancelRequestDialogVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideCancelRequestAlert}
-        title={STRINGS.dialogs.cancel_request.title}
-        message={`Are you sure you want to cancel request to ${
-          getSelectedItem()?.user?.getFullName() ?? "N/A"
-        }?`}
+        title={
+          profileMatch?.current?.isFriend === 0
+            ? Strings.dialogs.cancel_request.title_cancel_friend_request
+            : Strings.dialogs.cancel_request.title_cancel_roommate_request
+        }
+        message={`Are you sure you want to cancel ${
+          profileMatch?.current?.isFriend === 0 ? "friend" : "roommate"
+        } request to ${getSelectedItem()?.user?.getFullName() ?? "N/A"}?`}
         firstButtonText={STRINGS.dialogs.cancel_request.success}
         type={Type.CANCEL}
         errorMessage="Unable to send cancel request"
