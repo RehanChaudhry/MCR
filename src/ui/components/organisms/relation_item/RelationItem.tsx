@@ -24,24 +24,40 @@ import RequestStateIcon from "assets/images/request_state_icon.svg";
 
 interface Props {
   relationModel: RelationModel;
-  onCrossClicked: (relationModel: RelationModel) => void;
+  onCrossClicked?: (relationModel: RelationModel) => void;
   onChatButtonClicked: (relationModel: RelationModel) => void;
   onImageClicked: (relationModel: RelationModel) => void;
-  onRoommateRequestClicked: (relationModel: RelationModel) => void;
-  onCancelRequestClicked: (relationModel: RelationModel) => void;
-  onRequestReceivedClicked: (relationModel: RelationModel) => void;
-  onFriendRequestClicked?: (relationModel: RelationModel) => void;
-  onNotEligibleClicked?: (relationModel: RelationModel) => void;
+  onRoommateRequestActionButtonClicked?: (
+    relationModel: RelationModel
+  ) => void;
+  onCancelRequestActionButtonClicked?: (
+    relationModel: RelationModel
+  ) => void;
+  onRequestReceivedActionButtonClicked?: (
+    relationModel: RelationModel
+  ) => void;
+  onFriendRequestActionButtonClicked?: (
+    relationModel: RelationModel
+  ) => void;
+  onNotEligibleActionButtonClicked?: (
+    relationModel: RelationModel
+  ) => void;
+  onRemoveRoommateActionButtonClicked?: (
+    relationModel: RelationModel
+  ) => void;
 }
 
 function createActionButton(
   relationModel: RelationModel,
   themedColors: ColorPalette,
-  onCancelRequestClicked: (relationModel: RelationModel) => void,
-  onRoommateRequestClicked: (relationModel: RelationModel) => void,
-  onRequestReceivedClicked: (relationModel: RelationModel) => void,
+  onCancelRequestClicked?: (relationModel: RelationModel) => void,
+  onRoommateRequestClicked?: (relationModel: RelationModel) => void,
+  onRequestReceivedClicked?: (relationModel: RelationModel) => void,
   onFriendRequestClicked?: (relationModel: RelationModel) => void,
-  onNotEligibleClicked?: (relationModel: RelationModel) => void
+  onNotEligibleClicked?: (relationModel: RelationModel) => void,
+  onRemoveRoommateActionButtonClicked?: (
+    relationModel: RelationModel
+  ) => void
 ) {
   let actionButton: React.ReactElement;
   const { relationType, actionPerformed, eligible } = getRelationStatus(
@@ -71,7 +87,7 @@ function createActionButton(
       actionButton = (
         <AppButton
           onPress={() => {
-            onCancelRequestClicked(relationModel);
+            onCancelRequestClicked?.(relationModel);
           }}
           fontWeight={"semi-bold"}
           textStyle={[
@@ -110,7 +126,7 @@ function createActionButton(
         actionButton = (
           <AppButton
             onPress={() => {
-              onRoommateRequestClicked(relationModel);
+              onRoommateRequestClicked?.(relationModel);
             }}
             fontWeight={"semi-bold"}
             textStyle={[
@@ -131,7 +147,7 @@ function createActionButton(
       actionButton = (
         <AppButton
           onPress={() => {
-            onRequestReceivedClicked(relationModel);
+            onRequestReceivedClicked?.(relationModel);
           }}
           fontWeight={"semi-bold"}
           textStyle={[
@@ -149,7 +165,7 @@ function createActionButton(
       actionButton = (
         <AppButton
           onPress={() => {
-            onCancelRequestClicked(relationModel);
+            onCancelRequestClicked?.(relationModel);
           }}
           fontWeight={"semi-bold"}
           textStyle={[
@@ -164,21 +180,37 @@ function createActionButton(
         />
       );
     }
+  } else if (relationType === RelationType.ROOMMATE) {
+    actionButton = (
+      <AppButton
+        onPress={() => {
+          onRemoveRoommateActionButtonClicked?.(relationModel);
+        }}
+        fontWeight={"semi-bold"}
+        textStyle={[styles.btnActionText, { color: themedColors.danger }]}
+        buttonStyle={[
+          styles.btnAction,
+          { backgroundColor: themedColors.dangerShade }
+        ]}
+        text={STRINGS.matches.label_remove_roommate}
+      />
+    );
   }
 
   return actionButton!;
 }
 
-const RelationItem = ({
+const RelationListsItem = ({
   relationModel,
   onCrossClicked,
   onChatButtonClicked,
   onImageClicked,
-  onRoommateRequestClicked,
-  onCancelRequestClicked,
-  onRequestReceivedClicked,
-  onFriendRequestClicked,
-  onNotEligibleClicked
+  onRoommateRequestActionButtonClicked,
+  onCancelRequestActionButtonClicked,
+  onRequestReceivedActionButtonClicked,
+  onFriendRequestActionButtonClicked,
+  onNotEligibleActionButtonClicked,
+  onRemoveRoommateActionButtonClicked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -238,17 +270,19 @@ const RelationItem = ({
             />
           </Pressable>
         )}
-        <Pressable
-          style={styles.icTopEndButtons}
-          onPress={() => {
-            onCrossClicked(relationModel);
-          }}>
-          <Cross
-            fill={themedColors.interface[400]}
-            width={moderateScale(20)}
-            height={moderateScale(20)}
-          />
-        </Pressable>
+        {onCrossClicked !== undefined && (
+          <Pressable
+            style={styles.icTopEndButtons}
+            onPress={() => {
+              onCrossClicked(relationModel);
+            }}>
+            <Cross
+              fill={themedColors.interface[400]}
+              width={moderateScale(20)}
+              height={moderateScale(20)}
+            />
+          </Pressable>
+        )}
       </View>
       <View style={styles.buttonContainer}>
         <AppImageBackground
@@ -268,11 +302,12 @@ const RelationItem = ({
         {createActionButton(
           relationModel,
           themedColors,
-          onCancelRequestClicked,
-          onRoommateRequestClicked,
-          onRequestReceivedClicked,
-          onFriendRequestClicked,
-          onNotEligibleClicked
+          onCancelRequestActionButtonClicked,
+          onRoommateRequestActionButtonClicked,
+          onRequestReceivedActionButtonClicked,
+          onFriendRequestActionButtonClicked,
+          onNotEligibleActionButtonClicked,
+          onRemoveRoommateActionButtonClicked
         )}
       </View>
     </View>
@@ -332,4 +367,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default RelationItem;
+export default RelationListsItem;

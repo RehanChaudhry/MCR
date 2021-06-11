@@ -3,7 +3,7 @@ import { usePreferredTheme } from "hooks";
 import RelationModel from "models/RelationModel";
 import React, { FC, useCallback, useContext } from "react";
 import { StyleSheet, View } from "react-native";
-import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
+import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
@@ -19,9 +19,7 @@ type Props = {
 const ThreeButtonsAlert: FC<Props> = React.memo(
   ({ shouldShow, getSelectedItem, hideSelf, title, message }) => {
     const theme = usePreferredTheme();
-    const { matches, setMatches, resetData } = useContext(
-      MyFriendsContext
-    );
+    const { matches, setMatches, resetData } = useContext(AppDataContext);
 
     const onMatchRemoved = useCallback(
       (id: number) => {

@@ -5,7 +5,7 @@ enum RelationFilterType {
   FRIENDS = "friends",
   CANCEL = "cancel",
   CONNECT_REQUEST = "connect_requests",
-  ROOMMATE = "roommate"
+  ROOMMATE = "roommates"
 }
 
 export default RelationFilterType;

@@ -12,7 +12,7 @@ import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import MatchesFilter from "ui/components/molecules/matches_filter/MatchesFilter";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import RelationItem from "ui/components/organisms/relation_item/RelationItem";
+import RelationListsItem from "ui/components/organisms/relation_item/RelationItem";
 import OptimizedBottomBreadCrumbs, {
   OptimizedBBCItem
 } from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
@@ -105,7 +105,7 @@ export const MatchesView: React.FC<Props> = ({
     ({ item }: { item: RelationModel }) => {
       const _item = new RelationModel(item);
       return (
-        <RelationItem
+        <RelationListsItem
           relationModel={_item}
           onCrossClicked={() => {
             profileMatch.current = _item;
@@ -113,16 +113,16 @@ export const MatchesView: React.FC<Props> = ({
           }}
           onChatButtonClicked={moveToChatScreen}
           onImageClicked={moveToProfileScreen}
-          onRoommateRequestClicked={() => {
+          onRoommateRequestActionButtonClicked={() => {
             profileMatch.current = _item;
             setRoommateDialogVisible(true);
           }}
-          onCancelRequestClicked={() => {
+          onCancelRequestActionButtonClicked={() => {
             profileMatch.current = _item;
             setCancelRequestDialogVisible(true);
           }}
-          onRequestReceivedClicked={moveToRoommateRequests}
-          onFriendRequestClicked={() => {
+          onRequestReceivedActionButtonClicked={moveToRoommateRequests}
+          onFriendRequestActionButtonClicked={() => {
             profileMatch.current = _item;
             setFriendRequestDialogVisible(true);
           }}

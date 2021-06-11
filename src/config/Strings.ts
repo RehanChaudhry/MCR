@@ -106,7 +106,8 @@ export default {
     title: "Matches",
     label_not_eligible: "Not Eligible",
     label_roommate_request: "Roommate Request",
-    label_request_received: "Request Received"
+    label_request_received: "Request Received",
+    label_remove_roommate: "Remove Roommate"
   },
   profile: {
     title:

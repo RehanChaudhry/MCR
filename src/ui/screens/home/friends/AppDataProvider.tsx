@@ -11,6 +11,8 @@ import React, {
 type AppDataContextType = {
   myFriends?: RelationModel[];
   setMyFriends?: Dispatch<SetStateAction<RelationModel[] | undefined>>;
+  myRoommates?: RelationModel[];
+  setMyRoommates?: Dispatch<SetStateAction<RelationModel[] | undefined>>;
   matches?: RelationModel[];
   setMatches?: Dispatch<SetStateAction<RelationModel[] | undefined>>;
   addListenerOnResetData: (listener: () => void) => void;
@@ -18,13 +20,14 @@ type AppDataContextType = {
   resetData: () => void;
 };
 
-export const MyFriendsContext = React.createContext<AppDataContextType>(
+export const AppDataContext = React.createContext<AppDataContextType>(
   // @ts-ignore
   {}
 );
 
 const AppDataProvider: FC = (props) => {
   const [myFriends, setMyFriends] = useState<RelationModel[]>();
+  const [myRoommates, setMyRoommates] = useState<RelationModel[]>();
   const [matches, setMatches] = useState<RelationModel[]>();
   const listenersRef = useRef<Array<() => void>>([]);
   const addListenerOnResetData = useCallback((listener: () => void) => {
@@ -40,18 +43,20 @@ const AppDataProvider: FC = (props) => {
   }, []);
 
   return (
-    <MyFriendsContext.Provider
+    <AppDataContext.Provider
       value={{
-        myFriends: myFriends,
-        setMyFriends: setMyFriends,
-        matches: matches,
-        setMatches: setMatches,
-        addListenerOnResetData: addListenerOnResetData,
-        removeListenerOnResetData: removeListenerOnResetData,
-        resetData: resetData
+        myFriends,
+        setMyFriends,
+        myRoommates,
+        setMyRoommates,
+        matches,
+        setMatches,
+        addListenerOnResetData,
+        removeListenerOnResetData,
+        resetData
       }}>
       {props.children}
-    </MyFriendsContext.Provider>
+    </AppDataContext.Provider>
   );
 };
 
