@@ -254,10 +254,11 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
 
     // @ts-ignore
     setMessages((prevState) => {
-      return _.uniqBy(
-        [...[prepareMessage], ...(prevState || [])] as Message[],
-        (item: Message) => item.id
+      AppLog.logForcefully(
+        "testing messages : " +
+          JSON.stringify([...[prepareMessage], ...(prevState || [])])
       );
+      return [...[prepareMessage], ...(prevState || [])];
     });
 
     if (params?.isArchived) {
