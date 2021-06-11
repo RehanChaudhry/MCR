@@ -131,7 +131,6 @@ const MatchesController: FC<Props> = () => {
   };
 
   const moveToRoommateRequests = useCallback(
-    //@typescript-eslint/no-shadow
     (_: RelationModel) => {
       navigation.navigate("ConnectRequests", {
         title: "Roommate Requests",
