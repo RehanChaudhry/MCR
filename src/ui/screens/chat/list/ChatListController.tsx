@@ -247,6 +247,31 @@ export const ChatListController: FC<Props> = ({
             return _.uniqBy([data], (item) => item.id);
           }
         });
+      } else {
+        setInActiveConversations?.((prevState: any) => {
+          let chatsCopy = _.cloneDeep(prevState);
+          if (chatsCopy?.length ?? -1 > 0) {
+            let findIndex = chatsCopy?.findIndex(
+              (item: any) => item.id === data.id
+            );
+
+            AppLog.logForcefully("inside if");
+            if (findIndex !== -1) {
+              //remove item at index
+              chatsCopy?.splice(findIndex!!, 1);
+
+              //add item at index 0
+              chatsCopy?.splice(0, 0, data);
+
+              return _.uniqBy(chatsCopy, (item) => item.id);
+            } else {
+              return prevState;
+            }
+          } else {
+            AppLog.logForcefully("inside else ");
+            return prevState;
+          }
+        });
       }
     });
 
