@@ -53,7 +53,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
   }, [pullToRefreshCallback]);
 
   function shouldShowError() {
-    return error !== undefined;
+    return error !== undefined && !dataHasRecords();
   }
 
   function getErrorView() {
@@ -79,7 +79,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
   const footerWrapper = React.memo<Props<any>>(() => {
     return (
       <>
-        {!isAllDataLoaded && data !== undefined && (
+        {!isAllDataLoaded && data !== undefined && error === undefined && (
           <View style={styles.loadMore}>
             <AppLoadMore testID="loader" />
           </View>
@@ -103,7 +103,11 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
           onRefresh={
             pullToRefreshCallback === undefined ? undefined : onRefresh
           }
-          onEndReached={isAllDataLoaded ? undefined : onEndReached}
+          onEndReached={
+            isAllDataLoaded || error !== undefined
+              ? undefined
+              : onEndReached
+          }
           ItemSeparatorComponent={ItemSeparatorHeaderAndFooterComponent}
           ListHeaderComponent={ItemSeparatorHeaderAndFooterComponent}
           ListFooterComponent={footerWrapper}

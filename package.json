@@ -42,6 +42,7 @@
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
+    "react-id-generator": "^3.0.1",
     "react-native": "0.63.4",
     "react-native-check-box": "^2.1.7",
     "react-native-cli": "^2.0.1",

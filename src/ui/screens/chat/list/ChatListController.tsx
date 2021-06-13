@@ -93,6 +93,7 @@ export const ChatListController: FC<Props> = ({
       dataBody.data === undefined
     ) {
       AppLog.log("ChatList => Unable to find chats " + errorBody);
+      setShouldShowProgressBar(false);
       return;
     } else {
       setChatsData((prevState) => {
@@ -241,10 +242,10 @@ export const ChatListController: FC<Props> = ({
 
               return _.uniqBy(chatsCopy, (item) => item.id);
             } else {
-              return _.uniqBy([data, ...chatsCopy!!], (item) => item.id);
+              return [data, ...chatsCopy!!];
             }
           } else {
-            return _.uniqBy([data], (item) => item.id);
+            return [data];
           }
         });
       } else {
@@ -258,12 +259,12 @@ export const ChatListController: FC<Props> = ({
             AppLog.logForcefully("inside if");
             if (findIndex !== -1) {
               //remove item at index
-              chatsCopy?.splice(findIndex!!, 1);
+              chatsCopy?.splice(findIndex!, 1);
 
               //add item at index 0
               chatsCopy?.splice(0, 0, data);
 
-              return _.uniqBy(chatsCopy, (item) => item.id);
+              return chatsCopy;
             } else {
               return prevState;
             }

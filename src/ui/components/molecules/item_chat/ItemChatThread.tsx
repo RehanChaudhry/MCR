@@ -5,62 +5,88 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { useAuth, usePreferredTheme } from "hooks";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import Message from "models/Message";
+import { ContinuousProgress } from "ui/components/molecules/continuous_progress/ContinuousProgress";
 
 export interface ItemChatThreadProps extends ViewStyle {
   item: Message | undefined;
   style?: StyleProp<ViewStyle>;
+  retry?: (message: Message) => void;
 }
 
 export const ItemChatThread = React.memo<ItemChatThreadProps>(
-  ({ style, item }) => {
+  ({ style, item, retry }) => {
     const { themedColors } = usePreferredTheme();
     const currentUser = useAuth();
-
-    let prettyTime = new PrettyTimeFormat().getPrettyTime(
-      item!!.createdAt
+    const DateFormatter = new PrettyTimeFormat();
+    const [prettyTime, setPrettyTime] = useState<string>(
+      DateFormatter.getPrettyTime((item!.createdAt as unknown) as string)
     );
 
-    return (
-      <View style={[styles.container, style]}>
-        <Image
-          style={styles.imgStyle}
-          source={
-            item?.profilePicture?.fileURL !== undefined
-              ? { uri: item?.profilePicture?.fileURL }
-              : require("assets/images/profile.png")
-          }
-        />
+    useEffect(() => {
+      let id = setTimeout(() => {
+        setPrettyTime(
+          DateFormatter.getPrettyTime(
+            (item!.createdAt as unknown) as string
+          )
+        );
+      }, 10000);
+      return () => {
+        clearTimeout(id);
+      };
+    });
 
-        <View
-          style={styles.textWrapper(
-            themedColors,
-            item?.userId === currentUser.user?.profile?.id
-          )}>
-          <View style={styles.nameContainer}>
+    return (
+      <View style={{ flexDirection: "column" }}>
+        <View style={[styles.container, style]}>
+          <Image
+            style={styles.imgStyle}
+            source={
+              item?.profilePicture?.fileURL !== undefined
+                ? { uri: item?.profilePicture?.fileURL }
+                : require("assets/images/profile.png")
+            }
+          />
+
+          <View
+            style={styles.textWrapper(
+              themedColors,
+              item?.userId === currentUser.user?.profile?.id
+            )}>
+            <View style={styles.nameContainer}>
+              <AppLabel
+                style={styles.nameText(themedColors)}
+                text={item?.firstName + " " + item?.lastName}
+                weight="semi-bold"
+              />
+              <AppLabel
+                style={styles.timeText(themedColors)}
+                text={prettyTime}
+                weight="normal"
+              />
+            </View>
             <AppLabel
-              style={styles.nameText(themedColors)}
-              text={item?.firstName + " " + item?.lastName}
-              weight="semi-bold"
-            />
-            <AppLabel
-              style={styles.timeText(themedColors)}
-              text={prettyTime}
+              style={styles.messageText(themedColors)}
+              text={item?.text}
+              numberOfLines={0}
+              ellipsizeMode="tail"
               weight="normal"
             />
           </View>
-          <AppLabel
-            style={styles.messageText(themedColors)}
-            text={item?.text}
-            numberOfLines={0}
-            ellipsizeMode="tail"
-            weight="normal"
+        </View>
+        <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+          <ContinuousProgress
+            isLoading={item!.isLoading}
+            isError={item!.isError}
+            retryCallback={() => {
+              retry?.(item!);
+            }}
           />
         </View>
       </View>

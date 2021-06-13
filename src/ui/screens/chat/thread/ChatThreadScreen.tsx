@@ -16,6 +16,8 @@ type Props = {
   isAllDataLoaded: boolean;
   error: string | undefined;
   onEndReached: () => void;
+  retry?: (message: Message) => void;
+  retryCallback: () => void;
 };
 
 export const ChatThreadScreen = React.memo<Props>(
@@ -25,11 +27,13 @@ export const ChatThreadScreen = React.memo<Props>(
     shouldShowProgressBar,
     isAllDataLoaded,
     error,
-    onEndReached
+    onEndReached,
+    retry,
+    retryCallback
   }) => {
     const renderItem = ({ item }: { item: Message | undefined }) => {
       /* AppLog.log("rendering list item : " + JSON.stringify(item));*/
-      return <ItemChatThread item={item} />;
+      return <ItemChatThread item={item} retry={retry} />;
     };
 
     function sentMessage(text: string) {
@@ -48,6 +52,7 @@ export const ChatThreadScreen = React.memo<Props>(
           error={error}
           isAllDataLoaded={isAllDataLoaded}
           onEndReached={onEndReached}
+          retryCallback={retryCallback}
           keyExtractor={(item, index) => index.toString()}
           contentContainerStyle={[
             listContentContainerStyle,

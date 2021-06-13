@@ -39,6 +39,7 @@ import { Socket } from "socket.io-client";
 import { ChatHelper } from "utils/ChatHelper";
 import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
 import _ from "lodash";
+import nextId from "react-id-generator";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -194,13 +195,10 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       } = await loadMessages.request([loadMessagesRequestModel.current]);
       if (hasError || dataBody === undefined) {
         AppLog.logForcefully("Unable to find messages " + errorBody);
+        SimpleToast.show(Strings.something_went_wrong);
         setShouldShowProgressBar(false);
         return;
       } else {
-        AppLog.logForcefully(
-          "Just before my messages wrapper : " +
-            JSON.stringify(dataBody.data)
-        );
         setMessages((prevState) => {
           return _.uniqBy(
             [
@@ -234,8 +232,23 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     await handleLoadMessagesApi();
   }, [handleLoadMessagesApi]);
 
-  function sentMessageToSocket(text: string) {
-    let prepareMessage = {
+  function sentMessageToSocket(
+    text: string,
+    id?: number,
+    isRetry = false
+  ) {
+    let generateId = nextId(
+      (messages?.length ?? 0) > 0 ? messages![0].id!.toString() : "0"
+    ).split(
+      (messages?.length ?? 0) > 0 ? messages![0].id!.toString() : "0"
+    );
+
+    id = id ?? Number(generateId[0]) + Number(generateId[1]);
+
+    AppLog.logForcefully("message id : " + JSON.stringify(id));
+
+    let prepareMessage = ({
+      id: id,
       userId: user?.profile?.id,
       firstName: user?.profile?.firstName,
       lastName: user?.profile?.lastName,
@@ -245,33 +258,74 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       readBy: [user?.profile?.id],
       createdAt: new Date(),
       updatedAt: new Date(),
-      userType: "Student"
-    };
+      userType: "Student",
+      isLoading: false,
+      isError: false
+    } as unknown) as Message;
 
+    AppLog.logForcefully(
+      "socket status : " + JSON.stringify(socket?.current?.connected)
+    );
     if (socket?.current?.connected ?? false) {
       socket!!.current!!.emit("sendMessage", prepareMessage);
+
+      //check if this chat is opened from archive list
+      if (params?.isArchived) {
+        //if chat is in archive and you message, the conversation has to move into active chats
+        ChatHelper.manipulateChatLists(
+          setActiveConversations,
+          inActiveConversations,
+          setInActiveConversations,
+          activeConversations,
+          false,
+          conversationId,
+          (prepareMessage as unknown) as Message
+        );
+      }
+    } else {
+      //update message but with retry option
+      prepareMessage.isLoading = false;
+      prepareMessage.isError = true;
     }
 
-    // @ts-ignore
-    setMessages((prevState) => {
-      AppLog.logForcefully(
-        "testing messages : " +
-          JSON.stringify([...[prepareMessage], ...(prevState || [])])
-      );
-      return [...[prepareMessage], ...(prevState || [])];
-    });
+    //update messages list after sending message
+    if (!isRetry) {
+      // @ts-ignore
+      setMessages((prevState) => {
+        return [...[prepareMessage], ...(prevState || [])];
+      });
+    } else {
+      //update message since we are retrying
+      setMessages((prevState) => {
+        let messagesDeepCopy = _.cloneDeep(prevState);
 
-    if (params?.isArchived) {
-      //if chat is in archive and you message, the conversation has to move into active chats
-      ChatHelper.manipulateChatLists(
-        setActiveConversations,
-        inActiveConversations,
-        setInActiveConversations,
-        activeConversations,
-        false,
-        conversationId,
-        (prepareMessage as unknown) as Message
-      );
+        let findIndex = messagesDeepCopy?.findIndex(
+          (item: any) => item.id === id
+        );
+
+        if (findIndex !== -1) {
+          let findItem = messagesDeepCopy?.find(
+            (_item) => _item.id === id
+          );
+
+          AppLog.log(
+            "prepare message : " + JSON.stringify(prepareMessage)
+          );
+
+          prepareMessage.createdAt = findItem?.createdAt as string;
+          prepareMessage.updatedAt = findItem?.updatedAt as string;
+
+          //remove item from index
+          messagesDeepCopy?.splice(findIndex!, 1);
+
+          //add item at index
+          messagesDeepCopy?.splice(findIndex!, 0, prepareMessage);
+
+          return messagesDeepCopy;
+        } else {
+          return prevState;
+        }
+      });
     }
   }
 
@@ -289,14 +343,19 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
 
     socket.current.on("receiveMessage", (data) => {
       setMessages((prevState) => {
-        return _.uniqBy(
-          [...data.message, ...(prevState === undefined ? [] : prevState)],
-          (item) => item.id
-        );
+        return [...data.message, ...(prevState || [])];
       });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const retry = (message: Message) => {
+    //  connectSocket().then().catch();
+    if (!socket?.current?.connected) {
+      socket?.current?.connect();
+    }
+    sentMessageToSocket(message.text, message.id, true);
+  };
 
   return (
     <ChatThreadScreen
@@ -306,6 +365,12 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       error={loadMessages.error}
       isAllDataLoaded={isAllDataLoaded}
       onEndReached={onEndReached}
+      retry={retry}
+      retryCallback={() => {
+        loadMessagesRequestModel.current.page = 1;
+        setMessages(undefined);
+        handleLoadMessagesApi().then().catch();
+      }}
     />
   );
 };
