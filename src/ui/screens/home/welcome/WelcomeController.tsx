@@ -14,7 +14,7 @@ import { StaticContentType } from "models/api_requests/StaticContentRequestModel
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { View } from "react-native";
-import WelcomeSkipTitleButton from "ui/components/molecules/welcome_skip_title_button/WelcomeSkipTitleButton";
+import SkipTitleButton from "ui/components/molecules/skip_title_button/SkipTitleButton";
 import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseModel";
 
 type WelcomeNavigationProp = StackNavigationProp<
@@ -51,7 +51,7 @@ const WelcomeController: FC<Props> = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <WelcomeSkipTitleButton
+        <SkipTitleButton
           onPress={openUpdateProfileScreen}
           updateProfileRequest={{
             welcomeVideoStatus: EWelcomeFlowStatus.SKIPPED

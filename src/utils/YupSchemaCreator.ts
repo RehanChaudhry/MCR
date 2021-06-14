@@ -1,30 +1,24 @@
 import * as Yup from "yup";
 import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
 import { SchemaOf } from "yup";
-import { AppLog } from "utils/Util";
 import { AgreementField } from "models/api_requests/GetAgreementApi";
 
 let FieldTypes = {
-  dropdown: (field: FormInputFieldData): SchemaOf<any> =>
-    Yup.object().required(field?.inputType + " field required."),
   text: (field: FormInputFieldData): SchemaOf<any> =>
     Yup.string()
-      .required(field?.inputType + " is required.")
+      .required(computeValidationMessage(field))
       .min(3, "Should be atleast 3 characters")
       .max(50, "should be less than 50 characters"),
-  checkbox: (field: FormInputFieldData): SchemaOf<any> => {
-    AppLog.log("remove warning " + field.inputType);
-    return Yup.array().notRequired();
-  },
-  radio: (field: FormInputFieldData): SchemaOf<any> => {
-    AppLog.log("remove warning " + field.inputType);
-    return Yup.string().notRequired();
-  },
+  dropdown: (field: FormInputFieldData): SchemaOf<any> =>
+    Yup.object().required(computeValidationMessage(field)),
+  checkbox: (field: FormInputFieldData): SchemaOf<any> =>
+    Yup.array().required(computeValidationMessage(field)),
+  radio: (field: FormInputFieldData): SchemaOf<any> =>
+    Yup.string().required(computeValidationMessage(field)),
   textarea: (field: FormInputFieldData): SchemaOf<any> =>
-    Yup.string().required(field?.inputType + " is required."),
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    Yup.string().required(computeValidationMessage(field)),
   agreement: (field: FormInputFieldData): SchemaOf<any> =>
-    Yup.string().notRequired()
+    Yup.string().required(computeValidationMessage(field))
 };
 
 export const createYupSchema = (
@@ -45,3 +39,7 @@ export const createYupSchema = (
 
   return Yup.object().shape(schema as any);
 };
+
+function computeValidationMessage(field: FormInputFieldData) {
+  return field?.name?.[0] + field.name?.slice(1) + " is required";
+}

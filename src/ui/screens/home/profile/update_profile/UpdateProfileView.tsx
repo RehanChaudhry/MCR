@@ -20,7 +20,6 @@ import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 import { AppLog } from "utils/Util";
 
 type Props = {
-  openUpdateQuestionnaireScreen: () => void;
   infoTextShown: boolean;
   handleUpdateProfile: (values: UpdateProfileRequestModel) => void;
   updateProfileUiData: Profile | undefined;
@@ -28,7 +27,6 @@ type Props = {
 };
 
 export const UpdateProfileView: React.FC<Props> = ({
-  //openUpdateQuestionnaireScreen,
   infoTextShown,
   handleUpdateProfile,
   updateProfileUiData,

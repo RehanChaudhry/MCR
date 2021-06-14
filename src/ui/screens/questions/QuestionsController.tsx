@@ -51,7 +51,7 @@ import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import { ProfileRootStackParamList } from "routes/ProfileRootStack";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseModel";
-import WelcomeSkipTitleButton from "ui/components/molecules/welcome_skip_title_button/WelcomeSkipTitleButton";
+import SkipTitleButton from "ui/components/molecules/skip_title_button/SkipTitleButton";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -119,7 +119,7 @@ const QuestionsController: FC<Props> = () => {
           />
         ),
         headerRight: () => (
-          <WelcomeSkipTitleButton
+          <SkipTitleButton
             onPress={moveToHomeScreen}
             updateProfileRequest={{
               questionnaireStatus: EWelcomeFlowStatus.SKIPPED

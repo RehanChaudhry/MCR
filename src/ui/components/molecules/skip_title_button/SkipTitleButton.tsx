@@ -15,7 +15,7 @@ interface Props {
   onPress?: () => void;
 }
 
-const WelcomeSkipTitleButton: React.FC<Props> = ({
+const SkipTitleButton: React.FC<Props> = ({
   updateProfileRequest,
   onPress
 }: Props) => {
@@ -88,4 +88,4 @@ const styles = StyleSheet.create({
   loader: { marginRight: SPACE.lg }
 });
 
-export default WelcomeSkipTitleButton;
+export default SkipTitleButton;
