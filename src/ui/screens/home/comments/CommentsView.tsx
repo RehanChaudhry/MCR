@@ -36,7 +36,7 @@ export const CommentsView = React.memo<Props>(
     const theme = usePreferredTheme();
 
     const renderItem = ({ item }: { item: Comment }) => {
-      AppLog.logForcefully("Rendering item " + item.id);
+      AppLog.logForcefully(() => "Rendering item " + item.id);
       return <ItemComment item={item} retry={retry} />;
     };
 
@@ -55,6 +55,7 @@ export const CommentsView = React.memo<Props>(
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           error={error}
+          noRecordFoundText="Be the first one to comment!'"
           contentContainerStyle={styles.listContainer}
           ItemSeparatorComponent={() => (
             <View style={styles.itemSeparator} />

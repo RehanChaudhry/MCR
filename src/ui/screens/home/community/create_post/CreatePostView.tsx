@@ -6,11 +6,16 @@ import { COLORS, FONT_SIZE, SPACE, STRINGS } from "config";
 import Strings from "config/Strings";
 import { FormikValues } from "formik";
 import { useAuth, usePreferredTheme } from "hooks";
+import { useImageUpload } from "hooks/useImageUpload";
+import _ from "lodash";
+import MyImagePickerResponse from "models/api_responses/MyImagePickerResponse";
 import React, { useCallback, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Tooltip } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import { ImagePickerResponse } from "react-native-image-picker";
 import SimpleToast from "react-native-simple-toast";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { EmbedButton } from "ui/components/atoms/compact_buttons/EmbedButton";
 import { LinkButton } from "ui/components/atoms/compact_buttons/LinkButton";
 import { PhotosButton } from "ui/components/atoms/compact_buttons/PhotosButton";
@@ -27,9 +32,6 @@ import { ImageWithCross } from "ui/components/molecules/image_with_cross/ImageWi
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, iframePattern, pattern, SvgProp } from "utils/Util";
 import * as Yup from "yup";
-import { useImageUpload } from "hooks/useImageUpload";
-import MyImagePickerResponse from "models/api_responses/MyImagePickerResponse";
-import _ from "lodash";
 
 type Props = {
   shouldShowProgressBar?: boolean;
@@ -62,6 +64,7 @@ export const CreatePostView = React.memo<Props>((props) => {
   const [images, setImages] = useState<MyImagePickerResponse[]>([]);
   const [postType, setPostType] = useState<POST_TYPES>(POST_TYPES.NONE);
   const imageGalleryResult = useImageUpload();
+  const auth = useAuth();
 
   let initialValues: FormikValues = {
     message: String,
@@ -106,8 +109,10 @@ export const CreatePostView = React.memo<Props>((props) => {
       <ImageWithCross
         imageResponse={item}
         onImageRemoved={(imageResponse) => {
-          AppLog.log(JSON.stringify(images));
-          AppLog.log("images length when item remove" + images.length);
+          AppLog.log(() => JSON.stringify(images));
+          AppLog.log(
+            () => "images length when item remove" + images.length
+          );
           setImages((prevState) => {
             return [
               ...prevState.filter((filteredImage) => {
@@ -181,7 +186,7 @@ export const CreatePostView = React.memo<Props>((props) => {
       <Screen style={styles.container} shouldAddBottomInset={false}>
         <View style={styles.cardView}>
           <AnnouncementHeader
-            title={Strings.whats_new}
+            title={`What’s new, ${auth.user?.profile?.firstName}?`}
             leftImageUrl={useAuth().user?.profile?.profilePicture.fileURL}
             shouldHideSubTitle={true}
             shouldHideBottomSeparator={true}
@@ -232,7 +237,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                       !postType.includes(POST_TYPES.PHOTOS) ||
                       images.length === 0
                     ) {
-                      AppLog.logForcefully("if");
+                      AppLog.logForcefully(() => "if");
                       setImages([]);
                       setPostType(POST_TYPES.PHOTOS);
                       openImageGallery();
@@ -246,7 +251,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                     if (!postType.includes(POST_TYPES.LINK)) {
                       setPostType(POST_TYPES.LINK);
                       setImages([]);
-                      AppLog.log("postType: " + postType);
+                      AppLog.log(() => "postType: " + postType);
                     }
                   }}
                 />
@@ -257,21 +262,35 @@ export const CreatePostView = React.memo<Props>((props) => {
                     if (!postType.includes(POST_TYPES.EMBED)) {
                       setPostType(POST_TYPES.EMBED);
                       setImages([]);
-                      AppLog.log("postType: " + postType);
+                      AppLog.log(() => "postType: " + postType);
                     }
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
-                <TouchableOpacity
-                  onPress={() =>
-                    SimpleToast.show("Clicked on info icon.")
-                  }>
+                <Tooltip
+                  popover={
+                    <AppLabel
+                      text="text"
+                      style={{ color: theme.themedColors.primary }}
+                    />
+                  }
+                  backgroundColor={theme.themedColors.interface["200"]}>
                   <InfoCircle
                     width={23}
                     height={23}
                     fill={theme.themedColors.interface["500"]}
                   />
-                </TouchableOpacity>
+                </Tooltip>
+                {/*<TouchableOpacity*/}
+                {/*  onPress={() =>*/}
+                {/*    SimpleToast.show("Clicked on info icon.")*/}
+                {/*  }>*/}
+                {/*  <InfoCircle*/}
+                {/*    width={23}*/}
+                {/*    height={23}*/}
+                {/*    fill={theme.themedColors.interface["500"]}*/}
+                {/*  />*/}
+                {/*</TouchableOpacity>*/}
               </View>
             </ScrollView>
             {postType !== POST_TYPES.NONE && (
@@ -430,7 +449,8 @@ const styles = StyleSheet.create({
     marginRight: SPACE.sm
   },
   list: {
-    marginTop: SPACE.lg
+    marginTop: SPACE.lg,
+    borderWidth: 1.0
     // flexGrow: 1,
     // flexBasis: 0
   },

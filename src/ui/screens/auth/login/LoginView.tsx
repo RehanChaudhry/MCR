@@ -30,11 +30,12 @@ type Props = {
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email()
-    .required(Strings.login.enter_valid_email_validation),
+    .email(Strings.login.enter_valid_email_validation)
+    .required(Strings.login.email_required_validation),
   password: Yup.string()
-    .required("Enter your password.")
+    .required(Strings.login.pass_required_validation)
     .matches(loginRegx, Strings.login.pass_validation)
+    .min(8, Strings.login.pass_validation)
 });
 
 let initialValues: FormikValues = {
@@ -52,7 +53,7 @@ export const LoginView = React.memo<Props>(
     const theme = usePreferredTheme();
 
     const onSubmit = (_value: FormikValues) => {
-      AppLog.log("form values" + initialValues);
+      AppLog.log(() => "form values" + initialValues);
       onLogin({
         email: _value.email,
         password: _value.password,

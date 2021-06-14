@@ -13,7 +13,7 @@ export const apiClient = create({
 resetApiClient();
 
 export function resetApiClient(providedAuthToken?: string) {
-  AppLog.log("Resetting Authorization Token...");
+  AppLog.log(() => "Resetting Authorization Token...");
   // clear all transforms
   apiClient.asyncRequestTransforms.length = 0;
   // add new transform
@@ -23,7 +23,7 @@ export function resetApiClient(providedAuthToken?: string) {
     let token =
       providedAuthToken ?? (await extractAndRefreshTokenIfExpire());
 
-    AppLog.log("Access Token: " + token);
+    AppLog.log(() => "Access Token: " + token);
 
     if (token === undefined) {
       return;
@@ -61,8 +61,8 @@ export const useApi = <
       setLoading(true);
       setError(undefined);
 
-      AppLog.logForcefully("Request Body:");
-      AppLog.logForcefully(args);
+      AppLog.logForcefully(() => "Request Body:");
+      AppLog.logForcefully(() => args);
 
       let response: any;
       try {
@@ -72,8 +72,8 @@ export const useApi = <
         AppLog.bug(e);
       }
 
-      AppLog.logForcefully("Response Body:");
-      AppLog.logForcefullyForComplexMessages(
+      AppLog.logForcefully(() => "Response Body:");
+      AppLog.logForcefully(
         () => response?.config?.url + ": " + JSON.stringify(response)
       );
 

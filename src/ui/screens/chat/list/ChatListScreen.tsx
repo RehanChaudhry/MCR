@@ -40,7 +40,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
     isAllDataLoaded,
     performSearch
   }) => {
-    AppLog.log("Rendering chat screen...");
+    AppLog.log(() => "Rendering chat screen...");
     const { themedColors } = usePreferredTheme();
 
     const handleClick = useCallback((textToSearch?: string) => {
@@ -58,7 +58,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
       item: Conversation;
       index: number;
     }) => {
-      // AppLog.log("rendering chat list item : " + JSON.stringify(item));
+      // AppLog.logForComplexMessages(() => "rendering chat list item : " + JSON.stringify(item));
       if (index === 0) {
         lastHeaderTitle = "";
       }
@@ -69,9 +69,6 @@ export const ChatListScreen = React.memo<ChatListProps>(
             lastHeaderTitle={lastHeaderTitle}
             onHeaderCreated={(title: string) => {
               lastHeaderTitle = title;
-              /* AppLog.log(
-                "Chat header => lastHeaderTitle " + lastHeaderTitle
-              );*/
             }}
           />
           <ItemChatList

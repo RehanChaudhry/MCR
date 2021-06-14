@@ -4,7 +4,9 @@ enum EScreen {
   MATCH_INFO,
   NOTIFICATION,
   HOME,
-  MY_FRIENDS
+  MY_FRIENDS,
+  COMMUNITY,
+  ANNOUNCEMENT
 }
 
 export default EScreen;

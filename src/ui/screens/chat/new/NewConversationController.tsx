@@ -79,7 +79,7 @@ export const NewConversationController: FC<Props> = () => {
   >(ChatApis.getSuggestions);
 
   const handleGetSuggestionApi = async (keyword: string) => {
-    AppLog.logForcefully("Handle suggestions APi.");
+    AppLog.logForcefully(() => "Handle suggestions APi.");
     setShowProgressbar(true);
     const { hasError, dataBody, errorBody } = await getSuggestions.request(
       [
@@ -91,7 +91,7 @@ export const NewConversationController: FC<Props> = () => {
     );
     setShowProgressbar(false);
     if (hasError || dataBody === undefined) {
-      AppLog.log("Unable to find suggestions " + errorBody);
+      AppLog.log(() => "Unable to find suggestions " + errorBody);
       return;
     } else {
       setSuggestions(dataBody.data);

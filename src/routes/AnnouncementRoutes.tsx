@@ -1,7 +1,8 @@
+import EScreen from "models/enums/EScreen";
 import React from "react";
-import { CommunityStack } from "routes/CommunityStack";
 import AnnouncementController from "ui/screens/home/announcement/AnnouncementController";
 import { CommentsController } from "ui/screens/home/comments/CommentsController";
+import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
 import { AnnouncementStack } from "./AnnouncementStack";
 
 const AnnouncementRoutes = () => {
@@ -11,9 +12,15 @@ const AnnouncementRoutes = () => {
         name="Announcement"
         component={AnnouncementController}
       />
-      <CommunityStack.Screen
+      <AnnouncementStack.Screen
         name="Comments"
         component={CommentsController}
+      />
+      <AnnouncementStack.Screen
+        name="Profile"
+        component={ViewProfileController}
+        initialParams={{ isFrom: EScreen.ANNOUNCEMENT }}
+        options={{ title: "View Profile" }}
       />
     </AnnouncementStack.Navigator>
   );

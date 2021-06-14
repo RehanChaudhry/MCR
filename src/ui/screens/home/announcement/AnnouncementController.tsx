@@ -5,6 +5,7 @@ import {
   CommunityAnnouncement,
   CommunityAnnouncementResponseModel
 } from "models/api_responses/CommunityAnnouncementResponseModel";
+import EScreen from "models/enums/EScreen";
 import React, {
   FC,
   useCallback,
@@ -44,14 +45,14 @@ const AnnouncementController: FC<Props> = () => {
 
   useEffect(() => {
     return navigation.addListener("blur", () => {
-      AppLog.log("announcements screen is blur");
+      AppLog.log(() => "announcements screen is blur");
       setShouldPlayVideo(false);
     });
   }, [navigation]);
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
-      AppLog.log("announcements screen is focus");
+      AppLog.log(() => "announcements screen is focus");
       setShouldPlayVideo(true);
     });
   }, [navigation]);
@@ -146,6 +147,10 @@ const AnnouncementController: FC<Props> = () => {
     fetchAnnouncements().then().catch();
   }, [fetchAnnouncements]);
 
+  const moveToProfileScreen = useCallback(() => {
+    navigation.navigate("Profile", { isFrom: EScreen.ANNOUNCEMENT });
+  }, [navigation]);
+
   return (
     <AnnouncementView
       data={announcements}
@@ -156,6 +161,7 @@ const AnnouncementController: FC<Props> = () => {
       pullToRefreshCallback={refreshCallback}
       openCommentsScreen={openCommentsScreen}
       shouldPlayVideo={shouldPlayVideo}
+      moveToProfileScreen={moveToProfileScreen}
     />
   );
 };

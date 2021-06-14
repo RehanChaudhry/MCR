@@ -4,7 +4,7 @@ export type AuthStackParamList = {
   Login: undefined;
   SignUp: undefined;
   ForgotPassword: undefined;
-  ForgotPasswordFeedBack: undefined;
+  ForgotPasswordFeedBack: { email: string };
   UniSelection: undefined;
   Welcome: undefined;
   SSO_Login: undefined;

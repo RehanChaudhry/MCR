@@ -7,6 +7,7 @@ import {
   StyleProp,
   StyleSheet,
   TextStyle,
+  TouchableOpacity,
   TouchableOpacityProps,
   View,
   ViewStyle
@@ -32,6 +33,7 @@ export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   rightIcon?: SvgProp;
   onRightBtnClicked?: () => void | undefined;
   leftImageStyle?: StyleProp<ImageStyle> | undefined;
+  onProfileImageClicked?: () => void;
 }
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
@@ -48,7 +50,8 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
     titleFontWeight = "normal",
     rightIcon,
     leftImageStyle,
-    onRightBtnClicked
+    onRightBtnClicked,
+    onProfileImageClicked
   }) => {
     const theme = usePreferredTheme();
 
@@ -56,14 +59,16 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
       <View style={style.mainContainer}>
         <View style={style.container}>
           <View style={style.leftContainer}>
-            <Image
-              style={[style.profileImage, leftImageStyle]}
-              source={
-                leftImageUrl !== undefined
-                  ? { uri: leftImageUrl }
-                  : require("assets/images/profile.png")
-              }
-            />
+            <TouchableOpacity onPress={onProfileImageClicked}>
+              <Image
+                style={[style.profileImage, leftImageStyle]}
+                source={
+                  leftImageUrl !== undefined
+                    ? { uri: leftImageUrl }
+                    : require("assets/images/profile.png")
+                }
+              />
+            </TouchableOpacity>
 
             <View style={style.titleSubtitle}>
               <AppLabel
@@ -119,7 +124,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
 
 const style = StyleSheet.create({
   mainContainer: {
-    marginTop: SPACE.lg
+    marginTop: SPACE.md
   },
   container: {
     flexDirection: "row"
@@ -152,8 +157,9 @@ const style = StyleSheet.create({
     borderRadius: 50
   },
   rightImage: {
-    width: 36,
-    height: 36
+    width: 40,
+    height: 40,
+    marginTop: SPACE.xs
   },
   rightContainer: {
     flexDirection: "row",

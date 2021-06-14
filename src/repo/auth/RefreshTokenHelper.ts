@@ -13,12 +13,13 @@ function isTokenExpired(accessToken: string, expiresIn: string) {
   let current = Date.now();
   let isTokenGonnaExpire = future + threshold < current;
 
-  AppLog.log("expiresIn: " + expiresIn);
-  AppLog.log("expiresIn (ms): " + future);
-  AppLog.log("currentTime (ms): " + current);
-  AppLog.log("Is token gonna expire soon: " + isTokenGonnaExpire);
+  AppLog.log(() => "expiresIn: " + expiresIn);
+  AppLog.log(() => "expiresIn (ms): " + future);
+  AppLog.log(() => "currentTime (ms): " + current);
+  AppLog.log(() => "Is token gonna expire soon: " + isTokenGonnaExpire);
   AppLog.log(
-    "Token gonna expire in: " +
+    () =>
+      "Token gonna expire in: " +
       Math.round((future - current) / (1000 * 60 * 60)) +
       " hours"
   );
@@ -45,7 +46,7 @@ export async function extractAndRefreshTokenIfExpire(
     return accessToken;
   }
 
-  AppLog.log("Token expired...");
+  AppLog.log(() => "Token expired...");
 
   const response = await refreshTokenApiClient.post(
     REFRESH_TOKEN_API,
@@ -61,14 +62,14 @@ export async function extractAndRefreshTokenIfExpire(
 
   let updateUser: UserModel;
   if (!response.ok) {
-    AppLog.log("Failed to refresh token...");
+    AppLog.log(() => "Failed to refresh token...");
     onFail?.();
     return undefined;
   } else {
     try {
       let dataBody = response.data;
       if (dataBody === undefined) {
-        AppLog.log("Failed to refresh token...");
+        AppLog.log(() => "Failed to refresh token...");
         onFail?.();
         return undefined;
       }
@@ -87,12 +88,13 @@ export async function extractAndRefreshTokenIfExpire(
       await AuthStorage.storeUser(updateUser);
 
       AppLog.log(
-        "Updated Refreshed Access Token: " +
+        () =>
+          "Updated Refreshed Access Token: " +
           updateUser.authentication?.accessToken
       );
     } catch (e) {
-      AppLog.log("Failed to refresh token...");
-      AppLog.log(e);
+      AppLog.log(() => "Failed to refresh token...");
+      AppLog.log(() => e);
       onFail?.();
       return undefined;
     }

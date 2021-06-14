@@ -30,7 +30,7 @@ const keyExtractor = (item: mock) => item.id.toString();
 const listItem = ({ item }: { item: mock }) => (
   <TouchableOpacity
     testID={`item-${item.id}`}
-    onPress={() => AppLog.log(`clicked-${item.id}`)}>
+    onPress={() => AppLog.log(() => `clicked-${item.id}`)}>
     <Text>{item.name}</Text>
   </TouchableOpacity>
 );

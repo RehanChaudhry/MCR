@@ -38,7 +38,6 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
     callback,
     style
   }) => {
-    // AppLog.log("Rendering QuestionItem");
     const { themedColors } = usePreferredTheme();
     let [sliderWidth, setSliderWidth] = useState<number>(0);
 
@@ -61,16 +60,13 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
 
     const topSliderCallback = (result: number[]) => {
       topRangeSliderValues.current = result;
-      // AppLog.log("top slider callback: " + result);
       returnResultToComponent();
     };
 
     const bottomSliderCallback = (result: number[]) => {
       bottomRangeSliderValues.current = result;
-      // AppLog.log("bottom slider callback: " + result);
       if (!preferenceSwitchValue) {
         lastRangeSelected.current = result;
-        // AppLog.log("bottom slider callback: " + lastRangeSelected.current);
       }
       returnResultToComponent();
     };

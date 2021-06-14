@@ -3,9 +3,11 @@ export default {
   splash: {},
 
   login: {
-    pass_validation:
-      "Password containing One alphabet (capital case), One number only and minimum eight characters.",
     enter_valid_email_validation: "Please enter a valid email address.",
+    pass_required_validation: "Please enter a password here.",
+    pass_validation:
+      "Your password should contain at least one alphabet (in capital), one number, and a minimum of eight characters.",
+    email_required_validation: "Please enter an email address.",
     email_address: "Email address",
     enter_your_email: "Enter your email address",
     password: "Password",

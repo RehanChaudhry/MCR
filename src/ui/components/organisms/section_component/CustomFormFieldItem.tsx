@@ -99,7 +99,6 @@ export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
               }}
               name={listData.id.toString()}
               isLocked={listData.isLocked}
-              // onChange={(value) => AppLog.log(value)}
             />
           </View>
         );

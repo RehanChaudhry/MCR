@@ -22,6 +22,7 @@ export interface AnnouncementItemProps extends TouchableOpacityProps {
   shouldPlayVideo: boolean;
   shouldShowRightIcon?: boolean;
   openReportContentScreen?: (postId: number) => void;
+  onProfileImageClicked?: () => void;
 }
 
 function showAttachedItemsIfAny(
@@ -51,7 +52,8 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
     openCommentsScreen,
     shouldPlayVideo,
     shouldShowRightIcon = false,
-    openReportContentScreen
+    openReportContentScreen,
+    onProfileImageClicked
   }) => {
     const theme = usePreferredTheme();
 
@@ -59,8 +61,8 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
       return (
         <Shield
           testID="right-icon"
-          width={23}
-          height={23}
+          width={30}
+          height={30}
           fill={theme.themedColors.interface["700"]}
         />
       );
@@ -87,6 +89,7 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
           onRightBtnClicked={() => {
             openReportContentScreen?.(announcementItem.id);
           }}
+          onProfileImageClicked={onProfileImageClicked}
         />
         {announcementItem.content && (
           <AppLabel

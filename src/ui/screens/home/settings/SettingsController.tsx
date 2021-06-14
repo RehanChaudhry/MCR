@@ -38,7 +38,7 @@ const SettingsController: FC<Props> = () => {
 
   const handleUpdateAccountPassword = usePreventDoubleTap(
     async (apiRequestModel: UpdateProfileRequestModel) => {
-      AppLog.log("handleUpdateAccountPassword: ");
+      AppLog.log(() => "handleUpdateAccountPassword: ");
       setShouldShowPb(true);
       // authenticate user
       const {

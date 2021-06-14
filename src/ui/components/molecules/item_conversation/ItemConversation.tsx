@@ -25,14 +25,14 @@ export interface ItemConversationProps extends ViewStyle {
 export const ItemConversation = optimizedMemo<ItemConversationProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
-    AppLog.logForcefully("item user : " + JSON.stringify(item));
+    AppLog.logForcefully(() => "item user : " + JSON.stringify(item));
     const defaultIcon: SvgProp = (
       color?: Color,
       width?: NumberProp,
       height?: NumberProp
     ) => {
       AppLog.log(
-        "item conversation avoid warning: " + color + width + height
+        () => "item conversation avoid warning: " + color + width + height
       ); //just to avoid warning
       return (
         <Trash

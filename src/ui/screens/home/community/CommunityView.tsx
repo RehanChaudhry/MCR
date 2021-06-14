@@ -25,6 +25,7 @@ type Props = {
   openReportContentScreen?: (postId: number) => void;
   error: string | undefined;
   filterDataBy: (type: string) => void;
+  moveToProfileScreen: () => void;
 };
 
 export const CommunityView = React.memo<Props>(
@@ -39,7 +40,8 @@ export const CommunityView = React.memo<Props>(
     shouldPlayVideo,
     openReportContentScreen,
     error,
-    filterDataBy
+    filterDataBy,
+    moveToProfileScreen
   }) => {
     const auth = useAuth();
     const keyExtractor = useCallback(
@@ -55,9 +57,16 @@ export const CommunityView = React.memo<Props>(
           shouldPlayVideo={shouldPlayVideo}
           openReportContentScreen={openReportContentScreen}
           shouldShowRightIcon={item.postedBy !== auth.user?.profile?.id}
+          onProfileImageClicked={moveToProfileScreen}
         />
       ),
-      [openCommentsScreen, shouldPlayVideo, openReportContentScreen, auth]
+      [
+        openCommentsScreen,
+        shouldPlayVideo,
+        openReportContentScreen,
+        auth,
+        moveToProfileScreen
+      ]
     );
     function getFeedsFilterData(): Item[] {
       return feedsFilterData.map((value) => {

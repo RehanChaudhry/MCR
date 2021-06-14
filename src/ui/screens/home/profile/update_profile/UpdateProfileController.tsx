@@ -21,11 +21,10 @@ import { useApi } from "repo/Client";
 import AuthApis from "repo/auth/AuthApis";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
 import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
-//import { NotifyContext } from "routes/ProfileRoutes";
-import WelcomeSkipTitleButton from "ui/components/molecules/welcome_skip_title_button/WelcomeSkipTitleButton";
+import SkipTitleButton from "ui/components/molecules/skip_title_button/SkipTitleButton";
 import Api from "config/Api";
 import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
-//import AuthStorage from "repo/auth/AuthStorage";
+import SimpleToast from "react-native-simple-toast";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -91,7 +90,7 @@ const UpdateProfileController: FC<Props> = () => {
           />
         ),
         headerRight: () => (
-          <WelcomeSkipTitleButton
+          <SkipTitleButton
             onPress={openQuestionnaireScreen}
             updateProfileRequest={{
               queryParams: Api.COMPLETE_PROFILE_QUERY_PARAMS
@@ -129,9 +128,6 @@ const UpdateProfileController: FC<Props> = () => {
   //handle update profile api
   const handleUpdateProfile = usePreventDoubleTap(
     async (apiRequestModel: UpdateProfileRequestModel) => {
-      // AppLog.log("handleSignIn: ");
-
-      //setShouldShowPb(true);
       if (route.params.isFrom === EScreen.WELCOME) {
         apiRequestModel.queryParams = Api.COMPLETE_PROFILE_QUERY_PARAMS;
       }
@@ -147,50 +143,29 @@ const UpdateProfileController: FC<Props> = () => {
         Alert.alert("Unable to update your profile", errorBody);
         return;
       } else {
-        await fetchMyProfile();
+        await fetchUpdatedProfile();
       }
     }
   );
 
-  //updating user info to show in view profile
-  const updateProfileUiApi = useApi<any, FetchMyProfileResponseModel>(
+  const fetchUiDataApi = useApi<any, FetchMyProfileResponseModel>(
     AuthApis.fetchMyProfile
   );
 
-  //handle update profile ui api
-  const fetchMyProfile = useCallback(async () => {
-    //setShouldShowPb(true);
+  const fetchUpdatedProfile = useCallback(async () => {
+    const { hasError, dataBody } = await fetchUiDataApi.request([]);
 
-    // authenticate user
-    const {
-      hasError,
-      errorBody,
-      dataBody
-    } = await updateProfileUiApi.request([]);
-
-    if (hasError || dataBody === undefined) {
-      Alert.alert("Something went wrong", errorBody);
-      return;
-    } else {
-      // //data modification for profile header
-      // let modifiedItem = dataBody.data.sections?.[0]?.formInputs?.[0]!!;
-      // modifiedItem.firstName = dataBody.data.sections![0].formInputs![1].userMeta![0].value;
-      // modifiedItem.lastName = dataBody.data.sections![0].formInputs![2].userMeta![0].value;
-      // dataBody.data.sections?.[0].formInputs?.splice(0, 3, modifiedItem);
-
-      //updating user info
-      await auth.saveUser({
-        authentication: auth.user?.authentication,
-        profile: dataBody.data
-      });
-
-      Alert.alert(
-        "Your profile has been updated successfully.",
-        dataBody.message
+    if (hasError) {
+      SimpleToast.show(
+        "Please try agian later \n" + fetchUiDataApi.error,
+        SimpleToast.SHORT
       );
+    } else {
+      await auth.saveProfile(dataBody?.data!, auth.user);
+      SimpleToast.show("Your profile has been updated successfully");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateProfileUiApi]);
+  }, [fetchUiDataApi]);
 
   return (
     <>
@@ -205,7 +180,7 @@ const UpdateProfileController: FC<Props> = () => {
           shouldShowProgressBar={updateProfileApi.loading}
         />,
         null,
-        3000
+        1000
       )}
     </>
   );

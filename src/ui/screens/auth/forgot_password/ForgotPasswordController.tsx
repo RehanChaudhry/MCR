@@ -29,9 +29,13 @@ const ForgotPasswordController: FC<Props> = () => {
     navigation.setOptions(NoHeader.create());
   }, [navigation]);
 
-  const openForgotPasswordFeedBackScreen = usePreventDoubleTap(() => {
-    navigation.navigate("ForgotPasswordFeedBack");
-  });
+  const openForgotPasswordFeedBackScreen = usePreventDoubleTap(
+    (email: string) => {
+      navigation.navigate("ForgotPasswordFeedBack", {
+        email: email
+      });
+    }
+  );
 
   const openSignInScreen = usePreventDoubleTap(() => {
     navigation.pop();
@@ -46,7 +50,7 @@ const ForgotPasswordController: FC<Props> = () => {
     if (requestModel.current === undefined) {
       return;
     }
-    AppLog.log("handle forgotpassword: ");
+    AppLog.log(() => "handle forgotpassword: ");
     const {
       hasError,
       errorBody,
@@ -60,7 +64,7 @@ const ForgotPasswordController: FC<Props> = () => {
     }
   });
 
-  AppLog.log(handleForgotPassword);
+  AppLog.log(() => handleForgotPassword);
 
   return (
     <ForgotPasswordView

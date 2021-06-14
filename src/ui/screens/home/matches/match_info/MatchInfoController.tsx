@@ -33,7 +33,7 @@ type MatchesNavigationProp = StackNavigationProp<
 type Props = {};
 
 const MatchInfoController: FC<Props> = () => {
-  AppLog.log("Opening MatchesController");
+  AppLog.log(() => "Opening MatchesController");
 
   const navigation = useNavigation<MatchesNavigationProp>();
 
@@ -66,7 +66,7 @@ const MatchInfoController: FC<Props> = () => {
 
   const moveToChatScreen = (profileMatch: RelationModel) => {
     AppLog.logForcefully(
-      "moveToChatScreen(), profile: " + JSON.stringify(profileMatch)
+      () => "moveToChatScreen(), profile: " + JSON.stringify(profileMatch)
     );
 
     navigation.push("Chat", {
@@ -79,7 +79,8 @@ const MatchInfoController: FC<Props> = () => {
 
   const moveToProfileScreen = (profileMatch: RelationModel) => {
     AppLog.log(
-      "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
+      () =>
+        "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
     );
     navigation.navigate("Profile", {
       isFrom: EScreen.MATCH_INFO,
@@ -88,26 +89,29 @@ const MatchInfoController: FC<Props> = () => {
   };
 
   const moveToRoommateAgreementScreen = () => {
-    // AppLog.log(
-    //   "moveToRoommateAgreementScreen(), profile: " + JSON.stringify(profileMatch)
-    // );
-    navigation.navigate("RoommateAgreement", {
-      isFrom: EScreen.MATCH_INFO
-    });
+    // AppLog.logForComplexMessages(
+    () =>
+      //   "moveToRoommateAgreementScreen(), profile: " + JSON.stringify(profileMatch)
+      // );
+      navigation.navigate("RoommateAgreement", {
+        isFrom: EScreen.MATCH_INFO
+      });
   };
 
   const moveToUpdateProfileScreen = () => {
-    // AppLog.log(
-    //   "moveToUpdateProfileScreen(), profile: " + JSON.stringify(profileMatch)
-    // );
-    navigation.navigate("UpdateProfile", { isFrom: EScreen.MATCH_INFO });
+    // AppLog.logForComplexMessages(
+    () =>
+      //   "moveToUpdateProfileScreen(), profile: " + JSON.stringify(profileMatch)
+      // );
+      navigation.navigate("UpdateProfile", { isFrom: EScreen.MATCH_INFO });
   };
 
   const moveToQuestionnaireScreen = () => {
-    // AppLog.log(
-    //   "moveToQuestionnaireScreen(), profile: " + JSON.stringify(profileMatch)
-    // );
-    navigation.navigate("Questionnaire", { isFrom: EScreen.MATCH_INFO });
+    // AppLog.logForComplexMessages(
+    () =>
+      //   "moveToQuestionnaireScreen(), profile: " + JSON.stringify(profileMatch)
+      // );
+      navigation.navigate("Questionnaire", { isFrom: EScreen.MATCH_INFO });
   };
 
   const handleGetMatchInfoApi = async () => {
@@ -116,11 +120,11 @@ const MatchInfoController: FC<Props> = () => {
     );
     if (hasError || dataBody === undefined) {
       // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.log("Unable to find MatchInfo " + errorBody);
+      AppLog.log(() => "Unable to find MatchInfo " + errorBody);
       return;
     } else {
       setMatchInfo(dataBody);
-      AppLog.log("MatchInfoData" + JSON.stringify(dataBody.data));
+      AppLog.log(() => "MatchInfoData" + JSON.stringify(dataBody.data));
     }
   };
 
@@ -134,11 +138,11 @@ const MatchInfoController: FC<Props> = () => {
     ]);
     if (hasError || dataBody === undefined) {
       // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.log("Unable to find MatchInfo " + errorBody);
+      AppLog.log(() => "Unable to find MatchInfo " + errorBody);
       return;
     } else {
       setRoommate(dataBody);
-      AppLog.log("MyRoommatesData" + JSON.stringify(dataBody.data));
+      AppLog.log(() => "MyRoommatesData" + JSON.stringify(dataBody.data));
     }
   };
 

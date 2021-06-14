@@ -103,18 +103,13 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
                 })}
             isMarkersSeparated={true}
             customMarkerLeft={(_) => {
-              /*AppLog.log(
-              "RangeSlider() => customMarkerLeft: " + e.currentValue
-            );*/
               return customSliderMarker();
             }}
             customMarkerRight={(_) => {
-              // AppLog.log("RangeSlider() => customMarkerRight: " + e);
               return customSliderMarker();
             }}
             onValuesChangeFinish={(values: number[]) => {
               result(values);
-              // AppLog.log("RangeSlider() => onValuesChangeFinish: " + values);
             }}
             trackStyle={styles.track}
             sliderLength={sliderWidth}

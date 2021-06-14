@@ -40,12 +40,12 @@ const validationSchema = Yup.object().shape({
 });
 
 export const SignUpView = React.memo<Props>((props) => {
-  AppLog.log("Rendering SignUpView...");
+  AppLog.log(() => "Rendering SignUpView...");
 
   const formik = useFormik({
     initialValues: initialFormValues,
     onSubmit: (values: any) => {
-      AppLog.log(values);
+      AppLog.log(() => values);
       props.sendEmailButtonCallback?.(values);
     },
     validationSchema: validationSchema

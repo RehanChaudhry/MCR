@@ -9,7 +9,7 @@ export const PushNotification = {
     OneSignal.setAppId(Env.ONE_SIGNAL_APP_ID);
 
     OneSignal.setNotificationOpenedHandler((notification) => {
-      AppLog.log("OneSignal: notification opened: ", notification);
+      AppLog.log(() => "OneSignal: notification opened: ", notification);
     });
 
     userId !== undefined &&

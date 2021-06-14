@@ -1,20 +1,30 @@
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { usePreventDoubleTap } from "hooks";
 import React, { FC, useLayoutEffect } from "react";
 import { AuthStackParamList } from "routes";
 import NoHeader from "ui/components/headers/NoHeader";
 import { ForgotPasswordFeedBackView } from "ui/screens/auth/forgot_password_feedback/ForgotPasswordFeedBackView";
-import { usePreventDoubleTap } from "hooks";
 
 type LoginNavigationProp = StackNavigationProp<
   AuthStackParamList,
   "Login"
 >;
 
+type ForgotPasswordfeedBackRoute = RouteProp<
+  AuthStackParamList,
+  "ForgotPasswordFeedBack"
+>;
+
 type Props = {};
 
 const ForgotPasswordFeedBackController: FC<Props> = () => {
   const navigation = useNavigation<LoginNavigationProp>();
+  const route = useRoute<ForgotPasswordfeedBackRoute>();
 
   // Add no toolbar
   useLayoutEffect(() => {
@@ -32,6 +42,7 @@ const ForgotPasswordFeedBackController: FC<Props> = () => {
     <ForgotPasswordFeedBackView
       openForgotPasswordScreen={openForgotPasswordScreen}
       openSignInScreen={openSignInScreen}
+      email={route.params.email}
     />
   );
 };

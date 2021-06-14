@@ -80,7 +80,8 @@ export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
     };
     initialValues[name] !== undefined &&
       AppLog.log(
-        "upload Profile Photo : " + JSON.stringify(initialValues[name])
+        () =>
+          "upload Profile Photo : " + JSON.stringify(initialValues[name])
       );
     return (
       <View style={styles.container}>

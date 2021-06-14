@@ -55,7 +55,8 @@ const AppFormField = optimizedMemo<Props>(
       initialValues
     } = useFormikContext<FormikValues>();
 
-    /*  AppLog.logForcefully(
+    /*  AppLog.logForcefullyForComplexMessages(
+      () =>
       "AppFormField => initialValues " +
         JSON.stringify(initialValues[name]) +
         " field name is : " +
@@ -85,7 +86,9 @@ const AppFormField = optimizedMemo<Props>(
             <View style={styles.space} />
 
             {linkLabelProps && (
-              <TouchableOpacity onPress={linkLabelOnPress}>
+              <TouchableOpacity
+                onPress={linkLabelOnPress}
+                style={styles.linkLabelClick}>
                 <AppLabel
                   style={[
                     styles.linkLabel,
@@ -133,6 +136,9 @@ const styles = StyleSheet.create({
   },
   linkLabel: {
     fontSize: FONT_SIZE.xs
+  },
+  linkLabelClick: {
+    paddingTop: SPACE.xs
   }
 });
 

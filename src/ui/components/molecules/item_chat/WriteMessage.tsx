@@ -54,7 +54,8 @@ export const WriteMessage = React.memo<TypingComponentProps>(
       height?: NumberProp
     ) => {
       AppLog.log(
-        "Write message view remove warning : " + color + width + height
+        () =>
+          "Write message view remove warning: " + color + width + height
       ); //just to avoid warning
       return (
         <PaperAirplane
