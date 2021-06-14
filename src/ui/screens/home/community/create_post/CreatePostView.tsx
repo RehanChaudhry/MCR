@@ -62,6 +62,7 @@ export const CreatePostView = React.memo<Props>((props) => {
   const [images, setImages] = useState<MyImagePickerResponse[]>([]);
   const [postType, setPostType] = useState<POST_TYPES>(POST_TYPES.NONE);
   const imageGalleryResult = useImageUpload();
+  const auth = useAuth();
 
   let initialValues: FormikValues = {
     message: String,
@@ -181,7 +182,7 @@ export const CreatePostView = React.memo<Props>((props) => {
       <Screen style={styles.container} shouldAddBottomInset={false}>
         <View style={styles.cardView}>
           <AnnouncementHeader
-            title={Strings.whats_new}
+            title={`What’s new, ${auth.user?.profile?.firstName}?`}
             leftImageUrl={useAuth().user?.profile?.profilePicture.fileURL}
             shouldHideSubTitle={true}
             shouldHideBottomSeparator={true}
