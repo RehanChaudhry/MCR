@@ -107,7 +107,9 @@ export default {
     label_not_eligible: "Not Eligible",
     label_roommate_request: "Roommate Request",
     label_request_received: "Request Received",
-    label_remove_roommate: "Remove Roommate"
+    label_remove_roommate: "Remove Roommate",
+    label_unblocked: "Unblock",
+    label_restore: "Restore"
   },
   profile: {
     title:

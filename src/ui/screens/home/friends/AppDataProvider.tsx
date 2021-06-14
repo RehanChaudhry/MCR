@@ -13,6 +13,10 @@ type AppDataContextType = {
   setMyFriends?: Dispatch<SetStateAction<RelationModel[] | undefined>>;
   myRoommates?: RelationModel[];
   setMyRoommates?: Dispatch<SetStateAction<RelationModel[] | undefined>>;
+  dismissed?: RelationModel[];
+  setDismissed?: Dispatch<SetStateAction<RelationModel[] | undefined>>;
+  blocked?: RelationModel[];
+  setBlocked?: Dispatch<SetStateAction<RelationModel[] | undefined>>;
   matches?: RelationModel[];
   setMatches?: Dispatch<SetStateAction<RelationModel[] | undefined>>;
   addListenerOnResetData: (listener: () => void) => void;
@@ -28,6 +32,8 @@ export const AppDataContext = React.createContext<AppDataContextType>(
 const AppDataProvider: FC = (props) => {
   const [myFriends, setMyFriends] = useState<RelationModel[]>();
   const [myRoommates, setMyRoommates] = useState<RelationModel[]>();
+  const [dismissed, setDismissed] = useState<RelationModel[]>();
+  const [blocked, setBlocked] = useState<RelationModel[]>();
   const [matches, setMatches] = useState<RelationModel[]>();
   const listenersRef = useRef<Array<() => void>>([]);
   const addListenerOnResetData = useCallback((listener: () => void) => {
@@ -49,6 +55,10 @@ const AppDataProvider: FC = (props) => {
         setMyFriends,
         myRoommates,
         setMyRoommates,
+        dismissed,
+        setDismissed,
+        blocked,
+        setBlocked,
         matches,
         setMatches,
         addListenerOnResetData,

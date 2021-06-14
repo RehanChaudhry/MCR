@@ -22,7 +22,9 @@ export enum Type {
   MATCHES_ROOMMATE_REQUEST = "matches_roommate_request",
   CANCEL = "cancel",
   UNFRIEND = "unfriend",
-  REMOVE_ROOMMATE = "remove-roommate"
+  REMOVE_ROOMMATE = "remove-roommate",
+  RESTORE = "restored",
+  UNBLOCK = "unblock"
 }
 
 type Props = {
@@ -114,7 +116,7 @@ const TwoButtonsAlert: FC<Props> = React.memo(
       return type.toString() as UpdateRelationStatus;
     };
 
-    //for cancel match and unfriend
+    //for cancel match, unfriend and unblock
     const {
       shouldShowPb: shouldShowRelationUpdatePb,
       updateRelation
@@ -163,7 +165,9 @@ const TwoButtonsAlert: FC<Props> = React.memo(
                   sendRequest(getSelectedItem());
                 } else if (
                   type === Type.CANCEL ||
-                  type === Type.UNFRIEND
+                  type === Type.UNFRIEND ||
+                  type === Type.UNBLOCK ||
+                  type === Type.RESTORE
                 ) {
                   updateRelation(getSelectedItem());
                 }

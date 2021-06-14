@@ -46,6 +46,7 @@ export class RelationModel {
   isFriend!: EIntBoolean;
   criteria?: Criteria;
   acceptee?: number;
+  dismissed?: number;
 
   constructor(relationModel: RelationModel) {
     Object.assign(this, relationModel);

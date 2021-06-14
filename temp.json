@@ -1,45 +1,48 @@
 {
-  "duration": 451,
+  "duration": 387,
   "problem": null,
   "originalError": null,
   "ok": true,
   "status": 200,
   "headers": {
+    "cf-request-id": "0aab07b35600000a42f4a9b000000001",
     "content-type": "application/json; charset=utf-8",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=exKTwW%2F%2Bvf9eVY04S6tLloMPOrlr%2BmmWv4CBE3QpZQLJuLItaBdfVvjlxwwCi5RoQImZpv3oHSurpjCg48pfQm0M45MAFIwYXj1LiY1G8RQSP31y1uE9RU65vly64dZi\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
-    "x-frame-options": "SAMEORIGIN",
-    "cf-request-id": "0a9cb176c8000014d45e08d000000001",
-    "cf-cache-status": "DYNAMIC",
-    "x-powered-by": "Express",
-    "date": "Fri, 11 Jun 2021 12:42:29 GMT",
-    "cf-ray": "65daeb6ad9c014d4-NRT",
-    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
-    "x-xss-protection": "1; mode=block",
-    "content-encoding": "br",
-    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
-    "server": "cloudflare",
-    "strict-transport-security": "max-age=0; includeSubDomains",
-    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
     "x-content-type-options": "nosniff",
-    "etag": "W/\"3a-5IWM9c37QPROXUh+laLKeA4Ue/w\"",
-    "vary": "Origin"
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=cyuHfbVv3hLZvVzW79iTtdMzefSmrHBtn6dzqf7MUKUsExDV480P9zTgIpqZJbd1nMlGRVCrYzMdUKVDkiennAm2wbHe0VF8ODHUKnMw1VWb5nw9G%2BMvJx%2BE9%2F%2F1mxLR\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "65f1dbcbbcd20a42-KIX",
+    "x-powered-by": "Express",
+    "x-xss-protection": "1; mode=block",
+    "vary": "Origin",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
+    "cf-cache-status": "DYNAMIC",
+    "x-frame-options": "SAMEORIGIN",
+    "date": "Mon, 14 Jun 2021 07:31:21 GMT",
+    "server": "cloudflare",
+    "etag": "W/\"1a9-Z/5n1SwSRaSbbBj77dtbVUPnG+4\""
   },
   "config": {
     "url": "relation",
     "method": "get",
     "headers": {
       "Accept": "application/json",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjE0LCJ1c2VySWQiOjQ0LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJ1cGRhdGUtYWdyZWVtZW50LWFuc3dlciIsInF1ZXN0aW9uYWlyZS1hbnN3ZXIiLCJ1c2VycyIsIm1hdGNoaW5nLWluZm9ybWF0aW9uIiwicmVsYXRpb24iLCJjaGF0IiwiZGVsZXRlLWZpbGUiXSwiaWF0IjoxNjIzNDE1Mjk2LCJleHAiOjE2MjYwMDcyOTZ9.magRYprH8MHXMU8Hp7mpNFXYmAipUuhQ96KYO6rfXNU"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mjk5LCJ1c2VySWQiOjQ2LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJ1cGRhdGUtYWdyZWVtZW50LWFuc3dlciIsInF1ZXN0aW9uYWlyZS1hbnN3ZXIiLCJ1c2VycyIsIm1hdGNoaW5nLWluZm9ybWF0aW9uIiwicmVsYXRpb24iLCJjaGF0IiwiZGVsZXRlLWZpbGUiXSwiaWF0IjoxNjIzNjUxODQxLCJleHAiOjE2MjYyNDM4NDF9.m37BTJ0W8djwzCxc9HfmrbKV7WtfDHbd4_lvYjHt39U"
     },
     "params": {
-      "type": "friends",
+      "type": "blocked",
       "page": 1,
       "limit": 9,
       "paginate": true
     },
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
-    "transformRequest": [null],
-    "transformResponse": [null],
+    "transformRequest": [
+      null
+    ],
+    "transformResponse": [
+      null
+    ],
     "timeout": 0,
     "xsrfCookieName": "XSRF-TOKEN",
     "xsrfHeaderName": "X-XSRF-TOKEN",
@@ -48,8 +51,30 @@
   },
   "data": {
     "message": "Success",
-    "data": [],
-    "count": 0,
-    "pendingCount": 0
+    "data": [
+      {
+        "id": 598,
+        "status": "blocked",
+        "isRoommate": 0,
+        "isFriend": 0,
+        "blockee": 46,
+        "acceptee": null,
+        "createdAt": "2021-06-14T07:16:21.000Z",
+        "updatedAt": "2021-06-14T07:16:21.000Z",
+        "user": {
+          "id": 28,
+          "firstName": "Amandy",
+          "lastName": "Handmore",
+          "hometown": "Thompsonville",
+          "major": "Geophysics",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/5.jpg",
+            "originalName": "5.jpg"
+          }
+        },
+        "userId": 28
+      }
+    ],
+    "count": 1
   }
 }
