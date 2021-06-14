@@ -6,7 +6,8 @@ export type UpdateRelationStatus =
   | "unfriend"
   | "remove-roommate"
   | "cancel"
-  | "dismissed";
+  | "dismissed"
+  | "restored";
 
 export type UpdateRelationApiRequestModel = {
   receiverId: number;

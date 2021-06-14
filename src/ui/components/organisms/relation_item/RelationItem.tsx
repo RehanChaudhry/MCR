@@ -45,6 +45,10 @@ interface Props {
   onRemoveRoommateActionButtonClicked?: (
     relationModel: RelationModel
   ) => void;
+  onRestoreDismissedActionButtonClicked?: (
+    relationModel: RelationModel
+  ) => void;
+  onUnBlockedActionButtonClicked?: (relationModel: RelationModel) => void;
 }
 
 function createActionButton(
@@ -57,7 +61,11 @@ function createActionButton(
   onNotEligibleClicked?: (relationModel: RelationModel) => void,
   onRemoveRoommateActionButtonClicked?: (
     relationModel: RelationModel
-  ) => void
+  ) => void,
+  onRestoreDismissedActionButtonClicked?: (
+    relationModel: RelationModel
+  ) => void,
+  onUnBlockedActionButtonClicked?: (relationModel: RelationModel) => void
 ) {
   let actionButton: React.ReactElement;
   const { relationType, actionPerformed, eligible } = getRelationStatus(
@@ -204,6 +212,36 @@ function createActionButton(
         text={STRINGS.matches.label_remove_roommate}
       />
     );
+  } else if (relationType === RelationType.BLOCKED) {
+    actionButton = (
+      <AppButton
+        onPress={() => {
+          onUnBlockedActionButtonClicked?.(relationModel);
+        }}
+        fontWeight={"semi-bold"}
+        textStyle={[styles.btnActionText, { color: themedColors.primary }]}
+        buttonStyle={[
+          styles.btnAction,
+          { backgroundColor: themedColors.primaryShade }
+        ]}
+        text={STRINGS.matches.label_unblocked}
+      />
+    );
+  } else if (relationType === RelationType.DISMISSED) {
+    actionButton = (
+      <AppButton
+        onPress={() => {
+          onRestoreDismissedActionButtonClicked?.(relationModel);
+        }}
+        fontWeight={"semi-bold"}
+        textStyle={[styles.btnActionText, { color: themedColors.primary }]}
+        buttonStyle={[
+          styles.btnAction,
+          { backgroundColor: themedColors.primaryShade }
+        ]}
+        text={STRINGS.matches.label_restore}
+      />
+    );
   }
 
   return actionButton!;
@@ -219,7 +257,9 @@ const RelationListsItem = ({
   onRequestReceivedActionButtonClicked,
   onFriendRequestActionButtonClicked,
   onNotEligibleActionButtonClicked,
-  onRemoveRoommateActionButtonClicked
+  onRemoveRoommateActionButtonClicked,
+  onRestoreDismissedActionButtonClicked,
+  onUnBlockedActionButtonClicked
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -316,7 +356,9 @@ const RelationListsItem = ({
           onRequestReceivedActionButtonClicked,
           onFriendRequestActionButtonClicked,
           onNotEligibleActionButtonClicked,
-          onRemoveRoommateActionButtonClicked
+          onRemoveRoommateActionButtonClicked,
+          onRestoreDismissedActionButtonClicked,
+          onUnBlockedActionButtonClicked
         )}
       </View>
     </View>

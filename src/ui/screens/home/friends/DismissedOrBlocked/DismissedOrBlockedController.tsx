@@ -1,58 +1,73 @@
-import { COLORS, FONT_SIZE, SPACE } from "config";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { COLORS, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import {
-  DismissedOrBlocked,
-  DismissedOrBlockedResponseModel
-} from "models/api_responses/DismissedOrBlockedResponseModel";
-import React, { FC, useCallback, useEffect, useState } from "react";
+import StaticContentRequestModel, {
+  StaticContentType
+} from "models/api_requests/StaticContentRequestModel";
+import StaticContentResponseModel, {
+  StaticContent
+} from "models/api_responses/StaticContentResponseModel";
+import EScreen from "models/enums/EScreen";
+import RelationFilterType from "models/enums/RelationFilterType";
+import RelationModel from "models/RelationModel";
+import React, {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import { StyleSheet, View } from "react-native";
 import { useApi } from "repo/Client";
-import FriendsApis from "repo/friends/FriendsApis";
+import OtherApis from "repo/home/OtherApis";
+import { FriendsRootStackParamList } from "routes/FriendsRootStack";
+import { DismissedOrBlockStackParamList } from "routes/FriendsStack";
 import {
   Choice,
   SegmentedControl
 } from "ui/components/molecules/segmented_control/SegmentedControl";
-import AppPopUp from "ui/components/organisms/popup/AppPopUp";
-import DataGenerator from "utils/DataGenerator";
+import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
+import useFetchRelations from "ui/screens/home/friends/useFetchRelations";
 import { AppLog } from "utils/Util";
 import DismissedOrBlockedView from "./DismissedOrBlockedView";
-import StaticContentResponseModel, {
-  StaticContent
-} from "models/api_responses/StaticContentResponseModel";
-import StaticContentRequestModel, {
-  StaticContentType
-} from "models/api_requests/StaticContentRequestModel";
-import OtherApis from "repo/home/OtherApis";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { DismissedOrBlockStackParamList } from "routes/FriendsStack";
-import { useNavigation } from "@react-navigation/native";
-import EScreen from "models/enums/EScreen";
 
 type Props = {};
 
 type DismissBlockNavigationProp = StackNavigationProp<DismissedOrBlockStackParamList>;
 
+type FriendsNavigationProp = StackNavigationProp<
+  FriendsRootStackParamList,
+  "ConnectRequests"
+>;
+
 const DismissedOrBlockedController: FC<Props> = () => {
-  const [showRestoreAlert, setShowRestoreAlert] = useState<boolean>(false);
+  const navigation = useNavigation<FriendsNavigationProp>();
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 
   const dismissBlockRootNavigation = useNavigation<DismissBlockNavigationProp>();
+  const { dismissed, setDismissed } = useContext(AppDataContext);
+  const { blocked, setBlocked } = useContext(AppDataContext);
 
-  const [dismissed, setDismissed] = useState<Array<DismissedOrBlocked>>(
-    DataGenerator.getDismissedOrBlocked().data
+  const {
+    isLoading: isLoadingDismissed,
+    canLoadMore: canLoadMoreDismissed,
+    onEndReached: onEndReachedDismissed,
+    errorMessage: errorMessageDismissed,
+    onPullToRefresh: onPullToRefreshDismissed
+  } = useFetchRelations(
+    RelationFilterType.DISMISSED,
+    dismissed,
+    setDismissed
   );
 
-  const [blocked, setBlocked] = useState<Array<DismissedOrBlocked>>(
-    DataGenerator.getDismissedOrBlocked().data
-  );
-
-  const dismissedApi = useApi<any, DismissedOrBlockedResponseModel>(
-    FriendsApis.getDismissedOrBlocked
-  );
-
-  const blockedApi = useApi<any, DismissedOrBlockedResponseModel>(
-    FriendsApis.getDismissedOrBlocked
-  );
+  const {
+    isLoading: isLoadingBlocked,
+    canLoadMore: canLoadMoreBlocked,
+    onEndReached: onEndReachedBlocked,
+    errorMessage: errorMessageBlocked,
+    onPullToRefresh: onPullToRefreshBlocked
+  } = useFetchRelations(RelationFilterType.BLOCKED, blocked, setBlocked);
 
   // static content
   const [headerContent, setHeaderContent] = useState<StaticContent>();
@@ -85,75 +100,15 @@ const DismissedOrBlockedController: FC<Props> = () => {
     });
   }, [dismissBlockRootNavigation, headerContent]);
 
-  const handleDismissedResponse = async (onComplete?: () => void) => {
-    const { hasError, dataBody, errorBody } = await dismissedApi.request(
-      []
-    );
-    if (hasError || dataBody === undefined) {
-      AppLog.log("Unable to find dismissed or blocked " + errorBody);
-      return;
-    } else {
-      setDismissed(dataBody.data);
-      onComplete?.();
-    }
-  };
-
-  const handleBlockedResponse = async (onComplete?: () => void) => {
-    const { hasError, dataBody, errorBody } = await blockedApi.request([]);
-    if (hasError || dataBody === undefined) {
-      AppLog.log("Unable to find dismissed or blocked " + errorBody);
-      return;
-    } else {
-      setBlocked(dataBody.data);
-      onComplete?.();
-    }
-  };
-
-  AppLog.log(
-    "handledismissedorblockedresponse: ",
-    handleDismissedResponse,
-    handleBlockedResponse
-  );
-
   const theme = usePreferredTheme();
 
   const onTabChanged = (value: Choice, index: number) => {
     setSelectedTabIndex(index);
   };
 
-  const restoreAlert = () => {
-    return (
-      <AppPopUp
-        isVisible={showRestoreAlert}
-        title={"Restore from Dismissed List"}
-        message={
-          "Are you sure you want to restore Aris Johnson from your dismissed list?"
-        }
-        actions={[
-          {
-            title: "Yes, restore",
-            onPress: () => {
-              setShowRestoreAlert(false);
-            },
-            style: {
-              weight: "bold",
-              style: {
-                color: theme.themedColors.primary,
-                textAlign: "center",
-                fontSize: FONT_SIZE.lg
-              }
-            }
-          },
-          {
-            title: "Cancel",
-            onPress: () => {
-              setShowRestoreAlert(false);
-            }
-          }
-        ]}
-      />
-    );
-  };
+  const moveToProfileScreen = useCallback(() => {
+    navigation.navigate("Profile", { isFrom: EScreen.MY_FRIENDS });
+  }, [navigation]);
 
   useEffect(() => {
     getHeaderContent();
@@ -184,41 +139,40 @@ const DismissedOrBlockedController: FC<Props> = () => {
           <DismissedOrBlockedView
             headerTitle={headerContent?.title!}
             headerSubtitle={headerContent?.description!}
-            learnMoreTitle={"Learnmore about dismissed list"}
+            learnMoreTitle={"Learn more about dismissed list"}
             learnMoreAction={moveToHeaderContent}
             data={dismissed}
-            onPressAction={(item: DismissedOrBlocked) => {
-              AppLog.log("items: ", item);
-              setShowRestoreAlert(true);
+            isLoading={isLoadingDismissed}
+            canLoadMore={canLoadMoreDismissed}
+            error={errorMessageDismissed}
+            onEndReached={onEndReachedDismissed}
+            onPullToRefresh={onPullToRefreshDismissed}
+            onPressChat={(item: RelationModel) => {
+              AppLog.log("onPressChat: ", item);
             }}
-            onPressChat={(item: DismissedOrBlocked) => {
-              AppLog.log("items: ", item);
-            }}
-            onPressCross={(item: DismissedOrBlocked) => {
-              AppLog.log("items: ", item);
-            }}
+            onPressProfile={moveToProfileScreen}
+            selectedTab={selectedTabIndex}
           />
         ) : (
           <DismissedOrBlockedView
             headerTitle={headerContent?.title!}
             headerSubtitle={headerContent?.description!}
-            learnMoreTitle={"Learnmore about blocked list"}
+            learnMoreTitle={"Learn more about blocked list"}
             learnMoreAction={moveToHeaderContent}
             data={blocked}
-            onPressAction={(item: DismissedOrBlocked) => {
-              AppLog.log("items: ", item);
-              setShowRestoreAlert(true);
+            isLoading={isLoadingBlocked}
+            canLoadMore={canLoadMoreBlocked}
+            error={errorMessageBlocked}
+            onEndReached={onEndReachedBlocked}
+            onPullToRefresh={onPullToRefreshBlocked}
+            onPressChat={(item: RelationModel) => {
+              AppLog.log("onPressChat: ", item);
             }}
-            onPressChat={(item: DismissedOrBlocked) => {
-              AppLog.log("items: ", item);
-            }}
-            onPressCross={(item: DismissedOrBlocked) => {
-              AppLog.log("items: ", item);
-            }}
+            onPressProfile={moveToProfileScreen}
+            selectedTab={selectedTabIndex}
           />
         )}
       </View>
-      {restoreAlert()}
     </>
   );
 };

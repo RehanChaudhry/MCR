@@ -58,6 +58,7 @@ export default {
   DISMISSED_OR_BLOCKED: "relation/dismiss",
   FRIEND_REQUESTS: "relation/pending/friends",
   ROOMMATE_REQUESTS: "relation/pending/roommates",
+  RELATION_RESTORE: "relation/restored",
 
   // others
   GET_STATIC_CONTENT: "static-content/",
