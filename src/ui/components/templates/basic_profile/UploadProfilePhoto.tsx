@@ -79,7 +79,7 @@ export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
       });
     };
     initialValues[name] !== undefined &&
-      AppLog.logForComplexMessages(
+      AppLog.log(
         () =>
           "upload Profile Photo : " + JSON.stringify(initialValues[name])
       );

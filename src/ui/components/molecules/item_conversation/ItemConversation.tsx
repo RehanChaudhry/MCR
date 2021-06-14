@@ -25,17 +25,13 @@ export interface ItemConversationProps extends ViewStyle {
 export const ItemConversation = optimizedMemo<ItemConversationProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
-    AppLog.logForcefullyForComplexMessages(
-      () => "item user : " + JSON.stringify(item)
-    );
+    AppLog.logForcefully(() => "item user : " + JSON.stringify(item));
     const defaultIcon: SvgProp = (
       color?: Color,
       width?: NumberProp,
       height?: NumberProp
     ) => {
-      AppLog.logForComplexMessages(
-        () => "color : " + color + width + height
-      ); //just to avoid warning
+      AppLog.log(() => "color : " + color + width + height); //just to avoid warning
       return (
         <Trash
           testID="icon"

@@ -59,12 +59,12 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
     const { themedColors } = usePreferredTheme();
 
     function openModal() {
-      AppLog.logForComplexMessages(() => "show modal");
+      AppLog.log(() => "show modal");
       setModalVisible(true);
     }
 
     function closeModal() {
-      AppLog.logForComplexMessages(() => "close modal");
+      AppLog.log(() => "close modal");
       setModalVisible(false);
     }
 
@@ -75,7 +75,7 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
 
     const selectedItem = useCallback(
       (item: DropDownItem | any) => {
-        AppLog.logForComplexMessages(() => "selectedItem " + item.value);
+        AppLog.log(() => "selectedItem " + item.value);
         setModalVisible(false);
         setSelectedItemText(item.value);
         selectedItemCallback(item);

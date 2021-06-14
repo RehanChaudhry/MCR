@@ -116,9 +116,7 @@ const RoommateAgreementView: FC<Props> = ({
   }
 
   const onSubmit = (_value: FormikValues) => {
-    AppLog.logForComplexMessages(
-      () => "Button Pressed" + JSON.stringify(_value)
-    );
+    AppLog.log(() => "Button Pressed" + JSON.stringify(_value));
     handleSaveAndContinue({
       agreementUserAnswers: Object.entries(_value).map(([key, value]) => ({
         agreementFieldId: Number(key),

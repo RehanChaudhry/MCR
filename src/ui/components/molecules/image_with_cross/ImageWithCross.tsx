@@ -56,9 +56,7 @@ export const ImageWithCross = optimizedMemo<ImageWithCrossProps>(
         <TouchableOpacity
           onPress={() => {
             onImageRemoved(imageResponse);
-            AppLog.logForcefullyForComplexMessages(
-              () => "onImageRemoved clicked"
-            );
+            AppLog.logForcefully(() => "onImageRemoved clicked");
           }}
           style={style.crossView}>
           {closeImage()}

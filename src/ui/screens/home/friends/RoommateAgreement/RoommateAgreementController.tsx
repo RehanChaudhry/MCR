@@ -122,7 +122,7 @@ const RoommateAgreementController: FC<Props> = () => {
             }
           }}
           icon={(color, width, height) => {
-            AppLog.logForComplexMessages(() => color);
+            AppLog.log(() => color);
             return (
               <InfoCircle
                 width={width}
@@ -151,14 +151,10 @@ const RoommateAgreementController: FC<Props> = () => {
       errorBody
     } = await roommateUpdateApi.request([submitAnswerRequest.current!!]);
     if (hasError || dataBody === undefined) {
-      AppLog.logForComplexMessages(
-        () => "submit agreement Response : " + errorBody
-      );
+      AppLog.log(() => "submit agreement Response : " + errorBody);
       return;
     } else {
-      AppLog.logForComplexMessages(
-        () => "submit agreement Response : " + dataBody.message
-      );
+      AppLog.log(() => "submit agreement Response : " + dataBody.message);
     }
   }, [roommateUpdateApi]);
 
@@ -170,9 +166,7 @@ const RoommateAgreementController: FC<Props> = () => {
         errorBody
       } = await getAgreementApi.request([user?.profile?.agreementId]);
       if (hasError || dataBody === undefined) {
-        AppLog.logForComplexMessages(
-          () => "Unable to find agreement answers " + errorBody
-        );
+        AppLog.log(() => "Unable to find agreement answers " + errorBody);
         SimpleToast.show(
           STRINGS.roommateAgreementDetails.no_agreement_found
         );
@@ -188,17 +182,13 @@ const RoommateAgreementController: FC<Props> = () => {
     submitAnswerRequest.current = data;
     setAgreementDialog(true);
 
-    AppLog.logForComplexMessages(
-      () => "submitted values " + JSON.stringify(data)
-    );
+    AppLog.log(() => "submitted values " + JSON.stringify(data));
   };
 
   const agreementDialogCallback = async (status: string) => {
     setAgreementDialog(false);
 
-    AppLog.logForComplexMessages(
-      () => "userProfile: " + JSON.stringify(user?.profile)
-    );
+    AppLog.log(() => "userProfile: " + JSON.stringify(user?.profile));
     submitAnswerRequest.current.agreementId = user?.profile?.agreementId!!;
     submitAnswerRequest.current.status = status;
 

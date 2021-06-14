@@ -123,7 +123,7 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
       previouslyOpenedSection.current < selectedIndex &&
       previouslyOpenedSection.current !== -1
     ) {
-      AppLog.logForcefullyForComplexMessages(
+      AppLog.logForcefully(
         () =>
           `previouslyOpenedSection: ${previouslyOpenedSection.current}, selectedIndex: ${selectedIndex}`
       );
@@ -152,9 +152,7 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
       keyExtractor={keyExtractor}
       contentContainerStyle={style}
       onScrollToIndexFailed={(info) => {
-        AppLog.logForcefullyForComplexMessages(
-          () => "Failed to scroll to " + info.index
-        );
+        AppLog.logForcefully(() => "Failed to scroll to " + info.index);
       }}
       ListFooterComponent={listFooterComponent}
       stickySectionHeadersEnabled={false} // true by default for iOS, for same experience

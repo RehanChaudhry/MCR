@@ -81,14 +81,12 @@ export const SettingsView = React.memo<Props>(
         newPassword !== "" ||
         conPassword !== ""
       );
-      AppLog.logForComplexMessages(() => disable);
+      AppLog.log(() => disable);
       return disable;
     }
 
     const onSubmit = (_value: FormikValues) => {
-      AppLog.logForComplexMessages(
-        () => "form values" + JSON.stringify(_value)
-      );
+      AppLog.log(() => "form values" + JSON.stringify(_value));
       const request: UpdateProfileRequestModel = {};
       if (secEmail !== "") {
         request.secondaryEmail = secEmail;
@@ -98,9 +96,7 @@ export const SettingsView = React.memo<Props>(
         request.newPassword = newPassword;
         request.confirmPassword = conPassword;
       }
-      AppLog.logForComplexMessages(
-        () => "form values request" + JSON.stringify(request)
-      );
+      AppLog.log(() => "form values request" + JSON.stringify(request));
       onUpdateAccountSettings(request);
     };
 

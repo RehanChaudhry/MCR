@@ -13,28 +13,13 @@ export function timeout(ms: number) {
 
 export const AppLog = (function () {
   return {
-    log: (message?: any, ...optionalParams: any[]) => {
-      if (Constants.SHOULD_PRINT_LOGS) {
-        // eslint-disable-next-line no-console
-        console.log(message, ...optionalParams);
-      }
-    },
-    logForComplexMessages: (
-      onComputeMessage: () => string,
-      ...optionalParams: any[]
-    ) => {
+    log: (onComputeMessage: () => string, ...optionalParams: any[]) => {
       if (Constants.SHOULD_PRINT_LOGS) {
         // eslint-disable-next-line no-console
         console.log(onComputeMessage(), ...optionalParams);
       }
     },
-    logForcefully: (message?: any, ...optionalParams: any[]) => {
-      if (Env.CURRENT !== "PROD") {
-        // eslint-disable-next-line no-console
-        console.log(message, ...optionalParams);
-      }
-    },
-    logForcefullyForComplexMessages: (
+    logForcefully: (
       onComputeMessage: () => string,
       ...optionalParams: any[]
     ) => {

@@ -71,20 +71,16 @@ const WelcomeController: FC<Props> = () => {
     } = await staticContentApi.request([requestModel]);
     if (hasError || dataBody === undefined) {
       // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.logForComplexMessages(
-        () => "Unable to find Static Content " + errorBody
-      );
+      AppLog.log(() => "Unable to find Static Content " + errorBody);
       return;
     } else {
-      AppLog.logForcefullyForComplexMessages(() => "data found ");
+      AppLog.logForcefully(() => "data found ");
       setStaticContent(dataBody);
     }
   };
 
   useEffect(() => {
-    AppLog.logForcefullyForComplexMessages(
-      () => "Wlcome COntroller use effect "
-    );
+    AppLog.logForcefully(() => "Wlcome COntroller use effect ");
     handleGetStaticContentApi().then().catch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

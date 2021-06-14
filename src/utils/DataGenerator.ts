@@ -10,7 +10,7 @@ const getNotifications = () => {
   const date = new Date();
 
   //date: moment(date).subtract(i, "day").toDate().toString(),
-  AppLog.logForComplexMessages(
+  AppLog.log(
     () => "Data Generaor" + moment(date).subtract(2, "day").toDate()
   );
 

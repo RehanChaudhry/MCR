@@ -58,7 +58,7 @@ const MyRoommatesController: FC<Props> = () => {
       onEndReached={onEndReached}
       onPullToRefresh={onPullToRefresh}
       onPressChat={(item: RelationModel) => {
-        AppLog.logForComplexMessages(() => "onPressChat: ", item);
+        AppLog.log(() => "onPressChat: ", item);
       }}
       onPressProfile={moveToProfileScreen}
       onPressReceivedRoommateRequests={onPressReceivedRoommateRequests}

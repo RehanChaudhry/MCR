@@ -39,7 +39,7 @@ export const ForgotPasswordView = React.memo<Props>(
 
     const onSubmit = (_value: FormikValues) => {
       initialValues = _value;
-      AppLog.logForComplexMessages(() => "form values" + initialValues);
+      AppLog.log(() => "form values" + initialValues);
       openForgotPasswordFeedBackScreen();
     };
     return (

@@ -33,7 +33,7 @@ export const useImageUpload = () => {
         SimpleToast.show("Image upload failed" + errorBody);
         return false;
       } else {
-        AppLog.logForComplexMessages(
+        AppLog.log(
           () =>
             "Image successfully uploaded to s3 : " +
             JSON.stringify(dataBody)
@@ -46,7 +46,7 @@ export const useImageUpload = () => {
 
   const uploadImage = useCallback(
     async (image: ImagePickerResponse) => {
-      AppLog.logForComplexMessages(() => "Your Signed Url : ");
+      AppLog.log(() => "Your Signed Url : ");
 
       const { hasError, dataBody } = await createSignedUrl.request([
         image.fileName!!
@@ -56,9 +56,7 @@ export const useImageUpload = () => {
         SimpleToast.show("Image upload failed" + image.fileName!!);
         return false;
       } else {
-        AppLog.logForComplexMessages(
-          () => "Your Signed Url : " + JSON.stringify(dataBody)
-        );
+        AppLog.log(() => "Your Signed Url : " + JSON.stringify(dataBody));
         return await handleUploadFileToS3({
           url: dataBody.url,
           data: image
@@ -83,7 +81,7 @@ export const useImageUpload = () => {
             response !== undefined &&
             response.didCancel !== true
           ) {
-            AppLog.logForComplexMessages(
+            AppLog.log(
               () =>
                 "Image picker response : " +
                 JSON.stringify(response.fileName)

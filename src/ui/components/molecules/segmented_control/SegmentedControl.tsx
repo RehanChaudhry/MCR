@@ -28,7 +28,7 @@ interface Props {
 
 export const SegmentedControl = optimizedMemoWithStyleProp<Props>(
   ({ onChange, selectedIndex = 0, containerStyle, tabStyle, values }) => {
-    AppLog.logForComplexMessages(() => "rendering SegmentedControl...");
+    AppLog.log(() => "rendering SegmentedControl...");
 
     if (values.length < 2) {
       throw new Error("At-least 2 values are required");
@@ -73,7 +73,7 @@ export const SegmentedControl = optimizedMemoWithStyleProp<Props>(
 
     function buttonPressed(position: number) {
       const oldSelectedOption = selectedPosition;
-      AppLog.logForComplexMessages(() => "position : " + position);
+      AppLog.log(() => "position : " + position);
       setSelectedIndexDuplicate(position);
       setSelectedPosition(position);
       if (position !== oldSelectedOption) {
@@ -97,7 +97,7 @@ export const SegmentedControl = optimizedMemoWithStyleProp<Props>(
             ? width / values.length
             : 0;
           tabHeight = height;
-          AppLog.logForComplexMessages(() => "width : " + width);
+          AppLog.log(() => "width : " + width);
           if (newSegmentWidth !== segmentWidth) {
             animation.setValue(newSegmentWidth * (selectedIndex || 0));
             setSegmentWidth(newSegmentWidth);

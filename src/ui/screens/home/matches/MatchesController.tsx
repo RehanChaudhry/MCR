@@ -43,7 +43,7 @@ type MatchesNavigationProp = StackNavigationProp<
 type Props = {};
 
 const MatchesController: FC<Props> = () => {
-  AppLog.logForComplexMessages(() => "Opening MatchesController");
+  AppLog.log(() => "Opening MatchesController");
   const { themedColors } = usePreferredTheme();
   const navigation = useNavigation<MatchesNavigationProp>();
 
@@ -77,7 +77,7 @@ const MatchesController: FC<Props> = () => {
       inActiveConversations
     );
 
-    AppLog.logForcefullyForComplexMessages(
+    AppLog.logForcefully(
       () =>
         "create conversation : " + JSON.stringify(createConversationResult)
     );
@@ -93,7 +93,7 @@ const MatchesController: FC<Props> = () => {
   };
 
   const moveToProfileScreen = (profileMatch: RelationModel) => {
-    AppLog.logForComplexMessages(
+    AppLog.log(
       () =>
         "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
     );
@@ -142,9 +142,7 @@ const MatchesController: FC<Props> = () => {
         onComplete?.();
       })
       .catch((reason) => {
-        AppLog.logForComplexMessages(
-          () => "refreshCallback > catch(), reason:" + reason
-        );
+        AppLog.log(() => "refreshCallback > catch(), reason:" + reason);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -172,9 +170,7 @@ const MatchesController: FC<Props> = () => {
   const [totalCount, setTotalCount] = useState<number>(0);
 
   const getProfileMatches = useCallback(async () => {
-    AppLog.logForcefullyForComplexMessages(
-      () => "in getProfileMatches()..."
-    );
+    AppLog.logForcefully(() => "in getProfileMatches()...");
     if (isFetchingInProgress.current) {
       return;
     }
@@ -327,7 +323,7 @@ const MatchesController: FC<Props> = () => {
     request: UpdateRelationApiRequestModel,
     type: RelationActionType
   ) => {
-    AppLog.logForComplexMessages(() => "type: " + type);
+    AppLog.log(() => "type: " + type);
     const {
       hasError,
       errorBody,

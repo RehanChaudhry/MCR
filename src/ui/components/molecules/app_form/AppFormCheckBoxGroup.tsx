@@ -59,7 +59,7 @@ export const AppFormCheckBoxGroup: React.FC<AppFormCheckBoxGroupProps> = ({
         listData={listData}
         preSelected={initialValues[name]}
         onChange={(checked: boolean, text?: string) => {
-          AppLog.logForComplexMessages(
+          AppLog.log(
             () =>
               "Checkbox check changed : " +
               checked +

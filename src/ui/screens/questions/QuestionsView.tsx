@@ -41,7 +41,7 @@ export const QuestionsView = ({
   submitAnswersLoading,
   submitAnswers
 }: Props) => {
-  AppLog.logForComplexMessages(() => "rendering QuestionsView");
+  AppLog.log(() => "rendering QuestionsView");
   const { themedColors } = usePreferredTheme();
 
   const listHeader = useRef(

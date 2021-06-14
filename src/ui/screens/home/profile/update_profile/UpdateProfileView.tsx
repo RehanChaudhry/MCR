@@ -100,7 +100,7 @@ export const UpdateProfileView: React.FC<Props> = ({
         ? createYupSchema(fieldToGetValidation.current)
         : Yup.object().shape({});
 
-    AppLog.logForComplexMessages(
+    AppLog.log(
       () => "create schema : " + JSON.stringify(yepSchema.current)
     );
 
@@ -126,7 +126,7 @@ export const UpdateProfileView: React.FC<Props> = ({
     });
   }, [updateProfileUiData]);
 
-  AppLog.logForComplexMessages(
+  AppLog.log(
     () => "UpdateProfile Ui Data = " + JSON.stringify(updateProfileUiData)
   );
 

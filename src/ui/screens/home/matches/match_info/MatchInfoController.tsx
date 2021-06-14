@@ -33,7 +33,7 @@ type MatchesNavigationProp = StackNavigationProp<
 type Props = {};
 
 const MatchInfoController: FC<Props> = () => {
-  AppLog.logForComplexMessages(() => "Opening MatchesController");
+  AppLog.log(() => "Opening MatchesController");
 
   const navigation = useNavigation<MatchesNavigationProp>();
 
@@ -65,7 +65,7 @@ const MatchInfoController: FC<Props> = () => {
   const [roommate, setRoommate] = useState<RelationApiResponseModel>();
 
   const moveToChatScreen = (profileMatch: RelationModel) => {
-    AppLog.logForcefullyForComplexMessages(
+    AppLog.logForcefully(
       () => "moveToChatScreen(), profile: " + JSON.stringify(profileMatch)
     );
 
@@ -78,7 +78,7 @@ const MatchInfoController: FC<Props> = () => {
   };
 
   const moveToProfileScreen = (profileMatch: RelationModel) => {
-    AppLog.logForComplexMessages(
+    AppLog.log(
       () =>
         "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
     );
@@ -120,15 +120,11 @@ const MatchInfoController: FC<Props> = () => {
     );
     if (hasError || dataBody === undefined) {
       // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.logForComplexMessages(
-        () => "Unable to find MatchInfo " + errorBody
-      );
+      AppLog.log(() => "Unable to find MatchInfo " + errorBody);
       return;
     } else {
       setMatchInfo(dataBody);
-      AppLog.logForComplexMessages(
-        () => "MatchInfoData" + JSON.stringify(dataBody.data)
-      );
+      AppLog.log(() => "MatchInfoData" + JSON.stringify(dataBody.data));
     }
   };
 
@@ -142,15 +138,11 @@ const MatchInfoController: FC<Props> = () => {
     ]);
     if (hasError || dataBody === undefined) {
       // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.logForComplexMessages(
-        () => "Unable to find MatchInfo " + errorBody
-      );
+      AppLog.log(() => "Unable to find MatchInfo " + errorBody);
       return;
     } else {
       setRoommate(dataBody);
-      AppLog.logForComplexMessages(
-        () => "MyRoommatesData" + JSON.stringify(dataBody.data)
-      );
+      AppLog.log(() => "MyRoommatesData" + JSON.stringify(dataBody.data));
     }
   };
 

@@ -59,9 +59,7 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
 
     const toggleLikedState = useCallback(
       async (_postId: number) => {
-        AppLog.logForcefullyForComplexMessages(
-          () => "like dislike api : " + _postId
-        );
+        AppLog.logForcefully(() => "like dislike api : " + _postId);
 
         const { hasError, dataBody } = await toggleLikedStateApi.request([
           _postId
@@ -104,9 +102,7 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
             <View style={style.leftContainerRightSide}>
               <CommentButton
                 onPress={() => {
-                  AppLog.logForcefullyForComplexMessages(
-                    () => "comment Button called"
-                  );
+                  AppLog.logForcefully(() => "comment Button called");
                   openCommentsScreen?.(postId);
                 }}
               />

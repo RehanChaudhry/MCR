@@ -40,7 +40,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
     isAllDataLoaded,
     performSearch
   }) => {
-    AppLog.logForComplexMessages(() => "Rendering chat screen...");
+    AppLog.log(() => "Rendering chat screen...");
     const { themedColors } = usePreferredTheme();
 
     const handleClick = useCallback((textToSearch?: string) => {

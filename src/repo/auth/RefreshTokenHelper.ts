@@ -13,13 +13,11 @@ function isTokenExpired(accessToken: string, expiresIn: string) {
   let current = Date.now();
   let isTokenGonnaExpire = future + threshold < current;
 
-  AppLog.logForComplexMessages(() => "expiresIn: " + expiresIn);
-  AppLog.logForComplexMessages(() => "expiresIn (ms): " + future);
-  AppLog.logForComplexMessages(() => "currentTime (ms): " + current);
-  AppLog.logForComplexMessages(
-    () => "Is token gonna expire soon: " + isTokenGonnaExpire
-  );
-  AppLog.logForComplexMessages(
+  AppLog.log(() => "expiresIn: " + expiresIn);
+  AppLog.log(() => "expiresIn (ms): " + future);
+  AppLog.log(() => "currentTime (ms): " + current);
+  AppLog.log(() => "Is token gonna expire soon: " + isTokenGonnaExpire);
+  AppLog.log(
     () =>
       "Token gonna expire in: " +
       Math.round((future - current) / (1000 * 60 * 60)) +
@@ -48,7 +46,7 @@ export async function extractAndRefreshTokenIfExpire(
     return accessToken;
   }
 
-  AppLog.logForComplexMessages(() => "Token expired...");
+  AppLog.log(() => "Token expired...");
 
   const response = await refreshTokenApiClient.post(
     REFRESH_TOKEN_API,
@@ -64,14 +62,14 @@ export async function extractAndRefreshTokenIfExpire(
 
   let updateUser: UserModel;
   if (!response.ok) {
-    AppLog.logForComplexMessages(() => "Failed to refresh token...");
+    AppLog.log(() => "Failed to refresh token...");
     onFail?.();
     return undefined;
   } else {
     try {
       let dataBody = response.data;
       if (dataBody === undefined) {
-        AppLog.logForComplexMessages(() => "Failed to refresh token...");
+        AppLog.log(() => "Failed to refresh token...");
         onFail?.();
         return undefined;
       }
@@ -89,14 +87,14 @@ export async function extractAndRefreshTokenIfExpire(
 
       await AuthStorage.storeUser(updateUser);
 
-      AppLog.logForComplexMessages(
+      AppLog.log(
         () =>
           "Updated Refreshed Access Token: " +
           updateUser.authentication?.accessToken
       );
     } catch (e) {
-      AppLog.logForComplexMessages(() => "Failed to refresh token...");
-      AppLog.logForComplexMessages(() => e);
+      AppLog.log(() => "Failed to refresh token...");
+      AppLog.log(() => e);
       onFail?.();
       return undefined;
     }

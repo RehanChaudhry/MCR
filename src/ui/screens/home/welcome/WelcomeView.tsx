@@ -31,9 +31,7 @@ export const WelcomeView = React.memo<Props>(
     //   return url.match(p) ? RegExp.$1 : false;
     // }
 
-    AppLog.logForcefullyForComplexMessages(
-      () => "video: " + shouldPlayVideo
-    );
+    AppLog.logForcefully(() => "video: " + shouldPlayVideo);
 
     // @ts-ignore
     return (

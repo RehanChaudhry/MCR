@@ -91,13 +91,13 @@ async function versionCheckLibraryImpl(): Promise<{
       (await VersionCheck.needUpdate()) ?? noStoreUrlFound;
   } catch (e) {
     // in case of no store url found
-    AppLog.logForcefullyForComplexMessages(
+    AppLog.logForcefully(
       () => "Exception occurred.. No store url found.."
     );
     versionCheckNeedUpdate = noStoreUrlFound;
   }
 
-  AppLog.logForcefullyForComplexMessages(
+  AppLog.logForcefully(
     () =>
       "versionCheckNeedUpdate: " + JSON.stringify(versionCheckNeedUpdate)
   );
@@ -126,7 +126,7 @@ function showForcedUpdateDialog(storeUrl: string) {
 }
 
 export const SplashView = React.memo<Props>(() => {
-  AppLog.logForComplexMessages(() => "Rendering SplashView...");
+  AppLog.log(() => "Rendering SplashView...");
   const [user, setUser] = useState<UserModel>();
   const [uni, setUni] = useState<Uni>();
   const [isReady, setIsReady] = useState(false);
@@ -145,7 +145,7 @@ export const SplashView = React.memo<Props>(() => {
       await fetchUserProfile(_user);
     } else if (_user?.profile) {
       // remove profile data if no access token exists
-      AppLog.logForcefullyForComplexMessages(
+      AppLog.logForcefully(
         () =>
           "Got NULL token with a user's profile upon user restoration.."
       );
@@ -160,9 +160,7 @@ export const SplashView = React.memo<Props>(() => {
   }
 
   async function fetchUserProfile(_user: UserModel) {
-    AppLog.logForcefullyForComplexMessages(
-      () => "Fetching user profile..."
-    );
+    AppLog.logForcefully(() => "Fetching user profile...");
     const {
       hasError,
       errorBody,
@@ -174,7 +172,7 @@ export const SplashView = React.memo<Props>(() => {
       await restoreUni();
       setUser(updatedUser);
     } else {
-      AppLog.logForcefullyForComplexMessages(
+      AppLog.logForcefully(
         () =>
           "Error fetching updated profile: " + JSON.stringify(errorBody)
       );
@@ -197,7 +195,7 @@ export const SplashView = React.memo<Props>(() => {
       if (!isReady) {
         setTimeout(() => {
           restoreUserIfExists().then(() => {
-            AppLog.logForcefullyForComplexMessages(() => "Get set go...");
+            AppLog.logForcefully(() => "Get set go...");
             setIsReady(true);
           });
         }, 2000);
@@ -232,13 +230,9 @@ export const SplashView = React.memo<Props>(() => {
   return (
     <AuthContext.Provider value={{ user, setUser, uni, setUni }}>
       <NavigationContainer>
-        {AppLog.logForComplexMessages(
-          () => "User exists: " + (user !== undefined)
-        )}
-        {AppLog.logForComplexMessages(
-          () => "User is logged in: " + isLoggedIn(user)
-        )}
-        {AppLog.logForComplexMessages(
+        {AppLog.log(() => "User exists: " + (user !== undefined))}
+        {AppLog.log(() => "User is logged in: " + isLoggedIn(user))}
+        {AppLog.log(
           () =>
             "User has completed welcome journey: " +
             JSON.stringify(hasCompletedWelcomeJourney(user))

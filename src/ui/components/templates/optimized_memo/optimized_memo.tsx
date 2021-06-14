@@ -29,7 +29,7 @@ function propsMatcher<PropType>() {
       }
 
       if (nextProps.logKey) {
-        AppLog.logForcefullyForComplexMessages(
+        AppLog.logForcefully(
           () =>
             `LogKey: ${
               nextProps.logKey
