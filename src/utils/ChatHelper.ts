@@ -32,7 +32,7 @@ export const ChatHelper = {
         return prevState;
       });
 
-      //remove chat in active list
+      //remove chat from active list
       setActiveConversations?.((prevState) => {
         let findItem = prevState?.find(
           (item) => item.id === conversationId
@@ -45,10 +45,10 @@ export const ChatHelper = {
         }
       });
     } else {
-      /*chat is move in archive*/
+      /*chat is moved to archive*/
 
       /*
-       * this code runs many time because if user goes to chat thread
+       * this code runs many time because if user goes to chat thread screen
        * from archive list, after every time user sent message this callback will be called
        * just to remove item from inactive list
        * */
@@ -66,14 +66,16 @@ export const ChatHelper = {
 
           item!!.message = [message!!];
           chatsCopy?.splice(
-            // eslint-disable-next-line @typescript-eslint/no-shadow
-            prevState?.findIndex((item) => item.id === conversationId)!!,
+            prevState?.findIndex((_item) => _item.id === conversationId)!!,
             1,
             item!!
           );
 
           return chatsCopy;
         } else {
+          /* if item was not found in active chat lists maybe it will present in
+             inactive chats, so pick it from inactive chat list
+           */
           let findItem = inActiveConversations?.find(
             (item) => item.id === conversationId
           );
