@@ -31,6 +31,7 @@ import { SocketHelper } from "utils/SocketHelper";
 import { useAuth } from "hooks";
 import _ from "lodash";
 import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
+import { ChatHelper } from "utils/ChatHelper";
 
 type ChatRootNavigationProp = StackNavigationProp<ChatRootStackParamList>;
 
@@ -124,10 +125,8 @@ export const ChatListController: FC<Props> = ({
     stateData?: SetStateAction<Conversation[] | undefined>
   ) {
     if (route.params.status === "active") {
-      AppLog.log("update chats active");
       setActiveConversations?.(stateData);
     } else {
-      AppLog.log("update chats inactive");
       // @ts-ignore
       setInActiveConversations?.(stateData);
     }
@@ -143,7 +142,7 @@ export const ChatListController: FC<Props> = ({
         undefined
     ) {
       if (socket?.current?.connected ?? false) {
-        AppLog.logForcefully("inside socket");
+        //emir read message event
         socket!!.current!!.emit("readByUser", {
           conversationId: item.id
         });
@@ -198,24 +197,38 @@ export const ChatListController: FC<Props> = ({
 
   let socket = useRef<Socket>();
   const connectSocket = useCallback(async () => {
-    socket.current = await SocketHelper.startConnection(
+    socket.current = await SocketHelper.getInstance(
       "Bearer " + user?.authentication?.accessToken
     );
 
-    socket.current.on("receiveMessage", (data) => {
+    socket?.current?.on("joinedUser", (userId) => {
+      ChatHelper.activeInActiveUsers(
+        userId,
+        true,
+        setActiveConversations,
+        setInActiveConversations
+      );
+    });
+
+    socket?.current?.on("leftUser", (userId) => {
+      ChatHelper.activeInActiveUsers(
+        userId,
+        false,
+        setActiveConversations,
+        setInActiveConversations
+      );
+    });
+
+    //listen to receive message event
+    socket?.current?.on("receiveMessage", (data) => {
       if (params?.status === "active") {
         let itemFoundInArchiveChats = false;
         setInActiveConversations?.((prevState: any) => {
-          AppLog.logForcefully(
-            "item found in archive chats before" +
-              JSON.stringify(prevState)
-          );
           if (
             prevState?.find(
               (prevItem: Conversation) => prevItem.id === data.id
             ) !== undefined
           ) {
-            AppLog.logForcefully("item found in archive chats");
             //does not update this conversation as its present in archived chats
             itemFoundInArchiveChats = true;
           }
@@ -256,7 +269,6 @@ export const ChatListController: FC<Props> = ({
               (item: any) => item.id === data.id
             );
 
-            AppLog.logForcefully("inside if");
             if (findIndex !== -1) {
               //remove item at index
               chatsCopy?.splice(findIndex!, 1);
@@ -269,7 +281,6 @@ export const ChatListController: FC<Props> = ({
               return prevState;
             }
           } else {
-            AppLog.logForcefully("inside else ");
             return prevState;
           }
         });

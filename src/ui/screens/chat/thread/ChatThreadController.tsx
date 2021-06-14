@@ -238,14 +238,16 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     isRetry = false
   ) {
     let generateId = nextId(
-      (messages?.length ?? 0) > 0 ? messages![0].id!.toString() : "0"
+      (messages?.length ?? 0) > 0 && messages![0] !== undefined
+        ? String(messages![0].id)
+        : "0"
     ).split(
-      (messages?.length ?? 0) > 0 ? messages![0].id!.toString() : "0"
+      (messages?.length ?? 0) > 0 && messages![0] !== undefined
+        ? String(messages![0].id)
+        : "0"
     );
 
     id = id ?? Number(generateId[0]) + Number(generateId[1]);
-
-    AppLog.logForcefully("message id : " + JSON.stringify(id));
 
     let prepareMessage = ({
       id: id,
@@ -263,11 +265,9 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       isError: false
     } as unknown) as Message;
 
-    AppLog.logForcefully(
-      "socket status : " + JSON.stringify(socket?.current?.connected)
-    );
     if (socket?.current?.connected ?? false) {
-      socket!!.current!!.emit("sendMessage", prepareMessage);
+      //remove id from message when sending to socket
+      socket!!.current!!.emit("sendMessage", _.omit(prepareMessage, "id"));
 
       //check if this chat is opened from archive list
       if (params?.isArchived) {
@@ -337,11 +337,11 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
 
   let socket = useRef<Socket>();
   const connectSocket = useCallback(async () => {
-    socket.current = await SocketHelper.startConnection(
+    socket.current = await SocketHelper.getInstance(
       "Bearer " + user?.authentication?.accessToken
     );
 
-    socket.current.on("receiveMessage", (data) => {
+    socket?.current?.on("receiveMessage", (data) => {
       setMessages((prevState) => {
         return [...data.message, ...(prevState || [])];
       });

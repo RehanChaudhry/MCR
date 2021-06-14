@@ -58,7 +58,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
       item: Conversation;
       index: number;
     }) => {
-      AppLog.log("rendering chat list item : " + JSON.stringify(item));
+      // AppLog.log("rendering chat list item : " + JSON.stringify(item));
       if (index === 0) {
         lastHeaderTitle = "";
       }

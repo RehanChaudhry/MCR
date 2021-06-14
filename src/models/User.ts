@@ -34,6 +34,7 @@ export class User {
   createdAt!: Date;
   updatedAt!: Date;
   online!: number;
+  userId!: number; //come's in chat
 
   constructor(user: User) {
     Object.assign(this, user);

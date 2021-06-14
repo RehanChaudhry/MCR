@@ -116,5 +116,50 @@ export const ChatHelper = {
         }
       });
     }
+  },
+
+  activeInActiveUsers(
+    userId: number,
+    isJoined: boolean,
+    setActiveConversations:
+      | Dispatch<SetStateAction<Conversation[] | undefined>>
+      | undefined,
+    setInActiveConversations:
+      | Dispatch<SetStateAction<Conversation[] | undefined>>
+      | undefined
+  ) {
+    setInActiveConversations?.((prevState) => {
+      let newList = _.cloneDeep(prevState);
+
+      if (newList !== undefined) {
+        _.forEach(newList, (item) => {
+          _.forEach(item.conversationUsers, (conversationUsers) => {
+            if (conversationUsers.userId === userId) {
+              conversationUsers.online = isJoined ? 1 : 0;
+            }
+          });
+        });
+        return [...newList];
+      } else {
+        return prevState;
+      }
+    });
+
+    setActiveConversations?.((prevState) => {
+      let newList = _.cloneDeep(prevState);
+
+      if (newList !== undefined) {
+        _.forEach(newList, (item) => {
+          _.forEach(item.conversationUsers, (conversationUsers) => {
+            if (conversationUsers.userId === userId) {
+              conversationUsers.online = isJoined ? 1 : 0;
+            }
+          });
+        });
+        return [...newList];
+      } else {
+        return prevState;
+      }
+    });
   }
 };
