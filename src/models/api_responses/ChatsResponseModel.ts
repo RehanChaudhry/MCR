@@ -14,20 +14,30 @@ export class Conversation {
   message!: Message[];
   status!: string;
 
-  constructor(activityLog: Conversation) {
-    Object.assign(this, activityLog);
+  constructor(conversation: Conversation) {
+    Object.assign(this, conversation);
   }
 
-  isMessageRead = () => {
-    let prettyDateTime = new PrettyTimeFormat();
-    /* this.isRead = prettyDateTime.isOneDayAgo(
-      this.lastMessagedAt.toString()
-    );*/
+  isMessageComesToday() {
+    let DateFormatter = new PrettyTimeFormat("m ago");
+
     return (
       this.lastMessagedAt !== undefined &&
-      prettyDateTime.isOneDayAgo(this.lastMessagedAt.toString())
+      DateFormatter.isSameDay(this.lastMessagedAt.toString())
     );
-  };
+  }
+
+  getFormattedDate() {
+    let DateFormatter = new PrettyTimeFormat("m ago");
+
+    return this.isMessageComesToday()
+      ? DateFormatter.formatTime(this.lastMessagedAt.toString())
+      : DateFormatter.getPrettyTime(
+          this.lastMessagedAt !== undefined
+            ? this.lastMessagedAt.toString()
+            : ""
+        );
+  }
 }
 
 class ChatResponseModel {

@@ -53,7 +53,7 @@ export const ChatThreadScreen = React.memo<Props>(
           isAllDataLoaded={isAllDataLoaded}
           onEndReached={onEndReached}
           retryCallback={retryCallback}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item) => item.id!.toString()}
           contentContainerStyle={[
             listContentContainerStyle,
             { paddingHorizontal: SPACE.lg, paddingBottom: 0 }

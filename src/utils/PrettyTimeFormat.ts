@@ -5,8 +5,8 @@ export class PrettyTimeFormat {
   minutesAgoText: string = "";
   secondsAgoText: string = "";
   yearsAgoText: string = "";
-  daysAgoText = "";
-  hoursAgoText = "";
+  daysAgoText: string = "";
+  hoursAgoText: string = "";
 
   constructor(
     minutesAgoText: string = " min ago",
@@ -23,33 +23,45 @@ export class PrettyTimeFormat {
   }
 
   getPrettyTime(date: string, compact: boolean = true): string {
-    let millis = new Date().getTime() - moment(date).valueOf();
-    let prettyTime = prettyMilliseconds(millis, { compact: compact });
+    if (date !== "") {
+      let millis = new Date().getTime() - moment(date).valueOf();
+      let prettyTime = prettyMilliseconds(millis, { compact: compact });
 
-    /* AppLog.log(
-      "pretty date is : " + prettyTime + " and original date is : " + date
-    );*/
+      /* AppLog.log(
+        "pretty date is : " + prettyTime + " and original date is : " + date
+      );*/
 
-    if (prettyTime[prettyTime.length - 1] === "y") {
-      prettyTime = prettyTime.replace(/.$/, this.yearsAgoText);
-    } else if (prettyTime[prettyTime.length - 1] === "d") {
-      prettyTime = prettyTime.replace(/.$/, this.daysAgoText);
-    } else if (prettyTime[prettyTime.length - 1] === "h") {
-      prettyTime = prettyTime.replace(/.$/, this.hoursAgoText);
-    } else if (prettyTime[prettyTime.length - 1] === "m") {
-      prettyTime = prettyTime.replace(/.$/, this.minutesAgoText);
-    } else if (prettyTime.slice(-2) === "ms") {
-      prettyTime = "Just Now";
-    } else if (prettyTime[prettyTime.length - 1] === "s") {
-      prettyTime = prettyTime.replace(/.$/, this.secondsAgoText);
+      if (prettyTime[prettyTime.length - 1] === "y") {
+        prettyTime = prettyTime.replace(/.$/, this.yearsAgoText);
+      } else if (prettyTime[prettyTime.length - 1] === "d") {
+        prettyTime = prettyTime.replace(/.$/, this.daysAgoText);
+      } else if (prettyTime[prettyTime.length - 1] === "h") {
+        prettyTime = prettyTime.replace(/.$/, this.hoursAgoText);
+      } else if (prettyTime[prettyTime.length - 1] === "m") {
+        prettyTime = prettyTime.replace(/.$/, this.minutesAgoText);
+      } else if (prettyTime.slice(-2) === "ms") {
+        prettyTime = "Just Now";
+      } else if (prettyTime[prettyTime.length - 1] === "s") {
+        prettyTime = prettyTime.replace(/.$/, this.secondsAgoText);
+      }
+
+      return prettyTime;
+    } else {
+      return date;
     }
-
-    return prettyTime;
   }
 
   isOneDayAgo(date: string, compact: boolean = true): boolean {
     let millis = new Date().getTime() - moment(date).valueOf();
     let prettyTime = prettyMilliseconds(millis, { compact: compact });
     return prettyTime[prettyTime.length - 1] === "d";
+  }
+
+  isSameDay(date: string): boolean {
+    return moment(date).isSame(moment(), "day");
+  }
+
+  formatTime(date: string, format: string = "h:mm a") {
+    return moment(date).format(format);
   }
 }

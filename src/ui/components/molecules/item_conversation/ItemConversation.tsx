@@ -31,7 +31,9 @@ export const ItemConversation = optimizedMemo<ItemConversationProps>(
       width?: NumberProp,
       height?: NumberProp
     ) => {
-      AppLog.log("color : " + color + width + height); //just to avoid warning
+      AppLog.log(
+        "item conversation avoid warning: " + color + width + height
+      ); //just to avoid warning
       return (
         <Trash
           testID="icon"

@@ -6,7 +6,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import NotifyIndic from "assets/images/notification-indicator.svg";
@@ -14,7 +14,6 @@ import NotifyIndicInActive from "assets/images/notification-indicator-inactive.s
 import { useAuth, usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { SenderType } from "models/ChatItem";
-import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
 import { User } from "models/User";
@@ -30,16 +29,10 @@ export const ItemChatList = React.memo<ItemChatListProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
     const { user } = useAuth();
-    let prettyTime =
-      item.lastMessagedAt !== undefined
-        ? new PrettyTimeFormat(
-            "m ago",
-            "s ago",
-            "y ago",
-            "d ago",
-            "h ago"
-          ).getPrettyTime(item.lastMessagedAt.toString())
-        : "";
+
+    const [prettyTime, setPrettyTime] = useState<string>(
+      item.getFormattedDate()
+    );
 
     //message will come null in case of create conversation
     let isMessageRead =
@@ -49,11 +42,21 @@ export const ItemChatList = React.memo<ItemChatListProps>(
         (userId) => userId === user?.profile?.id
       ) !== undefined;
 
+    useEffect(() => {
+      let id = setTimeout(() => {
+        setPrettyTime(item.getFormattedDate());
+      }, 10000);
+      return () => {
+        clearTimeout(id);
+      };
+    });
+
     return (
       <TouchableOpacity onPress={onPress}>
         <View
           style={styles.container(
-            item.conversationUsers.length > 1 && !item.isMessageRead,
+            item.conversationUsers.length > 1 &&
+              !item.isMessageComesToday(),
             themedColors
           )}>
           <Image
