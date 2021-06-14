@@ -26,9 +26,6 @@ export const ChatHelper = {
         );
 
         if (findItem !== undefined) {
-          //   setIsAllDataLoaded([findItem, ...(prevState || [])].length < 10);
-
-          // @ts-ignore
           return [findItem, ...(prevState || [])];
         }
 
@@ -42,10 +39,6 @@ export const ChatHelper = {
         );
 
         if (findItem !== undefined) {
-          /*  setIsAllDataLoaded(
-                        _.without(prevState as Conversation[], findItem).length < 10
-                    );*/
-
           return [..._.without(prevState as Conversation[], findItem)];
         } else {
           return prevState;
@@ -79,8 +72,6 @@ export const ChatHelper = {
             item!!
           );
 
-          //    setIsAllDataLoaded((chatsCopy?.length ?? 0) < 10);
-
           return chatsCopy;
         } else {
           let findItem = inActiveConversations?.find(
@@ -90,9 +81,6 @@ export const ChatHelper = {
           //add item in active chat list
           if (findItem !== undefined) {
             findItem.message = [message!!]; //replace conversation from new object
-
-            //   setIsAllDataLoaded([findItem, ...prevState].length < 10);
-
             return [findItem, ...prevState];
           }
 
@@ -107,9 +95,6 @@ export const ChatHelper = {
         );
 
         if (findItem !== undefined) {
-          /* setIsAllDataLoaded(
-                        _.without(prevState as Conversation[], findItem).length < 10
-                    );*/
           return [..._.without(prevState as Conversation[], findItem)];
         } else {
           return prevState;
