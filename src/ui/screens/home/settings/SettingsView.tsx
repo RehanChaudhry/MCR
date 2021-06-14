@@ -281,18 +281,17 @@ export const SettingsView = React.memo<Props>(
                 text={"Save"}
                 buttonType={BUTTON_TYPES.NORMAL}
                 fontWeight={"semi-bold"}
-                textStyle={
-                  shouldDisable()
-                    ? { color: theme.themedColors.primary }
-                    : { color: theme.themedColors.interface[100] }
-                }
+                textStyle={{ color: theme.themedColors.interface[100] }}
+                textDisableStyle={{ color: theme.themedColors.primary }}
                 buttonStyle={[
                   styles.buttonStyle,
                   {
-                    backgroundColor: shouldDisable()
-                      ? theme.themedColors.interface[200]
-                      : theme.themedColors.primary
+                    backgroundColor: theme.themedColors.primary
                   }
+                ]}
+                buttonDisableStyle={[
+                  styles.buttonStyle,
+                  { backgroundColor: theme.themedColors.interface[200] }
                 ]}
               />
             </View>
