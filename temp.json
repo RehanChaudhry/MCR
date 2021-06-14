@@ -1,40 +1,36 @@
 {
-  "duration": 387,
+  "duration": 827,
   "problem": null,
   "originalError": null,
   "ok": true,
   "status": 200,
   "headers": {
-    "cf-request-id": "0aab07b35600000a42f4a9b000000001",
+    "cf-request-id": "0aabc2c6f20000c609d2043000000001",
     "content-type": "application/json; charset=utf-8",
     "x-content-type-options": "nosniff",
     "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
     "strict-transport-security": "max-age=0; includeSubDomains",
     "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=cyuHfbVv3hLZvVzW79iTtdMzefSmrHBtn6dzqf7MUKUsExDV480P9zTgIpqZJbd1nMlGRVCrYzMdUKVDkiennAm2wbHe0VF8ODHUKnMw1VWb5nw9G%2BMvJx%2BE9%2F%2F1mxLR\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
-    "cf-ray": "65f1dbcbbcd20a42-KIX",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=UuQ85lspFiYhtKEsQdU7LiETj6LCoFc604KWWHekgWZN8un0wrYBvxLftp3tdhFZhtTWlyhWRO2TnagC%2FL50VLtmrnU6rry5yvGfYThNrJf%2BbAybxhlHWzYuOfrmsybk\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "65f3071e5cc9c609-KHI",
     "x-powered-by": "Express",
     "x-xss-protection": "1; mode=block",
-    "vary": "Origin",
+    "vary": "Accept-Encoding, Origin",
     "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
     "cf-cache-status": "DYNAMIC",
     "x-frame-options": "SAMEORIGIN",
-    "date": "Mon, 14 Jun 2021 07:31:21 GMT",
+    "date": "Mon, 14 Jun 2021 10:55:42 GMT",
     "server": "cloudflare",
-    "etag": "W/\"1a9-Z/5n1SwSRaSbbBj77dtbVUPnG+4\""
+    "etag": "W/\"37a-hyHxYs7y1kPZp2XOEjXynr8ho8I\""
   },
   "config": {
-    "url": "relation",
-    "method": "get",
+    "url": "post/like/20",
+    "method": "put",
+    "data": null,
     "headers": {
       "Accept": "application/json",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mjk5LCJ1c2VySWQiOjQ2LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJ1cGRhdGUtYWdyZWVtZW50LWFuc3dlciIsInF1ZXN0aW9uYWlyZS1hbnN3ZXIiLCJ1c2VycyIsIm1hdGNoaW5nLWluZm9ybWF0aW9uIiwicmVsYXRpb24iLCJjaGF0IiwiZGVsZXRlLWZpbGUiXSwiaWF0IjoxNjIzNjUxODQxLCJleHAiOjE2MjYyNDM4NDF9.m37BTJ0W8djwzCxc9HfmrbKV7WtfDHbd4_lvYjHt39U"
-    },
-    "params": {
-      "type": "blocked",
-      "page": 1,
-      "limit": 9,
-      "paginate": true
+      "Content-Type": "application/json",
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM4LCJ1c2VySWQiOjY0LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJ1cGRhdGUtYWdyZWVtZW50LWFuc3dlciIsInF1ZXN0aW9uYWlyZS1hbnN3ZXIiLCJ1c2VycyIsIm1hdGNoaW5nLWluZm9ybWF0aW9uIiwicmVsYXRpb24iLCJjaGF0IiwiZGVsZXRlLWZpbGUiXSwiaWF0IjoxNjIzNjY3MzQ5LCJleHAiOjE2MjYyNTkzNDl9.LjKSeCd_IYe2kG0BVDv8yoKzqiWC4hAfxM7dpMIhsnY"
     },
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
     "transformRequest": [
@@ -50,31 +46,37 @@
     "maxBodyLength": -1
   },
   "data": {
-    "message": "Success",
-    "data": [
-      {
-        "id": 598,
-        "status": "blocked",
-        "isRoommate": 0,
-        "isFriend": 0,
-        "blockee": 46,
-        "acceptee": null,
-        "createdAt": "2021-06-14T07:16:21.000Z",
-        "updatedAt": "2021-06-14T07:16:21.000Z",
-        "user": {
-          "id": 28,
-          "firstName": "Amandy",
-          "lastName": "Handmore",
-          "hometown": "Thompsonville",
-          "major": "Geophysics",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/5.jpg",
-            "originalName": "5.jpg"
-          }
-        },
-        "userId": 28
-      }
-    ],
-    "count": 1
+    "message": "Post has been liked successfully.",
+    "data": {
+      "id": 20,
+      "type": "announcement",
+      "content": "Vaccines are one way to stop COVID-19, but Dr. Jennifer Hines, a professor in the Department of Chemistry and Biochemistry, has discovered another- by disrupting the virus’s RNA and ability to reproduce.",
+      "link": null,
+      "photos": [
+        {
+          "fileURL": "https://mcr.cygnis.dev/storage/post-uploads/image4.png",
+          "originalName": "test-post123.jpg"
+        }
+      ],
+      "embed": null,
+      "postedBy": 1152,
+      "postedByFirstName": "Ohio",
+      "postedByLastName": "University",
+      "postedByProfilePicture": {
+        "fileURL": "https://mcr.cygnis.dev/storage/universities/ohio-university.png",
+        "originalName": "image1.jpg"
+      },
+      "likesCount": 3,
+      "commentsCount": 0,
+      "isFlagged": null,
+      "everyone": 1,
+      "specificFloorPlan": 0,
+      "specificMatchGroup": 0,
+      "specificGender": 0,
+      "createdAt": "2021-06-10T09:53:42.000Z",
+      "updatedAt": "2021-06-14T10:55:41.000Z",
+      "deletedAt": null,
+      "isLikedByMe": true
+    }
   }
 }

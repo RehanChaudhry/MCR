@@ -29,9 +29,13 @@ const ForgotPasswordController: FC<Props> = () => {
     navigation.setOptions(NoHeader.create());
   }, [navigation]);
 
-  const openForgotPasswordFeedBackScreen = usePreventDoubleTap(() => {
-    navigation.navigate("ForgotPasswordFeedBack");
-  });
+  const openForgotPasswordFeedBackScreen = usePreventDoubleTap(
+    (email: string) => {
+      navigation.navigate("ForgotPasswordFeedBack", {
+        email: email
+      });
+    }
+  );
 
   const openSignInScreen = usePreventDoubleTap(() => {
     navigation.pop();

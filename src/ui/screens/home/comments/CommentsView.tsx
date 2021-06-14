@@ -55,6 +55,7 @@ export const CommentsView = React.memo<Props>(
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           error={error}
+          noRecordFoundText="Be the first one to comment!'"
           contentContainerStyle={styles.listContainer}
           ItemSeparatorComponent={() => (
             <View style={styles.itemSeparator} />

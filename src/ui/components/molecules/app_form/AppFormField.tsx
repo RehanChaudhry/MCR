@@ -85,7 +85,9 @@ const AppFormField = optimizedMemo<Props>(
             <View style={styles.space} />
 
             {linkLabelProps && (
-              <TouchableOpacity onPress={linkLabelOnPress}>
+              <TouchableOpacity
+                onPress={linkLabelOnPress}
+                style={styles.linkLabelClick}>
                 <AppLabel
                   style={[
                     styles.linkLabel,
@@ -133,6 +135,9 @@ const styles = StyleSheet.create({
   },
   linkLabel: {
     fontSize: FONT_SIZE.xs
+  },
+  linkLabelClick: {
+    paddingTop: SPACE.xs
   }
 });
 

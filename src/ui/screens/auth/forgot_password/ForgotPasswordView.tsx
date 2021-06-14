@@ -1,3 +1,4 @@
+import Strings from "config/Strings";
 import React from "react";
 import {
   AppImageBackground,
@@ -20,13 +21,15 @@ import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 
 type Props = {
-  openForgotPasswordFeedBackScreen: () => void;
+  openForgotPasswordFeedBackScreen: (email: string) => void;
   shouldShowProgressBar?: boolean;
   openSignInScreen?: () => void;
 };
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().required("Enter your email address")
+  email: Yup.string()
+    .email(Strings.login.enter_valid_email_validation)
+    .required(Strings.login.email_required_validation)
 });
 
 let initialValues: FormikValues = {
@@ -40,7 +43,7 @@ export const ForgotPasswordView = React.memo<Props>(
     const onSubmit = (_value: FormikValues) => {
       initialValues = _value;
       AppLog.log("form values" + initialValues);
-      openForgotPasswordFeedBackScreen();
+      openForgotPasswordFeedBackScreen(_value.email);
     };
     return (
       <Screen

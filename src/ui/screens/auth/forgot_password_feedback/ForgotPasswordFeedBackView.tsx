@@ -24,10 +24,11 @@ type Props = {
   openForgotPasswordScreen?: () => void;
   openSignInScreen: () => void;
   shouldShowProgressBar?: boolean;
+  email: string;
 };
 
 export const ForgotPasswordFeedBackView = React.memo<Props>(
-  ({ openForgotPasswordScreen, openSignInScreen }) => {
+  ({ openForgotPasswordScreen, openSignInScreen, email }) => {
     const theme = usePreferredTheme();
 
     return (
@@ -71,7 +72,7 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
                 ]}
                 text={[
                   STRINGS.forgotPasswordFeedBack.feedBack_one_text,
-                  STRINGS.forgotPasswordFeedBack.email,
+                  email + " ",
                   STRINGS.forgotPasswordFeedBack.feedBack_third_text
                 ]}
               />
