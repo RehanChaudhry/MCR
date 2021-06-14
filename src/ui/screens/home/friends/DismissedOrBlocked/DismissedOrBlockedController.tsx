@@ -139,7 +139,7 @@ const DismissedOrBlockedController: FC<Props> = () => {
           <DismissedOrBlockedView
             headerTitle={headerContent?.title!}
             headerSubtitle={headerContent?.description!}
-            learnMoreTitle={"Learnmore about dismissed list"}
+            learnMoreTitle={"Learn more about dismissed list"}
             learnMoreAction={moveToHeaderContent}
             data={dismissed}
             isLoading={isLoadingDismissed}
@@ -157,7 +157,7 @@ const DismissedOrBlockedController: FC<Props> = () => {
           <DismissedOrBlockedView
             headerTitle={headerContent?.title!}
             headerSubtitle={headerContent?.description!}
-            learnMoreTitle={"Learnmore about blocked list"}
+            learnMoreTitle={"Learn more about blocked list"}
             learnMoreAction={moveToHeaderContent}
             data={blocked}
             isLoading={isLoadingBlocked}
