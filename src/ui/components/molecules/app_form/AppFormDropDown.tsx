@@ -65,7 +65,7 @@ export const AppFormDropDown: React.FC<Props> = ({
         }}
       />
 
-      {(errors[name] || touched[name]) && (
+      {errors[name] && touched[name] && (
         <AppFormValidationLabel
           validationLabelTestID={validationLabelTestID}
           errorString={errors[name] as string}
