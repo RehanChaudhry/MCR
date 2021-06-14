@@ -6,11 +6,16 @@ import { COLORS, FONT_SIZE, SPACE, STRINGS } from "config";
 import Strings from "config/Strings";
 import { FormikValues } from "formik";
 import { useAuth, usePreferredTheme } from "hooks";
+import { useImageUpload } from "hooks/useImageUpload";
+import _ from "lodash";
+import MyImagePickerResponse from "models/api_responses/MyImagePickerResponse";
 import React, { useCallback, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Tooltip } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import { ImagePickerResponse } from "react-native-image-picker";
 import SimpleToast from "react-native-simple-toast";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { EmbedButton } from "ui/components/atoms/compact_buttons/EmbedButton";
 import { LinkButton } from "ui/components/atoms/compact_buttons/LinkButton";
 import { PhotosButton } from "ui/components/atoms/compact_buttons/PhotosButton";
@@ -27,9 +32,6 @@ import { ImageWithCross } from "ui/components/molecules/image_with_cross/ImageWi
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppLog, iframePattern, pattern, SvgProp } from "utils/Util";
 import * as Yup from "yup";
-import { useImageUpload } from "hooks/useImageUpload";
-import MyImagePickerResponse from "models/api_responses/MyImagePickerResponse";
-import _ from "lodash";
 
 type Props = {
   shouldShowProgressBar?: boolean;
@@ -263,16 +265,30 @@ export const CreatePostView = React.memo<Props>((props) => {
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
-                <TouchableOpacity
-                  onPress={() =>
-                    SimpleToast.show("Clicked on info icon.")
-                  }>
+                <Tooltip
+                  popover={
+                    <AppLabel
+                      text="text"
+                      style={{ color: theme.themedColors.primary }}
+                    />
+                  }
+                  backgroundColor={theme.themedColors.interface["200"]}>
                   <InfoCircle
                     width={23}
                     height={23}
                     fill={theme.themedColors.interface["500"]}
                   />
-                </TouchableOpacity>
+                </Tooltip>
+                {/*<TouchableOpacity*/}
+                {/*  onPress={() =>*/}
+                {/*    SimpleToast.show("Clicked on info icon.")*/}
+                {/*  }>*/}
+                {/*  <InfoCircle*/}
+                {/*    width={23}*/}
+                {/*    height={23}*/}
+                {/*    fill={theme.themedColors.interface["500"]}*/}
+                {/*  />*/}
+                {/*</TouchableOpacity>*/}
               </View>
             </ScrollView>
             {postType !== POST_TYPES.NONE && (
@@ -431,7 +447,8 @@ const styles = StyleSheet.create({
     marginRight: SPACE.sm
   },
   list: {
-    marginTop: SPACE.lg
+    marginTop: SPACE.lg,
+    borderWidth: 1.0
     // flexGrow: 1,
     // flexBasis: 0
   },
