@@ -40,19 +40,16 @@ export const ChatListScreen = React.memo<ChatListProps>(
     isAllDataLoaded,
     performSearch
   }) => {
-    AppLog.log("Rendering chat screen...");
+    AppLog.log(() => "Rendering chat screen...");
     const { themedColors } = usePreferredTheme();
 
-    const handleClick = useCallback(
-      (textToSearch?: string) => {
+    const handleClick = useCallback((textToSearch?: string) => {
+      if (textToSearch !== undefined) {
         lastHeaderTitle = "";
-
-        textToSearch !== "" &&
-          textToSearch !== undefined &&
-          performSearch(textToSearch);
-      },
-      [performSearch]
-    );
+        performSearch(textToSearch);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const renderItem = ({
       item,
@@ -61,7 +58,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
       item: Conversation;
       index: number;
     }) => {
-      AppLog.log("rendering chat list item : " + JSON.stringify(item));
+      // AppLog.logForComplexMessages(() => "rendering chat list item : " + JSON.stringify(item));
       if (index === 0) {
         lastHeaderTitle = "";
       }
@@ -72,9 +69,6 @@ export const ChatListScreen = React.memo<ChatListProps>(
             lastHeaderTitle={lastHeaderTitle}
             onHeaderCreated={(title: string) => {
               lastHeaderTitle = title;
-              AppLog.log(
-                "Chat header => lastHeaderTitle " + lastHeaderTitle
-              );
             }}
           />
           <ItemChatList
@@ -108,7 +102,7 @@ export const ChatListScreen = React.memo<ChatListProps>(
               error={error}
               data={data}
               renderItem={renderItem}
-              keyExtractor={(item) => item.id.toString()}
+              keyExtractor={(item) => (item.id ? String(item.id) : "")}
               showsVerticalScrollIndicator={false}
               style={styles.list}
               retryCallback={pullToRefreshCallback}

@@ -28,7 +28,6 @@ interface Props {
 
 const ActivityLogItem = ({ activityLog }: Props) => {
   const { themedColors } = usePreferredTheme();
-  //AppLog.log("message: " + activityLog.getMessage());
 
   const icon: any = () => {
     if (activityLog.type != null) {

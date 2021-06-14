@@ -20,10 +20,11 @@ const BottomBreadCrumbs: FC<Props> = ({ data }) => {
   const [selectedId, setSelectedId] = useState(data[0].title);
 
   const renderItem = ({ item }: { item: Item }) => {
-    const backgroundColor =
-      item.title === selectedId
-        ? theme.themedColors.primaryShade
-        : theme.themedColors.interface[100];
+    const backgroundColor = item.isDisable
+      ? theme.themedColors.interface[200]
+      : item.title === selectedId
+      ? theme.themedColors.primaryShade
+      : theme.themedColors.interface[100];
     const textColor =
       item.title === selectedId
         ? theme.themedColors.primary
@@ -31,13 +32,17 @@ const BottomBreadCrumbs: FC<Props> = ({ data }) => {
     return (
       <BottomBreadCrumbsItem
         title={item.title}
-        onPress={() => {
-          if (!item.isDisable) {
-            setSelectedId(item.title);
-            item.onPress();
-          }
-        }}
-        style={{ backgroundColor }}
+        onPress={
+          !item.isDisable
+            ? () => {
+                if (!item.isDisable) {
+                  setSelectedId(item.title);
+                  item.onPress();
+                }
+              }
+            : undefined
+        }
+        style={{ backgroundColor, opacity: item.isDisable ? 0.5 : 1 }}
         textStyle={{ color: textColor }}
       />
     );

@@ -81,12 +81,12 @@ export const SettingsView = React.memo<Props>(
         newPassword !== "" ||
         conPassword !== ""
       );
-      AppLog.log(disable);
+      AppLog.log(() => disable);
       return disable;
     }
 
     const onSubmit = (_value: FormikValues) => {
-      AppLog.log("form values" + JSON.stringify(_value));
+      AppLog.log(() => "form values" + JSON.stringify(_value));
       const request: UpdateProfileRequestModel = {};
       if (secEmail !== "") {
         request.secondaryEmail = secEmail;
@@ -96,7 +96,7 @@ export const SettingsView = React.memo<Props>(
         request.newPassword = newPassword;
         request.confirmPassword = conPassword;
       }
-      AppLog.log("form values request" + JSON.stringify(request));
+      AppLog.log(() => "form values request" + JSON.stringify(request));
       onUpdateAccountSettings(request);
     };
 
@@ -281,18 +281,17 @@ export const SettingsView = React.memo<Props>(
                 text={"Save"}
                 buttonType={BUTTON_TYPES.NORMAL}
                 fontWeight={"semi-bold"}
-                textStyle={
-                  shouldDisable()
-                    ? { color: theme.themedColors.primary }
-                    : { color: theme.themedColors.interface[100] }
-                }
+                textStyle={{ color: theme.themedColors.interface[100] }}
+                textDisableStyle={{ color: theme.themedColors.primary }}
                 buttonStyle={[
                   styles.buttonStyle,
                   {
-                    backgroundColor: shouldDisable()
-                      ? theme.themedColors.interface[200]
-                      : theme.themedColors.primary
+                    backgroundColor: theme.themedColors.primary
                   }
+                ]}
+                buttonDisableStyle={[
+                  styles.buttonStyle,
+                  { backgroundColor: theme.themedColors.interface[200] }
                 ]}
               />
             </View>

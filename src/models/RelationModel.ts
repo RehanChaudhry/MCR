@@ -37,6 +37,7 @@ export type Criteria = {
 export class RelationModel {
   id!: number;
   userId: number = 0;
+  isModerator: number = 0;
   matchScore?: number;
   user?: RelationUser;
   createdAt: string = "";
@@ -88,22 +89,6 @@ export class RelationModel {
     } else {
       return RelationType.FRIEND;
     }
-
-    // if (this.isRoommate === EIntBoolean.TRUE) {
-    //   return RelationType.ROOMMATE;
-    // } else if (this.criteria?.eligible === false) {
-    //   return RelationType.NOT_ELIGIBLE;
-    // } else if (this.status === Status.PENDING) {
-    //   return RelationType.FRIEND_REQUESTED;
-    // } else if (this.isFriend === EIntBoolean.TRUE) {
-    //   return RelationType.FRIEND;
-    // } else if (this.status === Status.DISMISSED) {
-    //   return RelationType.DISMISSED;
-    // } else if (this.status === Status.BLOCKED) {
-    //   return RelationType.BLOCKED;
-    // } else {
-    //   return RelationType.NOT_FRIEND;
-    // }
   }
 }
 

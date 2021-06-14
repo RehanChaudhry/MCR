@@ -36,7 +36,7 @@ export const CommentsView = React.memo<Props>(
     const theme = usePreferredTheme();
 
     const renderItem = ({ item }: { item: Comment }) => {
-      AppLog.logForcefully("Rendering item " + item.id);
+      AppLog.logForcefully(() => "Rendering item " + item.id);
       return <ItemComment item={item} retry={retry} />;
     };
 

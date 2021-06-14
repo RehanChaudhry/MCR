@@ -8,18 +8,23 @@ import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 type Props = {
   openRoommateAgreementScreen: () => void;
   viewProfileUiData: Profile | undefined;
+  moveToChatScreen: (userId: number) => void;
 };
 
 export const ViewProfileView: React.FC<Props> = ({
   openRoommateAgreementScreen,
-  viewProfileUiData
+  viewProfileUiData,
+  moveToChatScreen
 }) => {
   return (
     <Screen shouldAddBottomInset={false}>
       <ScrollView>
         <View>
           <DynamicCardView sectionsData={viewProfileUiData?.sections} />
-          <MyRoommates openAgreementScreen={openRoommateAgreementScreen} />
+          <MyRoommates
+            openAgreementScreen={openRoommateAgreementScreen}
+            moveToChatScreen={moveToChatScreen}
+          />
         </View>
       </ScrollView>
     </Screen>

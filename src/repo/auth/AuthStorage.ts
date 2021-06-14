@@ -11,7 +11,7 @@ const storeUni = async (uni: Uni) => {
   try {
     await AsyncStorage.setItem(uniKey, JSON.stringify(uni));
   } catch (error) {
-    AppLog.log("Error storing the uni", error);
+    AppLog.log(() => "Error storing the uni", error);
   }
 };
 
@@ -30,7 +30,7 @@ const storeUser = async (user: UserModel) => {
   try {
     await Keychain.setGenericPassword(key, JSON.stringify(user));
   } catch (error) {
-    AppLog.log("Error storing the user", error);
+    AppLog.log(() => "Error storing the user", error);
   }
 };
 
@@ -56,7 +56,7 @@ const getUserToken = async () => {
     }
     return { accessToken, refreshToken, expiresIn };
   } catch (error) {
-    AppLog.log("Error getting the user: ", error);
+    AppLog.log(() => "Error getting the user: ", error);
   }
 };
 

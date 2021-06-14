@@ -28,7 +28,7 @@ export const AddInterestsView = React.memo<Props>(
       width?: NumberProp,
       height?: NumberProp
     ) {
-      AppLog.log("color : " + color + " " + width + " " + height); //just to avoid warning
+      AppLog.log(() => "color : " + color + " " + width + " " + height); //just to avoid warning
       return (
         <Plus
           testID="icon"
@@ -39,12 +39,8 @@ export const AddInterestsView = React.memo<Props>(
       );
     }
 
-    // function appInputCallback(text: string) {
-    //   AppLog.log("AppInput field callback " + text);
-    // }
-
     const renderItem = ({ item }: { item: ConversationItem }) => {
-      AppLog.log("rendering list item : " + JSON.stringify(item));
+      AppLog.log(() => "rendering list item : " + JSON.stringify(item));
       return (
         <ItemConversation
           item={item}

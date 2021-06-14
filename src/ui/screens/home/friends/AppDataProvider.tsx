@@ -7,6 +7,7 @@ import React, {
   useRef,
   useState
 } from "react";
+import { Conversation } from "models/api_responses/ChatsResponseModel";
 
 type AppDataContextType = {
   myFriends?: RelationModel[];
@@ -19,6 +20,14 @@ type AppDataContextType = {
   setBlocked?: Dispatch<SetStateAction<RelationModel[] | undefined>>;
   matches?: RelationModel[];
   setMatches?: Dispatch<SetStateAction<RelationModel[] | undefined>>;
+  activeConversations?: Conversation[];
+  setActiveConversations?: Dispatch<
+    SetStateAction<Conversation[] | undefined>
+  >;
+  inActiveConversations?: Conversation[];
+  setInActiveConversations?: Dispatch<
+    SetStateAction<Conversation[] | undefined>
+  >;
   addListenerOnResetData: (listener: () => void) => void;
   removeListenerOnResetData: (listener: () => void) => void;
   resetData: () => void;
@@ -35,6 +44,12 @@ const AppDataProvider: FC = (props) => {
   const [dismissed, setDismissed] = useState<RelationModel[]>();
   const [blocked, setBlocked] = useState<RelationModel[]>();
   const [matches, setMatches] = useState<RelationModel[]>();
+  const [activeConversations, setActiveConversations] = useState<
+    Conversation[]
+  >();
+  const [inActiveConversations, setInActiveConversations] = useState<
+    Conversation[]
+  >();
   const listenersRef = useRef<Array<() => void>>([]);
   const addListenerOnResetData = useCallback((listener: () => void) => {
     listenersRef.current.push(listener);
@@ -61,6 +76,10 @@ const AppDataProvider: FC = (props) => {
         setBlocked,
         matches,
         setMatches,
+        activeConversations,
+        inActiveConversations,
+        setActiveConversations,
+        setInActiveConversations,
         addListenerOnResetData,
         removeListenerOnResetData,
         resetData

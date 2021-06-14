@@ -18,7 +18,7 @@ function signIn(requestModel: SignInApiRequestModel) {
 
 async function fetchMyProfile(token?: string) {
   if (token) {
-    await resetApiClient(token);
+    resetApiClient(token);
   }
   return apiClient.get<FetchMyProfileResponseModel>(
     API.FETCH_MY_PROFILE_URL

@@ -14,7 +14,7 @@ import { StaticContentType } from "models/api_requests/StaticContentRequestModel
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
 import { View } from "react-native";
-import WelcomeSkipTitleButton from "ui/components/molecules/welcome_skip_title_button/WelcomeSkipTitleButton";
+import SkipTitleButton from "ui/components/molecules/skip_title_button/SkipTitleButton";
 import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseModel";
 
 type WelcomeNavigationProp = StackNavigationProp<
@@ -51,7 +51,7 @@ const WelcomeController: FC<Props> = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <WelcomeSkipTitleButton
+        <SkipTitleButton
           onPress={openUpdateProfileScreen}
           updateProfileRequest={{
             welcomeVideoStatus: EWelcomeFlowStatus.SKIPPED
@@ -71,16 +71,16 @@ const WelcomeController: FC<Props> = () => {
     } = await staticContentApi.request([requestModel]);
     if (hasError || dataBody === undefined) {
       // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.log("Unable to find Static Content " + errorBody);
+      AppLog.log(() => "Unable to find Static Content " + errorBody);
       return;
     } else {
-      AppLog.logForcefully("data found ");
+      AppLog.logForcefully(() => "data found ");
       setStaticContent(dataBody);
     }
   };
 
   useEffect(() => {
-    AppLog.logForcefully("Wlcome COntroller use effect ");
+    AppLog.logForcefully(() => "Wlcome COntroller use effect ");
     handleGetStaticContentApi().then().catch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

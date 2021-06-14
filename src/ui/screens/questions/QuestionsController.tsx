@@ -51,7 +51,7 @@ import { ProfileStackParamList } from "routes/ProfileBottomBar";
 import { ProfileRootStackParamList } from "routes/ProfileRootStack";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseModel";
-import WelcomeSkipTitleButton from "ui/components/molecules/welcome_skip_title_button/WelcomeSkipTitleButton";
+import SkipTitleButton from "ui/components/molecules/skip_title_button/SkipTitleButton";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -80,7 +80,7 @@ type ProfileRouteProp = RouteProp<
 type Props = {};
 
 const QuestionsController: FC<Props> = () => {
-  AppLog.log("Opening QuestionsController");
+  AppLog.log(() => "Opening QuestionsController");
 
   const { themedColors } = usePreferredTheme();
 
@@ -119,7 +119,7 @@ const QuestionsController: FC<Props> = () => {
           />
         ),
         headerRight: () => (
-          <WelcomeSkipTitleButton
+          <SkipTitleButton
             onPress={moveToHomeScreen}
             updateProfileRequest={{
               questionnaireStatus: EWelcomeFlowStatus.SKIPPED
@@ -175,7 +175,7 @@ const QuestionsController: FC<Props> = () => {
       { type: StaticContentType.QUESTIONNAIRE }
     ]);
     if (hasError || dataBody === undefined) {
-      AppLog.log("Unable to find header content " + errorBody);
+      AppLog.log(() => "Unable to find header content " + errorBody);
       return;
     } else {
       setHeaderContent(dataBody.data);
@@ -216,7 +216,7 @@ const QuestionsController: FC<Props> = () => {
     );
     if (hasError || dataBody === undefined) {
       // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.log("Unable to find questions " + errorBody);
+      AppLog.log(() => "Unable to find questions " + errorBody);
       return;
     } else {
       setQuestions(toSections(dataBody.data ?? []));
@@ -228,7 +228,7 @@ const QuestionsController: FC<Props> = () => {
     if (requestModel.current === undefined) {
       return;
     }
-    AppLog.log("handleSubmitAnswers: ");
+    AppLog.log(() => "handleSubmitAnswers: ");
     const { hasError, errorBody, dataBody } = await answerApi.request([
       requestModel.current!
     ]);

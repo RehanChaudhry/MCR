@@ -20,7 +20,6 @@ import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 import { AppLog } from "utils/Util";
 
 type Props = {
-  openUpdateQuestionnaireScreen: () => void;
   infoTextShown: boolean;
   handleUpdateProfile: (values: UpdateProfileRequestModel) => void;
   updateProfileUiData: Profile | undefined;
@@ -28,7 +27,6 @@ type Props = {
 };
 
 export const UpdateProfileView: React.FC<Props> = ({
-  //openUpdateQuestionnaireScreen,
   infoTextShown,
   handleUpdateProfile,
   updateProfileUiData,
@@ -102,7 +100,9 @@ export const UpdateProfileView: React.FC<Props> = ({
         ? createYupSchema(fieldToGetValidation.current)
         : Yup.object().shape({});
 
-    AppLog.log("create schema : " + JSON.stringify(yepSchema.current));
+    AppLog.log(
+      () => "create schema : " + JSON.stringify(yepSchema.current)
+    );
 
     // FieldBox's initial state is being handled here.
     // it is being handled in CustomForFieldItem
@@ -127,7 +127,7 @@ export const UpdateProfileView: React.FC<Props> = ({
   }, [updateProfileUiData]);
 
   AppLog.log(
-    "UpdateProfile Ui Data = " + JSON.stringify(updateProfileUiData)
+    () => "UpdateProfile Ui Data = " + JSON.stringify(updateProfileUiData)
   );
 
   useEffect(() => {

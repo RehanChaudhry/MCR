@@ -196,9 +196,18 @@ function createActionButton(
         }}
         fontWeight={"semi-bold"}
         textStyle={[styles.btnActionText, { color: themedColors.danger }]}
+        textDisableStyle={[
+          styles.btnActionText,
+          { color: themedColors.interface[600], opacity: 0.5 }
+        ]}
+        isDisable={relationModel.isModerator === 0}
         buttonStyle={[
           styles.btnAction,
           { backgroundColor: themedColors.dangerShade }
+        ]}
+        buttonDisableStyle={[
+          styles.btnAction,
+          { backgroundColor: themedColors.interface[200] }
         ]}
         text={STRINGS.matches.label_remove_roommate}
       />

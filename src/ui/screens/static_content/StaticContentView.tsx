@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const StaticContentView = React.memo<Props>(({ staticContent }) => {
-  AppLog.log("rendering StaticContentView");
+  AppLog.log(() => "rendering StaticContentView");
   return (
     <Screen style={styles.container} shouldAddBottomInset={false}>
       <WebView

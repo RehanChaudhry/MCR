@@ -25,7 +25,7 @@ const storePalette = async (palette: Partial<ColorPalette>) => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(palette));
   } catch (error) {
-    AppLog.log("Error storing palette", error);
+    AppLog.log(() => "Error storing palette", error);
   }
 };
 

@@ -63,7 +63,8 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
     };
     const onRightImagePress = () => {
       AppLog.logForcefully(
-        "arrowButton.current.snapToNext();" +
+        () =>
+          "arrowButton.current.snapToNext();" +
           arrowButton.current.snapToNext()
       );
       arrowButton.current.snapToNext();
@@ -132,7 +133,7 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
             ImageComponentStyle={styles.image}
             sliderBoxHeight={300}
             currentImageEmitter={(index: number) => {
-              AppLog.logForcefully("image pressed: " + index);
+              AppLog.logForcefully(() => "image pressed: " + index);
               setSelectedImageIndex(index);
             }}
           />

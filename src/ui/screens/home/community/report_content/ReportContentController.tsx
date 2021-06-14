@@ -38,7 +38,7 @@ const ReportContentController: FC<Props> = () => {
   const communityRoute = useRoute<CommunityRoute>();
   const [pb, setPb] = useState(false);
 
-  AppLog.log("communityid: " + route.params.postId);
+  AppLog.log(() => "communityid: " + route.params.postId);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -80,7 +80,7 @@ const ReportContentController: FC<Props> = () => {
         return;
       } else {
         setPb(false);
-        AppLog.log(dataBody.message);
+        AppLog.log(() => dataBody.message);
         closeScreen();
       }
     }

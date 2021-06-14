@@ -52,6 +52,7 @@ export const NewConversationScreen = React.memo<Props>(
       return (
         <ItemConversation
           item={item}
+          // @ts-ignore
           onPress={(_item: User) => {
             removeItem(_item);
           }}
@@ -79,7 +80,8 @@ export const NewConversationScreen = React.memo<Props>(
             values={Strings.newConversation.segmentValues}
             onChange={(value: Choice, index: number) => {
               AppLog.log(
-                "segment value : " + value + " and index is : " + index
+                () =>
+                  "segment value : " + value + " and index is : " + index
               );
               setConversationType(index);
               index === 0

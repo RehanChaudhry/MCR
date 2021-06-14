@@ -17,7 +17,7 @@ type CheckBoxGroupProps = {
 
 export const CheckBoxGroup = optimizedMemo<CheckBoxGroupProps>(
   ({ listData, onChange, preSelected, isLocked = EIntBoolean.FALSE }) => {
-    AppLog.log("PreSelected = " + preSelected);
+    AppLog.log(() => "PreSelected = " + preSelected);
     return (
       <View>
         {listData?.map((item) => (

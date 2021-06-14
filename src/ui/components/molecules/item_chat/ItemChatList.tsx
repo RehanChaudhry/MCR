@@ -11,13 +11,14 @@ import { FONT_SIZE, SPACE } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import NotifyIndic from "assets/images/notification-indicator.svg";
 import NotifyIndicInActive from "assets/images/notification-indicator-inactive.svg";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { SenderType } from "models/ChatItem";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
 import { User } from "models/User";
+import _ from "lodash";
 
 export interface ItemChatListProps extends ViewStyle {
   onPress: () => void;
@@ -28,14 +29,25 @@ export interface ItemChatListProps extends ViewStyle {
 export const ItemChatList = React.memo<ItemChatListProps>(
   ({ item, onPress }) => {
     const { themedColors } = usePreferredTheme();
+    const { user } = useAuth();
+    let prettyTime =
+      item.lastMessagedAt !== undefined
+        ? new PrettyTimeFormat(
+            "m ago",
+            "s ago",
+            "y ago",
+            "d ago",
+            "h ago"
+          ).getPrettyTime(item.lastMessagedAt.toString())
+        : "";
 
-    let prettyTime = new PrettyTimeFormat(
-      "m ago",
-      "s ago",
-      "y ago",
-      "d ago",
-      "h ago"
-    ).getPrettyTime(item.lastMessagedAt.toString());
+    //message will come null in case of create conversation
+    let isMessageRead =
+      _.isArray(item.message) &&
+      item.message.length > 0 &&
+      item.message[0].readBy.find(
+        (userId) => userId === user?.profile?.id
+      ) !== undefined;
 
     return (
       <TouchableOpacity onPress={onPress}>
@@ -55,12 +67,18 @@ export const ItemChatList = React.memo<ItemChatListProps>(
             }
           />
 
-          <NotifyIndic width={10} height={10} style={styles.indicator} />
-          <NotifyIndicInActive
-            width={10}
-            height={10}
-            style={styles.indicator}
-          />
+          {item.conversationUsers.length > 0 &&
+          item.conversationUsers.find(
+            (value: User) => value.online === 1
+          ) !== undefined ? (
+            <NotifyIndic width={10} height={10} style={styles.indicator} />
+          ) : (
+            <NotifyIndicInActive
+              width={10}
+              height={10}
+              style={styles.indicator}
+            />
+          )}
 
           <View style={styles.textWrapper(themedColors)}>
             <View style={styles.nameContainer}>
@@ -68,7 +86,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
                 style={styles.nameText(
                   themedColors,
                   item.conversationUsers.length,
-                  item.isRead
+                  isMessageRead
                 )}
                 text={
                   item.conversationUsers.length === 1
@@ -82,7 +100,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
                       (item.conversationUsers.length - 1) +
                       " more"
                 }
-                weight={item.isRead ? "normal" : "semi-bold"}
+                weight={isMessageRead ? "normal" : "semi-bold"}
               />
               <AppLabel
                 style={styles.timeText(themedColors)}
@@ -94,10 +112,12 @@ export const ItemChatList = React.memo<ItemChatListProps>(
               style={styles.messageText(
                 themedColors,
                 item.userType === SenderType.STAFF,
-                item.isRead
+                isMessageRead
               )}
               text={
-                item.message[0] !== undefined ? item.message[0].text : ""
+                _.isArray(item.message) && item.message[0] !== undefined
+                  ? item.message[0].text
+                  : ""
               }
               numberOfLines={2}
               ellipsizeMode="tail"
@@ -130,8 +150,8 @@ const styles = StyleSheet.create({
   indicator: {
     position: "absolute",
     start: 40,
-    top: 10,
-    left: 40
+    top: 0,
+    left: 43
   },
   imgStyle: {
     width: 40,

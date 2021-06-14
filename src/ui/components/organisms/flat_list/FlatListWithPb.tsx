@@ -53,7 +53,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
   }, [pullToRefreshCallback]);
 
   function shouldShowError() {
-    return error !== undefined;
+    return error !== undefined && !dataHasRecords();
   }
 
   function getErrorView() {
@@ -79,7 +79,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
   const footerWrapper = React.memo<Props<any>>(() => {
     return (
       <>
-        {!isAllDataLoaded && data !== undefined && (
+        {!isAllDataLoaded && dataHasRecords() && (
           <View style={styles.loadMore}>
             <AppLoadMore testID="loader" />
           </View>
@@ -94,8 +94,8 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
       return getErrorView();
     }
 
-    if (!shouldShowError() && dataHasRecords()) {
-      return (
+    if (!shouldShowError()) {
+      let ui = (
         <FlatList
           // initialNumToRender={7}
           onEndReachedThreshold={1}
@@ -103,24 +103,34 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
           onRefresh={
             pullToRefreshCallback === undefined ? undefined : onRefresh
           }
-          onEndReached={isAllDataLoaded ? undefined : onEndReached}
+          onEndReached={
+            isAllDataLoaded || !dataHasRecords() ? undefined : onEndReached
+          }
           ItemSeparatorComponent={ItemSeparatorHeaderAndFooterComponent}
           ListHeaderComponent={ItemSeparatorHeaderAndFooterComponent}
           ListFooterComponent={footerWrapper}
           {...rest}
         />
       );
-    }
 
-    if (!shouldShowError() && !dataHasRecords()) {
-      return (
-        <View style={styles.noRecordParent}>
-          <AppLabel
-            text={noRecordFoundText}
-            style={[styles.noRecord, { color: theme.themedColors.label }]}
-          />
-        </View>
-      );
+      if (!dataHasRecords()) {
+        return (
+          <>
+            {ui}
+            <View style={styles.noRecordParent}>
+              <AppLabel
+                text={noRecordFoundText}
+                style={[
+                  styles.noRecord,
+                  { color: theme.themedColors.label }
+                ]}
+              />
+            </View>
+          </>
+        );
+      } else {
+        return ui;
+      }
     }
   }
 
@@ -154,7 +164,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    position: "absolute"
   },
   noRecord: {
     textAlign: "center",

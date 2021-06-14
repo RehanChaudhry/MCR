@@ -1,11 +1,5 @@
 import React, { FC } from "react";
-import {
-  Alert,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import { FONT_SIZE, SPACE } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
@@ -20,12 +14,19 @@ type Props = {
   name: string;
   field: string;
   imageUrl: string;
+  moveToChatScreen: (userId: number) => void;
 };
 
-const MyRoommateItem: FC<Props> = ({ name, field, imageUrl }) => {
+const MyRoommateItem: FC<Props> = ({
+  name,
+  field,
+  imageUrl,
+  moveToChatScreen
+}) => {
   const theme = usePreferredTheme();
   const onPressChat = () => {
-    Alert.alert("Chat Clicked");
+    //dummy user id
+    moveToChatScreen(12);
   };
   return (
     <View style={styles.mainContainer}>

@@ -22,19 +22,19 @@ export default (props: any, key?: string) => {
       const keys = Object.keys(changedProps);
       const values = Object.values(changedProps);
 
-      AppLog.log("---------------------------");
+      AppLog.log(() => "---------------------------");
 
       if (key !== undefined) {
-        AppLog.log("Changed props of " + key + ": ");
+        AppLog.log(() => "Changed props of " + key + ": ");
       } else {
-        AppLog.log("Changed props: ");
+        AppLog.log(() => "Changed props: ");
       }
 
       keys.map((item, index) => {
-        AppLog.log(item + " > " + values[index]);
+        AppLog.log(() => item + " > " + values[index]);
       });
 
-      AppLog.log("---------------------------");
+      AppLog.log(() => "---------------------------");
     }
 
     prev.current = props;

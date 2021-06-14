@@ -55,7 +55,6 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
   listFooterComponent,
   isCollapsable = false
 }: Props<ItemT, ItemU>) => {
-  // AppLog.log("rendering _SectionedList");
   const [selectedIndex, setSelectedIndex] = useState<number>(
     selectedIndexProp ?? -1
   );
@@ -81,7 +80,6 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
       if (isCollapsable && parentPosition !== selectedIndex) {
         return null;
       } else {
-        // AppLog.log(`rendering BodyView ${item.key()}`);
         return bodyView(list, item, parentPosition, index);
       }
     },
@@ -91,10 +89,7 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
   const sectionView = useCallback(
     ({ section }: { section: Section<ItemT, ItemU> }) => {
       const index = list.indexOf(section);
-      // AppLog.log(`rendering HeaderView ${section.header.key()}`);
-
       const onPress = () => {
-        // AppLog.log(`HeaderView ${section.header.key()} pressed`);
         if (isCollapsable) {
           let updatedIndex = selectedIndex !== index ? index : -1;
           setSelectedIndex(updatedIndex);
@@ -129,7 +124,8 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
       previouslyOpenedSection.current !== -1
     ) {
       AppLog.logForcefully(
-        `previouslyOpenedSection: ${previouslyOpenedSection.current}, selectedIndex: ${selectedIndex}`
+        () =>
+          `previouslyOpenedSection: ${previouslyOpenedSection.current}, selectedIndex: ${selectedIndex}`
       );
       setTimeout(() => {
         sectionList.current?.scrollToLocation({
@@ -156,7 +152,7 @@ const SectionedList = <ItemT extends BaseItem, ItemU extends BaseItem>({
       keyExtractor={keyExtractor}
       contentContainerStyle={style}
       onScrollToIndexFailed={(info) => {
-        AppLog.logForcefully("Failed to scroll to " + info.index);
+        AppLog.logForcefully(() => "Failed to scroll to " + info.index);
       }}
       ListFooterComponent={listFooterComponent}
       stickySectionHeadersEnabled={false} // true by default for iOS, for same experience

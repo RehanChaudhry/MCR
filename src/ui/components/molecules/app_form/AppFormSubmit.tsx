@@ -9,8 +9,6 @@ import SimpleToast from "react-native-simple-toast";
 
 export const AppFormFormSubmit = optimizedMemo<AppButtonProps>((props) => {
   const { handleSubmit, isValid } = useFormikContext();
-
-  //AppLog.logForcefully("AppFormSubmit : " + JSON.stringify(initialValues));
   return (
     <AppButton
       onPress={() => {

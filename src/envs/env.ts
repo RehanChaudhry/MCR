@@ -3,7 +3,9 @@ const Env = {
   BASE_URL: "https://mcr-dev.cygnis.dev/",
   SHOULD_ENABLE_FORCE_UPDATE: true,
   SHOULD_OPTIMIZED_MEMO_ENABLED: true,
-  ONE_SIGNAL_APP_ID: "9ba282f4-b3f9-40f3-92bf-f5c7eeae01e1"
+  ONE_SIGNAL_APP_ID: "9ba282f4-b3f9-40f3-92bf-f5c7eeae01e1",
+  SOCKET_URL: "mcr-dev.cygnis.dev",
+  SOCKET_PORT: "8443"
 };
 
 export default Env;

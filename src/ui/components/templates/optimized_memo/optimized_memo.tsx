@@ -30,11 +30,12 @@ function propsMatcher<PropType>() {
 
       if (nextProps.logKey) {
         AppLog.logForcefully(
-          `LogKey: ${
-            nextProps.logKey
-          } \n\nKeys To Matched: ${JSON.stringify(
-            keys
-          )} \n\nProp That Changed: ${changedProp} 
+          () =>
+            `LogKey: ${
+              nextProps.logKey
+            } \n\nKeys To Matched: ${JSON.stringify(
+              keys
+            )} \n\nProp That Changed: ${changedProp} 
           \n\nRe-Render: ${!hasAllPropsMatched}`
         );
       }

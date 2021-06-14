@@ -11,6 +11,11 @@ export interface Message {
   createdAt: string;
   deletedAt: string;
   updatedAt: string;
+  readBy: number[];
+
+  //for manual handle new comment
+  isLoading?: boolean;
+  isError?: boolean;
 }
 
 export default Message;

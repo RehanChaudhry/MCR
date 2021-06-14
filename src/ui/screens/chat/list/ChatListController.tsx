@@ -1,6 +1,8 @@
 import React, {
   FC,
+  SetStateAction,
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState
@@ -24,6 +26,12 @@ import ChatRequestModel, {
   ESortOrder
 } from "models/api_requests/chatRequestModel";
 import { ChatBottomBarParamsList } from "routes/ChatBottomBar";
+import { Socket } from "socket.io-client";
+import { SocketHelper } from "utils/SocketHelper";
+import { useAuth } from "hooks";
+import _ from "lodash";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
+import { ChatHelper } from "utils/ChatHelper";
 
 type ChatRootNavigationProp = StackNavigationProp<ChatRootStackParamList>;
 
@@ -43,14 +51,21 @@ export const ChatListController: FC<Props> = ({
 }) => {
   const navigation = useNavigation<typeof chatRootNavigation>();
   const { params }: any = useRoute<typeof route>();
+
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(true);
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
     false
   );
   const isFetchingInProgress = useRef(false);
-  const [chats, setChats] = useState<Conversation[] | undefined>(
-    undefined
-  );
+
+  const { user } = useAuth();
+
+  const {
+    activeConversations,
+    setActiveConversations,
+    inActiveConversations,
+    setInActiveConversations
+  } = useContext(MyFriendsContext);
 
   const loadChatsApi = useApi<ChatRequestModel, ChatResponseModel>(
     ChatApis.getChats
@@ -78,16 +93,20 @@ export const ChatListController: FC<Props> = ({
       dataBody === undefined ||
       dataBody.data === undefined
     ) {
-      AppLog.log("ChatList => Unable to find chats " + errorBody);
+      AppLog.log(() => "ChatList => Unable to find chats " + errorBody);
+      setShouldShowProgressBar(false);
       return;
     } else {
-      setChats((prevState) => {
-        return [
-          ...(prevState === undefined || requestModel.current.page === 1
-            ? []
-            : prevState),
-          ...dataBody.data!!
-        ];
+      setChatsData((prevState) => {
+        return _.uniqBy(
+          [
+            ...(prevState === undefined || requestModel.current.page === 1
+              ? []
+              : (prevState as Conversation[])),
+            ...dataBody.data!!
+          ],
+          (item) => item.id
+        );
       });
 
       setIsAllDataLoaded(
@@ -99,9 +118,52 @@ export const ChatListController: FC<Props> = ({
       isFetchingInProgress.current = false;
       setShouldShowProgressBar(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadChatsApi]);
 
+  function setChatsData(
+    stateData?: SetStateAction<Conversation[] | undefined>
+  ) {
+    if (route.params.status === "active") {
+      setActiveConversations?.(stateData);
+    } else {
+      // @ts-ignore
+      setInActiveConversations?.(stateData);
+    }
+  }
+
   const openChatThread = (item: Conversation) => {
+    //check if conversation is read by current user if not fire  event to notify
+    // other users you have read the message
+    if (
+      _.isArray(item.message) &&
+      item.message.length > 0 &&
+      item.message[0].readBy.find((id) => id === user?.profile?.id!!) ===
+        undefined
+    ) {
+      if (socket?.current?.connected ?? false) {
+        //emir read message event
+        socket!!.current!!.emit("readByUser", {
+          conversationId: item.id
+        });
+      }
+
+      //update list with read status
+      // @ts-ignore
+      setChatsData((prevState) => {
+        let chatsCopy = _.clone(prevState) as Conversation[];
+        _.forEach(chatsCopy, (p) => {
+          if (p.id === item.id && p.message.length > 0) {
+            p.message[0].readBy.length > 0
+              ? p.message[0].readBy.push(user?.profile?.id!!)
+              : (p.message[0].readBy = [user?.profile?.id!!]);
+          }
+        });
+
+        return _.uniqBy(chatsCopy, (_item) => _item.id);
+      });
+    }
+
     navigation.navigate("ChatThread", {
       title: item.conversationUsers!!.reduce(
         (newArray: string[], _item) => (
@@ -109,7 +171,8 @@ export const ChatListController: FC<Props> = ({
         ),
         []
       ),
-      conversationId: item.id
+      conversationId: item.id,
+      isArchived: params?.status !== "Active"
     });
   };
 
@@ -128,22 +191,120 @@ export const ChatListController: FC<Props> = ({
   );
 
   const onEndReached = useCallback(async () => {
-    AppLog.log("ChatList => onEndReached is called");
+    AppLog.log(() => "ChatList => onEndReached is called");
     await handleLoadChatsApi();
   }, [handleLoadChatsApi]);
 
+  let socket = useRef<Socket>();
+  const connectSocket = useCallback(async () => {
+    socket.current = await SocketHelper.getInstance(
+      "Bearer " + user?.authentication?.accessToken
+    );
+
+    socket?.current?.on("joinedUser", (userId) => {
+      ChatHelper.activeInActiveUsers(
+        userId,
+        true,
+        setActiveConversations,
+        setInActiveConversations
+      );
+    });
+
+    socket?.current?.on("leftUser", (userId) => {
+      ChatHelper.activeInActiveUsers(
+        userId,
+        false,
+        setActiveConversations,
+        setInActiveConversations
+      );
+    });
+
+    //listen to receive message event
+    socket?.current?.on("receiveMessage", (data) => {
+      if (params?.status === "active") {
+        let itemFoundInArchiveChats = false;
+        setInActiveConversations?.((prevState: any) => {
+          if (
+            prevState?.find(
+              (prevItem: Conversation) => prevItem.id === data.id
+            ) !== undefined
+          ) {
+            //does not update this conversation as its present in archived chats
+            itemFoundInArchiveChats = true;
+          }
+          return prevState;
+        });
+        if (itemFoundInArchiveChats) {
+          //if item is already found in archive chats do not do anything
+          return;
+        }
+
+        setChatsData((prevState: any) => {
+          let chatsCopy = _.cloneDeep(prevState);
+          if (chatsCopy?.length ?? -1 > 0) {
+            let findIndex = chatsCopy?.findIndex(
+              (item: any) => item.id === data.id
+            );
+
+            if (findIndex !== -1) {
+              //remove item at index
+              chatsCopy?.splice(findIndex!!, 1);
+
+              //add item at index 0
+              chatsCopy?.splice(0, 0, data);
+
+              return _.uniqBy(chatsCopy, (item) => item.id);
+            } else {
+              return [data, ...chatsCopy!!];
+            }
+          } else {
+            return [data];
+          }
+        });
+      } else {
+        setInActiveConversations?.((prevState: any) => {
+          let chatsCopy = _.cloneDeep(prevState);
+          if (chatsCopy?.length ?? -1 > 0) {
+            let findIndex = chatsCopy?.findIndex(
+              (item: any) => item.id === data.id
+            );
+
+            if (findIndex !== -1) {
+              //remove item at index
+              chatsCopy?.splice(findIndex!, 1);
+
+              //add item at index 0
+              chatsCopy?.splice(0, 0, data);
+
+              return chatsCopy;
+            } else {
+              return prevState;
+            }
+          } else {
+            return prevState;
+          }
+        });
+      }
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     handleLoadChatsApi().then().catch();
-  }, [handleLoadChatsApi]);
+    connectSocket().then().catch();
+  }, [handleLoadChatsApi, connectSocket]);
 
-  function performSearch(textToSearch: string) {
-    setChats(
-      chats!!.filter((obj: Conversation) => {
-        return Object.values(obj).some((v) =>
-          `${v}`.toLowerCase().includes(`${textToSearch}`.toLowerCase())
-        );
-      })
-    );
+  // eslint-disable-next-line no-undef
+  let timeOutId: NodeJS.Timeout;
+  async function performSearch(textToSearch: string) {
+    clearTimeout(timeOutId);
+    timeOutId = setTimeout(() => {
+      requestModel.current.page = 1;
+      requestModel.current.keyword = textToSearch;
+      setChatsData(undefined);
+      handleLoadChatsApi();
+    }, 10);
   }
 
   return (
@@ -151,7 +312,11 @@ export const ChatListController: FC<Props> = ({
       shouldShowProgressBar={shouldShowProgressBar}
       error={loadChatsApi.error}
       isAllDataLoaded={isAllDataLoaded}
-      data={chats}
+      data={
+        route.params.status === "active"
+          ? activeConversations
+          : inActiveConversations
+      }
       onItemClick={openChatThread}
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}

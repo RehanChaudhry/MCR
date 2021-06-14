@@ -86,7 +86,7 @@ const DismissedOrBlockedController: FC<Props> = () => {
       { type: StaticContentType.DISMISSED_LIST }
     ]);
     if (hasError || dataBody === undefined) {
-      AppLog.log("Unable to find header content " + errorBody);
+      AppLog.log(() => "Unable to find header content " + errorBody);
       return;
     } else {
       setHeaderContent(dataBody.data);
@@ -148,7 +148,7 @@ const DismissedOrBlockedController: FC<Props> = () => {
             onEndReached={onEndReachedDismissed}
             onPullToRefresh={onPullToRefreshDismissed}
             onPressChat={(item: RelationModel) => {
-              AppLog.log("onPressChat: ", item);
+              AppLog.log(() => "onPressChat: ", item);
             }}
             onPressProfile={moveToProfileScreen}
             selectedTab={selectedTabIndex}
@@ -166,7 +166,7 @@ const DismissedOrBlockedController: FC<Props> = () => {
             onEndReached={onEndReachedBlocked}
             onPullToRefresh={onPullToRefreshBlocked}
             onPressChat={(item: RelationModel) => {
-              AppLog.log("onPressChat: ", item);
+              AppLog.log(() => "onPressChat: ", item);
             }}
             onPressProfile={moveToProfileScreen}
             selectedTab={selectedTabIndex}

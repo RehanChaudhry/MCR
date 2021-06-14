@@ -107,7 +107,7 @@ const NotificationController: FC<Props> = () => {
   );
 
   const onEndReached = useCallback(() => {
-    AppLog.log("onEndReachedcall");
+    AppLog.log(() => "onEndReachedcall");
     handleGetNotificationApi(false, paginationRequestModel);
   }, [paginationRequestModel, handleGetNotificationApi]);
 

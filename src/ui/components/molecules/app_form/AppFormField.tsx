@@ -55,7 +55,8 @@ const AppFormField = optimizedMemo<Props>(
       initialValues
     } = useFormikContext<FormikValues>();
 
-    /*  AppLog.logForcefully(
+    /*  AppLog.logForcefullyForComplexMessages(
+      () =>
       "AppFormField => initialValues " +
         JSON.stringify(initialValues[name]) +
         " field name is : " +
@@ -111,7 +112,7 @@ const AppFormField = optimizedMemo<Props>(
           {...fieldInputProps}
           editable={!isLocked}
         />
-        {(errors[name] || touched[name]) && (
+        {errors[name] && touched[name] && (
           <AppFormValidationLabel
             validationLabelTestID={validationLabelTestID}
             errorString={errors[name] as string}
