@@ -12,7 +12,7 @@ import { FONT_SIZE, moderateScale, SPACE } from "config/Dimens";
 
 type Props = {
   title: string;
-  onPress: () => void;
+  onPress?: () => void;
   style: StyleProp<ViewStyle>;
   textStyle: StyleProp<TextStyle>;
 };
@@ -22,18 +22,22 @@ const BottomBreadCrumbsItem: FC<Props> = ({
   style,
   textStyle
 }) => {
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={[styles.mainContainer, style]}>
-        <AppLabel
-          text={title}
-          shouldNotOptimize={true}
-          style={[styles.text, textStyle]}
-          weight={"semi-bold"}
-        />
-      </View>
-    </TouchableOpacity>
+  let ui = (
+    <View style={[styles.mainContainer, style]}>
+      <AppLabel
+        text={title}
+        shouldNotOptimize={true}
+        style={[styles.text, textStyle]}
+        weight={"semi-bold"}
+      />
+    </View>
   );
+
+  if (onPress) {
+    return <TouchableOpacity onPress={onPress}>{ui}</TouchableOpacity>;
+  } else {
+    return ui;
+  }
 };
 const styles = StyleSheet.create({
   mainContainer: {

@@ -229,7 +229,7 @@ export const SplashView = React.memo<Props>(() => {
         {AppLog.log("User is logged in: " + isLoggedIn(user))}
         {AppLog.log(
           "User has completed welcome journey: " +
-            hasCompletedWelcomeJourney(user)
+            JSON.stringify(hasCompletedWelcomeJourney(user))
         )}
 
         {isLoggedIn(user) ? (

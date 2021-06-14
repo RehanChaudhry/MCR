@@ -21,6 +21,7 @@ export interface AppButtonProps extends TouchableOpacityProps {
   text: string;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  textDisableStyle?: StyleProp<TextStyle>;
   textContainerStyle?: StyleProp<ViewStyle>;
   shouldShowProgressBar?: boolean;
   loaderSize?: number;
@@ -29,6 +30,7 @@ export interface AppButtonProps extends TouchableOpacityProps {
   rightIcon?: SvgProp;
   buttonType?: BUTTON_TYPES;
   isDisable?: boolean;
+  buttonDisableStyle?: StyleProp<ViewStyle>;
   iconStyle?: StyleProp<ImageStyle>;
   shouldShowError?: boolean;
   fontWeight?: Weight;
@@ -49,6 +51,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
     iconStyle,
     buttonStyle,
     textStyle,
+    textDisableStyle,
     shouldShowProgressBar = false,
     loaderSize = 15,
     loaderColor,
@@ -56,6 +59,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
     rightIcon,
     buttonType = BUTTON_TYPES.NORMAL,
     isDisable = false,
+    buttonDisableStyle,
     shouldShowError = false,
     fontWeight = "normal",
     shouldAlignTextWithLeftIconWithFullWidth = false,
@@ -96,12 +100,13 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
           getShadowStyle(),
           getButtonStyle(),
           {
-            backgroundColor:
-              isDisable === true
-                ? theme.themedColors.interface[100]
-                : theme.themedColors.background
+            backgroundColor: theme.themedColors.background
           },
-          buttonStyle
+          isDisable
+            ? buttonDisableStyle ?? {
+                backgroundColor: theme.themedColors.interface[100]
+              }
+            : buttonStyle
         ]}>
         <View testID="button-container" style={style.viewContainer}>
           {leftIcon && !shouldShowProgressBar && (
@@ -130,7 +135,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
                 style={[
                   style.text,
                   { color: theme.themedColors.primary },
-                  textStyle
+                  isDisable ? textDisableStyle : textStyle
                 ]}
                 text={text}
                 weight={fontWeight}
@@ -156,7 +161,9 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
   }
 )([
   "textStyle",
+  "textDisableStyle",
   "buttonStyle",
+  "buttonDisableStyle",
   "style",
   "iconStyle",
   "rightIcon",

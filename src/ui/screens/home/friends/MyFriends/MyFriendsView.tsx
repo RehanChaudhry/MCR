@@ -11,7 +11,7 @@ import TwoButtonsAlert, {
   Type
 } from "ui/screens/home/friends/MyFriends/TwoButtonsAlert";
 import InfoAlert from "./InfoAlert";
-import RelationItem from "ui/components/organisms/relation_item/RelationItem";
+import RelationListsItem from "ui/components/organisms/relation_item/RelationItem";
 
 type Props = {
   friendsCount: number;
@@ -84,15 +84,15 @@ const listItem = (
     />
   );*/
   return (
-    <RelationItem
+    <RelationListsItem
       relationModel={_item}
       onCrossClicked={onPressCross}
       onChatButtonClicked={onPressChat}
       onImageClicked={moveToProfileScreen}
-      onRoommateRequestClicked={showRequestAlert}
-      onCancelRequestClicked={showCancelAlert}
-      onRequestReceivedClicked={moveToRoommateRequests}
-      onNotEligibleClicked={showIneligibleInfoAlert}
+      onRoommateRequestActionButtonClicked={showRequestAlert}
+      onCancelRequestActionButtonClicked={showCancelAlert}
+      onRequestReceivedActionButtonClicked={moveToRoommateRequests}
+      onNotEligibleActionButtonClicked={showIneligibleInfoAlert}
     />
   );
 };

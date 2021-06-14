@@ -29,7 +29,7 @@ import { useApi } from "repo/Client";
 import RelationApis from "repo/home/RelationApis";
 import { MatchesStackParamList } from "routes/MatchesStack";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
-import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
+import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
@@ -152,8 +152,7 @@ const MatchesController: FC<Props> = () => {
     setMatches: setProfileMatches,
     setActiveConversations,
     inActiveConversations
-  } = useContext(MyFriendsContext);
-
+  } = useContext(AppDataContext);
   useEffect(() => {
     let listener = () => {
       refreshCallback();

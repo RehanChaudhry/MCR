@@ -107,7 +107,10 @@ export default {
     title: "Matches",
     label_not_eligible: "Not Eligible",
     label_roommate_request: "Roommate Request",
-    label_request_received: "Request Received"
+    label_request_received: "Request Received",
+    label_remove_roommate: "Remove Roommate",
+    label_unblocked: "Unblock",
+    label_restore: "Restore"
   },
   profile: {
     title:
@@ -322,7 +325,8 @@ export default {
       success: "Yes, send request"
     },
     cancel_request: {
-      title: "Cancel Request",
+      title_cancel_friend_request: "Cancel Friend Request",
+      title_cancel_roommate_request: "Cancel Roommate Request",
       success: "Yes, cancel request"
     }
   },

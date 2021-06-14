@@ -1,4 +1,5 @@
 import { FONT_SIZE, SPACE, STRINGS } from "config";
+import Strings from "config/Strings";
 import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 import EGender from "models/enums/EGender";
 import MatchesTypeFilter, {
@@ -11,7 +12,7 @@ import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import MatchesFilter from "ui/components/molecules/matches_filter/MatchesFilter";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import RelationItem from "ui/components/organisms/relation_item/RelationItem";
+import RelationListsItem from "ui/components/organisms/relation_item/RelationItem";
 import OptimizedBottomBreadCrumbs, {
   OptimizedBBCItem
 } from "ui/components/templates/bottom_bread_crumbs/OptimizedBottomBreadCrumbs";
@@ -104,7 +105,7 @@ export const MatchesView: React.FC<Props> = ({
     ({ item }: { item: RelationModel }) => {
       const _item = new RelationModel(item);
       return (
-        <RelationItem
+        <RelationListsItem
           relationModel={_item}
           onCrossClicked={() => {
             profileMatch.current = _item;
@@ -112,16 +113,16 @@ export const MatchesView: React.FC<Props> = ({
           }}
           onChatButtonClicked={moveToChatScreen}
           onImageClicked={moveToProfileScreen}
-          onRoommateRequestClicked={() => {
+          onRoommateRequestActionButtonClicked={() => {
             profileMatch.current = _item;
             setRoommateDialogVisible(true);
           }}
-          onCancelRequestClicked={() => {
+          onCancelRequestActionButtonClicked={() => {
             profileMatch.current = _item;
             setCancelRequestDialogVisible(true);
           }}
-          onRequestReceivedClicked={moveToRoommateRequests}
-          onFriendRequestClicked={() => {
+          onRequestReceivedActionButtonClicked={moveToRoommateRequests}
+          onFriendRequestActionButtonClicked={() => {
             profileMatch.current = _item;
             setFriendRequestDialogVisible(true);
           }}
@@ -200,10 +201,14 @@ export const MatchesView: React.FC<Props> = ({
         shouldShow={isCancelRequestDialogVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideCancelRequestAlert}
-        title={STRINGS.dialogs.cancel_request.title}
-        message={`Are you sure you want to cancel request to ${
-          getSelectedItem()?.user?.getFullName() ?? "N/A"
-        }?`}
+        title={
+          profileMatch?.current?.isFriend === 0
+            ? Strings.dialogs.cancel_request.title_cancel_friend_request
+            : Strings.dialogs.cancel_request.title_cancel_roommate_request
+        }
+        message={`Are you sure you want to cancel ${
+          profileMatch?.current?.isFriend === 0 ? "friend" : "roommate"
+        } request to ${getSelectedItem()?.user?.getFullName() ?? "N/A"}?`}
         firstButtonText={STRINGS.dialogs.cancel_request.success}
         type={Type.CANCEL}
         errorMessage="Unable to send cancel request"

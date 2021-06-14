@@ -21,7 +21,7 @@ const WelcomeSkipTitleButton: React.FC<Props> = ({
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
-  const { saveProfile } = useAuth();
+  const auth = useAuth();
 
   const updateProfile = useApi<
     UpdateProfileRequestModel,
@@ -44,11 +44,14 @@ const WelcomeSkipTitleButton: React.FC<Props> = ({
       return;
     } else {
       if (dataBody.data) {
-        await saveProfile(dataBody.data);
+        await auth.saveUser({
+          authentication: auth.user?.authentication,
+          profile: Object.assign(auth.user?.profile, requestUpdateProfile)
+        });
       }
       onPress?.();
     }
-  }, [updateProfile, updateProfileRequest, onPress, saveProfile]);
+  }, [updateProfile, updateProfileRequest, onPress, auth]);
 
   const _onPress = useCallback(() => {
     requestUpdateProfile();

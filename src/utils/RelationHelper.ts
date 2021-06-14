@@ -48,7 +48,7 @@ const getRelationStatus = (relationModel: RelationModel) => {
         eligible = Eligible.NOT_ELIGIBLE;
       }
     }
-  } else if (relationModel.status === Status.DISMISSED) {
+  } else if (relationModel.dismissed === EIntBoolean.TRUE) {
     relationType = RelationType.DISMISSED;
   } else if (relationModel.status === Status.BLOCKED) {
     relationType = RelationType.BLOCKED;

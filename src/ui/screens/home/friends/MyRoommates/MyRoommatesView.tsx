@@ -1,89 +1,150 @@
 import HomeOfficeIcon from "assets/images/icon_office_building.svg";
 import { usePreferredTheme } from "hooks";
-import { MyRoomate } from "models/api_responses/MyRoommatesResponseModel";
-import React, { FC } from "react";
-import { StyleSheet } from "react-native";
+import React, { FC, useCallback, useRef, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import ConnectionItem, {
-  CONNECTION_ACTION_STATE
-} from "ui/components/organisms/friends/connection/ConnectionItem";
 import ConnectionListHeader from "ui/components/organisms/friends/connection/ConnectionListHeader";
 import { SPACE } from "config";
+import TwoButtonsAlert, { Type } from "../MyFriends/TwoButtonsAlert";
+import RelationModel from "models/RelationModel";
+import RelationListsItem from "ui/components/organisms/relation_item/RelationItem";
 
 type Props = {
-  data: MyRoomate[];
-  onPressChat: (item: MyRoomate) => void;
-  onPressAction: (item: MyRoomate) => void;
-  onPressCross: (item: MyRoomate) => void;
+  roomatesCount: number;
+  pendingRoommatesCount: number;
+  data?: RelationModel[];
+  isLoading: boolean;
+  canLoadMore: boolean;
+  error?: string;
+  onPullToRefresh: (onComplete?: () => void) => void;
+  onEndReached: () => void;
+  onPressChat: (item: RelationModel) => void;
   onPressReceivedRoommateRequests: () => void;
+  onPressProfile: () => void;
 };
 
 const listItem = (
-  item: MyRoomate,
-  onPressChat: (item: MyRoomate) => void,
-  onPressAction: (item: MyRoomate) => void,
-  onPressCross: (item: MyRoomate) => void
+  item: RelationModel,
+  showRemoveRommmateAlert: (item: RelationModel) => void,
+  onPressChat: (item: RelationModel) => void,
+  onPressProfile: () => void
 ) => {
+  const _item = new RelationModel(item);
   return (
-    <ConnectionItem
-      key={item.id}
-      title={item.title}
-      subtitle={item.subtitle}
-      profileImage={item.profileImage}
-      actionButtonTitle={"Remove Roommate"}
-      actionButtonState={CONNECTION_ACTION_STATE.DANGER}
-      shouldShowTopActionable={false}
-      shouldShowLeftInfoIcon={false}
-      onPressAction={() => {
-        onPressAction(item);
-      }}
-      onPressChat={() => {
-        onPressChat(item);
-      }}
-      onPressCross={() => {
-        onPressCross(item);
-      }}
+    <RelationListsItem
+      relationModel={_item}
+      onChatButtonClicked={onPressChat}
+      onImageClicked={onPressProfile}
+      onRemoveRoommateActionButtonClicked={showRemoveRommmateAlert}
     />
   );
 };
 
 const MyRoommatesView: FC<Props> = ({
   data,
-  onPressAction,
+  pendingRoommatesCount,
+  roomatesCount,
+  isLoading,
+  canLoadMore,
+  onEndReached,
+  onPullToRefresh,
+  error,
   onPressChat,
-  onPressCross,
+  onPressProfile,
   onPressReceivedRoommateRequests
 }) => {
   const theme = usePreferredTheme();
+
+  const selectedItem = useRef<RelationModel>();
+
+  const [
+    shouldShowRemoveRoommateAlert,
+    setShouldShowRemoveRoommateAlert
+  ] = useState<boolean>(false);
+
+  const getSelectedItem = useCallback(() => {
+    return selectedItem.current;
+  }, []);
+
+  const hideRemoveRoomateAlert = useCallback(() => {
+    setShouldShowRemoveRoommateAlert(false);
+  }, []);
+
+  const showRemoveRoommateAlert = (item: RelationModel) => {
+    selectedItem.current = item;
+    setShouldShowRemoveRoommateAlert(true);
+  };
+
+  const headerDetails = () => {
+    const label: string = roomatesCount > 1 ? "roommates" : "roommate";
+    let details = `You have currently ${roomatesCount} ` + label;
+
+    if (pendingRoommatesCount > 0) {
+      details +=
+        ` and received ${pendingRoommatesCount} roommate ` +
+        (pendingRoommatesCount > 1 ? "requests." : "request.");
+    }
+
+    return details;
+  };
   return (
-    <Screen shouldAddBottomInset={false}>
-      <FlatListWithPb
-        style={styles.list}
-        shouldShowProgressBar={false}
-        ListHeaderComponent={() => (
-          <ConnectionListHeader
-            containerStyle={styles.header}
-            title="Received 1 new roommate request"
-            detail={
-              "You have currently 2 roommates and received 1 new roommate request."
-            }
-            icon={() => (
-              <HomeOfficeIcon
-                fill={theme.themedColors.labelSecondary}
-                width={18}
-                height={18}
-              />
-            )}
-            onPressAction={onPressReceivedRoommateRequests}
-          />
-        )}
-        renderItem={({ item }) => {
-          return listItem(item, onPressChat, onPressAction, onPressCross);
-        }}
-        data={data}
+    <>
+      <Screen shouldAddBottomInset={false}>
+        <FlatListWithPb
+          style={styles.list}
+          shouldShowProgressBar={isLoading}
+          isAllDataLoaded={!canLoadMore}
+          onEndReached={onEndReached}
+          contentContainerStyle={styles.listContainer}
+          ItemSeparatorComponent={() => (
+            <View style={styles.itemSeparator} />
+          )}
+          pullToRefreshCallback={onPullToRefresh}
+          error={error}
+          ListHeaderComponent={() => (
+            <ConnectionListHeader
+              containerStyle={styles.header}
+              title={
+                `Received ${pendingRoommatesCount} new roommate ` +
+                (pendingRoommatesCount > 1 ? "requests" : "request")
+              }
+              detail={headerDetails()}
+              icon={() => (
+                <HomeOfficeIcon
+                  fill={theme.themedColors.labelSecondary}
+                  width={18}
+                  height={18}
+                />
+              )}
+              onPressAction={onPressReceivedRoommateRequests}
+            />
+          )}
+          renderItem={({ item }) => {
+            return listItem(
+              item,
+              showRemoveRoommateAlert,
+              onPressChat,
+              onPressProfile
+            );
+          }}
+          data={data}
+        />
+      </Screen>
+      <TwoButtonsAlert
+        shouldShow={shouldShowRemoveRoommateAlert}
+        getSelectedItem={getSelectedItem}
+        hideSelf={hideRemoveRoomateAlert}
+        title="Remove Roommate"
+        message={`Are you sure you want to remove ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        } from your roommates list?`}
+        type={Type.UNFRIEND}
+        errorMessage="Unable to remove roommate"
+        firstButtonText="Yes, remove"
+        isFromMatchScreen={false}
       />
-    </Screen>
+    </>
   );
 };
 
@@ -92,10 +153,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
+  listContainer: { padding: SPACE.lg },
+  itemSeparator: {
+    height: SPACE.lg
+  },
   header: {
-    paddingLeft: SPACE.lg,
-    paddingRight: SPACE.lg,
-    paddingTop: SPACE.lg,
     paddingBottom: SPACE.sm
   }
 });

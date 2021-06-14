@@ -1,5 +1,6 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
+import { UpdateRelationStatus } from "models/api_requests/UpdateRelationApiRequestModel";
 import RelationModel, { Status } from "models/RelationModel";
 import React, {
   Dispatch,
@@ -11,7 +12,7 @@ import React, {
 import { StyleSheet, View } from "react-native";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
-import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
+import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import useSendFriendOrRoommateRequest from "ui/screens/home/friends/useSendFriendOrRoommateRequest";
 import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
 
@@ -20,7 +21,10 @@ export enum Type {
   FRIENDS_ROOMMATE_REQUEST = "friends_roommate_request",
   MATCHES_ROOMMATE_REQUEST = "matches_roommate_request",
   CANCEL = "cancel",
-  UNFRIEND = "unfriend"
+  UNFRIEND = "unfriend",
+  REMOVE_ROOMMATE = "remove-roommate",
+  RESTORE = "restored",
+  UNBLOCK = "unblock"
 }
 
 type Props = {
@@ -55,7 +59,7 @@ const TwoButtonsAlert: FC<Props> = React.memo(
       matches,
       setMatches,
       resetData
-    } = useContext(MyFriendsContext);
+    } = useContext(AppDataContext);
 
     let relations: RelationModel[] | undefined,
       setRelations:
@@ -109,14 +113,10 @@ const TwoButtonsAlert: FC<Props> = React.memo(
     );
 
     const getTypeForUpdateRelation = () => {
-      if (type === Type.CANCEL) {
-        return "cancel";
-      } else {
-        return "unfriend";
-      }
+      return type.toString() as UpdateRelationStatus;
     };
 
-    //for cancel match and unfriend
+    //for cancel match, unfriend and unblock
     const {
       shouldShowPb: shouldShowRelationUpdatePb,
       updateRelation
@@ -165,7 +165,9 @@ const TwoButtonsAlert: FC<Props> = React.memo(
                   sendRequest(getSelectedItem());
                 } else if (
                   type === Type.CANCEL ||
-                  type === Type.UNFRIEND
+                  type === Type.UNFRIEND ||
+                  type === Type.UNBLOCK ||
+                  type === Type.RESTORE
                 ) {
                   updateRelation(getSelectedItem());
                 }

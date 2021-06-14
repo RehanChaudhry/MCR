@@ -23,7 +23,7 @@ import { ProfileRootStackParamList } from "routes/ProfileRootStack";
 import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 import { useAuth } from "hooks";
 import { useCreateConversation } from "hooks/useCreateConversation";
-import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
+import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
   ProfileStackParamList,
@@ -93,7 +93,7 @@ const ViewProfileController: FC<Props> = () => {
     });
   };
   const { setActiveConversations, inActiveConversations } = useContext(
-    MyFriendsContext
+    AppDataContext
   );
 
   const moveToChatScreen = async (userId: number) => {
