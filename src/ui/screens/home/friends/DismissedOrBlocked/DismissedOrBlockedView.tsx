@@ -1,7 +1,7 @@
 import { SPACE } from "config";
 import RelationModel from "models/RelationModel";
 import React, { FC, useCallback, useRef, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import DismissedOrBlockedListHeader from "ui/components/organisms/friends/dismissed_or_blocked/DismissedOrBlockedListHeader";
@@ -104,6 +104,9 @@ const DismissedOrBlockedView: FC<Props> = ({
           pullToRefreshCallback={onPullToRefresh}
           error={error}
           contentContainerStyle={styles.listContainer}
+          ItemSeparatorComponent={() => (
+            <View style={styles.itemSeparator} />
+          )}
           ListHeaderComponent={() => (
             <DismissedOrBlockedListHeader
               title={headerTitle}
@@ -159,7 +162,10 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-  listContainer: { padding: SPACE.lg }
+  listContainer: { padding: SPACE.lg },
+  itemSeparator: {
+    height: SPACE.lg
+  }
 });
 
 export default DismissedOrBlockedView;

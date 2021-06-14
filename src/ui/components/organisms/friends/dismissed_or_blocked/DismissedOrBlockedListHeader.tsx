@@ -61,11 +61,7 @@ const DismissedOrBlockedListHeader: FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: SPACE.sm
-    // paddingTop: SPACE.lg,
-    // paddingBottom: SPACE.sm,
-    // paddingLeft: SPACE.lg,
-    // paddingRight: SPACE.lg
+    paddingBottom: SPACE.lg
   },
   contentContainer: {
     flexDirection: "column",
