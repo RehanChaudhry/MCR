@@ -9,7 +9,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 type Props = {};
 
 const App: React.FC<Props> = () => {
-  AppLog.log("Rendering App...");
+  AppLog.logForComplexMessages(() => "Rendering App...");
 
   return (
     <AppThemeProvider colorScheme={AppColorScheme.SYSTEM}>

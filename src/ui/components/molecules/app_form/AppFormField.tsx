@@ -55,7 +55,8 @@ const AppFormField = optimizedMemo<Props>(
       initialValues
     } = useFormikContext<FormikValues>();
 
-    /*  AppLog.logForcefully(
+    /*  AppLog.logForcefullyForComplexMessages(
+      () =>
       "AppFormField => initialValues " +
         JSON.stringify(initialValues[name]) +
         " field name is : " +

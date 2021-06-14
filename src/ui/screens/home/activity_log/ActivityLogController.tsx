@@ -98,7 +98,7 @@ const ActivityLogController: FC<Props> = () => {
   );
 
   const onEndReached = useCallback(() => {
-    AppLog.log("onEndReachedcall");
+    AppLog.logForComplexMessages(() => "onEndReachedcall");
     handleGetActivityLogApi(false, paginationRequestModel);
   }, [paginationRequestModel, handleGetActivityLogApi]);
 

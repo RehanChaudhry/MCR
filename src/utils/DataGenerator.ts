@@ -10,7 +10,9 @@ const getNotifications = () => {
   const date = new Date();
 
   //date: moment(date).subtract(i, "day").toDate().toString(),
-  AppLog.log("Data Generaor" + moment(date).subtract(2, "day").toDate());
+  AppLog.logForComplexMessages(
+    () => "Data Generaor" + moment(date).subtract(2, "day").toDate()
+  );
 
   const response: NotificationsResponseModel = {
     message: "Success",

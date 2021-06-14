@@ -6,7 +6,7 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { ThemeSwitcher } from "ui/components/templates/theme_switcher/ThemeSwitcher";
 
 export const LikeCommentButtonScreen = React.memo(() => {
-  AppLog.log("Rendering App...");
+  AppLog.logForComplexMessages(() => "Rendering App...");
   const theme = usePreferredTheme();
 
   const onValueChanged = (isSelected: boolean) => {

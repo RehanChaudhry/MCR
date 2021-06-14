@@ -55,11 +55,15 @@ export const CommentsController: FC<Props> = (Props) => {
   const { themedColors } = usePreferredTheme();
   let { user } = useAuth();
 
-  AppLog.logForcefully("rendering comments controller");
+  AppLog.logForcefullyForComplexMessages(
+    () => "rendering comments controller"
+  );
 
   useEffect(() => {
-    AppLog.logForcefully("comments state changes");
-    AppLog.logForcefully("newComment " + JSON.stringify(comments));
+    AppLog.logForcefullyForComplexMessages(() => "comments state changes");
+    AppLog.logForcefullyForComplexMessages(
+      () => "newComment " + JSON.stringify(comments)
+    );
   }, [comments]);
 
   useLayoutEffect(() => {
@@ -113,7 +117,9 @@ export const CommentsController: FC<Props> = (Props) => {
     isFetchingInProgress.current = false;
 
     if (hasError || dataBody === undefined) {
-      AppLog.logForcefully("Unable to find chats " + errorBody);
+      AppLog.logForcefullyForComplexMessages(
+        () => "Unable to find chats " + errorBody
+      );
       return;
     } else {
       // to handle pull to refresh
@@ -184,7 +190,9 @@ export const CommentsController: FC<Props> = (Props) => {
         }
       })
       .catch((error) => {
-        AppLog.log("postComment()=> Failure " + JSON.stringify(error));
+        AppLog.logForComplexMessages(
+          () => "postComment()=> Failure " + JSON.stringify(error)
+        );
 
         const findIndex: number | undefined = comments?.findIndex(
           (item) => item.id === postId
@@ -242,7 +250,9 @@ export const CommentsController: FC<Props> = (Props) => {
           (item) => item.id === commentId
         );
 
-        AppLog.logForcefully("items before" + JSON.stringify(findIndex));
+        AppLog.logForcefullyForComplexMessages(
+          () => "items before" + JSON.stringify(findIndex)
+        );
         if (findIndex !== undefined && findIndex >= 0) {
           let items = [];
           newList?.splice(findIndex, 1, {
@@ -253,12 +263,14 @@ export const CommentsController: FC<Props> = (Props) => {
           items = [...newList!!];
           setComments(items);
 
-          AppLog.logForcefully("items" + JSON.stringify(comments));
+          AppLog.logForcefullyForComplexMessages(
+            () => "items" + JSON.stringify(comments)
+          );
         }
       })
       .catch((error) => {
-        AppLog.logForcefully(
-          "postComment()=> Failure " + JSON.stringify(error)
+        AppLog.logForcefullyForComplexMessages(
+          () => "postComment()=> Failure " + JSON.stringify(error)
         );
 
         const findIndex: number | undefined = comments?.findIndex(
@@ -275,13 +287,15 @@ export const CommentsController: FC<Props> = (Props) => {
           items = [...newList!!];
           setComments(items);
 
-          AppLog.logForcefully("items" + JSON.stringify(commentId));
+          AppLog.logForcefullyForComplexMessages(
+            () => "items" + JSON.stringify(commentId)
+          );
         }
       });
   }
 
   const onEndReached = useCallback(async () => {
-    AppLog.logForcefully("onEndReached");
+    AppLog.logForcefullyForComplexMessages(() => "onEndReached");
     requestModel.current.page = requestModel.current.page!! + 1;
     await handleGetCommentsApi();
   }, [handleGetCommentsApi]);

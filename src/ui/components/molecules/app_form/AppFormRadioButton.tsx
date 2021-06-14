@@ -58,8 +58,9 @@ export const AppFormRadioButton: React.FC<Props> = ({
         itemsInRow={3}
         isLocked={isLocked}
         onChange={(value: OptionsData, index: number) => {
-          AppLog.logForcefully(
-            "Selected radio button index : " +
+          AppLog.logForcefullyForComplexMessages(
+            () =>
+              "Selected radio button index : " +
               JSON.stringify(value) +
               "index : " +
               index

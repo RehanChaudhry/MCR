@@ -79,8 +79,9 @@ export const NewConversationScreen = React.memo<Props>(
             containerStyle={styles.segment}
             values={Strings.newConversation.segmentValues}
             onChange={(value: Choice, index: number) => {
-              AppLog.log(
-                "segment value : " + value + " and index is : " + index
+              AppLog.logForComplexMessages(
+                () =>
+                  "segment value : " + value + " and index is : " + index
               );
               setConversationType(index);
               index === 0

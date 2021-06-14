@@ -18,26 +18,30 @@ export const SocketHelper = (function () {
         });
 
         socket.on("connect", () => {
-          AppLog.log("Socket connected!");
+          AppLog.logForComplexMessages(() => "Socket connected!");
           resolve(socket);
         });
 
         socket.on("disconnect", () => {
-          AppLog.log("Socket disConnected!");
+          AppLog.logForComplexMessages(() => "Socket disConnected!");
           reject();
         });
 
         socket.on("close", () => {
-          AppLog.log("Socket closed!");
+          AppLog.logForComplexMessages(() => "Socket closed!");
         });
 
         socket.io.on("error", (err: Error) => {
-          AppLog.logForcefully("Socket error " + JSON.stringify(err));
+          AppLog.logForComplexMessages(
+            () => "Socket error " + JSON.stringify(err)
+          );
           reject();
         });
 
         socket.on("respond", (data: any) => {
-          AppLog.log("Socket responded!" + JSON.stringify(data));
+          AppLog.logForComplexMessages(
+            () => "Socket responded!" + JSON.stringify(data)
+          );
         });
       } else {
         resolve(socket);

@@ -25,7 +25,7 @@ export const useCreateConversation = () => {
       createConversationAPi
         .request([{ userIds: userId }])
         .then(({ hasError, dataBody }) => {
-          AppLog.logForcefully("api result : ");
+          AppLog.logForcefullyForComplexMessages(() => "api result : ");
 
           if (!hasError) {
             //update active chat list context

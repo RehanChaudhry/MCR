@@ -26,7 +26,8 @@ export class PrettyTimeFormat {
     let millis = new Date().getTime() - moment(date).valueOf();
     let prettyTime = prettyMilliseconds(millis, { compact: compact });
 
-    /* AppLog.log(
+    /* AppLog.logForComplexMessages(
+      () =>
       "pretty date is : " + prettyTime + " and original date is : " + date
     );*/
 

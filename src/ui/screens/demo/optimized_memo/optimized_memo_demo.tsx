@@ -23,7 +23,7 @@ type LabelProps = {
 };
 
 const MyLabel = optimizedMemo<LabelProps>((props) => {
-  AppLog.log(`Rendering ${props.keyTag}...`);
+  AppLog.logForComplexMessages(() => `Rendering ${props.keyTag}...`);
   return (
     <Text style={[props.style, { textAlign: "center" }]}>
       {props.text}
@@ -40,7 +40,7 @@ type LabelWithCustomStyleProps = {
 
 const MyLabelWithCustomStyle = optimizedMemoWithStyleProp<LabelWithCustomStyleProps>(
   (props) => {
-    AppLog.log(`Rendering ${props.keyTag}...`);
+    AppLog.logForComplexMessages(() => `Rendering ${props.keyTag}...`);
     return (
       <Text style={[props.textStyle, { textAlign: "center" }]}>
         {props.text}
@@ -54,7 +54,7 @@ type ButtonProps = {
   onPress: () => void;
 };
 const MyButton: FC<ButtonProps> = React.memo((props) => {
-  AppLog.log("Rendering MyButton...");
+  AppLog.logForComplexMessages(() => "Rendering MyButton...");
   return <Button title={props.text} onPress={props.onPress} />;
 });
 
@@ -68,7 +68,7 @@ function getRandomColor() {
 }
 
 const OptimizedMemoDemo: React.FC<Props> = () => {
-  AppLog.log("Rendering App...");
+  AppLog.logForComplexMessages(() => "Rendering App...");
   const [counter, setCounter] = useState(0);
   const [labelColor, setLabelColor] = useState(getRandomColor());
   return (

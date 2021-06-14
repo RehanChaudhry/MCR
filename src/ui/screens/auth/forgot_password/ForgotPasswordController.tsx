@@ -46,7 +46,7 @@ const ForgotPasswordController: FC<Props> = () => {
     if (requestModel.current === undefined) {
       return;
     }
-    AppLog.log("handle forgotpassword: ");
+    AppLog.logForComplexMessages(() => "handle forgotpassword: ");
     const {
       hasError,
       errorBody,
@@ -60,7 +60,7 @@ const ForgotPasswordController: FC<Props> = () => {
     }
   });
 
-  AppLog.log(handleForgotPassword);
+  AppLog.logForComplexMessages(() => handleForgotPassword);
 
   return (
     <ForgotPasswordView

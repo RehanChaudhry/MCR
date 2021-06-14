@@ -93,7 +93,9 @@ export const ChatListController: FC<Props> = ({
       dataBody === undefined ||
       dataBody.data === undefined
     ) {
-      AppLog.log("ChatList => Unable to find chats " + errorBody);
+      AppLog.logForComplexMessages(
+        () => "ChatList => Unable to find chats " + errorBody
+      );
       setShouldShowProgressBar(false);
       return;
     } else {
@@ -191,7 +193,9 @@ export const ChatListController: FC<Props> = ({
   );
 
   const onEndReached = useCallback(async () => {
-    AppLog.log("ChatList => onEndReached is called");
+    AppLog.logForComplexMessages(
+      () => "ChatList => onEndReached is called"
+    );
     await handleLoadChatsApi();
   }, [handleLoadChatsApi]);
 

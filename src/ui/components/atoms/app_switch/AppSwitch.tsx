@@ -39,7 +39,6 @@ export const AppSwitch = optimizedMemo<AppButtonProps>(
     }, [defaultValue]);
 
     const toggleSwitch = () => {
-      // AppLog.log("AppSwitch() => toggle working");
       setIsEnabled((previousState) => !previousState);
       onValueChange(!isEnabled);
     };

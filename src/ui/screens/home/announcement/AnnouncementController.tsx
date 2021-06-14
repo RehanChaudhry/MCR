@@ -44,14 +44,14 @@ const AnnouncementController: FC<Props> = () => {
 
   useEffect(() => {
     return navigation.addListener("blur", () => {
-      AppLog.log("announcements screen is blur");
+      AppLog.logForComplexMessages(() => "announcements screen is blur");
       setShouldPlayVideo(false);
     });
   }, [navigation]);
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
-      AppLog.log("announcements screen is focus");
+      AppLog.logForComplexMessages(() => "announcements screen is focus");
       setShouldPlayVideo(true);
     });
   }, [navigation]);

@@ -18,7 +18,8 @@ const AppForm: React.FC<Props> = ({
   validateOnMount,
   children
 }) => {
-  /*  AppLog.logForcefully(
+  /*  AppLog.logForcefullyForComplexMessages(
+      () =>
     "AppForm => initialValues " + JSON.stringify(initialValues)
   );*/
 

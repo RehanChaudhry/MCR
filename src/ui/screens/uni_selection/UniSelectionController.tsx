@@ -42,7 +42,9 @@ const UniSelectionController: FC<Props> = () => {
   const handleGetUnisApi = async (onComplete?: () => void) => {
     const { hasError, dataBody, errorBody } = await unisApi.request([]);
     if (hasError || dataBody === undefined) {
-      AppLog.log("Unable to find unis " + errorBody);
+      AppLog.logForComplexMessages(
+        () => "Unable to find unis " + errorBody
+      );
       return;
     } else {
       setUnis(dataBody.data);
@@ -54,7 +56,7 @@ const UniSelectionController: FC<Props> = () => {
 
   const uniDidSelect = usePreventDoubleTap((item: Uni) => {
     requestAnimationFrame(() => {
-      AppLog.log("selected item: ", item);
+      AppLog.logForComplexMessages(() => "selected item: ", item);
       theme.saveCustomPalette({
         interface: computeShades(item.interfaceColor),
         primaryShade: item.primaryColorLight,

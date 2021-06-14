@@ -56,14 +56,14 @@ const CommunityController: FC<Props> = () => {
 
   useEffect(() => {
     return navigation.addListener("blur", () => {
-      AppLog.log("community screen is blur");
+      AppLog.logForComplexMessages(() => "community screen is blur");
       setShouldPlayVideo(false);
     });
   }, [navigation]);
 
   useEffect(() => {
     return navigation.addListener("focus", () => {
-      AppLog.log("community screen is focus");
+      AppLog.logForComplexMessages(() => "community screen is focus");
       setShouldPlayVideo(true);
     });
   }, [navigation]);

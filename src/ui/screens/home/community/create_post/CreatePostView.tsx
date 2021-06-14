@@ -106,8 +106,10 @@ export const CreatePostView = React.memo<Props>((props) => {
       <ImageWithCross
         imageResponse={item}
         onImageRemoved={(imageResponse) => {
-          AppLog.log(JSON.stringify(images));
-          AppLog.log("images length when item remove" + images.length);
+          AppLog.logForComplexMessages(() => JSON.stringify(images));
+          AppLog.logForComplexMessages(
+            () => "images length when item remove" + images.length
+          );
           setImages((prevState) => {
             return [
               ...prevState.filter((filteredImage) => {
@@ -232,7 +234,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                       !postType.includes(POST_TYPES.PHOTOS) ||
                       images.length === 0
                     ) {
-                      AppLog.logForcefully("if");
+                      AppLog.logForcefullyForComplexMessages(() => "if");
                       setImages([]);
                       setPostType(POST_TYPES.PHOTOS);
                       openImageGallery();
@@ -246,7 +248,9 @@ export const CreatePostView = React.memo<Props>((props) => {
                     if (!postType.includes(POST_TYPES.LINK)) {
                       setPostType(POST_TYPES.LINK);
                       setImages([]);
-                      AppLog.log("postType: " + postType);
+                      AppLog.logForComplexMessages(
+                        () => "postType: " + postType
+                      );
                     }
                   }}
                 />
@@ -257,7 +261,9 @@ export const CreatePostView = React.memo<Props>((props) => {
                     if (!postType.includes(POST_TYPES.EMBED)) {
                       setPostType(POST_TYPES.EMBED);
                       setImages([]);
-                      AppLog.log("postType: " + postType);
+                      AppLog.logForComplexMessages(
+                        () => "postType: " + postType
+                      );
                     }
                   }}
                 />

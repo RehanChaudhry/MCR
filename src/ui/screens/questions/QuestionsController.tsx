@@ -80,7 +80,7 @@ type ProfileRouteProp = RouteProp<
 type Props = {};
 
 const QuestionsController: FC<Props> = () => {
-  AppLog.log("Opening QuestionsController");
+  AppLog.logForComplexMessages(() => "Opening QuestionsController");
 
   const { themedColors } = usePreferredTheme();
 
@@ -175,7 +175,9 @@ const QuestionsController: FC<Props> = () => {
       { type: StaticContentType.QUESTIONNAIRE }
     ]);
     if (hasError || dataBody === undefined) {
-      AppLog.log("Unable to find header content " + errorBody);
+      AppLog.logForComplexMessages(
+        () => "Unable to find header content " + errorBody
+      );
       return;
     } else {
       setHeaderContent(dataBody.data);
@@ -216,7 +218,9 @@ const QuestionsController: FC<Props> = () => {
     );
     if (hasError || dataBody === undefined) {
       // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.log("Unable to find questions " + errorBody);
+      AppLog.logForComplexMessages(
+        () => "Unable to find questions " + errorBody
+      );
       return;
     } else {
       setQuestions(toSections(dataBody.data ?? []));
@@ -228,7 +232,7 @@ const QuestionsController: FC<Props> = () => {
     if (requestModel.current === undefined) {
       return;
     }
-    AppLog.log("handleSubmitAnswers: ");
+    AppLog.logForComplexMessages(() => "handleSubmitAnswers: ");
     const { hasError, errorBody, dataBody } = await answerApi.request([
       requestModel.current!
     ]);

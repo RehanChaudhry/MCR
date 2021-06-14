@@ -156,7 +156,9 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     ]);
 
     if (hasError || dataBody === undefined) {
-      AppLog.logForcefully("Chat archive failed :  " + errorBody);
+      AppLog.logForcefullyForComplexMessages(
+        () => "Chat archive failed :  " + errorBody
+      );
       SimpleToast.show(
         "Archive failed for conversation : " + conversationId
       );
@@ -194,7 +196,9 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
         errorBody
       } = await loadMessages.request([loadMessagesRequestModel.current]);
       if (hasError || dataBody === undefined) {
-        AppLog.logForcefully("Unable to find messages " + errorBody);
+        AppLog.logForcefullyForComplexMessages(
+          () => "Unable to find messages " + errorBody
+        );
         SimpleToast.show(Strings.something_went_wrong);
         setShouldShowProgressBar(false);
         return;
@@ -228,7 +232,9 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
   );
 
   const onEndReached = useCallback(async () => {
-    AppLog.log("ChatThread => onEndReached is called");
+    AppLog.logForComplexMessages(
+      () => "ChatThread => onEndReached is called"
+    );
     await handleLoadMessagesApi();
   }, [handleLoadMessagesApi]);
 
@@ -308,8 +314,8 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
             (_item) => _item.id === id
           );
 
-          AppLog.log(
-            "prepare message : " + JSON.stringify(prepareMessage)
+          AppLog.logForComplexMessages(
+            () => "prepare message : " + JSON.stringify(prepareMessage)
           );
 
           prepareMessage.createdAt = findItem?.createdAt as string;

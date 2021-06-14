@@ -43,7 +43,7 @@ type MatchesNavigationProp = StackNavigationProp<
 type Props = {};
 
 const MatchesController: FC<Props> = () => {
-  AppLog.log("Opening MatchesController");
+  AppLog.logForComplexMessages(() => "Opening MatchesController");
   const { themedColors } = usePreferredTheme();
   const navigation = useNavigation<MatchesNavigationProp>();
 
@@ -77,8 +77,9 @@ const MatchesController: FC<Props> = () => {
       inActiveConversations
     );
 
-    AppLog.logForcefully(
-      "create conversation : " + JSON.stringify(createConversationResult)
+    AppLog.logForcefullyForComplexMessages(
+      () =>
+        "create conversation : " + JSON.stringify(createConversationResult)
     );
     if (createConversationResult !== undefined) {
       navigation.navigate("Chat", {
@@ -92,8 +93,9 @@ const MatchesController: FC<Props> = () => {
   };
 
   const moveToProfileScreen = (profileMatch: RelationModel) => {
-    AppLog.log(
-      "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
+    AppLog.logForComplexMessages(
+      () =>
+        "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
     );
     navigation.navigate("Profile", {
       isFrom: EScreen.MATCH_INFO,
@@ -140,7 +142,9 @@ const MatchesController: FC<Props> = () => {
         onComplete?.();
       })
       .catch((reason) => {
-        AppLog.log("refreshCallback > catch(), reason:" + reason);
+        AppLog.logForComplexMessages(
+          () => "refreshCallback > catch(), reason:" + reason
+        );
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -168,16 +172,13 @@ const MatchesController: FC<Props> = () => {
   const [totalCount, setTotalCount] = useState<number>(0);
 
   const getProfileMatches = useCallback(async () => {
-    AppLog.logForcefully("in getProfileMatches()...");
+    AppLog.logForcefullyForComplexMessages(
+      () => "in getProfileMatches()..."
+    );
     if (isFetchingInProgress.current) {
       return;
     }
     isFetchingInProgress.current = true;
-
-    // AppLog.log(
-    //   "in getProfileMatches(), fetching page: " +
-    //     JSON.stringify(requestModel.current)
-    // );
 
     const { hasError, errorBody, dataBody } = await relationsApi.request([
       requestModel.current
@@ -222,7 +223,6 @@ const MatchesController: FC<Props> = () => {
 
   const onFilterChange = useCallback(
     (keyword?: string, gender?: EGender) => {
-      // AppLog.log(keyword);
       requestModel.current.keyword = keyword;
       requestModel.current.gender = gender;
       refreshCallback();
@@ -327,7 +327,7 @@ const MatchesController: FC<Props> = () => {
     request: UpdateRelationApiRequestModel,
     type: RelationActionType
   ) => {
-    AppLog.log("type: " + type);
+    AppLog.logForComplexMessages(() => "type: " + type);
     const {
       hasError,
       errorBody,

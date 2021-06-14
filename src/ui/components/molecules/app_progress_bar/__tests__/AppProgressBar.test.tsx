@@ -61,7 +61,7 @@ it("throw error when wrong percentage is provided", () => {
 
     expect(percentage).toBe(null);
   } catch (e: any) {
-    AppLog.logForcefully("error thrown => " + e);
+    AppLog.logForcefullyForComplexMessages(() => "error thrown => " + e);
 
     //then
     expect(e).toBeDefined();

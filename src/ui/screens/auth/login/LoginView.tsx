@@ -52,7 +52,7 @@ export const LoginView = React.memo<Props>(
     const theme = usePreferredTheme();
 
     const onSubmit = (_value: FormikValues) => {
-      AppLog.log("form values" + initialValues);
+      AppLog.logForComplexMessages(() => "form values" + initialValues);
       onLogin({
         email: _value.email,
         password: _value.password,

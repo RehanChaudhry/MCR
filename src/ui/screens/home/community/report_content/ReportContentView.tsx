@@ -38,7 +38,7 @@ export const ReportContentView = React.memo<Props>(
       if (prob.length < 1) {
         SimpleToast.show("Please select at least one problem");
       } else {
-        AppLog.log("form values" + initialValues);
+        AppLog.logForComplexMessages(() => "form values" + initialValues);
         const unique = new Set(prob);
         const uniqueArray = [...unique]; // array
         onPostReportContent({

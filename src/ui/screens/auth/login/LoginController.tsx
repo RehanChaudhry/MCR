@@ -50,7 +50,7 @@ const LoginController: FC<Props> = () => {
 
   const handleSignIn = usePreventDoubleTap(
     async (apiRequestModel: SignInApiRequestModel) => {
-      AppLog.log("handleSignIn: ");
+      AppLog.logForComplexMessages(() => "handleSignIn: ");
 
       // authenticate user
       const { hasError } = await signInApi.request([apiRequestModel]);

@@ -37,7 +37,8 @@ export const AppFormCheckBoxGroup: React.FC<AppFormCheckBoxGroupProps> = ({
   } = useFormikContext<FormikValues>();
   let result: React.MutableRefObject<OptionsData[]> = useRef([]);
 
-  /*AppLog.logForcefully(
+  /*AppLog.logForcefullyForComplexMessages(
+      () =>
     "AppFormCheckboxGroup => initialValues " +
       JSON.stringify(initialValues[name]) +
       " field name is : " +
@@ -58,8 +59,9 @@ export const AppFormCheckBoxGroup: React.FC<AppFormCheckBoxGroupProps> = ({
         listData={listData}
         preSelected={initialValues[name]}
         onChange={(checked: boolean, text?: string) => {
-          AppLog.log(
-            "Checkbox check changed : " +
+          AppLog.logForComplexMessages(
+            () =>
+              "Checkbox check changed : " +
               checked +
               " and text is : " +
               text

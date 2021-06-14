@@ -100,7 +100,9 @@ export const UpdateProfileView: React.FC<Props> = ({
         ? createYupSchema(fieldToGetValidation.current)
         : Yup.object().shape({});
 
-    AppLog.log("create schema : " + JSON.stringify(yepSchema.current));
+    AppLog.logForComplexMessages(
+      () => "create schema : " + JSON.stringify(yepSchema.current)
+    );
 
     // FieldBox's initial state is being handled here.
     // it is being handled in CustomForFieldItem
@@ -124,8 +126,8 @@ export const UpdateProfileView: React.FC<Props> = ({
     });
   }, [updateProfileUiData]);
 
-  AppLog.log(
-    "UpdateProfile Ui Data = " + JSON.stringify(updateProfileUiData)
+  AppLog.logForComplexMessages(
+    () => "UpdateProfile Ui Data = " + JSON.stringify(updateProfileUiData)
   );
 
   useEffect(() => {

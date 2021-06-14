@@ -13,7 +13,7 @@ type Props = {
 
 const InfoAlert: FC<Props> = React.memo(
   ({ shouldShow, getSelectedItem, hideSelf }) => {
-    AppLog.log("in InfoAlert");
+    AppLog.logForComplexMessages(() => "in InfoAlert");
 
     const theme = usePreferredTheme();
     return (

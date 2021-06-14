@@ -32,7 +32,8 @@ export const ChatThreadScreen = React.memo<Props>(
     retryCallback
   }) => {
     const renderItem = ({ item }: { item: Message | undefined }) => {
-      /* AppLog.log("rendering list item : " + JSON.stringify(item));*/
+      /* AppLog.logForComplexMessages(
+      () =>"rendering list item : " + JSON.stringify(item));*/
       return <ItemChatThread item={item} retry={retry} />;
     };
 
