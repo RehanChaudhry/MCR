@@ -86,7 +86,7 @@ export const UpdateProfileView: React.FC<Props> = ({
 
   // dynamic form validation making sure this complex logic executes only once when screen renders
   const init = useCallback(() => {
-    updateProfileUiData?.sections.forEach((value) => {
+    updateProfileUiData?.sections?.forEach((value) => {
       fieldToGetValidation.current = [
         ...fieldToGetValidation.current,
         ...(value.formInputs ?? [])
