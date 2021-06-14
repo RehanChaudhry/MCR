@@ -17,6 +17,7 @@ type Props = {
   openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
   error: string | undefined;
+  moveToProfileScreen: () => void;
 };
 
 export const AnnouncementView = React.memo<Props>(
@@ -28,7 +29,8 @@ export const AnnouncementView = React.memo<Props>(
     pullToRefreshCallback,
     openCommentsScreen,
     shouldPlayVideo,
-    error
+    error,
+    moveToProfileScreen
   }) => {
     const keyExtractor = useCallback(
       (item: CommunityAnnouncement) => item.id.toString(),
@@ -42,10 +44,11 @@ export const AnnouncementView = React.memo<Props>(
             announcementItem={item}
             openCommentsScreen={openCommentsScreen}
             shouldPlayVideo={shouldPlayVideo}
+            onProfileImageClicked={moveToProfileScreen}
           />
         );
       },
-      [openCommentsScreen, shouldPlayVideo]
+      [openCommentsScreen, shouldPlayVideo, moveToProfileScreen]
     );
 
     return (

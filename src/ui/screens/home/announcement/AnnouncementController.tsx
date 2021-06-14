@@ -5,6 +5,7 @@ import {
   CommunityAnnouncement,
   CommunityAnnouncementResponseModel
 } from "models/api_responses/CommunityAnnouncementResponseModel";
+import EScreen from "models/enums/EScreen";
 import React, {
   FC,
   useCallback,
@@ -146,6 +147,10 @@ const AnnouncementController: FC<Props> = () => {
     fetchAnnouncements().then().catch();
   }, [fetchAnnouncements]);
 
+  const moveToProfileScreen = useCallback(() => {
+    navigation.navigate("Profile", { isFrom: EScreen.ANNOUNCEMENT });
+  }, [navigation]);
+
   return (
     <AnnouncementView
       data={announcements}
@@ -156,6 +161,7 @@ const AnnouncementController: FC<Props> = () => {
       pullToRefreshCallback={refreshCallback}
       openCommentsScreen={openCommentsScreen}
       shouldPlayVideo={shouldPlayVideo}
+      moveToProfileScreen={moveToProfileScreen}
     />
   );
 };

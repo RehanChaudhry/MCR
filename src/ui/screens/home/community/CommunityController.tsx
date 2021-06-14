@@ -11,6 +11,7 @@ import {
   CommunityAnnouncement,
   CommunityAnnouncementResponseModel
 } from "models/api_responses/CommunityAnnouncementResponseModel";
+import EScreen from "models/enums/EScreen";
 import FeedsTypeFilter, {
   getFeedsTypeFilterData
 } from "models/enums/FeedsTypeFilter";
@@ -211,6 +212,10 @@ const CommunityController: FC<Props> = () => {
     navigation.navigate("ReportContent", { postId: postId });
   };
 
+  const moveToProfileScreen = useCallback(() => {
+    navigation.navigate("Profile", { isFrom: EScreen.COMMUNITY });
+  }, [navigation]);
+
   useEffect(() => {
     fetchCommunities().then().catch();
   }, [fetchCommunities]);
@@ -243,6 +248,7 @@ const CommunityController: FC<Props> = () => {
       shouldPlayVideo={shouldPlayVideo}
       openReportContentScreen={openReportContentScreen}
       filterDataBy={filterDataBy}
+      moveToProfileScreen={moveToProfileScreen}
     />
   );
 };
