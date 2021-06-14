@@ -9,9 +9,9 @@ export type WelcomeStackParamList = {
   Auth: undefined;
   UpdateProfile: {
     isFrom: EScreen;
+    updateProfile: boolean;
     list?: ConversationItem[];
     listKey?: string;
-    updateProfile: boolean;
   };
   AddInterests: {
     list: ConversationItem[];
