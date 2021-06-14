@@ -79,7 +79,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
   const footerWrapper = React.memo<Props<any>>(() => {
     return (
       <>
-        {!isAllDataLoaded && data !== undefined && error === undefined && (
+        {!isAllDataLoaded && dataHasRecords() && (
           <View style={styles.loadMore}>
             <AppLoadMore testID="loader" />
           </View>
@@ -116,6 +116,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
       if (!dataHasRecords()) {
         return (
           <>
+            {ui}
             <View style={styles.noRecordParent}>
               <AppLabel
                 text={noRecordFoundText}
@@ -125,7 +126,6 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
                 ]}
               />
             </View>
-            {ui}
           </>
         );
       } else {
@@ -164,7 +164,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    position: "absolute"
   },
   noRecord: {
     textAlign: "center",
