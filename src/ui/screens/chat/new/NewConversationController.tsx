@@ -1,6 +1,7 @@
 import React, {
   FC,
   useCallback,
+  useContext,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -23,10 +24,10 @@ import { ConversationSuggestionsResponseModel } from "models/api_responses/Conve
 import ChatApis from "repo/chat/ChatApis";
 import { AppLog } from "utils/Util";
 import { ConversationSuggestionsRequestModel } from "models/api_requests/ConversationSuggestionsRequestModel";
-import { CreateConversationRequestModel } from "models/api_requests/CreateConversationRequestModel";
 import SimpleToast from "react-native-simple-toast";
-import { CreateConversationResponseModel } from "models/api_responses/CreateConversationResponseModel";
 import { User } from "models/User";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
+import { useCreateConversation } from "hooks/useCreateConversation";
 
 type ConversationNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -48,6 +49,12 @@ export const NewConversationController: FC<Props> = () => {
   >(undefined);
   const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
   const [clearInputField, setClearInputField] = useState<boolean>(false);
+
+  const createConversation = useCreateConversation();
+
+  const { setActiveConversations, inActiveConversations } = useContext(
+    MyFriendsContext
+  );
 
   const openChatThreadScreen = useCallback(
     (conversationId: number) => {
@@ -91,34 +98,17 @@ export const NewConversationController: FC<Props> = () => {
     }
   };
 
-  const createConversationAPi = useApi<
-    CreateConversationRequestModel,
-    CreateConversationResponseModel
-  >(ChatApis.createConversations);
-
-  const handleCreateConversationApi = useCallback(async () => {
-    const { hasError, dataBody, errorBody } = await createConversationAPi // @ts-ignore
-      .request([{ userIds: usersIds.current }]);
-
-    return { hasError, dataBody, errorBody };
-  }, [createConversationAPi]);
-
-  const headerRightClick = useCallback(() => {
-    AppLog.logForcefully("dats  : " + JSON.stringify(newConversations));
+  const headerRightClick = useCallback(async () => {
     if (newConversations !== undefined && newConversations.length > 0) {
-      handleCreateConversationApi()
-        .then((result) => {
-          if (result.hasError && result.dataBody !== undefined) {
-            SimpleToast.show(
-              result.errorBody ?? Strings.somethingWentWrong
-            );
-          } else {
-            openChatThreadScreen(result.dataBody!!.data.id);
-          }
-        })
-        .catch((error) => {
-          SimpleToast.show(error ?? Strings.somethingWentWrong);
-        });
+      const createConversationResult = await createConversation(
+        usersIds.current,
+        setActiveConversations,
+        inActiveConversations
+      );
+
+      if (createConversationResult !== undefined) {
+        openChatThreadScreen(createConversationResult.id);
+      }
     } else {
       navigation.goBack();
     }
@@ -126,7 +116,9 @@ export const NewConversationController: FC<Props> = () => {
     navigation,
     openChatThreadScreen,
     newConversations,
-    handleCreateConversationApi
+    setActiveConversations,
+    inActiveConversations,
+    createConversation
   ]);
 
   useLayoutEffect(() => {

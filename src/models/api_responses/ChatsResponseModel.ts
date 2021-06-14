@@ -9,12 +9,12 @@ export class Conversation {
   createdBy!: number;
   createdAt!: Date;
   updatedAt!: Date;
+  currentUser!: User[];
   conversationUsers!: User[];
   message!: Message[];
-  isRead!: boolean;
+  status!: string;
 
   constructor(activityLog: Conversation) {
-    this.isRead = false;
     Object.assign(this, activityLog);
   }
 
@@ -23,7 +23,10 @@ export class Conversation {
     /* this.isRead = prettyDateTime.isOneDayAgo(
       this.lastMessagedAt.toString()
     );*/
-    return prettyDateTime.isOneDayAgo(this.lastMessagedAt.toString());
+    return (
+      this.lastMessagedAt !== undefined &&
+      prettyDateTime.isOneDayAgo(this.lastMessagedAt.toString())
+    );
   };
 }
 

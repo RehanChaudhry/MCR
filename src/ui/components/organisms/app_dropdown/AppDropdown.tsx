@@ -32,6 +32,7 @@ export interface AppDropdownProps {
   shouldShowCustomIcon?: boolean;
   shouldNotOptimize?: boolean;
   isLocked?: EIntBoolean;
+  onBlur?: () => void;
 }
 
 export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
@@ -47,7 +48,8 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
     textStyle,
     dropDownIcon,
     shouldShowCustomIcon = false,
-    isLocked = EIntBoolean.FALSE
+    isLocked = EIntBoolean.FALSE,
+    onBlur
   }) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const [selectedItemText, setSelectedItemText] = useState<
@@ -124,6 +126,7 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
         <Pressable
           testID="dropdown-click"
           onPress={() => {
+            onBlur?.();
             !isLocked && openModal();
           }}>
           <View style={[styles.wrapper]}>

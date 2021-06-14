@@ -33,6 +33,7 @@ export class User {
   lastReportedAt!: null;
   createdAt!: Date;
   updatedAt!: Date;
+  online!: number;
 
   constructor(user: User) {
     Object.assign(this, user);

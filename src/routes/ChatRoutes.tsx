@@ -13,7 +13,7 @@ export const ChatRoutes = () => {
       <ChatBottomBar.Screen
         name="Archive"
         component={ChatListController}
-        initialParams={{ status: "archive" }}
+        initialParams={{ status: "archived" }}
       />
     </ChatBottomBar.Navigator>
   );

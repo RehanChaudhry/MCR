@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import InfoCircle from "assets/images/info_circle.svg";
 import { STRINGS } from "config";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 import ApiSuccessResponseModel from "models/api_responses/ApiSuccessResponseModel";
@@ -33,6 +33,7 @@ import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
+import { useCreateConversation } from "hooks/useCreateConversation";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -45,6 +46,9 @@ const MatchesController: FC<Props> = () => {
   AppLog.log("Opening MatchesController");
   const { themedColors } = usePreferredTheme();
   const navigation = useNavigation<MatchesNavigationProp>();
+
+  const createConversation = useCreateConversation();
+  const { user } = useAuth();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -66,13 +70,25 @@ const MatchesController: FC<Props> = () => {
     });
   }, [navigation, themedColors]);
 
-  const moveToChatScreen = (profileMatch: RelationModel) => {
-    // AppLog.log(
-    //   "moveToChatScreen(), profile: " + JSON.stringify(profileMatch)
-    // );
-    navigation.navigate("Chat", {
-      title: [profileMatch.user?.getFullName() ?? STRINGS.common.not_found]
-    });
+  const moveToChatScreen = async (profileMatch: RelationModel) => {
+    const createConversationResult = await createConversation(
+      [user?.profile?.id!!, profileMatch.user?.id!],
+      setActiveConversations,
+      inActiveConversations
+    );
+
+    AppLog.logForcefully(
+      "create conversation : " + JSON.stringify(createConversationResult)
+    );
+    if (createConversationResult !== undefined) {
+      navigation.navigate("Chat", {
+        title: [
+          profileMatch.user?.getFullName() ?? STRINGS.common.not_found
+        ],
+        conversationId: createConversationResult?.id!,
+        isArchived: createConversationResult.status === "active"
+      });
+    }
   };
 
   const moveToProfileScreen = (profileMatch: RelationModel) => {
@@ -133,7 +149,9 @@ const MatchesController: FC<Props> = () => {
     addListenerOnResetData,
     removeListenerOnResetData,
     matches: profileMatches,
-    setMatches: setProfileMatches
+    setMatches: setProfileMatches,
+    setActiveConversations,
+    inActiveConversations
   } = useContext(AppDataContext);
   useEffect(() => {
     let listener = () => {

@@ -1,6 +1,7 @@
 import React, {
   FC,
   useCallback,
+  useContext,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -14,11 +15,10 @@ import {
   useRoute
 } from "@react-navigation/native";
 import { useApi } from "repo/Client";
-import ChatResponseModel from "models/api_responses/ChatsResponseModel";
 import ChatApis from "repo/chat/ChatApis";
 import { AppLog } from "utils/Util";
 import { COLORS, SPACE } from "config";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import Archive from "assets/images/archive.svg";
 import Close from "assets/images/close.svg";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
@@ -33,6 +33,13 @@ import ChatRequestModel, {
 } from "models/api_requests/chatRequestModel";
 import MessagesResponseModel from "models/api_responses/MessagesResponseModel";
 import Message from "models/Message";
+import SimpleToast from "react-native-simple-toast";
+import { SocketHelper } from "utils/SocketHelper";
+import { Socket } from "socket.io-client";
+import { ChatHelper } from "utils/ChatHelper";
+import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
+import _ from "lodash";
+import nextId from "react-id-generator";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -62,8 +69,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     false
   );
   const isFetchingInProgress = useRef(false);
-
-  AppLog.log("remove warning " + conversationId);
+  const { user } = useAuth();
 
   const getTitle = (): string => {
     const title = params?.title ?? "N/A";
@@ -104,9 +110,10 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       headerRight: () => (
         <HeaderRightTextWithIcon
           text={Strings.chatThreadScreen.titleRight}
-          onPress={() => {
-            navigation.goBack();
+          onPress={async () => {
+            await handleUpdateConversationApi();
           }}
+          shouldShowLoader={updateConversationApi.loading}
           textStyle={{ color: COLORS.red }}
           icon={() => (
             <Archive
@@ -126,11 +133,52 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     ChatApis.getMessages
   );
 
-  const requestModel = useRef<ChatRequestModel>({
+  //archive chat api
+  const updateConversationApi = useApi<
+    { status: string; conversationId: number },
+    any
+  >(ChatApis.updateConversation);
+
+  const {
+    activeConversations,
+    setActiveConversations,
+    inActiveConversations,
+    setInActiveConversations
+  } = useContext(MyFriendsContext);
+
+  async function handleUpdateConversationApi() {
+    const {
+      hasError,
+      dataBody,
+      errorBody
+    } = await updateConversationApi.request([
+      { status: "archived", conversationId: conversationId }
+    ]);
+
+    if (hasError || dataBody === undefined) {
+      AppLog.logForcefully("Chat archive failed :  " + errorBody);
+      SimpleToast.show(
+        "Archive failed for conversation : " + conversationId
+      );
+      return;
+    } else {
+      ChatHelper.manipulateChatLists(
+        setActiveConversations,
+        inActiveConversations,
+        setInActiveConversations,
+        activeConversations,
+        true,
+        conversationId
+      );
+      navigation.goBack();
+    }
+  }
+
+  const loadMessagesRequestModel = useRef<ChatRequestModel>({
     paginate: true,
     page: 1,
     limit: 10,
-    orderBy: ESortBy.UPDATED_AT,
+    orderBy: ESortBy.CREATED_AT,
     order: ESortOrder.DSC,
     id: conversationId
   });
@@ -139,31 +187,38 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     async (onComplete?: () => void) => {
       setShouldShowProgressBar(true);
       isFetchingInProgress.current = true;
+
       const {
         hasError,
         dataBody,
         errorBody
-      } = await loadMessages.request([requestModel.current]);
+      } = await loadMessages.request([loadMessagesRequestModel.current]);
       if (hasError || dataBody === undefined) {
         AppLog.logForcefully("Unable to find messages " + errorBody);
+        SimpleToast.show(Strings.something_went_wrong);
         setShouldShowProgressBar(false);
         return;
       } else {
         setMessages((prevState) => {
-          return [
-            ...(prevState === undefined || requestModel.current.page === 1
-              ? []
-              : prevState),
-            ...dataBody.data!!
-          ];
+          return _.uniqBy(
+            [
+              ...(prevState === undefined ||
+              loadMessagesRequestModel.current.page === 1
+                ? []
+                : (prevState as Message[])),
+              ...dataBody.data!!
+            ],
+            (item) => item.id
+          );
         });
 
         setIsAllDataLoaded(
-          dataBody.data!!.length < requestModel.current.limit
+          dataBody.data!!.length < loadMessagesRequestModel.current.limit
         );
 
         onComplete?.();
-        requestModel.current.page = (requestModel?.current?.page ?? 0) + 1;
+        loadMessagesRequestModel.current.page =
+          (loadMessagesRequestModel?.current?.page ?? 0) + 1;
 
         isFetchingInProgress.current = false;
         setShouldShowProgressBar(false);
@@ -172,80 +227,150 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     [loadMessages]
   );
 
-  const sentMessageApi = useApi<Object, ChatResponseModel>(
-    ChatApis.sentMessage
-  );
-
-  const sentMessage = useCallback(
-    async (message: string) => {
-      AppLog.log("message to sent : " + JSON.stringify(message));
-
-      const {
-        hasError,
-        dataBody,
-        errorBody
-      } = await sentMessageApi.request([
-        {
-          conversationId: conversationId,
-          text: message
-        }
-      ]);
-
-      if (
-        hasError ||
-        dataBody === undefined ||
-        dataBody.data === undefined
-      ) {
-        AppLog.log("Unable to sent message " + errorBody);
-        return;
-      } else {
-      }
-    },
-    [conversationId, sentMessageApi]
-  );
-
-  const refreshCallback = useCallback(
-    async (onComplete?: () => void) => {
-      requestModel.current.page = 1;
-      handleLoadMessagesApi()
-        .then(() => {
-          onComplete?.();
-        })
-        .catch(() => {
-          onComplete?.();
-        });
-    },
-    [handleLoadMessagesApi]
-  );
-
   const onEndReached = useCallback(async () => {
     AppLog.log("ChatThread => onEndReached is called");
     await handleLoadMessagesApi();
   }, [handleLoadMessagesApi]);
 
-  function updateMessagesList(text: string) {
-    sentMessage(text).then().catch();
+  function sentMessageToSocket(
+    text: string,
+    id?: number,
+    isRetry = false
+  ) {
+    let generateId = nextId(
+      (messages?.length ?? 0) > 0 ? messages![0].id!.toString() : "0"
+    ).split(
+      (messages?.length ?? 0) > 0 ? messages![0].id!.toString() : "0"
+    );
 
-    let newList: Message[] | undefined = [];
+    id = id ?? Number(generateId[0]) + Number(generateId[1]);
 
-    // newList.push(messages);
-    // newList.push(messages);
-    setMessages(newList);
+    AppLog.logForcefully("message id : " + JSON.stringify(id));
+
+    let prepareMessage = ({
+      id: id,
+      userId: user?.profile?.id,
+      firstName: user?.profile?.firstName,
+      lastName: user?.profile?.lastName,
+      profilePicture: user?.profile?.profilePicture,
+      conversationId: conversationId,
+      text: text,
+      readBy: [user?.profile?.id],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      userType: "Student",
+      isLoading: false,
+      isError: false
+    } as unknown) as Message;
+
+    AppLog.logForcefully(
+      "socket status : " + JSON.stringify(socket?.current?.connected)
+    );
+    if (socket?.current?.connected ?? false) {
+      socket!!.current!!.emit("sendMessage", prepareMessage);
+
+      //check if this chat is opened from archive list
+      if (params?.isArchived) {
+        //if chat is in archive and you message, the conversation has to move into active chats
+        ChatHelper.manipulateChatLists(
+          setActiveConversations,
+          inActiveConversations,
+          setInActiveConversations,
+          activeConversations,
+          false,
+          conversationId,
+          (prepareMessage as unknown) as Message
+        );
+      }
+    } else {
+      //update message but with retry option
+      prepareMessage.isLoading = false;
+      prepareMessage.isError = true;
+    }
+
+    //update messages list after sending message
+    if (!isRetry) {
+      // @ts-ignore
+      setMessages((prevState) => {
+        return [...[prepareMessage], ...(prevState || [])];
+      });
+    } else {
+      //update message since we are retrying
+      setMessages((prevState) => {
+        let messagesDeepCopy = _.cloneDeep(prevState);
+
+        let findIndex = messagesDeepCopy?.findIndex(
+          (item: any) => item.id === id
+        );
+
+        if (findIndex !== -1) {
+          let findItem = messagesDeepCopy?.find(
+            (_item) => _item.id === id
+          );
+
+          AppLog.log(
+            "prepare message : " + JSON.stringify(prepareMessage)
+          );
+
+          prepareMessage.createdAt = findItem?.createdAt as string;
+          prepareMessage.updatedAt = findItem?.updatedAt as string;
+
+          //remove item from index
+          messagesDeepCopy?.splice(findIndex!, 1);
+
+          //add item at index
+          messagesDeepCopy?.splice(findIndex!, 0, prepareMessage);
+
+          return messagesDeepCopy;
+        } else {
+          return prevState;
+        }
+      });
+    }
   }
 
   useEffect(() => {
     handleLoadMessagesApi().then().catch();
+    connectSocket().then().catch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleLoadMessagesApi]);
+
+  let socket = useRef<Socket>();
+  const connectSocket = useCallback(async () => {
+    socket.current = await SocketHelper.startConnection(
+      "Bearer " + user?.authentication?.accessToken
+    );
+
+    socket.current.on("receiveMessage", (data) => {
+      setMessages((prevState) => {
+        return [...data.message, ...(prevState || [])];
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const retry = (message: Message) => {
+    //  connectSocket().then().catch();
+    if (!socket?.current?.connected) {
+      socket?.current?.connect();
+    }
+    sentMessageToSocket(message.text, message.id, true);
+  };
 
   return (
     <ChatThreadScreen
       data={messages}
-      sentMessageApi={updateMessagesList}
+      sentMessageApi={sentMessageToSocket}
       shouldShowProgressBar={shouldShowProgressBar}
       error={loadMessages.error}
       isAllDataLoaded={isAllDataLoaded}
-      pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
+      retry={retry}
+      retryCallback={() => {
+        loadMessagesRequestModel.current.page = 1;
+        setMessages(undefined);
+        handleLoadMessagesApi().then().catch();
+      }}
     />
   );
 };

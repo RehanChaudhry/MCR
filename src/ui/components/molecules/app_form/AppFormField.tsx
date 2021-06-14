@@ -109,7 +109,7 @@ const AppFormField = optimizedMemo<Props>(
           {...fieldInputProps}
           editable={!isLocked}
         />
-        {(errors[name] || touched[name]) && (
+        {errors[name] && touched[name] && (
           <AppFormValidationLabel
             validationLabelTestID={validationLabelTestID}
             errorString={errors[name] as string}

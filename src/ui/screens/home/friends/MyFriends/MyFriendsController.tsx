@@ -4,12 +4,14 @@ import RelationModel from "models/RelationModel";
 import React, { FC, useCallback, useContext } from "react";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import { FriendsRootStackParamList } from "routes/FriendsRootStack";
-import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "../connect_requests/ConnectRequestsController";
 import MyFriendsView from "./MyFriendsView";
 import EScreen from "models/enums/EScreen";
 import useFetchRelations from "../useFetchRelations";
 import RelationFilterType from "models/enums/RelationFilterType";
+import { STRINGS } from "config";
+import { useCreateConversation } from "hooks/useCreateConversation";
+import { useAuth } from "hooks";
 
 type Props = {};
 type FriendsNavigationProp = StackNavigationProp<
@@ -18,8 +20,15 @@ type FriendsNavigationProp = StackNavigationProp<
 >;
 
 const MyFriendsController: FC<Props> = () => {
+  const { user } = useAuth();
+  const createConversation = useCreateConversation();
   const navigation = useNavigation<FriendsNavigationProp>();
-  const { myFriends, setMyFriends } = useContext(AppDataContext);
+  const {
+    myFriends,
+    setMyFriends,
+    setActiveConversations,
+    inActiveConversations
+  } = useContext(AppDataContext);
   const {
     relationsCount: friendsCount,
     pendingRelationsCount: pendingFriendsCount,
@@ -58,6 +67,24 @@ const MyFriendsController: FC<Props> = () => {
     });
   }, [navigation]);
 
+  const moveToChatScreen = async (profileMatch: RelationModel) => {
+    const createConversationResult = await createConversation(
+      [user?.profile?.id!!, profileMatch.user?.id!],
+      setActiveConversations,
+      inActiveConversations
+    );
+
+    if (createConversationResult !== undefined) {
+      navigation.navigate("Chat", {
+        title: [
+          profileMatch.user?.getFullName() ?? STRINGS.common.not_found
+        ],
+        conversationId: createConversationResult?.id!,
+        isArchived: createConversationResult.status === "active"
+      });
+    }
+  };
+
   return (
     <MyFriendsView
       friendsCount={friendsCount}
@@ -68,9 +95,7 @@ const MyFriendsController: FC<Props> = () => {
       error={errorMessage}
       onEndReached={onEndReached}
       onPullToRefresh={onPullToRefresh}
-      onPressChat={(item: RelationModel) => {
-        AppLog.log("onPressChat: ", item);
-      }}
+      onPressChat={moveToChatScreen}
       onPressReceivedFriendRequests={onPressReceivedFriendRequests}
       moveToProfileScreen={moveToProfileScreen}
       moveToRoommateRequests={moveToRoommateRequests}

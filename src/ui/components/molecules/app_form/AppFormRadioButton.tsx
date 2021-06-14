@@ -14,6 +14,7 @@ import { FormikValues, useFormikContext } from "formik";
 import { AppLog } from "utils/Util";
 import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel";
 import EIntBoolean from "models/enums/EIntBoolean";
+import { AppFormValidationLabel } from "ui/components/molecules/app_form/AppFormValidationLabel";
 
 type Props = {
   name: string;
@@ -21,6 +22,7 @@ type Props = {
   radioData: OptionsData[];
   direction: DIRECTION_TYPE;
   isLocked?: EIntBoolean;
+  validationLabelTestID?: string;
 };
 
 export const AppFormRadioButton: React.FC<Props> = ({
@@ -28,13 +30,17 @@ export const AppFormRadioButton: React.FC<Props> = ({
   labelProps,
   radioData,
   direction,
-  isLocked = EIntBoolean.FALSE
+  isLocked = EIntBoolean.FALSE,
+  validationLabelTestID
 }) => {
   const theme = usePreferredTheme();
 
   const {
     setFieldValue,
-    initialValues
+    initialValues,
+    touched,
+    setFieldTouched,
+    errors
   } = useFormikContext<FormikValues>();
 
   return (
@@ -52,13 +58,16 @@ export const AppFormRadioButton: React.FC<Props> = ({
         itemsInRow={3}
         isLocked={isLocked}
         onChange={(value: OptionsData, index: number) => {
-          AppLog.log(
+          AppLog.logForcefully(
             "Selected radio button index : " +
               JSON.stringify(value) +
               "index : " +
               index
           );
-          value !== undefined && setFieldValue(name, value.value);
+          if (value !== undefined) {
+            setFieldValue(name, value.value, true);
+            setFieldTouched(name, true);
+          }
         }}
         byDefaultSelected={radioData.findIndex(
           (item) =>
@@ -66,6 +75,14 @@ export const AppFormRadioButton: React.FC<Props> = ({
             initialValues[name]?.toString().toLowerCase()
         )}
       />
+
+      {errors[name] && touched[name] && (
+        <AppFormValidationLabel
+          validationLabelTestID={validationLabelTestID}
+          errorString={errors[name] as string}
+          shouldVisible={true}
+        />
+      )}
     </View>
   );
 };

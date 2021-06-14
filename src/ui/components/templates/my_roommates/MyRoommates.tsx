@@ -13,9 +13,13 @@ import MyRoommateItem from "ui/components/templates/my_roommates/MyRoommateItem"
 
 type Props = {
   openAgreementScreen: () => void;
+  moveToChatScreen: (userId: number) => void;
 };
 
-const MyRoommates: FC<Props> = ({ openAgreementScreen }) => {
+const MyRoommates: FC<Props> = ({
+  openAgreementScreen,
+  moveToChatScreen
+}) => {
   const theme = usePreferredTheme();
 
   return (
@@ -35,6 +39,7 @@ const MyRoommates: FC<Props> = ({ openAgreementScreen }) => {
               name={item.name}
               field={item.field}
               imageUrl={item.imageUrl}
+              moveToChatScreen={moveToChatScreen}
             />
           )}
           style={styles.flatList}
