@@ -94,8 +94,8 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
       return getErrorView();
     }
 
-    if (!shouldShowError() && dataHasRecords()) {
-      return (
+    if (!shouldShowError()) {
+      let ui = (
         <FlatList
           // initialNumToRender={7}
           onEndReachedThreshold={1}
@@ -104,9 +104,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
             pullToRefreshCallback === undefined ? undefined : onRefresh
           }
           onEndReached={
-            isAllDataLoaded || error !== undefined
-              ? undefined
-              : onEndReached
+            isAllDataLoaded || !dataHasRecords() ? undefined : onEndReached
           }
           ItemSeparatorComponent={ItemSeparatorHeaderAndFooterComponent}
           ListHeaderComponent={ItemSeparatorHeaderAndFooterComponent}
@@ -114,17 +112,25 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
           {...rest}
         />
       );
-    }
 
-    if (!shouldShowError() && !dataHasRecords()) {
-      return (
-        <View style={styles.noRecordParent}>
-          <AppLabel
-            text={noRecordFoundText}
-            style={[styles.noRecord, { color: theme.themedColors.label }]}
-          />
-        </View>
-      );
+      if (!dataHasRecords()) {
+        return (
+          <>
+            <View style={styles.noRecordParent}>
+              <AppLabel
+                text={noRecordFoundText}
+                style={[
+                  styles.noRecord,
+                  { color: theme.themedColors.label }
+                ]}
+              />
+            </View>
+            {ui}
+          </>
+        );
+      } else {
+        return ui;
+      }
     }
   }
 
