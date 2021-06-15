@@ -33,7 +33,7 @@ function createInitialListForFieldBoxFromUserMeta(
   }));
 }
 
-export const CustomFormFieldItem = React.memo<CustomFormFieldProps>(
+export const UpdateProfileSectionFieldItem = React.memo<CustomFormFieldProps>(
   ({ listData }) => {
     //for multi select item
     const chevronRight = () => <ChevronRight height={20} width={20} />;
@@ -237,4 +237,4 @@ const styles = StyleSheet.create({
     paddingBottom: SPACE.lg
   }
 });
-export default CustomFormFieldItem;
+export default UpdateProfileSectionFieldItem;

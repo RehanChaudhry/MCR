@@ -2,9 +2,9 @@ import React from "react";
 import { View } from "react-native";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
-import CustomFormFieldItem from "ui/components/organisms/section_component/CustomFormFieldItem";
+import { UpdateProfileSectionFieldItem } from "ui/components/organisms/section_component/UpdateProfileSectionFieldItem";
 import { useRoute } from "@react-navigation/native";
-import { CustomViewProfileItems } from "ui/components/organisms/section_component/CustomViewProfiletems";
+import { ViewProfileSectionFieldItem } from "ui/components/organisms/section_component/ViewProfileSectionFieldItem";
 
 type Props = {
   listData: FormInputFieldData[] | undefined;
@@ -19,9 +19,9 @@ export const SectionComponent = React.memo<Props>(
         updateProfileRoute.params.updateProfile === undefined ||
         updateProfileRoute.params.updateProfile === true
       ) {
-        return <CustomFormFieldItem listData={item} />;
+        return <UpdateProfileSectionFieldItem listData={item} />;
       } else {
-        return <CustomViewProfileItems listData={item} />;
+        return <ViewProfileSectionFieldItem listData={item} />;
       }
     };
 
