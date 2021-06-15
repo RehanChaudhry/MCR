@@ -1,61 +1,41 @@
 {
-  "duration": 1268,
-  "problem": "CLIENT_ERROR",
-  "originalError": {
-    "message": "Request failed with status code 404",
-    "name": "Error",
-    "stack": "Error: Request failed with status code 404\n    at createError (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119124:17)\n    at settle (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119114:14)\n    at XMLHttpRequest.handleLoad (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119014:9)\n    at XMLHttpRequest.dispatchEvent (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:32318:27)\n    at XMLHttpRequest.setReadyState (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31476:14)\n    at XMLHttpRequest.__didCompleteResponse (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31307:16)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31417:47\n    at RCTDeviceEventEmitter.emit (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:3570:37)\n    at MessageQueue.__callFunction (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2780:31)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2512:17",
-    "config": {
-      "url": "password/request",
-      "method": "post",
-      "data": "{\"email\":\"lfrance11@geocities.jp\"}",
-      "headers": {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "subdomain": "yale"
-      },
-      "baseURL": "https://mcr-dev.cygnis.dev/api/",
-      "transformRequest": [
-        null
-      ],
-      "transformResponse": [
-        null
-      ],
-      "timeout": 0,
-      "xsrfCookieName": "XSRF-TOKEN",
-      "xsrfHeaderName": "X-XSRF-TOKEN",
-      "maxContentLength": -1,
-      "maxBodyLength": -1
-    }
-  },
-  "ok": false,
-  "status": 404,
+  "duration": 466,
+  "problem": null,
+  "originalError": null,
+  "ok": true,
+  "status": 200,
   "headers": {
-    "cf-request-id": "0ab0c649250000c6117b223000000001",
-    "content-type": "text/html; charset=utf-8",
+    "cf-request-id": "0ab1210b8c0000c619ba39d000000001",
+    "content-type": "application/json; charset=utf-8",
     "x-content-type-options": "nosniff",
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
     "strict-transport-security": "max-age=0; includeSubDomains",
     "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=wCikPF7f%2Bzar7juqyGlr%2BuO91IZO0d9YB6R%2F6IBG%2BnfCwk6%2BC78%2BZnOtpYm%2FIc5jCPFy%2B1V3mLuRTubIGLYfhVWLYHEYsznujQQ9Nl3sXshyesizfRjsG6JvDP%2FwNLG1\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
-    "cf-ray": "65fb0cbb6d30c611-KHI",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=5v0zYI67mLzKEOiTUgoseKT17eEKWh0n%2FtaBYEcNgje7yX9sc70r%2BRNyPJmiZBpmLtfhPAYJE4IUKFStuf1jgs7XqxP34dP5FT2p1l2cgtIhCHs3LKjYsoa3XaJ2VWbh\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "65fb9df27d6cc619-KHI",
     "x-powered-by": "Express",
     "x-xss-protection": "1; mode=block",
     "vary": "Origin",
     "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
     "cf-cache-status": "DYNAMIC",
     "x-frame-options": "SAMEORIGIN",
-    "date": "Tue, 15 Jun 2021 10:17:38 GMT",
+    "date": "Tue, 15 Jun 2021 11:56:46 GMT",
     "server": "cloudflare",
-    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\""
+    "etag": "W/\"de7-vfwkQ9Xqm5zo3T4vfT8gxt2lA64\""
   },
   "config": {
-    "url": "password/request",
-    "method": "post",
-    "data": "{\"email\":\"lfrance11@geocities.jp\"}",
+    "url": "log",
+    "method": "get",
     "headers": {
       "Accept": "application/json",
-      "Content-Type": "application/json",
-      "subdomain": "yale"
+      "subdomain": "ohio",
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDEsInVzZXJJZCI6NjQsImNsaWVudElkIjoiMSIsInNjb3BlcyI6WyJjb21tdW5pdHkiLCJhbm5vdW5jZW1lbnRzIiwibGlzdC1xdWVzdGlvbiIsImxpc3Qtc2VjdGlvbiIsImxpc3QtYWdyZWVtZW50LWZpZWxkcyIsInZpZXctc3RhdGljLWNvbnRlbnQiLCJsaXN0LWNvbmZpZ3VyYXRpb24iLCJsaXN0LWZvcm0taW5wdXQiLCJzeXN0ZW0tbG9nIiwiY29udmVyc2F0aW9uIiwibWFyay1zcGFtIiwibm90aWZpY2F0aW9uIiwiYWdyZWVtZW50LWFuc3dlciIsInVwZGF0ZS1hZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiLCJkZWxldGUtZmlsZSJdLCJpYXQiOjE2MjM3NTgwOTQsImV4cCI6MTYyNjM1MDA5NH0.1GlLuyyvlXq7lgBzxAIMuEeeWzMazl4aiGBDUSAd1OA"
+    },
+    "params": {
+      "type": "friend-request",
+      "page": 1,
+      "limit": 9,
+      "paginate": true
     },
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
     "transformRequest": [
@@ -70,5 +50,204 @@
     "maxContentLength": -1,
     "maxBodyLength": -1
   },
-  "data": "NotFound"
+  "data": {
+    "message": "Success.",
+    "data": [
+      {
+        "id": 3299,
+        "userId": 64,
+        "entityId": 64,
+        "type": "student",
+        "action": "login",
+        "data": "You have signed in successfully.",
+        "createdAt": "2021-06-15T11:54:54.000Z",
+        "updatedAt": "2021-06-15T11:54:54.000Z",
+        "user": {
+          "firstName": "Lucie",
+          "lastName": "France",
+          "roleTitle": "Student",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
+            "originalName": "47.jpg"
+          }
+        }
+      },
+      {
+        "id": 3297,
+        "userId": 64,
+        "entityId": 293,
+        "type": "friend-request",
+        "action": "create",
+        "data": {
+          "receiverId": 293,
+          "receiverLastName": "Sodor",
+          "receiverFirstName": "Domeniga"
+        },
+        "createdAt": "2021-06-15T11:52:46.000Z",
+        "updatedAt": "2021-06-15T11:52:46.000Z",
+        "user": {
+          "firstName": "Lucie",
+          "lastName": "France",
+          "roleTitle": "Student",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
+            "originalName": "47.jpg"
+          }
+        }
+      },
+      {
+        "id": 3291,
+        "userId": 64,
+        "entityId": 1135,
+        "type": "friend-request",
+        "action": "create",
+        "data": {
+          "receiverId": 1135,
+          "receiverLastName": "Moar",
+          "receiverFirstName": "Sammy"
+        },
+        "createdAt": "2021-06-15T11:47:48.000Z",
+        "updatedAt": "2021-06-15T11:47:48.000Z",
+        "user": {
+          "firstName": "Lucie",
+          "lastName": "France",
+          "roleTitle": "Student",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
+            "originalName": "47.jpg"
+          }
+        }
+      },
+      {
+        "id": 3290,
+        "userId": 64,
+        "entityId": 30,
+        "type": "friend-request",
+        "action": "create",
+        "data": {
+          "receiverId": 30,
+          "receiverLastName": "Cronk",
+          "receiverFirstName": "Honey"
+        },
+        "createdAt": "2021-06-15T11:47:37.000Z",
+        "updatedAt": "2021-06-15T11:47:37.000Z",
+        "user": {
+          "firstName": "Lucie",
+          "lastName": "France",
+          "roleTitle": "Student",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
+            "originalName": "47.jpg"
+          }
+        }
+      },
+      {
+        "id": 3289,
+        "userId": 64,
+        "entityId": 513,
+        "type": "friend-request",
+        "action": "create",
+        "data": {
+          "receiverId": 513,
+          "receiverLastName": "Wort",
+          "receiverFirstName": "Onfroi"
+        },
+        "createdAt": "2021-06-15T11:47:27.000Z",
+        "updatedAt": "2021-06-15T11:47:27.000Z",
+        "user": {
+          "firstName": "Lucie",
+          "lastName": "France",
+          "roleTitle": "Student",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
+            "originalName": "47.jpg"
+          }
+        }
+      },
+      {
+        "id": 3288,
+        "userId": 64,
+        "entityId": 263,
+        "type": "friend-request",
+        "action": "create",
+        "data": {
+          "receiverId": 263,
+          "receiverLastName": "Chinnery",
+          "receiverFirstName": "Ora"
+        },
+        "createdAt": "2021-06-15T11:47:13.000Z",
+        "updatedAt": "2021-06-15T11:47:13.000Z",
+        "user": {
+          "firstName": "Lucie",
+          "lastName": "France",
+          "roleTitle": "Student",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
+            "originalName": "47.jpg"
+          }
+        }
+      },
+      {
+        "id": 3287,
+        "userId": 64,
+        "entityId": 749,
+        "type": "friend-request",
+        "action": "create",
+        "data": {
+          "receiverId": 749,
+          "receiverLastName": "Pietzker",
+          "receiverFirstName": "Rhys"
+        },
+        "createdAt": "2021-06-15T11:47:09.000Z",
+        "updatedAt": "2021-06-15T11:47:09.000Z",
+        "user": {
+          "firstName": "Lucie",
+          "lastName": "France",
+          "roleTitle": "Student",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
+            "originalName": "47.jpg"
+          }
+        }
+      },
+      {
+        "id": 3285,
+        "userId": 64,
+        "entityId": 64,
+        "type": "profile",
+        "action": "update",
+        "data": null,
+        "createdAt": "2021-06-15T11:45:16.000Z",
+        "updatedAt": "2021-06-15T11:45:16.000Z",
+        "user": {
+          "firstName": "Lucie",
+          "lastName": "France",
+          "roleTitle": "Student",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
+            "originalName": "47.jpg"
+          }
+        }
+      },
+      {
+        "id": 3284,
+        "userId": 64,
+        "entityId": null,
+        "type": "questionnaire",
+        "action": "create",
+        "data": null,
+        "createdAt": "2021-06-15T11:44:06.000Z",
+        "updatedAt": "2021-06-15T11:44:06.000Z",
+        "user": {
+          "firstName": "Lucie",
+          "lastName": "France",
+          "roleTitle": "Student",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
+            "originalName": "47.jpg"
+          }
+        }
+      }
+    ]
+  }
 }
