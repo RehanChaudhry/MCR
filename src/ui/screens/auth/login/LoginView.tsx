@@ -34,8 +34,8 @@ const validationSchema = Yup.object().shape({
     .required(Strings.login.email_required_validation),
   password: Yup.string()
     .required(Strings.login.pass_required_validation)
+    .min(8, Strings.login.min_pass_vaidation)
     .matches(loginRegx, Strings.login.pass_validation)
-    .min(8, Strings.login.pass_validation)
 });
 
 let initialValues: FormikValues = {

@@ -3,6 +3,7 @@ export default {
   splash: {},
 
   login: {
+    min_pass_vaidation: "Password cannot be less than eight characters.",
     enter_valid_email_validation: "Please enter a valid email address.",
     pass_required_validation: "Please enter a password here.",
     pass_validation:
