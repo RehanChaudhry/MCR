@@ -13,7 +13,7 @@ type Props = {
   style: StyleProp<ViewStyle>;
 };
 
-export const DynamicAppFormField: React.FC<Props> = ({
+export const SectionComponentTextArea: React.FC<Props> = ({
   label,
   placeHolder,
   name,
