@@ -1,505 +1,74 @@
 {
-  "duration": 541,
-  "problem": null,
-  "originalError": null,
-  "ok": true,
-  "status": 200,
+  "duration": 1268,
+  "problem": "CLIENT_ERROR",
+  "originalError": {
+    "message": "Request failed with status code 404",
+    "name": "Error",
+    "stack": "Error: Request failed with status code 404\n    at createError (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119124:17)\n    at settle (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119114:14)\n    at XMLHttpRequest.handleLoad (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119014:9)\n    at XMLHttpRequest.dispatchEvent (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:32318:27)\n    at XMLHttpRequest.setReadyState (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31476:14)\n    at XMLHttpRequest.__didCompleteResponse (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31307:16)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31417:47\n    at RCTDeviceEventEmitter.emit (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:3570:37)\n    at MessageQueue.__callFunction (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2780:31)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2512:17",
+    "config": {
+      "url": "password/request",
+      "method": "post",
+      "data": "{\"email\":\"lfrance11@geocities.jp\"}",
+      "headers": {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "subdomain": "yale"
+      },
+      "baseURL": "https://mcr-dev.cygnis.dev/api/",
+      "transformRequest": [
+        null
+      ],
+      "transformResponse": [
+        null
+      ],
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "maxBodyLength": -1
+    }
+  },
+  "ok": false,
+  "status": 404,
   "headers": {
-    "content-type": "application/json; charset=utf-8",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=s4PMPdD%2Fo18zQ4weq1ShOObMDWt77SCI%2BRm5AL%2F%2BxGH6yGSJalWO%2B%2B%2FmBK6ZY3oLbXAyG8rtQDgn7VE%2FHBP9jOdni5qkAFuUAyEgFqbbDXNujsOcNXUVNuDwkk7Tj11%2B\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
-    "x-frame-options": "SAMEORIGIN",
-    "cf-request-id": "0ab0bd1fe00000c6196d2da000000001",
-    "cf-cache-status": "DYNAMIC",
-    "x-powered-by": "Express",
-    "date": "Tue, 15 Jun 2021 10:07:37 GMT",
-    "cf-ray": "65fafe12fd73c619-KHI",
-    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
-    "x-xss-protection": "1; mode=block",
-    "content-encoding": "br",
-    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
-    "server": "cloudflare",
-    "strict-transport-security": "max-age=0; includeSubDomains",
-    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "cf-request-id": "0ab0c649250000c6117b223000000001",
+    "content-type": "text/html; charset=utf-8",
     "x-content-type-options": "nosniff",
-    "etag": "W/\"200d-NhnmGPuf3jrgdls6BBUFNRf/o5s\"",
-    "vary": "Accept-Encoding, Origin"
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=wCikPF7f%2Bzar7juqyGlr%2BuO91IZO0d9YB6R%2F6IBG%2BnfCwk6%2BC78%2BZnOtpYm%2FIc5jCPFy%2B1V3mLuRTubIGLYfhVWLYHEYsznujQQ9Nl3sXshyesizfRjsG6JvDP%2FwNLG1\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "65fb0cbb6d30c611-KHI",
+    "x-powered-by": "Express",
+    "x-xss-protection": "1; mode=block",
+    "vary": "Origin",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
+    "cf-cache-status": "DYNAMIC",
+    "x-frame-options": "SAMEORIGIN",
+    "date": "Tue, 15 Jun 2021 10:17:38 GMT",
+    "server": "cloudflare",
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\""
   },
   "config": {
-    "url": "user/me?meta=true",
-    "method": "get",
+    "url": "password/request",
+    "method": "post",
+    "data": "{\"email\":\"lfrance11@geocities.jp\"}",
     "headers": {
       "Accept": "application/json",
-      "subdomain": "ohio",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInVzZXJJZCI6NjQsImNsaWVudElkIjoiMSIsInNjb3BlcyI6WyJjb21tdW5pdHkiLCJhbm5vdW5jZW1lbnRzIiwibGlzdC1xdWVzdGlvbiIsImxpc3Qtc2VjdGlvbiIsImxpc3QtYWdyZWVtZW50LWZpZWxkcyIsInZpZXctc3RhdGljLWNvbnRlbnQiLCJsaXN0LWNvbmZpZ3VyYXRpb24iLCJsaXN0LWZvcm0taW5wdXQiLCJzeXN0ZW0tbG9nIiwiY29udmVyc2F0aW9uIiwibWFyay1zcGFtIiwibm90aWZpY2F0aW9uIiwiYWdyZWVtZW50LWFuc3dlciIsInVwZGF0ZS1hZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiLCJkZWxldGUtZmlsZSJdLCJpYXQiOjE2MjM3NTE2NTcsImV4cCI6MTYyNjM0MzY1N30.1LWX-Az5as-INGC_sMFzfelvWcQVg27OSvBwHJXxlGY"
+      "Content-Type": "application/json",
+      "subdomain": "yale"
     },
-    "params": {},
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
-    "transformRequest": [null],
-    "transformResponse": [null],
+    "transformRequest": [
+      null
+    ],
+    "transformResponse": [
+      null
+    ],
     "timeout": 0,
     "xsrfCookieName": "XSRF-TOKEN",
     "xsrfHeaderName": "X-XSRF-TOKEN",
     "maxContentLength": -1,
     "maxBodyLength": -1
   },
-  "data": {
-    "message": "Success.",
-    "data": {
-      "id": 64,
-      "firstName": "Lucie",
-      "lastName": "France",
-      "email": "lfrance11@geocities.jp",
-      "secondaryEmail": "Rudolph.Parisian@hotmail.com",
-      "roleId": 4,
-      "roleTitle": "Student",
-      "enrollmentId": "vxz4mousa6y",
-      "status": "active",
-      "profilePicture": {
-        "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
-        "originalName": "47.jpg"
-      },
-      "genderId": 1,
-      "gender": "Male",
-      "major": "Furniture Design",
-      "hometown": "Lake George",
-      "program": null,
-      "youtubeVideoURL": "https://www.youtube.com/watch?v=UhvMXQK1pcQ",
-      "matchingPatternPreferences": null,
-      "matchGroupId": 3,
-      "matchGroupName": "Junior",
-      "floorPlanRoomId": 7,
-      "building": "Jade Field Pillar",
-      "roomNumber": "49741",
-      "welcomeVideoStatus": "pending",
-      "questionnaireStatus": "pending",
-      "totalQuestions": 24,
-      "totalQuestionsAnswered": 0,
-      "profileCompletedAt": null,
-      "isFlagged": 0,
-      "lastReportedAt": null,
-      "about": "I am a Communications major and a gym freak. You wanna workout? Let's do it 25/7. Haha, just kidding! Or am I? I am a typical extrovert and a nutrition geek. I make friends easy and resolve conflicts even easier.",
-      "totalProfileQuestions": 26,
-      "totalProfileQuestionsAnswered": 22,
-      "createdAt": "2021-06-14T08:11:46.000Z",
-      "updatedAt": "2021-06-15T10:07:37.000Z",
-      "sections": [
-        {
-          "title": "Basic Profile",
-          "description": "This information will be displayed publicly.",
-          "icon": "icon-user-avatar",
-          "formInputs": [
-            {
-              "id": 1,
-              "label": "Profile Picture",
-              "inputType": "file",
-              "options": [],
-              "placeholder": "",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 1,
-              "icon": null,
-              "userMeta": [
-                {
-                  "value": "{\"fileURL\":\"https://randomuser.me/api/portraits/men/47.jpg\",\"originalName\":\"47.jpg\"}"
-                }
-              ]
-            },
-            {
-              "id": 2,
-              "label": "First Name",
-              "inputType": "text",
-              "options": [],
-              "placeholder": "Start typing",
-              "isLocked": 1,
-              "isRequired": 1,
-              "isDefault": 1,
-              "icon": null,
-              "userMeta": [{ "value": "Lucie" }]
-            },
-            {
-              "id": 3,
-              "label": "Last Name",
-              "inputType": "text",
-              "options": [],
-              "placeholder": "Start typing",
-              "isLocked": 1,
-              "isRequired": 1,
-              "isDefault": 1,
-              "icon": null,
-              "userMeta": [{ "value": "France" }]
-            },
-            {
-              "id": 4,
-              "label": "About me",
-              "inputType": "textarea",
-              "options": [],
-              "placeholder": "Brief description for your profile",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [
-                {
-                  "value": "I am a Communications major and a gym freak. You wanna workout? Let's do it 25/7. Haha, just kidding! Or am I? I am a typical extrovert and a nutrition geek. I make friends easy and resolve conflicts even easier."
-                }
-              ]
-            },
-            {
-              "id": 5,
-              "label": "Facebook profile",
-              "inputType": "url",
-              "options": [],
-              "placeholder": "facebook.com/",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": "icon-facebook",
-              "userMeta": []
-            },
-            {
-              "id": 6,
-              "label": "Twitter profile",
-              "inputType": "url",
-              "options": [],
-              "placeholder": "twitter.com/",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": "icon-twitter",
-              "userMeta": []
-            },
-            {
-              "id": 7,
-              "label": "Linkedin profile",
-              "inputType": "url",
-              "options": [],
-              "placeholder": "linkedin.com/",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": "icon-linkedin",
-              "userMeta": []
-            },
-            {
-              "id": 8,
-              "label": "Instagram profile",
-              "inputType": "url",
-              "options": [],
-              "placeholder": "instagram.com/",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": "icon-instagram",
-              "userMeta": []
-            },
-            {
-              "id": 9,
-              "label": "Snapchat profile",
-              "inputType": "url",
-              "options": [],
-              "placeholder": "snapchat.com/",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": "icon-snapchat",
-              "userMeta": []
-            },
-            {
-              "id": 10,
-              "label": "TikTok profile",
-              "inputType": "url",
-              "options": [],
-              "placeholder": "tiktok.com/",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": "icon-tiktok",
-              "userMeta": []
-            }
-          ]
-        },
-        {
-          "title": "Demographics",
-          "description": "Please take a moment to tell us more about you.",
-          "icon": "icon-birthday",
-          "formInputs": [
-            {
-              "id": 11,
-              "label": "Gender",
-              "inputType": "dropdown",
-              "options": [
-                { "text": "Male", "value": "Male" },
-                { "text": "Female", "value": "Female" },
-                { "text": "Other", "value": "Other" }
-              ],
-              "placeholder": "Select your gender",
-              "isLocked": 1,
-              "isRequired": 1,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [{ "value": "Male" }]
-            },
-            {
-              "id": 12,
-              "label": "Smoking habits",
-              "inputType": "radio",
-              "options": [
-                { "text": "Never", "value": "never" },
-                { "text": "Occasionally", "value": "occasionally" },
-                { "text": "Frequently", "value": "frequently" }
-              ],
-              "placeholder": "",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [
-                { "value": "frequently" },
-                { "value": "never" },
-                { "value": "occasionally" }
-              ]
-            },
-            {
-              "id": 13,
-              "label": "Hometown",
-              "inputType": "text",
-              "options": [],
-              "placeholder": "Enter your hometown",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [{ "value": "Lake George" }]
-            },
-            {
-              "id": 14,
-              "label": "Intended major",
-              "inputType": "text",
-              "options": [],
-              "placeholder": "Enter your intended major",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [{ "value": "Furniture Design" }]
-            }
-          ]
-        },
-        {
-          "title": "Interests",
-          "description": "Tell others what you enjoy doing.",
-          "icon": "icon-heart",
-          "formInputs": [
-            {
-              "id": 15,
-              "label": "Hobbies & interests",
-              "inputType": "multiselect",
-              "options": [],
-              "placeholder": "Start typing",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": []
-            },
-            {
-              "id": 16,
-              "label": "Clubs & memberships",
-              "inputType": "multiselect",
-              "options": [],
-              "placeholder": "Start typing",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [
-                { "value": "Classic film club" },
-                { "value": "Goldsmiths Racialised Postgraduate Network" },
-                { "value": "Happy Calm Knitting Society" },
-                { "value": "JUNTOS" },
-                { "value": "Musical Theatre Society " },
-                { "value": "Robotics club" },
-                { "value": "Science Olympiad" },
-                { "value": "Student government" },
-                { "value": "Symphony Club" }
-              ]
-            },
-            {
-              "id": 17,
-              "label": "Favorite movies & TV shows",
-              "inputType": "multiselect",
-              "options": [],
-              "placeholder": "Start typing",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [
-                { "value": "Elia Kazan: A Director's Journey" },
-                { "value": "Novo" },
-                { "value": "The Killing Floor" }
-              ]
-            },
-            {
-              "id": 18,
-              "label": "Music",
-              "inputType": "multiselect",
-              "options": [],
-              "placeholder": "Start typing",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [
-                { "value": "(I Can't Get No) Satisfaction" },
-                { "value": "7 Years" },
-                { "value": "Get low" },
-                { "value": "I’m an Albatraoz" },
-                { "value": "I’m Not The Only One" },
-                { "value": "Karma Police" },
-                { "value": "Love Me Like You Do" },
-                { "value": "Radioactive" },
-                { "value": "Rather Be" },
-                { "value": "Scream & Shout" },
-                { "value": "Thinking Out Loud" },
-                { "value": "Wake Me Up" }
-              ]
-            },
-            {
-              "id": 19,
-              "label": "Books",
-              "inputType": "multiselect",
-              "options": [],
-              "placeholder": "Start typing",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": []
-            },
-            {
-              "id": 20,
-              "label": "Games",
-              "inputType": "multiselect",
-              "options": [],
-              "placeholder": "Start typing",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [
-                { "value": "Arcomage" },
-                { "value": "Fantasy Empires" },
-                { "value": "Master of Magic" },
-                { "value": "Nobunaga's Ambition" },
-                { "value": "Pocket Tanks" },
-                { "value": "Sid Meier's Alpha Centauri" }
-              ]
-            },
-            {
-              "id": 21,
-              "label": "Communities",
-              "inputType": "multiselect",
-              "options": [],
-              "placeholder": "Start typing",
-              "isLocked": 0,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [
-                { "value": "Agriculture" },
-                { "value": "American Studies" },
-                { "value": "Bioethics" },
-                { "value": "Cognitive Psychology" },
-                { "value": "Dental Hygiene" },
-                { "value": "Engineering Physics" }
-              ]
-            }
-          ]
-        },
-        {
-          "title": "Living Detail",
-          "description": "",
-          "icon": "icon-cap",
-          "formInputs": [
-            {
-              "id": 22,
-              "label": "Enrollment ID",
-              "inputType": "text",
-              "options": [],
-              "placeholder": "Start typing",
-              "isLocked": 1,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [
-                { "value": "ey17g8hij8c" },
-                { "value": "nsje7flwe8o" },
-                { "value": "p6pk4i4m5cr" },
-                { "value": "vxz4mousa6y" }
-              ]
-            },
-            {
-              "id": 23,
-              "label": "Building",
-              "inputType": "text",
-              "options": [],
-              "placeholder": "Enter your building information",
-              "isLocked": 1,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [{ "value": "Jade Field Pillar" }]
-            },
-            {
-              "id": 24,
-              "label": "Room",
-              "inputType": "text",
-              "options": [],
-              "placeholder": "Enter your room number",
-              "isLocked": 1,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [{ "value": "49741" }]
-            },
-            {
-              "id": 25,
-              "label": "Programs",
-              "inputType": "text",
-              "options": [],
-              "placeholder": "Enter your educational program",
-              "isLocked": 1,
-              "isRequired": 0,
-              "isDefault": 0,
-              "icon": null,
-              "userMeta": [{ "value": "MS" }, { "value": "PhD" }]
-            }
-          ]
-        },
-        {
-          "title": "Video Introduction",
-          "description": "Record 60 seconds self-introduction video and post it on YouTube.",
-          "icon": "icon-video",
-          "formInputs": [
-            {
-              "id": 26,
-              "label": "Youtube video URL",
-              "inputType": "url",
-              "options": [],
-              "placeholder": "youtube.com/",
-              "isLocked": 1,
-              "isRequired": 0,
-              "isDefault": 1,
-              "icon": "icon-youtube",
-              "userMeta": [
-                { "value": "https://www.youtube.com/watch?v=UhvMXQK1pcQ" }
-              ]
-            }
-          ]
-        }
-      ],
-      "agreementId": null
-    }
-  }
+  "data": "NotFound"
 }

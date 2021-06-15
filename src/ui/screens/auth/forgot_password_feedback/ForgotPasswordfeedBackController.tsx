@@ -9,6 +9,7 @@ import { ForgotPasswordApiRequestModel } from "models/api_requests/ForgotPasswor
 import { ForgotPasswordApiResponseModel } from "models/api_responses/ForgotPasswordApiResponseModel";
 import React, { FC, useLayoutEffect, useRef } from "react";
 import { Alert } from "react-native";
+import SimpleToast from "react-native-simple-toast";
 import AuthApis from "repo/auth/AuthApis";
 import { useApi } from "repo/Client";
 import { AuthStackParamList } from "routes";
@@ -65,6 +66,7 @@ const ForgotPasswordFeedBackController: FC<Props> = () => {
       Alert.alert("Unable to forgot password", errorBody);
       return;
     } else {
+      SimpleToast.show(dataBody.message);
       // await auth.logIn(dataBody.data);
     }
   });
@@ -74,10 +76,7 @@ const ForgotPasswordFeedBackController: FC<Props> = () => {
       openForgotPasswordScreen={openForgotPasswordScreen}
       openSignInScreen={openSignInScreen}
       email={route.params.email}
-      onClickedOnTryAgain={() => {
-        AppLog.logForcefully(() => "dxnckn");
-        handleForgotPassword();
-      }}
+      onClickedOnTryAgain={handleForgotPassword}
       shouldShowProgressBar={forgotPasswordApi.loading}
     />
   );

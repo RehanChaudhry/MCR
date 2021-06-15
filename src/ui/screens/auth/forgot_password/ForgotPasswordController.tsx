@@ -3,6 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { usePreventDoubleTap } from "hooks";
 import React, { FC, useLayoutEffect, useRef } from "react";
 import { Alert } from "react-native";
+import SimpleToast from "react-native-simple-toast";
 import AuthApis from "repo/auth/AuthApis";
 import { AuthStackParamList } from "routes";
 import NoHeader from "ui/components/headers/NoHeader";
@@ -60,6 +61,7 @@ const ForgotPasswordController: FC<Props> = () => {
       Alert.alert("Unable to forgot password", errorBody);
       return;
     } else {
+      SimpleToast.show(dataBody.message);
       openForgotPasswordFeedBackScreen(requestModel.current.email);
     }
   });
