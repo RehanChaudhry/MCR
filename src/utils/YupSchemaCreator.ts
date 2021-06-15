@@ -21,7 +21,17 @@ let FieldTypes = {
   agreement: (field: FormInputFieldData): SchemaOf<any> =>
     Yup.string().required(computeValidationMessage(field)),
   url: (field: FormInputFieldData): SchemaOf<any> =>
-    Yup.string().matches(pattern, computeValidationMessage(field))
+    Yup.string().test(
+      "custom error", //method name for yup
+      computeValidationMessage(field),
+      (value: string | undefined): boolean => {
+        if (value === undefined) {
+          return true;
+        } else {
+          return pattern.test(value);
+        }
+      }
+    )
 };
 
 export const createYupSchema = (
