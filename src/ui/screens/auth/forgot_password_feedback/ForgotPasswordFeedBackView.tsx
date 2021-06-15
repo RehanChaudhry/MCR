@@ -1,15 +1,12 @@
-import React from "react";
-import {
-  AppImageBackground,
-  CONTAINER_TYPES
-} from "ui/components/atoms/image_background/AppImageBackground";
-import ArrowLeft from "assets/images/arrow_left.svg";
 import LeftArrow from "assets/images/arrow_left.svg";
-import { usePreferredTheme } from "hooks";
-import Colors from "config/Colors";
-import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
+import Colors from "config/Colors";
+import { moderateScale } from "config/Dimens";
+import { usePreferredTheme } from "hooks";
+import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 import Screen from "ui/components/atoms/Screen";
 import { UniImage } from "ui/components/atoms/UniImage";
 import { UniLogo } from "ui/components/atoms/UniLogo";
@@ -17,36 +14,28 @@ import {
   AppButton,
   BUTTON_TYPES
 } from "ui/components/molecules/app_button/AppButton";
-import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
-import { moderateScale } from "config/Dimens";
+import { AppLog } from "utils/Util";
 
 type Props = {
   openForgotPasswordScreen?: () => void;
   openSignInScreen: () => void;
   shouldShowProgressBar?: boolean;
   email: string;
+  onClickedOnTryAgain: () => void;
 };
 
 export const ForgotPasswordFeedBackView = React.memo<Props>(
-  ({ openForgotPasswordScreen, openSignInScreen, email }) => {
+  ({
+    openSignInScreen,
+    email,
+    onClickedOnTryAgain,
+    shouldShowProgressBar
+  }) => {
     const theme = usePreferredTheme();
 
     return (
       <Screen>
         <ScrollView>
-          <AppImageBackground
-            containerShape={CONTAINER_TYPES.CIRCLE}
-            icon={() => (
-              <ArrowLeft
-                width={20}
-                height={20}
-                fill={theme.themedColors.primary}
-              />
-            )}
-            containerStyle={styles.leftArrow}
-            onPress={openForgotPasswordScreen}
-          />
-
           <UniLogo style={styles.logo} />
 
           <UniImage />
@@ -85,6 +74,7 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
             />
 
             <AppButton
+              shouldShowProgressBar={shouldShowProgressBar}
               text={STRINGS.forgotPasswordFeedBack.did_not_recieve_email}
               buttonStyle={[
                 styles.recieveEmail,
@@ -95,6 +85,10 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
                 { color: theme.themedColors.background }
               ]}
               fontWeight={"semi-bold"}
+              onPress={() => {
+                AppLog.logForcefully(() => "clciked");
+                onClickedOnTryAgain();
+              }}
             />
 
             <AppButton

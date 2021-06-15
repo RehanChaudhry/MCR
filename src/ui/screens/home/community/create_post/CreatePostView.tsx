@@ -39,9 +39,7 @@ type Props = {
 };
 
 const validationSchema = Yup.object().shape({
-  message: Yup.string()
-    .min(10)
-    .required(Strings.createPost.requiredField.message),
+  message: Yup.string(),
   link: Yup.string().matches(
     pattern,
     Strings.createPost.fieldValidationMessage.invalidUrl
@@ -79,10 +77,19 @@ export const CreatePostView = React.memo<Props>((props) => {
 
   const onSubmit = (_value: FormikValues) => {
     initialValues = _value;
-    initialValues.images = images;
-    // trim whitespaces from message
-    initialValues.message = initialValues.message.trim();
-    props.createPost(initialValues);
+    if (
+      initialValues.link !== "" ||
+      initialValues.embed !== "" ||
+      initialValues.message !== "" ||
+      initialValues.images.length > 0
+    ) {
+      initialValues.images = images;
+      // trim whitespaces from message
+      initialValues.message = initialValues.message.trim();
+      props.createPost(initialValues);
+    } else {
+      SimpleToast.show("Please enter at least one field");
+    }
   };
 
   const linkIcon = () => {

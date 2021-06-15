@@ -9,7 +9,7 @@ type Props = {
   showProgressBar?: boolean;
 };
 
-export const DynamicCardView = React.memo<Props>(
+export const DynamicFormView = React.memo<Props>(
   ({ sectionsData, showProgressBar }) => {
     const listItem = ({ item }: { item: SectionsType }) => {
       return (

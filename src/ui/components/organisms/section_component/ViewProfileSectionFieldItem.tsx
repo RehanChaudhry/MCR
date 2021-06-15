@@ -17,196 +17,216 @@ import SnapchatDark from "assets/images/snapchat_dark_icon.svg";
 import TwitterDark from "assets/images/twitter_dark_icon.svg";
 import YouTube from "assets/images/youtube_icon_dark.svg";
 
-type CustomViewProfileProps = {
+type ViewProfileSectionFieldItemProps = {
   listData: FormInputFieldData;
 };
 
-export const ViewProfileSectionFieldItem = React.memo<CustomViewProfileProps>(
-  ({ listData }) => {
-    const theme = usePreferredTheme();
+export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemProps> = ({
+  listData
+}) => {
+  const theme = usePreferredTheme();
 
-    switch (listData.inputType) {
-      // case "agreement":
-      //   return <AppLabel text={"Agreement"} />;
-      case "textarea":
-        return (
-          <>
-            <View style={styles.spacer} />
+  switch (listData.inputType) {
+    case "textarea":
+      return (
+        <>
+          <View style={styles.spacer} />
 
-            <AppLabel
-              text={listData.label}
-              style={[
-                styles.aboutMe,
-                {
-                  color: theme.themedColors.labelSecondary,
-                  fontSize: FONT_SIZE.md
-                }
-              ]}
-              weight={"semi-bold"}
-            />
-
-            <AppLabel
-              text={
-                listData.userMeta?.length === 0
-                  ? "N/A"
-                  : listData.userMeta![0].value
+          <AppLabel
+            text={listData.label}
+            style={[
+              styles.aboutMe,
+              {
+                color: theme.themedColors.labelSecondary,
+                fontSize: FONT_SIZE.md
               }
-              numberOfLines={0}
-              style={{
-                fontSize: FONT_SIZE.sm,
-                color: grayShades.warmGray["700"]
-              }}
-            />
-            <View style={styles.horizontalLine} />
-          </>
-        );
-      case "dropdown":
-        return (
-          <>
-            <View style={styles.spacer} />
-            <HeadingWithText
-              headingText={listData.label}
-              text={
-                listData.userMeta?.length === 0
-                  ? "N/A"
-                  : listData.userMeta![0].value
-              }
-              headingFontWeight={"semi-bold"}
-              textStyle={styles.textStyle}
-              headingStyle={[
-                styles.headingStyle,
-                { color: theme.themedColors.labelSecondary }
-              ]}
-            />
-          </>
-        );
-      case "checkbox":
-        return (
-          <>
-            <View style={styles.spacer} />
-            <HeadingWithText
-              headingText={listData.label}
-              text={
-                listData.userMeta?.length === 0
-                  ? "N/A"
-                  : listData.userMeta![0].value
-              }
-              headingFontWeight={"semi-bold"}
-              textStyle={styles.textStyle}
-              headingStyle={[
-                styles.headingStyle,
-                { color: theme.themedColors.labelSecondary }
-              ]}
-            />
-          </>
-        );
-      case "radio":
-        return (
-          <>
-            <View style={styles.spacer} />
-            <HeadingWithText
-              headingText={listData.label}
-              text={
-                listData.userMeta?.length === 0
-                  ? "N/A"
-                  : listData.userMeta![0].value
-              }
-              headingFontWeight={"semi-bold"}
-              textStyle={styles.textStyle}
-              headingStyle={[
-                styles.headingStyle,
-                { color: theme.themedColors.labelSecondary }
-              ]}
-            />
-          </>
-        );
-      case "multiselect":
-        return (
-          <>
-            <View style={styles.spacer} />
-            <TagList
-              labelTitle={listData.label}
-              data={listData.userMeta ?? []}
-            />
-          </>
-        );
+            ]}
+            weight={"semi-bold"}
+          />
 
-      case "text":
-        return (
-          <>
-            <View style={styles.spacer} />
-            <HeadingWithText
-              headingText={listData.label}
-              text={
-                listData.userMeta?.length === 0
-                  ? "N/A"
-                  : listData.userMeta![0].value
-              }
-              headingFontWeight={"semi-bold"}
-              textStyle={styles.textStyle}
-              headingStyle={[
-                styles.headingStyle,
-                { color: theme.themedColors.labelSecondary }
-              ]}
-            />
-          </>
-        );
+          <AppLabel
+            text={
+              listData.userMeta?.length === 0
+                ? "N/A"
+                : listData.userMeta![0].value
+            }
+            numberOfLines={0}
+            style={{
+              fontSize: FONT_SIZE.sm,
+              color: grayShades.warmGray["700"]
+            }}
+          />
+          <View style={styles.horizontalLine} />
+        </>
+      );
+    case "dropdown":
+      return (
+        <>
+          <View style={styles.spacer} />
+          <HeadingWithText
+            headingText={listData.label}
+            text={
+              listData.userMeta?.length === 0
+                ? "N/A"
+                : listData.userMeta![0].value
+            }
+            headingFontWeight={"semi-bold"}
+            textStyle={styles.textStyle}
+            headingStyle={[
+              styles.headingStyle,
+              { color: theme.themedColors.labelSecondary }
+            ]}
+          />
+        </>
+      );
+    case "checkbox":
+      return (
+        <>
+          <View style={styles.spacer} />
+          <HeadingWithText
+            headingText={listData.label}
+            text={
+              listData.userMeta?.length === 0
+                ? "N/A"
+                : listData.userMeta![0].value
+            }
+            headingFontWeight={"semi-bold"}
+            textStyle={styles.textStyle}
+            headingStyle={[
+              styles.headingStyle,
+              { color: theme.themedColors.labelSecondary }
+            ]}
+          />
+        </>
+      );
+    case "radio":
+      return (
+        <>
+          <View style={styles.spacer} />
+          <HeadingWithText
+            headingText={listData.label}
+            text={
+              listData.userMeta?.length === 0
+                ? "N/A"
+                : listData.userMeta![0].value
+            }
+            headingFontWeight={"semi-bold"}
+            textStyle={styles.textStyle}
+            headingStyle={[
+              styles.headingStyle,
+              { color: theme.themedColors.labelSecondary }
+            ]}
+          />
+        </>
+      );
+    case "multiselect":
+      return (
+        <>
+          <View style={styles.spacer} />
+          <TagList
+            labelTitle={listData.label}
+            data={listData.userMeta ?? []}
+          />
+        </>
+      );
 
-      case "url":
-        const userMetaLinks =
-          listData.userMeta?.length === 0
-            ? "N/A"
-            : listData.userMeta![0].value;
-        const IconTypes = {
-          "icon-facebook": FacebookDark,
-          "icon-twitter": TwitterDark,
-          "icon-linkedin": LikedInDark,
-          "icon-instagram": InstagramDark,
-          "icon-snapchat": SnapchatDark,
-          "icon-tiktok": TikTokDark,
-          "icon-youtube": YouTube
-        };
-        return (
-          <>
-            <View style={styles.spacer} />
-            <SocialDetailForm
-              heading={listData.label}
-              title={userMetaLinks!}
-              headingStyle={{ color: grayShades.warmGray["700"] }}
-              onPress={() => {
-                // Alert.alert("Facebook profile link is pressed");
-                Linking.openURL(userMetaLinks!);
-              }}
-              icon={() => {
-                const MyIcon =
-                  // @ts-ignore
-                  IconTypes[
-                    listData!.icon !== undefined
-                      ? listData?.icon.toString()
-                      : "icon-facebook"
-                  ];
+    case "text":
+      return (
+        <>
+          <View style={styles.spacer} />
+          <HeadingWithText
+            headingText={listData.label}
+            text={
+              listData.userMeta?.length === 0
+                ? "N/A"
+                : listData.userMeta![0].value
+            }
+            headingFontWeight={"semi-bold"}
+            textStyle={styles.textStyle}
+            headingStyle={[
+              styles.headingStyle,
+              { color: theme.themedColors.labelSecondary }
+            ]}
+          />
+        </>
+      );
 
-                return <MyIcon testID="icon" width={20} height={20} />;
-              }}
-            />
-          </>
-        );
+    case "text":
+      return (
+        <>
+          <View style={styles.spacer} />
+          <HeadingWithText
+            headingText={listData.label}
+            text={
+              listData.userMeta?.length === 0
+                ? "N/A"
+                : listData.userMeta![0].value
+            }
+            headingFontWeight={"semi-bold"}
+            textStyle={styles.textStyle}
+            headingStyle={[
+              styles.headingStyle,
+              { color: theme.themedColors.labelSecondary }
+            ]}
+          />
+        </>
+      );
 
-      case "file":
-        return (
-          <>
-            <ProfileHeader
-              firstName={listData.firstName}
-              lastName={listData.lastName}
-            />
-          </>
-        );
+    case "url":
+      const userMetaLinks =
+        listData.userMeta?.length === 0
+          ? "N/A"
+          : listData.userMeta![0].value;
+      const IconTypes = {
+        "icon-facebook": FacebookDark,
+        "icon-twitter": TwitterDark,
+        "icon-linkedin": LikedInDark,
+        "icon-instagram": InstagramDark,
+        "icon-snapchat": SnapchatDark,
+        "icon-tiktok": TikTokDark,
+        "icon-youtube": YouTube
+      };
+      return (
+        <>
+          <View style={styles.spacer} />
+          <SocialDetailForm
+            heading={listData.label}
+            title={userMetaLinks!}
+            headingStyle={{ color: grayShades.warmGray["700"] }}
+            onPress={() => {
+              // Alert.alert("Facebook profile link is pressed");
+              Linking.openURL(userMetaLinks!);
+            }}
+            icon={() => {
+              const MyIcon =
+                // @ts-ignore
+                IconTypes[
+                  listData!.icon !== undefined
+                    ? listData?.icon.toString()
+                    : "icon-facebook"
+                ];
 
-      default:
-        return null;
-    }
+              return <MyIcon testID="icon" width={20} height={20} />;
+            }}
+          />
+        </>
+      );
+
+    case "file":
+      return (
+        <>
+          <ProfileHeader
+            firstName={listData.firstName}
+            lastName={listData.lastName}
+          />
+        </>
+      );
+
+    default:
+      return null;
   }
-);
+};
+
 const styles = StyleSheet.create({
   space: {
     marginTop: SPACE.sm

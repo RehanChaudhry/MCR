@@ -135,10 +135,10 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   linkLabel: {
-    fontSize: FONT_SIZE.xs
+    fontSize: FONT_SIZE.sm
   },
   linkLabelClick: {
-    paddingTop: SPACE.xs
+    paddingTop: SPACE._2xs
   }
 });
 

@@ -11,7 +11,7 @@ type Props = {
   showProgressBar: boolean;
 };
 
-export const SectionComponent = React.memo<Props>(
+export const DynamicCardViewBody = React.memo<Props>(
   ({ listData, showProgressBar }) => {
     const updateProfileRoute = useRoute<any>();
     const listItem = ({ item }: { item: FormInputFieldData }) => {

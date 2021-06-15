@@ -3,6 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { usePreventDoubleTap } from "hooks";
 import React, { FC, useLayoutEffect, useRef } from "react";
 import { Alert } from "react-native";
+import SimpleToast from "react-native-simple-toast";
 import AuthApis from "repo/auth/AuthApis";
 import { AuthStackParamList } from "routes";
 import NoHeader from "ui/components/headers/NoHeader";
@@ -50,27 +51,32 @@ const ForgotPasswordController: FC<Props> = () => {
     if (requestModel.current === undefined) {
       return;
     }
-    AppLog.log(() => "handle forgotpassword: ");
+    AppLog.log(() => "handle forgot password: ");
     const {
       hasError,
       errorBody,
       dataBody
     } = await forgotPasswordApi.request([requestModel.current]);
     if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to Sign In", errorBody);
+      Alert.alert("Unable to forgot password", errorBody);
       return;
     } else {
-      // await auth.logIn(dataBody.data);
+      SimpleToast.show(dataBody.message);
+      openForgotPasswordFeedBackScreen(requestModel.current.email);
     }
   });
-
-  AppLog.log(() => handleForgotPassword);
 
   return (
     <ForgotPasswordView
       shouldShowProgressBar={forgotPasswordApi.loading}
       openForgotPasswordFeedBackScreen={openForgotPasswordFeedBackScreen}
       openSignInScreen={openSignInScreen}
+      onForgotPassword={(value) => {
+        requestModel.current = {
+          email: value.email
+        };
+        handleForgotPassword();
+      }}
     />
   );
 };
