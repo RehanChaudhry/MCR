@@ -4,6 +4,7 @@ import { useAuth } from "hooks";
 import { ApiErrorResponseModel } from "models/api_responses/ApiErrorResponseModel";
 import { useCallback, useRef, useState } from "react";
 import { AppLog } from "utils/Util";
+import AuthStorage from "./auth/AuthStorage";
 import { extractAndRefreshTokenIfExpire } from "./auth/RefreshTokenHelper";
 
 export const apiClient = create({
@@ -14,11 +15,17 @@ resetApiClient();
 
 export function resetApiClient(providedAuthToken?: string) {
   AppLog.log(() => "Resetting Authorization Token...");
+
   // clear all transforms
   apiClient.asyncRequestTransforms.length = 0;
   // add new transform
   apiClient.addAsyncRequestTransform(async (request) => {
     request.headers.accept = "application/json";
+
+    const uni = await AuthStorage.getUni();
+    if (uni) {
+      request.headers.subdomain = uni.subdomain;
+    }
 
     let token =
       providedAuthToken ?? (await extractAndRefreshTokenIfExpire());
@@ -62,7 +69,7 @@ export const useApi = <
       setError(undefined);
 
       AppLog.logForcefully(() => "Request Body:");
-      AppLog.logForcefully(() => args);
+      AppLog.logForcefully(() => JSON.stringify(args));
 
       let response: any;
       try {
