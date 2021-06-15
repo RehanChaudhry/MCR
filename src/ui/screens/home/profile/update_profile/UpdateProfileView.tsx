@@ -11,7 +11,7 @@ import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
-import { DynamicCardView as DynamicCardSectionsList } from "ui/components/templates/dynamic_card_view/DynamicCardView";
+import { DynamicFormView } from "ui/components/templates/dynamic_card_view/DynamicFormView";
 import { createYupSchema } from "utils/YupSchemaCreator";
 import _ from "lodash";
 import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
@@ -151,9 +151,7 @@ export const UpdateProfileView = optimizedMemo<Props>(
             />
           )}
 
-          <DynamicCardSectionsList
-            sectionsData={updateProfileUiData?.sections}
-          />
+          <DynamicFormView sectionsData={updateProfileUiData?.sections} />
 
           <View style={styles.buttonViewStyle}>
             <AppFormFormSubmit

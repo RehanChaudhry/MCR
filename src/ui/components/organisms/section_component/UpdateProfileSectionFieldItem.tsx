@@ -19,7 +19,7 @@ import { UploadProfilePhoto } from "ui/components/templates/basic_profile/Upload
 import { AppFormCheckBoxGroup } from "ui/components/molecules/app_form/AppFormCheckBoxGroup";
 import RoommateAgreementTerms from "ui/components/templates/roommate_agreement/RoommateAgreementTerms";
 
-type CustomFormFieldProps = {
+type UpdateProfileSectionFieldItemProps = {
   listData: FormInputFieldData;
 };
 
@@ -33,196 +33,194 @@ function createInitialListForFieldBoxFromUserMeta(
   }));
 }
 
-export const UpdateProfileSectionFieldItem = React.memo<CustomFormFieldProps>(
-  ({ listData }) => {
-    //for multi select item
-    const chevronRight = () => <ChevronRight height={20} width={20} />;
+export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldItemProps> = ({
+  listData
+}) => {
+  //for multi select item
+  const chevronRight = () => <ChevronRight height={20} width={20} />;
 
-    const theme = usePreferredTheme();
+  const theme = usePreferredTheme();
 
-    switch (listData.inputType) {
-      case "agreement":
-        return <RoommateAgreementTerms name={listData.id.toString()} />;
-      case "textarea":
-        return (
-          <View style={styles.spacer}>
-            <DynamicAppFormField
-              label={listData?.label}
-              placeHolder={listData?.placeholder}
-              name={listData?.id.toString()}
-              isLocked={listData.isLocked}
-            />
-          </View>
-        );
-      case "dropdown":
-        return (
-          <View style={styles.spacer}>
-            <AppFormDropDown
-              name={listData.id.toString()}
-              validationLabelTestID={"genderValidationTestID"}
-              labelProps={{
-                text: listData.label,
-                weight: "semi-bold"
-              }}
-              isLocked={listData.isLocked}
-              appDropDownProps={{
-                title: STRINGS.profile.dropDownInitialValue.gender,
-                items: listData.options!,
-                selectedItemCallback: () => {
-                  //setTitle(item.title);
-                },
-                style: [
-                  styles.dropDown,
-                  {
-                    borderColor: !listData.isLocked
-                      ? theme.themedColors.border
-                      : theme.themedColors.borderSecondary,
-                    backgroundColor: !listData.isLocked
-                      ? theme.themedColors.background
-                      : theme.themedColors.backgroundSecondary
-                  }
-                ]
-              }}
-            />
-          </View>
-        );
+  switch (listData.inputType) {
+    case "agreement":
+      return <RoommateAgreementTerms name={listData.id.toString()} />;
+    case "textarea":
+      return (
+        <DynamicAppFormField
+          label={listData?.label}
+          placeHolder={listData?.placeholder}
+          name={listData?.id.toString()}
+          isLocked={listData.isLocked}
+          style={styles.padding}
+        />
+      );
+    case "dropdown":
+      return (
+        <AppFormDropDown
+          style={styles.padding}
+          name={listData.id.toString()}
+          validationLabelTestID={"genderValidationTestID"}
+          labelProps={{
+            text: listData.label,
+            weight: "semi-bold"
+          }}
+          isLocked={listData.isLocked}
+          appDropDownProps={{
+            title: STRINGS.profile.dropDownInitialValue.gender,
+            items: listData.options!,
+            selectedItemCallback: () => {
+              //setTitle(item.title);
+            },
+            style: [
+              styles.dropDown,
+              {
+                borderColor: !listData.isLocked
+                  ? theme.themedColors.border
+                  : theme.themedColors.borderSecondary,
+                backgroundColor: !listData.isLocked
+                  ? theme.themedColors.background
+                  : theme.themedColors.backgroundSecondary
+              }
+            ]
+          }}
+        />
+      );
 
-      case "checkbox":
-        return (
-          <View style={styles.spacer}>
-            <AppFormCheckBoxGroup
-              listData={listData.options!!}
-              labelProps={{
-                text: listData.label,
-                weight: "semi-bold",
-                numberOfLines: 0
-              }}
-              name={listData.id.toString()}
-              isLocked={listData.isLocked}
-            />
-          </View>
-        );
-      case "radio":
-        return (
-          <View style={styles.spacer}>
-            <AppFormRadioButton
-              name={listData.id.toString()}
-              labelProps={{
-                text: listData.label,
-                weight: "semi-bold"
-              }}
-              radioData={listData.options!!}
-              direction={DIRECTION_TYPE.HORIZONTAL}
-              isLocked={listData.isLocked}
-            />
-          </View>
-        );
-      case "date":
-        return (
-          <View style={styles.spacer}>
-            <AppLabel text={"date"} />
-          </View>
-        );
-      case "multiselect":
-        return (
-          <View style={styles.spacer}>
-            <FieldBox
-              name={listData.id.toString()}
-              title={listData.label}
-              textStyle={{ color: theme.themedColors.placeholder }}
-              rightIcon={chevronRight}
-              initialList={createInitialListForFieldBoxFromUserMeta(
-                listData.userMeta ?? []
-              )}
-              isLocked={listData.isLocked}
-            />
-          </View>
-        );
+    case "checkbox":
+      return (
+        <AppFormCheckBoxGroup
+          style={styles.padding}
+          listData={listData.options!!}
+          labelProps={{
+            text: listData.label,
+            weight: "semi-bold",
+            numberOfLines: 0
+          }}
+          name={listData.id.toString()}
+          isLocked={listData.isLocked}
+        />
+      );
+    case "radio":
+      return (
+        <View style={styles.padding}>
+          <AppFormRadioButton
+            name={listData.id.toString()}
+            labelProps={{
+              text: listData.label,
+              weight: "semi-bold"
+            }}
+            radioData={listData.options!!}
+            direction={DIRECTION_TYPE.HORIZONTAL}
+            isLocked={listData.isLocked}
+          />
+        </View>
+      );
+    case "date":
+      return (
+        <View style={styles.padding}>
+          <AppLabel text={"date"} />
+        </View>
+      );
+    case "multiselect":
+      return (
+        <View style={styles.padding}>
+          <FieldBox
+            name={listData.id.toString()}
+            title={listData.label}
+            textStyle={{ color: theme.themedColors.placeholder }}
+            rightIcon={chevronRight}
+            initialList={createInitialListForFieldBoxFromUserMeta(
+              listData.userMeta ?? []
+            )}
+            isLocked={listData.isLocked}
+          />
+        </View>
+      );
 
-      case "text":
-        return (
-          <View style={styles.spacer}>
-            <AppFormField
-              name={listData.id.toString()}
-              labelProps={{
-                text: listData?.label,
-                weight: "semi-bold"
-              }}
-              fieldInputProps={{
-                textContentType: "name",
-                keyboardType: "default",
-                returnKeyType: "next",
-                placeholder: listData?.placeholder,
-                /* value: text,
+    case "text":
+      return (
+        <View style={styles.padding}>
+          <AppFormField
+            name={listData.id.toString()}
+            labelProps={{
+              text: listData?.label,
+              weight: "semi-bold"
+            }}
+            fieldInputProps={{
+              textContentType: "name",
+              keyboardType: "default",
+              returnKeyType: "next",
+              placeholder: listData?.placeholder,
+              /* value: text,
                 onChangeText: (value) => setText(value),*/
-                autoCapitalize: "none",
-                placeholderTextColor: theme.themedColors.placeholder,
-                style: { color: theme.themedColors.label },
-                viewStyle: [
-                  styles.textFieldStyle,
-                  {
-                    backgroundColor: !listData.isLocked
-                      ? theme.themedColors.background
-                      : theme.themedColors.backgroundSecondary,
-                    borderColor: !listData.isLocked
-                      ? theme.themedColors.border
-                      : theme.themedColors.borderSecondary
-                  }
-                ]
-              }}
-              isLocked={listData.isLocked}
-            />
-          </View>
-        );
+              autoCapitalize: "none",
+              placeholderTextColor: theme.themedColors.placeholder,
+              style: { color: theme.themedColors.label },
+              viewStyle: [
+                styles.textFieldStyle,
+                {
+                  backgroundColor: !listData.isLocked
+                    ? theme.themedColors.background
+                    : theme.themedColors.backgroundSecondary,
+                  borderColor: !listData.isLocked
+                    ? theme.themedColors.border
+                    : theme.themedColors.borderSecondary
+                }
+              ]
+            }}
+            isLocked={listData.isLocked}
+          />
+        </View>
+      );
 
-      case "url":
-        return (
-          <View style={styles.spacer}>
-            <AppFormField
-              name={listData.id.toString()}
-              labelProps={{
-                text: listData?.label,
-                weight: "semi-bold"
-              }}
-              fieldInputProps={{
-                textContentType: "name",
-                keyboardType: "default",
-                returnKeyType: "next",
-                placeholder: listData?.placeholder,
-                /* value: text,
+    case "url":
+      return (
+        <View style={styles.padding}>
+          <AppFormField
+            name={listData.id.toString()}
+            labelProps={{
+              text: listData?.label,
+              weight: "semi-bold"
+            }}
+            fieldInputProps={{
+              textContentType: "name",
+              keyboardType: "default",
+              returnKeyType: "next",
+              placeholder: listData?.placeholder,
+              /* value: text,
                             onChangeText: (value) => setText(value),*/
-                autoCapitalize: "none",
-                placeholderTextColor: theme.themedColors.placeholder,
-                style: { color: theme.themedColors.label },
-                viewStyle: [
-                  styles.textFieldStyle,
-                  {
-                    backgroundColor: !listData.isLocked
-                      ? theme.themedColors.background
-                      : theme.themedColors.backgroundSecondary,
-                    borderColor: !listData.isLocked
-                      ? theme.themedColors.border
-                      : theme.themedColors.borderSecondary
-                  }
-                ]
-              }}
-              isLocked={listData.isLocked}
-            />
-          </View>
-        );
+              autoCapitalize: "none",
+              placeholderTextColor: theme.themedColors.placeholder,
+              style: { color: theme.themedColors.label },
+              viewStyle: [
+                styles.textFieldStyle,
+                {
+                  backgroundColor: !listData.isLocked
+                    ? theme.themedColors.background
+                    : theme.themedColors.backgroundSecondary,
+                  borderColor: !listData.isLocked
+                    ? theme.themedColors.border
+                    : theme.themedColors.borderSecondary
+                }
+              ]
+            }}
+            isLocked={listData.isLocked}
+          />
+        </View>
+      );
 
-      case "file":
-        return (
-          <View style={styles.spacer}>
-            <UploadProfilePhoto name={listData.id.toString()} />
-          </View>
-        );
+    case "file":
+      return (
+        <View style={styles.padding}>
+          <UploadProfilePhoto name={listData.id.toString()} />
+        </View>
+      );
 
-      default:
-        return null;
-    }
+    default:
+      return null;
   }
-);
+};
+
 const styles = StyleSheet.create({
   space: {
     marginTop: SPACE.sm
@@ -233,7 +231,7 @@ const styles = StyleSheet.create({
   textFieldStyle: {
     borderWidth: 1
   },
-  spacer: {
+  padding: {
     paddingBottom: SPACE.lg
   }
 });

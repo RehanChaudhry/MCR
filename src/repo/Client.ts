@@ -98,6 +98,7 @@ export const useApi = <
         }
 
         try {
+          AppLog.toastDebug("Error: " + errorBody);
           return { hasError: true, errorBody };
         } finally {
           setError(errorBody);

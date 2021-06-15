@@ -10,176 +10,175 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import TagList from "ui/components/molecules/tag_list/TagList";
 import SocialDetailForm from "ui/components/templates/about_me/SocialDetailForm";
 
-type CustomViewProfileProps = {
+type ViewProfileSectionFieldItemProps = {
   listData: FormInputFieldData;
 };
 
-export const ViewProfileSectionFieldItem = React.memo<CustomViewProfileProps>(
-  ({ listData }) => {
-    const theme = usePreferredTheme();
+export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemProps> = ({
+  listData
+}) => {
+  const theme = usePreferredTheme();
 
-    switch (listData.inputType) {
-      // case "agreement":
-      //   return <AppLabel text={"Agreement"} />;
-      case "textarea":
-        return (
-          <>
-            <View style={styles.spacer} />
+  switch (listData.inputType) {
+    case "textarea":
+      return (
+        <>
+          <View style={styles.spacer} />
 
-            <AppLabel
-              text={listData.label}
-              style={[
-                styles.aboutMe,
-                {
-                  color: theme.themedColors.labelSecondary,
-                  fontSize: FONT_SIZE.md
-                }
-              ]}
-              weight={"semi-bold"}
-            />
-
-            <AppLabel
-              text={
-                listData.userMeta?.length === 0
-                  ? "N/A"
-                  : listData.userMeta![0].value
+          <AppLabel
+            text={listData.label}
+            style={[
+              styles.aboutMe,
+              {
+                color: theme.themedColors.labelSecondary,
+                fontSize: FONT_SIZE.md
               }
-              numberOfLines={0}
-              style={{
-                fontSize: FONT_SIZE.sm,
-                color: grayShades.warmGray["700"]
-              }}
-            />
-            <View style={styles.horizontalLine} />
-          </>
-        );
-      case "dropdown":
-        return (
-          <>
-            <View style={styles.spacer} />
-            <HeadingWithText
-              headingText={listData.label}
-              text={
-                listData.userMeta?.length === 0
-                  ? "N/A"
-                  : listData.userMeta![0].value
-              }
-              headingFontWeight={"semi-bold"}
-              textStyle={styles.textStyle}
-              headingStyle={[
-                styles.headingStyle,
-                { color: theme.themedColors.labelSecondary }
-              ]}
-            />
-          </>
-        );
-      case "checkbox":
-        return (
-          <>
-            <View style={styles.spacer} />
-            <HeadingWithText
-              headingText={listData.label}
-              text={
-                listData.userMeta?.length === 0
-                  ? "N/A"
-                  : listData.userMeta![0].value
-              }
-              headingFontWeight={"semi-bold"}
-              textStyle={styles.textStyle}
-              headingStyle={[
-                styles.headingStyle,
-                { color: theme.themedColors.labelSecondary }
-              ]}
-            />
-          </>
-        );
-      case "radio":
-        return (
-          <>
-            <View style={styles.spacer} />
-            <HeadingWithText
-              headingText={listData.label}
-              text={
-                listData.userMeta?.length === 0
-                  ? "N/A"
-                  : listData.userMeta![0].value
-              }
-              headingFontWeight={"semi-bold"}
-              textStyle={styles.textStyle}
-              headingStyle={[
-                styles.headingStyle,
-                { color: theme.themedColors.labelSecondary }
-              ]}
-            />
-          </>
-        );
-      case "multiselect":
-        return (
-          <>
-            <View style={styles.spacer} />
-            <TagList
-              labelTitle={listData.label}
-              data={listData.userMeta ?? []}
-            />
-          </>
-        );
+            ]}
+            weight={"semi-bold"}
+          />
 
-      case "text":
-        return (
-          <>
-            <View style={styles.spacer} />
-            <HeadingWithText
-              headingText={listData.label}
-              text={
-                listData.userMeta?.length === 0
-                  ? "N/A"
-                  : listData.userMeta![0].value
-              }
-              headingFontWeight={"semi-bold"}
-              textStyle={styles.textStyle}
-              headingStyle={[
-                styles.headingStyle,
-                { color: theme.themedColors.labelSecondary }
-              ]}
-            />
-          </>
-        );
+          <AppLabel
+            text={
+              listData.userMeta?.length === 0
+                ? "N/A"
+                : listData.userMeta![0].value
+            }
+            numberOfLines={0}
+            style={{
+              fontSize: FONT_SIZE.sm,
+              color: grayShades.warmGray["700"]
+            }}
+          />
+          <View style={styles.horizontalLine} />
+        </>
+      );
+    case "dropdown":
+      return (
+        <>
+          <View style={styles.spacer} />
+          <HeadingWithText
+            headingText={listData.label}
+            text={
+              listData.userMeta?.length === 0
+                ? "N/A"
+                : listData.userMeta![0].value
+            }
+            headingFontWeight={"semi-bold"}
+            textStyle={styles.textStyle}
+            headingStyle={[
+              styles.headingStyle,
+              { color: theme.themedColors.labelSecondary }
+            ]}
+          />
+        </>
+      );
+    case "checkbox":
+      return (
+        <>
+          <View style={styles.spacer} />
+          <HeadingWithText
+            headingText={listData.label}
+            text={
+              listData.userMeta?.length === 0
+                ? "N/A"
+                : listData.userMeta![0].value
+            }
+            headingFontWeight={"semi-bold"}
+            textStyle={styles.textStyle}
+            headingStyle={[
+              styles.headingStyle,
+              { color: theme.themedColors.labelSecondary }
+            ]}
+          />
+        </>
+      );
+    case "radio":
+      return (
+        <>
+          <View style={styles.spacer} />
+          <HeadingWithText
+            headingText={listData.label}
+            text={
+              listData.userMeta?.length === 0
+                ? "N/A"
+                : listData.userMeta![0].value
+            }
+            headingFontWeight={"semi-bold"}
+            textStyle={styles.textStyle}
+            headingStyle={[
+              styles.headingStyle,
+              { color: theme.themedColors.labelSecondary }
+            ]}
+          />
+        </>
+      );
+    case "multiselect":
+      return (
+        <>
+          <View style={styles.spacer} />
+          <TagList
+            labelTitle={listData.label}
+            data={listData.userMeta ?? []}
+          />
+        </>
+      );
 
-      case "url":
-        const userMetaLinks =
-          listData.userMeta?.length === 0
-            ? "N/A"
-            : listData.userMeta![0].value;
-        return (
-          <>
-            <View style={styles.spacer} />
-            <SocialDetailForm
-              heading={listData.label}
-              title={userMetaLinks!}
-              headingStyle={{ color: grayShades.warmGray["700"] }}
-              onPress={() => {
-                // Alert.alert("Facebook profile link is pressed");
-                Linking.openURL(userMetaLinks!);
-              }}
-            />
-          </>
-        );
+    case "text":
+      return (
+        <>
+          <View style={styles.spacer} />
+          <HeadingWithText
+            headingText={listData.label}
+            text={
+              listData.userMeta?.length === 0
+                ? "N/A"
+                : listData.userMeta![0].value
+            }
+            headingFontWeight={"semi-bold"}
+            textStyle={styles.textStyle}
+            headingStyle={[
+              styles.headingStyle,
+              { color: theme.themedColors.labelSecondary }
+            ]}
+          />
+        </>
+      );
 
-      case "file":
-        return (
-          <>
-            <ProfileHeader
-              firstName={listData.firstName}
-              lastName={listData.lastName}
-            />
-          </>
-        );
+    case "url":
+      const userMetaLinks =
+        listData.userMeta?.length === 0
+          ? "N/A"
+          : listData.userMeta![0].value;
+      return (
+        <>
+          <View style={styles.spacer} />
+          <SocialDetailForm
+            heading={listData.label}
+            title={userMetaLinks!}
+            headingStyle={{ color: grayShades.warmGray["700"] }}
+            onPress={() => {
+              // Alert.alert("Facebook profile link is pressed");
+              Linking.openURL(userMetaLinks!);
+            }}
+          />
+        </>
+      );
 
-      default:
-        return null;
-    }
+    case "file":
+      return (
+        <>
+          <ProfileHeader
+            firstName={listData.firstName}
+            lastName={listData.lastName}
+          />
+        </>
+      );
+
+    default:
+      return null;
   }
-);
+};
+
 const styles = StyleSheet.create({
   space: {
     marginTop: SPACE.sm

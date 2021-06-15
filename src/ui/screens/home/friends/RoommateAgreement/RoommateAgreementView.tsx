@@ -21,7 +21,7 @@ import { AgreementAnswersRequestModel } from "models/api_requests/AgreementAnswe
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 import { AgreementField } from "models/api_requests/GetAgreementApi";
 import { SectionsType } from "models/api_responses/DynamicFormSections";
-import { DynamicCardView } from "ui/components/templates/dynamic_card_view/DynamicCardView";
+import { DynamicFormView } from "ui/components/templates/dynamic_card_view/DynamicFormView";
 
 type Props = {
   roommateData: AgreementField[] | undefined;
@@ -186,7 +186,7 @@ const RoommateAgreementView: FC<Props> = ({
             />
           </View>
 
-          <DynamicCardView
+          <DynamicFormView
             sectionsData={formFields}
             showProgressBar={showProgressBar}
           />
