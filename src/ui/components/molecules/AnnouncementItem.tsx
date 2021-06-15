@@ -43,6 +43,14 @@ function showAttachedItemsIfAny(
     return <ImagesSlideShow images={item.photos} />;
   } else if (item.link) {
     return <UrlMetaData url={item.link} />;
+  } else if (item.content) {
+    return (
+      <AppLabel
+        text={item.content}
+        // style={[{ color: theme.themedColors.label }, style.text]}
+        numberOfLines={0}
+      />
+    );
   }
 }
 
@@ -91,13 +99,13 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
           }}
           onProfileImageClicked={onProfileImageClicked}
         />
-        {announcementItem.content && (
-          <AppLabel
-            text={announcementItem.content}
-            style={[{ color: theme.themedColors.label }, style.text]}
-            numberOfLines={0}
-          />
-        )}
+        {/*{announcementItem.content && (*/}
+        {/*  <AppLabel*/}
+        {/*    text={announcementItem.content}*/}
+        {/*    style={[{ color: theme.themedColors.label }, style.text]}*/}
+        {/*    numberOfLines={0}*/}
+        {/*  />*/}
+        {/*)}*/}
         {showAttachedItemsIfAny(announcementItem, shouldPlayVideo)}
         <AnnouncementFooter
           commentCount={announcementItem.commentsCount}

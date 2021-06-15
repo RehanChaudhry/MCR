@@ -39,9 +39,7 @@ type Props = {
 };
 
 const validationSchema = Yup.object().shape({
-  message: Yup.string()
-    .min(10)
-    .required(Strings.createPost.requiredField.message),
+  message: Yup.string(),
   link: Yup.string().matches(
     pattern,
     Strings.createPost.fieldValidationMessage.invalidUrl
@@ -270,7 +268,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                 <Tooltip
                   popover={
                     <AppLabel
-                      text="text"
+                      text={Strings.createPost.dummyText}
                       style={{ color: theme.themedColors.primary }}
                     />
                   }
