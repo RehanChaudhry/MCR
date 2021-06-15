@@ -27,6 +27,7 @@ export interface AppCompactButtonProps extends TouchableOpacityProps {
   shouldShowBgColorCahange: boolean;
   onPress?: () => void;
   shouldNotOptimize?: boolean;
+  shouldTextColorChangeOnClick?: boolean;
 }
 export const AppCompactButton = optimizedMemo<AppCompactButtonProps>(
   ({
@@ -39,7 +40,8 @@ export const AppCompactButton = optimizedMemo<AppCompactButtonProps>(
     shouldTextChangeOnClick = false,
     shouldShowBgColorCahange = false,
     isSelected,
-    onPress
+    onPress,
+    shouldTextColorChangeOnClick
   }) => {
     const theme = usePreferredTheme();
     return (
@@ -71,13 +73,18 @@ export const AppCompactButton = optimizedMemo<AppCompactButtonProps>(
             12
           )}
           <AppLabel
+            shouldNotOptimize={true}
             style={[
               style.text,
               shouldTextChangeOnClick
                 ? isSelected
                   ? { color: theme.themedColors.primary }
-                  : { color: theme.themedColors.interface["700"] }
-                : { color: theme.themedColors.interface["700"] },
+                  : { color: theme.themedColors.interface["600"] }
+                : shouldTextColorChangeOnClick
+                ? isSelected
+                  ? { color: theme.themedColors.primary }
+                  : { color: theme.themedColors.interface["600"] }
+                : { color: theme.themedColors.interface["600"] },
               textStyle
             ]}
             text={

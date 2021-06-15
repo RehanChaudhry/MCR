@@ -6,4 +6,5 @@ export type LikeDislikeResponseModel = {
 export type LikeDislike = {
   isLikedByMe: boolean;
   id: number;
+  likesCount: number;
 };

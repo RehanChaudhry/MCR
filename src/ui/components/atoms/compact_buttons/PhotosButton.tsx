@@ -24,6 +24,7 @@ export const PhotosButton = optimizedMemo<Props>(
     return (
       <AppCompactButton
         unSelectedText={"Photos"}
+        shouldTextColorChangeOnClick={true}
         shouldIconColorChangeOnClick={true}
         shouldTextChangeOnClick={true}
         shouldShowBgColorCahange={true}

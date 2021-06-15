@@ -53,6 +53,8 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
       isLikedByMe
     );
 
+    const [likedCount, setLikedCount] = useState(likeCount);
+
     const toggleLikedStateApi = useApi<number, LikeDislikeResponseModel>(
       CommunityAnnouncementApis.likeDislike
     );
@@ -72,6 +74,7 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
           );
           return false;
         } else {
+          setLikedCount(dataBody.data.likesCount);
           return true;
         }
       },
@@ -118,7 +121,7 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
                   style={style.icon}
                 />
                 <AppLabel
-                  text={likeCount.toString()}
+                  text={likedCount.toString()}
                   style={[
                     { color: theme.themedColors.interface["700"] },
                     style.commentLikeCount

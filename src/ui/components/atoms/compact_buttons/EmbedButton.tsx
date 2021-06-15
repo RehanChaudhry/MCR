@@ -25,9 +25,10 @@ export const EmbedButton = optimizedMemo<Props>(
       <AppCompactButton
         unSelectedText={"Embed"}
         shouldIconColorChangeOnClick={true}
-        shouldTextChangeOnClick={true}
+        shouldTextChangeOnClick={false}
         shouldShowBgColorCahange={true}
         isSelected={isSelected}
+        shouldTextColorChangeOnClick={true}
         icon={codeIcon}
         onPress={() => {
           values.link = "";
