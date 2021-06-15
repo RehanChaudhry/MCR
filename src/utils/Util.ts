@@ -6,6 +6,7 @@ import { Color, NumberProp } from "react-native-svg";
 import React from "react";
 import { ViewStyle } from "react-native";
 import moment from "moment";
+import SimpleToast from "react-native-simple-toast";
 
 export function timeout(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -26,6 +27,13 @@ export const AppLog = (function () {
       if (Env.CURRENT !== "PROD") {
         // eslint-disable-next-line no-console
         console.log(onComputeMessage(), ...optionalParams);
+      }
+    },
+    toastDebug: (message?: any, ...optionalParams: any[]) => {
+      if (Env.CURRENT !== "PROD") {
+        // eslint-disable-next-line no-console
+        console.warn(message, ...optionalParams);
+        SimpleToast.show(message, SimpleToast.SHORT);
       }
     },
     warn: (message?: any, ...optionalParams: any[]) => {
