@@ -26,7 +26,7 @@ import { AppLog } from "utils/Util";
 import { ConversationSuggestionsRequestModel } from "models/api_requests/ConversationSuggestionsRequestModel";
 import SimpleToast from "react-native-simple-toast";
 import { User } from "models/User";
-import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
+import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import { useCreateConversation } from "hooks/useCreateConversation";
 
 type ConversationNavigationProp = StackNavigationProp<
@@ -53,7 +53,7 @@ export const NewConversationController: FC<Props> = () => {
   const createConversation = useCreateConversation();
 
   const { setActiveConversations, inActiveConversations } = useContext(
-    MyFriendsContext
+    AppDataContext
   );
 
   const openChatThreadScreen = useCallback(
