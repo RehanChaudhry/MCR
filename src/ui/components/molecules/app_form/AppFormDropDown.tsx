@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import {
   AppLabel,
   AppLabelProps
@@ -31,10 +31,8 @@ export const AppFormDropDown: React.FC<Props> = ({
   name,
   appDropDownProps,
   validationLabelTestID,
-  isLocked = EIntBoolean.FALSE
-  // style,
-  // dropDownIcon,
-  // shouldShowCustomIcon = false
+  isLocked = EIntBoolean.FALSE,
+  style
 }) => {
   const theme = usePreferredTheme();
   const {
@@ -47,7 +45,7 @@ export const AppFormDropDown: React.FC<Props> = ({
   const { title, ...appDropDownPropsCopy } = appDropDownProps;
 
   return (
-    <>
+    <View style={style}>
       {labelProps && (
         <AppLabel
           numberOfLines={0}
@@ -72,7 +70,7 @@ export const AppFormDropDown: React.FC<Props> = ({
           shouldVisible={true}
         />
       )}
-    </>
+    </View>
   );
 };
 

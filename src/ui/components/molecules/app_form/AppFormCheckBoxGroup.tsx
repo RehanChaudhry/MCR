@@ -6,7 +6,7 @@ import {
   AppLabel,
   AppLabelProps
 } from "ui/components/atoms/app_label/AppLabel";
-import { View } from "react-native";
+import { StyleProp, View, ViewStyle } from "react-native";
 import { CheckBoxGroup } from "ui/components/atoms/checkbox_group/CheckBoxGroup";
 import { AppLog } from "utils/Util";
 import EIntBoolean from "models/enums/EIntBoolean";
@@ -15,6 +15,7 @@ import { AppFormValidationLabel } from "ui/components/molecules/app_form/AppForm
 type AppFormCheckBoxGroupProps = {
   name: string;
   labelProps?: AppLabelProps;
+  style?: StyleProp<ViewStyle>;
   listData: OptionsData[];
   isLocked: EIntBoolean;
   validationLabelTestID?: string;
@@ -24,6 +25,7 @@ export const AppFormCheckBoxGroup: React.FC<AppFormCheckBoxGroupProps> = ({
   listData,
   labelProps,
   name,
+  style,
   isLocked = EIntBoolean.FALSE,
   validationLabelTestID
 }) => {
@@ -46,7 +48,7 @@ export const AppFormCheckBoxGroup: React.FC<AppFormCheckBoxGroupProps> = ({
   );*/
 
   return (
-    <View>
+    <View style={style}>
       {labelProps && (
         <AppLabel
           numberOfLines={0}

@@ -46,66 +46,63 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
       return <RoommateAgreementTerms name={listData.id.toString()} />;
     case "textarea":
       return (
-        <View style={styles.spacer}>
-          <DynamicAppFormField
-            label={listData?.label}
-            placeHolder={listData?.placeholder}
-            name={listData?.id.toString()}
-            isLocked={listData.isLocked}
-          />
-        </View>
+        <DynamicAppFormField
+          label={listData?.label}
+          placeHolder={listData?.placeholder}
+          name={listData?.id.toString()}
+          isLocked={listData.isLocked}
+          style={styles.padding}
+        />
       );
     case "dropdown":
       return (
-        <View style={styles.spacer}>
-          <AppFormDropDown
-            name={listData.id.toString()}
-            validationLabelTestID={"genderValidationTestID"}
-            labelProps={{
-              text: listData.label,
-              weight: "semi-bold"
-            }}
-            isLocked={listData.isLocked}
-            appDropDownProps={{
-              title: STRINGS.profile.dropDownInitialValue.gender,
-              items: listData.options!,
-              selectedItemCallback: () => {
-                //setTitle(item.title);
-              },
-              style: [
-                styles.dropDown,
-                {
-                  borderColor: !listData.isLocked
-                    ? theme.themedColors.border
-                    : theme.themedColors.borderSecondary,
-                  backgroundColor: !listData.isLocked
-                    ? theme.themedColors.background
-                    : theme.themedColors.backgroundSecondary
-                }
-              ]
-            }}
-          />
-        </View>
+        <AppFormDropDown
+          style={styles.padding}
+          name={listData.id.toString()}
+          validationLabelTestID={"genderValidationTestID"}
+          labelProps={{
+            text: listData.label,
+            weight: "semi-bold"
+          }}
+          isLocked={listData.isLocked}
+          appDropDownProps={{
+            title: STRINGS.profile.dropDownInitialValue.gender,
+            items: listData.options!,
+            selectedItemCallback: () => {
+              //setTitle(item.title);
+            },
+            style: [
+              styles.dropDown,
+              {
+                borderColor: !listData.isLocked
+                  ? theme.themedColors.border
+                  : theme.themedColors.borderSecondary,
+                backgroundColor: !listData.isLocked
+                  ? theme.themedColors.background
+                  : theme.themedColors.backgroundSecondary
+              }
+            ]
+          }}
+        />
       );
 
     case "checkbox":
       return (
-        <View style={styles.spacer}>
-          <AppFormCheckBoxGroup
-            listData={listData.options!!}
-            labelProps={{
-              text: listData.label,
-              weight: "semi-bold",
-              numberOfLines: 0
-            }}
-            name={listData.id.toString()}
-            isLocked={listData.isLocked}
-          />
-        </View>
+        <AppFormCheckBoxGroup
+          style={styles.padding}
+          listData={listData.options!!}
+          labelProps={{
+            text: listData.label,
+            weight: "semi-bold",
+            numberOfLines: 0
+          }}
+          name={listData.id.toString()}
+          isLocked={listData.isLocked}
+        />
       );
     case "radio":
       return (
-        <View style={styles.spacer}>
+        <View style={styles.padding}>
           <AppFormRadioButton
             name={listData.id.toString()}
             labelProps={{
@@ -120,13 +117,13 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
       );
     case "date":
       return (
-        <View style={styles.spacer}>
+        <View style={styles.padding}>
           <AppLabel text={"date"} />
         </View>
       );
     case "multiselect":
       return (
-        <View style={styles.spacer}>
+        <View style={styles.padding}>
           <FieldBox
             name={listData.id.toString()}
             title={listData.label}
@@ -142,7 +139,7 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
 
     case "text":
       return (
-        <View style={styles.spacer}>
+        <View style={styles.padding}>
           <AppFormField
             name={listData.id.toString()}
             labelProps={{
@@ -178,7 +175,7 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
 
     case "url":
       return (
-        <View style={styles.spacer}>
+        <View style={styles.padding}>
           <AppFormField
             name={listData.id.toString()}
             labelProps={{
@@ -214,7 +211,7 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
 
     case "file":
       return (
-        <View style={styles.spacer}>
+        <View style={styles.padding}>
           <UploadProfilePhoto name={listData.id.toString()} />
         </View>
       );
@@ -234,7 +231,7 @@ const styles = StyleSheet.create({
   textFieldStyle: {
     borderWidth: 1
   },
-  spacer: {
+  padding: {
     paddingBottom: SPACE.lg
   }
 });
