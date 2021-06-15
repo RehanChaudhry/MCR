@@ -14,7 +14,7 @@ type Props = {
   name: string;
   field: string;
   imageUrl: string;
-  moveToChatScreen: (userId: number) => void;
+  moveToChatScreen?: (userId: number) => void;
 };
 
 const MyRoommateItem: FC<Props> = ({
