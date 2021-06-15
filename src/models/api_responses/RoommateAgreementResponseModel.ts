@@ -30,7 +30,7 @@ export type FormInputFieldData = {
   userMeta?: UserMetaData[];
   profilePicture?: ProfilePicture;
   intendedMajor?: string;
-  homeTown: string;
+  homeTown: string | undefined;
 };
 
 export type OptionsData = {
