@@ -23,6 +23,7 @@ export const LinkButton = optimizedMemo<Props>(
     const { values } = useFormikContext<FormikValues>();
     return (
       <AppCompactButton
+        shouldTextColorChangeOnClick={true}
         unSelectedText={"Link"}
         shouldIconColorChangeOnClick={true}
         shouldTextChangeOnClick={true}
