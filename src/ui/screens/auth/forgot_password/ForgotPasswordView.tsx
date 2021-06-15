@@ -1,29 +1,31 @@
+import ArrowLeft from "assets/images/arrow_left.svg";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
+import Colors from "config/Colors";
 import Strings from "config/Strings";
+import { FormikValues } from "formik";
+import { usePreferredTheme } from "hooks";
+import { ForgotPasswordApiRequestModel } from "models/api_requests/ForgotPasswordApiRequestModel";
 import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import {
   AppImageBackground,
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
-import ArrowLeft from "assets/images/arrow_left.svg";
-import { usePreferredTheme } from "hooks";
-import Colors from "config/Colors";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { FONT_SIZE, SPACE, STRINGS } from "config";
+import Screen from "ui/components/atoms/Screen";
 import { UniLogo } from "ui/components/atoms/UniLogo";
+import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import AppFormField from "ui/components/molecules/app_form/AppFormField";
-import * as Yup from "yup";
-import { FormikValues } from "formik";
-import { AppLog } from "utils/Util";
-import Screen from "ui/components/atoms/Screen";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
-import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
+import { AppLog } from "utils/Util";
+import * as Yup from "yup";
 
 type Props = {
   openForgotPasswordFeedBackScreen: (email: string) => void;
   shouldShowProgressBar?: boolean;
   openSignInScreen?: () => void;
+  onForgotPassword: (request: ForgotPasswordApiRequestModel) => void;
 };
 
 const validationSchema = Yup.object().shape({
@@ -33,17 +35,19 @@ const validationSchema = Yup.object().shape({
 });
 
 let initialValues: FormikValues = {
-  email: "john.doe@gmail.com"
+  email: "lfrance11@geocities.jp"
 };
 
 export const ForgotPasswordView = React.memo<Props>(
-  ({ openForgotPasswordFeedBackScreen, openSignInScreen }) => {
+  ({ onForgotPassword, openSignInScreen, shouldShowProgressBar }) => {
     const theme = usePreferredTheme();
 
     const onSubmit = (_value: FormikValues) => {
       initialValues = _value;
       AppLog.log(() => "form values" + initialValues);
-      openForgotPasswordFeedBackScreen(_value.email);
+      onForgotPassword({
+        email: _value.email
+      });
     };
     return (
       <Screen
@@ -113,6 +117,7 @@ export const ForgotPasswordView = React.memo<Props>(
 
               <View style={styles.buttonViewStyle}>
                 <AppFormFormSubmit
+                  shouldShowProgressBar={shouldShowProgressBar}
                   text={STRINGS.forgotpassword.reset_password}
                   buttonType={BUTTON_TYPES.NORMAL}
                   fontWeight={"semi-bold"}

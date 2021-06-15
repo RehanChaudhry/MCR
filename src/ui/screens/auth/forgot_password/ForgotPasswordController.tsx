@@ -50,27 +50,31 @@ const ForgotPasswordController: FC<Props> = () => {
     if (requestModel.current === undefined) {
       return;
     }
-    AppLog.log(() => "handle forgotpassword: ");
+    AppLog.log(() => "handle forgot password: ");
     const {
       hasError,
       errorBody,
       dataBody
     } = await forgotPasswordApi.request([requestModel.current]);
     if (hasError || dataBody === undefined) {
-      Alert.alert("Unable to Sign In", errorBody);
+      Alert.alert("Unable to forgot password", errorBody);
       return;
     } else {
-      // await auth.logIn(dataBody.data);
+      openForgotPasswordFeedBackScreen(requestModel.current.email);
     }
   });
-
-  AppLog.log(() => handleForgotPassword);
 
   return (
     <ForgotPasswordView
       shouldShowProgressBar={forgotPasswordApi.loading}
       openForgotPasswordFeedBackScreen={openForgotPasswordFeedBackScreen}
       openSignInScreen={openSignInScreen}
+      onForgotPassword={(value) => {
+        requestModel.current = {
+          email: value.email
+        };
+        handleForgotPassword();
+      }}
     />
   );
 };

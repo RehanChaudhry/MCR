@@ -11,7 +11,7 @@ export default {
   API_URL: "api/",
   LOGIN_URL: "auth/login",
   FETCH_MY_PROFILE_URL: "user/me?meta=true",
-  FORGOT_PASS_URL: "password/request/",
+  FORGOT_PASS_URL: "password/request",
   RESET_PASS_URL: "password/set/",
   COMPLETE_PROFILE_QUERY_PARAMS: "completingProfile=true",
   MY_PROFILE: "user/me",

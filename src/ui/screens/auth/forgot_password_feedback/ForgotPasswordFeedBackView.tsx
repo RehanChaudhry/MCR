@@ -19,16 +19,24 @@ import {
 } from "ui/components/molecules/app_button/AppButton";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 import { moderateScale } from "config/Dimens";
+import { AppLog } from "utils/Util";
 
 type Props = {
   openForgotPasswordScreen?: () => void;
   openSignInScreen: () => void;
   shouldShowProgressBar?: boolean;
   email: string;
+  onClickedOnTryAgain: () => void;
 };
 
 export const ForgotPasswordFeedBackView = React.memo<Props>(
-  ({ openForgotPasswordScreen, openSignInScreen, email }) => {
+  ({
+    openForgotPasswordScreen,
+    openSignInScreen,
+    email,
+    onClickedOnTryAgain,
+    shouldShowProgressBar
+  }) => {
     const theme = usePreferredTheme();
 
     return (
@@ -85,6 +93,7 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
             />
 
             <AppButton
+              shouldShowProgressBar={shouldShowProgressBar}
               text={STRINGS.forgotPasswordFeedBack.did_not_recieve_email}
               buttonStyle={[
                 styles.recieveEmail,
@@ -95,6 +104,10 @@ export const ForgotPasswordFeedBackView = React.memo<Props>(
                 { color: theme.themedColors.background }
               ]}
               fontWeight={"semi-bold"}
+              onPress={() => {
+                AppLog.logForcefully(() => "clciked");
+                onClickedOnTryAgain();
+              }}
             />
 
             <AppButton
