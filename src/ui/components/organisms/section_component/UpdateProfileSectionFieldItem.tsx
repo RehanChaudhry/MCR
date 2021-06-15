@@ -18,7 +18,13 @@ import { FieldBox } from "ui/components/atoms/FieldBox";
 import { UploadProfilePhoto } from "ui/components/templates/basic_profile/UploadProfilePhoto";
 import { AppFormCheckBoxGroup } from "ui/components/molecules/app_form/AppFormCheckBoxGroup";
 import RoommateAgreementTerms from "ui/components/templates/roommate_agreement/RoommateAgreementTerms";
-
+import InstagramDark from "assets/images/instagram_icon.svg";
+import FacebookDark from "assets/images/facebook_icon.svg";
+import LikedInDark from "assets/images/linkedin_icon.svg";
+import TikTokDark from "assets/images/tiktok_icon.svg";
+import SnapchatDark from "assets/images/snapchat_icon.svg";
+import TwitterDark from "assets/images/twitter_icon.svg";
+import YouTube from "assets/images/youtube_icon.svg";
 type CustomFormFieldProps = {
   listData: FormInputFieldData;
 };
@@ -176,6 +182,24 @@ export const UpdateProfileSectionFieldItem = React.memo<CustomFormFieldProps>(
         );
 
       case "url":
+        const IconTypes = {
+          "icon-facebook": FacebookDark,
+          "icon-twitter": TwitterDark,
+          "icon-linkedin": LikedInDark,
+          "icon-instagram": InstagramDark,
+          "icon-snapchat": SnapchatDark,
+          "icon-tiktok": TikTokDark,
+          "icon-youtube": YouTube
+        };
+
+        const MyIcon =
+          // @ts-ignore
+          IconTypes[
+            listData!.icon !== undefined
+              ? listData?.icon.toString()
+              : "icon-facebook"
+          ];
+
         return (
           <View style={styles.spacer}>
             <AppFormField
@@ -194,6 +218,7 @@ export const UpdateProfileSectionFieldItem = React.memo<CustomFormFieldProps>(
                 autoCapitalize: "none",
                 placeholderTextColor: theme.themedColors.placeholder,
                 style: { color: theme.themedColors.label },
+                leftIcon: () => <MyIcon width={20} height={20} />,
                 viewStyle: [
                   styles.textFieldStyle,
                   {
