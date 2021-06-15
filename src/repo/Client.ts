@@ -6,7 +6,6 @@ import { useCallback, useRef, useState } from "react";
 import { AppLog } from "utils/Util";
 import AuthStorage from "./auth/AuthStorage";
 import { extractAndRefreshTokenIfExpire } from "./auth/RefreshTokenHelper";
-import * as Keychain from "react-native-keychain";
 
 export const apiClient = create({
   baseURL: API.BASE_URL + API.API_URL
@@ -23,6 +22,11 @@ export function resetApiClient(providedAuthToken?: string) {
   apiClient.addAsyncRequestTransform(async (request) => {
     request.headers.accept = "application/json";
 
+    const uni = await AuthStorage.getUni();
+    if (uni) {
+      request.headers.subdomain = uni.subdomain;
+    }
+
     let token =
       providedAuthToken ?? (await extractAndRefreshTokenIfExpire());
 
@@ -32,15 +36,6 @@ export function resetApiClient(providedAuthToken?: string) {
       return;
     }
     request.headers.Authorization = "Bearer " + token;
-
-    const uni = await AuthStorage.getUni();
-    if (uni) {
-      request.headers.subdomain = uni.subdomain;
-    } else if (token) {
-      // to remove a bug where after update user had token but no uni
-      await Keychain.resetGenericPassword();
-      request.headers.Authorization = "Bearer ";
-    }
   });
 }
 

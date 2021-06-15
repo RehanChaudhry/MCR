@@ -1,18 +1,15 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Uni } from "models/api_responses/UniSelectionResponseModel";
 import { UserModel } from "models/api_responses/UserModel";
 import { AppLog } from "utils/Util";
 import * as Keychain from "react-native-keychain";
 
 const key = "user_data";
+const uniKey = "uni_data";
 
 const storeUni = async (uni: Uni) => {
   try {
-    const user = await getUser();
-    if (user) {
-      user.uni = uni;
-      await storeUser(user);
-    }
-    throw new Error("Undefined user from keychain");
+    await AsyncStorage.setItem(uniKey, JSON.stringify(uni));
   } catch (error) {
     AppLog.log(() => "Error storing the uni", error);
   }
@@ -20,8 +17,10 @@ const storeUni = async (uni: Uni) => {
 
 const getUni = async () => {
   try {
-    const user = await getUser();
-    return user?.uni;
+    const uniAsString = await AsyncStorage.getItem(uniKey);
+    if (uniAsString) {
+      return JSON.parse(uniAsString) as Uni;
+    }
   } catch (error) {
     AppLog.warn("Error getting the uni", error);
   }
