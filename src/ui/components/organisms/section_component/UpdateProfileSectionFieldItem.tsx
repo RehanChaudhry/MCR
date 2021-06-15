@@ -4,9 +4,7 @@ import {
 } from "models/api_responses/RoommateAgreementResponseModel";
 import React from "react";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import { DynamicAppFormField } from "ui/components/templates/roommate_agreement/DynamicAppFormField";
-import { AppFormDropDown } from "ui/components/molecules/app_form/AppFormDropDown";
-import { SPACE, STRINGS } from "config";
+import { SPACE } from "config";
 import { StyleSheet, View } from "react-native";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppFormRadioButton } from "ui/components/molecules/app_form/AppFormRadioButton";
@@ -17,7 +15,6 @@ import ChevronRight from "assets/images/chevron_right.svg";
 import { FieldBox } from "ui/components/atoms/FieldBox";
 import { UploadProfilePhoto } from "ui/components/templates/basic_profile/UploadProfilePhoto";
 import { AppFormCheckBoxGroup } from "ui/components/molecules/app_form/AppFormCheckBoxGroup";
-import RoommateAgreementTerms from "ui/components/templates/roommate_agreement/RoommateAgreementTerms";
 import InstagramDark from "assets/images/instagram_icon.svg";
 import FacebookDark from "assets/images/facebook_icon.svg";
 import LikedInDark from "assets/images/linkedin_icon.svg";
@@ -25,6 +22,9 @@ import TikTokDark from "assets/images/tiktok_icon.svg";
 import SnapchatDark from "assets/images/snapchat_icon.svg";
 import TwitterDark from "assets/images/twitter_icon.svg";
 import YouTube from "assets/images/youtube_icon.svg";
+import SectionComponentAppSwitch from "ui/components/organisms/section_component/SectionComponentAppSwitch";
+import SectionComponentDropDown from "./SectionComponentDropDown";
+import { SectionComponentTextArea } from "ui/components/organisms/section_component/SectionComponentTextArea";
 
 type UpdateProfileSectionFieldItemProps = {
   listData: FormInputFieldData;
@@ -50,10 +50,10 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
 
   switch (listData.inputType) {
     case "agreement":
-      return <RoommateAgreementTerms name={listData.id.toString()} />;
+      return <SectionComponentAppSwitch name={listData.id.toString()} />;
     case "textarea":
       return (
-        <DynamicAppFormField
+        <SectionComponentTextArea
           label={listData?.label}
           placeHolder={listData?.placeholder}
           name={listData?.id.toString()}
@@ -62,36 +62,7 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
         />
       );
     case "dropdown":
-      return (
-        <AppFormDropDown
-          style={styles.padding}
-          name={listData.id.toString()}
-          validationLabelTestID={"genderValidationTestID"}
-          labelProps={{
-            text: listData.label,
-            weight: "semi-bold"
-          }}
-          isLocked={listData.isLocked}
-          appDropDownProps={{
-            title: STRINGS.profile.dropDownInitialValue.gender,
-            items: listData.options!,
-            selectedItemCallback: () => {
-              //setTitle(item.title);
-            },
-            style: [
-              styles.dropDown,
-              {
-                borderColor: !listData.isLocked
-                  ? theme.themedColors.border
-                  : theme.themedColors.borderSecondary,
-                backgroundColor: !listData.isLocked
-                  ? theme.themedColors.background
-                  : theme.themedColors.backgroundSecondary
-              }
-            ]
-          }}
-        />
-      );
+      return <SectionComponentDropDown listData={listData} />;
 
     case "checkbox":
       return (
@@ -258,7 +229,7 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   padding: {
-    paddingBottom: SPACE.lg
+    marginBottom: SPACE.lg
   }
 });
 export default UpdateProfileSectionFieldItem;
