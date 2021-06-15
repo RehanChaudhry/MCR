@@ -24,6 +24,7 @@ import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 import { useAuth } from "hooks";
 import { useCreateConversation } from "hooks/useCreateConversation";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
+import { AppLog } from "utils/Util";
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
   ProfileStackParamList,
@@ -50,6 +51,16 @@ type ProfileRouteProp = RouteProp<ProfileStackParamList, "ViewProfile">;
 // removes firstName, lastName, and modifies profilePicture object
 function modifyUiFields(_viewProfileUiData: Profile) {
   let modifiedItem = _viewProfileUiData?.sections?.[0]?.formInputs?.[0]!!;
+  modifiedItem.intendedMajor = _viewProfileUiData.major;
+  modifiedItem.homeTown = _viewProfileUiData.hometown;
+  modifiedItem.profilePicture =
+    (_viewProfileUiData?.sections[0]?.formInputs![0]?.userMeta!.length >
+      0 ??
+      0) &&
+    JSON.parse(
+      _viewProfileUiData?.sections[0]?.formInputs![0]?.userMeta![0]
+        .value ?? ""
+    );
   modifiedItem.firstName =
     _viewProfileUiData?.sections![0].formInputs![1].userMeta?.length === 0
       ? "N/A"
@@ -59,6 +70,10 @@ function modifyUiFields(_viewProfileUiData: Profile) {
       ? "N/A"
       : _viewProfileUiData?.sections![0].formInputs![2].userMeta![0].value;
   _viewProfileUiData?.sections?.[0].formInputs?.splice(0, 3, modifiedItem);
+
+  AppLog.logForcefully(
+    () => "viewProfileController : " + JSON.stringify(modifiedItem)
+  );
 }
 
 const ViewProfileController: FC<Props> = () => {

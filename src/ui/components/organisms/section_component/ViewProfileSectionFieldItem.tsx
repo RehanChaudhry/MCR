@@ -151,27 +151,6 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
         </>
       );
 
-    case "text":
-      return (
-        <>
-          <View style={styles.spacer} />
-          <HeadingWithText
-            headingText={listData.label}
-            text={
-              listData.userMeta?.length === 0
-                ? "N/A"
-                : listData.userMeta![0].value
-            }
-            headingFontWeight={"semi-bold"}
-            textStyle={styles.textStyle}
-            headingStyle={[
-              styles.headingStyle,
-              { color: theme.themedColors.labelSecondary }
-            ]}
-          />
-        </>
-      );
-
     case "url":
       const userMetaLinks =
         listData.userMeta?.length === 0
@@ -218,6 +197,9 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
           <ProfileHeader
             firstName={listData.firstName}
             lastName={listData.lastName}
+            profilePicture={listData.profilePicture}
+            matchGroupName={listData.intendedMajor}
+            homeTown={listData.homeTown}
           />
         </>
       );

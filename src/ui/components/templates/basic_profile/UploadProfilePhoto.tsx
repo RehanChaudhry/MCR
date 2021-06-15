@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACE.md
   },
   text: {
-    paddingTop: SPACE.xl
+    paddingTop: SPACE.lg
   },
   imageViewStyle: {
     height: 50,

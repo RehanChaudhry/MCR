@@ -1,4 +1,5 @@
 import EIntBoolean from "models/enums/EIntBoolean";
+import { ProfilePicture } from "models/User";
 
 export type RoommateAgreementResponseModel = {
   message: string;
@@ -27,6 +28,9 @@ export type FormInputFieldData = {
   updatedAt?: string;
   deletedAt?: null;
   userMeta?: UserMetaData[];
+  profilePicture?: ProfilePicture;
+  intendedMajor?: string;
+  homeTown: string;
 };
 
 export type OptionsData = {

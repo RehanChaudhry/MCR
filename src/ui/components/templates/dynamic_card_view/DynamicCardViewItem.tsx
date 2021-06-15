@@ -3,9 +3,10 @@ import { CardView } from "ui/components/atoms/CardView";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import { SectionsType } from "models/api_responses/DynamicFormSections";
 import { DynamicCardViewBody } from "ui/components/organisms/section_component/DynamicCardViewBody";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SPACE } from "config";
 import { useRoute } from "@react-navigation/native";
+import { grayShades } from "hooks/theme/ColorPaletteContainer";
 
 type DynamicCardViewItemProps = {
   section: SectionsType;
@@ -19,15 +20,20 @@ export const DynamicCardViewItem: React.FC<DynamicCardViewItemProps> = ({
   const updateProfileRoute = useRoute<any>();
   return (
     <CardView style={styles.cardView}>
-      {/*//when update profile is open then basic profile will be shown*/}
+      {/*//when update profile is open, then basic profile will be shown*/}
       {updateProfileRoute.params.updateProfile === true && (
-        <HeadingWithText
-          headingFontWeight={"semi-bold"}
-          headingText={section.title}
-          text={section.description}
-        />
+        <>
+          <HeadingWithText
+            headingFontWeight={"semi-bold"}
+            headingText={section.title}
+            text={section.description}
+            headingStyle={{ marginBottom: SPACE.sm }}
+          />
+
+          <View style={styles.horizontalLine} />
+        </>
       )}
-      {/*//when view profile is open basic profile will not be shown*/}
+      {/*//when view profile is open, basic profile will not be shown*/}
       {updateProfileRoute.params.updateProfile === false && (
         <HeadingWithText
           headingFontWeight={"semi-bold"}
@@ -56,5 +62,10 @@ const styles = StyleSheet.create({
     marginTop: SPACE.lg,
     paddingVertical: SPACE.lg,
     paddingHorizontal: SPACE.lg
+  },
+  horizontalLine: {
+    backgroundColor: grayShades.warmGray["300"],
+    height: 0.5,
+    marginTop: SPACE.lg
   }
 });
