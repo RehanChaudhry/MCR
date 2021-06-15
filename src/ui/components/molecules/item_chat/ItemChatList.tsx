@@ -18,6 +18,7 @@ import ListItemSeparator from "ui/components/atoms/ListItemSeparator";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
 import { User } from "models/User";
 import _ from "lodash";
+import { AppLog } from "utils/Util";
 
 export interface ItemChatListProps extends ViewStyle {
   onPress: () => void;
@@ -30,9 +31,9 @@ export const ItemChatList = React.memo<ItemChatListProps>(
     const { themedColors } = usePreferredTheme();
     const { user } = useAuth();
 
-    const [prettyTime, setPrettyTime] = useState<string>(
-      item.getFormattedDate()
-    );
+    let formattedDate = item.getFormattedDate();
+    AppLog.log(() => `Item: ${item.id}, formattedDate: ${formattedDate}`);
+    const [prettyTime, setPrettyTime] = useState<string>(formattedDate);
 
     //message will come null in case of create conversation
     let isMessageRead =
@@ -43,13 +44,19 @@ export const ItemChatList = React.memo<ItemChatListProps>(
       ) !== undefined;
 
     useEffect(() => {
-      let id = setTimeout(() => {
+      AppLog.log(
+        () =>
+          `In useEffect()... Item: ${item.id}, formattedDate: ${formattedDate}`
+      );
+      setPrettyTime(item.getFormattedDate());
+      let id = setInterval(() => {
         setPrettyTime(item.getFormattedDate());
-      }, 10000);
+      }, 5000);
       return () => {
-        clearTimeout(id);
+        clearInterval(id);
       };
-    });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formattedDate]);
 
     return (
       <TouchableOpacity onPress={onPress}>

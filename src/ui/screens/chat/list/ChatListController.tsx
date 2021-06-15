@@ -171,8 +171,7 @@ export const ChatListController: FC<Props> = ({
         ),
         []
       ),
-      conversationId: item.id,
-      isArchived: params?.status !== "Active"
+      conversationId: item.id
     });
   };
 
@@ -253,6 +252,9 @@ export const ChatListController: FC<Props> = ({
               //add item at index 0
               chatsCopy?.splice(0, 0, data);
 
+              AppLog.log(
+                () => "receive message : " + JSON.stringify(data)
+              );
               return _.uniqBy(chatsCopy, (item) => item.id);
             } else {
               return [data, ...chatsCopy!!];

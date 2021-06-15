@@ -6,7 +6,6 @@ export type ChatRootStackParamList = {
   ChatThread: {
     title: string[];
     conversationId: number;
-    isArchived?: boolean;
   };
 };
 

@@ -10,7 +10,7 @@ export type FriendsRootStackParamList = {
     agreementData?: AgreementData;
   };
   Profile: { isFrom: EScreen };
-  Chat: { title: string[]; conversationId: number; isArchived?: boolean };
+  Chat: { title: string[]; conversationId: number };
 };
 
 export const FriendsRootStack = createStackNavigator<FriendsRootStackParamList>();

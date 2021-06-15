@@ -269,19 +269,17 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       //remove id from message when sending to socket
       socket!!.current!!.emit("sendMessage", _.omit(prepareMessage, "id"));
 
-      //check if this chat is opened from archive list
-      if (params?.isArchived) {
-        //if chat is in archive and you message, the conversation has to move into active chats
-        ChatHelper.manipulateChatLists(
-          setActiveConversations,
-          inActiveConversations,
-          setInActiveConversations,
-          activeConversations,
-          false,
-          conversationId,
-          (prepareMessage as unknown) as Message
-        );
-      }
+      //remove chat from archive list if present, also
+      //update active and inactive chats list to reflect in chat listing as well
+      ChatHelper.manipulateChatLists(
+        setActiveConversations,
+        inActiveConversations,
+        setInActiveConversations,
+        activeConversations,
+        false,
+        conversationId,
+        (prepareMessage as unknown) as Message
+      );
     } else {
       //update message but with retry option
       prepareMessage.isLoading = false;

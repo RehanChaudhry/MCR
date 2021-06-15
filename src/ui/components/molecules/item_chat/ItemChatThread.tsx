@@ -13,6 +13,7 @@ import { useAuth, usePreferredTheme } from "hooks";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import Message from "models/Message";
 import { ContinuousProgress } from "ui/components/molecules/continuous_progress/ContinuousProgress";
+import { AppLog } from "utils/Util";
 
 export interface ItemChatThreadProps extends ViewStyle {
   item: Message | undefined;
@@ -25,22 +26,33 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
     const { themedColors } = usePreferredTheme();
     const currentUser = useAuth();
     const DateFormatter = new PrettyTimeFormat();
-    const [prettyTime, setPrettyTime] = useState<string>(
-      DateFormatter.getPrettyTime((item!.createdAt as unknown) as string)
+
+    let formattedDate = DateFormatter.getPrettyTime(
+      (item!.createdAt as unknown) as string
     );
+    AppLog.log(() => `Item: ${item?.id}, formattedDate: ${formattedDate}`);
+    const [prettyTime, setPrettyTime] = useState<string>(formattedDate);
 
     useEffect(() => {
-      let id = setTimeout(() => {
+      AppLog.log(
+        () =>
+          `In useEffect()... Item: ${item?.id}, formattedDate: ${formattedDate}`
+      );
+      setPrettyTime(
+        DateFormatter.getPrettyTime((item!.createdAt as unknown) as string)
+      );
+      let id = setInterval(() => {
         setPrettyTime(
           DateFormatter.getPrettyTime(
             (item!.createdAt as unknown) as string
           )
         );
-      }, 10000);
+      }, 5000);
       return () => {
-        clearTimeout(id);
+        clearInterval(id);
       };
-    });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formattedDate]);
 
     return (
       <View style={{ flexDirection: "column" }}>

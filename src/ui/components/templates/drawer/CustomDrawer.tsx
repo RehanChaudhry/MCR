@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import {
   Image,
   ScrollView,
@@ -30,6 +30,7 @@ import { SvgProps } from "react-native-svg";
 import { HomeDrawerParamList } from "routes";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { profileCompletedPercentage } from "models/api_responses/FetchMyProfileResponseModel";
+import { SocketHelper } from "utils/SocketHelper";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
   currentItem: string;
@@ -51,6 +52,19 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
       shouldNotDrawView?: boolean;
     };
   };
+
+  const connectSocket = useCallback(async () => {
+    await SocketHelper.getInstance(
+      "Bearer " + auth.user?.authentication?.accessToken
+    );
+  }, [auth.user]);
+  //connect socket just to tell server that user is online
+  useEffect(() => {
+    connectSocket()
+      .then((_) => {})
+      .catch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const DrawerItems: ItemType<HomeDrawerParamList> = {
     Matches: { name: "Matches", icon: Matches },

@@ -30,7 +30,7 @@ const createHeader = (
   };
 
   if (
-    !item.isMessageComesToday() &&
+    item.isMessageComesToday() &&
     lastHeaderTitle !== SenderType.NEW_MESSAGES
   ) {
     lastHeaderTitle = SenderType.NEW_MESSAGES;
@@ -39,7 +39,7 @@ const createHeader = (
   } else if (
     item.userType === SenderType.STAFF &&
     lastHeaderTitle !== SenderType.STAFF &&
-    item.isMessageComesToday()
+    !item.isMessageComesToday()
   ) {
     lastHeaderTitle = /*SenderType.STAFF*/ "STAFF";
     callback(lastHeaderTitle);
@@ -47,7 +47,7 @@ const createHeader = (
   } else if (
     item.userType === SenderType.STUDENTS &&
     lastHeaderTitle !== "STUDENTS" &&
-    item.isMessageComesToday()
+    !item.isMessageComesToday()
   ) {
     lastHeaderTitle = /*SenderType.STUDENTS*/ "STUDENTS";
     callback(lastHeaderTitle);
