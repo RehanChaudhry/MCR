@@ -2,6 +2,7 @@ import * as Yup from "yup";
 import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
 import { SchemaOf } from "yup";
 import { AgreementField } from "models/api_requests/GetAgreementApi";
+import { pattern } from "utils/Util";
 
 let FieldTypes = {
   text: (field: FormInputFieldData): SchemaOf<any> =>
@@ -18,7 +19,9 @@ let FieldTypes = {
   textarea: (field: FormInputFieldData): SchemaOf<any> =>
     Yup.string().required(computeValidationMessage(field)),
   agreement: (field: FormInputFieldData): SchemaOf<any> =>
-    Yup.string().required(computeValidationMessage(field))
+    Yup.string().required(computeValidationMessage(field)),
+  url: (field: FormInputFieldData): SchemaOf<any> =>
+    Yup.string().matches(pattern, computeValidationMessage(field))
 };
 
 export const createYupSchema = (
@@ -28,7 +31,7 @@ export const createYupSchema = (
     | FormInputFieldData
     | AgreementField
   )[]).reduce<FormInputFieldData | AgreementField>((_schema, field) => {
-    return field.isRequired === 1
+    return field.isRequired === 1 || field.inputType === "url"
       ? {
           ..._schema,
           // @ts-ignore

@@ -46,7 +46,7 @@ const SocialDetailForm: FC<Props> = ({
   return (
     <View style={mainContainerStyle}>
       <View style={styles.subContainer}>
-        {icon?.(theme.themedColors.label, 20, 20)}
+        {icon?.(theme.themedColors.label, 15, 15)}
         <AppLabel
           text={heading}
           weight={"semi-bold"}

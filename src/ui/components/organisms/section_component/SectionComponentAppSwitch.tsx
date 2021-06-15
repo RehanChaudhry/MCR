@@ -11,7 +11,7 @@ type Props = {
   name: string;
 };
 
-const RoommateAgreementTerms: FC<Props> = ({ name }) => {
+const SectionComponentAppSwitch: FC<Props> = ({ name }) => {
   const theme = usePreferredTheme();
 
   const {
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default RoommateAgreementTerms;
+export default SectionComponentAppSwitch;
