@@ -79,12 +79,12 @@ export const AppCompactButton = optimizedMemo<AppCompactButtonProps>(
               shouldTextChangeOnClick
                 ? isSelected
                   ? { color: theme.themedColors.primary }
-                  : { color: theme.themedColors.interface["700"] }
+                  : { color: theme.themedColors.interface["600"] }
                 : shouldTextColorChangeOnClick
                 ? isSelected
                   ? { color: theme.themedColors.primary }
-                  : { color: theme.themedColors.interface["700"] }
-                : { color: theme.themedColors.interface["700"] },
+                  : { color: theme.themedColors.interface["600"] }
+                : { color: theme.themedColors.interface["600"] },
               textStyle
             ]}
             text={
