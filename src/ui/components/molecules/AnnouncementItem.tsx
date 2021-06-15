@@ -91,7 +91,7 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
           }}
           onProfileImageClicked={onProfileImageClicked}
         />
-        {announcementItem.content && (
+        {announcementItem.content !== undefined && (
           <AppLabel
             text={announcementItem.content}
             style={[{ color: theme.themedColors.label }, style.text]}

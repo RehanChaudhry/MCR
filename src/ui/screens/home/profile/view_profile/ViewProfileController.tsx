@@ -47,37 +47,34 @@ type NotificationNavigationProp = StackNavigationProp<
 
 type ProfileRouteProp = RouteProp<ProfileStackParamList, "ViewProfile">;
 
+// removes firstName, lastName, and modifies profilePicture object
+function modifyUiFields(_viewProfileUiData: Profile) {
+  let modifiedItem = _viewProfileUiData?.sections?.[0]?.formInputs?.[0]!!;
+  modifiedItem.firstName =
+    _viewProfileUiData?.sections![0].formInputs![1].userMeta?.length === 0
+      ? "N/A"
+      : _viewProfileUiData?.sections![0].formInputs![1].userMeta![0].value;
+  modifiedItem.lastName =
+    _viewProfileUiData?.sections![0].formInputs![2].userMeta?.length === 0
+      ? "N/A"
+      : _viewProfileUiData?.sections![0].formInputs![2].userMeta![0].value;
+  _viewProfileUiData?.sections?.[0].formInputs?.splice(0, 3, modifiedItem);
+}
+
 const ViewProfileController: FC<Props> = () => {
   const auth = useAuth();
   const [viewProfileUiData, setViewProfileUiData] = useState<Profile>();
 
   const createConversation = useCreateConversation();
-  const { user } = useAuth();
 
-  //view  profile UI integration and modification in data for profile header
   useEffect(() => {
-    //data modification for profile header
-    let modifiedItem = auth.user?.profile?.sections?.[0]
-      ?.formInputs?.[0]!!;
-    modifiedItem.firstName =
-      auth.user?.profile?.sections![0].formInputs![1].userMeta?.length ===
-      0
-        ? "N/A"
-        : auth.user?.profile?.sections![0].formInputs![1].userMeta![0]
-            .value;
-    modifiedItem.lastName =
-      auth.user?.profile?.sections![0].formInputs![2].userMeta?.length ===
-      0
-        ? "N/A"
-        : auth.user?.profile?.sections![0].formInputs![2].userMeta![0]
-            .value;
-    auth.user?.profile?.sections?.[0].formInputs?.splice(
-      0,
-      3,
-      modifiedItem
+    let _viewProfileUiData: Profile = JSON.parse(
+      JSON.stringify(auth.user?.profile)
     );
 
-    setViewProfileUiData(auth.user?.profile);
+    modifyUiFields(_viewProfileUiData);
+
+    setViewProfileUiData(_viewProfileUiData);
   }, [auth.user]);
 
   const navigation = useNavigation<ProfileNavigationProp>();
@@ -98,7 +95,7 @@ const ViewProfileController: FC<Props> = () => {
 
   const moveToChatScreen = async (userId: number) => {
     const createConversationResult = await createConversation(
-      [user?.profile?.id!!, userId],
+      [auth.user?.profile?.id!!, userId],
       setActiveConversations,
       inActiveConversations
     );

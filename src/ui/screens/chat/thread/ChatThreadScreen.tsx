@@ -4,7 +4,7 @@ import { ItemChatThread } from "ui/components/molecules/item_chat/ItemChatThread
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
-import { AppLog, listContentContainerStyle } from "utils/Util";
+import { listContentContainerStyle } from "utils/Util";
 import Strings from "config/Strings";
 import { SPACE } from "config";
 import Message from "models/Message";
@@ -32,7 +32,7 @@ export const ChatThreadScreen = React.memo<Props>(
     retryCallback
   }) => {
     const renderItem = ({ item }: { item: Message | undefined }) => {
-      AppLog.log(() => "rendering list item : " + JSON.stringify(item));
+      //AppLog.log(() => "rendering list item : " + JSON.stringify(item));
       return <ItemChatThread item={item} retry={retry} />;
     };
 

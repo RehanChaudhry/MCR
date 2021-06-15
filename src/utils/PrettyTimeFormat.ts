@@ -28,7 +28,11 @@ export class PrettyTimeFormat {
       let prettyTime = prettyMilliseconds(millis, { compact: compact });
 
       /* AppLog.log(
-        "pretty date is : " + prettyTime + " and original date is : " + date
+        () =>
+          "pretty date is : " +
+          prettyTime +
+          " and original date is : " +
+          date
       );*/
 
       if (prettyTime[prettyTime.length - 1] === "y") {
@@ -42,7 +46,12 @@ export class PrettyTimeFormat {
       } else if (prettyTime.slice(-2) === "ms") {
         prettyTime = "Just Now";
       } else if (prettyTime[prettyTime.length - 1] === "s") {
-        prettyTime = prettyTime.replace(/.$/, this.secondsAgoText);
+        //lest than 30 seconds send just now
+        if (Number(prettyTime.slice(0, -1)) <= 30) {
+          prettyTime = "Just Now";
+        } else {
+          prettyTime = prettyTime.replace(/.$/, this.secondsAgoText);
+        }
       }
 
       return prettyTime;

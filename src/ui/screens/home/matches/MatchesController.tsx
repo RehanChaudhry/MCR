@@ -77,7 +77,7 @@ const MatchesController: FC<Props> = () => {
       inActiveConversations
     );
 
-    AppLog.logForcefully(
+    AppLog.log(
       () =>
         "create conversation : " + JSON.stringify(createConversationResult)
     );
@@ -86,8 +86,7 @@ const MatchesController: FC<Props> = () => {
         title: [
           profileMatch.user?.getFullName() ?? STRINGS.common.not_found
         ],
-        conversationId: createConversationResult?.id!,
-        isArchived: createConversationResult.status === "active"
+        conversationId: createConversationResult?.id!
       });
     }
   };

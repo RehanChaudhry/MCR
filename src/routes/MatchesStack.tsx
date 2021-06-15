@@ -6,7 +6,7 @@ import { AgreementData } from "models/api_responses/AgreementAnswerResponseModel
 export type MatchesStackParamList = {
   Matches: undefined;
   MatchInfo: undefined;
-  Chat: { title: string[]; conversationId: number; isArchived?: boolean };
+  Chat: { title: string[]; conversationId: number };
   Profile: { isFrom: EScreen; updateProfile: boolean };
   RoommateAgreement: { isFrom: EScreen };
   UpdateProfile: { isFrom: EScreen };

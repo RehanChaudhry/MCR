@@ -41,5 +41,5 @@ export const createYupSchema = (
 };
 
 function computeValidationMessage(field: FormInputFieldData) {
-  return field?.name?.[0] + field.name?.slice(1) + " is required";
+  return field?.label + " is required";
 }

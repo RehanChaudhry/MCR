@@ -30,13 +30,15 @@ export class Conversation {
   getFormattedDate() {
     let DateFormatter = new PrettyTimeFormat("m ago");
 
-    return this.isMessageComesToday()
+    /*this.isMessageComesToday()
       ? DateFormatter.formatTime(this.lastMessagedAt.toString())
-      : DateFormatter.getPrettyTime(
-          this.lastMessagedAt !== undefined
-            ? this.lastMessagedAt.toString()
-            : ""
-        );
+      :*/
+
+    return DateFormatter.getPrettyTime(
+      this.lastMessagedAt !== undefined
+        ? this.lastMessagedAt.toString()
+        : ""
+    );
   }
 }
 

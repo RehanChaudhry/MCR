@@ -148,16 +148,16 @@ const UpdateProfileController: FC<Props> = () => {
     }
   );
 
-  const fetchUiDataApi = useApi<any, FetchMyProfileResponseModel>(
+  const fetchProfileApi = useApi<any, FetchMyProfileResponseModel>(
     AuthApis.fetchMyProfile
   );
 
   const fetchUpdatedProfile = useCallback(async () => {
-    const { hasError, dataBody } = await fetchUiDataApi.request([]);
+    const { hasError, dataBody } = await fetchProfileApi.request([]);
 
     if (hasError) {
       SimpleToast.show(
-        "Please try agian later \n" + fetchUiDataApi.error,
+        "Please try agian later \n" + fetchProfileApi.error,
         SimpleToast.SHORT
       );
     } else {
@@ -165,7 +165,7 @@ const UpdateProfileController: FC<Props> = () => {
       SimpleToast.show("Your profile has been updated successfully");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchUiDataApi]);
+  }, [fetchProfileApi]);
 
   return (
     <>

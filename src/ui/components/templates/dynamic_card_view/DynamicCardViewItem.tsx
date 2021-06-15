@@ -8,12 +8,12 @@ import { SPACE } from "config";
 import { useRoute } from "@react-navigation/native";
 
 type DynamicCardViewItemProps = {
-  sections: SectionsType;
+  section: SectionsType;
   showProgressBar?: boolean;
 };
 
 export const DynamicCardViewItem = React.memo<DynamicCardViewItemProps>(
-  ({ sections, showProgressBar }) => {
+  ({ section, showProgressBar }) => {
     const updateProfileRoute = useRoute<any>();
     return (
       <CardView style={styles.cardView}>
@@ -21,8 +21,8 @@ export const DynamicCardViewItem = React.memo<DynamicCardViewItemProps>(
         {updateProfileRoute.params.updateProfile === true && (
           <HeadingWithText
             headingFontWeight={"semi-bold"}
-            headingText={sections.title}
-            text={sections.description}
+            headingText={section.title}
+            text={section.description}
           />
         )}
         {/*//when view profile is open basic profile will not be shown*/}
@@ -30,19 +30,17 @@ export const DynamicCardViewItem = React.memo<DynamicCardViewItemProps>(
           <HeadingWithText
             headingFontWeight={"semi-bold"}
             headingText={
-              sections.title === "Basic Profile"
-                ? undefined
-                : sections.title
+              section.title === "Basic Profile" ? undefined : section.title
             }
             text={
-              sections.title === "Basic Profile"
+              section.title === "Basic Profile"
                 ? undefined
-                : sections.description
+                : section.description
             }
           />
         )}
         <SectionComponent
-          listData={sections.formInputs}
+          listData={section.formInputs}
           showProgressBar={showProgressBar ?? true}
         />
       </CardView>

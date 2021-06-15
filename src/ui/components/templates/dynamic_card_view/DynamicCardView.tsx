@@ -14,7 +14,7 @@ export const DynamicCardView = React.memo<Props>(
     const listItem = ({ item }: { item: SectionsType }) => {
       return (
         <DynamicCardViewItem
-          sections={item}
+          section={item}
           showProgressBar={showProgressBar}
         />
       );

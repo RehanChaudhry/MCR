@@ -64,6 +64,8 @@ export const ChatHelper = {
             (listItem) => listItem.id === conversationId
           );
 
+          // @ts-ignore
+          item!!.lastMessagedAt = message?.createdAt;
           item!!.message = [message!!];
           chatsCopy?.splice(
             prevState?.findIndex((_item) => _item.id === conversationId)!!,
@@ -82,6 +84,8 @@ export const ChatHelper = {
 
           //add item in active chat list
           if (findItem !== undefined) {
+            // @ts-ignore
+            findItem.lastMessagedAt = message?.createdAt;
             findItem.message = [message!!]; //replace conversation from new object
             return [findItem, ...prevState];
           }

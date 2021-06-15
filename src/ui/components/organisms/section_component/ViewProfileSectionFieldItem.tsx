@@ -14,7 +14,7 @@ type CustomViewProfileProps = {
   listData: FormInputFieldData;
 };
 
-export const CustomViewProfileItems = React.memo<CustomViewProfileProps>(
+export const ViewProfileSectionFieldItem = React.memo<CustomViewProfileProps>(
   ({ listData }) => {
     const theme = usePreferredTheme();
 
