@@ -1,45 +1,49 @@
 {
-  "duration": 458,
+  "duration": 564,
   "problem": null,
   "originalError": null,
   "ok": true,
   "status": 200,
   "headers": {
+    "cf-request-id": "0aafd969420000c6153fa4e000000001",
     "content-type": "application/json; charset=utf-8",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=5AtyxZkJRUt4bdyPMm4xQI9Qqnu8TQANddnDSqqCo9vgwfvuBnlRbHE5z1dvzIGJ0gikGc5iMv%2BDryD%2FP80Imkru3rywQyCyynnyJJPjXsZqVZ2suutF%2BKLkYXm9wmdp\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
-    "x-frame-options": "SAMEORIGIN",
-    "cf-request-id": "0aaaf56ac60000c6198b2a0000000001",
-    "cf-cache-status": "DYNAMIC",
-    "x-powered-by": "Express",
-    "date": "Mon, 14 Jun 2021 07:11:23 GMT",
-    "cf-ray": "65f1be8adc65c619-KHI",
-    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
-    "x-xss-protection": "1; mode=block",
-    "content-encoding": "br",
-    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
-    "server": "cloudflare",
-    "strict-transport-security": "max-age=0; includeSubDomains",
-    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
     "x-content-type-options": "nosniff",
-    "etag": "W/\"372-p9z3d1wCUF8o29xRXrlXXwANG+w\"",
-    "vary": "Origin"
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=8HUbEW%2FDUjTHJdQ0mjMm4qLpJHlGgDSFqsOzeznyuOVnLxuDq5x1QiwMZrDScIjdkasTVzI6tKXy6%2Bq6gh0PnTMScn%2FFhgUEfNIk2DgGreJWavxwPjyjBlxTfqGgVx7g\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "65f991bb9bb6c615-KHI",
+    "x-powered-by": "Express",
+    "x-xss-protection": "1; mode=block",
+    "vary": "Accept-Encoding, Origin",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
+    "cf-cache-status": "DYNAMIC",
+    "x-frame-options": "SAMEORIGIN",
+    "date": "Tue, 15 Jun 2021 05:58:54 GMT",
+    "server": "cloudflare",
+    "etag": "W/\"29-ay7GTOfLJMl1BhcyxVF2urQHM0s\""
   },
   "config": {
-    "url": "relation",
+    "url": "relation/matches",
     "method": "get",
     "headers": {
       "Accept": "application/json",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzA2LCJ1c2VySWQiOjY0LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJ1cGRhdGUtYWdyZWVtZW50LWFuc3dlciIsInF1ZXN0aW9uYWlyZS1hbnN3ZXIiLCJ1c2VycyIsIm1hdGNoaW5nLWluZm9ybWF0aW9uIiwicmVsYXRpb24iLCJjaGF0IiwiZGVsZXRlLWZpbGUiXSwiaWF0IjoxNjIzNjUyMjMzLCJleHAiOjE2MjYyNDQyMzN9.4xCpHosd-DFNz5LlKHazkZjWt_u56KN0_Z6LA29eezg"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzM4LCJ1c2VySWQiOjY0LCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJ1cGRhdGUtYWdyZWVtZW50LWFuc3dlciIsInF1ZXN0aW9uYWlyZS1hbnN3ZXIiLCJ1c2VycyIsIm1hdGNoaW5nLWluZm9ybWF0aW9uIiwicmVsYXRpb24iLCJjaGF0IiwiZGVsZXRlLWZpbGUiXSwiaWF0IjoxNjIzNjY3MzQ5LCJleHAiOjE2MjYyNTkzNDl9.LjKSeCd_IYe2kG0BVDv8yoKzqiWC4hAfxM7dpMIhsnY"
     },
     "params": {
-      "type": "roommates",
+      "type": "matches",
+      "gender": "female",
+      "paginate": true,
       "page": 1,
-      "limit": 9,
-      "paginate": true
+      "limit": 10
     },
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
-    "transformRequest": [null],
-    "transformResponse": [null],
+    "transformRequest": [
+      null
+    ],
+    "transformResponse": [
+      null
+    ],
     "timeout": 0,
     "xsrfCookieName": "XSRF-TOKEN",
     "xsrfHeaderName": "X-XSRF-TOKEN",
@@ -48,59 +52,7 @@
   },
   "data": {
     "message": "Success",
-    "data": [
-      {
-        "userId": 43,
-        "agreementId": 23,
-        "isModerator": 0,
-        "status": "accepted",
-        "id": 43,
-        "isFriend": 1,
-        "isRoommate": 1,
-        "acceptee": null,
-        "blockee": null,
-        "user": {
-          "firstName": "Johnna",
-          "lastName": "Tigue",
-          "major": "Culinary Arts",
-          "hometown": "New Maud",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/97.jpg",
-            "originalName": "97.jpg"
-          },
-          "genderId": 1,
-          "floorPlanRoomId": 3,
-          "matchGroupId": 2,
-          "matchGroupName": "Sophomore"
-        }
-      },
-      {
-        "userId": 44,
-        "agreementId": 23,
-        "isModerator": 0,
-        "status": "accepted",
-        "id": 44,
-        "isFriend": 1,
-        "isRoommate": 1,
-        "acceptee": null,
-        "blockee": null,
-        "user": {
-          "firstName": "Despina",
-          "lastName": "Bayard",
-          "major": "Fine Arts",
-          "hometown": "North Marcelino",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/30.jpg",
-            "originalName": "30.jpg"
-          },
-          "genderId": 1,
-          "floorPlanRoomId": 15,
-          "matchGroupId": 1,
-          "matchGroupName": "Freshman"
-        }
-      }
-    ],
-    "count": 2,
-    "pendingCount": 0
+    "data": [],
+    "count": 0
   }
 }

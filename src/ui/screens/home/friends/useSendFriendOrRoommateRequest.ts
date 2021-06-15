@@ -3,6 +3,7 @@ import { UpdateRelationApiResponseModel } from "models/api_responses/UpdateRelat
 import RelationModel from "models/RelationModel";
 import { useCallback, useState } from "react";
 import { Alert } from "react-native";
+import SimpleToast from "react-native-simple-toast";
 import { useApi } from "repo/Client";
 import RelationApis from "repo/home/RelationApis";
 
@@ -36,6 +37,7 @@ export default (
         setShouldShowPb(false);
         return;
       } else {
+        SimpleToast.show(dataBody.message);
         try {
           onSuccess();
         } finally {
