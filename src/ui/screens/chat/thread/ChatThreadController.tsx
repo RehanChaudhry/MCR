@@ -37,7 +37,7 @@ import SimpleToast from "react-native-simple-toast";
 import { SocketHelper } from "utils/SocketHelper";
 import { Socket } from "socket.io-client";
 import { ChatHelper } from "utils/ChatHelper";
-import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
+import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import _ from "lodash";
 import nextId from "react-id-generator";
 
@@ -144,7 +144,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     setActiveConversations,
     inActiveConversations,
     setInActiveConversations
-  } = useContext(MyFriendsContext);
+  } = useContext(AppDataContext);
 
   async function handleUpdateConversationApi() {
     const {
@@ -292,7 +292,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     if (!isRetry) {
       // @ts-ignore
       setMessages((prevState) => {
-        return [...[prepareMessage], ...(prevState || [])];
+        return _.cloneDeep([prepareMessage, ...(prevState || [])]);
       });
     } else {
       //update message since we are retrying

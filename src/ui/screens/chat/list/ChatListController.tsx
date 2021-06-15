@@ -30,7 +30,7 @@ import { Socket } from "socket.io-client";
 import { SocketHelper } from "utils/SocketHelper";
 import { useAuth } from "hooks";
 import _ from "lodash";
-import { MyFriendsContext } from "ui/screens/home/friends/AppDataProvider";
+import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import { ChatHelper } from "utils/ChatHelper";
 
 type ChatRootNavigationProp = StackNavigationProp<ChatRootStackParamList>;
@@ -65,7 +65,7 @@ export const ChatListController: FC<Props> = ({
     setActiveConversations,
     inActiveConversations,
     setInActiveConversations
-  } = useContext(MyFriendsContext);
+  } = useContext(AppDataContext);
 
   const loadChatsApi = useApi<ChatRequestModel, ChatResponseModel>(
     ChatApis.getChats

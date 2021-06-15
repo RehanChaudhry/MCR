@@ -171,11 +171,8 @@ const UpdateProfileController: FC<Props> = () => {
     <>
       {useLazyLoadInterface(
         <UpdateProfileView
-          openUpdateQuestionnaireScreen={openQuestionnaireScreen}
           infoTextShown={infoTextShown}
-          handleUpdateProfile={(_requestModel) => {
-            handleUpdateProfile(_requestModel);
-          }}
+          handleUpdateProfile={handleUpdateProfile}
           updateProfileUiData={auth.user?.profile}
           shouldShowProgressBar={updateProfileApi.loading}
         />,
