@@ -105,10 +105,10 @@ export default {
   whats_new: "What’s new, Zane?",
   matches: {
     match_score: "Match Score: ",
-    action_add_friend: "Add Friend",
-    label_cancel_request: "Cancel Request",
     placeholder_search_keyword: "Search by keyword",
     title: "Matches",
+    action_add_friend: "Add Friend",
+    label_cancel_request: "Cancel Request",
     label_not_eligible: "Not Eligible",
     label_roommate_request: "Roommate Request",
     label_request_received: "Request Received",
@@ -282,7 +282,8 @@ export default {
   },
 
   comments: {
-    comments: "Comments"
+    comments: "Comments",
+    typingHint: "Start typing your comment"
   },
 
   announcement: {

@@ -1,49 +1,47 @@
 {
-  "duration": 466,
+  "duration": 807,
   "problem": null,
   "originalError": null,
   "ok": true,
   "status": 200,
   "headers": {
-    "cf-request-id": "0ab1210b8c0000c619ba39d000000001",
     "content-type": "application/json; charset=utf-8",
-    "x-content-type-options": "nosniff",
-    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
-    "strict-transport-security": "max-age=0; includeSubDomains",
-    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=5v0zYI67mLzKEOiTUgoseKT17eEKWh0n%2FtaBYEcNgje7yX9sc70r%2BRNyPJmiZBpmLtfhPAYJE4IUKFStuf1jgs7XqxP34dP5FT2p1l2cgtIhCHs3LKjYsoa3XaJ2VWbh\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
-    "cf-ray": "65fb9df27d6cc619-KHI",
-    "x-powered-by": "Express",
-    "x-xss-protection": "1; mode=block",
-    "vary": "Origin",
-    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
-    "cf-cache-status": "DYNAMIC",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=4VrpEAZh%2BX8HneuXpmcU%2Fj5lYDiwQ%2BUoNeY4%2BvYh9PIKlXTJtkxHnjNvYUwuFUrmb0XRjzpcfVPAOL%2FFI%2B2VNqILLqZc9cBY1%2FC2PujZrk%2BIByCjAW%2Fl0UB229QtdXBl\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
     "x-frame-options": "SAMEORIGIN",
-    "date": "Tue, 15 Jun 2021 11:56:46 GMT",
+    "cf-request-id": "0ab20895050000c60da883c000000001",
+    "cf-cache-status": "DYNAMIC",
+    "x-powered-by": "Express",
+    "date": "Tue, 15 Jun 2021 16:09:40 GMT",
+    "cf-ray": "65fd10680f6cc60d-KHI",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
+    "x-xss-protection": "1; mode=block",
+    "content-encoding": "br",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
     "server": "cloudflare",
-    "etag": "W/\"de7-vfwkQ9Xqm5zo3T4vfT8gxt2lA64\""
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "x-content-type-options": "nosniff",
+    "etag": "W/\"1173-fXGGSWmFh+vgIsjUKIo+VX+Co4c\"",
+    "vary": "Accept-Encoding, Origin"
   },
   "config": {
-    "url": "log",
+    "url": "relation/matches",
     "method": "get",
     "headers": {
       "Accept": "application/json",
       "subdomain": "ohio",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDEsInVzZXJJZCI6NjQsImNsaWVudElkIjoiMSIsInNjb3BlcyI6WyJjb21tdW5pdHkiLCJhbm5vdW5jZW1lbnRzIiwibGlzdC1xdWVzdGlvbiIsImxpc3Qtc2VjdGlvbiIsImxpc3QtYWdyZWVtZW50LWZpZWxkcyIsInZpZXctc3RhdGljLWNvbnRlbnQiLCJsaXN0LWNvbmZpZ3VyYXRpb24iLCJsaXN0LWZvcm0taW5wdXQiLCJzeXN0ZW0tbG9nIiwiY29udmVyc2F0aW9uIiwibWFyay1zcGFtIiwibm90aWZpY2F0aW9uIiwiYWdyZWVtZW50LWFuc3dlciIsInVwZGF0ZS1hZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiLCJkZWxldGUtZmlsZSJdLCJpYXQiOjE2MjM3NTgwOTQsImV4cCI6MTYyNjM1MDA5NH0.1GlLuyyvlXq7lgBzxAIMuEeeWzMazl4aiGBDUSAd1OA"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODcsInVzZXJJZCI6MTE2MSwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwidXBkYXRlLWFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCIsImRlbGV0ZS1maWxlIl0sImlhdCI6MTYyMzc3MzM3OCwiZXhwIjoxNjI2MzY1Mzc4fQ.eeQrf8zyo1z-jZEx30eaAxkz64oSFu-rc1jihWrfQeg"
     },
     "params": {
-      "type": "friend-request",
+      "type": "matches",
+      "paginate": true,
       "page": 1,
-      "limit": 9,
-      "paginate": true
+      "limit": 10,
+      "filterBy": "matches"
     },
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
-    "transformRequest": [
-      null
-    ],
-    "transformResponse": [
-      null
-    ],
+    "transformRequest": [null],
+    "transformResponse": [null],
     "timeout": 0,
     "xsrfCookieName": "XSRF-TOKEN",
     "xsrfHeaderName": "X-XSRF-TOKEN",
@@ -51,203 +49,269 @@
     "maxBodyLength": -1
   },
   "data": {
-    "message": "Success.",
+    "message": "Success",
     "data": [
       {
-        "id": 3299,
-        "userId": 64,
-        "entityId": 64,
-        "type": "student",
-        "action": "login",
-        "data": "You have signed in successfully.",
-        "createdAt": "2021-06-15T11:54:54.000Z",
-        "updatedAt": "2021-06-15T11:54:54.000Z",
+        "userId": 28,
+        "matches": 0,
+        "matchScore": "0.0",
         "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
+          "id": 28,
+          "firstName": "Amandy",
+          "lastName": "Handmore",
           "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
-            "originalName": "47.jpg"
-          }
-        }
-      },
-      {
-        "id": 3297,
-        "userId": 64,
-        "entityId": 293,
-        "type": "friend-request",
-        "action": "create",
-        "data": {
-          "receiverId": 293,
-          "receiverLastName": "Sodor",
-          "receiverFirstName": "Domeniga"
+            "fileURL": "https://randomuser.me/api/portraits/men/42.jpg",
+            "originalName": "42.jpg"
+          },
+          "hometown": "Grahamstad",
+          "major": "Counseling",
+          "floorPlanRoomId": 4,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 2,
+          "matchGroupName": "Sophomore"
         },
-        "createdAt": "2021-06-15T11:52:46.000Z",
-        "updatedAt": "2021-06-15T11:52:46.000Z",
-        "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
-            "originalName": "47.jpg"
-          }
-        }
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
       },
       {
-        "id": 3291,
-        "userId": 64,
-        "entityId": 1135,
-        "type": "friend-request",
-        "action": "create",
-        "data": {
-          "receiverId": 1135,
-          "receiverLastName": "Moar",
-          "receiverFirstName": "Sammy"
+        "userId": 29,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 29,
+          "firstName": "Lynnell",
+          "lastName": "Ballston",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/11.jpg",
+            "originalName": "11.jpg"
+          },
+          "hometown": "East Annamae",
+          "major": "Jazz Studies",
+          "floorPlanRoomId": 15,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 1,
+          "matchGroupName": "Freshman"
         },
-        "createdAt": "2021-06-15T11:47:48.000Z",
-        "updatedAt": "2021-06-15T11:47:48.000Z",
-        "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
-            "originalName": "47.jpg"
-          }
-        }
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
       },
       {
-        "id": 3290,
-        "userId": 64,
-        "entityId": 30,
-        "type": "friend-request",
-        "action": "create",
-        "data": {
-          "receiverId": 30,
-          "receiverLastName": "Cronk",
-          "receiverFirstName": "Honey"
+        "userId": 30,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 30,
+          "firstName": "Honey",
+          "lastName": "Cronk",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/57.jpg",
+            "originalName": "57.jpg"
+          },
+          "hometown": "West Georgiana",
+          "major": "Home Economics",
+          "floorPlanRoomId": 13,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 2,
+          "matchGroupName": "Sophomore"
         },
-        "createdAt": "2021-06-15T11:47:37.000Z",
-        "updatedAt": "2021-06-15T11:47:37.000Z",
-        "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
-            "originalName": "47.jpg"
-          }
-        }
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
       },
       {
-        "id": 3289,
-        "userId": 64,
-        "entityId": 513,
-        "type": "friend-request",
-        "action": "create",
-        "data": {
-          "receiverId": 513,
-          "receiverLastName": "Wort",
-          "receiverFirstName": "Onfroi"
+        "userId": 31,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 31,
+          "firstName": "Zane",
+          "lastName": "Mayes",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/5.jpg",
+            "originalName": "5.jpg"
+          },
+          "hometown": "Lemkemouth",
+          "major": "Latin American Studies",
+          "floorPlanRoomId": 9,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 3,
+          "matchGroupName": "Junior"
         },
-        "createdAt": "2021-06-15T11:47:27.000Z",
-        "updatedAt": "2021-06-15T11:47:27.000Z",
-        "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
-            "originalName": "47.jpg"
-          }
-        }
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
       },
       {
-        "id": 3288,
-        "userId": 64,
-        "entityId": 263,
-        "type": "friend-request",
-        "action": "create",
-        "data": {
-          "receiverId": 263,
-          "receiverLastName": "Chinnery",
-          "receiverFirstName": "Ora"
+        "userId": 32,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 32,
+          "firstName": "Tressa",
+          "lastName": "Littler",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/women/21.jpg",
+            "originalName": "21.jpg"
+          },
+          "hometown": "Volkmanshire",
+          "major": "Pharmacy",
+          "floorPlanRoomId": 14,
+          "genderId": 1,
+          "gender": "Female",
+          "status": "active",
+          "matchGroupId": 3,
+          "matchGroupName": "Junior"
         },
-        "createdAt": "2021-06-15T11:47:13.000Z",
-        "updatedAt": "2021-06-15T11:47:13.000Z",
-        "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
-            "originalName": "47.jpg"
-          }
-        }
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
       },
       {
-        "id": 3287,
-        "userId": 64,
-        "entityId": 749,
-        "type": "friend-request",
-        "action": "create",
-        "data": {
-          "receiverId": 749,
-          "receiverLastName": "Pietzker",
-          "receiverFirstName": "Rhys"
+        "userId": 33,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 33,
+          "firstName": "Clarinda",
+          "lastName": "Whetzel",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/women/96.jpg",
+            "originalName": "96.jpg"
+          },
+          "hometown": "Zettafurt",
+          "major": "Radio and Television",
+          "floorPlanRoomId": 15,
+          "genderId": 1,
+          "gender": "Female",
+          "status": "active",
+          "matchGroupId": 1,
+          "matchGroupName": "Freshman"
         },
-        "createdAt": "2021-06-15T11:47:09.000Z",
-        "updatedAt": "2021-06-15T11:47:09.000Z",
-        "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
-            "originalName": "47.jpg"
-          }
-        }
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
       },
       {
-        "id": 3285,
-        "userId": 64,
-        "entityId": 64,
-        "type": "profile",
-        "action": "update",
-        "data": null,
-        "createdAt": "2021-06-15T11:45:16.000Z",
-        "updatedAt": "2021-06-15T11:45:16.000Z",
+        "userId": 34,
+        "matches": 0,
+        "matchScore": "0.0",
         "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
+          "id": 34,
+          "firstName": "Meridith",
+          "lastName": "Ridgeway",
           "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
-            "originalName": "47.jpg"
-          }
-        }
+            "fileURL": "https://randomuser.me/api/portraits/women/88.jpg",
+            "originalName": "88.jpg"
+          },
+          "hometown": "Port Stantonton",
+          "major": "Engineering Mechanics",
+          "floorPlanRoomId": 6,
+          "genderId": 1,
+          "gender": "Female",
+          "status": "active",
+          "matchGroupId": 2,
+          "matchGroupName": "Sophomore"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
       },
       {
-        "id": 3284,
-        "userId": 64,
-        "entityId": null,
-        "type": "questionnaire",
-        "action": "create",
-        "data": null,
-        "createdAt": "2021-06-15T11:44:06.000Z",
-        "updatedAt": "2021-06-15T11:44:06.000Z",
+        "userId": 37,
+        "matches": 0,
+        "matchScore": "0.0",
         "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
+          "id": 37,
+          "firstName": "Maryjo",
+          "lastName": "Rathjen",
           "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/47.jpg",
-            "originalName": "47.jpg"
-          }
-        }
+            "fileURL": "https://randomuser.me/api/portraits/men/56.jpg",
+            "originalName": "56.jpg"
+          },
+          "hometown": "New Lisandro",
+          "major": "Feed Science",
+          "floorPlanRoomId": 14,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 1,
+          "matchGroupName": "Freshman"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
+      },
+      {
+        "userId": 38,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 38,
+          "firstName": "Salvatore",
+          "lastName": "Voorhis",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/91.jpg",
+            "originalName": "91.jpg"
+          },
+          "hometown": "Ryleemouth",
+          "major": "Web Design",
+          "floorPlanRoomId": 7,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 2,
+          "matchGroupName": "Sophomore"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
+      },
+      {
+        "userId": 40,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 40,
+          "firstName": "Theo",
+          "lastName": "Easton",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/4.jpg",
+            "originalName": "4.jpg"
+          },
+          "hometown": "Port Georgetteberg",
+          "major": "Asian-American Studies",
+          "floorPlanRoomId": 7,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 3,
+          "matchGroupName": "Junior"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
       }
-    ]
+    ],
+    "count": 391
   }
 }

@@ -113,6 +113,16 @@ const MatchesController: FC<Props> = () => {
     [navigation]
   );
 
+  const moveToFriendRequests = useCallback(
+    (_: RelationModel) => {
+      navigation.navigate("ConnectRequests", {
+        title: "Friend Requests",
+        type: ConnectRequestType.FRIEND_REQUESTS
+      });
+    },
+    [navigation]
+  );
+
   // Matches API
   const relationsApi = useApi<
     PaginationParamsModel,
@@ -409,6 +419,7 @@ const MatchesController: FC<Props> = () => {
       moveToChatScreen={moveToChatScreen}
       moveToProfileScreen={moveToProfileScreen}
       moveToRoommateRequests={moveToRoommateRequests}
+      moveToFriendRequests={moveToFriendRequests}
     />
   );
 };

@@ -6,6 +6,6 @@ export type MatchInfoApiResponseModel = {
 export type MatchInfoData = {
   currentStatus?: string;
   deadline?: string;
-  noOfRoommates?: number;
+  noOfRoommates?: string;
   criteria?: string;
 };

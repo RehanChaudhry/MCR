@@ -67,7 +67,7 @@ export const CommentsView = React.memo<Props>(
 
         <WriteMessage
           btnPressCallback={sentMessage}
-          appInputPlaceHolder={Strings.chatThreadScreen.typingHint}
+          appInputPlaceHolder={Strings.comments.typingHint}
           btnImage={() => (
             <Chat
               width={24}

@@ -12,6 +12,7 @@ import RelationFilterType from "models/enums/RelationFilterType";
 import { STRINGS } from "config";
 import { useCreateConversation } from "hooks/useCreateConversation";
 import { useAuth } from "hooks";
+import { AppLog } from "utils/Util";
 
 type Props = {};
 type FriendsNavigationProp = StackNavigationProp<
@@ -65,6 +66,7 @@ const MyFriendsController: FC<Props> = () => {
   );
 
   const onPressReceivedFriendRequests = useCallback(() => {
+    AppLog.log(() => "in onPressReceivedFriendRequests");
     navigation.navigate("ConnectRequests", {
       title: "Friend Requests",
       type: ConnectRequestType.FRIEND_REQUESTS

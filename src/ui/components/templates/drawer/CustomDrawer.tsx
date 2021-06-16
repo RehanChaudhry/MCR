@@ -127,6 +127,7 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
                   />
 
                   <TouchableOpacity
+                    style={styles.settingIconContainer}
                     onPress={() => {
                       navigation.navigate("Settings");
                       setCurrentItem("Settings");
@@ -243,6 +244,10 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
 });
 
 const styles = StyleSheet.create({
+  settingIconContainer: {
+    paddingTop: SPACE.sm,
+    paddingBottom: SPACE.sm
+  },
   name: {
     fontSize: FONT_SIZE.base
   },

@@ -30,6 +30,7 @@ type Props = {
   showAgreementDialog: boolean;
   agreementDialogCallback: (status: string) => void;
   progressBarBtn: boolean;
+  shouldShowAgreementDialog: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const RoommateAgreementView: FC<Props> = ({
@@ -38,7 +39,8 @@ const RoommateAgreementView: FC<Props> = ({
   handleSaveAndContinue,
   showAgreementDialog,
   agreementDialogCallback,
-  progressBarBtn
+  progressBarBtn,
+  shouldShowAgreementDialog
 }) => {
   const { themedColors } = usePreferredTheme();
   let myInitialValues = useRef<FormikValues>({});
@@ -146,7 +148,7 @@ const RoommateAgreementView: FC<Props> = ({
           }
         },
         {
-          title: "DisAgree",
+          title: "Disagree",
           onPress: () => {
             agreementDialogCallback("disagreed");
           },
@@ -163,7 +165,9 @@ const RoommateAgreementView: FC<Props> = ({
           style: {
             style: styles.dialogButtonStyle
           },
-          onPress: () => {}
+          onPress: () => {
+            shouldShowAgreementDialog(false);
+          }
         }
       ]}
     />

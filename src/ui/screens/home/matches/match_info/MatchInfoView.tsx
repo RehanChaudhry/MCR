@@ -165,7 +165,11 @@ export const MatchInfoView: React.FC<Props> = ({
               />
             )}
             heading={STRINGS.matchInfo.matching_deadline}
-            title={moment(matchInfo.deadline).format("MMMM DD, YYYY")}
+            title={
+              matchInfo.deadline
+                ? moment(matchInfo.deadline).format("MMMM DD, YYYY")
+                : STRINGS.common.not_found
+            }
           />
           <Divider style={{ backgroundColor: themedColors.separator }} />
           <SocialDetailForm
@@ -186,9 +190,7 @@ export const MatchInfoView: React.FC<Props> = ({
               />
             )}
             heading={STRINGS.matchInfo.max_roommate_count}
-            title={`${matchInfo.noOfRoommates} roommate${
-              matchInfo.noOfRoommates ?? 0 > 1 ? "s" : ""
-            }`}
+            title={matchInfo.noOfRoommates ?? STRINGS.common.not_found}
           />
           <Divider style={{ backgroundColor: themedColors.separator }} />
           <SocialDetailForm
@@ -209,9 +211,11 @@ export const MatchInfoView: React.FC<Props> = ({
               />
             )}
             heading={STRINGS.matchInfo.matching_criteria}
-            title={`${matchInfo.criteria ?? STRINGS.common.not_found}, ${
-              matchInfo.criteria ?? STRINGS.common.not_found
-            }`}
+            title={
+              matchInfo.criteria
+                ? matchInfo.criteria
+                : STRINGS.common.not_found
+            }
           />
         </View>
         {roommates && roommates.length > 0 && (

@@ -46,7 +46,7 @@ export default (
         setShouldShowPb(false);
         return;
       } else {
-        SimpleToast.show(dataBody.message);
+        SimpleToast.show(dataBody.message, SimpleToast.LONG);
         try {
           onSuccess(item);
         } finally {

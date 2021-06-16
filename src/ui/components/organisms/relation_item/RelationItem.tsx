@@ -14,9 +14,8 @@ import {
 } from "ui/components/atoms/image_background/AppImageBackground";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import MatchScore from "ui/components/molecules/match_score/MatchScore";
-import { shadowStyleProps } from "utils/Util";
+import { AppLog, shadowStyleProps } from "utils/Util";
 import getRelationStatus, {
-  ActionPerformed,
   Eligible,
   RelationType
 } from "utils/RelationHelper";
@@ -33,7 +32,7 @@ interface Props {
   onCancelRequestActionButtonClicked?: (
     relationModel: RelationModel
   ) => void;
-  onRequestReceivedActionButtonClicked?: (
+  onFriendRequestReceivedActionButtonClicked?: (
     relationModel: RelationModel
   ) => void;
   onFriendRequestActionButtonClicked?: (
@@ -49,6 +48,9 @@ interface Props {
     relationModel: RelationModel
   ) => void;
   onUnBlockedActionButtonClicked?: (relationModel: RelationModel) => void;
+  onRoommateRequestReceivedActionButtonClicked?: (
+    relationModel: RelationModel
+  ) => void;
 }
 
 function createActionButton(
@@ -56,7 +58,10 @@ function createActionButton(
   themedColors: ColorPalette,
   onCancelRequestClicked?: (relationModel: RelationModel) => void,
   onRoommateRequestClicked?: (relationModel: RelationModel) => void,
-  onRequestReceivedClicked?: (relationModel: RelationModel) => void,
+  onFriendRequestReceivedClicked?: (relationModel: RelationModel) => void,
+  onRoommateRequestReceivedClicked?: (
+    relationModel: RelationModel
+  ) => void,
   onFriendRequestClicked?: (relationModel: RelationModel) => void,
   onNotEligibleClicked?: (relationModel: RelationModel) => void,
   onRemoveRoommateActionButtonClicked?: (
@@ -68,128 +73,108 @@ function createActionButton(
   onUnBlockedActionButtonClicked?: (relationModel: RelationModel) => void
 ) {
   let actionButton: React.ReactElement;
-  const { relationType, actionPerformed, eligible } = getRelationStatus(
-    relationModel
+
+  const {
+    user,
+    userId,
+    dismissed,
+    criteria,
+    isFriend,
+    isRoommate,
+    acceptee,
+    status
+  } = relationModel;
+
+  AppLog.logForcefully(
+    () =>
+      `name: ${user?.firstName}, id: ${userId}, acceptee: ${acceptee}, status: ${status}, dismissed: ${dismissed}, isFriend: ${isFriend}, isRoommate: ${isRoommate}`
   );
 
-  if (relationType === RelationType.NONE) {
-    if (actionPerformed === ActionPerformed.NONE) {
-      actionButton = (
-        <AppButton
-          onPress={() => {
-            onFriendRequestClicked?.(relationModel);
-          }}
-          fontWeight={"semi-bold"}
-          textStyle={[
-            styles.btnActionText,
-            { color: themedColors.primary }
-          ]}
-          buttonStyle={[
-            styles.btnAction,
-            { backgroundColor: themedColors.primaryShade }
-          ]}
-          text={STRINGS.matches.action_add_friend}
-        />
-      );
+  if (dismissed === 1) {
+    actionButton = createRestoreButton();
+  } else if (status === "blocked") {
+    actionButton = createUnblockButton();
+  } else if (
+    isFriend === 0 &&
+    isRoommate === 0 &&
+    (status === undefined || status === "rejected")
+  ) {
+    actionButton = createSendFriendRequestButton();
+  } else if (isFriend === 0 && isRoommate === 0 && status === "pending") {
+    if (acceptee === userId) {
+      actionButton = createCancelRequestButton();
     } else {
-      actionButton = (
-        <AppButton
-          onPress={() => {
-            onCancelRequestClicked?.(relationModel);
-          }}
-          fontWeight={"semi-bold"}
-          textStyle={[
-            styles.btnActionText,
-            { color: themedColors.interface[500] }
-          ]}
-          buttonStyle={[
-            styles.btnAction,
-            { backgroundColor: themedColors.interface[200] }
-          ]}
-          text={STRINGS.matches.label_cancel_request}
-        />
-      );
+      actionButton = createRequestReceivedButton(true);
     }
-  } else if (relationType === RelationType.FRIEND) {
-    if (actionPerformed === ActionPerformed.NONE) {
-      if (eligible === Eligible.NOT_ELIGIBLE) {
-        actionButton = (
-          <AppButton
-            onPress={() => {
-              onNotEligibleClicked?.(relationModel);
-            }}
-            fontWeight={"semi-bold"}
-            textStyle={[
-              styles.btnActionText,
-              { color: themedColors.danger }
-            ]}
-            buttonStyle={[
-              styles.btnAction,
-              { backgroundColor: themedColors.dangerShade }
-            ]}
-            text={STRINGS.matches.label_not_eligible}
-          />
-        );
-      } else {
-        actionButton = (
-          <AppButton
-            onPress={() => {
-              onRoommateRequestClicked?.(relationModel);
-            }}
-            fontWeight={"semi-bold"}
-            textStyle={[
-              styles.btnActionText,
-              { color: themedColors.primary }
-            ]}
-            buttonStyle={[
-              styles.btnAction,
-              { backgroundColor: themedColors.primaryShade }
-            ]}
-            text={STRINGS.matches.label_roommate_request}
-          />
-        );
-      }
-    } else if (
-      actionPerformed === ActionPerformed.ROOMMATE_REQUESTED_RECEIVED
-    ) {
-      actionButton = (
-        <AppButton
-          onPress={() => {
-            onRequestReceivedClicked?.(relationModel);
-          }}
-          fontWeight={"semi-bold"}
-          textStyle={[
-            styles.btnActionText,
-            { color: themedColors.primary }
-          ]}
-          buttonStyle={[
-            styles.btnAction,
-            { backgroundColor: themedColors.primaryShade }
-          ]}
-          text={STRINGS.matches.label_request_received}
-        />
-      );
+  } else if (
+    isFriend === 1 &&
+    isRoommate === 0 &&
+    (status === undefined ||
+      status === "rejected" ||
+      status === "accepted")
+  ) {
+    if (criteria?.eligible) {
+      actionButton = createSendRoommateRequestButton();
     } else {
-      actionButton = (
-        <AppButton
-          onPress={() => {
-            onCancelRequestClicked?.(relationModel);
-          }}
-          fontWeight={"semi-bold"}
-          textStyle={[
-            styles.btnActionText,
-            { color: themedColors.interface[500] }
-          ]}
-          buttonStyle={[
-            styles.btnAction,
-            { backgroundColor: themedColors.interface[200] }
-          ]}
-          text={STRINGS.matches.label_cancel_request}
-        />
-      );
+      actionButton = createNotEligibleButton();
     }
-  } else if (relationType === RelationType.ROOMMATE) {
-    actionButton = (
+  } else if (isFriend === 1 && isRoommate === 0 && status === "pending") {
+    if (acceptee === userId) {
+      actionButton = createCancelRequestButton();
+    } else {
+      actionButton = createRequestReceivedButton(false);
+    }
+  } else if (isFriend === 1 && isRoommate === 1) {
+    actionButton = createRemoveRoommateButton();
+  }
+
+  return actionButton!;
+
+  function createUnblockButton(): React.ReactElement<
+    any,
+    string | React.JSXElementConstructor<any>
+  > {
+    return (
+      <AppButton
+        onPress={() => {
+          onUnBlockedActionButtonClicked?.(relationModel);
+        }}
+        fontWeight={"semi-bold"}
+        textStyle={[styles.btnActionText, { color: themedColors.primary }]}
+        buttonStyle={[
+          styles.btnAction,
+          { backgroundColor: themedColors.primaryShade }
+        ]}
+        text={STRINGS.matches.label_unblocked}
+      />
+    );
+  }
+
+  function createRestoreButton(): React.ReactElement<
+    any,
+    string | React.JSXElementConstructor<any>
+  > {
+    return (
+      <AppButton
+        onPress={() => {
+          onRestoreDismissedActionButtonClicked?.(relationModel);
+        }}
+        fontWeight={"semi-bold"}
+        textStyle={[styles.btnActionText, { color: themedColors.primary }]}
+        buttonStyle={[
+          styles.btnAction,
+          { backgroundColor: themedColors.primaryShade }
+        ]}
+        text={STRINGS.matches.label_restore}
+      />
+    );
+  }
+
+  function createRemoveRoommateButton(): React.ReactElement<
+    any,
+    string | React.JSXElementConstructor<any>
+  > {
+    return (
       <AppButton
         onPress={() => {
           onRemoveRoommateActionButtonClicked?.(relationModel);
@@ -212,39 +197,105 @@ function createActionButton(
         text={STRINGS.matches.label_remove_roommate}
       />
     );
-  } else if (relationType === RelationType.BLOCKED) {
-    actionButton = (
+  }
+
+  function createNotEligibleButton(): React.ReactElement<
+    any,
+    string | React.JSXElementConstructor<any>
+  > {
+    return (
       <AppButton
         onPress={() => {
-          onUnBlockedActionButtonClicked?.(relationModel);
+          onNotEligibleClicked?.(relationModel);
         }}
         fontWeight={"semi-bold"}
-        textStyle={[styles.btnActionText, { color: themedColors.primary }]}
+        textStyle={[styles.btnActionText, { color: themedColors.danger }]}
         buttonStyle={[
           styles.btnAction,
-          { backgroundColor: themedColors.primaryShade }
+          { backgroundColor: themedColors.dangerShade }
         ]}
-        text={STRINGS.matches.label_unblocked}
-      />
-    );
-  } else if (relationType === RelationType.DISMISSED) {
-    actionButton = (
-      <AppButton
-        onPress={() => {
-          onRestoreDismissedActionButtonClicked?.(relationModel);
-        }}
-        fontWeight={"semi-bold"}
-        textStyle={[styles.btnActionText, { color: themedColors.primary }]}
-        buttonStyle={[
-          styles.btnAction,
-          { backgroundColor: themedColors.primaryShade }
-        ]}
-        text={STRINGS.matches.label_restore}
+        text={STRINGS.matches.label_not_eligible}
       />
     );
   }
 
-  return actionButton!;
+  function createSendRoommateRequestButton(): React.ReactElement<
+    any,
+    string | React.JSXElementConstructor<any>
+  > {
+    return (
+      <AppButton
+        onPress={() => {
+          onRoommateRequestClicked?.(relationModel);
+        }}
+        fontWeight={"semi-bold"}
+        textStyle={[styles.btnActionText, { color: themedColors.primary }]}
+        buttonStyle={[
+          styles.btnAction,
+          { backgroundColor: themedColors.primaryShade }
+        ]}
+        text={STRINGS.matches.label_roommate_request}
+      />
+    );
+  }
+
+  function createRequestReceivedButton(
+    shouldMoveToFriendRequestReceivedScreen: boolean
+  ) {
+    return (
+      <AppButton
+        onPress={() => {
+          (shouldMoveToFriendRequestReceivedScreen
+            ? onFriendRequestReceivedClicked
+            : onRoommateRequestReceivedClicked)?.(relationModel);
+        }}
+        fontWeight={"semi-bold"}
+        textStyle={[styles.btnActionText, { color: themedColors.primary }]}
+        buttonStyle={[
+          styles.btnAction,
+          { backgroundColor: themedColors.primaryShade }
+        ]}
+        text={STRINGS.matches.label_request_received}
+      />
+    );
+  }
+
+  function createCancelRequestButton() {
+    return (
+      <AppButton
+        onPress={() => {
+          onCancelRequestClicked?.(relationModel);
+        }}
+        fontWeight={"semi-bold"}
+        textStyle={[
+          styles.btnActionText,
+          { color: themedColors.interface[500] }
+        ]}
+        buttonStyle={[
+          styles.btnAction,
+          { backgroundColor: themedColors.interface[200] }
+        ]}
+        text={STRINGS.matches.label_cancel_request}
+      />
+    );
+  }
+
+  function createSendFriendRequestButton() {
+    return (
+      <AppButton
+        onPress={() => {
+          onFriendRequestClicked?.(relationModel);
+        }}
+        fontWeight={"semi-bold"}
+        textStyle={[styles.btnActionText, { color: themedColors.primary }]}
+        buttonStyle={[
+          styles.btnAction,
+          { backgroundColor: themedColors.primaryShade }
+        ]}
+        text={STRINGS.matches.action_add_friend}
+      />
+    );
+  }
 }
 
 const RelationListsItem = ({
@@ -254,7 +305,8 @@ const RelationListsItem = ({
   onImageClicked,
   onRoommateRequestActionButtonClicked,
   onCancelRequestActionButtonClicked,
-  onRequestReceivedActionButtonClicked,
+  onFriendRequestReceivedActionButtonClicked,
+  onRoommateRequestReceivedActionButtonClicked,
   onFriendRequestActionButtonClicked,
   onNotEligibleActionButtonClicked,
   onRemoveRoommateActionButtonClicked,
@@ -353,7 +405,8 @@ const RelationListsItem = ({
           themedColors,
           onCancelRequestActionButtonClicked,
           onRoommateRequestActionButtonClicked,
-          onRequestReceivedActionButtonClicked,
+          onFriendRequestReceivedActionButtonClicked,
+          onRoommateRequestReceivedActionButtonClicked,
           onFriendRequestActionButtonClicked,
           onNotEligibleActionButtonClicked,
           onRemoveRoommateActionButtonClicked,
