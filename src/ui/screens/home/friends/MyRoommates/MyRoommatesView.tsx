@@ -21,7 +21,7 @@ type Props = {
   onEndReached: () => void;
   onPressChat: (item: RelationModel) => void;
   onPressReceivedRoommateRequests: () => void;
-  onPressProfile: () => void;
+  onPressProfile: (relationModel: RelationModel) => void;
 };
 
 const listItem = (

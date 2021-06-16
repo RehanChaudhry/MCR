@@ -17,7 +17,7 @@ type Props = {
   learnMoreTitle: string;
   learnMoreAction: () => void;
   onPressChat: (item: RelationModel) => void;
-  onPressProfile: () => void;
+  onPressProfile: (relationModel: RelationModel) => void;
   isLoading: boolean;
   canLoadMore: boolean;
   error?: string;
@@ -29,7 +29,7 @@ type Props = {
 const listItem = (
   item: RelationModel,
   onPressChat: (item: RelationModel) => void,
-  onPressProfile: () => void,
+  onPressProfile: (relationModel: RelationModel) => void,
   showRestoreAlert: (item: RelationModel) => void,
   showUnblockAlert: (item: RelationModel) => void
 ) => {

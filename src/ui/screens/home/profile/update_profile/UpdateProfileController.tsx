@@ -1,4 +1,10 @@
-import React, { FC, useCallback, useLayoutEffect, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState
+} from "react";
 import { UpdateProfileView } from "ui/screens/home/profile/update_profile/UpdateProfileView";
 import {
   RouteProp,
@@ -12,7 +18,6 @@ import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { UpdateProfileStackParamList } from "routes/ProfileStack";
 import EScreen from "models/enums/EScreen";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import LeftArrow from "assets/images/left.svg";
 import { useAuth, usePreferredTheme, usePreventDoubleTap } from "hooks";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
@@ -25,6 +30,7 @@ import SkipTitleButton from "ui/components/molecules/skip_title_button/SkipTitle
 import Api from "config/Api";
 import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
 import SimpleToast from "react-native-simple-toast";
+import { BackHandler } from "react-native";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -60,6 +66,21 @@ const UpdateProfileController: FC<Props> = () => {
     });
   });
 
+  useEffect(() => {
+    if (route.params.isFrom === EScreen.WELCOME) {
+      const exitAppHandler = () => {
+        BackHandler.exitApp();
+        return true;
+      };
+      BackHandler.addEventListener("hardwareBackPress", exitAppHandler);
+      return () =>
+        BackHandler.removeEventListener(
+          "hardwareBackPress",
+          exitAppHandler
+        );
+    }
+  }, [route.params.isFrom]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => <Hamburger />,
@@ -71,24 +92,7 @@ const UpdateProfileController: FC<Props> = () => {
       navigation.setOptions({
         headerTitleAlign: "center",
         headerTitle: () => <HeaderTitle text="Complete Profile" />,
-        headerLeft: () => (
-          <HeaderLeftTextWithIcon
-            fontWeight={"semi-bold"}
-            text={"Back"}
-            icon={() => {
-              return (
-                <LeftArrow
-                  width={20}
-                  height={20}
-                  fill={themedColors.interface["700"]}
-                />
-              );
-            }}
-            onPress={() => {
-              navigation.pop();
-            }}
-          />
-        ),
+        headerLeft: () => null,
         headerRight: () => (
           <SkipTitleButton
             onPress={openQuestionnaireScreen}
@@ -163,6 +167,9 @@ const UpdateProfileController: FC<Props> = () => {
     } else {
       await auth.saveProfile(dataBody?.data!, auth.user);
       SimpleToast.show("Your profile has been updated successfully");
+      if (route.params.isFrom === EScreen.WELCOME) {
+        openQuestionnaireScreen();
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchProfileApi]);

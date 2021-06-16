@@ -15,6 +15,7 @@ export default {
   RESET_PASS_URL: "password/set/",
   COMPLETE_PROFILE_QUERY_PARAMS: "completingProfile=true",
   MY_PROFILE: "user/me",
+  USER: "user",
   NOTIFICATION_URL: "notification",
   AGREEMENT_DETAILS: "agreement_details",
   ROOMATE_AGREEMENT_FIELDS: "agreement-field",

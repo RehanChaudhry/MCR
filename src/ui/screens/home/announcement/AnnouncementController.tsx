@@ -152,9 +152,16 @@ const AnnouncementController: FC<Props> = () => {
     fetchAnnouncements().then().catch();
   };
 
-  const moveToProfileScreen = useCallback(() => {
-    navigation.navigate("Profile", { isFrom: EScreen.ANNOUNCEMENT });
-  }, [navigation]);
+  const moveToProfileScreen = useCallback(
+    (userId: number) => {
+      navigation.navigate("Profile", {
+        isFrom: EScreen.ANNOUNCEMENT,
+        updateProfile: false,
+        userId: userId
+      });
+    },
+    [navigation]
+  );
 
   return (
     <AnnouncementView

@@ -89,29 +89,17 @@ const MatchInfoController: FC<Props> = () => {
   };
 
   const moveToRoommateAgreementScreen = () => {
-    // AppLog.logForComplexMessages(
-    () =>
-      //   "moveToRoommateAgreementScreen(), profile: " + JSON.stringify(profileMatch)
-      // );
-      navigation.navigate("RoommateAgreement", {
-        isFrom: EScreen.MATCH_INFO
-      });
+    navigation.navigate("RoommateAgreement", {
+      isFrom: EScreen.MATCH_INFO
+    });
   };
 
   const moveToUpdateProfileScreen = () => {
-    // AppLog.logForComplexMessages(
-    () =>
-      //   "moveToUpdateProfileScreen(), profile: " + JSON.stringify(profileMatch)
-      // );
-      navigation.navigate("UpdateProfile", { isFrom: EScreen.MATCH_INFO });
+    navigation.navigate("UpdateProfile", { isFrom: EScreen.MATCH_INFO });
   };
 
   const moveToQuestionnaireScreen = () => {
-    // AppLog.logForComplexMessages(
-    () =>
-      //   "moveToQuestionnaireScreen(), profile: " + JSON.stringify(profileMatch)
-      // );
-      navigation.navigate("Questionnaire", { isFrom: EScreen.MATCH_INFO });
+    navigation.navigate("Questionnaire", { isFrom: EScreen.MATCH_INFO });
   };
 
   const handleGetMatchInfoApi = async () => {

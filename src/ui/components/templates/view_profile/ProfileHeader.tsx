@@ -1,6 +1,5 @@
 import React, { FC } from "react";
-import { StyleSheet, View } from "react-native";
-import UserImage from "assets/images/user_pic2.svg";
+import { Image, Linking, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE } from "config";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
@@ -11,13 +10,26 @@ import {
 import Strings from "config/Strings";
 import Colors from "config/Colors";
 import WatchVideo from "assets/images/watch_video_icon.svg";
+import { ProfilePicture } from "models/User";
+import SimpleToast from "react-native-simple-toast";
 
 type Props = {
   firstName: string | undefined;
   lastName: string | undefined;
+  profilePicture: ProfilePicture | undefined;
+  matchGroupName: string | undefined;
+  homeTown: string | undefined;
+  youtubeVideoUrl: string | null | undefined;
 };
 
-const ProfileHeader: FC<Props> = ({ firstName, lastName }) => {
+const ProfileHeader: FC<Props> = ({
+  firstName,
+  lastName,
+  profilePicture,
+  matchGroupName,
+  homeTown,
+  youtubeVideoUrl
+}) => {
   const theme = usePreferredTheme();
   const watchVideo = () => (
     <WatchVideo height={16} width={16} color={Colors.grey} />
@@ -26,14 +38,17 @@ const ProfileHeader: FC<Props> = ({ firstName, lastName }) => {
   return (
     <View>
       <View style={styles.container}>
-        <View style={styles.imageView}>
-          <UserImage />
+        <View>
+          <Image
+            source={{ uri: profilePicture?.fileURL }}
+            style={styles.image}
+          />
         </View>
         <View style={styles.headingTextStyle}>
           <HeadingWithText
             headingText={firstName + " " + lastName}
             headingFontWeight={"semi-bold"}
-            text={"Freshman, Interior Architecture"}
+            text={matchGroupName + (homeTown ? "," + homeTown : "")}
             textStyle={[
               styles.textStyle,
               { color: theme.themedColors.interface["600"] }
@@ -59,21 +74,21 @@ const ProfileHeader: FC<Props> = ({ firstName, lastName }) => {
         leftIcon={watchVideo}
         shouldAlignTextWithLeftIconWithFullWidth={true}
         fontWeight={"semi-bold"}
+        onPress={() =>
+          youtubeVideoUrl !== null && youtubeVideoUrl !== undefined
+            ? Linking.openURL(youtubeVideoUrl!)
+            : SimpleToast.show(Strings.invalid_video)
+        }
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  imageView: {
-    height: 64,
-    width: 64,
-    borderRadius: SPACE._3xl
-  },
   headingTextStyle: {
     flexDirection: "column",
     justifyContent: "center",
-    paddingHorizontal: SPACE.lg
+    paddingHorizontal: SPACE.md
   },
   textStyle: {
     paddingTop: SPACE.xs,
@@ -89,6 +104,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: SPACE.sm
     //alignItems: "flex-start"
+  },
+  image: {
+    height: 55,
+    width: 55,
+    borderRadius: 55 / 2,
+    marginTop: 5,
+    overflow: "hidden"
   }
 });
 

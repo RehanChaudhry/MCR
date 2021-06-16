@@ -24,6 +24,11 @@ import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 import { useAuth } from "hooks";
 import { useCreateConversation } from "hooks/useCreateConversation";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
+import { useApi } from "repo/Client";
+import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
+import { Alert } from "react-native";
+import ProfileApis from "repo/auth/ProfileApis";
+
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
   ProfileStackParamList,
@@ -50,6 +55,16 @@ type ProfileRouteProp = RouteProp<ProfileStackParamList, "ViewProfile">;
 // removes firstName, lastName, and modifies profilePicture object
 function modifyUiFields(_viewProfileUiData: Profile) {
   let modifiedItem = _viewProfileUiData?.sections?.[0]?.formInputs?.[0]!!;
+  modifiedItem.intendedMajor = _viewProfileUiData.major;
+  modifiedItem.homeTown = _viewProfileUiData.hometown;
+  modifiedItem.profilePicture =
+    _viewProfileUiData?.sections[0]?.formInputs![0]?.userMeta!.length >
+      0 ?? 0
+      ? JSON.parse(
+          _viewProfileUiData?.sections[0]?.formInputs![0]?.userMeta![0]
+            .value ?? ""
+        )
+      : "";
   modifiedItem.firstName =
     _viewProfileUiData?.sections![0].formInputs![1].userMeta?.length === 0
       ? "N/A"
@@ -59,23 +74,50 @@ function modifyUiFields(_viewProfileUiData: Profile) {
       ? "N/A"
       : _viewProfileUiData?.sections![0].formInputs![2].userMeta![0].value;
   _viewProfileUiData?.sections?.[0].formInputs?.splice(0, 3, modifiedItem);
+  modifiedItem.youtubeVideoUrl = _viewProfileUiData?.sections![
+    _viewProfileUiData?.sections!.length - 1
+  ].formInputs![0].userMeta![0].value;
 }
 
 const ViewProfileController: FC<Props> = () => {
   const auth = useAuth();
   const [viewProfileUiData, setViewProfileUiData] = useState<Profile>();
-
+  const { params } = useRoute<ProfileRouteProp>();
   const createConversation = useCreateConversation();
 
+  const getUserRequestModel = useApi<number, UpdateProfileResponseModel>(
+    ProfileApis.getUserById
+  );
+
+  const handleGetUserByIdAPi = async () => {
+    const {
+      hasError,
+      dataBody,
+      errorBody
+    } = await getUserRequestModel.request([params?.userId]);
+    if (hasError || dataBody === undefined) {
+      Alert.alert("User not found", errorBody);
+      return;
+    } else {
+      modifyUiFields(dataBody.data!);
+      setViewProfileUiData(dataBody.data!);
+    }
+  };
+
   useEffect(() => {
-    let _viewProfileUiData: Profile = JSON.parse(
-      JSON.stringify(auth.user?.profile)
-    );
+    if ((params.userId! ?? undefined) === undefined) {
+      let _viewProfileUiData: Profile = JSON.parse(
+        JSON.stringify(auth.user?.profile)
+      );
 
-    modifyUiFields(_viewProfileUiData);
+      modifyUiFields(_viewProfileUiData);
 
-    setViewProfileUiData(_viewProfileUiData);
-  }, [auth.user]);
+      setViewProfileUiData(_viewProfileUiData);
+    } else {
+      handleGetUserByIdAPi().then().catch();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth.user, handleGetUserByIdAPi]);
 
   const navigation = useNavigation<ProfileNavigationProp>();
   const navigationViewProfile = useNavigation<ViewProfileNavigationProp>();
@@ -155,7 +197,9 @@ const ViewProfileController: FC<Props> = () => {
           openRoommateAgreementScreen={openRoommateAgreementScreen}
           viewProfileUiData={viewProfileUiData}
           moveToChatScreen={moveToChatScreen}
-        />
+        />,
+        undefined,
+        2000
       )}
     </>
   );

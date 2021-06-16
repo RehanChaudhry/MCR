@@ -6,7 +6,7 @@ export type CommunityStackParamList = {
   CreatePost: { postCreatedSuccessfully?: () => void };
   Comments: { postId: number };
   ReportContent: { postId: number };
-  Profile: { isFrom: EScreen };
+  Profile: { isFrom: EScreen; updateProfile: boolean; userId: number };
 };
 
 export const CommunityStack = createStackNavigator<CommunityStackParamList>();

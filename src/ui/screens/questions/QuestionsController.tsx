@@ -24,7 +24,7 @@ import {
 import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseModel";
 import ProfileApis from "repo/auth/ProfileApis";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
-import { Alert, View } from "react-native";
+import { Alert, BackHandler, View } from "react-native";
 import QuestionsResponseModel, {
   toSections
 } from "models/api_responses/QuestionsResponseModel";
@@ -37,7 +37,6 @@ import EScreen from "models/enums/EScreen";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { MatchesStackParamList } from "routes/MatchesStack";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
-import LeftArrow from "assets/images/left.svg";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { HomeDrawerParamList } from "routes";
 import StaticContentRequestModel, {
@@ -98,26 +97,25 @@ const QuestionsController: FC<Props> = () => {
     });
   }, [homeNavigation]);
 
+  useEffect(() => {
+    if (route.params.isFrom === EScreen.WELCOME) {
+      const exitAppHandler = () => {
+        BackHandler.exitApp();
+        return true;
+      };
+      BackHandler.addEventListener("hardwareBackPress", exitAppHandler);
+      return () =>
+        BackHandler.removeEventListener(
+          "hardwareBackPress",
+          exitAppHandler
+        );
+    }
+  }, [route.params.isFrom]);
+
   useLayoutEffect(() => {
     if (route.params.isFrom === EScreen.WELCOME) {
       welcomeNavigation.setOptions({
-        headerLeft: () => (
-          <HeaderLeftTextWithIcon
-            text={"Back"}
-            icon={() => {
-              return (
-                <LeftArrow
-                  width={20}
-                  height={20}
-                  fill={themedColors.interface["700"]}
-                />
-              );
-            }}
-            onPress={() => {
-              welcomeNavigation.pop();
-            }}
-          />
-        ),
+        headerLeft: () => null,
         headerRight: () => (
           <SkipTitleButton
             onPress={moveToHomeScreen}

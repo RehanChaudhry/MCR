@@ -35,13 +35,17 @@ export function getMessage(activityLog: ActivityLog): string {
         NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
       activityLog.action === Actions.ACCEPTED
     ) {
-      return "Accepted friend request";
+      return `Accepted friend request <b>${activityLog.user?.firstName}${
+        " " + activityLog.user?.lastName
+      }</b>`;
     } else if (
       (activityLog.type ===
         NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
         activityLog.action) === Actions.REJECTED
     ) {
-      return "Rejected friend request";
+      return `Rejected friend request <b>${activityLog.user?.firstName}${
+        " " + activityLog.user?.lastName
+      }" </b>`;
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
@@ -63,7 +67,9 @@ export function getMessage(activityLog: ActivityLog): string {
         NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
         activityLog.action) === Actions.REJECTED
     ) {
-      return "Rejected roommate request";
+      return `Rejected roommate request <b>${activityLog.user?.firstName}${
+        " " + activityLog.user?.lastName
+      }</b>`;
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.DISMISSED_LIST &&
@@ -84,18 +90,18 @@ export function getMessage(activityLog: ActivityLog): string {
       activityLog.type === NotificationAndActivityLogFilterType.POST &&
       activityLog.action === Actions.CREATE
     ) {
-      return "Created a new post in commmunity";
+      return `Created a new post in <b>commmunity</b>`;
     } else if (
       activityLog.type === NotificationAndActivityLogFilterType.POST &&
       activityLog.action === Actions.COMMENTED
     ) {
-      return "Commented on any post";
+      return `Commented on any post <b>Post commneted</b>`;
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.CONVERSATION &&
       activityLog.action === Actions.STARTED
     ) {
-      return "Started a new conversation with";
+      return `Started a <b>new conversation</b> with`;
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.QUESTIONAIRE &&
@@ -106,7 +112,7 @@ export function getMessage(activityLog: ActivityLog): string {
       activityLog.type === NotificationAndActivityLogFilterType.PROFILE &&
       activityLog.action === Actions.UPDATED
     ) {
-      return `Update your <b>Profile</b>`;
+      return `Updated your <b>Profile</b>`;
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
@@ -127,6 +133,31 @@ export function getMessage(activityLog: ActivityLog): string {
       activityLog.action === Actions.REJECTED
     ) {
       return `Rejected <b>Roommate Agreement</b>`;
+    } else if (
+      activityLog.type === NotificationAndActivityLogFilterType.COMMENT &&
+      activityLog.action === Actions.CREATE
+    ) {
+      return `Commented on a  <b>Post</b>`;
+    } else if (
+      activityLog.type === NotificationAndActivityLogFilterType.RESTORED &&
+      activityLog.action === Actions.CREATE
+    ) {
+      return `Removed <b>${activityLog.user?.firstName}${
+        " " + activityLog.user?.lastName
+      }</b> from dissmissed list`;
+    } else if (
+      activityLog.type === NotificationAndActivityLogFilterType.POST &&
+      activityLog.action === Actions.CREATE
+    ) {
+      return `Created a new Post in Commmunity  <b>Post</b>`;
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.CONVERSATION &&
+      activityLog.action === Actions.CREATE
+    ) {
+      return `Started a new conversation with  <b>${
+        activityLog.user?.firstName
+      }${" " + activityLog.user?.lastName}</b>`;
     }
   } else {
     return "Commented on any post";

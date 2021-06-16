@@ -43,9 +43,16 @@ const MyRoommatesController: FC<Props> = () => {
     });
   };
 
-  const moveToProfileScreen = useCallback(() => {
-    navigation.navigate("Profile", { isFrom: EScreen.MY_FRIENDS });
-  }, [navigation]);
+  const moveToProfileScreen = useCallback(
+    (_: RelationModel) => {
+      navigation.navigate("Profile", {
+        isFrom: EScreen.MY_FRIENDS,
+        updateProfile: false,
+        userId: _.userId
+      });
+    },
+    [navigation]
+  );
 
   return (
     <MyRoommatesView

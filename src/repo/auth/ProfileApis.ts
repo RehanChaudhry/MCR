@@ -8,6 +8,7 @@ import ActivityLogApiRequestModel from "models/api_requests/ActivityLogApiReques
 import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
 import { MatchInfoApiResponseModel } from "models/api_responses/MatchInfoApiResponseModel";
 import { NotificationApiRequestModel } from "models/api_requests/NotificationApiRequestModel";
+import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
 
 function questions() {
   return apiClient.get<QuestionsResponseModel>(API.GET_QUESTIONS);
@@ -36,10 +37,17 @@ function activityLogs(requestModel: ActivityLogApiRequestModel) {
   });
 }
 
+function getUserById(userId: number) {
+  return apiClient.get<UpdateProfileResponseModel>(
+    API.USER + "/" + userId + "/?meta=true"
+  );
+}
+
 export default {
   questions,
   answers,
   getNotifications,
   activityLogs,
-  getMatchInfo
+  getMatchInfo,
+  getUserById
 };

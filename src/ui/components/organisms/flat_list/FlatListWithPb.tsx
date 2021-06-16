@@ -116,7 +116,6 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
       if (!dataHasRecords()) {
         return (
           <>
-            {ui}
             <View style={styles.noRecordParent}>
               <AppLabel
                 text={noRecordFoundText}
@@ -126,6 +125,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
                 ]}
               />
             </View>
+            {ui}
           </>
         );
       } else {

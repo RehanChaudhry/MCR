@@ -22,7 +22,7 @@ export interface AnnouncementItemProps extends TouchableOpacityProps {
   shouldPlayVideo: boolean;
   shouldShowRightIcon?: boolean;
   openReportContentScreen?: (postId: number) => void;
-  onProfileImageClicked?: () => void;
+  onProfileImageClicked?: (userId: number) => void;
 }
 
 function showAttachedItemsIfAny(
@@ -72,6 +72,10 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
       );
     }, [theme.themedColors]);
 
+    const onImageClicked = () => {
+      onProfileImageClicked?.(announcementItem!.postedBy!);
+    };
+
     return (
       <View
         style={[
@@ -93,7 +97,7 @@ export const AnnouncementItem = React.memo<AnnouncementItemProps>(
           onRightBtnClicked={() => {
             openReportContentScreen?.(announcementItem.id);
           }}
-          onProfileImageClicked={onProfileImageClicked}
+          onProfileImageClicked={onImageClicked}
         />
         {showAttachedItemsIfAny(announcementItem, shouldPlayVideo)}
         <AnnouncementFooter

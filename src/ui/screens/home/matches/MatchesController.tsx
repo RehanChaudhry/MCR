@@ -98,7 +98,8 @@ const MatchesController: FC<Props> = () => {
     );
     navigation.navigate("Profile", {
       isFrom: EScreen.MATCH_INFO,
-      updateProfile: true
+      updateProfile: false,
+      userId: profileMatch.user!.id!
     });
   };
 

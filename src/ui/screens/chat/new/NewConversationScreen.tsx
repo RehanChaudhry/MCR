@@ -133,6 +133,7 @@ export const NewConversationScreen = React.memo<Props>(
           showIcon={false}
           showProgressbar={showProgressbar}
           clearInputField={clearInputField}
+          multiline={false}
         />
       </Screen>
     );
