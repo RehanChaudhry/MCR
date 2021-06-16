@@ -42,6 +42,7 @@ type Props = {
     action: RelationActionType
   ) => void;
   moveToRoommateRequests: (profileMatch: RelationModel) => void;
+  moveToFriendRequests: (profileMatch: RelationModel) => void;
 };
 
 export const MatchesView: React.FC<Props> = ({
@@ -57,7 +58,8 @@ export const MatchesView: React.FC<Props> = ({
   selectedTotalCount,
   moveToChatScreen,
   moveToProfileScreen,
-  moveToRoommateRequests
+  moveToRoommateRequests,
+  moveToFriendRequests
 }: Props) => {
   const [filterType, setFilterType] = useState<MatchesTypeFilter>(
     MatchesTypeFilter.MATCHES
@@ -121,7 +123,10 @@ export const MatchesView: React.FC<Props> = ({
             profileMatch.current = _item;
             setCancelRequestDialogVisible(true);
           }}
-          onRequestReceivedActionButtonClicked={moveToRoommateRequests}
+          onFriendRequestReceivedActionButtonClicked={moveToFriendRequests}
+          onRoommateRequestReceivedActionButtonClicked={
+            moveToRoommateRequests
+          }
           onFriendRequestActionButtonClicked={() => {
             profileMatch.current = _item;
             setFriendRequestDialogVisible(true);
@@ -129,7 +134,12 @@ export const MatchesView: React.FC<Props> = ({
         />
       );
     },
-    [moveToProfileScreen, moveToChatScreen, moveToRoommateRequests]
+    [
+      moveToProfileScreen,
+      moveToChatScreen,
+      moveToFriendRequests,
+      moveToRoommateRequests
+    ]
   );
 
   const getSelectedItem = useCallback(() => {

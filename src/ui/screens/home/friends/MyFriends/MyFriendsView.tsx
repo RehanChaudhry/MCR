@@ -91,7 +91,7 @@ const listItem = (
       onImageClicked={moveToProfileScreen}
       onRoommateRequestActionButtonClicked={showRequestAlert}
       onCancelRequestActionButtonClicked={showCancelAlert}
-      onRequestReceivedActionButtonClicked={moveToRoommateRequests}
+      onRoommateRequestReceivedActionButtonClicked={moveToRoommateRequests}
       onNotEligibleActionButtonClicked={showIneligibleInfoAlert}
     />
   );

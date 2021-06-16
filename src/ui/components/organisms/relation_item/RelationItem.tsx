@@ -32,7 +32,7 @@ interface Props {
   onCancelRequestActionButtonClicked?: (
     relationModel: RelationModel
   ) => void;
-  onRequestReceivedActionButtonClicked?: (
+  onFriendRequestReceivedActionButtonClicked?: (
     relationModel: RelationModel
   ) => void;
   onFriendRequestActionButtonClicked?: (
@@ -48,6 +48,9 @@ interface Props {
     relationModel: RelationModel
   ) => void;
   onUnBlockedActionButtonClicked?: (relationModel: RelationModel) => void;
+  onRoommateRequestReceivedActionButtonClicked?: (
+    relationModel: RelationModel
+  ) => void;
 }
 
 function createActionButton(
@@ -55,7 +58,10 @@ function createActionButton(
   themedColors: ColorPalette,
   onCancelRequestClicked?: (relationModel: RelationModel) => void,
   onRoommateRequestClicked?: (relationModel: RelationModel) => void,
-  onRequestReceivedClicked?: (relationModel: RelationModel) => void,
+  onFriendRequestReceivedClicked?: (relationModel: RelationModel) => void,
+  onRoommateRequestReceivedClicked?: (
+    relationModel: RelationModel
+  ) => void,
   onFriendRequestClicked?: (relationModel: RelationModel) => void,
   onNotEligibleClicked?: (relationModel: RelationModel) => void,
   onRemoveRoommateActionButtonClicked?: (
@@ -98,7 +104,7 @@ function createActionButton(
     if (acceptee === userId) {
       actionButton = createCancelRequestButton();
     } else {
-      actionButton = createRequestReceivedButton();
+      actionButton = createRequestReceivedButton(true);
     }
   } else if (
     isFriend === 1 &&
@@ -116,7 +122,7 @@ function createActionButton(
     if (acceptee === userId) {
       actionButton = createCancelRequestButton();
     } else {
-      actionButton = createRequestReceivedButton();
+      actionButton = createRequestReceivedButton(false);
     }
   } else if (isFriend === 1 && isRoommate === 1) {
     actionButton = createRemoveRoommateButton();
@@ -233,11 +239,15 @@ function createActionButton(
     );
   }
 
-  function createRequestReceivedButton() {
+  function createRequestReceivedButton(
+    shouldMoveToFriendRequestReceivedScreen: boolean
+  ) {
     return (
       <AppButton
         onPress={() => {
-          onRequestReceivedClicked?.(relationModel);
+          (shouldMoveToFriendRequestReceivedScreen
+            ? onFriendRequestReceivedClicked
+            : onRoommateRequestReceivedClicked)?.(relationModel);
         }}
         fontWeight={"semi-bold"}
         textStyle={[styles.btnActionText, { color: themedColors.primary }]}
@@ -295,7 +305,8 @@ const RelationListsItem = ({
   onImageClicked,
   onRoommateRequestActionButtonClicked,
   onCancelRequestActionButtonClicked,
-  onRequestReceivedActionButtonClicked,
+  onFriendRequestReceivedActionButtonClicked,
+  onRoommateRequestReceivedActionButtonClicked,
   onFriendRequestActionButtonClicked,
   onNotEligibleActionButtonClicked,
   onRemoveRoommateActionButtonClicked,
@@ -394,7 +405,8 @@ const RelationListsItem = ({
           themedColors,
           onCancelRequestActionButtonClicked,
           onRoommateRequestActionButtonClicked,
-          onRequestReceivedActionButtonClicked,
+          onFriendRequestReceivedActionButtonClicked,
+          onRoommateRequestReceivedActionButtonClicked,
           onFriendRequestActionButtonClicked,
           onNotEligibleActionButtonClicked,
           onRemoveRoommateActionButtonClicked,
