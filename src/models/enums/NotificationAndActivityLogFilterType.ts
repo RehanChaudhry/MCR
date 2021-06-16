@@ -1,8 +1,8 @@
 enum NotificationAndActivityLogFilterType {
   FRIEND_REQUEST = "friend-request",
   DISMISSED_LIST = "dismissed",
-  POST = "POST",
-  CONVERSATION = "Conversation",
+  POST = "post",
+  CONVERSATION = "conversation",
   ROOMMATE_REQUEST = "roommate-request",
   QUESTIONAIRE = "questionnaire",
   PROFILE = "profile",
@@ -16,7 +16,8 @@ enum NotificationAndActivityLogFilterType {
   NEW_CONVERSATION = "new-conversation",
   DISAGREED = "disagreed",
   AGREED = "agreed",
-  COMMENT = "comment"
+  COMMENT = "comment",
+  RESTORED = "restored"
 }
 
 export default NotificationAndActivityLogFilterType;
