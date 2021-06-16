@@ -1,5 +1,5 @@
 import { FONT_SIZE, SPACE } from "config";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import { UpdateRelationStatus } from "models/api_requests/UpdateRelationApiRequestModel";
 import RelationModel, { Status } from "models/RelationModel";
 import React, {
@@ -9,12 +9,15 @@ import React, {
   useCallback,
   useContext
 } from "react";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import useSendFriendOrRoommateRequest from "ui/screens/home/friends/useSendFriendOrRoommateRequest";
 import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
+import { useApi } from "repo/Client";
+import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
+import AuthApis from "repo/auth/AuthApis";
 
 export enum Type {
   FRIEND_REQUEST = "friend_request",

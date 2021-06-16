@@ -9,6 +9,7 @@ import { FriendsRoutes } from "routes/FriendsRoutes";
 import BottomBreadCrumbs, {
   Item
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
+import { AppLog } from "utils/Util";
 
 type FriendsNavigationProp = BottomTabNavigationProp<FriendsStackParamList>;
 
@@ -19,6 +20,7 @@ const FriendsController: FC<Props> = () => {
   const { user } = useAuth();
   const isAgreementId = user?.profile?.agreementId !== null;
 
+  AppLog.logForcefully(() => "Freinds controller created.");
   const _items: Item[] = [
     {
       title: "My Friends",

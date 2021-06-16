@@ -28,6 +28,7 @@ import { useApi } from "repo/Client";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
 import { Alert } from "react-native";
 import ProfileApis from "repo/auth/ProfileApis";
+import SimpleToast from "react-native-simple-toast";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -117,7 +118,7 @@ const ViewProfileController: FC<Props> = () => {
       handleGetUserByIdAPi().then().catch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.user, handleGetUserByIdAPi]);
+  }, []);
 
   const navigation = useNavigation<ProfileNavigationProp>();
   const navigationViewProfile = useNavigation<ViewProfileNavigationProp>();
