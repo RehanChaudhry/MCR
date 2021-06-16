@@ -16,6 +16,7 @@ import TikTokDark from "assets/images/tiktok_dark_icon.svg";
 import SnapchatDark from "assets/images/snapchat_dark_icon.svg";
 import TwitterDark from "assets/images/twitter_dark_icon.svg";
 import YouTube from "assets/images/youtube_icon_dark.svg";
+import SimpleToast from "react-native-simple-toast";
 
 type ViewProfileSectionFieldItemProps = {
   listData: FormInputFieldData;
@@ -165,6 +166,12 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
         "icon-tiktok": TikTokDark,
         "icon-youtube": YouTube
       };
+
+      const onPress = () => {
+        Linking.openURL(userMetaLinks!)
+          .then()
+          .catch(() => SimpleToast.show("invalid link"));
+      };
       return (
         <>
           <View style={styles.spacer} />
@@ -172,10 +179,7 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
             heading={listData.label}
             title={userMetaLinks!}
             headingStyle={{ color: grayShades.warmGray["700"] }}
-            onPress={() => {
-              // Alert.alert("Facebook profile link is pressed");
-              Linking.openURL(userMetaLinks!);
-            }}
+            onPress={onPress}
             icon={() => {
               const MyIcon =
                 // @ts-ignore
@@ -200,6 +204,7 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
             profilePicture={listData.profilePicture}
             matchGroupName={listData.intendedMajor}
             homeTown={listData.homeTown}
+            youtubeVideoUrl={listData.youtubeVideoUrl}
           />
         </>
       );

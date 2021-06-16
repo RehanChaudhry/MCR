@@ -31,6 +31,7 @@ export type FormInputFieldData = {
   profilePicture?: ProfilePicture;
   intendedMajor?: string;
   homeTown: string | undefined;
+  youtubeVideoUrl?: string | null;
 };
 
 export type OptionsData = {

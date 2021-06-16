@@ -1,5 +1,6 @@
 export default {
   something_went_wrong: "Something went wrong!",
+  invalid_video: "Invalid video url",
   splash: {},
 
   login: {

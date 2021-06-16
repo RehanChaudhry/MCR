@@ -40,11 +40,7 @@ export const DynamicCardViewItem: React.FC<DynamicCardViewItemProps> = ({
           headingText={
             section.title === "Basic Profile" ? undefined : section.title
           }
-          text={
-            section.title === "Basic Profile"
-              ? undefined
-              : section.description
-          }
+          text={undefined}
         />
       )}
       <DynamicCardViewBody

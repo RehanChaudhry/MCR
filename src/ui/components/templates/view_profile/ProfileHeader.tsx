@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, Linking, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE } from "config";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
@@ -11,6 +11,7 @@ import Strings from "config/Strings";
 import Colors from "config/Colors";
 import WatchVideo from "assets/images/watch_video_icon.svg";
 import { ProfilePicture } from "models/User";
+import SimpleToast from "react-native-simple-toast";
 
 type Props = {
   firstName: string | undefined;
@@ -18,6 +19,7 @@ type Props = {
   profilePicture: ProfilePicture | undefined;
   matchGroupName: string | undefined;
   homeTown: string | undefined;
+  youtubeVideoUrl: string | null | undefined;
 };
 
 const ProfileHeader: FC<Props> = ({
@@ -25,7 +27,8 @@ const ProfileHeader: FC<Props> = ({
   lastName,
   profilePicture,
   matchGroupName,
-  homeTown
+  homeTown,
+  youtubeVideoUrl
 }) => {
   const theme = usePreferredTheme();
   const watchVideo = () => (
@@ -71,6 +74,11 @@ const ProfileHeader: FC<Props> = ({
         leftIcon={watchVideo}
         shouldAlignTextWithLeftIconWithFullWidth={true}
         fontWeight={"semi-bold"}
+        onPress={() =>
+          youtubeVideoUrl !== null && youtubeVideoUrl !== undefined
+            ? Linking.openURL(youtubeVideoUrl!)
+            : SimpleToast.show(Strings.invalid_video)
+        }
       />
     </View>
   );
