@@ -1,11 +1,13 @@
 import { io, Socket } from "socket.io-client";
 import { AppLog } from "utils/Util";
 import Env from "envs/env";
+import AuthStorage from "repo/auth/AuthStorage";
 
 export const SocketHelper = (function () {
   let socket: Socket | any;
 
-  function startConnection(token: string): Promise<Socket> {
+  async function startConnection(token: string): Promise<Socket> {
+    let uni = await AuthStorage.getUni();
     return new Promise((resolve, reject) => {
       if (socket !== undefined || (!socket?.connected ?? false)) {
         socket = io("https://" + Env.SOCKET_URL + ":" + Env.SOCKET_PORT, {
@@ -13,7 +15,7 @@ export const SocketHelper = (function () {
           transports: ["websocket"],
           auth: {
             token: token,
-            subdomain: "ohiouniversity"
+            subdomain: uni!.subdomain!
           }
         });
 
