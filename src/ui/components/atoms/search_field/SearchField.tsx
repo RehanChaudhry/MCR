@@ -114,8 +114,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "center",
-    paddingTop: SPACE.md - 1,
-    paddingBottom: SPACE.md - 1,
+    // paddingTop: SPACE.md - 1,
+    // paddingBottom: SPACE.md - 1,
     paddingLeft: SPACE.md,
     paddingRight: SPACE.md,
     borderRadius: 10
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.regular,
     flex: 1,
     fontSize: FONT_SIZE.sm,
-    padding: 0,
+    paddingTop: SPACE.md,
     color: COLORS.textColor1
   },
   textInputSmallFont: {
