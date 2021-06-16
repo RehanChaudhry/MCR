@@ -27,6 +27,7 @@ export interface TypingComponentProps {
   showIcon?: boolean;
   showProgressbar?: boolean;
   clearInputField?: boolean;
+  multiline?: boolean;
 }
 
 export const WriteMessage = React.memo<TypingComponentProps>(
@@ -37,7 +38,8 @@ export const WriteMessage = React.memo<TypingComponentProps>(
     btnPressCallback,
     showIcon = true,
     showProgressbar = false,
-    clearInputField = false
+    clearInputField = false,
+    multiline = true
   }) => {
     const [initialText, setInitialText] = useState<string>("");
     const { themedColors } = usePreferredTheme();
@@ -75,7 +77,7 @@ export const WriteMessage = React.memo<TypingComponentProps>(
           <View
             style={[styles.input, { borderColor: themedColors.border }]}>
             <AppInputField
-              multiline={true}
+              multiline={multiline}
               placeholderTextColor={themedColors.interface["600"]}
               placeholder={appInputPlaceHolder}
               onChangeText={(text: string) => {
