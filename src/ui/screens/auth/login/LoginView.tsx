@@ -39,7 +39,8 @@ const validationSchema = Yup.object().shape({
 });
 
 let initialValues: FormikValues = {
-  email: "lfrance11@geocities.jp",
+  // email: "lfrance11@geocities.jp",
+  email: "muneeb.shafiq+st4@cygnismedia.com",
   password: "Mycollegeroomie1234"
 };
 

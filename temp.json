@@ -1,49 +1,47 @@
 {
-  "duration": 616,
+  "duration": 807,
   "problem": null,
   "originalError": null,
   "ok": true,
   "status": 200,
   "headers": {
-    "cf-request-id": "0ab4e983a90000db04b3b1c000000001",
     "content-type": "application/json; charset=utf-8",
-    "x-content-type-options": "nosniff",
-    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
-    "strict-transport-security": "max-age=0; includeSubDomains",
-    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=h2XEEr%2BXKAbTxF7B5QnBjg3zrA6jFQKuDJnJMNDnpAh0PXOjTixReDSeGB9dhBvVMm8ep6GOy9sAzyJ4qzac2a%2FaAs3LPpfcMbUSL2QGI0LuXtPTQkVnPW0dJ3ECBhsq\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
-    "cf-ray": "6601ab7f7c91db04-KIX",
-    "x-powered-by": "Express",
-    "x-xss-protection": "1; mode=block",
-    "vary": "Origin",
-    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
-    "cf-cache-status": "DYNAMIC",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=4VrpEAZh%2BX8HneuXpmcU%2Fj5lYDiwQ%2BUoNeY4%2BvYh9PIKlXTJtkxHnjNvYUwuFUrmb0XRjzpcfVPAOL%2FFI%2B2VNqILLqZc9cBY1%2FC2PujZrk%2BIByCjAW%2Fl0UB229QtdXBl\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
     "x-frame-options": "SAMEORIGIN",
-    "date": "Wed, 16 Jun 2021 05:34:35 GMT",
+    "cf-request-id": "0ab20895050000c60da883c000000001",
+    "cf-cache-status": "DYNAMIC",
+    "x-powered-by": "Express",
+    "date": "Tue, 15 Jun 2021 16:09:40 GMT",
+    "cf-ray": "65fd10680f6cc60d-KHI",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
+    "x-xss-protection": "1; mode=block",
+    "content-encoding": "br",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
     "server": "cloudflare",
-    "etag": "W/\"113e-5I5lgwDjOCu0WJohFT1MD+aBPFo\""
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "x-content-type-options": "nosniff",
+    "etag": "W/\"1173-fXGGSWmFh+vgIsjUKIo+VX+Co4c\"",
+    "vary": "Accept-Encoding, Origin"
   },
   "config": {
-    "url": "log",
+    "url": "relation/matches",
     "method": "get",
     "headers": {
       "Accept": "application/json",
       "subdomain": "ohio",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTgsInVzZXJJZCI6NjQsImNsaWVudElkIjoiMSIsInNjb3BlcyI6WyJjb21tdW5pdHkiLCJhbm5vdW5jZW1lbnRzIiwibGlzdC1xdWVzdGlvbiIsImxpc3Qtc2VjdGlvbiIsImxpc3QtYWdyZWVtZW50LWZpZWxkcyIsInZpZXctc3RhdGljLWNvbnRlbnQiLCJsaXN0LWNvbmZpZ3VyYXRpb24iLCJsaXN0LWZvcm0taW5wdXQiLCJzeXN0ZW0tbG9nIiwiY29udmVyc2F0aW9uIiwibWFyay1zcGFtIiwibm90aWZpY2F0aW9uIiwiYWdyZWVtZW50LWFuc3dlciIsInVwZGF0ZS1hZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiLCJkZWxldGUtZmlsZSJdLCJpYXQiOjE2MjM4MTkwMjAsImV4cCI6MTYyNjQxMTAyMH0.Fb4Y32uhGofT1JhVCZKym_Z2TFXs4g44cMqpJaZDJ8s"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODcsInVzZXJJZCI6MTE2MSwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwidXBkYXRlLWFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCIsImRlbGV0ZS1maWxlIl0sImlhdCI6MTYyMzc3MzM3OCwiZXhwIjoxNjI2MzY1Mzc4fQ.eeQrf8zyo1z-jZEx30eaAxkz64oSFu-rc1jihWrfQeg"
     },
     "params": {
-      "type": "friend-request",
+      "type": "matches",
+      "paginate": true,
       "page": 1,
-      "limit": 9,
-      "paginate": true
+      "limit": 10,
+      "filterBy": "matches"
     },
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
-    "transformRequest": [
-      null
-    ],
-    "transformResponse": [
-      null
-    ],
+    "transformRequest": [null],
+    "transformResponse": [null],
     "timeout": 0,
     "xsrfCookieName": "XSRF-TOKEN",
     "xsrfHeaderName": "X-XSRF-TOKEN",
@@ -51,211 +49,269 @@
     "maxBodyLength": -1
   },
   "data": {
-    "message": "Success.",
+    "message": "Success",
     "data": [
       {
-        "id": 3487,
-        "userId": 64,
-        "entityId": 64,
-        "type": "student",
-        "action": "login",
-        "data": "You have signed in successfully.",
-        "createdAt": "2021-06-16T05:29:26.000Z",
-        "updatedAt": "2021-06-16T05:29:26.000Z",
+        "userId": 28,
+        "matches": 0,
+        "matchScore": "0.0",
         "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
+          "id": 28,
+          "firstName": "Amandy",
+          "lastName": "Handmore",
           "profilePicture": {
-            "fileURL": "https://my-college-roomie-dev.s3.us-west-2.amazonaws.com/52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg",
-            "originalName": "52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg"
-          }
-        }
-      },
-      {
-        "id": 3484,
-        "userId": 64,
-        "entityId": 64,
-        "type": "student",
-        "action": "login",
-        "data": "You have signed in successfully.",
-        "createdAt": "2021-06-16T05:28:04.000Z",
-        "updatedAt": "2021-06-16T05:28:04.000Z",
-        "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
-          "profilePicture": {
-            "fileURL": "https://my-college-roomie-dev.s3.us-west-2.amazonaws.com/52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg",
-            "originalName": "52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg"
-          }
-        }
-      },
-      {
-        "id": 3464,
-        "userId": 64,
-        "entityId": 64,
-        "type": "profile",
-        "action": "update",
-        "data": null,
-        "createdAt": "2021-06-16T05:10:49.000Z",
-        "updatedAt": "2021-06-16T05:10:49.000Z",
-        "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
-          "profilePicture": {
-            "fileURL": "https://my-college-roomie-dev.s3.us-west-2.amazonaws.com/52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg",
-            "originalName": "52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg"
-          }
-        }
-      },
-      {
-        "id": 3460,
-        "userId": 64,
-        "entityId": 64,
-        "type": "student",
-        "action": "login",
-        "data": "You have signed in successfully.",
-        "createdAt": "2021-06-16T05:05:17.000Z",
-        "updatedAt": "2021-06-16T05:05:17.000Z",
-        "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
-          "profilePicture": {
-            "fileURL": "https://my-college-roomie-dev.s3.us-west-2.amazonaws.com/52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg",
-            "originalName": "52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg"
-          }
-        }
-      },
-      {
-        "id": 3459,
-        "userId": 64,
-        "entityId": 13,
-        "type": "comment",
-        "action": "create",
-        "data": {
-          "id": 13,
-          "postId": 10,
-          "comment": "👍🏻",
-          "content": "screenshot"
-        },
-        "createdAt": "2021-06-16T05:02:08.000Z",
-        "updatedAt": "2021-06-16T05:02:08.000Z",
-        "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
-          "profilePicture": {
-            "fileURL": "https://my-college-roomie-dev.s3.us-west-2.amazonaws.com/52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg",
-            "originalName": "52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg"
-          }
-        }
-      },
-      {
-        "id": 3457,
-        "userId": 64,
-        "entityId": 10,
-        "type": "post",
-        "action": "create",
-        "data": {
-          "id": 10,
-          "type": "feed",
-          "content": "screenshot",
-          "postedByLastName": "France",
-          "postedByFirstName": "Lucie"
-        },
-        "createdAt": "2021-06-16T05:01:56.000Z",
-        "updatedAt": "2021-06-16T05:01:56.000Z",
-        "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
-          "profilePicture": {
-            "fileURL": "https://my-college-roomie-dev.s3.us-west-2.amazonaws.com/52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg",
-            "originalName": "52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg"
-          }
-        }
-      },
-      {
-        "id": 3456,
-        "userId": 64,
-        "entityId": 203,
-        "type": "post",
-        "action": "report",
-        "data": {
-          "id": 203,
-          "type": "post",
-          "reason": null,
+            "fileURL": "https://randomuser.me/api/portraits/men/42.jpg",
+            "originalName": "42.jpg"
+          },
+          "hometown": "Grahamstad",
+          "major": "Counseling",
+          "floorPlanRoomId": 4,
+          "genderId": 1,
+          "gender": "Male",
           "status": "active",
-          "problems": [
-            "Threats",
-            "Nudity",
-            "Hate Speech"
-          ],
-          "createdAt": "2021-06-16T04:58:43.370Z",
-          "updatedAt": "2021-06-16T04:58:43.370Z",
-          "reportedBy": 64,
-          "referenceId": 7,
-          "reporterLastName": "France",
-          "reporterFirstName": "Lucie"
+          "matchGroupId": 2,
+          "matchGroupName": "Sophomore"
         },
-        "createdAt": "2021-06-16T04:58:43.000Z",
-        "updatedAt": "2021-06-16T04:58:43.000Z",
-        "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
-          "profilePicture": {
-            "fileURL": "https://my-college-roomie-dev.s3.us-west-2.amazonaws.com/52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg",
-            "originalName": "52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg"
-          }
-        }
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
       },
       {
-        "id": 3454,
-        "userId": 64,
-        "entityId": 12,
-        "type": "comment",
-        "action": "create",
-        "data": {
-          "id": 12,
-          "postId": 7,
-          "comment": "Hello hello",
-          "content": "hello\n"
-        },
-        "createdAt": "2021-06-16T04:56:39.000Z",
-        "updatedAt": "2021-06-16T04:56:39.000Z",
+        "userId": 29,
+        "matches": 0,
+        "matchScore": "0.0",
         "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
+          "id": 29,
+          "firstName": "Lynnell",
+          "lastName": "Ballston",
           "profilePicture": {
-            "fileURL": "https://my-college-roomie-dev.s3.us-west-2.amazonaws.com/52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg",
-            "originalName": "52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg"
-          }
-        }
+            "fileURL": "https://randomuser.me/api/portraits/men/11.jpg",
+            "originalName": "11.jpg"
+          },
+          "hometown": "East Annamae",
+          "major": "Jazz Studies",
+          "floorPlanRoomId": 15,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 1,
+          "matchGroupName": "Freshman"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
       },
       {
-        "id": 3453,
-        "userId": 64,
-        "entityId": 64,
-        "type": "student",
-        "action": "login",
-        "data": "You have signed in successfully.",
-        "createdAt": "2021-06-16T04:50:20.000Z",
-        "updatedAt": "2021-06-16T04:50:20.000Z",
+        "userId": 30,
+        "matches": 0,
+        "matchScore": "0.0",
         "user": {
-          "firstName": "Lucie",
-          "lastName": "France",
-          "roleTitle": "Student",
+          "id": 30,
+          "firstName": "Honey",
+          "lastName": "Cronk",
           "profilePicture": {
-            "fileURL": "https://my-college-roomie-dev.s3.us-west-2.amazonaws.com/52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg",
-            "originalName": "52C2DCB2-0EDE-4232-BAB8-CC321BA19C6E.jpg"
-          }
-        }
+            "fileURL": "https://randomuser.me/api/portraits/men/57.jpg",
+            "originalName": "57.jpg"
+          },
+          "hometown": "West Georgiana",
+          "major": "Home Economics",
+          "floorPlanRoomId": 13,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 2,
+          "matchGroupName": "Sophomore"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
+      },
+      {
+        "userId": 31,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 31,
+          "firstName": "Zane",
+          "lastName": "Mayes",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/5.jpg",
+            "originalName": "5.jpg"
+          },
+          "hometown": "Lemkemouth",
+          "major": "Latin American Studies",
+          "floorPlanRoomId": 9,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 3,
+          "matchGroupName": "Junior"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
+      },
+      {
+        "userId": 32,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 32,
+          "firstName": "Tressa",
+          "lastName": "Littler",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/women/21.jpg",
+            "originalName": "21.jpg"
+          },
+          "hometown": "Volkmanshire",
+          "major": "Pharmacy",
+          "floorPlanRoomId": 14,
+          "genderId": 1,
+          "gender": "Female",
+          "status": "active",
+          "matchGroupId": 3,
+          "matchGroupName": "Junior"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
+      },
+      {
+        "userId": 33,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 33,
+          "firstName": "Clarinda",
+          "lastName": "Whetzel",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/women/96.jpg",
+            "originalName": "96.jpg"
+          },
+          "hometown": "Zettafurt",
+          "major": "Radio and Television",
+          "floorPlanRoomId": 15,
+          "genderId": 1,
+          "gender": "Female",
+          "status": "active",
+          "matchGroupId": 1,
+          "matchGroupName": "Freshman"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
+      },
+      {
+        "userId": 34,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 34,
+          "firstName": "Meridith",
+          "lastName": "Ridgeway",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/women/88.jpg",
+            "originalName": "88.jpg"
+          },
+          "hometown": "Port Stantonton",
+          "major": "Engineering Mechanics",
+          "floorPlanRoomId": 6,
+          "genderId": 1,
+          "gender": "Female",
+          "status": "active",
+          "matchGroupId": 2,
+          "matchGroupName": "Sophomore"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
+      },
+      {
+        "userId": 37,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 37,
+          "firstName": "Maryjo",
+          "lastName": "Rathjen",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/56.jpg",
+            "originalName": "56.jpg"
+          },
+          "hometown": "New Lisandro",
+          "major": "Feed Science",
+          "floorPlanRoomId": 14,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 1,
+          "matchGroupName": "Freshman"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
+      },
+      {
+        "userId": 38,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 38,
+          "firstName": "Salvatore",
+          "lastName": "Voorhis",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/91.jpg",
+            "originalName": "91.jpg"
+          },
+          "hometown": "Ryleemouth",
+          "major": "Web Design",
+          "floorPlanRoomId": 7,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 2,
+          "matchGroupName": "Sophomore"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
+      },
+      {
+        "userId": 40,
+        "matches": 0,
+        "matchScore": "0.0",
+        "user": {
+          "id": 40,
+          "firstName": "Theo",
+          "lastName": "Easton",
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/men/4.jpg",
+            "originalName": "4.jpg"
+          },
+          "hometown": "Port Georgetteberg",
+          "major": "Asian-American Studies",
+          "floorPlanRoomId": 7,
+          "genderId": 1,
+          "gender": "Male",
+          "status": "active",
+          "matchGroupId": 3,
+          "matchGroupName": "Junior"
+        },
+        "dismissed": 0,
+        "isFriend": 0,
+        "isRoommate": 0,
+        "criteria": { "eligible": true }
       }
-    ]
+    ],
+    "count": 391
   }
 }

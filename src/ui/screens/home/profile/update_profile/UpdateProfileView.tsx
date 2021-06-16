@@ -100,16 +100,14 @@ export const UpdateProfileView = optimizedMemo<Props>(
           ];
         });
 
-        fieldToGetValidation.current = fieldToGetValidation.current.filter(
-          (value) => value.isRequired === 1
-        );
-
         yepSchema.current =
           updateProfileUiData !== undefined
             ? createYupSchema(fieldToGetValidation.current)
             : Yup.object().shape({});
 
-        AppLog.log(() => "Created updated schema...");
+        AppLog.log(
+          () => "Created updated schema..." + JSON.stringify(yepSchema)
+        );
 
         // FieldBox's initial state is not being handled here.
         // it is being handled in CustomFormFieldItem
