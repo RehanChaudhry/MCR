@@ -154,8 +154,8 @@ const styles = StyleSheet.create({
   },
   uploadButton: {
     height: 44,
-    width: "82%",
-    marginHorizontal: SPACE.md
+    marginStart: SPACE.md,
+    flex: 1
   },
   text: {
     paddingTop: SPACE.lg

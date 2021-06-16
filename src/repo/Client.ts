@@ -32,8 +32,12 @@ export function resetApiClient(providedAuthToken?: string) {
 
     AppLog.log(() => "Access Token: " + token);
 
-    if (token && uni) {
-      request.headers.Authorization = "Bearer " + token;
+    if (token) {
+      if (uni) {
+        request.headers.Authorization = "Bearer " + token;
+      } else {
+        await AuthStorage.removeUser();
+      }
     }
   });
 }
