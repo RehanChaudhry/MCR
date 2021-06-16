@@ -229,11 +229,12 @@ const MatchesController: FC<Props> = () => {
 
   const onFilterChange = useCallback(
     (keyword?: string, gender?: EGender) => {
+      setProfileMatches?.(undefined);
       requestModel.current.keyword = keyword;
       requestModel.current.gender = gender;
       refreshCallback();
     },
-    [refreshCallback]
+    [setProfileMatches, refreshCallback]
   );
 
   const onEndReached = () => {
