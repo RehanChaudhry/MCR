@@ -4,8 +4,8 @@ import EScreen from "models/enums/EScreen";
 export type CommunityStackParamList = {
   Community: { postId?: number };
   CreatePost: { postCreatedSuccessfully?: () => void };
-  Comments: { postId: number };
-  ReportContent: { postId: number };
+  Comments: { postId: number; callback: () => void };
+  ReportContent: { postId: number; callback: () => void };
   Profile: { isFrom: EScreen; updateProfile: boolean; userId: number };
 };
 
