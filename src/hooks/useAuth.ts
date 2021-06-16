@@ -60,7 +60,7 @@ export default () => {
 
   const saveProfile = async (
     profile: Profile,
-    userToBeUpdated?: UserModel
+    userToBeUpdated: UserModel
   ) => {
     let _user: UserModel = {
       ...userToBeUpdated,

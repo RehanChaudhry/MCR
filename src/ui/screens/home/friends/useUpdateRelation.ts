@@ -28,9 +28,7 @@ export default (
         return;
       }
 
-      onSuccess(item);
-
-      /*setShouldShowPb(true);
+      setShouldShowPb(true);
 
       const {
         hasError,
@@ -55,7 +53,7 @@ export default (
           onFinish?.();
           setShouldShowPb(false);
         }
-      }*/
+      }
     },
     [messageOnFailed, status, onFinish, onSuccess, updateRelationApi]
   );

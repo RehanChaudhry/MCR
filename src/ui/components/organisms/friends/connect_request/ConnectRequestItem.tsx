@@ -6,8 +6,7 @@ import { Image, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
-import { AppLog, shadowStyleProps } from "utils/Util";
-import { Type } from "ui/screens/home/friends/MyFriends/TwoButtonsAlert";
+import { shadowStyleProps } from "utils/Util";
 import { useApi } from "repo/Client";
 import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
 import AuthApis from "repo/auth/AuthApis";
@@ -20,25 +19,22 @@ type Props = {
 const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
   const theme = usePreferredTheme();
 
-  const { user, saveUser, saveProfile } = useAuth();
+  const { user, saveProfile } = useAuth();
 
   const fetchProfileApi = useApi<string, FetchMyProfileResponseModel>(
     AuthApis.fetchMyProfile
   );
 
   const fetchUserApi = useCallback(async () => {
-    // fetch user profile data
-    const { hasError: hasErrorProfile } = await fetchProfileApi.request(
-      []
-    );
+    const {
+      hasError: hasErrorProfile,
+      dataBody
+    } = await fetchProfileApi.request([]);
 
     if (!hasErrorProfile) {
-      let data = fetchProfileApi.data!.data;
-      data.agreementId = 19;
-      AppLog.log(() => "save user from matches " + JSON.stringify(data));
-      await saveProfile(data);
+      await saveProfile(dataBody?.data!, user!);
     }
-  }, []);
+  }, [fetchProfileApi, saveProfile, user]);
 
   const {
     shouldShowPb: acceptRequestPb,
@@ -48,11 +44,10 @@ const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
     "Unable to accept the request",
     undefined,
     (_item) => {
-      AppLog.log(() => "ConnectRequestItem => onSuccess");
       removeItemFromList(item);
-      // if ((user?.profile?.agreementId ?? 0) <= 0) {
-      fetchUserApi().then().catch();
-      // }
+      if (!user?.profile?.agreementId) {
+        fetchUserApi().then().catch();
+      }
     }
   );
 
