@@ -18,8 +18,7 @@ import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
 
 export enum Type {
   FRIEND_REQUEST = "friend_request",
-  FRIENDS_ROOMMATE_REQUEST = "friends_roommate_request",
-  MATCHES_ROOMMATE_REQUEST = "matches_roommate_request",
+  ROOMMATE_REQUEST = "roommate_request",
   CANCEL = "cancel",
   UNFRIEND = "unfriend",
   REMOVE_ROOMMATE = "remove-roommate",
@@ -109,6 +108,7 @@ const TwoButtonsAlert: FC<Props> = React.memo(
       hideSelf,
       () => {
         changedRelationStatus(getSelectedItem(), Status.PENDING);
+        // TODO: Fetch user profile here for updating agreementId
       }
     );
 
@@ -151,16 +151,14 @@ const TwoButtonsAlert: FC<Props> = React.memo(
               style={styles.actionContainer}
               shouldShowProgressBar={
                 type === Type.FRIEND_REQUEST ||
-                type === Type.FRIENDS_ROOMMATE_REQUEST ||
-                type === Type.MATCHES_ROOMMATE_REQUEST
+                type === Type.ROOMMATE_REQUEST
                   ? shouldShowPb
                   : shouldShowRelationUpdatePb
               }
               onPress={() => {
                 if (
                   type === Type.FRIEND_REQUEST ||
-                  type === Type.FRIENDS_ROOMMATE_REQUEST ||
-                  type === Type.MATCHES_ROOMMATE_REQUEST
+                  type === Type.ROOMMATE_REQUEST
                 ) {
                   sendRequest(getSelectedItem());
                 } else if (

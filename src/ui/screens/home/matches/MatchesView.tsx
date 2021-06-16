@@ -189,7 +189,7 @@ export const MatchesView: React.FC<Props> = ({
         message={`Are you sure you want to send roommate request to ${
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         }?`}
-        type={Type.MATCHES_ROOMMATE_REQUEST}
+        type={Type.ROOMMATE_REQUEST}
         errorMessage="Unable to send roommate request"
         firstButtonText="Yes, send request"
         isFromMatchScreen={true}
