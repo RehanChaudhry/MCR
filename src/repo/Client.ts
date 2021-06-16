@@ -32,10 +32,9 @@ export function resetApiClient(providedAuthToken?: string) {
 
     AppLog.log(() => "Access Token: " + token);
 
-    if (token === undefined) {
-      return;
+    if (token && uni) {
+      request.headers.Authorization = "Bearer " + token;
     }
-    request.headers.Authorization = "Bearer " + token;
   });
 }
 

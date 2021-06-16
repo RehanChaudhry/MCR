@@ -28,6 +28,7 @@ import { useApi } from "repo/Client";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
 import { Alert } from "react-native";
 import ProfileApis from "repo/auth/ProfileApis";
+import { useCallback } from "react";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -89,7 +90,7 @@ const ViewProfileController: FC<Props> = () => {
     ProfileApis.getUserById
   );
 
-  const handleGetUserByIdAPi = async () => {
+  const handleGetUserByIdAPi = useCallback(async () => {
     const {
       hasError,
       dataBody,
@@ -102,7 +103,7 @@ const ViewProfileController: FC<Props> = () => {
       modifyUiFields(dataBody.data!);
       setViewProfileUiData(dataBody.data!);
     }
-  };
+  }, [getUserRequestModel, params.userId]);
 
   useEffect(() => {
     if ((params.userId! ?? undefined) === undefined) {
@@ -114,10 +115,9 @@ const ViewProfileController: FC<Props> = () => {
 
       setViewProfileUiData(_viewProfileUiData);
     } else {
-      handleGetUserByIdAPi().then().catch();
+      handleGetUserByIdAPi();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.user, handleGetUserByIdAPi]);
+  }, [auth.user, handleGetUserByIdAPi, params.userId]);
 
   const navigation = useNavigation<ProfileNavigationProp>();
   const navigationViewProfile = useNavigation<ViewProfileNavigationProp>();
