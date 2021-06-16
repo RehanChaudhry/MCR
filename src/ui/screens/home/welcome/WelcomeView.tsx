@@ -1,7 +1,7 @@
 import ArrowRight from "assets/images/arrow_circle_right.svg";
 import Play from "assets/images/play.svg";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { CardView } from "ui/components/atoms/CardView";
@@ -13,7 +13,10 @@ import HtmlView from "react-native-htmlview";
 import YouTube from "react-native-youtube";
 import { AppLog } from "utils/Util";
 import WelcomeContinueButton from "ui/components/molecules/welcome_continue_button/WelcomeContinueButton";
-import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseModel";
+import {
+  EWelcomeFlowStatus,
+  getName
+} from "models/api_responses/FetchMyProfileResponseModel";
 
 type Props = {
   openUpdateProfileScreen: () => void;
@@ -33,13 +36,19 @@ export const WelcomeView = React.memo<Props>(
 
     AppLog.logForcefully(() => "video: " + shouldPlayVideo);
 
+    const { user } = useAuth();
+
     // @ts-ignore
     return (
       <Screen>
         <ScrollView>
           <View style={styles.mainContainer}>
             <HeadingWithText
-              headingText={STRINGS.welcome.welcome}
+              headingText={`Welcome ${
+                user?.profile
+                  ? getName(user?.profile)
+                  : STRINGS.common.not_found
+              },`}
               headingFontWeight={"bold"}
               headingStyle={styles.welcomeHeading}
               text={STRINGS.welcome.welcome_text}
