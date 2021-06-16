@@ -67,21 +67,8 @@ export const ActivityLogView = React.memo<Props>(
                 height={20}
               />
             )}
-            title={getActivityTypeFilterData()[0].value}
-            items={[
-              {
-                value: "View All",
-                text: ""
-              },
-              {
-                value: "View Friend Request",
-                text: "friend-request"
-              },
-              {
-                value: "View Roommate Request",
-                text: "roommate-request"
-              }
-            ]}
+            preselectedItemString={getActivityTypeFilterData()[0].value}
+            items={getActivityTypeFilterData()}
             selectedItemCallback={(item) => {
               onChangeFilter(item.text!);
             }}
