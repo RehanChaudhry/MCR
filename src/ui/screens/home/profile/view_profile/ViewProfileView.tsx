@@ -3,7 +3,6 @@ import React from "react";
 import { ScrollView, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { DynamicFormView } from "ui/components/templates/dynamic_card_view/DynamicFormView";
-import MyRoommatesController from "ui/screens/home/profile/my_roommates/MyRoommatesController";
 
 type Props = {
   openRoommateAgreementScreen: () => void;
@@ -23,7 +22,7 @@ export const ViewProfileView: React.FC<Props> = ({
       <ScrollView>
         <View>
           <DynamicFormView sectionsData={viewProfileUiData?.sections} />
-          <MyRoommatesController />
+          {/*<MyRoommatesController />*/}
         </View>
       </ScrollView>
     </Screen>

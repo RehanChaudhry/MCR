@@ -209,6 +209,7 @@ const RoommateAgreementController: FC<Props> = () => {
       showAgreementDialog={agreementDialog}
       agreementDialogCallback={agreementDialogCallback}
       progressBarBtn={roommateUpdateApi.loading}
+      shouldShowAgreementDialog={setAgreementDialog}
     />
   );
 };

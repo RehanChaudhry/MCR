@@ -281,7 +281,8 @@ export default {
   },
 
   comments: {
-    comments: "Comments"
+    comments: "Comments",
+    typingHint: "Start typing your comment"
   },
 
   announcement: {
