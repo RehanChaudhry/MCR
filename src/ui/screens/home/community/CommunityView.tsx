@@ -26,6 +26,7 @@ type Props = {
   error: string | undefined;
   filterDataBy: (type: string) => void;
   moveToProfileScreen: () => void;
+  reload: () => void;
 };
 
 export const CommunityView = React.memo<Props>(
@@ -41,7 +42,8 @@ export const CommunityView = React.memo<Props>(
     openReportContentScreen,
     error,
     filterDataBy,
-    moveToProfileScreen
+    moveToProfileScreen,
+    reload
   }) => {
     const auth = useAuth();
     const keyExtractor = useCallback(
@@ -85,6 +87,7 @@ export const CommunityView = React.memo<Props>(
         {useLazyLoadInterface(
           <>
             <FlatListWithPb
+              retryCallback={reload}
               removeClippedSubviews={true}
               initialNumToRender={4}
               maxToRenderPerBatch={4}

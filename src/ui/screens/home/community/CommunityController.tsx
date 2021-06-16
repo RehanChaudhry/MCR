@@ -220,6 +220,11 @@ const CommunityController: FC<Props> = () => {
     fetchCommunities().then().catch();
   }, [fetchCommunities]);
 
+  const reloadCallback = async () => {
+    requestModel.current.page = 1;
+    fetchCommunities().then().catch();
+  };
+
   useEffect(() => {
     if (route.params?.postId) {
       setCommunities((prevState) => {
@@ -249,6 +254,7 @@ const CommunityController: FC<Props> = () => {
       openReportContentScreen={openReportContentScreen}
       filterDataBy={filterDataBy}
       moveToProfileScreen={moveToProfileScreen}
+      reload={reloadCallback}
     />
   );
 };

@@ -147,6 +147,11 @@ const AnnouncementController: FC<Props> = () => {
     fetchAnnouncements().then().catch();
   }, [fetchAnnouncements]);
 
+  const reloadCallback = async () => {
+    requestModel.current.page = 1;
+    fetchAnnouncements().then().catch();
+  };
+
   const moveToProfileScreen = useCallback(() => {
     navigation.navigate("Profile", { isFrom: EScreen.ANNOUNCEMENT });
   }, [navigation]);
@@ -162,6 +167,7 @@ const AnnouncementController: FC<Props> = () => {
       openCommentsScreen={openCommentsScreen}
       shouldPlayVideo={shouldPlayVideo}
       moveToProfileScreen={moveToProfileScreen}
+      reload={reloadCallback}
     />
   );
 };
