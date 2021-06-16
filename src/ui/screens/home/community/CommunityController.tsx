@@ -205,7 +205,21 @@ const CommunityController: FC<Props> = () => {
   };
 
   const openCommentsScreen = (postId: number) => {
-    navigation.navigate("Comments", { postId: postId });
+    navigation.navigate("Comments", {
+      postId: postId,
+      callback: () => {
+        setCommunities((prevState) => {
+          const postIndex =
+            prevState?.findIndex((value) => value.id === postId) ?? -1;
+          if (postIndex > -1) {
+            prevState?.filter((community) => {
+              community.commentsCount++;
+            });
+          }
+          return prevState;
+        });
+      }
+    });
   };
 
   const openReportContentScreen = (postId: number) => {

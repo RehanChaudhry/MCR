@@ -3,7 +3,7 @@ import EScreen from "models/enums/EScreen";
 
 export type AnnouncementStackParamList = {
   Announcement: undefined;
-  Comments: { postId: number };
+  Comments: { postId: number; callback: () => void };
   Profile: { isFrom: EScreen; updateProfile: boolean; userId: number };
 };
 

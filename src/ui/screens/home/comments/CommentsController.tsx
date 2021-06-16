@@ -256,6 +256,7 @@ export const CommentsController: FC<Props> = (Props) => {
           });
           items = [...newList!!];
           setComments(items);
+          params.callback();
 
           AppLog.logForcefully(() => "items" + JSON.stringify(comments));
         }
