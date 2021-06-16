@@ -9,7 +9,7 @@ export type FriendsRootStackParamList = {
   AgreementDetails: {
     agreementData?: AgreementData;
   };
-  Profile: { isFrom: EScreen };
+  Profile: { isFrom: EScreen; updateProfile: boolean; userId: number };
   Chat: { title: string[]; conversationId: number };
 };
 

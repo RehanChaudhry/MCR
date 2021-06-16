@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { COLORS, SPACE } from "config";
-import { usePreferredTheme } from "hooks";
+import { COLORS, SPACE, STRINGS } from "config";
+import { useAuth, usePreferredTheme } from "hooks";
 import StaticContentRequestModel, {
   StaticContentType
 } from "models/api_requests/StaticContentRequestModel";
@@ -31,6 +31,7 @@ import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import useFetchRelations from "ui/screens/home/friends/useFetchRelations";
 import { AppLog } from "utils/Util";
 import DismissedOrBlockedView from "./DismissedOrBlockedView";
+import { useCreateConversation } from "hooks/useCreateConversation";
 
 type Props = {};
 
@@ -46,8 +47,15 @@ const DismissedOrBlockedController: FC<Props> = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 
   const dismissBlockRootNavigation = useNavigation<DismissBlockNavigationProp>();
-  const { dismissed, setDismissed } = useContext(AppDataContext);
+  const {
+    dismissed,
+    setDismissed,
+    setActiveConversations,
+    inActiveConversations
+  } = useContext(AppDataContext);
   const { blocked, setBlocked } = useContext(AppDataContext);
+  const createConversation = useCreateConversation();
+  const { user } = useAuth();
 
   const {
     isLoading: isLoadingDismissed,
@@ -106,9 +114,33 @@ const DismissedOrBlockedController: FC<Props> = () => {
     setSelectedTabIndex(index);
   };
 
-  const moveToProfileScreen = useCallback(() => {
-    navigation.navigate("Profile", { isFrom: EScreen.MY_FRIENDS });
-  }, [navigation]);
+  const moveToProfileScreen = useCallback(
+    (relationModel: RelationModel) => {
+      navigation.navigate("Profile", {
+        isFrom: EScreen.MY_FRIENDS,
+        updateProfile: false,
+        userId: relationModel.user!.id!
+      });
+    },
+    [navigation]
+  );
+
+  const moveToChatScreen = async (profileMatch: RelationModel) => {
+    const createConversationResult = await createConversation(
+      [user?.profile?.id!!, profileMatch.user?.id!],
+      setActiveConversations,
+      inActiveConversations
+    );
+
+    if (createConversationResult !== undefined) {
+      navigation.navigate("Chat", {
+        title: [
+          profileMatch.user?.getFullName() ?? STRINGS.common.not_found
+        ],
+        conversationId: createConversationResult?.id!
+      });
+    }
+  };
 
   useEffect(() => {
     getHeaderContent();
@@ -148,7 +180,7 @@ const DismissedOrBlockedController: FC<Props> = () => {
             onEndReached={onEndReachedDismissed}
             onPullToRefresh={onPullToRefreshDismissed}
             onPressChat={(item: RelationModel) => {
-              AppLog.log(() => "onPressChat: ", item);
+              moveToChatScreen(item).then().catch();
             }}
             onPressProfile={moveToProfileScreen}
             selectedTab={selectedTabIndex}
@@ -166,7 +198,7 @@ const DismissedOrBlockedController: FC<Props> = () => {
             onEndReached={onEndReachedBlocked}
             onPullToRefresh={onPullToRefreshBlocked}
             onPressChat={(item: RelationModel) => {
-              AppLog.log(() => "onPressChat: ", item);
+              moveToChatScreen(item).then().catch();
             }}
             onPressProfile={moveToProfileScreen}
             selectedTab={selectedTabIndex}

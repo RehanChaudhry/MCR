@@ -17,7 +17,7 @@ type Props = {
   openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
   error: string | undefined;
-  moveToProfileScreen: () => void;
+  moveToProfileScreen: (userId: number) => void;
 };
 
 export const AnnouncementView = React.memo<Props>(

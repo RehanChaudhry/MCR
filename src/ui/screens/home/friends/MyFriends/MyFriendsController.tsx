@@ -45,7 +45,11 @@ const MyFriendsController: FC<Props> = () => {
 
   const moveToProfileScreen = useCallback(
     (_: RelationModel) => {
-      navigation.navigate("Profile", { isFrom: EScreen.MY_FRIENDS });
+      navigation.navigate("Profile", {
+        isFrom: EScreen.MY_FRIENDS,
+        updateProfile: false,
+        userId: _.userId
+      });
     },
     [navigation]
   );
@@ -79,8 +83,7 @@ const MyFriendsController: FC<Props> = () => {
         title: [
           profileMatch.user?.getFullName() ?? STRINGS.common.not_found
         ],
-        conversationId: createConversationResult?.id!,
-        isArchived: createConversationResult.status === "active"
+        conversationId: createConversationResult?.id!
       });
     }
   };

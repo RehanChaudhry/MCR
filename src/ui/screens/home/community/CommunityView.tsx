@@ -25,7 +25,7 @@ type Props = {
   openReportContentScreen?: (postId: number) => void;
   error: string | undefined;
   filterDataBy: (type: string) => void;
-  moveToProfileScreen: () => void;
+  moveToProfileScreen?: (userId: number) => void;
 };
 
 export const CommunityView = React.memo<Props>(

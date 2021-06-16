@@ -7,7 +7,7 @@ export type MatchesStackParamList = {
   Matches: undefined;
   MatchInfo: undefined;
   Chat: { title: string[]; conversationId: number };
-  Profile: { isFrom: EScreen; updateProfile: boolean };
+  Profile: { isFrom: EScreen; updateProfile: boolean; userId: number };
   RoommateAgreement: { isFrom: EScreen };
   UpdateProfile: { isFrom: EScreen };
   Questionnaire: { isFrom: EScreen };

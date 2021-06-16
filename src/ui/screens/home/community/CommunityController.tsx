@@ -212,9 +212,16 @@ const CommunityController: FC<Props> = () => {
     navigation.navigate("ReportContent", { postId: postId });
   };
 
-  const moveToProfileScreen = useCallback(() => {
-    navigation.navigate("Profile", { isFrom: EScreen.COMMUNITY });
-  }, [navigation]);
+  const moveToProfileScreen = useCallback(
+    (userId: number) => {
+      navigation.navigate("Profile", {
+        isFrom: EScreen.COMMUNITY,
+        updateProfile: false,
+        userId: userId
+      });
+    },
+    [navigation]
+  );
 
   useEffect(() => {
     fetchCommunities().then().catch();
