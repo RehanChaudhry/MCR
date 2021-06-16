@@ -8,8 +8,11 @@ type ActivityLog = {
   type?: NotificationAndActivityLogFilterType;
   user?: User;
   action?: Actions;
+  data?: any | any[];
   createdAt: Date;
 };
+
+export type ActivityData = {};
 
 export function getDisplayTime(activityLog: ActivityLog): string {
   return timeAgo(
@@ -88,11 +91,6 @@ export function getMessage(activityLog: ActivityLog): string {
       }</b> from dismiss list`;
     } else if (
       activityLog.type === NotificationAndActivityLogFilterType.POST &&
-      activityLog.action === Actions.CREATE
-    ) {
-      return `Created a new post in <b>commmunity</b>`;
-    } else if (
-      activityLog.type === NotificationAndActivityLogFilterType.POST &&
       activityLog.action === Actions.COMMENTED
     ) {
       return `Commented on any post <b>Post commneted</b>`;
@@ -137,7 +135,10 @@ export function getMessage(activityLog: ActivityLog): string {
       activityLog.type === NotificationAndActivityLogFilterType.COMMENT &&
       activityLog.action === Actions.CREATE
     ) {
-      return `Commented on a  <b>Post</b>`;
+      return `Commented on a post, <b>${activityLog.data.content.replace(
+        /\r?\n|\r/g,
+        " "
+      )}</b>`;
     } else if (
       activityLog.type === NotificationAndActivityLogFilterType.RESTORED &&
       activityLog.action === Actions.CREATE
@@ -149,15 +150,18 @@ export function getMessage(activityLog: ActivityLog): string {
       activityLog.type === NotificationAndActivityLogFilterType.POST &&
       activityLog.action === Actions.CREATE
     ) {
-      return `Created a new Post in Commmunity  <b>Post</b>`;
+      return `Created a new post in commmunity, <b>"${activityLog.data.content.replace(
+        /\r?\n|\r/g,
+        " "
+      )}"</b>`;
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.CONVERSATION &&
       activityLog.action === Actions.CREATE
     ) {
-      return `Started a new conversation with  <b>${
+      return `Started a new conversation with <b>${
         activityLog.user?.firstName
-      }${" " + activityLog.user?.lastName}</b>`;
+      }${" " + activityLog.user?.lastName} </b>`;
     }
   } else {
     return "Commented on any post";
