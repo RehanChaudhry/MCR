@@ -38,6 +38,8 @@ import {
 } from "models/api_requests/GetAgreementApi";
 import SimpleToast from "react-native-simple-toast";
 import { STRINGS } from "config";
+import { FormikValues, isObject } from "formik";
+import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 
 type Props = {};
 
@@ -78,6 +80,7 @@ const RoommateAgreementController: FC<Props> = () => {
   const submitAnswerRequest = useRef<AgreementAnswersRequestModel>({});
   const [roommateData, setRoommateData] = useState<AgreementField[]>();
   const agreementPartiesData = useRef<AgreementData>({});
+  let myInitialValues = useRef<FormikValues | undefined>(undefined);
 
   const roommateUpdateApi = useApi<
     AgreementAnswersRequestModel,
@@ -122,7 +125,6 @@ const RoommateAgreementController: FC<Props> = () => {
             }
           }}
           icon={(color, width, height) => {
-            AppLog.log(() => color);
             return (
               <InfoCircle
                 width={width}
@@ -151,9 +153,11 @@ const RoommateAgreementController: FC<Props> = () => {
       errorBody
     } = await roommateUpdateApi.request([submitAnswerRequest.current!!]);
     if (hasError || dataBody === undefined) {
+      SimpleToast.show(errorBody ?? STRINGS.something_went_wrong);
       AppLog.log(() => "submit agreement Response : " + errorBody);
       return;
     } else {
+      SimpleToast.show(dataBody.message);
       AppLog.log(() => "submit agreement Response : " + dataBody.message);
     }
   }, [roommateUpdateApi]);
@@ -173,6 +177,19 @@ const RoommateAgreementController: FC<Props> = () => {
         return;
       } else {
         agreementPartiesData.current = dataBody.data;
+        myInitialValues.current = dataBody.data.agreementFields.reduce(
+          (map, obj: AgreementField) => {
+            // @ts-ignore
+            map[obj.id] = dataManipulation(
+              obj.agreementUserAnswers.map(
+                (data) => data.agreementFieldValue
+              ),
+              obj.inputType
+            );
+            return map;
+          },
+          {}
+        );
         setRoommateData(dataBody.data.agreementFields);
       }
     }
@@ -201,17 +218,49 @@ const RoommateAgreementController: FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  AppLog.logForcefully(
+    () =>
+      "myInitialValues.current: " + JSON.stringify(myInitialValues.current)
+  );
+
   return (
-    <RoommateAgreementView
-      roommateData={roommateData}
-      showProgressBar={getAgreementApi.loading}
-      handleSaveAndContinue={submitAgreement}
-      showAgreementDialog={agreementDialog}
-      agreementDialogCallback={agreementDialogCallback}
-      progressBarBtn={roommateUpdateApi.loading}
-      shouldShowAgreementDialog={setAgreementDialog}
-    />
+    <>
+      {useLazyLoadInterface(
+        <RoommateAgreementView
+          dataManipulation={dataManipulation}
+          myInitialValues={myInitialValues.current!}
+          roommateData={roommateData!}
+          showProgressBar={getAgreementApi.loading}
+          handleSaveAndContinue={submitAgreement}
+          showAgreementDialog={agreementDialog}
+          agreementDialogCallback={agreementDialogCallback}
+          progressBarBtn={roommateUpdateApi.loading}
+          shouldShowAgreementDialog={setAgreementDialog}
+        />,
+        undefined,
+        undefined,
+        () => {
+          return myInitialValues.current !== undefined;
+        }
+      )}
+    </>
   );
 };
 
+function dataManipulation(value: any, inputType?: string) {
+  if (Array.isArray(value) && value.length === 1) {
+    return (inputType ?? "") === "checkbox" ? [value[0]] : value[0];
+  } else if (Array.isArray(value) && value.length > 1) {
+    return value.reduce(
+      (newArray: string[], _item: any) => (
+        newArray.push(isObject(_item) ? _item.value : _item), newArray
+      ),
+      []
+    );
+  } else if (isObject(value)) {
+    return value.value;
+  } else {
+    return value;
+  }
+}
 export default RoommateAgreementController;

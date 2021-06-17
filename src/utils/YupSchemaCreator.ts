@@ -12,26 +12,30 @@ let FieldTypes = {
       .max(50, "should be less than 50 characters"),
   dropdown: (field: FormInputFieldData): SchemaOf<any> =>
     Yup.object().required(computeValidationMessage(field)),
-  checkbox: (field: FormInputFieldData): SchemaOf<any> =>
-    Yup.array().required(computeValidationMessage(field)),
+  checkbox: (_: FormInputFieldData): SchemaOf<any> =>
+    Yup.array()
+      .required("Please pick atleast one item")
+      .min(1, "Please pick atleast one item"),
   radio: (field: FormInputFieldData): SchemaOf<any> =>
     Yup.string().required(computeValidationMessage(field)),
   textarea: (field: FormInputFieldData): SchemaOf<any> =>
     Yup.string().required(computeValidationMessage(field)),
   agreement: (field: FormInputFieldData): SchemaOf<any> =>
-    Yup.string().required(computeValidationMessage(field)),
+    Yup.boolean().required(computeValidationMessage(field)),
   url: (field: FormInputFieldData): SchemaOf<any> =>
-    Yup.string().test(
-      "custom error", //method name for yup
-      computeValidationMessage(field),
-      (value: string | undefined): boolean => {
-        if (value === undefined) {
-          return true;
-        } else {
-          return pattern.test(value);
+    Yup.string()
+      .test(
+        "custom error", //method name for yup
+        computeValidationMessage(field),
+        (value: string | undefined): boolean => {
+          if (!value) {
+            return true;
+          } else {
+            return pattern.test(value);
+          }
         }
-      }
-    )
+      )
+      .nullable()
 };
 
 export const createYupSchema = (

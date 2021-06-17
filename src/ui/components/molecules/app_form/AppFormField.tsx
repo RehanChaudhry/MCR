@@ -1,7 +1,7 @@
 import { FONT_SIZE, SPACE } from "config";
 import { FormikValues, useFormikContext } from "formik";
 import { usePreferredTheme } from "hooks";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import {
@@ -47,6 +47,8 @@ const AppFormField = optimizedMemo<Props>(
     customTextChanged,
     isLocked = EIntBoolean.FALSE
   }) => {
+    const theme = usePreferredTheme();
+
     const {
       errors,
       setFieldTouched,
@@ -55,25 +57,10 @@ const AppFormField = optimizedMemo<Props>(
       initialValues
     } = useFormikContext<FormikValues>();
 
-    /*  AppLog.logForcefullyForComplexMessages(
-      () =>
-      "AppFormField => initialValues " +
-        JSON.stringify(initialValues[name]) +
-        " field name is : " +
-        name
-    );*/
-
-    const theme = usePreferredTheme();
-
     const _setFieldTouched = useCallback(() => setFieldTouched(name), [
       setFieldTouched,
       name
     ]);
-
-    useEffect(() => {
-      initialValues !== undefined && setFieldTouched(name, true);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [initialValues]);
 
     return (
       <>
