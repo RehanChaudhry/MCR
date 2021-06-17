@@ -117,7 +117,10 @@ export const WelcomeView = React.memo<Props>(
             <CardView style={styles.cardView}>
               <View style={styles.cardViewMainContainer}>
                 <HtmlView
-                  value={staticContent.content!}
+                  addLineBreaks={false}
+                  value={String(staticContent.content)
+                    .replace(/<br><br>/g, "<br>")
+                    .replace(/<(\/*)br[^>]*><(\/*)br[^>]*>/g, "</br>")}
                   stylesheet={styles}
                 />
               </View>
@@ -231,8 +234,5 @@ const styles = StyleSheet.create({
   h3: {
     fontSize: FONT_SIZE.sm,
     fontWeight: "bold"
-  },
-  br: {
-    lineHeight: -12
   }
 });
