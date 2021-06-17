@@ -19,22 +19,26 @@ import YouTube from "assets/images/youtube_icon_dark.svg";
 import SimpleToast from "react-native-simple-toast";
 
 type ViewProfileSectionFieldItemProps = {
-  listData: FormInputFieldData;
+  item: FormInputFieldData;
 };
 
 export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemProps> = ({
-  listData
+  item
 }) => {
   const theme = usePreferredTheme();
 
-  switch (listData.inputType) {
+  if (item.isDefault === 1) {
+    return null;
+  }
+
+  switch (item.inputType) {
     case "textarea":
       return (
         <>
           <View style={styles.spacer} />
 
           <AppLabel
-            text={listData.label}
+            text={item.label}
             style={[
               styles.aboutMe,
               {
@@ -47,9 +51,7 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
 
           <AppLabel
             text={
-              listData.userMeta?.length === 0
-                ? "N/A"
-                : listData.userMeta![0].value
+              item.userMeta?.length === 0 ? "N/A" : item.userMeta![0].value
             }
             numberOfLines={0}
             style={{
@@ -65,11 +67,9 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
         <>
           <View style={styles.spacer} />
           <HeadingWithText
-            headingText={listData.label}
+            headingText={item.label}
             text={
-              listData.userMeta?.length === 0
-                ? "N/A"
-                : listData.userMeta![0].value
+              item.userMeta?.length === 0 ? "N/A" : item.userMeta![0].value
             }
             headingFontWeight={"semi-bold"}
             textStyle={styles.textStyle}
@@ -85,11 +85,9 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
         <>
           <View style={styles.spacer} />
           <HeadingWithText
-            headingText={listData.label}
+            headingText={item.label}
             text={
-              listData.userMeta?.length === 0
-                ? "N/A"
-                : listData.userMeta![0].value
+              item.userMeta?.length === 0 ? "N/A" : item.userMeta![0].value
             }
             headingFontWeight={"semi-bold"}
             textStyle={styles.textStyle}
@@ -105,11 +103,9 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
         <>
           <View style={styles.spacer} />
           <HeadingWithText
-            headingText={listData.label}
+            headingText={item.label}
             text={
-              listData.userMeta?.length === 0
-                ? "N/A"
-                : listData.userMeta![0].value
+              item.userMeta?.length === 0 ? "N/A" : item.userMeta![0].value
             }
             headingFontWeight={"semi-bold"}
             textStyle={styles.textStyle}
@@ -124,10 +120,7 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
       return (
         <>
           <View style={styles.spacer} />
-          <TagList
-            labelTitle={listData.label}
-            data={listData.userMeta ?? []}
-          />
+          <TagList labelTitle={item.label} data={item.userMeta ?? []} />
         </>
       );
 
@@ -136,11 +129,9 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
         <>
           <View style={styles.spacer} />
           <HeadingWithText
-            headingText={listData.label}
+            headingText={item.label}
             text={
-              listData.userMeta?.length === 0
-                ? "N/A"
-                : listData.userMeta![0].value
+              item.userMeta?.length === 0 ? "N/A" : item.userMeta![0].value
             }
             headingFontWeight={"semi-bold"}
             textStyle={styles.textStyle}
@@ -154,9 +145,7 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
 
     case "url":
       const userMetaLinks =
-        listData.userMeta?.length === 0
-          ? "N/A"
-          : listData.userMeta![0].value;
+        item.userMeta?.length === 0 ? "N/A" : item.userMeta![0].value;
       const IconTypes = {
         "icon-facebook": FacebookDark,
         "icon-twitter": TwitterDark,
@@ -176,7 +165,7 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
         <>
           <View style={styles.spacer} />
           <SocialDetailForm
-            heading={listData.label}
+            heading={item.label}
             title={userMetaLinks!}
             headingStyle={{ color: grayShades.warmGray["700"] }}
             onPress={onPress}
@@ -184,8 +173,8 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
               const MyIcon =
                 // @ts-ignore
                 IconTypes[
-                  listData!.icon !== undefined
-                    ? listData?.icon.toString()
+                  item!.icon !== undefined
+                    ? item?.icon.toString()
                     : "icon-facebook"
                 ];
 
@@ -199,12 +188,12 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
       return (
         <>
           <ProfileHeader
-            firstName={listData.firstName}
-            lastName={listData.lastName}
-            profilePicture={listData.profilePicture}
-            matchGroupName={listData.intendedMajor}
-            homeTown={listData.homeTown}
-            youtubeVideoUrl={listData.youtubeVideoUrl}
+            firstName={item.firstName}
+            lastName={item.lastName}
+            profilePicture={item.profilePicture}
+            matchGroupName={item.intendedMajor}
+            homeTown={item.homeTown}
+            youtubeVideoUrl={item.youtubeVideoUrl}
           />
         </>
       );

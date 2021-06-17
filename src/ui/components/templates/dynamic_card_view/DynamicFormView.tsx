@@ -7,15 +7,17 @@ import { SectionsType } from "models/api_responses/DynamicFormSections";
 type Props = {
   sectionsData: SectionsType[] | undefined;
   showProgressBar?: boolean;
+  updateProfile?: boolean | undefined;
 };
 
 export const DynamicFormView = React.memo<Props>(
-  ({ sectionsData, showProgressBar }) => {
+  ({ sectionsData, showProgressBar, updateProfile }) => {
     const listItem = ({ item }: { item: SectionsType }) => {
       return (
         <DynamicCardViewItem
           section={item}
           showProgressBar={showProgressBar}
+          updateProfile={updateProfile}
         />
       );
     };
