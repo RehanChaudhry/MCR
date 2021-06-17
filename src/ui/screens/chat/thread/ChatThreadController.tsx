@@ -162,6 +162,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       );
       return;
     } else {
+      SimpleToast.show(dataBody.message);
       ChatHelper.manipulateChatLists(
         setActiveConversations,
         inActiveConversations,
