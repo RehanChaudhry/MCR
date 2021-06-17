@@ -443,7 +443,11 @@ const styles = StyleSheet.create({
     marginStart: SPACE.md,
     flex: 1
   },
-  userName: { fontSize: FONT_SIZE.lg, includeFontPadding: false },
+  userName: {
+    fontSize: FONT_SIZE.lg,
+    marginRight: 20,
+    includeFontPadding: false
+  },
   subtitle: { fontSize: FONT_SIZE.xs, marginTop: SPACE._2xs },
   matchScore: {
     marginTop: SPACE.md,

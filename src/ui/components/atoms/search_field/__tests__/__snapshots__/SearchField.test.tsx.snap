@@ -33,7 +33,6 @@ exports[`Snapshot testing 1`] = `
           "flex": 1,
           "fontFamily": "Inter-Regular",
           "fontSize": 25,
-          "paddingTop": 12,
         },
         Object {
           "color": "#111827",
