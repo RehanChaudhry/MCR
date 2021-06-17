@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE } from "config";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
@@ -6,6 +6,8 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppSwitch } from "ui/components/atoms/app_switch/AppSwitch";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
 import { FormikValues, useFormikContext } from "formik";
+import { AppFormValidationLabel } from "ui/components/molecules/app_form/AppFormValidationLabel";
+import { AppLog } from "utils/Util";
 
 type Props = {
   name: string;
@@ -15,15 +17,28 @@ const SectionComponentAppSwitch: FC<Props> = ({ name }) => {
   const theme = usePreferredTheme();
 
   const {
+    errors,
     setFieldTouched,
     setFieldValue,
+    touched,
     initialValues
   } = useFormikContext<FormikValues>();
 
-  useEffect(() => {
-    initialValues !== undefined && setFieldTouched(name, true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialValues]);
+  const _setFieldTouched = useCallback(() => setFieldTouched(name), [
+    setFieldTouched,
+    name
+  ]);
+
+  const _onValueChange = useCallback(
+    (isSwitched) => {
+      AppLog.log(
+        () => "In AppSwitch#onValueChange(), isSwitched: " + isSwitched
+      );
+      _setFieldTouched();
+      setFieldValue(name, isSwitched);
+    },
+    [_setFieldTouched, name, setFieldValue]
+  );
 
   return (
     <View style={styles.innerCardView}>
@@ -45,12 +60,16 @@ const SectionComponentAppSwitch: FC<Props> = ({ name }) => {
             ? initialValues[name].includes("1")
             : false
         }
-        onValueChange={(isSwitched) => {
-          setFieldValue(name, isSwitched);
-        }}
+        onValueChange={_onValueChange}
         showCustomThumb={true}
         style={styles.switchButton}
       />
+      {errors[name] && touched[name] && (
+        <AppFormValidationLabel
+          errorString={errors[name] as string}
+          shouldVisible={true}
+        />
+      )}
     </View>
   );
 };

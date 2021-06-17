@@ -1,18 +1,18 @@
 {
-  "duration": 807,
+  "duration": 444,
   "problem": null,
   "originalError": null,
   "ok": true,
   "status": 200,
   "headers": {
     "content-type": "application/json; charset=utf-8",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=4VrpEAZh%2BX8HneuXpmcU%2Fj5lYDiwQ%2BUoNeY4%2BvYh9PIKlXTJtkxHnjNvYUwuFUrmb0XRjzpcfVPAOL%2FFI%2B2VNqILLqZc9cBY1%2FC2PujZrk%2BIByCjAW%2Fl0UB229QtdXBl\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=dEaejYG%2FKxqkbA93pSad%2FhkynVZepVNiXerDJBfC5cu9Mf5kpXoZWrVfXXHXOLXAL2ORl2a3GPEJCiY0Jurk8MydXMxWPyaHnVbwxkoyDjSBxjPA6%2Fa5QhasN0Uy3vua\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
     "x-frame-options": "SAMEORIGIN",
-    "cf-request-id": "0ab20895050000c60da883c000000001",
+    "cf-request-id": "0ab699caad0000c6117f383000000001",
     "cf-cache-status": "DYNAMIC",
     "x-powered-by": "Express",
-    "date": "Tue, 15 Jun 2021 16:09:40 GMT",
-    "cf-ray": "65fd10680f6cc60d-KHI",
+    "date": "Wed, 16 Jun 2021 13:26:45 GMT",
+    "cf-ray": "66045f244e9cc611-KHI",
     "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
     "x-xss-protection": "1; mode=block",
     "content-encoding": "br",
@@ -21,24 +21,18 @@
     "strict-transport-security": "max-age=0; includeSubDomains",
     "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
     "x-content-type-options": "nosniff",
-    "etag": "W/\"1173-fXGGSWmFh+vgIsjUKIo+VX+Co4c\"",
-    "vary": "Accept-Encoding, Origin"
+    "etag": "W/\"1012-GeXuZRuJNGdmYZppttCiEa9jJJc\"",
+    "vary": "Origin"
   },
   "config": {
-    "url": "relation/matches",
+    "url": "agreement-answer/21",
     "method": "get",
     "headers": {
       "Accept": "application/json",
       "subdomain": "ohio",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODcsInVzZXJJZCI6MTE2MSwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwidXBkYXRlLWFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCIsImRlbGV0ZS1maWxlIl0sImlhdCI6MTYyMzc3MzM3OCwiZXhwIjoxNjI2MzY1Mzc4fQ.eeQrf8zyo1z-jZEx30eaAxkz64oSFu-rc1jihWrfQeg"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjgyLCJ1c2VySWQiOjExNjMsImNsaWVudElkIjoiMSIsInNjb3BlcyI6WyJjb21tdW5pdHkiLCJhbm5vdW5jZW1lbnRzIiwibGlzdC1xdWVzdGlvbiIsImxpc3Qtc2VjdGlvbiIsImxpc3QtYWdyZWVtZW50LWZpZWxkcyIsInZpZXctc3RhdGljLWNvbnRlbnQiLCJsaXN0LWNvbmZpZ3VyYXRpb24iLCJsaXN0LWZvcm0taW5wdXQiLCJzeXN0ZW0tbG9nIiwiY29udmVyc2F0aW9uIiwibWFyay1zcGFtIiwibm90aWZpY2F0aW9uIiwiYWdyZWVtZW50LWFuc3dlciIsInVwZGF0ZS1hZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiLCJkZWxldGUtZmlsZSJdLCJpYXQiOjE2MjM4NDcxNzcsImV4cCI6MTYyNjQzOTE3N30.MEJtzI4d9m3x3mLiYNRs6jCX524vnr8ZnRqAj50tqqo"
     },
-    "params": {
-      "type": "matches",
-      "paginate": true,
-      "page": 1,
-      "limit": 10,
-      "filterBy": "matches"
-    },
+    "params": {},
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
     "transformRequest": [null],
     "transformResponse": [null],
@@ -49,269 +43,174 @@
     "maxBodyLength": -1
   },
   "data": {
-    "message": "Success",
-    "data": [
-      {
-        "userId": 28,
-        "matches": 0,
-        "matchScore": "0.0",
-        "user": {
-          "id": 28,
-          "firstName": "Amandy",
-          "lastName": "Handmore",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/42.jpg",
-            "originalName": "42.jpg"
-          },
-          "hometown": "Grahamstad",
-          "major": "Counseling",
-          "floorPlanRoomId": 4,
-          "genderId": 1,
-          "gender": "Male",
-          "status": "active",
-          "matchGroupId": 2,
-          "matchGroupName": "Sophomore"
+    "message": "Success.",
+    "data": {
+      "agreementStatus": "in-process",
+      "agreementAccepted": null,
+      "agreementFields": [
+        {
+          "id": 1,
+          "label": "Roommate Agreement Terms Details",
+          "content": "We encourage you to discuss any issues with your roommate(s), as most disagreements can be resolved by discussing them openly and honestly. Your roommate(s) may think differently than you do, and usually do not realize that there is a problem if it is not discussed. Student staff members can help to facilitate the conversation with your roommate(s), as opposed to fixing the problem for you, which will help you and your roommate(s) create ways to communicate more effectively in regard to other matters.",
+          "inputType": "agreement",
+          "options": [],
+          "placeholder": "",
+          "isRequired": 1,
+          "agreementUserAnswers": []
         },
-        "dismissed": 0,
-        "isFriend": 0,
-        "isRoommate": 0,
-        "criteria": { "eligible": true }
-      },
-      {
-        "userId": 29,
-        "matches": 0,
-        "matchScore": "0.0",
-        "user": {
-          "id": 29,
-          "firstName": "Lynnell",
-          "lastName": "Ballston",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/11.jpg",
-            "originalName": "11.jpg"
-          },
-          "hometown": "East Annamae",
-          "major": "Jazz Studies",
-          "floorPlanRoomId": 15,
-          "genderId": 1,
-          "gender": "Male",
-          "status": "active",
-          "matchGroupId": 1,
-          "matchGroupName": "Freshman"
+        {
+          "id": 2,
+          "label": "If we are frustrated with each other, we will address it by:",
+          "content": null,
+          "inputType": "dropdown",
+          "options": [
+            {
+              "text": "Having a group discussion",
+              "value": "Having a group discussion"
+            },
+            {
+              "text": "Having our RA mediate",
+              "value": "Having our RA mediate"
+            },
+            {
+              "text": "Brushing it under the rug",
+              "value": "Brushing it under the rug"
+            }
+          ],
+          "placeholder": "Select",
+          "isRequired": 1,
+          "agreementUserAnswers": []
         },
-        "dismissed": 0,
-        "isFriend": 0,
-        "isRoommate": 0,
-        "criteria": { "eligible": true }
-      },
-      {
-        "userId": 30,
-        "matches": 0,
-        "matchScore": "0.0",
-        "user": {
-          "id": 30,
-          "firstName": "Honey",
-          "lastName": "Cronk",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/57.jpg",
-            "originalName": "57.jpg"
-          },
-          "hometown": "West Georgiana",
-          "major": "Home Economics",
-          "floorPlanRoomId": 13,
-          "genderId": 1,
-          "gender": "Male",
-          "status": "active",
-          "matchGroupId": 2,
-          "matchGroupName": "Sophomore"
+        {
+          "id": 3,
+          "label": "When we are upset, we need:",
+          "content": null,
+          "inputType": "textarea",
+          "options": [],
+          "placeholder": "Start typing the response",
+          "isRequired": 0,
+          "agreementUserAnswers": []
         },
-        "dismissed": 0,
-        "isFriend": 0,
-        "isRoommate": 0,
-        "criteria": { "eligible": true }
-      },
-      {
-        "userId": 31,
-        "matches": 0,
-        "matchScore": "0.0",
-        "user": {
-          "id": 31,
-          "firstName": "Zane",
-          "lastName": "Mayes",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/5.jpg",
-            "originalName": "5.jpg"
-          },
-          "hometown": "Lemkemouth",
-          "major": "Latin American Studies",
-          "floorPlanRoomId": 9,
-          "genderId": 1,
-          "gender": "Male",
-          "status": "active",
-          "matchGroupId": 3,
-          "matchGroupName": "Junior"
+        {
+          "id": 4,
+          "label": "What will we do if someone comes home under the influence of a substance?",
+          "content": null,
+          "inputType": "textarea",
+          "options": [],
+          "placeholder": "Start typing the response",
+          "isRequired": 1,
+          "agreementUserAnswers": []
         },
-        "dismissed": 0,
-        "isFriend": 0,
-        "isRoommate": 0,
-        "criteria": { "eligible": true }
-      },
-      {
-        "userId": 32,
-        "matches": 0,
-        "matchScore": "0.0",
-        "user": {
-          "id": 32,
-          "firstName": "Tressa",
-          "lastName": "Littler",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/women/21.jpg",
-            "originalName": "21.jpg"
-          },
-          "hometown": "Volkmanshire",
-          "major": "Pharmacy",
-          "floorPlanRoomId": 14,
-          "genderId": 1,
-          "gender": "Female",
-          "status": "active",
-          "matchGroupId": 3,
-          "matchGroupName": "Junior"
+        {
+          "id": 5,
+          "label": "How will we deal with differences in preferred room temperature?",
+          "content": null,
+          "inputType": "textarea",
+          "options": [],
+          "placeholder": "Start typing the response",
+          "isRequired": 1,
+          "agreementUserAnswers": []
         },
-        "dismissed": 0,
-        "isFriend": 0,
-        "isRoommate": 0,
-        "criteria": { "eligible": true }
-      },
-      {
-        "userId": 33,
-        "matches": 0,
-        "matchScore": "0.0",
-        "user": {
-          "id": 33,
-          "firstName": "Clarinda",
-          "lastName": "Whetzel",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/women/96.jpg",
-            "originalName": "96.jpg"
-          },
-          "hometown": "Zettafurt",
-          "major": "Radio and Television",
-          "floorPlanRoomId": 15,
-          "genderId": 1,
-          "gender": "Female",
-          "status": "active",
-          "matchGroupId": 1,
-          "matchGroupName": "Freshman"
+        {
+          "id": 6,
+          "label": "We are comfortable with sharing these items with each other:",
+          "content": null,
+          "inputType": "radio",
+          "options": [
+            { "text": "All Items", "value": "All Items" },
+            { "text": "Anything But Food", "value": "Anything But Food" },
+            { "text": "Only Food", "value": "Only Food" },
+            { "text": "Nothing", "value": "Nothing" }
+          ],
+          "placeholder": "Start typing the response",
+          "isRequired": 1,
+          "agreementUserAnswers": []
         },
-        "dismissed": 0,
-        "isFriend": 0,
-        "isRoommate": 0,
-        "criteria": { "eligible": true }
-      },
-      {
-        "userId": 34,
-        "matches": 0,
-        "matchScore": "0.0",
-        "user": {
-          "id": 34,
-          "firstName": "Meridith",
-          "lastName": "Ridgeway",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/women/88.jpg",
-            "originalName": "88.jpg"
-          },
-          "hometown": "Port Stantonton",
-          "major": "Engineering Mechanics",
-          "floorPlanRoomId": 6,
-          "genderId": 1,
-          "gender": "Female",
-          "status": "active",
-          "matchGroupId": 2,
-          "matchGroupName": "Sophomore"
+        {
+          "id": 7,
+          "label": "How much notice is needed before a guest stays overnight? How should we notify one another?",
+          "content": null,
+          "inputType": "textarea",
+          "options": [],
+          "placeholder": "Start typing the response",
+          "isRequired": 1,
+          "agreementUserAnswers": []
         },
-        "dismissed": 0,
-        "isFriend": 0,
-        "isRoommate": 0,
-        "criteria": { "eligible": true }
-      },
-      {
-        "userId": 37,
-        "matches": 0,
-        "matchScore": "0.0",
-        "user": {
-          "id": 37,
-          "firstName": "Maryjo",
-          "lastName": "Rathjen",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/56.jpg",
-            "originalName": "56.jpg"
-          },
-          "hometown": "New Lisandro",
-          "major": "Feed Science",
-          "floorPlanRoomId": 14,
-          "genderId": 1,
-          "gender": "Male",
-          "status": "active",
-          "matchGroupId": 1,
-          "matchGroupName": "Freshman"
+        {
+          "id": 8,
+          "label": "How will we support each other during times of stress, sadness, or worry?",
+          "content": null,
+          "inputType": "textarea",
+          "options": [],
+          "placeholder": "Start typing the response",
+          "isRequired": 0,
+          "agreementUserAnswers": []
         },
-        "dismissed": 0,
-        "isFriend": 0,
-        "isRoommate": 0,
-        "criteria": { "eligible": true }
-      },
-      {
-        "userId": 38,
-        "matches": 0,
-        "matchScore": "0.0",
-        "user": {
-          "id": 38,
-          "firstName": "Salvatore",
-          "lastName": "Voorhis",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/91.jpg",
-            "originalName": "91.jpg"
-          },
-          "hometown": "Ryleemouth",
-          "major": "Web Design",
-          "floorPlanRoomId": 7,
-          "genderId": 1,
-          "gender": "Male",
-          "status": "active",
-          "matchGroupId": 2,
-          "matchGroupName": "Sophomore"
+        {
+          "id": 9,
+          "label": "How do we feel about sexual behavior when the other roommate is in the room or away?",
+          "content": null,
+          "inputType": "textarea",
+          "options": [],
+          "placeholder": "Start typing the response",
+          "isRequired": 1,
+          "agreementUserAnswers": []
         },
-        "dismissed": 0,
-        "isFriend": 0,
-        "isRoommate": 0,
-        "criteria": { "eligible": true }
-      },
-      {
-        "userId": 40,
-        "matches": 0,
-        "matchScore": "0.0",
-        "user": {
-          "id": 40,
-          "firstName": "Theo",
-          "lastName": "Easton",
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/men/4.jpg",
-            "originalName": "4.jpg"
-          },
-          "hometown": "Port Georgetteberg",
-          "major": "Asian-American Studies",
-          "floorPlanRoomId": 7,
-          "genderId": 1,
-          "gender": "Male",
-          "status": "active",
-          "matchGroupId": 3,
-          "matchGroupName": "Junior"
+        {
+          "id": 10,
+          "label": "Guests may be in our room during",
+          "content": null,
+          "inputType": "checkbox",
+          "options": [
+            { "text": "Study Time", "value": "Study Time" },
+            { "text": "Sleep Time", "value": "Sleep Time" },
+            { "text": "Party Time", "value": "Party Time" },
+            { "text": "Gaming Time", "value": "Gaming Time" }
+          ],
+          "placeholder": "Start typing the response",
+          "isRequired": 1,
+          "agreementUserAnswers": []
         },
-        "dismissed": 0,
-        "isFriend": 0,
-        "isRoommate": 0,
-        "criteria": { "eligible": true }
+        {
+          "id": 11,
+          "label": "How will each of us get alone time in our room?",
+          "content": null,
+          "inputType": "textarea",
+          "options": [],
+          "placeholder": "Start typing the response",
+          "isRequired": 1,
+          "agreementUserAnswers": []
+        }
+      ],
+      "roommateAgreementParties": [
+        {
+          "userId": 1168,
+          "firstName": "Ben",
+          "lastName": "Sherman",
+          "status": "pending",
+          "submittedAt": null,
+          "profilePicture": {
+            "fileURL": "https://my-college-roomie-dev.s3.us-west-2.amazonaws.com/rn_image_picker_lib_temp_f2e61c30-bc4f-4e83-afc1-b69d5886761d.png",
+            "originalName": "rn_image_picker_lib_temp_f2e61c30-bc4f-4e83-afc1-b69d5886761d.png"
+          }
+        },
+        {
+          "userId": 1163,
+          "firstName": "Cecelia",
+          "lastName": "Coleman",
+          "status": "pending",
+          "submittedAt": null,
+          "profilePicture": {
+            "fileURL": "https://randomuser.me/api/portraits/women/50.jpg",
+            "originalName": "50.jpg"
+          }
+        }
+      ],
+      "approvalInformation": {
+        "approvalStatus": "in-process",
+        "approvalDate": null,
+        "approvedBy": null
       }
-    ],
-    "count": 391
+    }
   }
 }

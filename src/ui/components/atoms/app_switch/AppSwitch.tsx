@@ -35,8 +35,7 @@ export const AppSwitch = optimizedMemo<AppButtonProps>(
     useEffect(() => {
       onValueChange(defaultValue);
       setIsEnabled(defaultValue);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [defaultValue]);
+    }, [defaultValue, onValueChange]);
 
     const toggleSwitch = () => {
       setIsEnabled((previousState) => !previousState);
