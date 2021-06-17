@@ -1,12 +1,15 @@
 import { FONTS, FONT_SIZE, SPACE, STRINGS } from "config";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import RelationModel from "models/RelationModel";
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import useUpdateRelation from "ui/screens/home/friends/useUpdateRelation";
 import { shadowStyleProps } from "utils/Util";
+import { useApi } from "repo/Client";
+import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
+import AuthApis from "repo/auth/AuthApis";
 
 type Props = {
   item: RelationModel;
@@ -15,6 +18,23 @@ type Props = {
 
 const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
   const theme = usePreferredTheme();
+
+  const { user, saveProfile } = useAuth();
+
+  const fetchProfileApi = useApi<string, FetchMyProfileResponseModel>(
+    AuthApis.fetchMyProfile
+  );
+
+  const fetchUserApi = useCallback(async () => {
+    const {
+      hasError: hasErrorProfile,
+      dataBody
+    } = await fetchProfileApi.request([]);
+
+    if (!hasErrorProfile) {
+      await saveProfile(dataBody?.data!, user!);
+    }
+  }, [fetchProfileApi, saveProfile, user]);
 
   const {
     shouldShowPb: acceptRequestPb,
@@ -25,6 +45,9 @@ const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
     undefined,
     (_item) => {
       removeItemFromList(item);
+      if (!user?.profile?.agreementId) {
+        fetchUserApi().then().catch();
+      }
     }
   );
 
