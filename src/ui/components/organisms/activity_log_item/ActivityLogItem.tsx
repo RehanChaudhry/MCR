@@ -12,6 +12,8 @@ import Settings from "assets/images/settings.svg";
 import Profile from "assets/images/profile.svg";
 import UserAdd from "assets/images/user-add.svg";
 import Chat from "assets/images/chat_round.svg";
+import Agreement from "assets/images/agreement_icon.svg";
+import UserRejected from "assets/images/user_sub.svg";
 import RoommateRequest from "assets/images/request_state_icon.svg";
 import Dismissed from "assets/images/folder-remove.svg";
 import NewsPaper from "assets/images/newspaper.svg";
@@ -57,7 +59,21 @@ const ActivityLogItem = ({ activityLog }: Props) => {
           NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
         activityLog.action === Actions.CREATE
       ) {
+        return (
+          <RoommateRequest width={20} fill={themedColors.background} />
+        );
+      } else if (
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+        activityLog.action === Actions.ACCEPTED
+      ) {
         return <UserAdd width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+        activityLog.action === Actions.REJECTED
+      ) {
+        return <UserRejected width={20} fill={themedColors.background} />;
       } else if (
         activityLog.type ===
           NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
@@ -95,6 +111,12 @@ const ActivityLogItem = ({ activityLog }: Props) => {
         activityLog.action === Actions.CREATE
       ) {
         return <NewsPaper width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
+        activityLog.action === Actions.ACCEPTED
+      ) {
+        return <Agreement width={20} fill={themedColors.background} />;
       }
     } else {
       return null;
