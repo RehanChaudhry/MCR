@@ -6,9 +6,16 @@ import { GenerateSignedUrlResponse } from "models/api_responses/GenerateSignedUr
 import { S3ImageUploadRequest } from "models/api_requests/S3ImageUploadRequest";
 import { create } from "apisauce";
 import { decode } from "base64-arraybuffer";
+import { NotificationsCountApiRequestModel } from "models/api_requests/NotificationsCountApiRequestModel";
+import { NotificationsCountApiResponseModel } from "models/api_responses/NotificationsCountApiResponseModel";
 
 const s3Client = create({ baseURL: "" });
 
+function notificationCount(_: NotificationsCountApiRequestModel) {
+  return apiClient.get<NotificationsCountApiResponseModel>(
+    API.GET_NOTIFICATIONS_COUNT
+  );
+}
 function staticContent(request: StaticContentRequestModel) {
   return apiClient.get<StaticContentResponseModel>(
     API.GET_STATIC_CONTENT + request.type
@@ -37,4 +44,9 @@ async function uploadFileToS3(request: S3ImageUploadRequest) {
   });
 }
 
-export default { staticContent, createSignedUrl, uploadFileToS3 };
+export default {
+  notificationCount,
+  staticContent,
+  createSignedUrl,
+  uploadFileToS3
+};

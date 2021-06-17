@@ -27,7 +27,7 @@ import SectionComponentDropDown from "./SectionComponentDropDown";
 import { SectionComponentTextArea } from "ui/components/organisms/section_component/SectionComponentTextArea";
 
 type UpdateProfileSectionFieldItemProps = {
-  listData: FormInputFieldData;
+  item: FormInputFieldData;
 };
 
 function createInitialListForFieldBoxFromUserMeta(
@@ -41,55 +41,55 @@ function createInitialListForFieldBoxFromUserMeta(
 }
 
 export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldItemProps> = ({
-  listData
+  item
 }) => {
   //for multi select item
   const chevronRight = () => <ChevronRight height={20} width={20} />;
 
   const theme = usePreferredTheme();
 
-  switch (listData.inputType) {
+  switch (item.inputType) {
     case "agreement":
-      return <SectionComponentAppSwitch name={listData.id.toString()} />;
+      return <SectionComponentAppSwitch name={item.id.toString()} />;
     case "textarea":
       return (
         <SectionComponentTextArea
-          label={listData?.label}
-          placeHolder={listData?.placeholder}
-          name={listData?.id.toString()}
-          isLocked={listData.isLocked}
+          label={item?.label}
+          placeHolder={item?.placeholder}
+          name={item?.id.toString()}
+          isLocked={item.isLocked}
           style={styles.padding}
         />
       );
     case "dropdown":
-      return <SectionComponentDropDown listData={listData} />;
+      return <SectionComponentDropDown listData={item} />;
 
     case "checkbox":
       return (
         <AppFormCheckBoxGroup
           style={styles.padding}
-          listData={listData.options!!}
+          listData={item.options!!}
           labelProps={{
-            text: listData.label,
+            text: item.label,
             weight: "semi-bold",
             numberOfLines: 0
           }}
-          name={listData.id.toString()}
-          isLocked={listData.isLocked}
+          name={item.id.toString()}
+          isLocked={item.isLocked}
         />
       );
     case "radio":
       return (
         <View style={styles.padding}>
           <AppFormRadioButton
-            name={listData.id.toString()}
+            name={item.id.toString()}
             labelProps={{
-              text: listData.label,
+              text: item.label,
               weight: "semi-bold"
             }}
-            radioData={listData.options!!}
+            radioData={item.options!!}
             direction={DIRECTION_TYPE.HORIZONTAL}
-            isLocked={listData.isLocked}
+            isLocked={item.isLocked}
           />
         </View>
       );
@@ -103,14 +103,14 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
       return (
         <View style={styles.padding}>
           <FieldBox
-            name={listData.id.toString()}
-            title={listData.label}
+            name={item.id.toString()}
+            title={item.label}
             textStyle={{ color: theme.themedColors.placeholder }}
             rightIcon={chevronRight}
             initialList={createInitialListForFieldBoxFromUserMeta(
-              listData.userMeta ?? []
+              item.userMeta ?? []
             )}
-            isLocked={listData.isLocked}
+            isLocked={item.isLocked}
           />
         </View>
       );
@@ -119,16 +119,16 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
       return (
         <View style={styles.padding}>
           <AppFormField
-            name={listData.id.toString()}
+            name={item.id.toString()}
             labelProps={{
-              text: listData?.label,
+              text: item?.label,
               weight: "semi-bold"
             }}
             fieldInputProps={{
               textContentType: "name",
               keyboardType: "default",
               returnKeyType: "next",
-              placeholder: listData?.placeholder,
+              placeholder: item?.placeholder,
               /* value: text,
                 onChangeText: (value) => setText(value),*/
               autoCapitalize: "none",
@@ -137,16 +137,16 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
               viewStyle: [
                 styles.textFieldStyle,
                 {
-                  backgroundColor: !listData.isLocked
+                  backgroundColor: !item.isLocked
                     ? theme.themedColors.background
                     : theme.themedColors.backgroundSecondary,
-                  borderColor: !listData.isLocked
+                  borderColor: !item.isLocked
                     ? theme.themedColors.border
                     : theme.themedColors.borderSecondary
                 }
               ]
             }}
-            isLocked={listData.isLocked}
+            isLocked={item.isLocked}
           />
         </View>
       );
@@ -165,24 +165,24 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
       const MyIcon =
         // @ts-ignore
         IconTypes[
-          listData!.icon !== undefined
-            ? listData?.icon.toString()
+          item!.icon !== undefined
+            ? item?.icon.toString()
             : "icon-facebook"
         ];
 
       return (
         <View style={styles.padding}>
           <AppFormField
-            name={listData.id.toString()}
+            name={item.id.toString()}
             labelProps={{
-              text: listData?.label,
+              text: item?.label,
               weight: "semi-bold"
             }}
             fieldInputProps={{
               textContentType: "name",
               keyboardType: "default",
               returnKeyType: "next",
-              placeholder: listData?.placeholder,
+              placeholder: item?.placeholder,
               /* value: text,
                             onChangeText: (value) => setText(value),*/
               autoCapitalize: "none",
@@ -192,16 +192,16 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
               viewStyle: [
                 styles.textFieldStyle,
                 {
-                  backgroundColor: !listData.isLocked
+                  backgroundColor: !item.isLocked
                     ? theme.themedColors.background
                     : theme.themedColors.backgroundSecondary,
-                  borderColor: !listData.isLocked
+                  borderColor: !item.isLocked
                     ? theme.themedColors.border
                     : theme.themedColors.borderSecondary
                 }
               ]
             }}
-            isLocked={listData.isLocked}
+            isLocked={item.isLocked}
           />
         </View>
       );
@@ -210,7 +210,7 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
       return (
         <View style={styles.paddingTop}>
           <View style={styles.padding}>
-            <UploadProfilePhoto name={listData.id.toString()} />
+            <UploadProfilePhoto name={item.id.toString()} />
           </View>
         </View>
       );

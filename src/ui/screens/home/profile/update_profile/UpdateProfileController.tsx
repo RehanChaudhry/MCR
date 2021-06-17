@@ -159,13 +159,13 @@ const UpdateProfileController: FC<Props> = () => {
   const fetchUpdatedProfile = useCallback(async () => {
     const { hasError, dataBody } = await fetchProfileApi.request([]);
 
-    if (hasError) {
+    if (hasError || !auth.user || !dataBody?.data) {
       SimpleToast.show(
         "Please try agian later \n" + fetchProfileApi.error,
         SimpleToast.SHORT
       );
     } else {
-      await auth.saveProfile(dataBody?.data!, auth.user);
+      await auth.saveProfile(dataBody.data, auth.user);
       SimpleToast.show("Your profile has been updated successfully");
       if (route.params.isFrom === EScreen.WELCOME) {
         openQuestionnaireScreen();

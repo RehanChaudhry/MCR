@@ -10,6 +10,8 @@ import React, {
 import { Conversation } from "models/api_responses/ChatsResponseModel";
 
 type AppDataContextType = {
+  notificationsCount?: number;
+  setNotificationsCount?: Dispatch<SetStateAction<number | undefined>>;
   myFriends?: RelationModel[];
   setMyFriends?: Dispatch<SetStateAction<RelationModel[] | undefined>>;
   myRoommates?: RelationModel[];
@@ -39,6 +41,7 @@ export const AppDataContext = React.createContext<AppDataContextType>(
 );
 
 const AppDataProvider: FC = (props) => {
+  const [notificationsCount, setNotificationsCount] = useState<number>();
   const [myFriends, setMyFriends] = useState<RelationModel[]>();
   const [myRoommates, setMyRoommates] = useState<RelationModel[]>();
   const [dismissed, setDismissed] = useState<RelationModel[]>();
@@ -66,6 +69,8 @@ const AppDataProvider: FC = (props) => {
   return (
     <AppDataContext.Provider
       value={{
+        notificationsCount,
+        setNotificationsCount,
         myFriends,
         setMyFriends,
         myRoommates,

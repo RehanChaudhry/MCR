@@ -62,6 +62,7 @@ export default {
   RELATION_RESTORE: "relation/restored",
 
   // others
+  GET_NOTIFICATIONS_COUNT: "notification/unread",
   GET_STATIC_CONTENT: "static-content/",
   GET_SIGNED_URL: "file/upload-image"
 };

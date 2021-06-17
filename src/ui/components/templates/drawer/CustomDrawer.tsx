@@ -32,6 +32,7 @@ import { HomeDrawerParamList } from "routes";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { profileCompletedPercentage } from "models/api_responses/FetchMyProfileResponseModel";
 import { SocketHelper } from "utils/SocketHelper";
+import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
   currentItem: string;
@@ -40,8 +41,12 @@ type CustomDrawerProps = DrawerContentComponentProps & {
 };
 export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
   const { currentItem, setCurrentItem } = props;
+
   // eslint-disable-next-line new-cap
   const ripple = TouchableNativeFeedback.Ripple("#adacac", false);
+
+  const { notificationsCount } = useNotificationsCount();
+
   const { themedColors } = usePreferredTheme();
   const { state, navigation } = props;
   const auth = useAuth();
@@ -209,19 +214,19 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
                       }
                     />
 
-                    {/* just showing on notifications for design build*/}
-                    {index === 6 && (
-                      <View style={styles.notifyContainer}>
-                        <View style={styles.notifyCountBg}>
-                          <AppLabel
-                            text="3"
-                            weight="bold"
-                            style={styles.notifyText}
-                          />
+                    {index === 6 &&
+                      notificationsCount !== undefined &&
+                      notificationsCount !== 0 && (
+                        <View style={styles.notifyContainer}>
+                          <View style={styles.notifyCountBg}>
+                            <AppLabel
+                              text={notificationsCount.toString()}
+                              weight="bold"
+                              style={styles.notifyText}
+                            />
+                          </View>
                         </View>
-                      </View>
-                    )}
-                    {/* just showing on notifications for design build*/}
+                      )}
                   </View>
                 </TouchableNativeFeedback>
               );

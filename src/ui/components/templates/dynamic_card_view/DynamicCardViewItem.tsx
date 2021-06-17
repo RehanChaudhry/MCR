@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { CardView } from "ui/components/atoms/CardView";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import { SectionsType } from "models/api_responses/DynamicFormSections";
@@ -11,13 +11,25 @@ import { grayShades } from "hooks/theme/ColorPaletteContainer";
 type DynamicCardViewItemProps = {
   section: SectionsType;
   showProgressBar?: boolean;
+  updateProfile: boolean | undefined;
 };
 
 export const DynamicCardViewItem: React.FC<DynamicCardViewItemProps> = ({
   section,
-  showProgressBar
+  showProgressBar,
+  updateProfile
 }) => {
   const updateProfileRoute = useRoute<any>();
+
+  // don't show section if there aren't fields in it
+  let numberOfFieldsToShow = useMemo(
+    () => section.formInputs?.filter((value) => value.isDefault === 0),
+    [section.formInputs]
+  );
+  if (!numberOfFieldsToShow || numberOfFieldsToShow.length === 0) {
+    return null;
+  }
+
   return (
     <CardView style={styles.cardView}>
       {/*//when update profile is open, then basic profile will be shown*/}
@@ -46,6 +58,7 @@ export const DynamicCardViewItem: React.FC<DynamicCardViewItemProps> = ({
       <DynamicCardViewBody
         listData={section.formInputs}
         showProgressBar={showProgressBar ?? true}
+        updateProfile={updateProfile}
       />
     </CardView>
   );

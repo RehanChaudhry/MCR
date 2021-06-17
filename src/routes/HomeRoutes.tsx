@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AnnouncementRoutes from "routes/AnnouncementRoutes";
 import CommunityRoutes from "routes/CommunityRoutes";
-import { HomeDrawer } from "routes/HomeDrawer";
+import { HomeDrawer } from "routes/HomeDrawerStack";
 import MatchesRoutes from "routes/MatchesRoutes";
 import { NotificationRoutes } from "routes/NotificationRoutes";
 import { CustomDrawer } from "ui/components/templates/drawer/CustomDrawer";
