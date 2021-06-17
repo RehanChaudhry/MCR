@@ -17,6 +17,7 @@ type Props = {
   openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
   error: string | undefined;
+  reload: () => void;
   moveToProfileScreen: (userId: number) => void;
 };
 
@@ -30,7 +31,8 @@ export const AnnouncementView = React.memo<Props>(
     openCommentsScreen,
     shouldPlayVideo,
     error,
-    moveToProfileScreen
+    moveToProfileScreen,
+    reload
   }) => {
     const keyExtractor = useCallback(
       (item: CommunityAnnouncement) => item.id.toString(),
@@ -55,6 +57,7 @@ export const AnnouncementView = React.memo<Props>(
       <Screen style={styles.container}>
         {useLazyLoadInterface(
           <FlatListWithPb
+            retryCallback={reload}
             removeClippedSubviews={true}
             initialNumToRender={4}
             maxToRenderPerBatch={4}
@@ -75,7 +78,6 @@ export const AnnouncementView = React.memo<Props>(
             onEndReached={onEndReached}
             isAllDataLoaded={isAllDataLoaded}
             pullToRefreshCallback={pullToRefreshCallback}
-            retryCallback={pullToRefreshCallback}
           />
         )}
       </Screen>

@@ -17,6 +17,7 @@ type Props = {
   isLoading: boolean;
   isError?: string;
   didSelectItem: (item: Uni) => void;
+  reload: () => void;
 };
 
 const listItem = (item: Uni, onSelection: (item: Uni) => void) => {
@@ -27,7 +28,8 @@ const UniSelectionView: FC<Props> = ({
   unis,
   isLoading,
   isError,
-  didSelectItem
+  didSelectItem,
+  reload
 }) => {
   const theme = usePreferredTheme();
 
@@ -89,6 +91,7 @@ const UniSelectionView: FC<Props> = ({
         </View>
         <View style={styles.listContainer}>
           <FlatListWithPb
+            retryCallback={reload}
             error={isError}
             shouldShowProgressBar={isLoading}
             data={filteredData}

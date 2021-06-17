@@ -88,7 +88,7 @@ export const CreatePostView = React.memo<Props>((props) => {
       initialValues.message = initialValues.message.trim();
       props.createPost(initialValues);
     } else {
-      SimpleToast.show("Please enter at least one field");
+      SimpleToast.show("Please fill the Required values");
     }
   };
 
@@ -97,7 +97,7 @@ export const CreatePostView = React.memo<Props>((props) => {
       <Link
         width={18}
         height={18}
-        fill={theme.themedColors.interface["500"]}
+        fill={theme.themedColors.interface["400"]}
       />
     );
   };
@@ -106,7 +106,7 @@ export const CreatePostView = React.memo<Props>((props) => {
       <Code
         width={18}
         height={18}
-        fill={theme.themedColors.interface["500"]}
+        fill={theme.themedColors.interface["400"]}
       />
     );
   };
@@ -331,7 +331,6 @@ export const CreatePostView = React.memo<Props>((props) => {
                       returnKeyType: "next",
                       placeholder: STRINGS.createPost.placeholder.link,
                       autoCapitalize: "none",
-                      placeholderTextColor: theme.themedColors.placeholder,
                       style: [{ color: theme.themedColors.label }],
                       viewStyle: [
                         styles.list,
@@ -357,7 +356,6 @@ export const CreatePostView = React.memo<Props>((props) => {
                       placeholder: STRINGS.createPost.placeholder.embed,
                       autoCapitalize: "none",
                       valueToShowAtStart: initialValues.embed,
-                      placeholderTextColor: theme.themedColors.placeholder,
                       style: [{ color: theme.themedColors.label }],
                       viewStyle: [
                         styles.list,

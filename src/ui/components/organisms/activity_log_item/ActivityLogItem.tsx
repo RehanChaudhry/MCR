@@ -11,8 +11,10 @@ import Questionnaire from "assets/images/office-building.svg";
 import Settings from "assets/images/settings.svg";
 import Profile from "assets/images/profile.svg";
 import UserAdd from "assets/images/user-add.svg";
+import Chat from "assets/images/chat_round.svg";
 import RoommateRequest from "assets/images/request_state_icon.svg";
 import Dismissed from "assets/images/folder-remove.svg";
+import NewsPaper from "assets/images/newspaper.svg";
 import { Divider } from "react-native-elements";
 import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
 import ActivityLog, {
@@ -76,6 +78,23 @@ const ActivityLogItem = ({ activityLog }: Props) => {
         activityLog.action === Actions.UPDATED_AND_AGREED
       ) {
         return <Dismissed width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.CONVERSATION &&
+        activityLog.action === Actions.CREATE
+      ) {
+        return <Chat width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.COMMENT &&
+        activityLog.action === Actions.CREATE
+      ) {
+        return <Chat width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type === NotificationAndActivityLogFilterType.POST &&
+        activityLog.action === Actions.CREATE
+      ) {
+        return <NewsPaper width={20} fill={themedColors.background} />;
       }
     } else {
       return null;

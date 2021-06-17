@@ -77,11 +77,11 @@ function hasCompletedWelcomeJourney(
   }
 }
 
-async function versionCheckLibraryImpl(): Promise<{
-  isNeeded: boolean;
-  storeUrl: string;
-}> {
-  let versionCheckNeedUpdate;
+async function versionCheckLibraryImpl() {
+  let versionCheckNeedUpdate: {
+    isNeeded: boolean;
+    storeUrl: string;
+  };
   const noStoreUrlFound = {
     isNeeded: false,
     storeUrl: "N/A"

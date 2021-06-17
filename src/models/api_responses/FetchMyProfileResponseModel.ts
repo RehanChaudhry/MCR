@@ -51,6 +51,9 @@ export type Profile = {
   about?: string;
 };
 
+export const getName = (profile: Profile) =>
+  `${profile.firstName} ${profile.lastName}`;
+
 export function getSubtitle(profile: Profile): string {
   return profile.major + (profile.hometown ? ", " + profile.hometown : "");
 }

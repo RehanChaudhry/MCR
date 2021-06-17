@@ -245,7 +245,7 @@ const MyFriendsView: FC<Props> = ({
         message={`Are you sure you want to send roommate request to ${
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         }?`}
-        type={Type.FRIENDS_ROOMMATE_REQUEST}
+        type={Type.ROOMMATE_REQUEST}
         errorMessage="Unable to send roommate request"
         firstButtonText="Yes, send request"
         isFromMatchScreen={false}

@@ -28,17 +28,20 @@ type ReportContentRoute = RouteProp<
 >;
 type CommunityRoute = RouteProp<CommunityStackParamList, "Community">;
 
-type Props = {};
+type Props = {
+  route: CommunityRoute;
+  navigation: ReportContentRoute;
+};
 
-const ReportContentController: FC<Props> = () => {
+const ReportContentController: FC<Props> = (Props) => {
   const navigation = useNavigation<CommunityNavigationProp>();
   const theme = usePreferredTheme();
-  const route = useRoute<ReportContentRoute>();
+  const { params }: any = useRoute<typeof Props.route>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const communityRoute = useRoute<CommunityRoute>();
   const [pb, setPb] = useState(false);
 
-  AppLog.log(() => "communityid: " + route.params.postId);
+  AppLog.log(() => "communityid: " + params.postId);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -46,7 +49,6 @@ const ReportContentController: FC<Props> = () => {
         <HeaderLeftTextWithIcon
           onPress={() => {
             navigation.goBack();
-            navigation.replace("Community", {});
           }}
         />
       ),
@@ -57,7 +59,6 @@ const ReportContentController: FC<Props> = () => {
 
   const closeScreen = () => {
     navigation.goBack();
-    navigation.replace("Community", { postId: route.params.postId });
   };
 
   const reportContentApi = useApi<
@@ -81,6 +82,7 @@ const ReportContentController: FC<Props> = () => {
       } else {
         setPb(false);
         AppLog.log(() => dataBody.message);
+        params.callback();
         closeScreen();
       }
     }
@@ -88,7 +90,7 @@ const ReportContentController: FC<Props> = () => {
 
   return (
     <ReportContentView
-      communityId={route.params.postId}
+      communityId={params.postId}
       closeScreen={closeScreen}
       onPostReportContent={handleReportContent}
       shouldShowProgressBar={pb}

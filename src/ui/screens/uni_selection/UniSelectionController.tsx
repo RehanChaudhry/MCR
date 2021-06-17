@@ -80,12 +80,17 @@ const UniSelectionController: FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const reloadCallback = async () => {
+    handleGetUnisApi();
+  };
+
   return (
     <UniSelectionView
       isError={unisApi.error}
       isLoading={unisApi.loading}
       unis={unis}
       didSelectItem={uniDidSelect}
+      reload={reloadCallback}
     />
   );
 };

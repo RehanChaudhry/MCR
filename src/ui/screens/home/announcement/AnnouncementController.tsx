@@ -136,16 +136,32 @@ const AnnouncementController: FC<Props> = () => {
     [fetchAnnouncements]
   );
 
-  const openCommentsScreen = useCallback(
-    (postId: number) => {
-      navigation.navigate("Comments", { postId: postId });
-    },
-    [navigation]
-  );
+  const openCommentsScreen = (postId: number) => {
+    navigation.navigate("Comments", {
+      postId: postId,
+      callback: () => {
+        setAnnouncements((prevState) => {
+          const postIndex =
+            prevState?.findIndex((value) => value.id === postId) ?? -1;
+          if (postIndex > -1) {
+            prevState?.filter((community) => {
+              community.commentsCount++;
+            });
+          }
+          return prevState;
+        });
+      }
+    });
+  };
 
   useEffect(() => {
     fetchAnnouncements().then().catch();
   }, [fetchAnnouncements]);
+
+  const reloadCallback = async () => {
+    requestModel.current.page = 1;
+    fetchAnnouncements().then().catch();
+  };
 
   const moveToProfileScreen = useCallback(
     (userId: number) => {
@@ -169,6 +185,7 @@ const AnnouncementController: FC<Props> = () => {
       openCommentsScreen={openCommentsScreen}
       shouldPlayVideo={shouldPlayVideo}
       moveToProfileScreen={moveToProfileScreen}
+      reload={reloadCallback}
     />
   );
 };

@@ -49,7 +49,6 @@ export default {
   },
 
   welcome: {
-    welcome: "Welcome Zane Mayes,",
     welcome_text:
       "It's great to have you on board. Let's watch a 2 minute video to get you started.",
     play_video: "Play this video",

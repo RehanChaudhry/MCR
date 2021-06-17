@@ -1,12 +1,9 @@
-import {
-  RouteProp,
-  useNavigation,
-  useRoute
-} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import PencilAlt from "assets/images/pencil_alt.svg";
 import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
+import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
 import {
   CommunityAnnouncement,
   CommunityAnnouncementResponseModel
@@ -23,23 +20,20 @@ import React, {
   useRef,
   useState
 } from "react";
+import { Alert } from "react-native";
+import { useApi } from "repo/Client";
+import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { CommunityStackParamList } from "routes/CommunityStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { CommunityView } from "ui/screens/home/community/CommunityView";
 import { AppLog } from "utils/Util";
-import { Alert } from "react-native";
-import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
-import { useApi } from "repo/Client";
-import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
   "Community"
 >;
-
-type CommunityRoute = RouteProp<CommunityStackParamList, "Community">;
 
 type Props = {};
 
@@ -52,7 +46,6 @@ const CommunityController: FC<Props> = () => {
   >(undefined);
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   const navigation = useNavigation<CommunityNavigationProp>();
-  const route = useRoute<CommunityRoute>();
   const theme = usePreferredTheme();
 
   useEffect(() => {
@@ -205,11 +198,38 @@ const CommunityController: FC<Props> = () => {
   };
 
   const openCommentsScreen = (postId: number) => {
-    navigation.navigate("Comments", { postId: postId });
+    navigation.navigate("Comments", {
+      postId: postId,
+      callback: () => {
+        setCommunities((prevState) => {
+          const postIndex =
+            prevState?.findIndex((value) => value.id === postId) ?? -1;
+          if (postIndex > -1) {
+            prevState?.filter((community) => {
+              community.commentsCount++;
+            });
+          }
+          return prevState;
+        });
+      }
+    });
   };
 
   const openReportContentScreen = (postId: number) => {
-    navigation.navigate("ReportContent", { postId: postId });
+    navigation.navigate("ReportContent", {
+      postId: postId,
+      callback: () => {
+        AppLog.logForcefully(() => "come back");
+        setCommunities((prevState) => {
+          const spamUserIndex =
+            prevState?.findIndex((value) => value.id === postId) ?? -1;
+          if (spamUserIndex > -1) {
+            prevState!.splice(spamUserIndex, 1);
+          }
+          return prevState;
+        });
+      }
+    });
   };
 
   const moveToProfileScreen = useCallback(
@@ -227,20 +247,10 @@ const CommunityController: FC<Props> = () => {
     fetchCommunities().then().catch();
   }, [fetchCommunities]);
 
-  useEffect(() => {
-    if (route.params?.postId) {
-      setCommunities((prevState) => {
-        const spamUserIndex =
-          prevState?.findIndex(
-            (value) => value.id === route.params?.postId
-          ) ?? -1;
-        if (spamUserIndex > -1) {
-          prevState!.splice(spamUserIndex, 1);
-        }
-        return prevState;
-      });
-    }
-  }, [route.params?.postId]);
+  const reloadCallback = async () => {
+    requestModel.current.page = 1;
+    fetchCommunities().then().catch();
+  };
 
   return (
     <CommunityView
@@ -256,6 +266,7 @@ const CommunityController: FC<Props> = () => {
       openReportContentScreen={openReportContentScreen}
       filterDataBy={filterDataBy}
       moveToProfileScreen={moveToProfileScreen}
+      reload={reloadCallback}
     />
   );
 };
