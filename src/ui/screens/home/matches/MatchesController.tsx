@@ -77,16 +77,12 @@ const MatchesController: FC<Props> = () => {
       inActiveConversations
     );
 
-    AppLog.log(
-      () =>
-        "create conversation : " + JSON.stringify(createConversationResult)
-    );
     if (createConversationResult !== undefined) {
       navigation.navigate("Chat", {
         title: [
           profileMatch.user?.getFullName() ?? STRINGS.common.not_found
         ],
-        conversationId: createConversationResult?.id!
+        conversation: createConversationResult
       });
     }
   };

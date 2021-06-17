@@ -148,7 +148,7 @@ const ViewProfileController: FC<Props> = () => {
         title: [
           profileMatch.user?.getFullName() ?? STRINGS.common.not_found
         ],
-        conversationId: createConversationResult?.id!
+        conversation: createConversationResult
       });*/
     }
   };

@@ -32,7 +32,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
     const { user } = useAuth();
 
     let formattedDate = item.getFormattedDate();
-    AppLog.log(() => `Item: ${item.id}, formattedDate: ${formattedDate}`);
+    // AppLog.log(() => `Item: ${item.id}, formattedDate: ${formattedDate}`);
     const [prettyTime, setPrettyTime] = useState<string>(formattedDate);
 
     //message will come null in case of create conversation

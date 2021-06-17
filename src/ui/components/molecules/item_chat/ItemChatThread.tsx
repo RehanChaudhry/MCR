@@ -13,7 +13,6 @@ import { useAuth, usePreferredTheme } from "hooks";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import Message from "models/Message";
 import { ContinuousProgress } from "ui/components/molecules/continuous_progress/ContinuousProgress";
-import { AppLog } from "utils/Util";
 
 export interface ItemChatThreadProps extends ViewStyle {
   item: Message | undefined;
@@ -30,14 +29,14 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
     let formattedDate = DateFormatter.getPrettyTime(
       (item!.createdAt as unknown) as string
     );
-    AppLog.log(() => `Item: ${item?.id}, formattedDate: ${formattedDate}`);
+    //AppLog.log(() => `Item: ${item?.id}, formattedDate: ${formattedDate}`);
     const [prettyTime, setPrettyTime] = useState<string>(formattedDate);
 
     useEffect(() => {
-      AppLog.log(
+      /*AppLog.log(
         () =>
           `In useEffect()... Item: ${item?.id}, formattedDate: ${formattedDate}`
-      );
+      );*/
       setPrettyTime(
         DateFormatter.getPrettyTime((item!.createdAt as unknown) as string)
       );

@@ -32,6 +32,7 @@ import { useAuth } from "hooks";
 import _ from "lodash";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import { ChatHelper } from "utils/ChatHelper";
+import { User } from "models/User";
 
 type ChatRootNavigationProp = StackNavigationProp<ChatRootStackParamList>;
 
@@ -171,7 +172,7 @@ export const ChatListController: FC<Props> = ({
         ),
         []
       ),
-      conversationId: item.id
+      conversation: item
     });
   };
 
@@ -218,8 +219,20 @@ export const ChatListController: FC<Props> = ({
       );
     });
 
+    //define current user array for conversation which are added by
+    // socket, because we don't have current user array in new message
+    const currentUser: User[] = [];
+    //copy data of current user from finditem to newConversation which is received from socket
+    let myUser: User = {} as User;
+    myUser.firstName = user?.profile?.firstName!;
+    myUser.lastName = user?.profile?.lastName!;
+    myUser.profilePicture = user?.profile?.profilePicture!;
+    myUser.online = 1;
+    myUser.status = "active";
+    currentUser.push(myUser as User);
+
     //listen to receive message event
-    socket?.current?.on("receiveMessage", (data) => {
+    socket?.current?.on("receiveMessage", (data: Conversation) => {
       if (params?.status === "active") {
         let itemFoundInArchiveChats = false;
         setInActiveConversations?.((prevState: any) => {
@@ -246,20 +259,37 @@ export const ChatListController: FC<Props> = ({
             );
 
             if (findIndex !== -1) {
+              let findItem = chatsCopy?.find(
+                (item: any) => item.id === data.id
+              );
+
               //remove item at index
               chatsCopy?.splice(findIndex!!, 1);
+
+              //copy data of current user from finditem to newConversation which is received from socket
+              data.currentUser = [];
+              let _currentUser: User = {} as User;
+              _currentUser.firstName = findItem.currentUser[0].firstName;
+              _currentUser.lastName = findItem.currentUser[0].lastName;
+              _currentUser.profilePicture =
+                findItem.currentUser[0].profilePicture;
+              _currentUser.online = 1;
+              _currentUser.status = findItem.currentUser[0].status;
+
+              data.currentUser.push(_currentUser as User);
 
               //add item at index 0
               chatsCopy?.splice(0, 0, data);
 
-              AppLog.log(
-                () => "receive message : " + JSON.stringify(data)
-              );
               return _.uniqBy(chatsCopy, (item) => item.id);
             } else {
+              data.currentUser = [];
+              data.currentUser = currentUser;
               return [data, ...chatsCopy!!];
             }
           } else {
+            data.currentUser = [];
+            data.currentUser = currentUser;
             return [data];
           }
         });
@@ -272,17 +302,46 @@ export const ChatListController: FC<Props> = ({
             );
 
             if (findIndex !== -1) {
+              let findItem = chatsCopy?.find(
+                (item: any) => item.id === data.id
+              );
+
               //remove item at index
               chatsCopy?.splice(findIndex!, 1);
+
+              AppLog.logForcefully(
+                () =>
+                  "receive message inactive: " +
+                  JSON.stringify(findItem.currentUser[0])
+              );
+
+              //add item at index 0
+              //copy data of current user from finditem to newConversation which is received from socket
+              data.currentUser = [];
+              let _currentUser: User = {} as User;
+              _currentUser.firstName = findItem.currentUser[0].firstName;
+              _currentUser.lastName = findItem.currentUser[0].lastName;
+              _currentUser.profilePicture =
+                findItem.currentUser[0].profilePicture;
+              _currentUser.online = 1;
+              _currentUser.status = findItem.currentUser[0].status;
+
+              data.currentUser.push(_currentUser as User);
 
               //add item at index 0
               chatsCopy?.splice(0, 0, data);
 
               return chatsCopy;
             } else {
+              AppLog.logForcefully(
+                () => "receive message inactive bfeore: 2"
+              );
               return prevState;
             }
           } else {
+            AppLog.logForcefully(
+              () => "receive message inactive bfeore: 1"
+            );
             return prevState;
           }
         });
