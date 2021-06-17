@@ -74,10 +74,13 @@ function modifyUiFields(_viewProfileUiData: Profile) {
     _viewProfileUiData?.sections![0].formInputs![2].userMeta?.length === 0
       ? "N/A"
       : _viewProfileUiData?.sections![0].formInputs![2].userMeta![0].value;
-  _viewProfileUiData?.sections?.[0].formInputs?.splice(0, 3, modifiedItem);
-  modifiedItem.youtubeVideoUrl = _viewProfileUiData?.sections![
-    _viewProfileUiData?.sections!.length - 1
-  ].formInputs![0].userMeta![0].value;
+  modifiedItem.youtubeVideoUrl =
+    _viewProfileUiData?.sections?.[
+      _viewProfileUiData?.sections?.length - 1
+    ].formInputs?.[0].userMeta?.[0]?.value;
+  modifiedItem.isDefault = 0;
+
+  _viewProfileUiData?.sections?.[0].formInputs?.splice(0, 1, modifiedItem);
 }
 
 const ViewProfileController: FC<Props> = () => {
