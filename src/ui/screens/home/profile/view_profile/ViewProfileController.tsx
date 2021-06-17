@@ -95,7 +95,7 @@ const ViewProfileController: FC<Props> = () => {
       hasError,
       dataBody,
       errorBody
-    } = await getUserRequestModel.request([params?.userId]);
+    } = await getUserRequestModel.request([params?.userId ?? 0]);
     if (hasError || dataBody === undefined) {
       Alert.alert("User not found", errorBody);
       return;

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import {
   Image,
+  Pressable,
   ScrollView,
   StyleSheet,
   TouchableNativeFeedback,
@@ -95,6 +96,16 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
     );
   }
 
+  const moveToProfileScreen = useCallback(
+    () => {
+      // navigation.navigate("Profile");
+      // setCurrentItem("Profile");
+    },
+    [
+      /*navigation, setCurrentItem*/
+    ]
+  );
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -102,29 +113,36 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
           {/*drawer header start*/}
           <View style={styles.header}>
             <View style={styles.userInfo}>
-              <Image
-                style={styles.userImg}
-                source={
-                  auth.user?.profile?.profilePicture?.fileURL !== undefined
-                    ? { uri: auth.user?.profile?.profilePicture.fileURL }
-                    : require("assets/images/profile.png")
-                }
-              />
-              <View style={styles.nameContainer}>
-                <AppLabel
-                  text={
-                    auth.user?.profile?.firstName +
-                    " " +
-                    auth.user?.profile?.lastName
+              <Pressable onPress={moveToProfileScreen}>
+                <Image
+                  style={styles.userImg}
+                  source={
+                    auth.user?.profile?.profilePicture?.fileURL !==
+                    undefined
+                      ? { uri: auth.user?.profile?.profilePicture.fileURL }
+                      : require("assets/images/profile.png")
                   }
-                  weight="semi-bold"
-                  style={styles.name}
                 />
-                <View style={styles.settingContainer}>
+              </Pressable>
+              <View style={styles.nameContainer}>
+                <Pressable onPress={moveToProfileScreen}>
                   <AppLabel
-                    text={auth.user?.profile?.roleTitle}
-                    style={styles.userRole}
+                    text={
+                      auth.user?.profile?.firstName +
+                      " " +
+                      auth.user?.profile?.lastName
+                    }
+                    weight="semi-bold"
+                    style={styles.name}
                   />
+                </Pressable>
+                <View style={styles.settingContainer}>
+                  <Pressable onPress={moveToProfileScreen}>
+                    <AppLabel
+                      text={auth.user?.profile?.roleTitle}
+                      style={styles.userRole}
+                    />
+                  </Pressable>
 
                   <TouchableOpacity
                     style={styles.settingIconContainer}

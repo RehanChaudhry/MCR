@@ -14,7 +14,7 @@ import {
 } from "ui/components/atoms/image_background/AppImageBackground";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import MatchScore from "ui/components/molecules/match_score/MatchScore";
-import { AppLog, shadowStyleProps } from "utils/Util";
+import { shadowStyleProps } from "utils/Util";
 import getRelationStatus, {
   Eligible,
   RelationType
@@ -75,7 +75,7 @@ function createActionButton(
   let actionButton: React.ReactElement;
 
   const {
-    user,
+    // user,
     userId,
     dismissed,
     criteria,
@@ -85,10 +85,10 @@ function createActionButton(
     status
   } = relationModel;
 
-  AppLog.logForcefully(
-    () =>
-      `name: ${user?.firstName}, id: ${userId}, acceptee: ${acceptee}, status: ${status}, dismissed: ${dismissed}, isFriend: ${isFriend}, isRoommate: ${isRoommate}`
-  );
+  // AppLog.logForcefully(
+  //   () =>
+  //     `name: ${user?.firstName}, id: ${userId}, acceptee: ${acceptee}, status: ${status}, dismissed: ${dismissed}, isFriend: ${isFriend}, isRoommate: ${isRoommate}`
+  // );
 
   if (dismissed === 1) {
     actionButton = createRestoreButton();
