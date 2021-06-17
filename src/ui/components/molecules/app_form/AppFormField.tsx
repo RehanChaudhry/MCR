@@ -92,6 +92,7 @@ const AppFormField = optimizedMemo<Props>(
           valueToShowAtStart={initialValues[name]}
           onChangeText={(text) => {
             setFieldValue(name, text);
+            _setFieldTouched();
             customTextChanged?.(text);
           }}
           onBlur={_setFieldTouched}

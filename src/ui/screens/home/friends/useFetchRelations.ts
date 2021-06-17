@@ -53,7 +53,7 @@ export default (
     async (
       isFromPullToRefresh: boolean,
       requestModel: PaginationParamsModel,
-      onComplete?: () => void
+      onComplete?: (data?: RelationModel[]) => void
     ) => {
       const {
         hasError,
@@ -69,11 +69,13 @@ export default (
         setIsLoading(false);
         const data = dataBody.data ?? [];
 
+        let _updatedData;
         if (isFromPullToRefresh) {
-          setRelations?.(data);
+          _updatedData = data;
         } else {
-          setRelations?.([...(relations ?? []), ...data]);
+          _updatedData = [...(relations ?? []), ...data];
         }
+        setRelations?.(_updatedData);
 
         if (requestModel.page === 1) {
           setRelationsCount(dataBody.count ?? 0);
@@ -86,7 +88,7 @@ export default (
         });
         setCanLoadMore(data.length >= requestModel.limit!);
 
-        onComplete?.();
+        onComplete?.(_updatedData);
       }
     },
     [relations, relationsApi, setRelations]
@@ -105,7 +107,7 @@ export default (
   ]);
 
   const onPullToRefresh = useCallback(
-    (onComplete?: () => void) => {
+    (onComplete?: (data?: RelationModel[]) => void) => {
       if (relationsApi.loading) {
         onComplete?.();
         return;
@@ -118,9 +120,13 @@ export default (
 
       setPaginationRequestModel(myFriendRequestModel);
 
-      handleMyFriendsResponse(true, myFriendRequestModel, () => {
-        onComplete?.();
-      });
+      handleMyFriendsResponse(
+        true,
+        myFriendRequestModel,
+        (data?: RelationModel[]) => {
+          onComplete?.(data);
+        }
+      );
     },
     [handleMyFriendsResponse, relationsApi, paginationRequestModel]
   );

@@ -5,7 +5,6 @@ import { SectionsType } from "models/api_responses/DynamicFormSections";
 import { DynamicCardViewBody } from "ui/components/organisms/section_component/DynamicCardViewBody";
 import { StyleSheet, View } from "react-native";
 import { SPACE } from "config";
-import { useRoute } from "@react-navigation/native";
 import { grayShades } from "hooks/theme/ColorPaletteContainer";
 
 type DynamicCardViewItemProps = {
@@ -19,21 +18,22 @@ export const DynamicCardViewItem: React.FC<DynamicCardViewItemProps> = ({
   showProgressBar,
   updateProfile
 }) => {
-  const updateProfileRoute = useRoute<any>();
-
   // don't show section if there aren't fields in it
   let numberOfFieldsToShow = useMemo(
     () => section.formInputs?.filter((value) => value.isDefault === 0),
     [section.formInputs]
   );
-  if (!numberOfFieldsToShow || numberOfFieldsToShow.length === 0) {
+  if (
+    !updateProfile &&
+    (!numberOfFieldsToShow || numberOfFieldsToShow.length === 0)
+  ) {
     return null;
   }
 
   return (
     <CardView style={styles.cardView}>
       {/*//when update profile is open, then basic profile will be shown*/}
-      {updateProfileRoute.params.updateProfile === true && (
+      {updateProfile === true && (
         <>
           <HeadingWithText
             headingFontWeight={"semi-bold"}
@@ -46,7 +46,7 @@ export const DynamicCardViewItem: React.FC<DynamicCardViewItemProps> = ({
         </>
       )}
       {/*//when view profile is open, basic profile will not be shown*/}
-      {updateProfileRoute.params.updateProfile === false && (
+      {updateProfile === false && (
         <HeadingWithText
           headingFontWeight={"semi-bold"}
           headingText={

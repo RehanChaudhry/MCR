@@ -163,6 +163,7 @@ const RoommateAgreementView: FC<Props> = ({
           <DynamicFormView
             sectionsData={formFields}
             showProgressBar={showProgressBar}
+            updateProfile={true}
           />
           {agreementDialog()}
           <View style={styles.button}>
