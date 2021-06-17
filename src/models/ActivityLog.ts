@@ -114,9 +114,9 @@ export function getMessage(activityLog: ActivityLog): string {
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
-      activityLog.action === Actions.UPDATED_AND_AGREED
+      activityLog.action === Actions.ACCEPTED
     ) {
-      return `Updated and agreed on <b>Rommate Agreement</b>`;
+      return `Updated and agreed on <b>Roommate Agreement</b>`;
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.LOGIN_STUDENT ||
@@ -131,6 +131,12 @@ export function getMessage(activityLog: ActivityLog): string {
       activityLog.action === Actions.REJECTED
     ) {
       return `Rejected <b>Roommate Agreement</b>`;
+    } else if (
+      activityLog.type ===
+        NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
+      activityLog.action === Actions.UPDATED_AND_AGREED
+    ) {
+      return `Accepted <b>Roommate Agreement</b>`;
     } else if (
       activityLog.type === NotificationAndActivityLogFilterType.COMMENT &&
       activityLog.action === Actions.CREATE
