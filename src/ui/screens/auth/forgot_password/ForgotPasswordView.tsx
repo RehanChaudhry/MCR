@@ -117,6 +117,7 @@ export const ForgotPasswordView = React.memo<Props>(
 
               <View style={styles.buttonViewStyle}>
                 <AppFormFormSubmit
+                  showErrorToast={false}
                   shouldShowProgressBar={shouldShowProgressBar}
                   text={STRINGS.forgotpassword.reset_password}
                   buttonType={BUTTON_TYPES.NORMAL}
