@@ -19,6 +19,8 @@ import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { NotificationView } from "ui/screens/home/notification/NotificationView";
 import { AppLog } from "utils/Util";
+import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
+import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 
 type NotificationNavigationProp = StackNavigationProp<
   NotificationParamList,
@@ -44,7 +46,7 @@ const NotificationController: FC<Props> = () => {
     paginationRequestModel,
     setPaginationRequestModel
   ] = useState<PaginationParamsModel>({
-    type: "friend-request",
+    type: "",
     page: 1,
     limit: 9,
     paginate: true
@@ -128,6 +130,39 @@ const NotificationController: FC<Props> = () => {
     });
   };
 
+  const openChatScreen = usePreventDoubleTap(() => {
+    navigation.push("Chat");
+  });
+
+  const openFriendRequestScreen = usePreventDoubleTap(
+    (title: string, type: ConnectRequestType) => {
+      navigation.push("FriendRequests", {
+        title: title,
+        type: type
+      });
+    }
+  );
+
+  const navigateTOScreen = (type: string) => {
+    if (type != null) {
+      if (type === NotificationAndActivityLogFilterType.FRIEND_REQUEST) {
+        return openFriendRequestScreen(
+          "Friend Requests",
+          ConnectRequestType.FRIEND_REQUESTS
+        );
+      } else if (
+        type === NotificationAndActivityLogFilterType.ROOMMATE_REQUEST
+      ) {
+        return openFriendRequestScreen(
+          "Roommate Requests",
+          ConnectRequestType.ROOMMATE_REQUESTS
+        );
+      } else if (type === NotificationAndActivityLogFilterType.CHAT) {
+        return openChatScreen();
+      }
+    }
+  };
+
   const searchText = useCallback(
     (textToSearch: string) => {
       const updatedRequestModel = {
@@ -156,6 +191,7 @@ const NotificationController: FC<Props> = () => {
       notifications={notifications?.data}
       openMyProfileScreen={openMyProfileScreen}
       onChangeFilter={searchText}
+      navigateToRequiredScreen={navigateTOScreen}
     />
   );
 };

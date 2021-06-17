@@ -17,10 +17,11 @@ import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
 type Props = {
   notification: NotificationData;
   userNameOnPress?: () => void;
+  actionOnPress: (type: string) => void;
 };
 
 export const CircleImageWithText = React.memo<Props>(
-  ({ userNameOnPress, notification }) => {
+  ({ notification, actionOnPress }) => {
     const theme = usePreferredTheme();
 
     return (
@@ -49,7 +50,9 @@ export const CircleImageWithText = React.memo<Props>(
                 styles.buttonStyle,
                 { backgroundColor: theme.themedColors.primaryShade }
               ]}
-              onPress={userNameOnPress}
+              onPress={() => {
+                actionOnPress(notification?.type!);
+              }}
               fontWeight="bold"
               textStyle={styles.buttonText}
             />

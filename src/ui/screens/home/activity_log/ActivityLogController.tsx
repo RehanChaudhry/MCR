@@ -42,7 +42,7 @@ const ActivityLogController: FC<Props> = () => {
     paginationRequestModel,
     setPaginationRequestModel
   ] = useState<PaginationParamsModel>({
-    type: "friend-request",
+    type: "",
     page: 1,
     limit: 9,
     paginate: true
