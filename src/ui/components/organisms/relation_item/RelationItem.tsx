@@ -25,7 +25,7 @@ interface Props {
   relationModel: RelationModel;
   onCrossClicked?: (relationModel: RelationModel) => void;
   onChatButtonClicked: (relationModel: RelationModel) => void;
-  onImageClicked: (relationModel: RelationModel) => void;
+  onUserClicked: (relationModel: RelationModel) => void;
   onRoommateRequestActionButtonClicked?: (
     relationModel: RelationModel
   ) => void;
@@ -302,7 +302,7 @@ const RelationListsItem = ({
   relationModel,
   onCrossClicked,
   onChatButtonClicked,
-  onImageClicked,
+  onUserClicked,
   onRoommateRequestActionButtonClicked,
   onCancelRequestActionButtonClicked,
   onFriendRequestReceivedActionButtonClicked,
@@ -326,7 +326,7 @@ const RelationListsItem = ({
       <View style={styles.infoContainer}>
         <Pressable
           onPress={() => {
-            onImageClicked(relationModel);
+            onUserClicked(relationModel);
           }}>
           <Image
             style={styles.profileImage}
@@ -334,19 +334,25 @@ const RelationListsItem = ({
           />
         </Pressable>
         <View style={styles.infoTextContainer}>
-          <AppLabel
-            style={styles.userName}
-            text={
-              relationModel.user?.getFullName() ?? STRINGS.common.not_found
-            }
-          />
-          <AppLabel
-            style={[
-              styles.subtitle,
-              { color: themedColors.interface[600] }
-            ]}
-            text={relationModel.user?.getSubtitle()}
-          />
+          <Pressable
+            onPress={() => {
+              onUserClicked(relationModel);
+            }}>
+            <AppLabel
+              style={styles.userName}
+              text={
+                relationModel.user?.getFullName() ??
+                STRINGS.common.not_found
+              }
+            />
+            <AppLabel
+              style={[
+                styles.subtitle,
+                { color: themedColors.interface[600] }
+              ]}
+              text={relationModel.user?.getSubtitle()}
+            />
+          </Pressable>
           {relationModel.matchScore !== undefined && (
             <MatchScore
               style={styles.matchScore}
@@ -360,7 +366,7 @@ const RelationListsItem = ({
           <Pressable
             style={styles.icTopEndButtons}
             onPress={() => {
-              onImageClicked(relationModel);
+              onUserClicked(relationModel);
             }}>
             <RequestStateIcon
               fill={
