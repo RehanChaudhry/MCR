@@ -78,6 +78,7 @@ export default {
   home: {},
 
   common: {
+    not_available: "N/A",
     no_record_found: "No record found",
     not_found: "Not found",
     some_thing_bad_happened:

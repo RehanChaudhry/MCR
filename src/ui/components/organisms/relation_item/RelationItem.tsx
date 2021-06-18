@@ -330,7 +330,11 @@ const RelationListsItem = ({
           }}>
           <Image
             style={styles.profileImage}
-            source={{ uri: relationModel.user?.profilePicture?.fileURL }}
+            source={
+              relationModel.user?.profilePicture?.fileURL !== undefined
+                ? { uri: relationModel.user?.profilePicture?.fileURL }
+                : require("assets/images/profile.png")
+            }
           />
         </Pressable>
         <View style={styles.infoTextContainer}>
@@ -350,7 +354,10 @@ const RelationListsItem = ({
                 styles.subtitle,
                 { color: themedColors.interface[600] }
               ]}
-              text={relationModel.user?.getSubtitle()}
+              text={
+                relationModel.user?.getSubtitle() ??
+                STRINGS.common.not_available
+              }
             />
           </Pressable>
           {relationModel.matchScore !== undefined && (
