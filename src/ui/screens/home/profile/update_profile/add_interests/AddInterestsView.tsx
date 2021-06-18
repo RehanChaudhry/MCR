@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
-import React from "react";
+import { FlatList, StyleSheet, View } from "react-native";
+import React, { useCallback, useRef } from "react";
 import { WriteMessage } from "ui/components/molecules/item_chat/WriteMessage";
 import Screen from "ui/components/atoms/Screen";
 import { AppLog, shadowStyleProps } from "utils/Util";
@@ -21,6 +21,19 @@ type Props = {
 export const AddInterestsView = React.memo<Props>(
   ({ data, removeItem, addItem }) => {
     const { themedColors } = usePreferredTheme();
+
+    const list = useRef<FlatList>(null);
+
+    const onAddItem = useCallback(
+      (text: string) => {
+        addItem(text);
+        setTimeout(
+          () => list.current?.scrollToEnd({ animated: true }),
+          200
+        );
+      },
+      [addItem]
+    );
 
     function plusIcon(
       color?: Color,
@@ -54,6 +67,7 @@ export const AddInterestsView = React.memo<Props>(
       <Screen style={styles.container} shouldAddBottomInset={false}>
         <View style={styles.contentWrapper}>
           <FlatListWithPb
+            listRef={list}
             shouldShowProgressBar={false}
             data={data}
             renderItem={renderItem}
@@ -67,7 +81,7 @@ export const AddInterestsView = React.memo<Props>(
         <WriteMessage
           btnImage={plusIcon}
           appInputPlaceHolder="Start typing"
-          btnPressCallback={addItem}
+          btnPressCallback={onAddItem}
           multiline={false}
         />
       </Screen>

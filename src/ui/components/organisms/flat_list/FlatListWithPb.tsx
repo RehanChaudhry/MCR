@@ -24,6 +24,7 @@ interface OwnProps<ItemT> extends FlatListProps<ItemT> {
   ItemSeparatorHeaderAndFooterComponent?: React.ComponentType<any> | null;
   isAllDataLoaded?: boolean;
   noRecordFoundText?: string;
+  listRef?: React.RefObject<FlatList>;
 }
 
 type Props<ItemT> = OwnProps<ItemT>;
@@ -40,6 +41,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
     isAllDataLoaded = true,
     noRecordFoundText = STRINGS.common.no_record_found,
     onEndReached,
+    listRef,
     ...rest
   } = props;
 
@@ -98,6 +100,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
       let ui = (
         <FlatList
           // initialNumToRender={7}
+          ref={listRef}
           onEndReachedThreshold={1}
           refreshing={refreshing}
           onRefresh={
