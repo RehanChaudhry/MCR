@@ -15,7 +15,17 @@ export class RelationUser {
   }
 
   getSubtitle(): string {
-    return this.major + (this.hometown ? ", " + this.hometown : "");
+    let subtitle = "";
+    if (this.major) {
+      subtitle += this.major;
+    }
+    if (this.hometown) {
+      if (this.major) {
+        subtitle += ", ";
+      }
+      subtitle += this.hometown;
+    }
+    return subtitle;
   }
 }
 

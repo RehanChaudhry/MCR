@@ -290,7 +290,8 @@ const styles = StyleSheet.create({
   nameContainer: {
     justifyContent: "center",
     paddingStart: SPACE.md,
-    flexGrow: 1
+    flexGrow: 1,
+    flex: 1
   },
   userRole: {
     fontSize: FONT_SIZE.sm,

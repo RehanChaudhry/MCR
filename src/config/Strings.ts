@@ -50,7 +50,7 @@ export default {
 
   welcome: {
     welcome_text:
-      "It's great to have you on board. Let's watch a 2 minute video to get you started.",
+      "It's great to have you on board. Let's watch a video to get you started.",
     play_video: "Play this video",
     continue: "Continue",
     learn_about_heading: "Learn more about My College Roomie",
@@ -78,6 +78,7 @@ export default {
   home: {},
 
   common: {
+    not_available: "N/A",
     no_record_found: "No record found",
     not_found: "Not found",
     some_thing_bad_happened:
