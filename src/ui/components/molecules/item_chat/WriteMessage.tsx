@@ -18,6 +18,9 @@ import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { Color, NumberProp } from "react-native-svg";
 import { useHeaderHeight } from "@react-navigation/stack";
+import { User } from "models/User";
+import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
+import { ItemSuggestion } from "../item_conversation/ItemSuggestion";
 
 export interface TypingComponentProps {
   btnImage?: SvgProp;
@@ -28,6 +31,8 @@ export interface TypingComponentProps {
   showProgressbar?: boolean;
   clearInputField?: boolean;
   multiline?: boolean;
+  suggestionsList?: User[];
+  addItem: (item: User) => void;
 }
 
 export const WriteMessage = React.memo<TypingComponentProps>(
@@ -39,7 +44,9 @@ export const WriteMessage = React.memo<TypingComponentProps>(
     showIcon = true,
     showProgressbar = false,
     clearInputField = false,
-    multiline = true
+    multiline = true,
+    addItem,
+    suggestionsList
   }) => {
     const [initialText, setInitialText] = useState<string>("");
     const { themedColors } = usePreferredTheme();
@@ -69,49 +76,75 @@ export const WriteMessage = React.memo<TypingComponentProps>(
       );
     };
 
+    const renderSuggestionItems = ({ item }: { item: User }) => {
+      return (
+        <ItemSuggestion
+          item={item}
+          onPress={(currentItem: User) => {
+            AppLog.logForcefully(() => "in item on press");
+            addItem(currentItem);
+          }}
+        />
+      );
+    };
+
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         keyboardVerticalOffset={useHeaderHeight()}>
-        <View style={[styles.container(themedColors)]}>
-          <View
-            style={[styles.input, { borderColor: themedColors.border }]}>
-            <AppInputField
-              multiline={multiline}
-              placeholderTextColor={themedColors.interface["600"]}
-              placeholder={appInputPlaceHolder}
-              onChangeText={(text: string) => {
-                setInitialText(text);
-                appInputFieldCallback?.(text);
-              }}
-              valueToShowAtStart={initialText}
-              style={[
-                styles.inputField(showProgressbar),
-                { color: themedColors.label }
-              ]}
-            />
+        <View>
+          <View style={[styles.container(themedColors)]}>
+            <View
+              style={[styles.input, { borderColor: themedColors.border }]}>
+              <AppInputField
+                multiline={multiline}
+                placeholderTextColor={themedColors.interface["600"]}
+                placeholder={appInputPlaceHolder}
+                onChangeText={(text: string) => {
+                  setInitialText(text);
+                  appInputFieldCallback?.(text);
+                }}
+                valueToShowAtStart={initialText}
+                style={[
+                  styles.inputField(showProgressbar),
+                  { color: themedColors.label }
+                ]}
+              />
 
-            {showProgressbar && (
-              <ActivityIndicator
-                testID="initial-loader"
-                size="small"
-                color={themedColors.primary}
-                style={[styles.initialPb]}
+              {showProgressbar && (
+                <ActivityIndicator
+                  testID="initial-loader"
+                  size="small"
+                  color={themedColors.primary}
+                  style={[styles.initialPb]}
+                />
+              )}
+            </View>
+
+            {showIcon && (
+              <AppImageBackground
+                onPress={() => {
+                  if (initialText !== "") {
+                    setInitialText("");
+                    btnPressCallback?.(initialText);
+                  }
+                }}
+                icon={btnImage ?? defaultIcon}
+                containerShape={CONTAINER_TYPES.SQUARE}
+                containerStyle={styles.imgPaper(themedColors)}
               />
             )}
           </View>
 
-          {showIcon && (
-            <AppImageBackground
-              onPress={() => {
-                if (initialText !== "") {
-                  setInitialText("");
-                  btnPressCallback?.(initialText);
-                }
-              }}
-              icon={btnImage ?? defaultIcon}
-              containerShape={CONTAINER_TYPES.SQUARE}
-              containerStyle={styles.imgPaper(themedColors)}
+          {suggestionsList !== undefined && suggestionsList.length > 0 && (
+            <FlatListWithPb
+              shouldShowProgressBar={false}
+              data={suggestionsList}
+              renderItem={renderSuggestionItems}
+              showsVerticalScrollIndicator={false}
+              style={[styles.suggestionList(themedColors)]}
+              keyExtractor={(item) => item.id.toString()}
+              keyboardShouldPersistTaps="always"
             />
           )}
         </View>
@@ -163,5 +196,16 @@ const styles = StyleSheet.create({
     paddingVertical: 40 / 2,
     right: SPACE.md,
     position: "absolute"
+  },
+
+  suggestionList: (theme: ColorPalette) => {
+    return {
+      position: "absolute",
+      bottom: 75,
+      width: "100%",
+      backgroundColor: theme.background,
+      flexDirection: "column",
+      justifyContent: "flex-end"
+    };
   }
 });

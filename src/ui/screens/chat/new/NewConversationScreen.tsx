@@ -14,7 +14,6 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { ItemConversation } from "ui/components/molecules/item_conversation/ItemConversation";
 import Strings from "config/Strings";
-import { ItemSuggestion } from "ui/components/molecules/item_conversation/ItemSuggestion";
 import { User } from "models/User";
 
 type Props = {
@@ -60,17 +59,6 @@ export const NewConversationScreen = React.memo<Props>(
           // @ts-ignore
           onPress={(_item: User) => {
             removeItem(_item);
-          }}
-        />
-      );
-    };
-
-    const renderSuggestionItems = ({ item }: { item: User }) => {
-      return (
-        <ItemSuggestion
-          item={item}
-          onPress={(currentItem: User) => {
-            addItem(currentItem);
           }}
         />
       );
@@ -128,21 +116,9 @@ export const NewConversationScreen = React.memo<Props>(
           />
         </View>
 
-        {suggestionsList !== undefined && suggestionsList.length > 0 && (
-          <View style={styles.suggestContainer}>
-            <FlatListWithPb
-              shouldShowProgressBar={false}
-              data={suggestionsList}
-              renderItem={renderSuggestionItems}
-              showsVerticalScrollIndicator={false}
-              style={[styles.suggestionList(themedColors)]}
-              keyExtractor={(item) => item.id.toString()}
-              keyboardShouldPersistTaps="always"
-            />
-          </View>
-        )}
-
         <WriteMessage
+          suggestionsList={suggestionsList}
+          addItem={addItem}
           appInputFieldCallback={appInputCallback}
           appInputPlaceHolder={placeHolderText}
           showIcon={false}
