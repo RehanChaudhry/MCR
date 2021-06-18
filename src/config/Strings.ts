@@ -220,7 +220,9 @@ export default {
     title: "New Conversation",
     typingHint: "Start typing student name",
     typingHintStaff: "Start typing staff name",
-    createGroupText: "You can create a group of upto 5 people.",
+    createGroupText: "You can simultaneously select up to 4 people.",
+    createStaff:
+      "You can only chat with one admin or staff member at a time.",
     segmentValues: [
       { label: "Student", value: "Student" },
       { label: "Staff", value: "Staff" }

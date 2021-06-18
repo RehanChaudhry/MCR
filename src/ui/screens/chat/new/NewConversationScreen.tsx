@@ -44,6 +44,11 @@ export const NewConversationScreen = React.memo<Props>(
       Strings.newConversation.typingHint
     );
 
+    const [
+      createConversationText,
+      setCreateConversationText
+    ] = useState<string>(Strings.newConversation.createGroupText);
+
     function appInputCallback(text: string) {
       suggestions(text);
     }
@@ -81,14 +86,25 @@ export const NewConversationScreen = React.memo<Props>(
             onChange={(value: Choice, index: number) => {
               AppLog.log(
                 () =>
-                  "segment value : " + value + " and index is : " + index
+                  "NewConversationScreen => segment value : " +
+                  value +
+                  " and index is : " +
+                  index
               );
               setConversationType(index);
-              index === 0
-                ? setPlaceHolderText(Strings.newConversation.typingHint)
-                : setPlaceHolderText(
-                    Strings.newConversation.typingHintStaff
-                  );
+              if (index === 0) {
+                setCreateConversationText(
+                  Strings.newConversation.createGroupText
+                );
+                setPlaceHolderText(Strings.newConversation.typingHint);
+              } else {
+                setCreateConversationText(
+                  Strings.newConversation.createStaff
+                );
+                setPlaceHolderText(
+                  Strings.newConversation.typingHintStaff
+                );
+              }
             }}
           />
         </View>
@@ -96,7 +112,7 @@ export const NewConversationScreen = React.memo<Props>(
 
         <View style={styles.contentWrapper}>
           <AppLabel
-            text={Strings.newConversation.createGroupText}
+            text={createConversationText}
             style={styles.textStyle(themedColors)}
           />
 
