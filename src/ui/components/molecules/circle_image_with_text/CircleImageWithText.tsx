@@ -4,8 +4,8 @@ import Fonts from "config/Fonts";
 import { usePreferredTheme } from "hooks";
 import NotificationData, {
   getButtonText,
-  getMessage,
-  getDisplayTime
+  getDisplayTime,
+  getMessage
 } from "models/NotificationData";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -13,6 +13,13 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { CircleImageBorder } from "ui/components/atoms/circle_image_border/CircleImageBorder";
 import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
+import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
+import NotificationActionType from "models/enums/NotificationActionType";
+import Chat from "assets/images/chat_round.svg";
+import Like from "assets/images/agreed.svg";
+import UserGroup from "assets/images/user_group.svg";
+import OfficeBuilding from "assets/images/office-building.svg";
+import Announcement from "assets/images/announcements.svg";
 
 type Props = {
   notification: NotificationData;
@@ -21,18 +28,129 @@ type Props = {
 };
 
 export const CircleImageWithText = React.memo<Props>(
-  ({ notification, actionOnPress }) => {
+  ({ notification, userNameOnPress, actionOnPress }) => {
     const theme = usePreferredTheme();
+
+    const icon: any = () => {
+      if (notification.type != null) {
+        if (
+          notification.type ===
+            NotificationAndActivityLogFilterType.POST &&
+          notification.action === NotificationActionType.COMMENT
+        ) {
+          return (
+            <Chat width={14} fill={theme.themedColors.interface[400]} />
+          );
+        } else if (
+          notification.type ===
+            NotificationAndActivityLogFilterType.POST &&
+          notification.action === NotificationActionType.LIKE
+        ) {
+          return (
+            <Like width={14} fill={theme.themedColors.interface[400]} />
+          );
+        } else if (
+          notification.type ===
+            NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+          notification.action === NotificationActionType.ACCEPT
+        ) {
+          return (
+            <UserGroup
+              width={14}
+              fill={theme.themedColors.interface[400]}
+            />
+          );
+        } else if (
+          notification.type ===
+            NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+          notification.action === NotificationActionType.RECIEVE
+        ) {
+          return (
+            <UserGroup
+              width={14}
+              fill={theme.themedColors.interface[400]}
+            />
+          );
+        } else if (
+          (notification.type ===
+            NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+            notification.action === NotificationActionType.RECIEVE) ||
+          notification.action === NotificationActionType.ACCEPT ||
+          notification.action === NotificationActionType.RESPOND
+        ) {
+          return (
+            <OfficeBuilding
+              width={14}
+              fill={theme.themedColors.interface[400]}
+            />
+          );
+        } else if (
+          notification.type ===
+            NotificationAndActivityLogFilterType.ANNOUNCEMENT &&
+          notification.action === NotificationActionType.RECIEVE
+        ) {
+          return (
+            <Announcement
+              width={12}
+              fill={theme.themedColors.interface[400]}
+            />
+          );
+        } else if (
+          notification.type ===
+            NotificationAndActivityLogFilterType.CHAT &&
+          notification.action === NotificationActionType.RECIEVE
+        ) {
+          return (
+            <Chat width={12} fill={theme.themedColors.interface[400]} />
+          );
+        } else if (
+          (notification.type ===
+            NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
+            notification.action === NotificationActionType.DISAGREE) ||
+          notification.action === NotificationActionType.AGREE
+        ) {
+          return (
+            <OfficeBuilding
+              width={12}
+              fill={theme.themedColors.interface[400]}
+            />
+          );
+        } else if (
+          notification.type ===
+            NotificationAndActivityLogFilterType.CONVERSATION &&
+          notification.action === NotificationActionType.CREATE
+        ) {
+          return (
+            <Chat width={12} fill={theme.themedColors.interface[400]} />
+          );
+        } else if (
+          (notification.type ===
+            NotificationAndActivityLogFilterType.ROOMMATE_GROUP &&
+            notification.action === NotificationActionType.UPDATE) ||
+          notification.action === NotificationActionType.LEAVE ||
+          notification.action === NotificationActionType.ENTER
+        ) {
+          return (
+            <OfficeBuilding
+              width={12}
+              fill={theme.themedColors.interface[400]}
+            />
+          );
+        }
+      }
+    };
 
     return (
       <View style={styles.mainContainer}>
         <CircleImageBorder
           imageUrl={notification?.sender?.profilePicture?.fileURL!}
+          icon={icon}
         />
         <View style={styles.viewRequest}>
           <View style={styles.circleWithText}>
             <LabelHtml
               style={styles.messageText}
+              onBoldTextPress={userNameOnPress}
               text={getMessage(notification) ?? STRINGS.common.not_found}
             />
           </View>

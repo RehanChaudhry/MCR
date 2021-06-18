@@ -38,14 +38,16 @@ export function getMessage(notification: NotificationData): string {
   ) {
     return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has sent you a roommate request`;
   } else if (
-    notification.type === NotificationAndActivityLogFilterType.CHAT
+    notification.type === NotificationAndActivityLogFilterType.CHAT &&
+    notification.action === NotificationActionType.RECIEVE
   ) {
-    return "View Chat";
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has sent you a chat message`;
   } else if (
     notification.type ===
-    NotificationAndActivityLogFilterType.NEW_CONVERSATION
+      NotificationAndActivityLogFilterType.NEW_CONVERSATION &&
+    notification.action === NotificationActionType.CREATE
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> Started a new conversation with`;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> started a new conversation with`;
   } else if (
     notification.type === NotificationAndActivityLogFilterType.DISAGREED
   ) {
@@ -86,6 +88,36 @@ export function getMessage(notification: NotificationData): string {
     notification.action === NotificationActionType.RESPOND
   ) {
     return `You didn't respond to a roommate request from <b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> yet`;
+  } else if (
+    notification.type ===
+      NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+    notification.action === NotificationActionType.ACCEPT
+  ) {
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has accepted your roommate request`;
+  } else if (
+    notification.type ===
+      NotificationAndActivityLogFilterType.ROOMMATE_GROUP &&
+    notification.action === NotificationActionType.ENTER
+  ) {
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has joined your roommate group`;
+  } else if (
+    notification.type ===
+      NotificationAndActivityLogFilterType.ROOMMATE_GROUP &&
+    notification.action === NotificationActionType.UPDATE
+  ) {
+    return `Your <b>roommate list</b> has been updated by an Admin`;
+  } else if (
+    notification.type ===
+      NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
+    notification.action === NotificationActionType.DISAGREE
+  ) {
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has edited and disagreed on roommate agreement`;
+  } else if (
+    notification.type ===
+      NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
+    notification.action === NotificationActionType.AGREE
+  ) {
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has edited and disagreed on roommate agreement`;
   } else {
     return `<b>Message not found</b>`;
   }
@@ -100,7 +132,7 @@ export function getButtonText(notification: NotificationData): string {
     case NotificationAndActivityLogFilterType.CHAT:
       return "View Chat";
     case NotificationAndActivityLogFilterType.NEW_CONVERSATION:
-      return "View New Conversation";
+      return "View Conversation";
     case NotificationAndActivityLogFilterType.DISAGREED:
       return "View Disagreed";
     case NotificationAndActivityLogFilterType.AGREED:
@@ -115,6 +147,8 @@ export function getButtonText(notification: NotificationData): string {
       return "View Post";
     case NotificationAndActivityLogFilterType.ROOMMATE_GROUP:
       return "View Group";
+    case NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT:
+      return "View Details";
     default:
       return "N/A";
   }

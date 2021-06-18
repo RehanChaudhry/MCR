@@ -107,28 +107,24 @@ export const NotificationView = React.memo<Props>(
           />
         </View>
 
-        {notifications && (
-          <FlatListWithPb
-            shouldShowProgressBar={shouldShowProgressBar}
-            data={notifications}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={listItem}
-            style={styles.list}
-            onEndReached={onEndReached}
-            isAllDataLoaded={isAllDataLoaded}
-            pullToRefreshCallback={(_onComplete) => {
-              sharedDataRef.current = "";
-              pullToRefreshCallback(_onComplete);
-            }}
-            contentContainerStyle={[
-              listContentContainerStyle,
-              { paddingHorizontal: SPACE.lg }
-            ]}
-            ItemSeparatorComponent={() => (
-              <View style={listItemSeparator} />
-            )}
-          />
-        )}
+        <FlatListWithPb
+          shouldShowProgressBar={shouldShowProgressBar}
+          data={notifications}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={listItem}
+          style={styles.list}
+          onEndReached={onEndReached}
+          isAllDataLoaded={isAllDataLoaded}
+          pullToRefreshCallback={(_onComplete) => {
+            sharedDataRef.current = "";
+            pullToRefreshCallback(_onComplete);
+          }}
+          contentContainerStyle={[
+            listContentContainerStyle,
+            { paddingHorizontal: SPACE.lg }
+          ]}
+          ItemSeparatorComponent={() => <View style={listItemSeparator} />}
+        />
       </Screen>
     );
   }
