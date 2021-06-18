@@ -88,7 +88,7 @@ export default {
 
   questionnaire: {
     info:
-      "Roommate compatability questionnaire will be help us to find better roomate match for you.",
+      "The roommate compatibility questionnaire will help us find better roommate matches for you.",
     how_it_works: "How does it work?",
     how_it_works_detail:
       "Each Question has 2 sliders, one to identify approximately where you fall within the range and second to determine the comfort zone. It will help us to find the compatibility with your roommates.",
