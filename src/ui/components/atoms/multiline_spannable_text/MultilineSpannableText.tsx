@@ -24,7 +24,11 @@ const MultilineSpannableText = React.memo<Props>(
         <View testID={"SPANNABLE_TEXT"} style={containerStyle}>
           <Text>
             {text.map((item, index) => (
-              <AppLabel text={item} {...appLabelProps[index]} />
+              <AppLabel
+                key={index}
+                text={item}
+                {...appLabelProps[index]}
+              />
             ))}
           </Text>
         </View>
