@@ -249,7 +249,12 @@ const RoommateAgreementController: FC<Props> = () => {
 
 function dataManipulation(value: any, inputType?: string) {
   if (Array.isArray(value) && value.length === 1) {
-    return (inputType ?? "") === "checkbox" ? [value[0]] : value[0];
+    return (inputType ?? "") === "checkbox" ||
+      (inputType ?? "") === "multiselect"
+      ? [value[0]]
+      : isObject(value[0])
+      ? [value[0].value]
+      : value[0];
   } else if (Array.isArray(value) && value.length > 1) {
     return value.reduce(
       (newArray: string[], _item: any) => (

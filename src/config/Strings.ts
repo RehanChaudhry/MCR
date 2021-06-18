@@ -311,7 +311,7 @@ export default {
     textFieldPlaceholder: {
       response: "Start typing the response"
     },
-    roommate_agreement_text: "Roommate Agreem"
+    roommate_agreement_text: "Roommate Agreement"
   },
   dialogs: {
     friend_request: {
