@@ -20,8 +20,8 @@ let FieldTypes = {
     Yup.string().required(computeValidationMessage(field)),
   textarea: (field: FormInputFieldData): SchemaOf<any> =>
     Yup.string().required(computeValidationMessage(field)),
-  agreement: (field: FormInputFieldData): SchemaOf<any> =>
-    Yup.boolean().required(computeValidationMessage(field)),
+  agreement: (_: FormInputFieldData): SchemaOf<any> =>
+    Yup.bool().oneOf([true], "Please accept roommate terms."),
   url: (field: FormInputFieldData): SchemaOf<any> =>
     Yup.string()
       .test(
