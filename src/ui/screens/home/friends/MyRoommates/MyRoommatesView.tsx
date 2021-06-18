@@ -28,14 +28,14 @@ const listItem = (
   item: RelationModel,
   showRemoveRommmateAlert: (item: RelationModel) => void,
   onPressChat: (item: RelationModel) => void,
-  onPressProfile: () => void
+  onPressProfile: (item: RelationModel) => void
 ) => {
   const _item = new RelationModel(item);
   return (
     <RelationListsItem
       relationModel={_item}
       onChatButtonClicked={onPressChat}
-      onImageClicked={onPressProfile}
+      onUserClicked={onPressProfile}
       onRemoveRoommateActionButtonClicked={showRemoveRommmateAlert}
     />
   );

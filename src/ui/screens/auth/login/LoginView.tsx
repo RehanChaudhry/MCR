@@ -40,7 +40,7 @@ const validationSchema = Yup.object().shape({
 
 let initialValues: FormikValues = {
   // email: "lfrance11@geocities.jp",
-  email: "muneeb.shafiq+st4@cygnismedia.com",
+  email: "muneeb.shafiq+st3@cygnismedia.com",
   password: "Mycollegeroomie1234"
 };
 
@@ -161,6 +161,7 @@ export const LoginView = React.memo<Props>(
 
               <View style={styles.buttonViewStyle}>
                 <AppFormFormSubmit
+                  showErrorToast={false}
                   text={STRINGS.login.sign_in}
                   buttonType={BUTTON_TYPES.NORMAL}
                   fontWeight={"semi-bold"}

@@ -27,7 +27,6 @@ const AppForm: React.FC<Props> = ({
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
-      enableReinitialize
       validateOnMount={validateOnMount}
       validationSchema={validationSchema}>
       {() => <>{children}</>}

@@ -62,7 +62,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
   const [messages, setMessages] = useState<Message[] | undefined>(
     undefined
   );
-  const conversationId: number = params.conversationId;
+  const conversationId: number = params.conversation.id;
   const { themedColors } = usePreferredTheme();
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(
@@ -70,8 +70,11 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
   );
   const isFetchingInProgress = useRef(false);
   const { user } = useAuth();
+  const [showArchivedButton, setShowArchivedButton] = useState<boolean>(
+    params?.conversation.currentUser[0].status === "active"
+  );
 
-  const getTitle = (): string => {
+  const getTitle = useCallback(() => {
     const title = params?.title ?? "N/A";
 
     if (title.length === 1) {
@@ -81,53 +84,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     } else {
       return title[0] + " & " + (title.length - 1) + " more ";
     }
-  };
-
-  useLayoutEffect(() => {
-    myNavigation.setOptions({
-      headerTitle: () => (
-        <HeaderTitle
-          text={getTitle()}
-          labelStyle={{ paddingHorizontal: SPACE._2xl }}
-        />
-      ),
-      headerLeft: () => (
-        <HeaderLeftTextWithIcon
-          text={Strings.chatThreadScreen.titleLeft}
-          onPress={() => {
-            navigation.goBack();
-          }}
-          icon={() => (
-            <Close
-              testID="icon"
-              width={moderateScale(15)}
-              height={moderateScale(15)}
-              fill={themedColors.primary}
-            />
-          )}
-        />
-      ),
-      headerRight: () => (
-        <HeaderRightTextWithIcon
-          text={Strings.chatThreadScreen.titleRight}
-          onPress={async () => {
-            await handleUpdateConversationApi();
-          }}
-          shouldShowLoader={updateConversationApi.loading}
-          textStyle={{ color: COLORS.red }}
-          icon={() => (
-            <Archive
-              testID="icon"
-              width={moderateScale(15)}
-              height={moderateScale(15)}
-              fill={COLORS.red}
-            />
-          )}
-        />
-      )
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [params?.title]);
 
   const loadMessages = useApi<ChatRequestModel, MessagesResponseModel>(
     ChatApis.getMessages
@@ -146,7 +103,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     setInActiveConversations
   } = useContext(AppDataContext);
 
-  async function handleUpdateConversationApi() {
+  const handleUpdateConversationApi = useCallback(async () => {
     const {
       hasError,
       dataBody,
@@ -156,12 +113,11 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     ]);
 
     if (hasError || dataBody === undefined) {
-      AppLog.logForcefully(() => "Chat archive failed :  " + errorBody);
-      SimpleToast.show(
-        "Archive failed for conversation : " + conversationId
-      );
+      AppLog.log(() => "Conversation archive failed :  " + errorBody);
+      SimpleToast.show(errorBody!);
       return;
     } else {
+      SimpleToast.show(dataBody.message);
       ChatHelper.manipulateChatLists(
         setActiveConversations,
         inActiveConversations,
@@ -172,7 +128,15 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       );
       navigation.goBack();
     }
-  }
+  }, [
+    activeConversations,
+    conversationId,
+    inActiveConversations,
+    navigation,
+    setActiveConversations,
+    updateConversationApi,
+    setInActiveConversations
+  ]);
 
   const loadMessagesRequestModel = useRef<ChatRequestModel>({
     paginate: true,
@@ -266,6 +230,8 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     } as unknown) as Message;
 
     if (socket?.current?.connected ?? false) {
+      setShowArchivedButton(true);
+
       //remove id from message when sending to socket
       socket!!.current!!.emit("sendMessage", _.omit(prepareMessage, "id"));
 
@@ -354,6 +320,60 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     }
     sentMessageToSocket(message.text, message.id, true);
   };
+
+  useLayoutEffect(() => {
+    myNavigation.setOptions({
+      headerTitle: () => (
+        <HeaderTitle
+          text={getTitle()}
+          labelStyle={{ paddingHorizontal: SPACE._2xl }}
+        />
+      ),
+      headerLeft: () => (
+        <HeaderLeftTextWithIcon
+          text={Strings.chatThreadScreen.titleLeft}
+          onPress={() => {
+            navigation.goBack();
+          }}
+          icon={() => (
+            <Close
+              testID="icon"
+              width={moderateScale(15)}
+              height={moderateScale(15)}
+              fill={themedColors.primary}
+            />
+          )}
+        />
+      ),
+      headerRight: () =>
+        showArchivedButton && (
+          <HeaderRightTextWithIcon
+            text={Strings.chatThreadScreen.titleRight}
+            onPress={async () => {
+              await handleUpdateConversationApi();
+            }}
+            shouldShowLoader={updateConversationApi.loading}
+            textStyle={{ color: COLORS.red }}
+            icon={() => (
+              <Archive
+                testID="icon"
+                width={moderateScale(15)}
+                height={moderateScale(15)}
+                fill={COLORS.red}
+              />
+            )}
+          />
+        )
+    });
+  }, [
+    showArchivedButton,
+    handleUpdateConversationApi,
+    getTitle,
+    myNavigation,
+    navigation,
+    themedColors.primary,
+    updateConversationApi.loading
+  ]);
 
   return (
     <ChatThreadScreen

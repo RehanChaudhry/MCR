@@ -28,6 +28,7 @@ import SimpleToast from "react-native-simple-toast";
 import { User } from "models/User";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import { useCreateConversation } from "hooks/useCreateConversation";
+import { Conversation } from "models/api_responses/ChatsResponseModel";
 
 type ConversationNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -57,7 +58,7 @@ export const NewConversationController: FC<Props> = () => {
   );
 
   const openChatThreadScreen = useCallback(
-    (conversationId: number) => {
+    (conversation: Conversation) => {
       const users: string[] = newConversations!!.reduce(
         (newArray: string[], item) => (
           newArray.push(item.firstName + " " + item.lastName), newArray
@@ -67,7 +68,7 @@ export const NewConversationController: FC<Props> = () => {
       navigation.goBack();
       navigation.navigate("ChatThread", {
         title: users,
-        conversationId: conversationId
+        conversation: conversation
       });
     },
     [navigation, newConversations]
@@ -107,7 +108,7 @@ export const NewConversationController: FC<Props> = () => {
       );
 
       if (createConversationResult !== undefined) {
-        openChatThreadScreen(createConversationResult.id);
+        openChatThreadScreen(createConversationResult);
       }
     } else {
       navigation.goBack();

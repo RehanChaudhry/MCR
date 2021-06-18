@@ -12,6 +12,8 @@ import { AuthStackParamList } from "routes";
 import NoHeader from "ui/components/headers/NoHeader";
 import { LoginView } from "ui/screens/auth/login/LoginView";
 import { AppLog } from "utils/Util";
+import SimpleToast from "react-native-simple-toast";
+import { STRINGS } from "config";
 
 export type LoginScreenAuthStackScreenProps = StackScreenProps<
   AuthStackParamList,
@@ -56,7 +58,9 @@ const LoginController: FC<Props> = () => {
       const { hasError } = await signInApi.request([apiRequestModel]);
 
       if (hasError) {
-        Alert.alert("Unable to Sign In", signInApi.error);
+        SimpleToast.show(
+          signInApi.error ?? STRINGS.common.some_thing_bad_happened
+        );
         return;
       }
 

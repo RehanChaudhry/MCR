@@ -149,7 +149,10 @@ export const UpdateProfileView = optimizedMemo<Props>(
             />
           )}
 
-          <DynamicFormView sectionsData={updateProfileUiData?.sections} />
+          <DynamicFormView
+            sectionsData={updateProfileUiData?.sections}
+            updateProfile={true}
+          />
 
           <View style={styles.buttonViewStyle}>
             <AppFormFormSubmit

@@ -21,7 +21,10 @@ export const ViewProfileView: React.FC<Props> = ({
     <Screen shouldAddBottomInset={false}>
       <ScrollView>
         <View>
-          <DynamicFormView sectionsData={viewProfileUiData?.sections} />
+          <DynamicFormView
+            sectionsData={viewProfileUiData?.sections}
+            updateProfile={false}
+          />
           {/*<MyRoommatesController />*/}
         </View>
       </ScrollView>

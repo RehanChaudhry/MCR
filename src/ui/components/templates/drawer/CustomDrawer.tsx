@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import {
   Image,
+  Pressable,
   ScrollView,
   StyleSheet,
   TouchableNativeFeedback,
@@ -31,6 +32,7 @@ import { HomeDrawerParamList } from "routes";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { profileCompletedPercentage } from "models/api_responses/FetchMyProfileResponseModel";
 import { SocketHelper } from "utils/SocketHelper";
+import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
   currentItem: string;
@@ -39,8 +41,12 @@ type CustomDrawerProps = DrawerContentComponentProps & {
 };
 export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
   const { currentItem, setCurrentItem } = props;
+
   // eslint-disable-next-line new-cap
   const ripple = TouchableNativeFeedback.Ripple("#adacac", false);
+
+  const { notificationsCount } = useNotificationsCount();
+
   const { themedColors } = usePreferredTheme();
   const { state, navigation } = props;
   const auth = useAuth();
@@ -95,6 +101,16 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
     );
   }
 
+  const moveToProfileScreen = useCallback(
+    () => {
+      // navigation.navigate("Profile");
+      // setCurrentItem("Profile");
+    },
+    [
+      /*navigation, setCurrentItem*/
+    ]
+  );
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -102,29 +118,36 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
           {/*drawer header start*/}
           <View style={styles.header}>
             <View style={styles.userInfo}>
-              <Image
-                style={styles.userImg}
-                source={
-                  auth.user?.profile?.profilePicture?.fileURL !== undefined
-                    ? { uri: auth.user?.profile?.profilePicture.fileURL }
-                    : require("assets/images/profile.png")
-                }
-              />
-              <View style={styles.nameContainer}>
-                <AppLabel
-                  text={
-                    auth.user?.profile?.firstName +
-                    " " +
-                    auth.user?.profile?.lastName
+              <Pressable onPress={moveToProfileScreen}>
+                <Image
+                  style={styles.userImg}
+                  source={
+                    auth.user?.profile?.profilePicture?.fileURL !==
+                    undefined
+                      ? { uri: auth.user?.profile?.profilePicture.fileURL }
+                      : require("assets/images/profile.png")
                   }
-                  weight="semi-bold"
-                  style={styles.name}
                 />
-                <View style={styles.settingContainer}>
+              </Pressable>
+              <View style={styles.nameContainer}>
+                <Pressable onPress={moveToProfileScreen}>
                   <AppLabel
-                    text={auth.user?.profile?.roleTitle}
-                    style={styles.userRole}
+                    text={
+                      auth.user?.profile?.firstName +
+                      " " +
+                      auth.user?.profile?.lastName
+                    }
+                    weight="semi-bold"
+                    style={styles.name}
                   />
+                </Pressable>
+                <View style={styles.settingContainer}>
+                  <Pressable onPress={moveToProfileScreen}>
+                    <AppLabel
+                      text={auth.user?.profile?.roleTitle}
+                      style={styles.userRole}
+                    />
+                  </Pressable>
 
                   <TouchableOpacity
                     style={styles.settingIconContainer}
@@ -191,19 +214,19 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
                       }
                     />
 
-                    {/* just showing on notifications for design build*/}
-                    {index === 6 && (
-                      <View style={styles.notifyContainer}>
-                        <View style={styles.notifyCountBg}>
-                          <AppLabel
-                            text="3"
-                            weight="bold"
-                            style={styles.notifyText}
-                          />
+                    {index === 6 &&
+                      notificationsCount !== undefined &&
+                      notificationsCount !== 0 && (
+                        <View style={styles.notifyContainer}>
+                          <View style={styles.notifyCountBg}>
+                            <AppLabel
+                              text={notificationsCount.toString()}
+                              weight="bold"
+                              style={styles.notifyText}
+                            />
+                          </View>
                         </View>
-                      </View>
-                    )}
-                    {/* just showing on notifications for design build*/}
+                      )}
                   </View>
                 </TouchableNativeFeedback>
               );

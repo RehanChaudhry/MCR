@@ -10,7 +10,7 @@ import {
   View
 } from "react-native";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
-import { SvgProp } from "utils/Util";
+import { AppLog, SvgProp } from "utils/Util";
 import { Weight } from "ui/components/atoms/app_label/AppLabel";
 
 export interface HeaderRightTextWithIconProps
@@ -34,6 +34,9 @@ const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
   }) => {
     const theme = usePreferredTheme();
 
+    AppLog.logForcefully(
+      () => "HeaderRightTextWithIcon : " + shouldShowLoader
+    );
     return (
       <>
         {shouldShowLoader && (

@@ -14,7 +14,7 @@ import {
 } from "ui/components/atoms/image_background/AppImageBackground";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import MatchScore from "ui/components/molecules/match_score/MatchScore";
-import { AppLog, shadowStyleProps } from "utils/Util";
+import { shadowStyleProps } from "utils/Util";
 import getRelationStatus, {
   Eligible,
   RelationType
@@ -25,7 +25,7 @@ interface Props {
   relationModel: RelationModel;
   onCrossClicked?: (relationModel: RelationModel) => void;
   onChatButtonClicked: (relationModel: RelationModel) => void;
-  onImageClicked: (relationModel: RelationModel) => void;
+  onUserClicked: (relationModel: RelationModel) => void;
   onRoommateRequestActionButtonClicked?: (
     relationModel: RelationModel
   ) => void;
@@ -75,7 +75,7 @@ function createActionButton(
   let actionButton: React.ReactElement;
 
   const {
-    user,
+    // user,
     userId,
     dismissed,
     criteria,
@@ -85,10 +85,10 @@ function createActionButton(
     status
   } = relationModel;
 
-  AppLog.logForcefully(
-    () =>
-      `name: ${user?.firstName}, id: ${userId}, acceptee: ${acceptee}, status: ${status}, dismissed: ${dismissed}, isFriend: ${isFriend}, isRoommate: ${isRoommate}`
-  );
+  // AppLog.logForcefully(
+  //   () =>
+  //     `name: ${user?.firstName}, id: ${userId}, acceptee: ${acceptee}, status: ${status}, dismissed: ${dismissed}, isFriend: ${isFriend}, isRoommate: ${isRoommate}`
+  // );
 
   if (dismissed === 1) {
     actionButton = createRestoreButton();
@@ -302,7 +302,7 @@ const RelationListsItem = ({
   relationModel,
   onCrossClicked,
   onChatButtonClicked,
-  onImageClicked,
+  onUserClicked,
   onRoommateRequestActionButtonClicked,
   onCancelRequestActionButtonClicked,
   onFriendRequestReceivedActionButtonClicked,
@@ -326,7 +326,7 @@ const RelationListsItem = ({
       <View style={styles.infoContainer}>
         <Pressable
           onPress={() => {
-            onImageClicked(relationModel);
+            onUserClicked(relationModel);
           }}>
           <Image
             style={styles.profileImage}
@@ -334,19 +334,25 @@ const RelationListsItem = ({
           />
         </Pressable>
         <View style={styles.infoTextContainer}>
-          <AppLabel
-            style={styles.userName}
-            text={
-              relationModel.user?.getFullName() ?? STRINGS.common.not_found
-            }
-          />
-          <AppLabel
-            style={[
-              styles.subtitle,
-              { color: themedColors.interface[600] }
-            ]}
-            text={relationModel.user?.getSubtitle()}
-          />
+          <Pressable
+            onPress={() => {
+              onUserClicked(relationModel);
+            }}>
+            <AppLabel
+              style={styles.userName}
+              text={
+                relationModel.user?.getFullName() ??
+                STRINGS.common.not_found
+              }
+            />
+            <AppLabel
+              style={[
+                styles.subtitle,
+                { color: themedColors.interface[600] }
+              ]}
+              text={relationModel.user?.getSubtitle()}
+            />
+          </Pressable>
           {relationModel.matchScore !== undefined && (
             <MatchScore
               style={styles.matchScore}
@@ -360,7 +366,7 @@ const RelationListsItem = ({
           <Pressable
             style={styles.icTopEndButtons}
             onPress={() => {
-              onImageClicked(relationModel);
+              onUserClicked(relationModel);
             }}>
             <RequestStateIcon
               fill={
@@ -437,7 +443,11 @@ const styles = StyleSheet.create({
     marginStart: SPACE.md,
     flex: 1
   },
-  userName: { fontSize: FONT_SIZE.lg, includeFontPadding: false },
+  userName: {
+    fontSize: FONT_SIZE.lg,
+    marginRight: 20,
+    includeFontPadding: false
+  },
   subtitle: { fontSize: FONT_SIZE.xs, marginTop: SPACE._2xs },
   matchScore: {
     marginTop: SPACE.md,

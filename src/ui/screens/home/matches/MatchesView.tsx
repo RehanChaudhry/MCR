@@ -114,7 +114,7 @@ export const MatchesView: React.FC<Props> = ({
             setDismissDialogVisible(true);
           }}
           onChatButtonClicked={moveToChatScreen}
-          onImageClicked={moveToProfileScreen}
+          onUserClicked={moveToProfileScreen}
           onRoommateRequestActionButtonClicked={() => {
             profileMatch.current = _item;
             setRoommateDialogVisible(true);

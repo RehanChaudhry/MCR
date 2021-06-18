@@ -44,7 +44,7 @@ const MyRoommatesView: FC<Props> = ({
               onChatButtonClicked={() =>
                 AppLog.logForcefully(() => "chat")
               }
-              onImageClicked={() => AppLog.logForcefully(() => "chat")}
+              onUserClicked={() => AppLog.logForcefully(() => "chat")}
             />
           )}
           style={styles.flatList}

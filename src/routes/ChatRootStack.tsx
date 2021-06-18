@@ -1,11 +1,12 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import { Conversation } from "models/api_responses/ChatsResponseModel";
 
 export type ChatRootStackParamList = {
   Root: undefined;
   NewConversation: undefined;
   ChatThread: {
     title: string[];
-    conversationId: number;
+    conversation: Conversation;
   };
 };
 

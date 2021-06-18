@@ -365,6 +365,5 @@ export default {
     export_agreement: "Export Roommate Agreement",
     no_agreement_found: "No agreement found."
   },
-  somethingWentWrong: "Something went wrong!",
   staticContent: {}
 };

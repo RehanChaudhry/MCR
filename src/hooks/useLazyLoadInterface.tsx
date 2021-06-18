@@ -6,28 +6,46 @@ import {
   View
 } from "react-native";
 import { usePreferredTheme } from "hooks/index";
+import { AppLog } from "utils/Util";
 
 export default (
   actualView: React.ReactNode,
   loadingView?: React.ReactNode,
-  delayAfterInteraction?: number
+  delayAfterInteraction?: number,
+  dontCompleteInteractionTillNotTrue?: () => boolean
 ) => {
   const [interactionComplete, setInteractionComplete] = useState(false);
   const [showUserInterface, setShowUserInterface] = useState(
-    !delayAfterInteraction
+    !delayAfterInteraction && !dontCompleteInteractionTillNotTrue
   );
   const { themedColors } = usePreferredTheme();
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      setInteractionComplete(true);
+      if (!dontCompleteInteractionTillNotTrue) {
+        setInteractionComplete(true);
+      }
       if (delayAfterInteraction) {
         setTimeout(() => {
+          AppLog.logForcefully(
+            () => "in useLazyLoadInterface, timeout occurred..."
+          );
           setShowUserInterface(true);
         }, delayAfterInteraction);
       }
     });
   });
+
+  useEffect(() => {
+    if (dontCompleteInteractionTillNotTrue) {
+      let shouldShow = dontCompleteInteractionTillNotTrue();
+      AppLog.logForcefully(
+        () => "in useLazyLoadInterface, shouldShow:" + shouldShow
+      );
+      setInteractionComplete(shouldShow);
+      setShowUserInterface(shouldShow);
+    }
+  }, [dontCompleteInteractionTillNotTrue]);
 
   if (!interactionComplete) {
     return loadingView ? (

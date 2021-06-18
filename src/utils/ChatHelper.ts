@@ -2,6 +2,7 @@ import Message from "models/Message";
 import _ from "lodash";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
 import { Dispatch, SetStateAction } from "react";
+import { AppLog } from "utils/Util";
 
 export const ChatHelper = {
   manipulateChatLists: (
@@ -26,6 +27,7 @@ export const ChatHelper = {
         );
 
         if (findItem !== undefined) {
+          findItem.currentUser[0].status = "archived";
           return [findItem, ...(prevState || [])];
         }
 
@@ -64,9 +66,11 @@ export const ChatHelper = {
             (listItem) => listItem.id === conversationId
           );
 
+          AppLog.log(() => "users : " + JSON.stringify(item));
           // @ts-ignore
-          item!!.lastMessagedAt = message?.createdAt;
-          item!!.message = [message!!];
+          item!.lastMessagedAt = message?.createdAt;
+          item!.message = [message!!];
+          item!.currentUser[0].status = "active";
           chatsCopy?.splice(
             prevState?.findIndex((_item) => _item.id === conversationId)!!,
             1,
@@ -87,6 +91,7 @@ export const ChatHelper = {
             // @ts-ignore
             findItem.lastMessagedAt = message?.createdAt;
             findItem.message = [message!!]; //replace conversation from new object
+            findItem!.currentUser[0].status = "active";
             return [findItem, ...prevState];
           }
 

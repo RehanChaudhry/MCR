@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import Screen from "ui/components/atoms/Screen";
 import AppForm from "ui/components/molecules/app_form/AppForm";
-import { FormikValues, isObject } from "formik";
+import { FormikValues } from "formik";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
@@ -24,7 +24,9 @@ import { SectionsType } from "models/api_responses/DynamicFormSections";
 import { DynamicFormView } from "ui/components/templates/dynamic_card_view/DynamicFormView";
 
 type Props = {
-  roommateData: AgreementField[] | undefined;
+  myInitialValues: FormikValues;
+  dataManipulation: (value: any, inputType?: string) => any;
+  roommateData: AgreementField[];
   showProgressBar: boolean;
   handleSaveAndContinue: (values: AgreementAnswersRequestModel) => void;
   showAgreementDialog: boolean;
@@ -34,6 +36,8 @@ type Props = {
 };
 
 const RoommateAgreementView: FC<Props> = ({
+  myInitialValues,
+  dataManipulation,
   roommateData,
   showProgressBar,
   handleSaveAndContinue,
@@ -42,9 +46,10 @@ const RoommateAgreementView: FC<Props> = ({
   progressBarBtn,
   shouldShowAgreementDialog
 }) => {
+  AppLog.logForcefully(() => "in RoommateAgreementView()...");
+
   const { themedColors } = usePreferredTheme();
-  let myInitialValues = useRef<FormikValues>({});
-  let yupSchema = useRef({});
+  let yupSchema = useRef(Yup.object().shape({}));
   const [formFields, setFormFields] = useState<SectionsType[] | undefined>(
     undefined
   );
@@ -53,69 +58,34 @@ const RoommateAgreementView: FC<Props> = ({
     let counter = 0;
     let section: SectionsType[] = [];
 
-    if (roommateData !== undefined && roommateData.length > 0) {
-      //Create section ourselves
-      let firstElement = (roommateData as AgreementField[]).find(
-        (item) => item.id === 1
-      );
+    //Create section ourselves
+    let firstElement = (roommateData as AgreementField[]).find(
+      (item) => item.id === 1
+    );
 
-      if (firstElement !== undefined) {
-        section[counter] = {
-          // @ts-ignore
-          formInputs: [firstElement as AgreementField]
-        };
-        counter++;
-      }
-
+    if (firstElement !== undefined) {
       section[counter] = {
         // @ts-ignore
-        formInputs: roommateData.slice(1) as AgreementField[]
+        formInputs: [firstElement as AgreementField]
       };
-
-      setFormFields(section);
-
-      yupSchema.current = createYupSchema(roommateData);
-
-      myInitialValues.current = roommateData.reduce(
-        (map, obj: AgreementField) => {
-          // @ts-ignore
-          map[obj.id] = dataManipulation(
-            obj.agreementUserAnswers.map(
-              (data) => data.agreementFieldValue
-            ),
-            obj.inputType
-          );
-          return map;
-        },
-        {}
-      );
-
-      /*myInitialValues.current["1"] = roommateData.*/
-    } else {
-      yupSchema.current = Yup.string().notRequired();
+      counter++;
     }
+
+    section[counter] = {
+      // @ts-ignore
+      formInputs: roommateData.slice(1) as AgreementField[]
+    };
+
+    setFormFields(section);
+
+    yupSchema.current = createYupSchema(roommateData);
+
+    /*myInitialValues.current["1"] = roommateData.*/
   }, [roommateData]);
 
   useEffect(() => {
     init();
   }, [init]);
-
-  function dataManipulation(value: any, inputType?: string) {
-    if (Array.isArray(value) && value.length === 1) {
-      return (inputType ?? "") === "checkbox" ? [value[0]] : value[0];
-    } else if (Array.isArray(value) && value.length > 1) {
-      return value.reduce(
-        (newArray: string[], _item: any) => (
-          newArray.push(isObject(_item) ? _item.value : _item), newArray
-        ),
-        []
-      );
-    } else if (isObject(value)) {
-      return value.value;
-    } else {
-      return value;
-    }
-  }
 
   const onSubmit = (_value: FormikValues) => {
     AppLog.log(() => "Button Pressed" + JSON.stringify(_value));
@@ -177,7 +147,7 @@ const RoommateAgreementView: FC<Props> = ({
     <Screen shouldAddBottomInset={false}>
       <ScrollView>
         <AppForm
-          initialValues={myInitialValues.current}
+          initialValues={myInitialValues}
           onSubmit={onSubmit}
           validateOnMount={false}
           validationSchema={yupSchema.current}>
@@ -193,6 +163,7 @@ const RoommateAgreementView: FC<Props> = ({
           <DynamicFormView
             sectionsData={formFields}
             showProgressBar={showProgressBar}
+            updateProfile={true}
           />
           {agreementDialog()}
           <View style={styles.button}>

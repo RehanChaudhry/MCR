@@ -38,7 +38,7 @@ const listItem = (
     <RelationListsItem
       relationModel={_item}
       onChatButtonClicked={onPressChat}
-      onImageClicked={onPressProfile}
+      onUserClicked={onPressProfile}
       onRestoreDismissedActionButtonClicked={showRestoreAlert}
       onUnBlockedActionButtonClicked={showUnblockAlert}
     />

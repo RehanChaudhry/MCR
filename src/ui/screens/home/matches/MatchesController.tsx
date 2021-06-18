@@ -77,16 +77,12 @@ const MatchesController: FC<Props> = () => {
       inActiveConversations
     );
 
-    AppLog.log(
-      () =>
-        "create conversation : " + JSON.stringify(createConversationResult)
-    );
     if (createConversationResult !== undefined) {
       navigation.navigate("Chat", {
         title: [
           profileMatch.user?.getFullName() ?? STRINGS.common.not_found
         ],
-        conversationId: createConversationResult?.id!
+        conversation: createConversationResult
       });
     }
   };
@@ -229,11 +225,12 @@ const MatchesController: FC<Props> = () => {
 
   const onFilterChange = useCallback(
     (keyword?: string, gender?: EGender) => {
+      setProfileMatches?.(undefined);
       requestModel.current.keyword = keyword;
       requestModel.current.gender = gender;
       refreshCallback();
     },
-    [refreshCallback]
+    [setProfileMatches, refreshCallback]
   );
 
   const onEndReached = () => {

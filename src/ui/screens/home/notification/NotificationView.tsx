@@ -23,6 +23,7 @@ type Props = {
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete: () => void) => void;
   onChangeFilter: (textToFilter: string) => void;
+  navigateToRequiredScreen: (type: string) => void;
 };
 
 export const NotificationView = React.memo<Props>(
@@ -33,7 +34,8 @@ export const NotificationView = React.memo<Props>(
     pullToRefreshCallback,
     onEndReached,
     isAllDataLoaded,
-    onChangeFilter
+    onChangeFilter,
+    navigateToRequiredScreen
   }) => {
     const theme = usePreferredTheme();
     let sharedDataRef = useRef("");
@@ -45,13 +47,14 @@ export const NotificationView = React.memo<Props>(
             <NotiHeader item={item} setSharedDataRef={sharedDataRef} />
             <CircleImageWithText
               key={index}
+              actionOnPress={navigateToRequiredScreen}
               notification={item}
               userNameOnPress={openMyProfileScreen}
             />
           </>
         );
       },
-      [openMyProfileScreen]
+      [openMyProfileScreen, navigateToRequiredScreen]
     );
 
     return (

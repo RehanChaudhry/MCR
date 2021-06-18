@@ -1,9 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useAuth } from "hooks";
+import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
 import EScreen from "models/enums/EScreen";
 import RelationFilterType from "models/enums/RelationFilterType";
 import RelationModel from "models/RelationModel";
 import React, { FC, useCallback, useContext } from "react";
+import AuthApis from "repo/auth/AuthApis";
+import { useApi } from "repo/Client";
 import { FriendsRootStackParamList } from "routes/FriendsRootStack";
 import { AppLog } from "utils/Util";
 import { AppDataContext } from "../AppDataProvider";
@@ -54,6 +58,23 @@ const MyRoommatesController: FC<Props> = () => {
     [navigation]
   );
 
+  const { user, saveProfile } = useAuth();
+
+  const fetchProfileApi = useApi<string, FetchMyProfileResponseModel>(
+    AuthApis.fetchMyProfile
+  );
+
+  const fetchUserApi = useCallback(async () => {
+    const {
+      hasError: hasErrorProfile,
+      dataBody
+    } = await fetchProfileApi.request([]);
+
+    if (!hasErrorProfile) {
+      await saveProfile(dataBody?.data!, user!);
+    }
+  }, [fetchProfileApi, saveProfile, user]);
+
   return (
     <MyRoommatesView
       roomatesCount={roommatesCount}
@@ -63,7 +84,14 @@ const MyRoommatesController: FC<Props> = () => {
       canLoadMore={canLoadMore}
       error={errorMessage}
       onEndReached={onEndReached}
-      onPullToRefresh={onPullToRefresh}
+      onPullToRefresh={(onComplete?: () => void) => {
+        onPullToRefresh((data) => {
+          if (!user?.profile?.agreementId && data?.length !== 0) {
+            fetchUserApi().then().catch();
+          }
+          onComplete?.();
+        });
+      }}
       onPressChat={(item: RelationModel) => {
         AppLog.log(() => "onPressChat: ", item);
       }}

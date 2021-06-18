@@ -88,7 +88,7 @@ const listItem = (
       relationModel={_item}
       onCrossClicked={onPressCross}
       onChatButtonClicked={onPressChat}
-      onImageClicked={moveToProfileScreen}
+      onUserClicked={moveToProfileScreen}
       onRoommateRequestActionButtonClicked={showRequestAlert}
       onCancelRequestActionButtonClicked={showCancelAlert}
       onRoommateRequestReceivedActionButtonClicked={moveToRoommateRequests}
@@ -259,8 +259,10 @@ const MyFriendsView: FC<Props> = ({
         shouldShow={isCancelAlertVisible}
         getSelectedItem={getSelectedItem}
         hideSelf={hideCancelRequestAlert}
-        title={STRINGS.dialogs.cancel_request.title}
-        message={`Are you sure you want to cancel request to ${
+        title={
+          STRINGS.dialogs.cancel_request.title_cancel_roommate_request
+        }
+        message={`Are you sure you want to cancel roommates request to ${
           getSelectedItem()?.user?.getFullName() ?? "N/A"
         }?`}
         firstButtonText={STRINGS.dialogs.cancel_request.success}
