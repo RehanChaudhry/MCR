@@ -9,11 +9,12 @@ import React, { FC, useCallback, useContext } from "react";
 import AuthApis from "repo/auth/AuthApis";
 import { useApi } from "repo/Client";
 import { FriendsRootStackParamList } from "routes/FriendsRootStack";
-import { AppLog } from "utils/Util";
 import { AppDataContext } from "../AppDataProvider";
 import { ConnectRequestType } from "../connect_requests/ConnectRequestsController";
 import useFetchRelations from "../useFetchRelations";
 import MyRoommatesView from "./MyRoommatesView";
+import { STRINGS } from "config";
+import { useCreateConversation } from "hooks/useCreateConversation";
 
 type Props = {};
 
@@ -25,7 +26,15 @@ type FriendsNavigationProp = StackNavigationProp<
 const MyRoommatesController: FC<Props> = () => {
   const navigation = useNavigation<FriendsNavigationProp>();
 
-  const { myRoommates, setMyRoommates } = useContext(AppDataContext);
+  const createConversation = useCreateConversation();
+
+  const {
+    myRoommates,
+    setMyRoommates,
+    setActiveConversations,
+    inActiveConversations
+  } = useContext(AppDataContext);
+
   const {
     relationsCount: roommatesCount,
     pendingRelationsCount: pendingRoommatesCount,
@@ -75,6 +84,23 @@ const MyRoommatesController: FC<Props> = () => {
     }
   }, [fetchProfileApi, saveProfile, user]);
 
+  const moveToChatScreen = async (profileMatch: RelationModel) => {
+    const createConversationResult = await createConversation(
+      [user?.profile?.id!!, profileMatch.userId!],
+      setActiveConversations,
+      inActiveConversations
+    );
+
+    if (createConversationResult !== undefined) {
+      navigation.navigate("Chat", {
+        title: [
+          profileMatch.user?.getFullName() ?? STRINGS.common.not_found
+        ],
+        conversation: createConversationResult
+      });
+    }
+  };
+
   return (
     <MyRoommatesView
       roomatesCount={roommatesCount}
@@ -92,9 +118,7 @@ const MyRoommatesController: FC<Props> = () => {
           onComplete?.();
         });
       }}
-      onPressChat={(item: RelationModel) => {
-        AppLog.log(() => "onPressChat: ", item);
-      }}
+      onPressChat={moveToChatScreen}
       onPressProfile={moveToProfileScreen}
       onPressReceivedRoommateRequests={onPressReceivedRoommateRequests}
     />
