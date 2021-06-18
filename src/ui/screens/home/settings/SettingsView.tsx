@@ -4,7 +4,7 @@ import { useAuth } from "hooks";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 import EIntBoolean from "models/enums/EIntBoolean";
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { CardView } from "ui/components/atoms/CardView";
@@ -24,16 +24,7 @@ type Props = {
 export const SettingsView = React.memo<Props>(
   ({ onUpdateAccountSettings, shouldShowProgressBar }) => {
     const auth = useAuth();
-    const [secEmail, setSecEmail] = useState("");
-    const [oldPassword, setOldPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [conPassword, setConPassword] = useState("");
     const validationSchema = Yup.object().shape({
-      //basic profile component
-      // primaryEmailAddress: Yup.string()
-      //   .required("Enter your first name")
-      //   .min(3, "First name should be atleast 3 characters")
-      //   .max(25, "First name should be less than 26 characters"),
       alternateEmailAddress: Yup.string().email(
         "Please provide valid email address"
       ),
@@ -56,7 +47,7 @@ export const SettingsView = React.memo<Props>(
 
       currentPassword: Yup.string()
         .optional()
-        .min(8, "Password should be atleast 8 chars")
+        .min(8, "Password should be at least 8 chars")
         .when(["newPassword"], {
           is: (valueNewPassword: any[]) => {
             return valueNewPassword?.length > 0;
@@ -73,28 +64,35 @@ export const SettingsView = React.memo<Props>(
       confirmPassword: ""
     };
 
-    function shouldDisable() {
-      let disable: boolean = false;
-      disable = !(
-        secEmail !== "" ||
-        oldPassword !== "" ||
-        newPassword !== "" ||
-        conPassword !== ""
-      );
-      AppLog.log(() => disable);
-      return disable;
-    }
+    // initialValues.alternateEmailAddress =
+    //   auth.user?.profile?.secondaryEmail;
+
+    // function shouldDisable() {
+    //   let disable: boolean = false;
+    //   disable = !(
+    //     secEmail !== "" ||
+    //     oldPassword !== "" ||
+    //     newPassword !== "" ||
+    //     conPassword !== ""
+    //   );
+    //   AppLog.log(() => disable);
+    //   return disable;
+    // }
 
     const onSubmit = (_value: FormikValues) => {
       AppLog.log(() => "form values" + JSON.stringify(_value));
       const request: UpdateProfileRequestModel = {};
-      if (secEmail !== "") {
-        request.secondaryEmail = secEmail;
+      if (_value.alternateEmailAddress !== "") {
+        request.secondaryEmail = _value.alternateEmailAddress;
       }
-      if (oldPassword !== "" && newPassword !== "" && conPassword !== "") {
-        request.currentPassword = oldPassword;
-        request.newPassword = newPassword;
-        request.confirmPassword = conPassword;
+      if (
+        _value.currentPassword !== "" &&
+        _value.newPassword !== "" &&
+        _value.confirmPassword !== ""
+      ) {
+        request.currentPassword = _value.currentPassword;
+        request.newPassword = _value.newPassword;
+        request.confirmPassword = _value.confirmPassword;
       }
       AppLog.log(() => "form values request" + JSON.stringify(request));
       onUpdateAccountSettings(request);
@@ -157,8 +155,6 @@ export const SettingsView = React.memo<Props>(
                     text: "Alternative Email Address",
                     weight: "semi-bold"
                   }}
-                  value={secEmail}
-                  customTextChanged={setSecEmail}
                   fieldInputProps={{
                     textContentType: "name",
                     keyboardType: "default",
@@ -189,8 +185,6 @@ export const SettingsView = React.memo<Props>(
                     text: "Current Password",
                     weight: "semi-bold"
                   }}
-                  value={oldPassword}
-                  customTextChanged={setOldPassword}
                   fieldInputProps={{
                     textContentType: "password",
                     keyboardType: "default",
@@ -220,8 +214,6 @@ export const SettingsView = React.memo<Props>(
                     text: "New Password",
                     weight: "semi-bold"
                   }}
-                  value={newPassword}
-                  customTextChanged={setNewPassword}
                   fieldInputProps={{
                     textContentType: "name",
                     keyboardType: "default",
@@ -251,8 +243,6 @@ export const SettingsView = React.memo<Props>(
                     text: "Confirm Password",
                     weight: "semi-bold"
                   }}
-                  value={conPassword}
-                  customTextChanged={setConPassword}
                   fieldInputProps={{
                     textContentType: "name",
                     keyboardType: "default",
@@ -277,7 +267,6 @@ export const SettingsView = React.memo<Props>(
               <AppFormFormSubmit
                 loaderColor={theme.themedColors.background}
                 shouldShowProgressBar={shouldShowProgressBar}
-                isDisable={shouldDisable()}
                 text={"Save"}
                 buttonType={BUTTON_TYPES.NORMAL}
                 fontWeight={"semi-bold"}
