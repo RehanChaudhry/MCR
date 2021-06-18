@@ -208,10 +208,8 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
 
     case "file":
       return (
-        <View style={styles.paddingTop}>
-          <View style={styles.padding}>
-            <UploadProfilePhoto name={item.id.toString()} />
-          </View>
+        <View style={styles.padding}>
+          <UploadProfilePhoto name={item.id.toString()} />
         </View>
       );
 
@@ -232,9 +230,6 @@ const styles = StyleSheet.create({
   },
   padding: {
     marginBottom: SPACE.lg
-  },
-  paddingTop: {
-    marginTop: SPACE.lg
   }
 });
 export default UpdateProfileSectionFieldItem;

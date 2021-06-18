@@ -10,13 +10,15 @@ import { grayShades } from "hooks/theme/ColorPaletteContainer";
 type DynamicCardViewItemProps = {
   section: SectionsType;
   showProgressBar?: boolean;
-  updateProfile: boolean | undefined;
+  updateProfile?: boolean;
+  roommateAgreement?: boolean;
 };
 
 export const DynamicCardViewItem: React.FC<DynamicCardViewItemProps> = ({
   section,
   showProgressBar,
-  updateProfile
+  updateProfile = false,
+  roommateAgreement = false
 }) => {
   // don't show section if there aren't fields in it
   let numberOfFieldsToShow = useMemo(
@@ -25,6 +27,7 @@ export const DynamicCardViewItem: React.FC<DynamicCardViewItemProps> = ({
   );
   if (
     !updateProfile &&
+    !roommateAgreement &&
     (!numberOfFieldsToShow || numberOfFieldsToShow.length === 0)
   ) {
     return null;
@@ -46,7 +49,7 @@ export const DynamicCardViewItem: React.FC<DynamicCardViewItemProps> = ({
         </>
       )}
       {/*//when view profile is open, basic profile will not be shown*/}
-      {updateProfile === false && (
+      {(updateProfile === false || roommateAgreement === true) && (
         <HeadingWithText
           headingFontWeight={"semi-bold"}
           headingText={
@@ -59,6 +62,7 @@ export const DynamicCardViewItem: React.FC<DynamicCardViewItemProps> = ({
         listData={section.formInputs}
         showProgressBar={showProgressBar ?? true}
         updateProfile={updateProfile}
+        roommateAgreement={roommateAgreement}
       />
     </CardView>
   );
@@ -75,6 +79,9 @@ const styles = StyleSheet.create({
   horizontalLine: {
     backgroundColor: grayShades.warmGray["300"],
     height: 0.5,
-    marginTop: SPACE.lg
+    marginLeft: -SPACE.lg,
+    marginRight: -SPACE.lg,
+    marginTop: SPACE.lg,
+    marginBottom: SPACE.lg
   }
 });

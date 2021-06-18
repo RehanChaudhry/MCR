@@ -8,14 +8,15 @@ import { ViewProfileSectionFieldItem } from "ui/components/organisms/section_com
 type Props = {
   listData: FormInputFieldData[] | undefined;
   showProgressBar: boolean;
-  updateProfile: boolean | undefined;
+  updateProfile: boolean;
+  roommateAgreement: boolean;
 };
 
 export const DynamicCardViewBody = React.memo<Props>(
-  ({ listData, showProgressBar, updateProfile }) => {
+  ({ listData, showProgressBar, updateProfile, roommateAgreement }) => {
     //const updateProfileRoute = useRoute<any>();
     const listItem = ({ item }: { item: FormInputFieldData }) => {
-      if (updateProfile === undefined || updateProfile === true) {
+      if (roommateAgreement === true || updateProfile === true) {
         return <UpdateProfileSectionFieldItem item={item} />;
       } else {
         return <ViewProfileSectionFieldItem item={item} />;
