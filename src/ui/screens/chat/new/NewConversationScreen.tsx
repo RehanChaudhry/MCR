@@ -119,7 +119,6 @@ export const NewConversationScreen = React.memo<Props>(
               data={suggestionsList}
               renderItem={renderSuggestionItems}
               showsVerticalScrollIndicator={false}
-              removeClippedSubviews={true}
               style={[styles.suggestionList(themedColors)]}
               keyExtractor={(item) => item.id.toString()}
               keyboardShouldPersistTaps="always"
