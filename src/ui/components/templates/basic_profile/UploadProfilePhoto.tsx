@@ -45,14 +45,7 @@ export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
     }, [initialValues]);
 
     const profileIcon = () => {
-      return (
-        <ProfileAvatar
-          //testID="icon"
-          width={50}
-          height={50}
-          //fill={color}
-        />
-      );
+      return <ProfileAvatar width={45} height={45} />;
     };
 
     const [
@@ -85,30 +78,27 @@ export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
     return (
       <View style={styles.container}>
         <View style={styles.subContainer}>
-          {!imageResponse && !initialValues[name] && (
-            <AppImageBackground
-              icon={profileIcon}
-              containerShape={CONTAINER_TYPES.SQUARE}
-              // onPress={() => {
-              //   Alert.alert("Profile Icon Tapped");
-              // }}
-            />
-          )}
-          <>
-            <View style={styles.imageViewStyle}>
-              {(imageResponse !== undefined || initialValues[name]) && (
-                <Image
-                  style={styles.image}
-                  source={{
-                    uri:
-                      imageResponse?.uri !== undefined
-                        ? imageResponse.uri
-                        : JSON.parse(initialValues[name]).fileURL
-                  }}
-                />
-              )}
-            </View>
-          </>
+          <View style={styles.imageViewStyle}>
+            {!imageResponse && !initialValues[name] && (
+              <AppImageBackground
+                style={styles.image}
+                icon={profileIcon}
+                shouldNotOptimize={true}
+                containerShape={CONTAINER_TYPES.CIRCLE}
+              />
+            )}
+            {(imageResponse !== undefined || initialValues[name]) && (
+              <Image
+                style={styles.image}
+                source={{
+                  uri:
+                    imageResponse?.uri !== undefined
+                      ? imageResponse.uri
+                      : JSON.parse(initialValues[name]).fileURL
+                }}
+              />
+            )}
+          </View>
           <AppButton
             text={STRINGS.profile.buttonText.uploadProfilePhoto}
             buttonStyle={[
@@ -149,6 +139,8 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     flex: 1
   },
   uploadButton: {
@@ -160,13 +152,11 @@ const styles = StyleSheet.create({
     paddingTop: SPACE.lg
   },
   imageViewStyle: {
-    height: 50,
-    width: 50,
-    borderRadius: 8,
-    overflow: "hidden"
+    height: 40,
+    width: 40
   },
   image: {
-    height: 50,
-    width: 50
+    height: 40,
+    width: 40
   }
 });
