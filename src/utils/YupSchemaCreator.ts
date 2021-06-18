@@ -26,7 +26,7 @@ let FieldTypes = {
     Yup.string()
       .test(
         "custom error", //method name for yup
-        computeValidationMessage(field),
+        `Please enter valid ${field.label?.toLowerCase()}.`,
         (value: string | undefined): boolean => {
           if (!value) {
             return true;

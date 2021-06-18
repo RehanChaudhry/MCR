@@ -69,6 +69,7 @@ export const AddInterestsView = React.memo<Props>(
           btnImage={plusIcon}
           appInputPlaceHolder={Strings.newConversation.typingHint}
           btnPressCallback={addItem}
+          multiline={false}
         />
       </Screen>
     );

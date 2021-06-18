@@ -50,7 +50,7 @@ export default {
 
   welcome: {
     welcome_text:
-      "It's great to have you on board. Let's watch a 2 minute video to get you started.",
+      "It's great to have you on board. Let's watch a video to get you started.",
     play_video: "Play this video",
     continue: "Continue",
     learn_about_heading: "Learn more about My College Roomie",

@@ -142,7 +142,7 @@ export const UpdateProfileView = optimizedMemo<Props>(
           {infoTextShown && (
             <AppLabel
               text={
-                "This information will be help us to find better roommate match for you."
+                "This information will help others get to know you better."
               }
               numberOfLines={0}
               style={styles.topText}
