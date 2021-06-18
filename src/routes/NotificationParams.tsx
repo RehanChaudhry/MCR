@@ -5,7 +5,7 @@ import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/Con
 export type NotificationParamList = {
   Notification: undefined;
   ViewProfile: { isFrom: EScreen; updateProfile: boolean };
-  FriendRequests: { title: string; type: ConnectRequestType };
+  ConnectRequest: { title: string; type: ConnectRequestType };
   Chat: undefined;
 };
 

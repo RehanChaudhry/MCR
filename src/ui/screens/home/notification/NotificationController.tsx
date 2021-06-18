@@ -130,13 +130,13 @@ const NotificationController: FC<Props> = () => {
     });
   };
 
-  const openChatScreen = usePreventDoubleTap(() => {
-    navigation.push("Chat");
-  });
+  // const openChatScreen = usePreventDoubleTap(() => {
+  //   navigation.push("Chat");
+  // });
 
   const openFriendRequestScreen = usePreventDoubleTap(
     (title: string, type: ConnectRequestType) => {
-      navigation.push("FriendRequests", {
+      navigation.push("ConnectRequest", {
         title: title,
         type: type
       });
@@ -157,8 +157,6 @@ const NotificationController: FC<Props> = () => {
           "Roommate Requests",
           ConnectRequestType.ROOMMATE_REQUESTS
         );
-      } else if (type === NotificationAndActivityLogFilterType.CHAT) {
-        return openChatScreen();
       }
     }
   };
