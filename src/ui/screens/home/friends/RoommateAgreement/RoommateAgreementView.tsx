@@ -105,7 +105,7 @@ const RoommateAgreementView: FC<Props> = ({
       title={STRINGS.roommateAgreement.roommate_agreement_text}
       titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
       messageStyle={{ style: styles.dialogMessageStyle }}
-      message={`Do you want to add  in your dismissed list or blocked list?`}
+      message={`Do you agree with the terms and conditions of this roommate agreement?`}
       actions={[
         {
           title: "Agree",
