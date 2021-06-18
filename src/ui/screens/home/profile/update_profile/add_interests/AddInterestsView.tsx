@@ -11,7 +11,6 @@ import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { ItemConversation } from "ui/components/molecules/item_conversation/ItemConversation";
 import { ConversationItem } from "models/ConversationItem";
-import Strings from "config/Strings";
 
 type Props = {
   data: ConversationItem[];
@@ -67,7 +66,7 @@ export const AddInterestsView = React.memo<Props>(
 
         <WriteMessage
           btnImage={plusIcon}
-          appInputPlaceHolder={Strings.newConversation.typingHint}
+          appInputPlaceHolder="Start typing"
           btnPressCallback={addItem}
           multiline={false}
         />

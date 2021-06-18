@@ -13,7 +13,6 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
-import { AppLog } from "utils/Util";
 import { FONT_SIZE_LINE_HEIGHT } from "config/Dimens";
 import { useImageUpload } from "hooks/useImageUpload";
 import MyImagePickerResponse from "models/api_responses/MyImagePickerResponse";
@@ -78,11 +77,11 @@ export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
         }
       });
     };
-    initialValues[name] !== undefined &&
-      AppLog.log(
-        () =>
-          "upload Profile Photo : " + JSON.stringify(initialValues[name])
-      );
+    /* initialValues[name] !== undefined &&
+         AppLog.log(
+           () =>
+             "`upload Profile Photo : " + JSON.stringify(initialValues[name])
+         );*/
     return (
       <View style={styles.container}>
         <View style={styles.subContainer}>

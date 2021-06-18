@@ -45,36 +45,34 @@ export const UpdateProfileView = optimizedMemo<Props>(
       updateProfileUiData?.sections?.forEach((section) => {
         section.formInputs?.forEach((formInput) => {
           const val = _value[formInput.id.toString()];
-          if (val) {
-            if (_.isArray(val)) {
-              //if its array
-              const meta = val.map((obj: any) => {
-                return { value: obj.value };
-              });
-              formInput.userMeta = meta;
-            } else if (val.hasOwnProperty("fileURL")) {
-              const meta = [
-                {
-                  value: val
-                }
-              ];
-              formInput.userMeta = meta;
-            } else if (isObject(val)) {
-              const meta = [
-                {
-                  value: val.value
-                }
-              ];
-              formInput.userMeta = meta;
-            } else {
-              //if its string input
-              const meta = [
-                {
-                  value: val
-                }
-              ];
-              formInput.userMeta = meta;
-            }
+          if (val && _.isArray(val)) {
+            //if its array
+            const meta = val.map((obj: any) => {
+              return { value: obj.value };
+            });
+            formInput.userMeta = meta;
+          } else if (val && val.hasOwnProperty("fileURL")) {
+            const meta = [
+              {
+                value: val
+              }
+            ];
+            formInput.userMeta = meta;
+          } else if (val && isObject(val)) {
+            const meta = [
+              {
+                value: val.value
+              }
+            ];
+            formInput.userMeta = meta;
+          } else {
+            //if its string input
+            const meta = [
+              {
+                value: val
+              }
+            ];
+            formInput.userMeta = meta;
           }
         });
       });

@@ -1,5 +1,6 @@
 import React, {
   FC,
+  useContext,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -24,6 +25,8 @@ import { MatchInfoApiResponseModel } from "models/api_responses/MatchInfoApiResp
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import RelationApis from "repo/home/RelationApis";
+import { useCreateConversation } from "hooks/useCreateConversation";
+import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -37,6 +40,9 @@ const MatchInfoController: FC<Props> = () => {
 
   const navigation = useNavigation<MatchesNavigationProp>();
 
+  const createConversation = useCreateConversation();
+  const { user } = useAuth();
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -48,8 +54,6 @@ const MatchInfoController: FC<Props> = () => {
       )
     });
   }, [navigation]);
-
-  const { user } = useAuth();
 
   // Match Info API
   const matchInfoApi = useApi<any, MatchInfoApiResponseModel>(
@@ -64,17 +68,27 @@ const MatchInfoController: FC<Props> = () => {
   const [matchInfo, setMatchInfo] = useState<MatchInfoApiResponseModel>();
   const [roommate, setRoommate] = useState<RelationApiResponseModel>();
 
-  const moveToChatScreen = (profileMatch: RelationModel) => {
-    AppLog.logForcefully(
-      () => "moveToChatScreen(), profile: " + JSON.stringify(profileMatch)
+  const { setActiveConversations, inActiveConversations } = useContext(
+    AppDataContext
+  );
+
+  const moveToChatScreen = async (profileMatch: RelationModel) => {
+    const createConversationResult = await createConversation(
+      [user?.profile?.id!!, profileMatch.userId],
+      setActiveConversations,
+      inActiveConversations
     );
 
-    navigation.push("Chat", {
-      title: [
-        `${profileMatch.user?.firstName} ${profileMatch.user?.lastName}` ??
-          STRINGS.common.not_found
-      ]
-    });
+    if (createConversationResult !== undefined) {
+      navigation.navigate("Chat", {
+        title: [
+          profileMatch.user?.firstName +
+            " " +
+            profileMatch.user?.lastName ?? STRINGS.common.not_found
+        ],
+        conversation: createConversationResult
+      });
+    }
   };
 
   const moveToProfileScreen = (profileMatch: RelationModel) => {
@@ -84,7 +98,8 @@ const MatchInfoController: FC<Props> = () => {
     );
     navigation.navigate("Profile", {
       isFrom: EScreen.MATCH_INFO,
-      updateProfile: true
+      updateProfile: true,
+      userId: profileMatch.userId
     });
   };
 
