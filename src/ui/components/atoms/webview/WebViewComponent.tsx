@@ -84,12 +84,12 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    height: 315,
+    height: 150,
     marginTop: SPACE.md
   },
   webViewContainer: {
     flex: 1,
     width: "100%",
-    height: 320
+    height: 140
   }
 });
