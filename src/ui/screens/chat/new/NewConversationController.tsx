@@ -190,13 +190,13 @@ export const NewConversationController: FC<Props> = () => {
   };
 
   const addItem = (item: User) => {
-    const userLenght = conversationType.current === 0 ? 4 : 1;
+    const userLength = conversationType.current === 0 ? 4 : 1;
     if (
       newConversations === undefined ||
       (newConversations!!.filter(
         (_item) => _item.id.toString() === item.id.toString()
       ).length < 1 &&
-        newConversations.length < userLenght)
+        newConversations.length < userLength)
     ) {
       usersIds.current.push(item.id);
       setNewConversation((prevState) => {
