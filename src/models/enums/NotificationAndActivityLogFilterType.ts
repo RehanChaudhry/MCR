@@ -13,7 +13,7 @@ enum NotificationAndActivityLogFilterType {
   MESSAGE = "message",
   LIKE = "like",
   CHAT = "chat",
-  NEW_CONVERSATION = "new-conversation",
+  NEW_CONVERSATION = "conversation",
   DISAGREED = "disagreed",
   AGREED = "agreed",
   COMMENT = "comment",

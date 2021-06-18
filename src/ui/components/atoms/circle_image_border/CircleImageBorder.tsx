@@ -1,26 +1,32 @@
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import Colors from "config/Colors";
-import UserGroup from "assets/images/user_group.svg";
+
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { SvgProp } from "utils/Util";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
 
 type Props = {
   shouldNotOptimize?: boolean;
   imageUrl: string;
+  icon: SvgProp;
 };
 
-export const CircleImageBorder = optimizedMemo<Props>(({ imageUrl }) => {
-  return (
-    <View style={styles.mainContainer}>
-      <View style={styles.circle}>
-        <Image source={{ uri: imageUrl }} style={styles.image} />
-        <View style={styles.innerContainer}>
-          <UserGroup width={14} height={14} style={styles.userGroup} />
+export const CircleImageBorder = optimizedMemo<Props>(
+  ({ imageUrl, icon }) => {
+    const theme = usePreferredTheme();
+    return (
+      <View style={styles.mainContainer}>
+        <View style={styles.circle}>
+          <Image source={{ uri: imageUrl }} style={styles.image} />
+          <View style={styles.innerContainer}>
+            {icon?.(theme.themedColors.interface[700], 14, 14)}
+          </View>
         </View>
       </View>
-    </View>
-  );
-});
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   circle: {
@@ -44,7 +50,8 @@ const styles = StyleSheet.create({
     marginLeft: 32,
     marginTop: 30,
     position: "absolute",
-
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: Colors.white
   },
   mainContainer: {
