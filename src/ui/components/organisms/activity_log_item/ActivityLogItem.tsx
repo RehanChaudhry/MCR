@@ -84,6 +84,14 @@ const ActivityLogItem = ({ activityLog }: Props) => {
         );
       } else if (
         activityLog.type ===
+          NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+        activityLog.action === Actions.ACCEPTED
+      ) {
+        return (
+          <RoommateRequest width={20} fill={themedColors.background} />
+        );
+      } else if (
+        activityLog.type ===
           NotificationAndActivityLogFilterType.DISMISSED_LIST &&
         activityLog.action === Actions.CREATE
       ) {

@@ -134,14 +134,25 @@ const NotificationController: FC<Props> = () => {
   //   navigation.push("Chat");
   // });
 
-  const openFriendRequestScreen = usePreventDoubleTap(
-    (title: string, type: ConnectRequestType) => {
-      navigation.push("ConnectRequest", {
-        title: title,
-        type: type
-      });
-    }
-  );
+  const openMyRoommatesScreen = () => {
+    navigation.push("MyRoommates", { isFrom: EScreen.NOTIFICATION });
+  };
+  const openRoommateAgreementScreen = () => {
+    navigation.push("RoommateAgreement", { isFrom: EScreen.NOTIFICATION });
+  };
+  const openSinglePostScreen = () => {
+    navigation.push("SinglePost", { postId: 58 });
+  };
+
+  const openFriendRequestScreen = (
+    title: string,
+    type: ConnectRequestType
+  ) => {
+    navigation.push("ConnectRequest", {
+      title: title,
+      type: type
+    });
+  };
 
   const navigateTOScreen = (type: string) => {
     if (type != null) {
@@ -157,6 +168,16 @@ const NotificationController: FC<Props> = () => {
           "Roommate Requests",
           ConnectRequestType.ROOMMATE_REQUESTS
         );
+      } else if (
+        type === NotificationAndActivityLogFilterType.ROOMMATE_GROUP
+      ) {
+        return openMyRoommatesScreen();
+      } else if (
+        type === NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT
+      ) {
+        return openRoommateAgreementScreen();
+      } else if (type === NotificationAndActivityLogFilterType.POST) {
+        return openSinglePostScreen();
       }
     }
   };

@@ -65,7 +65,7 @@ export function getMessage(notification: NotificationData): string {
       NotificationAndActivityLogFilterType.ANNOUNCEMENT &&
     notification.action === NotificationActionType.RECIEVE
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has posted a new announcement, ${notification?.data?.content}`;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has posted a new announcement, <b>${notification?.data?.content}</b>`;
   } else if (
     notification.type === NotificationAndActivityLogFilterType.POST &&
     notification.action === NotificationActionType.LIKE
@@ -75,7 +75,7 @@ export function getMessage(notification: NotificationData): string {
     notification.type === NotificationAndActivityLogFilterType.POST &&
     notification.action === NotificationActionType.COMMENT
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has posted a comment on your post, ${notification?.data?.content}`;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has posted a comment on your post, <b>${notification?.data?.content}</b>`;
   } else if (
     notification.type ===
       NotificationAndActivityLogFilterType.ROOMMATE_GROUP &&

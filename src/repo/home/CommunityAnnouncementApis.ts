@@ -23,6 +23,12 @@ function getCommunityAnnouncements(
   );
 }
 
+function getSingleCommunityAnnouncements(postId: number) {
+  return apiClient.get<CommunityAnnouncementResponseModel>(
+    API.GET_COMMUNITY_ANNOUNCEMENT + "/" + postId
+  );
+}
+
 function getComments(requestModel: CommentsRequestModel) {
   return apiClient.get<CommentsResponseModel>(API.COMMENT, {
     ...requestModel
@@ -59,5 +65,6 @@ export default {
   likeDislike,
   getComments,
   postComment,
-  postReportContent
+  postReportContent,
+  getSingleCommunityAnnouncements
 };
