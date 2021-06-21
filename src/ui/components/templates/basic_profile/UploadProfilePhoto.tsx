@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import ProfileAvatar from "assets/images/profile_avatar.svg";
-import {
-  AppImageBackground,
-  CONTAINER_TYPES
-} from "ui/components/atoms/image_background/AppImageBackground";
 import {
   AppButton,
   BUTTON_TYPES
@@ -35,18 +30,14 @@ export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
     } = useFormikContext<FormikValues>();
 
     useEffect(() => {
-      if (initialValues[name] !== undefined) {
+      if (initialValues[name] !== null) {
         setFieldValue(name, {
-          fileURL: JSON.parse(initialValues[name]).fileURL,
-          originalName: JSON.parse(initialValues[name]).originalName
+          fileURL: JSON.parse(initialValues[name])?.fileURL,
+          originalName: JSON.parse(initialValues[name])?.originalName
         });
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialValues]);
-
-    const profileIcon = () => {
-      return <ProfileAvatar width={45} height={45} />;
-    };
 
     const [
       imageResponse,
@@ -70,32 +61,29 @@ export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
         }
       });
     };
-    /* initialValues[name] !== undefined &&
-         AppLog.log(
-           () =>
-             "`upload Profile Photo : " + JSON.stringify(initialValues[name])
-         );*/
+
     return (
       <View style={styles.container}>
         <View style={styles.subContainer}>
           <View style={styles.imageViewStyle}>
-            {!imageResponse && !initialValues[name] && (
+            {/* {!imageResponse && initialValues[name] === "null" && (
               <AppImageBackground
                 style={styles.image}
                 icon={profileIcon}
                 shouldNotOptimize={true}
                 containerShape={CONTAINER_TYPES.CIRCLE}
               />
-            )}
-            {(imageResponse !== undefined || initialValues[name]) && (
+            )}*/}
+            {(imageResponse || initialValues[name] !== null) && (
               <Image
                 style={styles.image}
-                source={{
-                  uri:
-                    imageResponse?.uri !== undefined
-                      ? imageResponse.uri
-                      : JSON.parse(initialValues[name]).fileURL
-                }}
+                source={
+                  imageResponse?.uri
+                    ? { uri: imageResponse.uri }
+                    : JSON.parse(initialValues[name])?.fileURL
+                    ? { uri: JSON.parse(initialValues[name])?.fileURL }
+                    : require("assets/images/profile_avatar.png")
+                }
               />
             )}
           </View>
@@ -114,6 +102,7 @@ export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
             shouldShowError={false}
             fontWeight={"semi-bold"}
             onPress={pickImage}
+            shouldNotOptimize={true}
           />
         </View>
         <AppLabel
@@ -140,7 +129,8 @@ const styles = StyleSheet.create({
   subContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    flexShrink: 1,
     flex: 1
   },
   uploadButton: {
@@ -152,11 +142,12 @@ const styles = StyleSheet.create({
     paddingTop: SPACE.lg
   },
   imageViewStyle: {
-    height: 40,
-    width: 40
+    height: 45,
+    width: 45
   },
   image: {
-    height: 40,
-    width: 40
+    height: 45,
+    width: 45,
+    borderRadius: 7
   }
 });

@@ -40,7 +40,11 @@ const ProfileHeader: FC<Props> = ({
       <View style={styles.container}>
         <View>
           <Image
-            source={{ uri: profilePicture?.fileURL }}
+            source={
+              profilePicture?.fileURL
+                ? { uri: profilePicture?.fileURL }
+                : require("assets/images/profile.png")
+            }
             style={styles.image}
           />
         </View>

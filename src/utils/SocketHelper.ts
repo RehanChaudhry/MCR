@@ -21,20 +21,26 @@ export const SocketHelper = (function () {
 
         socket.on("connect", () => {
           AppLog.log(() => "Socket connected!");
+          AppLog.toastDebug("Socket connected.");
           resolve(socket);
         });
 
-        socket.on("disconnect", () => {
+        socket.on("disconnect", (message: any) => {
           AppLog.log(() => "Socket disConnected!");
+          AppLog.toastDebug(
+            "Socket disconnected : " + JSON.stringify(message)
+          );
           reject();
         });
 
         socket.on("close", () => {
           AppLog.log(() => "Socket closed!");
+          AppLog.toastDebug("Socket close.");
         });
 
         socket.io.on("error", (err: Error) => {
           AppLog.log(() => "Socket error " + JSON.stringify(err));
+          AppLog.toastDebug("Socket error : " + JSON.stringify(err));
           reject();
         });
 
