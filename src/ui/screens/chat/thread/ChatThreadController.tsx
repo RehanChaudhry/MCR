@@ -296,25 +296,54 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
   useEffect(() => {
     handleLoadMessagesApi().then().catch();
     connectSocket().then().catch();
+
+    return () => {
+      // Do unmounting stuff here
+      socket?.current?.off("receiveMessage", receiveMessageListener);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleLoadMessagesApi]);
 
   let socket = useRef<Socket>();
+
+  const receiveMessageListener = useCallback(
+    (data: any) => {
+      if (conversationId === data?.id) {
+        setMessages((prevState) => {
+          return [...data.message, ...(prevState || [])];
+        });
+
+        data.message[0].readBy = [user?.profile?.id];
+        ChatHelper.manipulateChatLists(
+          setActiveConversations,
+          inActiveConversations,
+          setInActiveConversations,
+          activeConversations,
+          !showArchivedButton,
+          conversationId,
+          data.message[0] as Message
+        );
+      }
+    },
+    [
+      setActiveConversations,
+      setInActiveConversations,
+      inActiveConversations,
+      activeConversations,
+      showArchivedButton,
+      conversationId,
+      user?.profile?.id
+    ]
+  );
   const connectSocket = useCallback(async () => {
     socket.current = await SocketHelper.getInstance(
       "Bearer " + user?.authentication?.accessToken
     );
 
-    socket?.current?.on("receiveMessage", (data) => {
-      setMessages((prevState) => {
-        return [...data.message, ...(prevState || [])];
-      });
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    socket?.current?.on("receiveMessage", receiveMessageListener);
+  }, [receiveMessageListener, user?.authentication]);
 
   const retry = (message: Message) => {
-    //  connectSocket().then().catch();
     if (!socket?.current?.connected) {
       socket?.current?.connect();
     }

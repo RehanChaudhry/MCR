@@ -2,7 +2,6 @@ import Message from "models/Message";
 import _ from "lodash";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
 import { Dispatch, SetStateAction } from "react";
-import { AppLog } from "utils/Util";
 
 export const ChatHelper = {
   manipulateChatLists: (
@@ -66,21 +65,33 @@ export const ChatHelper = {
             (listItem) => listItem.id === conversationId
           );
 
-          AppLog.log(() => "users : " + JSON.stringify(item));
           // @ts-ignore
           item!.lastMessagedAt = message?.createdAt;
           item!.message = [message!!];
           item!.currentUser[0].status = "active";
-          chatsCopy?.splice(
+
+          /* chatsCopy?.splice(
             prevState?.findIndex((_item) => _item.id === conversationId)!!,
             1,
             item!!
+          );*/
+
+          //remove item at index
+          chatsCopy?.splice(
+            prevState?.findIndex(
+              (_item: Conversation) => _item.id === conversationId
+            )!,
+            1
           );
+
+          //add item at index 0
+          chatsCopy?.splice(0, 0, item!);
 
           return chatsCopy;
         } else {
           /* if item was not found in active chat lists maybe it will present in
              inactive chats, so pick it from inactive chat list
+             this will happen when chat is opened from archive list
            */
           let findItem = inActiveConversations?.find(
             (item) => item.id === conversationId
