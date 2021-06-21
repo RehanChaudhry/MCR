@@ -32,7 +32,7 @@ export interface TypingComponentProps {
   clearInputField?: boolean;
   multiline?: boolean;
   suggestionsList?: User[];
-  addItem: (item: User) => void;
+  addItem?: (item: User) => void;
 }
 
 export const WriteMessage = React.memo<TypingComponentProps>(
@@ -82,7 +82,7 @@ export const WriteMessage = React.memo<TypingComponentProps>(
           item={item}
           onPress={(currentItem: User) => {
             AppLog.logForcefully(() => "in item on press");
-            addItem(currentItem);
+            addItem?.(currentItem);
           }}
         />
       );
