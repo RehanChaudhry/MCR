@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState
 } from "react";
-import { AppLog } from "utils/Util";
+import { AppLog, SvgProp } from "utils/Util";
 import { Section } from "ui/components/organisms/sectioned_list/SectionedList";
 import QuestionSection from "models/QuestionSection";
 import Question from "models/Question";
@@ -24,13 +24,12 @@ import {
 import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseModel";
 import ProfileApis from "repo/auth/ProfileApis";
 import { usePreferredTheme, usePreventDoubleTap } from "hooks";
-import { Alert, BackHandler, View } from "react-native";
+import { Alert, BackHandler } from "react-native";
 import QuestionsResponseModel, {
   toSections
 } from "models/api_responses/QuestionsResponseModel";
 import { QuestionsView } from "ui/screens/questions/QuestionsView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { UpdateQuestionnaireStackParamList } from "routes/ProfileStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import EScreen from "models/enums/EScreen";
@@ -53,7 +52,9 @@ import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseM
 import SkipTitleButton from "ui/components/molecules/skip_title_button/SkipTitleButton";
 import SimpleToast from "react-native-simple-toast";
 import { STRINGS } from "config";
-
+import ErrorWithRetryView from "ui/components/molecules/ErrorWithRetryView";
+import { Color, NumberProp } from "react-native-svg";
+import Exclamation from "assets/images/exclamation.svg";
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
   "Questionnaire"
@@ -204,25 +205,32 @@ const QuestionsController: FC<Props> = () => {
     ProfileApis.answers
   );
 
-  useEffect(() => {
+  const requestGetQuestionsApi = useCallback(
+    async (onComplete?: () => void) => {
+      const { hasError, dataBody, errorBody } = await questionApi.request(
+        []
+      );
+      if (hasError || dataBody === undefined) {
+        // Alert.alert("Unable to find questions " + errorBody);
+        AppLog.log(() => "Unable to find questions " + errorBody);
+        return;
+      } else {
+        setQuestions(toSections(dataBody.data ?? []));
+        onComplete?.();
+      }
+    },
+    [questionApi]
+  );
+
+  const init = useCallback(() => {
     getHeaderContent();
     requestGetQuestionsApi();
+  }, [getHeaderContent, requestGetQuestionsApi]);
+
+  useEffect(() => {
+    init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const requestGetQuestionsApi = async (onComplete?: () => void) => {
-    const { hasError, dataBody, errorBody } = await questionApi.request(
-      []
-    );
-    if (hasError || dataBody === undefined) {
-      // Alert.alert("Unable to find questions " + errorBody);
-      AppLog.log(() => "Unable to find questions " + errorBody);
-      return;
-    } else {
-      setQuestions(toSections(dataBody.data ?? []));
-      onComplete?.();
-    }
-  };
 
   const handleSubmitAnswers = usePreventDoubleTap(async () => {
     if (requestModel.current === undefined) {
@@ -255,17 +263,23 @@ const QuestionsController: FC<Props> = () => {
     handleSubmitAnswers();
   }, [handleSubmitAnswers, questions]);
 
+  const errorImage: SvgProp = (
+    color?: Color,
+    width?: NumberProp,
+    height?: NumberProp
+  ) => <Exclamation fill={color} width={width} height={height} />;
+
   return (
     <ProgressErrorView
       isLoading={questionApi.loading}
       error={questionApi.error || staticContentApi.error}
-      errorView={(message) => {
-        return (
-          <View>
-            <AppLabel text={message} />
-          </View>
-        );
-      }}
+      errorView={(message) => (
+        <ErrorWithRetryView
+          image={errorImage}
+          text={message}
+          retryCallback={init}
+        />
+      )}
       data={questions && headerContent}>
       {useLazyLoadInterface(
         <QuestionsView
