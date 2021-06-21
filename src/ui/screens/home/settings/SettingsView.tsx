@@ -82,7 +82,9 @@ export const SettingsView = React.memo<Props>(
     const onSubmit = (_value: FormikValues) => {
       AppLog.log(() => "form values" + JSON.stringify(_value));
       const request: UpdateProfileRequestModel = {};
-      if (_value.alternateEmailAddress !== "") {
+      if (_value.alternateEmailAddress === "") {
+        request.secondaryEmail = null;
+      } else {
         request.secondaryEmail = _value.alternateEmailAddress;
       }
       if (

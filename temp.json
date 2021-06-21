@@ -1,41 +1,73 @@
 {
-  "duration": 444,
-  "problem": null,
-  "originalError": null,
-  "ok": true,
-  "status": 200,
+  "duration": 462,
+  "problem": "CLIENT_ERROR",
+  "originalError": {
+    "message": "Request failed with status code 422",
+    "name": "Error",
+    "stack": "Error: Request failed with status code 422\n    at createError (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119191:17)\n    at settle (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119181:14)\n    at XMLHttpRequest.handleLoad (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119081:9)\n    at XMLHttpRequest.dispatchEvent (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:32318:27)\n    at XMLHttpRequest.setReadyState (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31476:14)\n    at XMLHttpRequest.__didCompleteResponse (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31307:16)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31417:47\n    at RCTDeviceEventEmitter.emit (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:3570:37)\n    at MessageQueue.__callFunction (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2780:31)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2512:17",
+    "config": {
+      "url": "user/me",
+      "method": "put",
+      "data": "{\"secondaryEmail\":\"\"}",
+      "headers": {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "subdomain": "ohio",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjM0LCJ1c2VySWQiOjExNjMsImNsaWVudElkIjoiMSIsInNjb3BlcyI6WyJjb21tdW5pdHkiLCJhbm5vdW5jZW1lbnRzIiwibGlzdC1xdWVzdGlvbiIsImxpc3Qtc2VjdGlvbiIsImxpc3QtYWdyZWVtZW50LWZpZWxkcyIsInZpZXctc3RhdGljLWNvbnRlbnQiLCJsaXN0LWNvbmZpZ3VyYXRpb24iLCJsaXN0LWZvcm0taW5wdXQiLCJzeXN0ZW0tbG9nIiwiY29udmVyc2F0aW9uIiwibWFyay1zcGFtIiwibm90aWZpY2F0aW9uIiwiYWdyZWVtZW50LWFuc3dlciIsInVwZGF0ZS1hZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiLCJkZWxldGUtZmlsZSJdLCJpYXQiOjE2MjQwMDI3NzcsImV4cCI6MTYyNjU5NDc3N30.6nm-DlW7IguHYuIvV5BwVnj50QEZwVdb0pYP5qogfo8"
+      },
+      "baseURL": "https://mcr-dev.cygnis.dev/api/",
+      "transformRequest": [
+        null
+      ],
+      "transformResponse": [
+        null
+      ],
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "maxBodyLength": -1
+    }
+  },
+  "ok": false,
+  "status": 422,
   "headers": {
+    "cf-request-id": "0aceb659350000c60df4390000000001",
     "content-type": "application/json; charset=utf-8",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=dEaejYG%2FKxqkbA93pSad%2FhkynVZepVNiXerDJBfC5cu9Mf5kpXoZWrVfXXHXOLXAL2ORl2a3GPEJCiY0Jurk8MydXMxWPyaHnVbwxkoyDjSBxjPA6%2Fa5QhasN0Uy3vua\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
-    "x-frame-options": "SAMEORIGIN",
-    "cf-request-id": "0ab699caad0000c6117f383000000001",
-    "cf-cache-status": "DYNAMIC",
-    "x-powered-by": "Express",
-    "date": "Wed, 16 Jun 2021 13:26:45 GMT",
-    "cf-ray": "66045f244e9cc611-KHI",
-    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
-    "x-xss-protection": "1; mode=block",
-    "content-encoding": "br",
-    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
-    "server": "cloudflare",
-    "strict-transport-security": "max-age=0; includeSubDomains",
-    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
     "x-content-type-options": "nosniff",
-    "etag": "W/\"1012-GeXuZRuJNGdmYZppttCiEa9jJJc\"",
-    "vary": "Origin"
+    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+    "strict-transport-security": "max-age=0; includeSubDomains",
+    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=aUU%2Bi4hH%2BzSLcEkkxqSOH2mVvaS3DlTEsoxODIQ01mwBvIqRSQfRH7%2BBXe%2FGt1uPpWf14AZ6RXPwfVtElZqvffj76PiFNtwxbPuAmM8tv9zjLVhp5xx4OwCQLrxF%2BqHs\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "662af33b8f12c60d-KHI",
+    "x-powered-by": "Express",
+    "x-frame-options": "SAMEORIGIN",
+    "date": "Mon, 21 Jun 2021 05:48:50 GMT",
+    "server": "cloudflare",
+    "vary": "Origin",
+    "x-xss-protection": "1; mode=block",
+    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
+    "content-length": "129",
+    "cf-cache-status": "DYNAMIC",
+    "etag": "W/\"81-r/aWXngDrdxCS4PY8pJUPGwb5y0\""
   },
   "config": {
-    "url": "agreement-answer/21",
-    "method": "get",
+    "url": "user/me",
+    "method": "put",
+    "data": "{\"secondaryEmail\":\"\"}",
     "headers": {
       "Accept": "application/json",
+      "Content-Type": "application/json",
       "subdomain": "ohio",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjgyLCJ1c2VySWQiOjExNjMsImNsaWVudElkIjoiMSIsInNjb3BlcyI6WyJjb21tdW5pdHkiLCJhbm5vdW5jZW1lbnRzIiwibGlzdC1xdWVzdGlvbiIsImxpc3Qtc2VjdGlvbiIsImxpc3QtYWdyZWVtZW50LWZpZWxkcyIsInZpZXctc3RhdGljLWNvbnRlbnQiLCJsaXN0LWNvbmZpZ3VyYXRpb24iLCJsaXN0LWZvcm0taW5wdXQiLCJzeXN0ZW0tbG9nIiwiY29udmVyc2F0aW9uIiwibWFyay1zcGFtIiwibm90aWZpY2F0aW9uIiwiYWdyZWVtZW50LWFuc3dlciIsInVwZGF0ZS1hZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiLCJkZWxldGUtZmlsZSJdLCJpYXQiOjE2MjM4NDcxNzcsImV4cCI6MTYyNjQzOTE3N30.MEJtzI4d9m3x3mLiYNRs6jCX524vnr8ZnRqAj50tqqo"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjM0LCJ1c2VySWQiOjExNjMsImNsaWVudElkIjoiMSIsInNjb3BlcyI6WyJjb21tdW5pdHkiLCJhbm5vdW5jZW1lbnRzIiwibGlzdC1xdWVzdGlvbiIsImxpc3Qtc2VjdGlvbiIsImxpc3QtYWdyZWVtZW50LWZpZWxkcyIsInZpZXctc3RhdGljLWNvbnRlbnQiLCJsaXN0LWNvbmZpZ3VyYXRpb24iLCJsaXN0LWZvcm0taW5wdXQiLCJzeXN0ZW0tbG9nIiwiY29udmVyc2F0aW9uIiwibWFyay1zcGFtIiwibm90aWZpY2F0aW9uIiwiYWdyZWVtZW50LWFuc3dlciIsInVwZGF0ZS1hZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiLCJkZWxldGUtZmlsZSJdLCJpYXQiOjE2MjQwMDI3NzcsImV4cCI6MTYyNjU5NDc3N30.6nm-DlW7IguHYuIvV5BwVnj50QEZwVdb0pYP5qogfo8"
     },
-    "params": {},
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
-    "transformRequest": [null],
-    "transformResponse": [null],
+    "transformRequest": [
+      null
+    ],
+    "transformResponse": [
+      null
+    ],
     "timeout": 0,
     "xsrfCookieName": "XSRF-TOKEN",
     "xsrfHeaderName": "X-XSRF-TOKEN",
@@ -43,174 +75,9 @@
     "maxBodyLength": -1
   },
   "data": {
-    "message": "Success.",
-    "data": {
-      "agreementStatus": "in-process",
-      "agreementAccepted": null,
-      "agreementFields": [
-        {
-          "id": 1,
-          "label": "Roommate Agreement Terms Details",
-          "content": "We encourage you to discuss any issues with your roommate(s), as most disagreements can be resolved by discussing them openly and honestly. Your roommate(s) may think differently than you do, and usually do not realize that there is a problem if it is not discussed. Student staff members can help to facilitate the conversation with your roommate(s), as opposed to fixing the problem for you, which will help you and your roommate(s) create ways to communicate more effectively in regard to other matters.",
-          "inputType": "agreement",
-          "options": [],
-          "placeholder": "",
-          "isRequired": 1,
-          "agreementUserAnswers": []
-        },
-        {
-          "id": 2,
-          "label": "If we are frustrated with each other, we will address it by:",
-          "content": null,
-          "inputType": "dropdown",
-          "options": [
-            {
-              "text": "Having a group discussion",
-              "value": "Having a group discussion"
-            },
-            {
-              "text": "Having our RA mediate",
-              "value": "Having our RA mediate"
-            },
-            {
-              "text": "Brushing it under the rug",
-              "value": "Brushing it under the rug"
-            }
-          ],
-          "placeholder": "Select",
-          "isRequired": 1,
-          "agreementUserAnswers": []
-        },
-        {
-          "id": 3,
-          "label": "When we are upset, we need:",
-          "content": null,
-          "inputType": "textarea",
-          "options": [],
-          "placeholder": "Start typing the response",
-          "isRequired": 0,
-          "agreementUserAnswers": []
-        },
-        {
-          "id": 4,
-          "label": "What will we do if someone comes home under the influence of a substance?",
-          "content": null,
-          "inputType": "textarea",
-          "options": [],
-          "placeholder": "Start typing the response",
-          "isRequired": 1,
-          "agreementUserAnswers": []
-        },
-        {
-          "id": 5,
-          "label": "How will we deal with differences in preferred room temperature?",
-          "content": null,
-          "inputType": "textarea",
-          "options": [],
-          "placeholder": "Start typing the response",
-          "isRequired": 1,
-          "agreementUserAnswers": []
-        },
-        {
-          "id": 6,
-          "label": "We are comfortable with sharing these items with each other:",
-          "content": null,
-          "inputType": "radio",
-          "options": [
-            { "text": "All Items", "value": "All Items" },
-            { "text": "Anything But Food", "value": "Anything But Food" },
-            { "text": "Only Food", "value": "Only Food" },
-            { "text": "Nothing", "value": "Nothing" }
-          ],
-          "placeholder": "Start typing the response",
-          "isRequired": 1,
-          "agreementUserAnswers": []
-        },
-        {
-          "id": 7,
-          "label": "How much notice is needed before a guest stays overnight? How should we notify one another?",
-          "content": null,
-          "inputType": "textarea",
-          "options": [],
-          "placeholder": "Start typing the response",
-          "isRequired": 1,
-          "agreementUserAnswers": []
-        },
-        {
-          "id": 8,
-          "label": "How will we support each other during times of stress, sadness, or worry?",
-          "content": null,
-          "inputType": "textarea",
-          "options": [],
-          "placeholder": "Start typing the response",
-          "isRequired": 0,
-          "agreementUserAnswers": []
-        },
-        {
-          "id": 9,
-          "label": "How do we feel about sexual behavior when the other roommate is in the room or away?",
-          "content": null,
-          "inputType": "textarea",
-          "options": [],
-          "placeholder": "Start typing the response",
-          "isRequired": 1,
-          "agreementUserAnswers": []
-        },
-        {
-          "id": 10,
-          "label": "Guests may be in our room during",
-          "content": null,
-          "inputType": "checkbox",
-          "options": [
-            { "text": "Study Time", "value": "Study Time" },
-            { "text": "Sleep Time", "value": "Sleep Time" },
-            { "text": "Party Time", "value": "Party Time" },
-            { "text": "Gaming Time", "value": "Gaming Time" }
-          ],
-          "placeholder": "Start typing the response",
-          "isRequired": 1,
-          "agreementUserAnswers": []
-        },
-        {
-          "id": 11,
-          "label": "How will each of us get alone time in our room?",
-          "content": null,
-          "inputType": "textarea",
-          "options": [],
-          "placeholder": "Start typing the response",
-          "isRequired": 1,
-          "agreementUserAnswers": []
-        }
-      ],
-      "roommateAgreementParties": [
-        {
-          "userId": 1168,
-          "firstName": "Ben",
-          "lastName": "Sherman",
-          "status": "pending",
-          "submittedAt": null,
-          "profilePicture": {
-            "fileURL": "https://my-college-roomie-dev.s3.us-west-2.amazonaws.com/rn_image_picker_lib_temp_f2e61c30-bc4f-4e83-afc1-b69d5886761d.png",
-            "originalName": "rn_image_picker_lib_temp_f2e61c30-bc4f-4e83-afc1-b69d5886761d.png"
-          }
-        },
-        {
-          "userId": 1163,
-          "firstName": "Cecelia",
-          "lastName": "Coleman",
-          "status": "pending",
-          "submittedAt": null,
-          "profilePicture": {
-            "fileURL": "https://randomuser.me/api/portraits/women/50.jpg",
-            "originalName": "50.jpg"
-          }
-        }
-      ],
-      "approvalInformation": {
-        "approvalStatus": "in-process",
-        "approvalDate": null,
-        "approvedBy": null
-      }
+    "message": "Please fix the following errors",
+    "errors": {
+      "secondaryEmail": "Secondary email must be between 1 and 100 characters."
     }
   }
 }

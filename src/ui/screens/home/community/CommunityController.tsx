@@ -206,7 +206,9 @@ const CommunityController: FC<Props> = () => {
             prevState?.findIndex((value) => value.id === postId) ?? -1;
           if (postIndex > -1) {
             prevState?.filter((community) => {
-              community.commentsCount++;
+              if (community.id === postId) {
+                community.commentsCount++;
+              }
             });
           }
           return prevState;

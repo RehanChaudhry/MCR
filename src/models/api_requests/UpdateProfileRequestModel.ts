@@ -3,7 +3,7 @@ import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseM
 
 export type UpdateProfileRequestModel = {
   queryParams?: string;
-  secondaryEmail?: string;
+  secondaryEmail?: string | null;
   currentPassword?: string;
   newPassword?: string;
   confirmPassword?: string;
