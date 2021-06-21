@@ -150,7 +150,7 @@ export const MatchesView: React.FC<Props> = ({
     return getMatchesTypeFilterData().map((value) => {
       const item: OptimizedBBCItem<MatchesTypeFilter> = {
         title: capitalizeWords(
-          `${value.type.replace("_", " ")}` +
+          `${value.type.replace("-", " ")}` +
             (filterType === value.type && selectedTotalCount > 0
               ? " (" + selectedTotalCount + ")"
               : "")

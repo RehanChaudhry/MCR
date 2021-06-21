@@ -7,7 +7,7 @@ enum MatchesTypeFilter {
   MATCHES = "matches",
   FRIENDS = "friends",
   NEW = "new",
-  RECENTLY_VIEWED = "recently_viewed"
+  RECENTLY_VIEWED = "recently-viewed"
 }
 
 export const getMatchesTypeFilterData = () => {
