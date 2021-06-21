@@ -51,6 +51,8 @@ import { ProfileRootStackParamList } from "routes/ProfileRootStack";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseModel";
 import SkipTitleButton from "ui/components/molecules/skip_title_button/SkipTitleButton";
+import SimpleToast from "react-native-simple-toast";
+import { STRINGS } from "config";
 
 type WelcomeNavigationProp = StackNavigationProp<
   WelcomeStackParamList,
@@ -235,9 +237,13 @@ const QuestionsController: FC<Props> = () => {
       return;
     } else {
       if (route.params.isFrom === EScreen.WELCOME) {
+        SimpleToast.show(dataBody.message);
         moveToHomeScreen();
       } else {
-        Alert.alert("Answers submitted successfully", dataBody.message);
+        Alert.alert(
+          STRINGS.questionnaire.popup.title_success,
+          dataBody.message
+        );
       }
     }
   });

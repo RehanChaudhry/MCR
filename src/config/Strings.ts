@@ -93,9 +93,13 @@ export default {
     how_it_works_detail:
       "Each Question has 2 sliders, one to identify approximately where you fall within the range and second to determine the comfort zone. It will help us to find the compatibility with your roommates.",
     learn_more: "Learn more about questionnaire",
-    action_save: "Save & Continue",
+    action_save_continue: "Save & Continue",
+    action_save: "Save",
     title_update: "Update Questionnaire",
-    title_create: "Questionnaire"
+    title_create: "Questionnaire",
+    popup: {
+      title_success: "Questionnaire Updated"
+    }
   },
 
   dummyText:
@@ -127,7 +131,8 @@ export default {
     },
     buttonText: {
       uploadProfilePhoto: "Upload Profile Photo",
-      saveAndContinue: "Save & Continue"
+      saveAndContinue: "Save & Continue",
+      actionSave: "Save"
     },
     placeHolder: {
       firstName: "Enter your first name",
@@ -212,6 +217,10 @@ export default {
         heading: "My Roommates"
       },
       agreementButtonTitle: "View Roommate Agreement"
+    },
+    popup: {
+      title_success: "Profile Updated",
+      message_success: "Your profile has been updated successfully."
     }
   },
 
