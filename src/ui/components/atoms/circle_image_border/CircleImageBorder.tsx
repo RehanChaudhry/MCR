@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import Colors from "config/Colors";
+import Profile from "assets/images/profile.svg";
 
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { SvgProp } from "utils/Util";
@@ -18,7 +19,10 @@ export const CircleImageBorder = optimizedMemo<Props>(
     return (
       <View style={styles.mainContainer}>
         <View style={styles.circle}>
-          <Image source={{ uri: imageUrl }} style={styles.image} />
+          {imageUrl !== undefined && (
+            <Image source={{ uri: imageUrl }} style={styles.image} />
+          )}
+          {imageUrl === undefined && <Profile />}
           <View style={styles.innerContainer}>
             {icon?.(theme.themedColors.interface[700], 14, 14)}
           </View>
