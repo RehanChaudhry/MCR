@@ -1,11 +1,20 @@
-import { useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useAuth } from "hooks";
 import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
 import EScreen from "models/enums/EScreen";
 import RelationFilterType from "models/enums/RelationFilterType";
 import RelationModel from "models/RelationModel";
-import React, { FC, useCallback, useContext } from "react";
+import React, {
+  FC,
+  useCallback,
+  useContext,
+  useLayoutEffect
+} from "react";
 import AuthApis from "repo/auth/AuthApis";
 import { useApi } from "repo/Client";
 import { FriendsRootStackParamList } from "routes/FriendsRootStack";
@@ -15,6 +24,9 @@ import useFetchRelations from "../useFetchRelations";
 import MyRoommatesView from "./MyRoommatesView";
 import { STRINGS } from "config";
 import { useCreateConversation } from "hooks/useCreateConversation";
+import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
+import { NotificationParamList } from "routes/NotificationParams";
 
 type Props = {};
 
@@ -23,9 +35,14 @@ type FriendsNavigationProp = StackNavigationProp<
   "ConnectRequests"
 >;
 
+type NotificationRouteProp = RouteProp<
+  NotificationParamList,
+  "MyRoommates"
+>;
+
 const MyRoommatesController: FC<Props> = () => {
   const navigation = useNavigation<FriendsNavigationProp>();
-
+  const route = useRoute<NotificationRouteProp>();
   const createConversation = useCreateConversation();
 
   const {
@@ -100,6 +117,22 @@ const MyRoommatesController: FC<Props> = () => {
       });
     }
   };
+
+  useLayoutEffect(() => {
+    if (route.params.isFrom === EScreen.NOTIFICATION) {
+      navigation.setOptions({
+        headerLeft: () => (
+          <HeaderLeftTextWithIcon
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+        ),
+        headerTitleAlign: "center",
+        headerTitle: () => <HeaderTitle text={"My Roommates"} />
+      });
+    }
+  }, [navigation, route.params.isFrom]);
 
   return (
     <MyRoommatesView

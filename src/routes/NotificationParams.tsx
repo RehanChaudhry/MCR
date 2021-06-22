@@ -7,6 +7,13 @@ export type NotificationParamList = {
   ViewProfile: { isFrom: EScreen; updateProfile: boolean };
   ConnectRequest: { title: string; type: ConnectRequestType };
   Chat: undefined;
+  MyRoommates: { isFrom: EScreen };
+  RoommateAgreement: { isFrom: EScreen };
+  SinglePost: { postId: number };
+  Comments: { postId: number; callback: () => void };
+  ReportContent: { postId: number; callback: () => void };
+  Profile: { isFrom: EScreen; updateProfile: boolean; userId: number };
+  Community: { postId?: number };
 };
 
 export const NotificationStack = createStackNavigator<NotificationParamList>();

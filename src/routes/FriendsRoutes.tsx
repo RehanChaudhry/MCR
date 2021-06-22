@@ -62,6 +62,7 @@ const MyRoommatesRoutes: FC<MyRoommatesRoutesProps> = () => {
       <MyRoommatesStack.Screen
         name="MyRoommates"
         component={MyRoommatesController}
+        initialParams={{ isFrom: EScreen.MY_FRIENDS }}
         options={{
           headerTitleAlign: "center",
           headerTitle: () => <HeaderTitle text="My Roommates" />,
