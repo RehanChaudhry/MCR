@@ -20,6 +20,7 @@ import { NotificationView } from "ui/screens/home/notification/NotificationView"
 import { AppLog } from "utils/Util";
 import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
+import NotificationActionType from "models/enums/NotificationActionType";
 
 type NotificationNavigationProp = StackNavigationProp<
   NotificationParamList,
@@ -177,10 +178,21 @@ const NotificationController: FC<Props> = () => {
       ) {
         return openRoommateAgreementScreen();
       } else if (
-        type === NotificationAndActivityLogFilterType.POST ||
-        NotificationAndActivityLogFilterType.ANNOUNCEMENT
+        type ===
+          (NotificationAndActivityLogFilterType.POST &&
+            NotificationActionType.RECIEVE) ||
+        type ===
+          (NotificationAndActivityLogFilterType.ANNOUNCEMENT &&
+            NotificationActionType.COMMENT)
       ) {
         return openSinglePostScreen(postId!);
+      } else if (
+        type === NotificationAndActivityLogFilterType.CHAT &&
+        NotificationActionType.RECIEVE
+      ) {
+        return null;
+      } else {
+        return null;
       }
     }
   };

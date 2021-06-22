@@ -124,33 +124,63 @@ export function getMessage(notification: NotificationData): string {
 }
 
 export function getButtonText(notification: NotificationData): string {
-  switch (notification.type) {
-    case NotificationAndActivityLogFilterType.FRIEND_REQUEST:
-      return "View Request";
-    case NotificationAndActivityLogFilterType.ROOMMATE_REQUEST:
-      return "View Request";
-    case NotificationAndActivityLogFilterType.CHAT:
-      return "View Chat";
-    case NotificationAndActivityLogFilterType.NEW_CONVERSATION:
-      return "View Conversation";
-    case NotificationAndActivityLogFilterType.DISAGREED:
-      return "View Disagreed";
-    case NotificationAndActivityLogFilterType.AGREED:
-      return "Agreed";
-    case NotificationAndActivityLogFilterType.COMMENT:
-      return "Comment";
-    case NotificationAndActivityLogFilterType.ANNOUNCEMENT:
-      return "Announcement";
-    case NotificationAndActivityLogFilterType.LIKE:
-      return " View Like";
-    case NotificationAndActivityLogFilterType.POST:
-      return "View Post";
-    case NotificationAndActivityLogFilterType.ROOMMATE_GROUP:
-      return "View Group";
-    case NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT:
-      return "View Details";
-    default:
-      return "N/A";
+  if (
+    notification.type ===
+    NotificationAndActivityLogFilterType.FRIEND_REQUEST
+  ) {
+    return "View Request";
+  } else if (
+    notification.type ===
+    NotificationAndActivityLogFilterType.ROOMMATE_REQUEST
+  ) {
+    return "View Request";
+  } else if (
+    notification.type === NotificationAndActivityLogFilterType.CHAT &&
+    NotificationActionType.RECIEVE
+  ) {
+    return "View Chat";
+  } else if (
+    notification.type ===
+    NotificationAndActivityLogFilterType.NEW_CONVERSATION
+  ) {
+    return "View Conversation";
+  } else if (
+    notification.type === NotificationAndActivityLogFilterType.DISAGREED
+  ) {
+    return "View Disagreed";
+  } else if (
+    notification.type === NotificationAndActivityLogFilterType.AGREED
+  ) {
+    return "View Agreed";
+  } else if (
+    notification.type === NotificationAndActivityLogFilterType.POST &&
+    NotificationActionType.COMMENT
+  ) {
+    return "View Comment";
+  } else if (
+    notification.type === NotificationAndActivityLogFilterType.ANNOUNCEMENT
+  ) {
+    return "View Announcement";
+  } else if (
+    notification.type === NotificationAndActivityLogFilterType.LIKE
+  ) {
+    return " View Like";
+  } else if (
+    notification.type === NotificationAndActivityLogFilterType.POST
+  ) {
+    return "View Post";
+  } else if (
+    notification.type ===
+    NotificationAndActivityLogFilterType.ROOMMATE_GROUP
+  ) {
+    return "View Group";
+  } else if (
+    notification.type ===
+    NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT
+  ) {
+    return "View Details";
+  } else {
+    return "N/A";
   }
 }
 
