@@ -6,7 +6,7 @@ import { FilterCount } from "models/enums/FeedsTypeFilter";
 import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
-import { AnnouncementItem } from "ui/components/molecules/AnnouncementItem";
+import { FeedPostItem } from "ui/components/molecules/FeedPostItem";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import BottomBreadCrumbs, {
   Item
@@ -53,7 +53,7 @@ export const CommunityView = React.memo<Props>(
 
     const listItem = useCallback(
       ({ item }: { item: CommunityAnnouncement }) => (
-        <AnnouncementItem
+        <FeedPostItem
           announcementItem={item}
           openCommentsScreen={openCommentsScreen}
           shouldPlayVideo={shouldPlayVideo}

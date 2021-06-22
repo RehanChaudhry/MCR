@@ -50,7 +50,7 @@ function showAttachedItemsIfAny(
   }
 }
 
-export const AnnouncementItem = React.memo<AnnouncementItemProps>(
+export const FeedPostItem = React.memo<AnnouncementItemProps>(
   ({
     announcementItem,
     openCommentsScreen,
