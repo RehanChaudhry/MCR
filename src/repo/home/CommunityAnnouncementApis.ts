@@ -25,8 +25,7 @@ function getCommunityAnnouncements(
 
 function getSingleCommunityAnnouncements(postId: number) {
   return apiClient.get<CommunityAnnouncementResponseModel>(
-    API.GET_COMMUNITY_ANNOUNCEMENT,
-    { postId }
+    API.GET_COMMUNITY_ANNOUNCEMENT + "/" + postId
   );
 }
 

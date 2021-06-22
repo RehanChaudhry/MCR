@@ -4,6 +4,7 @@ import { AnnouncementItem } from "ui/components/molecules/AnnouncementItem";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import useAuth from "hooks/useAuth";
 import { SPACE } from "config";
+import { AppLog } from "utils/Util";
 
 type Props = {
   postData: CommunityAnnouncement;
@@ -22,6 +23,8 @@ export const SinglePostView = React.memo<Props>(
     moveToProfileScreen
   }) => {
     const auth = useAuth();
+
+    AppLog.logForcefully(() => "siple post: " + JSON.stringify(postData));
 
     return (
       <View style={styles.container}>

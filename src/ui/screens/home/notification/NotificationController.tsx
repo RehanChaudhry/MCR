@@ -155,7 +155,11 @@ const NotificationController: FC<Props> = () => {
     });
   };
 
-  const navigateTOScreen = (type: string, postId?: number) => {
+  const navigateTOScreen = (
+    type: string,
+    postId?: number,
+    action?: string
+  ) => {
     if (type != null) {
       if (type === NotificationAndActivityLogFilterType.FRIEND_REQUEST) {
         return openFriendRequestScreen(
@@ -178,12 +182,10 @@ const NotificationController: FC<Props> = () => {
       ) {
         return openRoommateAgreementScreen();
       } else if (
-        type ===
-          (NotificationAndActivityLogFilterType.POST &&
-            NotificationActionType.RECIEVE) ||
-        type ===
-          (NotificationAndActivityLogFilterType.ANNOUNCEMENT &&
-            NotificationActionType.COMMENT)
+        type === NotificationAndActivityLogFilterType.POST ||
+        (action === NotificationActionType.RECIEVE &&
+          type === NotificationAndActivityLogFilterType.ANNOUNCEMENT) ||
+        action === NotificationActionType.COMMENT
       ) {
         return openSinglePostScreen(postId!);
       } else if (

@@ -23,7 +23,11 @@ type Props = {
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete: () => void) => void;
   onChangeFilter: (textToFilter: string) => void;
-  navigateToRequiredScreen: (type: string, postId?: number) => void;
+  navigateToRequiredScreen: (
+    type: string,
+    postId?: number,
+    action?: string
+  ) => void;
 };
 
 export const NotificationView = React.memo<Props>(

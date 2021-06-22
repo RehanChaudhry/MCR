@@ -58,7 +58,7 @@ const SinglePostController: FC<Props> = () => {
       hasError,
       errorBody,
       dataBody
-    } = await getCommunitiesApi.request([{ postId: route.params.postId }]);
+    } = await getCommunitiesApi.request([route.params.postId]);
 
     if (hasError || dataBody === undefined) {
       Alert.alert("Unable to fetch posts", errorBody);

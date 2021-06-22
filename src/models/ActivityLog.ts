@@ -8,6 +8,7 @@ type ActivityLog = {
   type?: NotificationAndActivityLogFilterType;
   user?: User;
   action?: Actions;
+  entityId?: number;
   data?: any | any[];
   createdAt: Date;
 };
@@ -55,8 +56,8 @@ export function getMessage(activityLog: ActivityLog): string {
       activityLog.action === Actions.CREATE
     ) {
       return `Sent a roommate request to <b>${
-        activityLog.user?.firstName
-      }${" " + activityLog.user?.lastName}</b>`;
+        activityLog?.data?.receiverFirstName
+      }${" " + activityLog?.data?.receiverLastName}</b>`;
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
@@ -141,7 +142,7 @@ export function getMessage(activityLog: ActivityLog): string {
       activityLog.type === NotificationAndActivityLogFilterType.COMMENT &&
       activityLog.action === Actions.CREATE
     ) {
-      return `Commented on a post, <b>${activityLog.data.content.replace(
+      return `Commented on a post, <b>${activityLog?.data?.content?.replace(
         /\r?\n|\r/g,
         " "
       )}</b>`;
@@ -156,7 +157,7 @@ export function getMessage(activityLog: ActivityLog): string {
       activityLog.type === NotificationAndActivityLogFilterType.POST &&
       activityLog.action === Actions.CREATE
     ) {
-      return `Created a new post in commmunity, <b>"${activityLog.data.content.replace(
+      return `Created a new post in commmunity, <b>"${activityLog?.data?.content?.replace(
         /\r?\n|\r/g,
         " "
       )}"</b>`;

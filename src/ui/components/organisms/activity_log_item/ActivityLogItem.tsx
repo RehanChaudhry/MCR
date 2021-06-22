@@ -28,9 +28,14 @@ import Actions from "models/enums/ActivityLogAction";
 
 interface Props {
   activityLog: ActivityLog;
+  navigateTOScreen: (
+    type: string,
+    action: string,
+    postId?: number
+  ) => void;
 }
 
-const ActivityLogItem = ({ activityLog }: Props) => {
+const ActivityLogItem = ({ activityLog, navigateTOScreen }: Props) => {
   const { themedColors } = usePreferredTheme();
 
   const icon: any = () => {
@@ -160,6 +165,13 @@ const ActivityLogItem = ({ activityLog }: Props) => {
         <LabelHtml
           containerStyle={styles.message}
           style={styles.messageText}
+          onBoldTextPress={() =>
+            navigateTOScreen(
+              activityLog.type!,
+              activityLog.action!,
+              activityLog.entityId!
+            )
+          }
           text={getMessage(activityLog) ?? STRINGS.common.not_found}
         />
         <AppLabel
