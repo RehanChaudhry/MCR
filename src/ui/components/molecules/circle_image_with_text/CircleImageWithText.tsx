@@ -20,12 +20,11 @@ import Like from "assets/images/agreed.svg";
 import UserGroup from "assets/images/user_group.svg";
 import OfficeBuilding from "assets/images/office-building.svg";
 import Announcement from "assets/images/announcements.svg";
-import { AppLog } from "utils/Util";
 
 type Props = {
   notification: NotificationData;
   userNameOnPress: (userId: number) => void;
-  actionOnPress: (type: string, postId?: number) => void;
+  actionOnPress: (type: string, postId?: number, action?: string) => void;
 };
 
 export const CircleImageWithText = React.memo<Props>(
@@ -153,9 +152,6 @@ export const CircleImageWithText = React.memo<Props>(
               style={styles.messageText}
               numberOfLines={3}
               onBoldTextPress={() => {
-                AppLog.logForcefully(
-                  () => "userID: " + notification.senderId!
-                );
                 userNameOnPress(notification.senderId!);
               }}
               text={getMessage(notification) ?? STRINGS.common.not_found}
@@ -178,7 +174,11 @@ export const CircleImageWithText = React.memo<Props>(
                 { backgroundColor: theme.themedColors.primaryShade }
               ]}
               onPress={() => {
-                actionOnPress(notification?.type!, notification?.id);
+                actionOnPress(
+                  notification?.type!,
+                  notification?.id,
+                  notification?.action
+                );
               }}
               fontWeight="bold"
               textStyle={styles.buttonText}

@@ -17,6 +17,10 @@ import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { Alert } from "react-native";
+import EScreen from "models/enums/EScreen";
+import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
+import useAuth from "hooks/useAuth";
+import Actions from "models/enums/ActivityLogAction";
 
 type ActivityLogNavigationProp = StackNavigationProp<
   ActivityLogStackParamList,
@@ -36,6 +40,7 @@ const ActivityLogController: FC<Props> = () => {
   const activityLogApi = useApi<any, ActivityLogsResponseModel>(
     ProfileApis.activityLogs
   );
+  const user = useAuth();
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
 
   const [
@@ -133,6 +138,40 @@ const ActivityLogController: FC<Props> = () => {
     [paginationRequestModel, handleGetActivityLogApi]
   );
 
+  const openMyProfileScreen = () => {
+    navigation.push("Profile", {
+      isFrom: EScreen.NOTIFICATION,
+      updateProfile: false,
+      userId: user.user?.profile?.id!
+    });
+  };
+
+  const openSinglePostScreen = (postId: number) => {
+    navigation.push("SinglePost", { postId: postId });
+  };
+
+  const navigateTOScreen = (
+    type: string,
+    action: string,
+    postId?: number
+  ) => {
+    if (type != null) {
+      if (
+        type === NotificationAndActivityLogFilterType.LOGIN_STUDENT &&
+        action === Actions.LOGIN
+      ) {
+        return openMyProfileScreen();
+      } else if (
+        type === NotificationAndActivityLogFilterType.COMMENT &&
+        action === Actions.CREATE
+      ) {
+        return openSinglePostScreen(postId!);
+      } else {
+        return null;
+      }
+    }
+  };
+
   useEffect(() => {
     handleGetActivityLogApi(false, paginationRequestModel);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -144,6 +183,7 @@ const ActivityLogController: FC<Props> = () => {
       activityLogs={activityLogs?.data}
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
+      navigateTOScreen={navigateTOScreen}
       isAllDataLoaded={isAllDataLoaded}
     />
   );

@@ -19,6 +19,11 @@ type Props = {
   onEndReached: () => void;
   isAllDataLoaded: boolean;
   onChangeFilter: (textToFilter: string) => void;
+  navigateTOScreen: (
+    type: string,
+    action: string,
+    postId?: number
+  ) => void;
 };
 
 export const ActivityLogView = React.memo<Props>(
@@ -27,22 +32,29 @@ export const ActivityLogView = React.memo<Props>(
     activityLogs,
     pullToRefreshCallback,
     onEndReached,
-    onChangeFilter
+    onChangeFilter,
+    navigateTOScreen
   }) => {
     const { themedColors } = usePreferredTheme();
     let sharedDataRef = useRef("");
 
-    const listItem = useCallback(({ item }: { item: ActivityLog }) => {
-      return (
-        <>
-          <ActivityLogHeader
-            item={item}
-            setSharedDataRef={sharedDataRef}
-          />
-          <ActivityLogItem activityLog={item} />
-        </>
-      );
-    }, []);
+    const listItem = useCallback(
+      ({ item }: { item: ActivityLog }) => {
+        return (
+          <>
+            <ActivityLogHeader
+              item={item}
+              setSharedDataRef={sharedDataRef}
+            />
+            <ActivityLogItem
+              navigateTOScreen={navigateTOScreen}
+              activityLog={item}
+            />
+          </>
+        );
+      },
+      [navigateTOScreen]
+    );
 
     return (
       <Screen
