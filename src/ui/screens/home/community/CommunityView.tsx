@@ -54,7 +54,7 @@ export const CommunityView = React.memo<Props>(
     const listItem = useCallback(
       ({ item }: { item: CommunityAnnouncement }) => (
         <FeedPostItem
-          announcementItem={item}
+          data={item}
           openCommentsScreen={openCommentsScreen}
           shouldPlayVideo={shouldPlayVideo}
           openReportContentScreen={openReportContentScreen}

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { AnnouncementItem } from "ui/components/molecules/AnnouncementItem";
+import { FeedPostItem } from "ui/components/molecules/FeedPostItem";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import useAuth from "hooks/useAuth";
 import { SPACE } from "config";
@@ -29,8 +29,8 @@ export const SinglePostView = React.memo<Props>(
     return (
       <View style={styles.container}>
         {postData && (
-          <AnnouncementItem
-            announcementItem={postData}
+          <FeedPostItem
+            data={postData}
             openCommentsScreen={openCommentsScreen}
             shouldPlayVideo={shouldPlayVideo}
             openReportContentScreen={openReportContentScreen}

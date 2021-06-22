@@ -43,7 +43,7 @@ export const AnnouncementView = React.memo<Props>(
       ({ item }: { item: CommunityAnnouncement }) => {
         return (
           <FeedPostItem
-            announcementItem={item}
+            data={item}
             openCommentsScreen={openCommentsScreen}
             shouldPlayVideo={shouldPlayVideo}
             onProfileImageClicked={moveToProfileScreen}
