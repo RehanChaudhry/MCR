@@ -22,17 +22,20 @@ type Props = {
   onPressChat: (item: RelationModel) => void;
   onPressReceivedRoommateRequests: () => void;
   onPressProfile: (relationModel: RelationModel) => void;
+  isLoggedInUserAModerator: boolean;
 };
 
 const listItem = (
   item: RelationModel,
   showRemoveRommmateAlert: (item: RelationModel) => void,
   onPressChat: (item: RelationModel) => void,
-  onPressProfile: (item: RelationModel) => void
+  onPressProfile: (item: RelationModel) => void,
+  isLoggedInUserAModerator: boolean
 ) => {
   const _item = new RelationModel(item);
   return (
     <RelationListsItem
+      isLoggedInUserAModerator={isLoggedInUserAModerator}
       relationModel={_item}
       onChatButtonClicked={onPressChat}
       onUserClicked={onPressProfile}
@@ -43,6 +46,7 @@ const listItem = (
 
 const MyRoommatesView: FC<Props> = ({
   data,
+  isLoggedInUserAModerator,
   pendingRoommatesCount,
   roomatesCount,
   isLoading,
@@ -71,10 +75,10 @@ const MyRoommatesView: FC<Props> = ({
     setShouldShowRemoveRoommateAlert(false);
   }, []);
 
-  const showRemoveRoommateAlert = (item: RelationModel) => {
+  const showRemoveRoommateAlert = useCallback((item: RelationModel) => {
     selectedItem.current = item;
     setShouldShowRemoveRoommateAlert(true);
-  };
+  }, []);
 
   const headerDetails = () => {
     const label: string = roomatesCount > 1 ? "roommates" : "roommate";
@@ -125,7 +129,8 @@ const MyRoommatesView: FC<Props> = ({
               item,
               showRemoveRoommateAlert,
               onPressChat,
-              onPressProfile
+              onPressProfile,
+              isLoggedInUserAModerator
             );
           }}
           data={data}

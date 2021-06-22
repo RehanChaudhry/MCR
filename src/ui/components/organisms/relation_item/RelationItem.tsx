@@ -23,6 +23,7 @@ import RequestStateIcon from "assets/images/request_state_icon.svg";
 
 interface Props {
   relationModel: RelationModel;
+  isLoggedInUserAModerator: boolean;
   onCrossClicked?: (relationModel: RelationModel) => void;
   onChatButtonClicked: (relationModel: RelationModel) => void;
   onUserClicked: (relationModel: RelationModel) => void;
@@ -55,6 +56,7 @@ interface Props {
 
 function createActionButton(
   relationModel: RelationModel,
+  isLoggedInUserAModerator: boolean,
   themedColors: ColorPalette,
   onCancelRequestClicked?: (relationModel: RelationModel) => void,
   onRoommateRequestClicked?: (relationModel: RelationModel) => void,
@@ -185,7 +187,7 @@ function createActionButton(
           styles.btnActionText,
           { color: themedColors.interface[600], opacity: 0.5 }
         ]}
-        isDisable={relationModel.isModerator === 0}
+        isDisable={!isLoggedInUserAModerator}
         buttonStyle={[
           styles.btnAction,
           { backgroundColor: themedColors.dangerShade }
@@ -300,6 +302,7 @@ function createActionButton(
 
 const RelationListsItem = ({
   relationModel,
+  isLoggedInUserAModerator,
   onCrossClicked,
   onChatButtonClicked,
   onUserClicked,
@@ -415,6 +418,7 @@ const RelationListsItem = ({
         />
         {createActionButton(
           relationModel,
+          isLoggedInUserAModerator,
           themedColors,
           onCancelRequestActionButtonClicked,
           onRoommateRequestActionButtonClicked,
