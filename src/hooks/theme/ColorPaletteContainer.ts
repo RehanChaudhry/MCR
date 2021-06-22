@@ -106,7 +106,6 @@ export function computeShades(
 }
 
 export type ColorPalette = {
-  black: string;
   background: string;
   backgroundSecondary: string;
 
@@ -146,7 +145,6 @@ type ColorPaletteContainer = {
 };
 
 let defaultPalette: ColorPalette = {
-  black: "#000000",
   background: "#FFFFFF",
   backgroundSecondary: grayShades.coolGray[100],
 
