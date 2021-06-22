@@ -154,7 +154,11 @@ export const UpdateProfileView = optimizedMemo<Props>(
 
           <View style={styles.buttonViewStyle}>
             <AppFormFormSubmit
-              text={STRINGS.profile.buttonText.saveAndContinue}
+              text={
+                infoTextShown
+                  ? STRINGS.profile.buttonText.saveAndContinue
+                  : STRINGS.profile.buttonText.save
+              }
               buttonType={BUTTON_TYPES.NORMAL}
               fontWeight={"semi-bold"}
               textStyle={{ color: theme.themedColors.background }}

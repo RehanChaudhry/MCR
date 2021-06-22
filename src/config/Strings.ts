@@ -127,7 +127,8 @@ export default {
     },
     buttonText: {
       uploadProfilePhoto: "Upload Profile Photo",
-      saveAndContinue: "Save & Continue"
+      saveAndContinue: "Save & Continue",
+      save: "Save"
     },
     placeHolder: {
       firstName: "Enter your first name",

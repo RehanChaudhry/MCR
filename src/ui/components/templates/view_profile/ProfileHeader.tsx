@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   uploadButton: {
     height: 44,
-    marginVertical: SPACE.lg,
+    marginTop: SPACE.lg,
     width: "100%",
     flexDirection: "row",
     paddingLeft: SPACE.sm
