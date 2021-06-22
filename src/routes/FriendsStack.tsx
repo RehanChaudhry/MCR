@@ -8,7 +8,7 @@ export type MyFriendsStackParamList = {
 export const MyFriendsStack = createStackNavigator<MyFriendsStackParamList>();
 
 export type MyRoomMatesStackParamList = {
-  MyRoommates: undefined;
+  MyRoommates: { isFrom: EScreen };
 };
 export const MyRoommatesStack = createStackNavigator<MyRoomMatesStackParamList>();
 

@@ -135,13 +135,12 @@ const CommunityController: FC<Props> = () => {
           ...(prevState === undefined || requestModel.current.page === 1
             ? []
             : prevState),
-          ...dataBody.data
+          ...(dataBody.data as CommunityAnnouncement[])
         ];
       });
 
-      setIsAllDataLoaded(
-        dataBody.data.length < requestModel.current.limit
-      );
+      const communities1: CommunityAnnouncement[] = dataBody.data as CommunityAnnouncement[];
+      setIsAllDataLoaded(communities1.length < requestModel.current.limit);
     }
   }, [getCommunitiesApi]);
 

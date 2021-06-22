@@ -1,9 +1,9 @@
 export interface CommunityAnnouncementResponseModel {
   message: string;
-  data: CommunityAnnouncement[];
+  data: CommunityAnnouncement[] | CommunityAnnouncement;
 }
 
-export interface CommunityAnnouncement {
+export type CommunityAnnouncement = {
   popularityScore: number;
   id: number;
   type: string;
@@ -27,7 +27,7 @@ export interface CommunityAnnouncement {
   deletedAt: null;
   postFilter: PostFilter;
   isLikedByMe: boolean;
-}
+};
 
 export interface PostFilter {
   filterType: string;
