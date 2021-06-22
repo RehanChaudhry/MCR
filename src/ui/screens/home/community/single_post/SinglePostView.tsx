@@ -1,8 +1,9 @@
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { AnnouncementItem } from "ui/components/molecules/AnnouncementItem";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import useAuth from "hooks/useAuth";
+import { SPACE } from "config";
 
 type Props = {
   postData: CommunityAnnouncement;
@@ -23,7 +24,7 @@ export const SinglePostView = React.memo<Props>(
     const auth = useAuth();
 
     return (
-      <View>
+      <View style={styles.container}>
         {postData && (
           <AnnouncementItem
             announcementItem={postData}
@@ -40,3 +41,9 @@ export const SinglePostView = React.memo<Props>(
     );
   }
 );
+
+const styles = StyleSheet.create({
+  container: {
+    padding: SPACE.lg
+  }
+});

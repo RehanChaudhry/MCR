@@ -8,12 +8,14 @@ interface Props {
   text: string;
   style: StyleProp<TextStyle>;
   onBoldTextPress?: () => void;
+  numberOfLines?: number;
 }
 const LabelHtml: React.FC<Props> = ({
   containerStyle,
   text,
   style,
-  onBoldTextPress
+  onBoldTextPress,
+  numberOfLines
 }: Props) => {
   const { themedColors } = usePreferredTheme();
   let texts: string[] = text.split(/<b>|<\/b>/g);
@@ -47,6 +49,7 @@ const LabelHtml: React.FC<Props> = ({
     <MultilineSpannableText
       appLabelProps={appLabelProps}
       text={texts}
+      numberOfLines={numberOfLines}
       containerStyle={containerStyle}
     />
   );

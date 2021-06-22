@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { usePreventDoubleTap } from "hooks";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import { NotificationsResponseModel } from "models/api_responses/NotificationsResponseModel";
 import EScreen from "models/enums/EScreen";
@@ -52,12 +51,13 @@ const NotificationController: FC<Props> = () => {
     paginate: true
   });
 
-  const openMyProfileScreen = usePreventDoubleTap(() => {
-    navigation.push("ViewProfile", {
+  const openMyProfileScreen = (userId: number) => {
+    navigation.push("Profile", {
       isFrom: EScreen.NOTIFICATION,
-      updateProfile: false
+      updateProfile: false,
+      userId: userId
     });
-  });
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -140,8 +140,8 @@ const NotificationController: FC<Props> = () => {
   const openRoommateAgreementScreen = () => {
     navigation.push("RoommateAgreement", { isFrom: EScreen.NOTIFICATION });
   };
-  const openSinglePostScreen = () => {
-    navigation.push("SinglePost", { postId: 58 });
+  const openSinglePostScreen = (postId: number) => {
+    navigation.push("SinglePost", { postId: postId });
   };
 
   const openFriendRequestScreen = (
@@ -154,7 +154,7 @@ const NotificationController: FC<Props> = () => {
     });
   };
 
-  const navigateTOScreen = (type: string) => {
+  const navigateTOScreen = (type: string, postId?: number) => {
     if (type != null) {
       if (type === NotificationAndActivityLogFilterType.FRIEND_REQUEST) {
         return openFriendRequestScreen(
@@ -176,8 +176,11 @@ const NotificationController: FC<Props> = () => {
         type === NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT
       ) {
         return openRoommateAgreementScreen();
-      } else if (type === NotificationAndActivityLogFilterType.POST) {
-        return openSinglePostScreen();
+      } else if (
+        type === NotificationAndActivityLogFilterType.POST ||
+        NotificationAndActivityLogFilterType.ANNOUNCEMENT
+      ) {
+        return openSinglePostScreen(postId!);
       }
     }
   };
