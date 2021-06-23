@@ -4,6 +4,7 @@ import React from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { SvgCssUri } from "react-native-svg";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
+import { GenericErrorBoundary } from "../organisms/error_boundries/GenericErrorBoundary";
 
 interface OwnProps {
   shouldNotOptimize?: boolean;
@@ -16,10 +17,12 @@ export const UniLogo = optimizedMemo<Props>(({ style }) => {
   const auth = useAuth();
 
   return (
-    <SvgCssUri
-      uri={auth?.uni?.navLogo?.fileURL ?? null}
-      style={[styles.logo, style]}
-    />
+    <GenericErrorBoundary>
+      <SvgCssUri
+        uri={auth?.uni?.navLogo?.fileURL ?? null}
+        style={[styles.logo, style]}
+      />
+    </GenericErrorBoundary>
   );
 });
 
