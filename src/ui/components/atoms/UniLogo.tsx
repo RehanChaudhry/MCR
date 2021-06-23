@@ -1,14 +1,12 @@
 import { moderateScale, SPACE } from "config/Dimens";
 import { useAuth } from "hooks";
 import React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
-import { SvgCssUri } from "react-native-svg";
+import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
-import { GenericErrorBoundary } from "../organisms/error_boundries/GenericErrorBoundary";
 
 interface OwnProps {
   shouldNotOptimize?: boolean;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ImageStyle>;
 }
 
 type Props = OwnProps;
@@ -17,12 +15,13 @@ export const UniLogo = optimizedMemo<Props>(({ style }) => {
   const auth = useAuth();
 
   return (
-    <GenericErrorBoundary>
-      <SvgCssUri
-        uri={auth?.uni?.navLogo?.fileURL ?? null}
-        style={[styles.logo, style]}
-      />
-    </GenericErrorBoundary>
+    <Image
+      style={[styles.logo, style]}
+      resizeMode="contain"
+      source={{
+        uri: auth?.uni?.navLogo?.fileURL
+      }}
+    />
   );
 });
 
