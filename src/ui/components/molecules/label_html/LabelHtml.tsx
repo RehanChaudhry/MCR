@@ -24,7 +24,7 @@ const LabelHtml: React.FC<Props> = ({
     let appLabelProp: AppLabelProps;
     if (index % 2 !== 0) {
       appLabelProp = {
-        onPress: onBoldTextPress,
+        onPress: index === 1 ? onBoldTextPress : undefined,
         style: [
           {
             color: themedColors.primary

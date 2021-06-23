@@ -4,7 +4,9 @@ import EScreen from "models/enums/EScreen";
 export type ActivityLogStackParamList = {
   ActivityLog: undefined;
   Profile: { isFrom: EScreen; updateProfile: boolean; userId: number };
-  SinglePost: { postId: number };
+  SinglePost: { postId: number; isFrom: EScreen };
+  Comments: { postId: number; callback: () => void };
+  ReportContent: { postId: number; callback: () => void };
 };
 
 export const ActivityLogStack = createStackNavigator<ActivityLogStackParamList>();

@@ -176,7 +176,7 @@ export const CircleImageWithText = React.memo<Props>(
               onPress={() => {
                 actionOnPress(
                   notification?.type!,
-                  notification?.id,
+                  notification?.referenceId,
                   notification?.action
                 );
               }}

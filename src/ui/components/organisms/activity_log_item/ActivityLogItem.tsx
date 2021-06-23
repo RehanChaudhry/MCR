@@ -31,7 +31,8 @@ interface Props {
   navigateTOScreen: (
     type: string,
     action: string,
-    postId?: number
+    postId?: number,
+    userId?: number
   ) => void;
 }
 
@@ -169,7 +170,8 @@ const ActivityLogItem = ({ activityLog, navigateTOScreen }: Props) => {
             navigateTOScreen(
               activityLog.type!,
               activityLog.action!,
-              activityLog.entityId!
+              activityLog.entityId!,
+              activityLog.data.receiverId
             )
           }
           text={getMessage(activityLog) ?? STRINGS.common.not_found}

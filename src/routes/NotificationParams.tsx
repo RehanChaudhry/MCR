@@ -9,7 +9,7 @@ export type NotificationParamList = {
   Chat: undefined;
   MyRoommates: { isFrom: EScreen };
   RoommateAgreement: { isFrom: EScreen };
-  SinglePost: { postId: number };
+  SinglePost: { postId: number; isFrom: EScreen };
   Comments: { postId: number; callback: () => void };
   ReportContent: { postId: number; callback: () => void };
   Profile: { isFrom: EScreen; updateProfile: boolean; userId: number };

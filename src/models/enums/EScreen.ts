@@ -6,7 +6,8 @@ enum EScreen {
   HOME,
   MY_FRIENDS,
   COMMUNITY,
-  ANNOUNCEMENT
+  ANNOUNCEMENT,
+  ACTIVTY_LOG
 }
 
 export default EScreen;

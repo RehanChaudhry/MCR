@@ -22,7 +22,8 @@ type Props = {
   navigateTOScreen: (
     type: string,
     action: string,
-    postId?: number
+    postId?: number,
+    userId?: number
   ) => void;
 };
 

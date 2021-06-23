@@ -142,7 +142,10 @@ const NotificationController: FC<Props> = () => {
     navigation.push("RoommateAgreement", { isFrom: EScreen.NOTIFICATION });
   };
   const openSinglePostScreen = (postId: number) => {
-    navigation.push("SinglePost", { postId: postId });
+    navigation.push("SinglePost", {
+      postId: postId,
+      isFrom: EScreen.NOTIFICATION
+    });
   };
 
   const openFriendRequestScreen = (

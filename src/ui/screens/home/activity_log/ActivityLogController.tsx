@@ -138,34 +138,48 @@ const ActivityLogController: FC<Props> = () => {
     [paginationRequestModel, handleGetActivityLogApi]
   );
 
-  const openMyProfileScreen = () => {
+  const openMyProfileScreen = (userId: number) => {
     navigation.push("Profile", {
       isFrom: EScreen.NOTIFICATION,
       updateProfile: false,
-      userId: user.user?.profile?.id!
+      userId: userId
     });
   };
 
   const openSinglePostScreen = (postId: number) => {
-    navigation.push("SinglePost", { postId: postId });
+    navigation.push("SinglePost", {
+      postId: postId,
+      isFrom: EScreen.ACTIVTY_LOG
+    });
   };
 
   const navigateTOScreen = (
     type: string,
     action: string,
-    postId?: number
+    postId?: number,
+    userId?: number
   ) => {
     if (type != null) {
       if (
         type === NotificationAndActivityLogFilterType.LOGIN_STUDENT &&
         action === Actions.LOGIN
       ) {
-        return openMyProfileScreen();
+        return openMyProfileScreen(user.user?.profile?.id!);
       } else if (
         type === NotificationAndActivityLogFilterType.COMMENT &&
         action === Actions.CREATE
       ) {
         return openSinglePostScreen(postId!);
+      } else if (
+        type === NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+        action === Actions.CREATE
+      ) {
+        return openMyProfileScreen(userId!);
+      } else if (
+        type === NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+        action === Actions.CREATE
+      ) {
+        return openMyProfileScreen(userId!);
       } else {
         return null;
       }

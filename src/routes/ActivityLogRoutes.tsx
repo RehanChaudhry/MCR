@@ -7,6 +7,9 @@ import ActivityLogController from "ui/screens/home/activity_log/ActivityLogContr
 import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
 import SinglePostController from "ui/screens/home/community/single_post/SinglePostController";
 import { NotificationStack } from "routes/NotificationParams";
+import { CommunityStack } from "routes/CommunityStack";
+import { CommentsController } from "ui/screens/home/comments/CommentsController";
+import ReportContentController from "ui/screens/home/community/report_content/ReportContentController";
 
 const ActivityLogRoutes = () => (
   <ActivityLogStack.Navigator
@@ -33,6 +36,14 @@ const ActivityLogRoutes = () => (
     <NotificationStack.Screen
       name="SinglePost"
       component={SinglePostController}
+    />
+    <CommunityStack.Screen
+      name="Comments"
+      component={CommentsController}
+    />
+    <CommunityStack.Screen
+      name="ReportContent"
+      component={ReportContentController}
     />
   </ActivityLogStack.Navigator>
 );

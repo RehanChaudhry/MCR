@@ -24,11 +24,16 @@ import EScreen from "models/enums/EScreen";
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { Alert } from "react-native";
+import { ActivityLogStackParamList } from "routes/ActivityLogStack";
 
 type Props = {};
 
 type NotificationNavigationProp = StackNavigationProp<
   NotificationParamList,
+  "SinglePost"
+>;
+type ActivityLogNavigationProp = StackNavigationProp<
+  ActivityLogStackParamList,
   "SinglePost"
 >;
 type NotificationRouteProp = RouteProp<
@@ -38,6 +43,7 @@ type NotificationRouteProp = RouteProp<
 
 const SinglePostController: FC<Props> = () => {
   const notificationNavigation = useNavigation<NotificationNavigationProp>();
+  const activityLogNavigation = useNavigation<ActivityLogNavigationProp>();
   const route = useRoute<NotificationRouteProp>();
 
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
@@ -72,35 +78,64 @@ const SinglePostController: FC<Props> = () => {
   }, [getCommunitiesApi, route.params.postId]);
 
   const openCommentsScreen = (postId: number) => {
-    notificationNavigation.navigate("Comments", {
-      postId: postId,
-      callback: () => {
-        setCommunity((prevState) => {
-          prevState!.commentsCount++;
-          return prevState;
-        });
-      }
-    });
+    if (route.params.isFrom === EScreen.NOTIFICATION) {
+      notificationNavigation.navigate("Comments", {
+        postId: postId,
+        callback: () => {
+          setCommunity((prevState) => {
+            prevState!.commentsCount++;
+            return prevState;
+          });
+        }
+      });
+    } else {
+      activityLogNavigation.navigate("Comments", {
+        postId: postId,
+        callback: () => {
+          setCommunity((prevState) => {
+            prevState!.commentsCount++;
+            return prevState;
+          });
+        }
+      });
+    }
   };
 
   const openReportContentScreen = (postId: number) => {
-    notificationNavigation.navigate("ReportContent", {
-      postId: postId,
-      callback: () => {
-        AppLog.logForcefully(() => "come back");
-      }
-    });
+    if (route.params.isFrom === EScreen.NOTIFICATION) {
+      notificationNavigation.navigate("ReportContent", {
+        postId: postId,
+        callback: () => {
+          AppLog.logForcefully(() => "come back");
+        }
+      });
+    } else {
+      activityLogNavigation.navigate("ReportContent", {
+        postId: postId,
+        callback: () => {
+          AppLog.logForcefully(() => "come back");
+        }
+      });
+    }
   };
 
   const moveToProfileScreen = useCallback(
     (userId: number) => {
-      notificationNavigation.navigate("Profile", {
-        isFrom: EScreen.NOTIFICATION,
-        updateProfile: false,
-        userId: userId
-      });
+      if (route.params.isFrom === EScreen.NOTIFICATION) {
+        notificationNavigation.navigate("Profile", {
+          isFrom: EScreen.NOTIFICATION,
+          updateProfile: false,
+          userId: userId
+        });
+      } else {
+        activityLogNavigation.navigate("Profile", {
+          isFrom: EScreen.NOTIFICATION,
+          updateProfile: false,
+          userId: userId
+        });
+      }
     },
-    [notificationNavigation]
+    [notificationNavigation, activityLogNavigation, route.params.isFrom]
   );
 
   useLayoutEffect(() =>
