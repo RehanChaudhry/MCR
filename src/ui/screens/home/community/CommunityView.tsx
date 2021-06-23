@@ -12,6 +12,7 @@ import BottomBreadCrumbs, {
   Item
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
 import { listContentContainerStyle, listItemSeparator } from "utils/Util";
+import NoRecordFound from "assets/images/community_no_record_found.svg";
 
 type Props = {
   data: CommunityAnnouncement[] | undefined;
@@ -108,6 +109,7 @@ export const CommunityView = React.memo<Props>(
               onEndReached={onEndReached}
               isAllDataLoaded={isAllDataLoaded}
               pullToRefreshCallback={pullToRefreshCallback}
+              noRecordFoundImage={<NoRecordFound />}
             />
             <BottomBreadCrumbs data={getFeedsFilterData()} />
           </>

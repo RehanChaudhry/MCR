@@ -8,6 +8,7 @@ import { listContentContainerStyle } from "utils/Util";
 import Strings from "config/Strings";
 import { SPACE } from "config";
 import Message from "models/Message";
+import ChatNoRecordFound from "assets/images/chat_no_record_found.svg";
 
 type Props = {
   data: Message[] | undefined;
@@ -58,6 +59,7 @@ export const ChatThreadScreen = React.memo<Props>(
             listContentContainerStyle,
             { paddingHorizontal: SPACE.lg, paddingBottom: 0 }
           ]}
+          noRecordFoundImage={<ChatNoRecordFound />}
         />
         <WriteMessage
           btnPressCallback={sentMessage}

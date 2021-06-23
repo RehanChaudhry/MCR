@@ -7,6 +7,7 @@ import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { listContentContainerStyle, listItemSeparator } from "utils/Util";
 import { FeedPostItem } from "ui/components/molecules/FeedPostItem";
+import NoRecordFound from "assets/images/community_no_record_found.svg";
 
 type Props = {
   data: CommunityAnnouncement[] | undefined;
@@ -78,6 +79,7 @@ export const AnnouncementView = React.memo<Props>(
             onEndReached={onEndReached}
             isAllDataLoaded={isAllDataLoaded}
             pullToRefreshCallback={pullToRefreshCallback}
+            noRecordFoundImage={<NoRecordFound />}
           />
         )}
       </Screen>
