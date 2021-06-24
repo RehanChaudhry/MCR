@@ -24,9 +24,7 @@ export const HomeRoutes = () => {
           <CustomDrawer
             {...props}
             currentItem={currentItem}
-            setCurrentItem={(name: string) => {
-              setCurrentItem(name);
-            }}
+            setCurrentItem={setCurrentItem}
           />
         )}>
         <HomeDrawer.Screen

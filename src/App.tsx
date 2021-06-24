@@ -16,7 +16,7 @@ type Props = {};
 const App: React.FC<Props> = () => {
   AppLog.log(() => "Rendering App...");
   const [notificationId, setNotificationId] = useState("");
-  const [screenName, setScreenName] = useState("");
+  const [screenName, setScreenName] = useState("Matches");
 
   const notificationUpdate: PushNotificationContext = {
     notificationId: notificationId,
@@ -83,7 +83,7 @@ const App: React.FC<Props> = () => {
 
   function sentNotification(text?: string) {
     AppLog.logForcefully(() => text ?? "sentNotification()");
-    setScreenName(text ?? "");
+    setScreenName("Settings");
   }
 
   OneSignal.setNotificationOpenedHandler((data) => {
