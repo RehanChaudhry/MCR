@@ -1,27 +1,22 @@
 {
-  "duration": 462,
+  "duration": 475,
   "problem": "CLIENT_ERROR",
   "originalError": {
     "message": "Request failed with status code 422",
     "name": "Error",
-    "stack": "Error: Request failed with status code 422\n    at createError (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119191:17)\n    at settle (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119181:14)\n    at XMLHttpRequest.handleLoad (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:119081:9)\n    at XMLHttpRequest.dispatchEvent (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:32318:27)\n    at XMLHttpRequest.setReadyState (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31476:14)\n    at XMLHttpRequest.__didCompleteResponse (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31307:16)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31417:47\n    at RCTDeviceEventEmitter.emit (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:3570:37)\n    at MessageQueue.__callFunction (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2780:31)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2512:17",
+    "stack": "Error: Request failed with status code 422\n    at createError (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:117322:17)\n    at settle (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:117312:14)\n    at XMLHttpRequest.handleLoad (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:117212:9)\n    at XMLHttpRequest.dispatchEvent (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:32111:27)\n    at XMLHttpRequest.setReadyState (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31269:14)\n    at XMLHttpRequest.__didCompleteResponse (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31100:16)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:31210:47\n    at RCTDeviceEventEmitter.emit (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:7063:37)\n    at MessageQueue.__callFunction (http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2674:31)\n    at http://localhost:8081/index.bundle?platform=android&dev=true&minify=false:2406:17",
     "config": {
-      "url": "user/me",
-      "method": "put",
-      "data": "{\"secondaryEmail\":\"\"}",
+      "url": "user/me?meta=true",
+      "method": "get",
       "headers": {
         "Accept": "application/json",
-        "Content-Type": "application/json",
         "subdomain": "ohio",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjM0LCJ1c2VySWQiOjExNjMsImNsaWVudElkIjoiMSIsInNjb3BlcyI6WyJjb21tdW5pdHkiLCJhbm5vdW5jZW1lbnRzIiwibGlzdC1xdWVzdGlvbiIsImxpc3Qtc2VjdGlvbiIsImxpc3QtYWdyZWVtZW50LWZpZWxkcyIsInZpZXctc3RhdGljLWNvbnRlbnQiLCJsaXN0LWNvbmZpZ3VyYXRpb24iLCJsaXN0LWZvcm0taW5wdXQiLCJzeXN0ZW0tbG9nIiwiY29udmVyc2F0aW9uIiwibWFyay1zcGFtIiwibm90aWZpY2F0aW9uIiwiYWdyZWVtZW50LWFuc3dlciIsInVwZGF0ZS1hZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiLCJkZWxldGUtZmlsZSJdLCJpYXQiOjE2MjQwMDI3NzcsImV4cCI6MTYyNjU5NDc3N30.6nm-DlW7IguHYuIvV5BwVnj50QEZwVdb0pYP5qogfo8"
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE2NSwidXNlcklkIjoxMTYzLCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJ1cGRhdGUtYWdyZWVtZW50LWFuc3dlciIsInF1ZXN0aW9uYWlyZS1hbnN3ZXIiLCJ1c2VycyIsIm1hdGNoaW5nLWluZm9ybWF0aW9uIiwicmVsYXRpb24iLCJjaGF0IiwiZGVsZXRlLWZpbGUiXSwiaWF0IjoxNjI0NTI3NzkzLCJleHAiOjE2MjcxMTk3OTN9.LcLVB8xa8D2CF2kJWmxB5Ux29oWgGOfkAFGeG4DaEOU"
       },
+      "params": {},
       "baseURL": "https://mcr-dev.cygnis.dev/api/",
-      "transformRequest": [
-        null
-      ],
-      "transformResponse": [
-        null
-      ],
+      "transformRequest": [null],
+      "transformResponse": [null],
       "timeout": 0,
       "xsrfCookieName": "XSRF-TOKEN",
       "xsrfHeaderName": "X-XSRF-TOKEN",
@@ -32,52 +27,42 @@
   "ok": false,
   "status": 422,
   "headers": {
-    "cf-request-id": "0aceb659350000c60df4390000000001",
+    "cf-request-id": "0adf00061800002f28628c0000000001",
     "content-type": "application/json; charset=utf-8",
     "x-content-type-options": "nosniff",
     "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
     "strict-transport-security": "max-age=0; includeSubDomains",
     "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=aUU%2Bi4hH%2BzSLcEkkxqSOH2mVvaS3DlTEsoxODIQ01mwBvIqRSQfRH7%2BBXe%2FGt1uPpWf14AZ6RXPwfVtElZqvffj76PiFNtwxbPuAmM8tv9zjLVhp5xx4OwCQLrxF%2BqHs\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
-    "cf-ray": "662af33b8f12c60d-KHI",
+    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=6bGGGquiuj34yYuUEH48C%2BxUzS69yf9NBdIASqdMGfgJylaQgcls3pDxWRJDHBVslD0AYSvpKHlM69B8xH8wgFfKOswQJVfNIrnXGck6tHzEyK8X%2BFmgcq8hruJwA4ok\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
+    "cf-ray": "664502b68ac52f28-SIN",
     "x-powered-by": "Express",
     "x-frame-options": "SAMEORIGIN",
-    "date": "Mon, 21 Jun 2021 05:48:50 GMT",
+    "date": "Thu, 24 Jun 2021 09:43:13 GMT",
     "server": "cloudflare",
     "vary": "Origin",
     "x-xss-protection": "1; mode=block",
     "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
-    "content-length": "129",
+    "content-length": "54",
     "cf-cache-status": "DYNAMIC",
-    "etag": "W/\"81-r/aWXngDrdxCS4PY8pJUPGwb5y0\""
+    "etag": "W/\"36-QVzkVbfxA/N06k9dRWpIUCMgDyU\""
   },
   "config": {
-    "url": "user/me",
-    "method": "put",
-    "data": "{\"secondaryEmail\":\"\"}",
+    "url": "user/me?meta=true",
+    "method": "get",
     "headers": {
       "Accept": "application/json",
-      "Content-Type": "application/json",
       "subdomain": "ohio",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjM0LCJ1c2VySWQiOjExNjMsImNsaWVudElkIjoiMSIsInNjb3BlcyI6WyJjb21tdW5pdHkiLCJhbm5vdW5jZW1lbnRzIiwibGlzdC1xdWVzdGlvbiIsImxpc3Qtc2VjdGlvbiIsImxpc3QtYWdyZWVtZW50LWZpZWxkcyIsInZpZXctc3RhdGljLWNvbnRlbnQiLCJsaXN0LWNvbmZpZ3VyYXRpb24iLCJsaXN0LWZvcm0taW5wdXQiLCJzeXN0ZW0tbG9nIiwiY29udmVyc2F0aW9uIiwibWFyay1zcGFtIiwibm90aWZpY2F0aW9uIiwiYWdyZWVtZW50LWFuc3dlciIsInVwZGF0ZS1hZ3JlZW1lbnQtYW5zd2VyIiwicXVlc3Rpb25haXJlLWFuc3dlciIsInVzZXJzIiwibWF0Y2hpbmctaW5mb3JtYXRpb24iLCJyZWxhdGlvbiIsImNoYXQiLCJkZWxldGUtZmlsZSJdLCJpYXQiOjE2MjQwMDI3NzcsImV4cCI6MTYyNjU5NDc3N30.6nm-DlW7IguHYuIvV5BwVnj50QEZwVdb0pYP5qogfo8"
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE2NSwidXNlcklkIjoxMTYzLCJjbGllbnRJZCI6IjEiLCJzY29wZXMiOlsiY29tbXVuaXR5IiwiYW5ub3VuY2VtZW50cyIsImxpc3QtcXVlc3Rpb24iLCJsaXN0LXNlY3Rpb24iLCJsaXN0LWFncmVlbWVudC1maWVsZHMiLCJ2aWV3LXN0YXRpYy1jb250ZW50IiwibGlzdC1jb25maWd1cmF0aW9uIiwibGlzdC1mb3JtLWlucHV0Iiwic3lzdGVtLWxvZyIsImNvbnZlcnNhdGlvbiIsIm1hcmstc3BhbSIsIm5vdGlmaWNhdGlvbiIsImFncmVlbWVudC1hbnN3ZXIiLCJ1cGRhdGUtYWdyZWVtZW50LWFuc3dlciIsInF1ZXN0aW9uYWlyZS1hbnN3ZXIiLCJ1c2VycyIsIm1hdGNoaW5nLWluZm9ybWF0aW9uIiwicmVsYXRpb24iLCJjaGF0IiwiZGVsZXRlLWZpbGUiXSwiaWF0IjoxNjI0NTI3NzkzLCJleHAiOjE2MjcxMTk3OTN9.LcLVB8xa8D2CF2kJWmxB5Ux29oWgGOfkAFGeG4DaEOU"
     },
+    "params": {},
     "baseURL": "https://mcr-dev.cygnis.dev/api/",
-    "transformRequest": [
-      null
-    ],
-    "transformResponse": [
-      null
-    ],
+    "transformRequest": [null],
+    "transformResponse": [null],
     "timeout": 0,
     "xsrfCookieName": "XSRF-TOKEN",
     "xsrfHeaderName": "X-XSRF-TOKEN",
     "maxContentLength": -1,
     "maxBodyLength": -1
   },
-  "data": {
-    "message": "Please fix the following errors",
-    "errors": {
-      "secondaryEmail": "Secondary email must be between 1 and 100 characters."
-    }
-  }
+  "data": { "message": "Whoops, looks like something went wrong." }
 }
