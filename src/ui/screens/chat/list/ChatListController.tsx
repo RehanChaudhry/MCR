@@ -309,12 +309,6 @@ export const ChatListController: FC<Props> = ({
               //remove item at index
               chatsCopy?.splice(findIndex!, 1);
 
-              AppLog.logForcefully(
-                () =>
-                  "receive message inactive: " +
-                  JSON.stringify(findItem.currentUser[0])
-              );
-
               //add item at index 0
               //copy data of current user from finditem to newConversation which is received from socket
               data.currentUser = [];
@@ -333,15 +327,9 @@ export const ChatListController: FC<Props> = ({
 
               return chatsCopy;
             } else {
-              AppLog.logForcefully(
-                () => "receive message inactive bfeore: 2"
-              );
               return prevState;
             }
           } else {
-            AppLog.logForcefully(
-              () => "receive message inactive bfeore: 1"
-            );
             return prevState;
           }
         });

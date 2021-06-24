@@ -191,8 +191,6 @@ function createListFooter(
           }
         ]}
         fontWeight={"semi-bold"}
-        textStyle={[styles.saveButton, { color: themedColors.background }]}
-        loaderColor={themedColors.background}
         rightIcon={() => (
           <RightArrowCircle
             width={13}

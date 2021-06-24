@@ -12,6 +12,7 @@ import {
 import { usePreferredTheme } from "hooks";
 import { FONT_SIZE, SPACE } from "config";
 import AgreementStatus from "models/enums/AgreementStatusType";
+import Color from "config/Colors";
 
 type Props = {
   username: string;
@@ -59,11 +60,7 @@ export const AgreementDetailsListItem = React.memo<Props>(
               <AppImageBackground
                 containerShape={CONTAINER_TYPES.SQUARE}
                 icon={() => (
-                  <Chat
-                    width={18}
-                    height={18}
-                    fill={theme.themedColors.black}
-                  />
+                  <Chat width={18} height={18} fill={Color.black} />
                 )}
                 containerStyle={styles.chatImage}
               />

@@ -1,8 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import EScreen from "models/enums/EScreen";
 
 export type FriendsStackParamList = {
   MyFriends: undefined;
-  MyRoommates: undefined;
+  MyRoommates: { isFrom: EScreen };
   RoommateAgreement: undefined;
   DismissedOrBlocked: undefined;
 };

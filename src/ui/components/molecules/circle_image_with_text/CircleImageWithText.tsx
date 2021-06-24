@@ -23,8 +23,8 @@ import Announcement from "assets/images/announcements.svg";
 
 type Props = {
   notification: NotificationData;
-  userNameOnPress?: () => void;
-  actionOnPress: (type: string) => void;
+  userNameOnPress: (userId: number) => void;
+  actionOnPress: (type: string, postId?: number, action?: string) => void;
 };
 
 export const CircleImageWithText = React.memo<Props>(
@@ -150,7 +150,10 @@ export const CircleImageWithText = React.memo<Props>(
           <View style={styles.circleWithText}>
             <LabelHtml
               style={styles.messageText}
-              onBoldTextPress={userNameOnPress}
+              numberOfLines={3}
+              onBoldTextPress={() => {
+                userNameOnPress(notification.senderId!);
+              }}
               text={getMessage(notification) ?? STRINGS.common.not_found}
             />
           </View>
@@ -162,6 +165,8 @@ export const CircleImageWithText = React.memo<Props>(
                 { color: theme.themedColors.interface["700"] }
               ]}
             />
+          </View>
+          <View style={styles.buttonContainer}>
             <LinkButton
               text={getButtonText(notification)!}
               viewStyle={[
@@ -169,7 +174,11 @@ export const CircleImageWithText = React.memo<Props>(
                 { backgroundColor: theme.themedColors.primaryShade }
               ]}
               onPress={() => {
-                actionOnPress(notification?.type!);
+                actionOnPress(
+                  notification?.type!,
+                  notification?.id,
+                  notification?.action
+                );
               }}
               fontWeight="bold"
               textStyle={styles.buttonText}
@@ -231,5 +240,10 @@ const styles = StyleSheet.create({
   viewRequest: {
     flex: 1
   },
-  messageText: { fontSize: FONT_SIZE.sm }
+  messageText: { fontSize: FONT_SIZE.sm },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    flexDirection: "row"
+  }
 });

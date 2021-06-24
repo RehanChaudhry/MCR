@@ -39,6 +39,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
     let isMessageRead =
       _.isArray(item.message) &&
       item.message.length > 0 &&
+      item.message[0].readBy.length > 0 &&
       item.message[0].readBy.find(
         (userId) => userId === user?.profile?.id
       ) !== undefined;
@@ -48,6 +49,7 @@ export const ItemChatList = React.memo<ItemChatListProps>(
         () =>
           `In useEffect()... Item: ${item.id}, formattedDate: ${formattedDate}`
       );
+
       setPrettyTime(item.getFormattedDate());
       let id = setInterval(() => {
         setPrettyTime(item.getFormattedDate());
@@ -69,7 +71,8 @@ export const ItemChatList = React.memo<ItemChatListProps>(
           <Image
             style={styles.imgStyle}
             source={
-              item.conversationUsers.length > 0
+              item.conversationUsers.length > 0 &&
+              item.conversationUsers[0].profilePicture?.fileURL !== "null"
                 ? {
                     uri: item.conversationUsers[0].profilePicture?.fileURL
                   }

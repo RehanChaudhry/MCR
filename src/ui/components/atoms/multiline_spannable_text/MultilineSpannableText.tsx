@@ -9,12 +9,13 @@ export interface SpannableProps {
   containerStyle?: StyleProp<ViewStyle>;
   text: Array<string>;
   appLabelProps: Array<AppLabelProps>;
+  numberOfLines?: number;
 }
 
 type Props = SpannableProps;
 
 const MultilineSpannableText = React.memo<Props>(
-  ({ text, containerStyle, appLabelProps }) => {
+  ({ text, containerStyle, appLabelProps, numberOfLines = 0 }) => {
     if (
       text.length > 0 &&
       appLabelProps.length > 0 &&
@@ -22,7 +23,7 @@ const MultilineSpannableText = React.memo<Props>(
     ) {
       return (
         <View testID={"SPANNABLE_TEXT"} style={containerStyle}>
-          <Text>
+          <Text numberOfLines={numberOfLines}>
             {text.map((item, index) => (
               <AppLabel
                 key={index}

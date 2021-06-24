@@ -4,7 +4,9 @@ exports[`Snapshot testing 1`] = `
 <View
   testID="SPANNABLE_TEXT"
 >
-  <Text>
+  <Text
+    numberOfLines={0}
+  >
     <Text
       numberOfLines={1}
       style={

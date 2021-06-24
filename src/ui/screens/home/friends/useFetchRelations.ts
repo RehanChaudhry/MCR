@@ -29,6 +29,10 @@ export default (
     paginate: true
   });
 
+  const [isLoggedInUserAModerator, setIsLoggedInUserAModerator] = useState(
+    false
+  );
+
   const [isLoading, setIsLoading] = useState(true);
   const [canLoadMore, setCanLoadMore] = useState<boolean>(false);
 
@@ -78,6 +82,9 @@ export default (
         setRelations?.(_updatedData);
 
         if (requestModel.page === 1) {
+          setIsLoggedInUserAModerator(
+            data?.filter((value) => value.isModerator === 1)?.length === 0
+          );
           setRelationsCount(dataBody.count ?? 0);
           setPendingRelationsCount(dataBody.pendingCount ?? 0);
         }
@@ -153,6 +160,7 @@ export default (
     canLoadMore,
     onEndReached,
     errorMessage,
-    onPullToRefresh
+    onPullToRefresh,
+    isLoggedInUserAModerator
   };
 };

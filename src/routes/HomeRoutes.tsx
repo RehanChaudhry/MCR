@@ -32,6 +32,9 @@ export const HomeRoutes = () => {
         <HomeDrawer.Screen
           name="Matches"
           component={MatchesRoutes}
+          options={{
+            unmountOnBlur: true
+          }}
           // @ts-ignore
           initialParams={{
             changeSelectedDrawerItem: () => {
@@ -39,9 +42,18 @@ export const HomeRoutes = () => {
             }
           }}
         />
-        <HomeDrawer.Screen name="Community" component={CommunityRoutes} />
+        <HomeDrawer.Screen
+          name="Community"
+          options={{
+            unmountOnBlur: true
+          }}
+          component={CommunityRoutes}
+        />
         <HomeDrawer.Screen
           name="Announcement"
+          options={{
+            unmountOnBlur: true
+          }}
           component={AnnouncementRoutes}
         />
         <HomeDrawer.Screen name="Profile" component={ProfileRootRoutes} />

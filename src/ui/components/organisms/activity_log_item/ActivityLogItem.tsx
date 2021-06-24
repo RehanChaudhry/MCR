@@ -28,9 +28,14 @@ import Actions from "models/enums/ActivityLogAction";
 
 interface Props {
   activityLog: ActivityLog;
+  navigateTOScreen: (
+    type: string,
+    action: string,
+    postId?: number
+  ) => void;
 }
 
-const ActivityLogItem = ({ activityLog }: Props) => {
+const ActivityLogItem = ({ activityLog, navigateTOScreen }: Props) => {
   const { themedColors } = usePreferredTheme();
 
   const icon: any = () => {
@@ -78,6 +83,14 @@ const ActivityLogItem = ({ activityLog }: Props) => {
         activityLog.type ===
           NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
         activityLog.action === Actions.CREATE
+      ) {
+        return (
+          <RoommateRequest width={20} fill={themedColors.background} />
+        );
+      } else if (
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+        activityLog.action === Actions.ACCEPTED
       ) {
         return (
           <RoommateRequest width={20} fill={themedColors.background} />
@@ -152,6 +165,13 @@ const ActivityLogItem = ({ activityLog }: Props) => {
         <LabelHtml
           containerStyle={styles.message}
           style={styles.messageText}
+          onBoldTextPress={() =>
+            navigateTOScreen(
+              activityLog.type!,
+              activityLog.action!,
+              activityLog.entityId!
+            )
+          }
           text={getMessage(activityLog) ?? STRINGS.common.not_found}
         />
         <AppLabel

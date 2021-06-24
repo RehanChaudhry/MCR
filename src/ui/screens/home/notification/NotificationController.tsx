@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { usePreventDoubleTap } from "hooks";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import { NotificationsResponseModel } from "models/api_responses/NotificationsResponseModel";
 import EScreen from "models/enums/EScreen";
@@ -21,6 +20,7 @@ import { NotificationView } from "ui/screens/home/notification/NotificationView"
 import { AppLog } from "utils/Util";
 import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
+import NotificationActionType from "models/enums/NotificationActionType";
 
 type NotificationNavigationProp = StackNavigationProp<
   NotificationParamList,
@@ -52,12 +52,13 @@ const NotificationController: FC<Props> = () => {
     paginate: true
   });
 
-  const openMyProfileScreen = usePreventDoubleTap(() => {
-    navigation.push("ViewProfile", {
+  const openMyProfileScreen = (userId: number) => {
+    navigation.push("Profile", {
       isFrom: EScreen.NOTIFICATION,
-      updateProfile: false
+      updateProfile: false,
+      userId: userId
     });
-  });
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -134,16 +135,31 @@ const NotificationController: FC<Props> = () => {
   //   navigation.push("Chat");
   // });
 
-  const openFriendRequestScreen = usePreventDoubleTap(
-    (title: string, type: ConnectRequestType) => {
-      navigation.push("ConnectRequest", {
-        title: title,
-        type: type
-      });
-    }
-  );
+  const openMyRoommatesScreen = () => {
+    navigation.push("MyRoommates", { isFrom: EScreen.NOTIFICATION });
+  };
+  const openRoommateAgreementScreen = () => {
+    navigation.push("RoommateAgreement", { isFrom: EScreen.NOTIFICATION });
+  };
+  const openSinglePostScreen = (postId: number) => {
+    navigation.push("SinglePost", { postId: postId });
+  };
 
-  const navigateTOScreen = (type: string) => {
+  const openFriendRequestScreen = (
+    title: string,
+    type: ConnectRequestType
+  ) => {
+    navigation.push("ConnectRequest", {
+      title: title,
+      type: type
+    });
+  };
+
+  const navigateTOScreen = (
+    type: string,
+    postId?: number,
+    action?: string
+  ) => {
     if (type != null) {
       if (type === NotificationAndActivityLogFilterType.FRIEND_REQUEST) {
         return openFriendRequestScreen(
@@ -157,6 +173,28 @@ const NotificationController: FC<Props> = () => {
           "Roommate Requests",
           ConnectRequestType.ROOMMATE_REQUESTS
         );
+      } else if (
+        type === NotificationAndActivityLogFilterType.ROOMMATE_GROUP
+      ) {
+        return openMyRoommatesScreen();
+      } else if (
+        type === NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT
+      ) {
+        return openRoommateAgreementScreen();
+      } else if (
+        type === NotificationAndActivityLogFilterType.POST ||
+        (action === NotificationActionType.RECIEVE &&
+          type === NotificationAndActivityLogFilterType.ANNOUNCEMENT) ||
+        action === NotificationActionType.COMMENT
+      ) {
+        return openSinglePostScreen(postId!);
+      } else if (
+        type === NotificationAndActivityLogFilterType.CHAT &&
+        NotificationActionType.RECIEVE
+      ) {
+        return null;
+      } else {
+        return null;
       }
     }
   };

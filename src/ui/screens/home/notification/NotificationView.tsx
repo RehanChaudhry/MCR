@@ -16,14 +16,18 @@ import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import NotificationData from "models/NotificationData";
 
 type Props = {
-  openMyProfileScreen: () => void;
+  openMyProfileScreen: (userId: number) => void;
   notifications?: NotificationData[];
   shouldShowProgressBar: boolean;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete: () => void) => void;
   onChangeFilter: (textToFilter: string) => void;
-  navigateToRequiredScreen: (type: string) => void;
+  navigateToRequiredScreen: (
+    type: string,
+    postId?: number,
+    action?: string
+  ) => void;
 };
 
 export const NotificationView = React.memo<Props>(
