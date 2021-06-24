@@ -33,6 +33,7 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 import { profileCompletedPercentage } from "models/api_responses/FetchMyProfileResponseModel";
 import { SocketHelper } from "utils/SocketHelper";
 import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount";
+import useListenPushNotifications from "ui/screens/home/friends/useListenPushNotification";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
   currentItem: string;
@@ -110,6 +111,13 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
       /*navigation, setCurrentItem*/
     ]
   );
+
+  const { screenName, notificationId } = useListenPushNotifications();
+
+  useEffect(() => {
+    navigation.navigate("Settings");
+    setCurrentItem("Settings");
+  }, [setCurrentItem, navigation, screenName, notificationId]);
 
   return (
     <View style={styles.container}>

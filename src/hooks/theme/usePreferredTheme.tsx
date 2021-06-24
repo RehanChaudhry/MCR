@@ -41,7 +41,7 @@ const getPalette = async () => {
 const ThemeContext = React.createContext<ThemeContext>({
   isDark: false,
   themedColors: colorPaletteContainer.light({}),
-  saveCustomPalette: () => {},
+  saveCustomPalette: async () => {},
   setScheme: () => {}
 });
 
