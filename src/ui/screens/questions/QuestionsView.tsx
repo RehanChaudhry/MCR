@@ -190,6 +190,7 @@ function createListFooter(
             backgroundColor: themedColors.primary
           }
         ]}
+        textStyle={{ color: themedColors.background }}
         fontWeight={"semi-bold"}
         rightIcon={() => (
           <RightArrowCircle
