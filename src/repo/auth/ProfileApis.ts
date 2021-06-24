@@ -9,6 +9,7 @@ import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponse
 import { MatchInfoApiResponseModel } from "models/api_responses/MatchInfoApiResponseModel";
 import { NotificationApiRequestModel } from "models/api_requests/NotificationApiRequestModel";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
+import { NotificationReadApiRequestModel } from "models/api_requests/NotificationReadApiRequestModel";
 
 function questions() {
   return apiClient.get<QuestionsResponseModel>(API.GET_QUESTIONS);
@@ -16,6 +17,14 @@ function questions() {
 
 function getNotifications(requestModel: NotificationApiRequestModel) {
   return apiClient.get<NotificationsResponseModel>(API.NOTIFICATION_URL, {
+    ...requestModel
+  });
+}
+
+function notificationMarkRead(
+  requestModel: NotificationReadApiRequestModel
+) {
+  return apiClient.put<any>(API.NOTIFICATION_URL, {
     ...requestModel
   });
 }
@@ -49,5 +58,6 @@ export default {
   getNotifications,
   activityLogs,
   getMatchInfo,
-  getUserById
+  getUserById,
+  notificationMarkRead
 };

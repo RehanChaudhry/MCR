@@ -39,17 +39,17 @@ export function getMessage(activityLog: ActivityLog): string {
         NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
       activityLog.action === Actions.ACCEPTED
     ) {
-      return `Accepted friend request <b>${activityLog.user?.firstName}${
-        " " + activityLog.user?.lastName
-      }</b>`;
+      return `Accepted friend request <b>${
+        activityLog.data?.senderFirstName
+      }${" " + activityLog.data?.senderLastName}</b>`;
     } else if (
-      (activityLog.type ===
+      activityLog.type ===
         NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
-        activityLog.action) === Actions.REJECTED
+      activityLog.action === Actions.REJECTED
     ) {
-      return `Rejected friend request <b>${activityLog.user?.firstName}${
-        " " + activityLog.user?.lastName
-      }" </b>`;
+      return `Rejected friend request <b>${
+        activityLog.data?.senderFirstName
+      }${" " + activityLog.data?.senderLastName}</b>`;
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
@@ -64,23 +64,23 @@ export function getMessage(activityLog: ActivityLog): string {
       activityLog.action === Actions.ACCEPTED
     ) {
       return `Accepted a roommate request from <b>${
-        activityLog.user?.firstName
-      }${" " + activityLog.user?.lastName}</b>`;
+        activityLog.data?.senderFirstName
+      }${" " + activityLog.data?.senderLastName}</b>`;
     } else if (
-      (activityLog.type ===
+      activityLog.type ===
         NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
-        activityLog.action) === Actions.REJECTED
+      activityLog.action === Actions.REJECTED
     ) {
-      return `Rejected roommate request <b>${activityLog.user?.firstName}${
-        " " + activityLog.user?.lastName
-      }</b>`;
+      return `Rejected roommate request <b>${
+        activityLog.data?.senderFirstName
+      }${" " + activityLog.data?.senderLastName}</b>`;
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.DISMISSED_LIST &&
       activityLog.action === Actions.CREATE
     ) {
-      return `Added <b>${activityLog.user?.firstName}${
-        " " + activityLog.user?.lastName
+      return `Added <b>${activityLog.data?.senderFirstName}${
+        " " + activityLog.data?.senderFirstName
       }</b> to dismiss list`;
     } else if (
       activityLog.type ===

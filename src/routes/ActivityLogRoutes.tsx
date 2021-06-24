@@ -6,8 +6,6 @@ import { ActivityLogStack } from "routes/ActivityLogStack";
 import ActivityLogController from "ui/screens/home/activity_log/ActivityLogController";
 import ViewProfileController from "ui/screens/home/profile/view_profile/ViewProfileController";
 import SinglePostController from "ui/screens/home/community/single_post/SinglePostController";
-import { NotificationStack } from "routes/NotificationParams";
-import { CommunityStack } from "routes/CommunityStack";
 import { CommentsController } from "ui/screens/home/comments/CommentsController";
 import ReportContentController from "ui/screens/home/community/report_content/ReportContentController";
 
@@ -33,15 +31,15 @@ const ActivityLogRoutes = () => (
       name="Profile"
       component={ViewProfileController}
     />
-    <NotificationStack.Screen
+    <ActivityLogStack.Screen
       name="SinglePost"
       component={SinglePostController}
     />
-    <CommunityStack.Screen
+    <ActivityLogStack.Screen
       name="Comments"
       component={CommentsController}
     />
-    <CommunityStack.Screen
+    <ActivityLogStack.Screen
       name="ReportContent"
       component={ReportContentController}
     />

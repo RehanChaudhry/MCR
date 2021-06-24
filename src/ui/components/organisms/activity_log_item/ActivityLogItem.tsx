@@ -166,6 +166,7 @@ const ActivityLogItem = ({ activityLog, navigateTOScreen }: Props) => {
         <LabelHtml
           containerStyle={styles.message}
           style={styles.messageText}
+          numberOfLines={3}
           onBoldTextPress={() =>
             navigateTOScreen(
               activityLog.type!,

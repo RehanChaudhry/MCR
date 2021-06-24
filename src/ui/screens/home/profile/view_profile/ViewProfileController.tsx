@@ -41,10 +41,7 @@ type ViewProfileNavigationProp = StackNavigationProp<
   "RoommateAgreement"
 >;
 
-type ViewProfileRouteProp = RouteProp<
-  NotificationParamList,
-  "ViewProfile"
->;
+type ViewProfileRouteProp = RouteProp<NotificationParamList, "Profile">;
 
 type NotificationNavigationProp = StackNavigationProp<
   NotificationParamList,
@@ -166,7 +163,7 @@ const ViewProfileController: FC<Props> = () => {
         ),
 
         headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text="My Profile" />
+        headerTitle: () => <HeaderTitle text={route.params.userName!} />
       });
     } else if (viewProfileRoute.params.isFrom === EScreen.HOME) {
       navigation.setOptions({
@@ -190,6 +187,7 @@ const ViewProfileController: FC<Props> = () => {
     navigation,
     route.params.isFrom,
     viewProfileRoute.params.isFrom,
+    route.params.userName,
     navigationNotification
   ]);
 

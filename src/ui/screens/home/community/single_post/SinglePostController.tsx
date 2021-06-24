@@ -129,7 +129,7 @@ const SinglePostController: FC<Props> = () => {
         });
       } else {
         activityLogNavigation.navigate("Profile", {
-          isFrom: EScreen.NOTIFICATION,
+          isFrom: EScreen.ACTIVTY_LOG,
           updateProfile: false,
           userId: userId
         });

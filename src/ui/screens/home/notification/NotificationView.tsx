@@ -16,7 +16,7 @@ import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import NotificationData from "models/NotificationData";
 
 type Props = {
-  openMyProfileScreen: (userId: number) => void;
+  openMyProfileScreen: (userId: number, userName: string) => void;
   notifications?: NotificationData[];
   shouldShowProgressBar: boolean;
   onEndReached: () => void;
@@ -26,7 +26,10 @@ type Props = {
   navigateToRequiredScreen: (
     type: string,
     postId?: number,
-    action?: string
+    action?: string,
+    users?: [],
+    conversationId?: number,
+    notificationId?: number
   ) => void;
 };
 

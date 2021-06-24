@@ -180,6 +180,11 @@ const ActivityLogController: FC<Props> = () => {
         action === Actions.CREATE
       ) {
         return openMyProfileScreen(userId!);
+      } else if (
+        type === NotificationAndActivityLogFilterType.POST &&
+        action === Actions.CREATE
+      ) {
+        return openSinglePostScreen(postId!);
       } else {
         return null;
       }

@@ -34,7 +34,8 @@ export const ActivityLogView = React.memo<Props>(
     pullToRefreshCallback,
     onEndReached,
     onChangeFilter,
-    navigateTOScreen
+    navigateTOScreen,
+    isAllDataLoaded
   }) => {
     const { themedColors } = usePreferredTheme();
     let sharedDataRef = useRef("");
@@ -94,6 +95,7 @@ export const ActivityLogView = React.memo<Props>(
           renderItem={listItem}
           style={styles.list}
           onEndReached={onEndReached}
+          isAllDataLoaded={isAllDataLoaded}
           pullToRefreshCallback={(_onComplete) => {
             sharedDataRef.current = "";
             pullToRefreshCallback(_onComplete);

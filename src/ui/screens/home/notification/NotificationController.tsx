@@ -21,6 +21,10 @@ import { AppLog } from "utils/Util";
 import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 import NotificationActionType from "models/enums/NotificationActionType";
+import { useAuth, usePreventDoubleTap } from "hooks";
+import { Conversation } from "models/api_responses/ChatsResponseModel";
+import { NotificationReadApiRequestModel } from "models/api_requests/NotificationReadApiRequestModel";
+import SimpleToast from "react-native-simple-toast";
 
 type NotificationNavigationProp = StackNavigationProp<
   NotificationParamList,
@@ -40,6 +44,9 @@ const NotificationController: FC<Props> = () => {
   const notificationApi = useApi<any, NotificationsResponseModel>(
     ProfileApis.getNotifications
   );
+  const notificationReadApi = useApi<NotificationReadApiRequestModel, any>(
+    ProfileApis.notificationMarkRead
+  );
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
 
   const [
@@ -52,11 +59,12 @@ const NotificationController: FC<Props> = () => {
     paginate: true
   });
 
-  const openMyProfileScreen = (userId: number) => {
+  const openMyProfileScreen = (userId: number, userName: string) => {
     navigation.push("Profile", {
       isFrom: EScreen.NOTIFICATION,
       updateProfile: false,
-      userId: userId
+      userId: userId,
+      userName: userName
     });
   };
 
@@ -68,6 +76,32 @@ const NotificationController: FC<Props> = () => {
       headerTitle: () => <HeaderTitle text="Notification" />
     });
   }, [navigation]);
+
+  const handleNotificationMarkRead = useCallback(
+    async (notificationId: number) => {
+      AppLog.logForcefully(
+        () => "readnotificationApifunctioncall" + notificationId
+      );
+      const {
+        hasError,
+        errorBody,
+        dataBody
+      } = await notificationReadApi.request([
+        {
+          all: false,
+          notificationId: notificationId
+        }
+      ]);
+
+      if (hasError || dataBody === undefined) {
+        Alert.alert("Unable to read notification", errorBody);
+        return;
+      } else {
+        SimpleToast.show(dataBody.message);
+      }
+    },
+    [notificationReadApi]
+  );
 
   const handleGetNotificationApi = useCallback(
     async (
@@ -131,9 +165,31 @@ const NotificationController: FC<Props> = () => {
     });
   };
 
-  // const openChatScreen = usePreventDoubleTap(() => {
-  //   navigation.push("Chat");
-  // });
+  const { user } = useAuth();
+  const openChatScreen = usePreventDoubleTap(
+    (users: [], conversationId: number) => {
+      AppLog.logForcefully(() => "usersArray: " + JSON.stringify(users));
+      navigation.push("ChatThread", {
+        title: users.reduce(
+          (newArray: string[], _item: any) => (
+            newArray.push(_item.firstName + " " + _item.lastName), newArray
+          ),
+          []
+        ),
+        conversation: {
+          id: conversationId,
+          currentUser: [
+            {
+              firstName: user?.profile?.firstName,
+              lastName: user?.profile?.lastName,
+              profilePicture: user?.profile?.profilePicture,
+              status: "active"
+            }
+          ]
+        } as Conversation
+      });
+    }
+  );
 
   const openMyRoommatesScreen = () => {
     navigation.push("MyRoommates", { isFrom: EScreen.NOTIFICATION });
@@ -161,8 +217,14 @@ const NotificationController: FC<Props> = () => {
   const navigateTOScreen = (
     type: string,
     postId?: number,
-    action?: string
+    action?: string,
+    users?: string[],
+    conversationId?: number,
+    notificationId?: number
   ) => {
+    //MarkRead Api Call
+    handleNotificationMarkRead(notificationId!).then().catch();
+
     if (type != null) {
       if (type === NotificationAndActivityLogFilterType.FRIEND_REQUEST) {
         return openFriendRequestScreen(
@@ -192,10 +254,10 @@ const NotificationController: FC<Props> = () => {
       ) {
         return openSinglePostScreen(postId!);
       } else if (
-        type === NotificationAndActivityLogFilterType.CHAT &&
-        NotificationActionType.RECIEVE
+        type === NotificationAndActivityLogFilterType.CONVERSATION &&
+        NotificationActionType.CREATE
       ) {
-        return null;
+        return openChatScreen(users, conversationId);
       } else {
         return null;
       }

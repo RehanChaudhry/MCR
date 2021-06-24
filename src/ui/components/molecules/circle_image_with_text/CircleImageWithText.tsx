@@ -23,8 +23,15 @@ import Announcement from "assets/images/announcements.svg";
 
 type Props = {
   notification: NotificationData;
-  userNameOnPress: (userId: number) => void;
-  actionOnPress: (type: string, postId?: number, action?: string) => void;
+  userNameOnPress: (userId: number, userName: string) => void;
+  actionOnPress: (
+    type: string,
+    postId?: number,
+    action?: string,
+    users?: [],
+    conversationId?: number,
+    notificationId?: number
+  ) => void;
 };
 
 export const CircleImageWithText = React.memo<Props>(
@@ -152,7 +159,12 @@ export const CircleImageWithText = React.memo<Props>(
               style={styles.messageText}
               numberOfLines={3}
               onBoldTextPress={() => {
-                userNameOnPress(notification.senderId!);
+                userNameOnPress(
+                  notification.senderId!,
+                  notification.sender?.firstName! +
+                    " " +
+                    notification.sender?.lastName!
+                );
               }}
               text={getMessage(notification) ?? STRINGS.common.not_found}
             />
@@ -177,7 +189,10 @@ export const CircleImageWithText = React.memo<Props>(
                 actionOnPress(
                   notification?.type!,
                   notification?.referenceId,
-                  notification?.action
+                  notification?.action,
+                  notification?.data?.users,
+                  notification.referenceId!,
+                  notification.id
                 );
               }}
               fontWeight="bold"

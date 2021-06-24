@@ -9,9 +9,9 @@ import MyRoommatesController from "ui/screens/home/friends/MyRoommates/MyRoommat
 import RoommateAgreementController from "ui/screens/home/friends/RoommateAgreement/RoommateAgreementController";
 import SinglePostController from "ui/screens/home/community/single_post/SinglePostController";
 import CommunityController from "ui/screens/home/community/CommunityController";
-import { CommunityStack } from "routes/CommunityStack";
 import { CommentsController } from "ui/screens/home/comments/CommentsController";
 import ReportContentController from "ui/screens/home/community/report_content/ReportContentController";
+import { ChatThreadController } from "ui/screens/chat/thread/ChatThreadController";
 
 const Stack = createStackNavigator();
 
@@ -46,19 +46,23 @@ export const NotificationRoutes = () => {
         name="SinglePost"
         component={SinglePostController}
       />
-      <CommunityStack.Screen
+      <NotificationStack.Screen
         name="Community"
         component={CommunityController}
       />
-      <CommunityStack.Screen
+      <NotificationStack.Screen
         name="Comments"
         component={CommentsController}
       />
-      <CommunityStack.Screen
+      <NotificationStack.Screen
+        name="ChatThread"
+        component={ChatThreadController}
+      />
+      <NotificationStack.Screen
         name="ReportContent"
         component={ReportContentController}
       />
-      <CommunityStack.Screen
+      <NotificationStack.Screen
         name="Profile"
         component={ViewProfileController}
         initialParams={{ isFrom: EScreen.NOTIFICATION }}

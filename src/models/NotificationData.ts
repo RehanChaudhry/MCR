@@ -25,6 +25,15 @@ export function getDisplayTime(notification: NotificationData): string {
   );
 }
 
+const getUsers = (users: []) => {
+  return users.reduce(
+    (newArray: string[], _item: any) => (
+      newArray.push(_item.firstName + " " + _item.lastName), newArray
+    ),
+    []
+  );
+};
+
 export function getMessage(notification: NotificationData): string {
   if (
     notification.type ===
@@ -47,7 +56,11 @@ export function getMessage(notification: NotificationData): string {
       NotificationAndActivityLogFilterType.NEW_CONVERSATION &&
     notification.action === NotificationActionType.CREATE
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> started a new conversation with`;
+    return `<b>${notification?.sender?.firstName} ${
+      notification?.sender?.lastName
+    }</b> started a new conversation with <b>${getUsers(
+      notification?.data?.users
+    )}</b>`;
   } else if (
     notification.type === NotificationAndActivityLogFilterType.DISAGREED
   ) {
@@ -70,7 +83,7 @@ export function getMessage(notification: NotificationData): string {
     notification.type === NotificationAndActivityLogFilterType.POST &&
     notification.action === NotificationActionType.LIKE
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has like your post, ${notification.data.content} `;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has like your post, <b>${notification.data.content}</b> `;
   } else if (
     notification.type === NotificationAndActivityLogFilterType.POST &&
     notification.action === NotificationActionType.COMMENT
