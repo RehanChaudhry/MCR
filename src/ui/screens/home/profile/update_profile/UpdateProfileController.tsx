@@ -31,7 +31,6 @@ import Api from "config/Api";
 import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
 import SimpleToast from "react-native-simple-toast";
 import { BackHandler } from "react-native";
-import { STRINGS } from "config";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -167,14 +166,9 @@ const UpdateProfileController: FC<Props> = () => {
       );
     } else {
       await auth.saveProfile(dataBody.data, auth.user);
+      SimpleToast.show("Your profile has been updated successfully");
       if (route.params.isFrom === EScreen.WELCOME) {
-        SimpleToast.show(STRINGS.profile.popup.message_success);
         openQuestionnaireScreen();
-      } else {
-        Alert.alert(
-          STRINGS.profile.popup.title_success,
-          STRINGS.profile.popup.message_success
-        );
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -184,7 +178,6 @@ const UpdateProfileController: FC<Props> = () => {
     <>
       {useLazyLoadInterface(
         <UpdateProfileView
-          isFrom={route.params.isFrom}
           infoTextShown={infoTextShown}
           handleUpdateProfile={handleUpdateProfile}
           updateProfileUiData={auth.user?.profile}

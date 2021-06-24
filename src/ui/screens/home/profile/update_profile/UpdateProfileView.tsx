@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
@@ -18,11 +18,10 @@ import { FormInputFieldData } from "models/api_responses/RoommateAgreementRespon
 import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 import { AppLog } from "utils/Util";
+import { useMemo } from "react";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
-import EScreen from "models/enums/EScreen";
 
 type Props = {
-  isFrom: EScreen;
   infoTextShown: boolean;
   handleUpdateProfile: (values: UpdateProfileRequestModel) => void;
   updateProfileUiData: Profile | undefined;
@@ -32,7 +31,6 @@ type Props = {
 
 export const UpdateProfileView = optimizedMemo<Props>(
   ({
-    isFrom,
     infoTextShown,
     handleUpdateProfile,
     updateProfileUiData,
@@ -156,11 +154,7 @@ export const UpdateProfileView = optimizedMemo<Props>(
 
           <View style={styles.buttonViewStyle}>
             <AppFormFormSubmit
-              text={
-                isFrom === EScreen.WELCOME
-                  ? STRINGS.profile.buttonText.saveAndContinue
-                  : STRINGS.profile.buttonText.actionSave
-              }
+              text={STRINGS.profile.buttonText.saveAndContinue}
               buttonType={BUTTON_TYPES.NORMAL}
               fontWeight={"semi-bold"}
               textStyle={{ color: theme.themedColors.background }}

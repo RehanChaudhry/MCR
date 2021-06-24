@@ -131,8 +131,7 @@ export default {
     },
     buttonText: {
       uploadProfilePhoto: "Upload Profile Photo",
-      saveAndContinue: "Save & Continue",
-      actionSave: "Save"
+      saveAndContinue: "Save & Continue"
     },
     placeHolder: {
       firstName: "Enter your first name",
@@ -217,10 +216,6 @@ export default {
         heading: "My Roommates"
       },
       agreementButtonTitle: "View Roommate Agreement"
-    },
-    popup: {
-      title_success: "Profile Updated",
-      message_success: "Your profile has been updated successfully."
     }
   },
 
