@@ -16,7 +16,7 @@ export enum AppColorScheme {
 type ThemeContext = {
   isDark: boolean;
   themedColors: ColorPalette;
-  saveCustomPalette: (palette: Partial<ColorPalette>) => void;
+  saveCustomPalette: (palette: Partial<ColorPalette>) => Promise<void>;
   setScheme: (scheme: AppColorScheme) => void;
 };
 
@@ -86,7 +86,7 @@ export const AppThemeProvider = React.memo<Props>((props) => {
     themedColors: isDark
       ? colorPaletteContainer.dark(customPalette)
       : colorPaletteContainer.light(customPalette),
-    saveCustomPalette: (palette: Partial<ColorPalette>) => {
+    saveCustomPalette: async (palette: Partial<ColorPalette>) => {
       storePalette(palette);
       setCustomPalette(palette);
     },

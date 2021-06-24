@@ -26,6 +26,10 @@ import VersionCheck from "react-native-version-check";
 import Screen from "ui/components/atoms/Screen";
 import { useAuth, usePreferredTheme } from "hooks";
 import Logo from "assets/images/mcr_logo.svg";
+import { FetchUniDetailsResponseModel } from "models/api_responses/FetchUniDetailsResponseModel";
+import UniSelectionApis from "repo/auth/UniSelectionApis";
+import FetchUniDetailsRequestModel from "models/api_requests/FetchUniDetailsRequestModel";
+import { computeShades } from "hooks/theme/ColorPaletteContainer";
 
 interface Props {}
 
@@ -136,6 +140,11 @@ export const SplashView = React.memo<Props>(() => {
     AuthApis.fetchMyProfile
   );
 
+  const fetchUniDetails = useApi<
+    FetchUniDetailsRequestModel,
+    FetchUniDetailsResponseModel
+  >(UniSelectionApis.getUniDetails);
+
   const auth = useAuth();
 
   const restoreUserIfExists = async () => {
@@ -156,7 +165,24 @@ export const SplashView = React.memo<Props>(() => {
 
   async function restoreUni() {
     const _uni = await AuthStorage.getUni();
+    // const { hasError, dataBody } = await fetchUniDetails.request([
+    //   { name: _uni?.subdomain ?? "" }
+    // ]);
+    // const updatedUni = dataBody?.data;
+
+    // if (!hasError && updatedUni) {
+    //   await theme.saveCustomPalette({
+    //     interface: computeShades(updatedUni.interfaceColor),
+    //     primaryShade: updatedUni.primaryColorLight,
+    //     primary: updatedUni.primaryColorDark,
+    //     secondaryShade: updatedUni.secondaryColorLight,
+    //     secondary: updatedUni.secondaryColorDark
+    //   });
+    //   await auth.saveUni(updatedUni);
+    //   setUni(updatedUni);
+    // } else {
     setUni(_uni);
+    // }
   }
 
   async function fetchUserProfile(_user: UserModel) {

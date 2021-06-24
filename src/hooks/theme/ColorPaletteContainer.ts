@@ -83,9 +83,9 @@ export const grayShades: GrayShades = {
 };
 
 /**
- * This function returns the Shade specified by the color.
- * In case where no existing shades found matching the color it will return
- * the default shade i.e. grayShades.gray
+ * This function returns the "type of gray shade" specified by the color.
+ * In case where no existing type of shades found,
+ * it will return the default type shade i.e. grayShades.gray
  * */
 export function computeShades(
   color: string,

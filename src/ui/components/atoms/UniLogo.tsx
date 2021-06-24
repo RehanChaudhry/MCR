@@ -19,7 +19,7 @@ export const UniLogo = optimizedMemo<Props>(({ style }) => {
       style={[styles.logo, style]}
       resizeMode="contain"
       source={{
-        uri: auth?.uni?.navLogo?.fileURL
+        uri: auth?.uni?.mainLogo?.fileURL + "@2x"
       }}
     />
   );
