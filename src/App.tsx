@@ -13,6 +13,7 @@ const App: React.FC<Props> = () => {
   AppLog.log(() => "Rendering App...");
 
   PushNotification.init();
+
   return (
     <AppThemeProvider colorScheme={AppColorScheme.SYSTEM}>
       <SafeAreaProvider>
@@ -21,4 +22,5 @@ const App: React.FC<Props> = () => {
     </AppThemeProvider>
   );
 };
+
 export default App;

@@ -1,4 +1,3 @@
-import { AppLog } from "utils/Util";
 import OneSignal from "react-native-onesignal";
 import Env from "envs/env";
 
@@ -8,26 +7,30 @@ export const PushNotification = {
     OneSignal.setLogLevel(6, 0);
     OneSignal.setAppId(Env.ONE_SIGNAL_APP_ID);
 
-    OneSignal.setNotificationOpenedHandler((notification) => {
-      AppLog.log(
-        () => "OneSignal: setNotificationOpenedHandler: ",
-        notification
-      );
-    });
+    /**
+     * Handle notification before displaying
+     */
+    /* OneSignal.setNotificationWillShowInForegroundHandler(
+      (notifReceivedEvent) => {
+        let notif = notifReceivedEvent.getNotification();
+        const payload = JSON.parse(notif.rawPayload);
+        payload.alert = "Title Manipulation";
+        notif.body = "Title Manipulation";
+        notif.title = "Title Manipulation";
+        notif.rawPayload = payload;
 
-    OneSignal.setNotificationWillShowInForegroundHandler(
-      (notification) => {
         AppLog.log(
           () => "OneSignal: setNotificationWillShowInForegroundHandler: ",
-          notification
+          JSON.stringify(notif)
         );
-      }
-    );
 
+        notifReceivedEvent.complete(notif);
+        prepareNotification(notif);
+      }
+    );*/
     /* O N E S I G N A L   S E T U P */
   },
   registerUser: (userId: number | undefined) => {
-    userId !== undefined &&
-      OneSignal.sendTag("user_id", userId.toString());
+    userId && OneSignal.sendTag("user_id", userId.toString());
   }
 };

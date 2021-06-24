@@ -38,6 +38,7 @@ export default () => {
     setUser(model);
 
     PushNotification.registerUser(model.profile?.id);
+    PushNotification.init();
 
     return model;
   };

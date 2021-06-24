@@ -34,6 +34,7 @@ import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 import { useCreateConversation } from "hooks/useCreateConversation";
+import { PushNotification } from "utils/PushNotification";
 
 type MatchesNavigationProp = StackNavigationProp<
   MatchesStackParamList,
@@ -50,6 +51,7 @@ const MatchesController: FC<Props> = () => {
   const createConversation = useCreateConversation();
   const { user } = useAuth();
 
+  PushNotification.prepareNotification();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
