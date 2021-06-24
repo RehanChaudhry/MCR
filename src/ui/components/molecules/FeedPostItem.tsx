@@ -1,6 +1,6 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
+import { CommunityAnnouncement as FeedData } from "models/api_responses/CommunityAnnouncementResponseModel";
 import React, { useCallback } from "react";
 import { StyleSheet, TouchableOpacityProps, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
@@ -16,8 +16,8 @@ import { shadowStyleProps, SvgProp } from "utils/Util";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import Shield from "assets/images/shield.svg";
 
-export interface AnnouncementItemProps extends TouchableOpacityProps {
-  announcementItem: CommunityAnnouncement;
+export interface FeedPostItemProps extends TouchableOpacityProps {
+  data: FeedData;
   openCommentsScreen?: (postId: number) => void;
   shouldPlayVideo: boolean;
   shouldShowRightIcon?: boolean;
@@ -25,10 +25,7 @@ export interface AnnouncementItemProps extends TouchableOpacityProps {
   onProfileImageClicked?: (userId: number) => void;
 }
 
-function showAttachedItemsIfAny(
-  item: CommunityAnnouncement,
-  shouldPlayVideo: boolean
-) {
+function showAttachedItemsIfAny(item: FeedData, shouldPlayVideo: boolean) {
   if (item.link) {
     return <UrlMetaData url={item.link} />;
   } else if (item.embed) {
@@ -50,9 +47,9 @@ function showAttachedItemsIfAny(
   }
 }
 
-export const AnnouncementItem = React.memo<AnnouncementItemProps>(
+export const FeedPostItem = React.memo<FeedPostItemProps>(
   ({
-    announcementItem,
+    data: announcementItem,
     openCommentsScreen,
     shouldPlayVideo,
     shouldShowRightIcon = false,

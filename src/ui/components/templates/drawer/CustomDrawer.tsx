@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import {
   Image,
-  Pressable,
   ScrollView,
   StyleSheet,
   TouchableNativeFeedback,
@@ -33,6 +32,8 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 import { profileCompletedPercentage } from "models/api_responses/FetchMyProfileResponseModel";
 import { SocketHelper } from "utils/SocketHelper";
 import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount";
+import useListenPushNotifications from "ui/screens/home/friends/useListenPushNotification";
+import { AppLog } from "utils/Util";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
   currentItem: string;
@@ -101,15 +102,13 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
     );
   }
 
-  const moveToProfileScreen = useCallback(
-    () => {
-      // navigation.navigate("Profile");
-      // setCurrentItem("Profile");
-    },
-    [
-      /*navigation, setCurrentItem*/
-    ]
-  );
+  const { screenName, notificationId } = useListenPushNotifications();
+
+  useEffect(() => {
+    AppLog.logForcefully(() => "screenName: " + screenName);
+    navigation.navigate(screenName);
+    setCurrentItem(screenName);
+  }, [setCurrentItem, navigation, screenName, notificationId]);
 
   return (
     <View style={styles.container}>
@@ -118,36 +117,29 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
           {/*drawer header start*/}
           <View style={styles.header}>
             <View style={styles.userInfo}>
-              <Pressable onPress={moveToProfileScreen}>
-                <Image
-                  style={styles.userImg}
-                  source={
-                    auth.user?.profile?.profilePicture?.fileURL !==
-                    undefined
-                      ? { uri: auth.user?.profile?.profilePicture.fileURL }
-                      : require("assets/images/profile.png")
-                  }
-                />
-              </Pressable>
+              <Image
+                style={styles.userImg}
+                source={
+                  auth.user?.profile?.profilePicture?.fileURL !== undefined
+                    ? { uri: auth.user?.profile?.profilePicture.fileURL }
+                    : require("assets/images/profile.png")
+                }
+              />
               <View style={styles.nameContainer}>
-                <Pressable onPress={moveToProfileScreen}>
-                  <AppLabel
-                    text={
-                      auth.user?.profile?.firstName +
-                      " " +
-                      auth.user?.profile?.lastName
-                    }
-                    weight="semi-bold"
-                    style={styles.name}
-                  />
-                </Pressable>
+                <AppLabel
+                  text={
+                    auth.user?.profile?.firstName +
+                    " " +
+                    auth.user?.profile?.lastName
+                  }
+                  weight="semi-bold"
+                  style={styles.name}
+                />
                 <View style={styles.settingContainer}>
-                  <Pressable onPress={moveToProfileScreen}>
-                    <AppLabel
-                      text={auth.user?.profile?.roleTitle}
-                      style={styles.userRole}
-                    />
-                  </Pressable>
+                  <AppLabel
+                    text={auth.user?.profile?.roleTitle}
+                    style={styles.userRole}
+                  />
 
                   <TouchableOpacity
                     style={styles.settingIconContainer}

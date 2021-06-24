@@ -29,13 +29,11 @@ const UniSelectionController: FC<Props> = () => {
     UniSelectionApis.getUnis
   );
 
-  const openLoginScreen = async (item: Uni) => {
-    await auth.saveUni(item);
+  const openLoginScreen = async () => {
     navigation.navigate("Login");
   };
 
-  const openSSOScreen = async (item: Uni) => {
-    await auth.saveUni(item);
+  const openSSOScreen = async () => {
     navigation.navigate("SSO_Login");
   };
 
@@ -53,19 +51,21 @@ const UniSelectionController: FC<Props> = () => {
   const theme = usePreferredTheme();
 
   const uniDidSelect = usePreventDoubleTap((item: Uni) => {
-    requestAnimationFrame(() => {
+    requestAnimationFrame(async () => {
       AppLog.log(() => "selected item: ", item);
-      theme.saveCustomPalette({
+      await theme.saveCustomPalette({
         interface: computeShades(item.interfaceColor),
         primaryShade: item.primaryColorLight,
         primary: item.primaryColorDark,
         secondaryShade: item.secondaryColorLight,
         secondary: item.secondaryColorDark
       });
+      await auth.saveUni(item);
+
       if (item.ssoMethod === "off") {
-        openLoginScreen(item);
+        openLoginScreen();
       } else {
-        openSSOScreen(item);
+        openSSOScreen();
       }
     });
   });

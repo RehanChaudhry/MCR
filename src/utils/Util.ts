@@ -46,8 +46,6 @@ export const AppLog = (function () {
     bug: (message?: any, ...optionalParams: any[]) => {
       if (Constants.SHOULD_PRINT_LOGS) {
         // eslint-disable-next-line no-console
-        console.warn(message, ...optionalParams);
-        // eslint-disable-next-line no-console
         console.error(message, ...optionalParams);
       }
     }

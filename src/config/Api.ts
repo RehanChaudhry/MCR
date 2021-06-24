@@ -24,6 +24,7 @@ export default {
 
   //Get universities
   UNIS: "university",
+  UNI_DETAILS: "university/",
 
   // Profile
   GET_QUESTIONS: "answer/",

@@ -63,6 +63,7 @@ export const QuestionsView = ({
         headerView={headerView}
         bodyView={bodyView}
         listFooterComponent={createListFooter(
+          isFrom,
           submitAnswersLoading,
           submitAnswers,
           themedColors
@@ -168,6 +169,7 @@ function createListHeader(
 }
 
 function createListFooter(
+  isFrom: EScreen,
   submitAnswersLoading: boolean,
   submitAnswers: () => void,
   themedColors: ColorPalette
@@ -177,16 +179,19 @@ function createListFooter(
       <AppButton
         shouldShowProgressBar={submitAnswersLoading}
         onPress={submitAnswers}
-        text={STRINGS.questionnaire.action_save}
+        text={
+          isFrom === EScreen.WELCOME
+            ? STRINGS.questionnaire.action_save_continue
+            : STRINGS.questionnaire.action_save
+        }
         buttonStyle={[
           styles.saveButtonContainer,
           {
             backgroundColor: themedColors.primary
           }
         ]}
+        textStyle={{ color: themedColors.background }}
         fontWeight={"semi-bold"}
-        textStyle={[styles.saveButton, { color: themedColors.background }]}
-        loaderColor={themedColors.background}
         rightIcon={() => (
           <RightArrowCircle
             width={13}

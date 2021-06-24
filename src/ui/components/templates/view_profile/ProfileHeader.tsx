@@ -1,17 +1,17 @@
-import React, { FC } from "react";
-import { Image, Linking, StyleSheet, View } from "react-native";
-import { FONT_SIZE, SPACE } from "config";
-import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
+import WatchVideo from "assets/images/watch_video_icon.svg";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
+import Colors from "config/Colors";
+import Strings from "config/Strings";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { ProfilePicture } from "models/User";
+import React, { FC, useState } from "react";
+import { Image, StyleSheet, View } from "react-native";
 import {
   AppButton,
   BUTTON_TYPES
 } from "ui/components/molecules/app_button/AppButton";
-import Strings from "config/Strings";
-import Colors from "config/Colors";
-import WatchVideo from "assets/images/watch_video_icon.svg";
-import { ProfilePicture } from "models/User";
-import SimpleToast from "react-native-simple-toast";
+import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
+import AppVideoPopup from "ui/components/organisms/popup/AppVideoPopup";
 
 type Props = {
   firstName: string | undefined;
@@ -31,8 +31,33 @@ const ProfileHeader: FC<Props> = ({
   youtubeVideoUrl
 }) => {
   const theme = usePreferredTheme();
+  const [shouldShowVideoDialog, setShouldShowVideoDialog] = useState(
+    false
+  );
   const watchVideo = () => (
     <WatchVideo height={16} width={16} color={Colors.grey} />
+  );
+
+  const videoDialog = () => (
+    <AppVideoPopup
+      videoUrl={youtubeVideoUrl!}
+      isVisible={shouldShowVideoDialog}
+      title={STRINGS.roommateAgreement.roommate_agreement_text}
+      titleStyle={{ style: styles.dialogTitleStyle, weight: "semi-bold" }}
+      messageStyle={{ style: styles.dialogMessageStyle }}
+      message={`Do you agree with the terms and conditions of this roommate agreement?`}
+      actions={[
+        {
+          title: "Cancel",
+          style: {
+            style: styles.dialogButtonStyle
+          },
+          onPress: () => {
+            setShouldShowVideoDialog(false);
+          }
+        }
+      ]}
+    />
   );
 
   return (
@@ -60,30 +85,29 @@ const ProfileHeader: FC<Props> = ({
           />
         </View>
       </View>
-      <AppButton
-        text={Strings.profile.viewProfile.videoIntroduction}
-        buttonStyle={[
-          styles.uploadButton,
-          { borderColor: theme.themedColors.interface["700"] }
-        ]}
-        buttonType={BUTTON_TYPES.BORDER}
-        textStyle={{
-          color: theme.themedColors.label,
-          borderColor: theme.themedColors.interface["700"],
-          marginHorizontal: SPACE.xs,
-          fontSize: FONT_SIZE.md
-        }}
-        shouldShowError={false}
-        //fontWeight={"bold"}
-        leftIcon={watchVideo}
-        shouldAlignTextWithLeftIconWithFullWidth={true}
-        fontWeight={"semi-bold"}
-        onPress={() =>
-          youtubeVideoUrl !== null && youtubeVideoUrl !== undefined
-            ? Linking.openURL(youtubeVideoUrl!)
-            : SimpleToast.show(Strings.invalid_video)
-        }
-      />
+      {youtubeVideoUrl !== null && youtubeVideoUrl !== undefined && (
+        <AppButton
+          text={Strings.profile.viewProfile.videoIntroduction}
+          buttonStyle={[
+            styles.uploadButton,
+            { borderColor: theme.themedColors.interface["700"] }
+          ]}
+          buttonType={BUTTON_TYPES.BORDER}
+          textStyle={{
+            color: theme.themedColors.label,
+            borderColor: theme.themedColors.interface["700"],
+            marginHorizontal: SPACE.xs,
+            fontSize: FONT_SIZE.md
+          }}
+          shouldShowError={false}
+          //fontWeight={"bold"}
+          leftIcon={watchVideo}
+          shouldAlignTextWithLeftIconWithFullWidth={true}
+          fontWeight={"semi-bold"}
+          onPress={() => setShouldShowVideoDialog(true)}
+        />
+      )}
+      {videoDialog()}
     </View>
   );
 };
@@ -103,7 +127,7 @@ const styles = StyleSheet.create({
   },
   uploadButton: {
     height: 44,
-    marginVertical: SPACE.lg,
+    marginTop: SPACE.lg,
     width: "100%",
     flexDirection: "row",
     paddingLeft: SPACE.sm
@@ -115,7 +139,13 @@ const styles = StyleSheet.create({
     borderRadius: 55 / 2,
     marginTop: 5,
     overflow: "hidden"
-  }
+  },
+  dialogButtonStyle: {
+    textAlign: "center",
+    fontSize: FONT_SIZE.base
+  },
+  dialogTitleStyle: { fontSize: FONT_SIZE.base, textAlign: "center" },
+  dialogMessageStyle: { fontSize: FONT_SIZE.sm, textAlign: "center" }
 });
 
 export default ProfileHeader;

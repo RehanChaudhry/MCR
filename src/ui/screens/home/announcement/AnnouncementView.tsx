@@ -3,10 +3,11 @@ import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncemen
 import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
-import { AnnouncementItem } from "ui/components/molecules/AnnouncementItem";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { listContentContainerStyle, listItemSeparator } from "utils/Util";
+import { FeedPostItem } from "ui/components/molecules/FeedPostItem";
+import NoRecordFound from "assets/images/community_no_record_found.svg";
 
 type Props = {
   data: CommunityAnnouncement[] | undefined;
@@ -42,8 +43,8 @@ export const AnnouncementView = React.memo<Props>(
     const listItem = useCallback(
       ({ item }: { item: CommunityAnnouncement }) => {
         return (
-          <AnnouncementItem
-            announcementItem={item}
+          <FeedPostItem
+            data={item}
             openCommentsScreen={openCommentsScreen}
             shouldPlayVideo={shouldPlayVideo}
             onProfileImageClicked={moveToProfileScreen}
@@ -78,6 +79,7 @@ export const AnnouncementView = React.memo<Props>(
             onEndReached={onEndReached}
             isAllDataLoaded={isAllDataLoaded}
             pullToRefreshCallback={pullToRefreshCallback}
+            noRecordFoundImage={<NoRecordFound />}
           />
         )}
       </Screen>

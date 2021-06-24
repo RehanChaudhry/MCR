@@ -161,7 +161,7 @@ const UpdateProfileController: FC<Props> = () => {
 
     if (hasError || !auth.user || !dataBody?.data) {
       SimpleToast.show(
-        "Please try agian later \n" + fetchProfileApi.error,
+        "Please try again later \n" + fetchProfileApi.error,
         SimpleToast.SHORT
       );
     } else {

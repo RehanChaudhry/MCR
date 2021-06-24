@@ -72,8 +72,8 @@ export const useImageUpload = () => {
         {
           mediaType: "photo",
           includeBase64: true,
-          maxWidth: 500,
-          maxHeight: 500
+          maxWidth: 1024,
+          maxHeight: 1024
         },
         async (response) => {
           if (

@@ -13,6 +13,7 @@ import {
 import { AppLoadMore } from "ui/components/atoms/app_load_more/AppLoadMore";
 import ErrorWithRetryView from "ui/components/molecules/ErrorWithRetryView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import NoRecordFound from "assets/images/no-result-found.svg";
 
 interface OwnProps<ItemT> extends FlatListProps<ItemT> {
   shouldShowProgressBar?: boolean;
@@ -25,6 +26,7 @@ interface OwnProps<ItemT> extends FlatListProps<ItemT> {
   isAllDataLoaded?: boolean;
   noRecordFoundText?: string;
   listRef?: React.RefObject<FlatList>;
+  noRecordFoundImage?: React.ReactElement;
 }
 
 type Props<ItemT> = OwnProps<ItemT>;
@@ -42,6 +44,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
     noRecordFoundText = STRINGS.common.no_record_found,
     onEndReached,
     listRef,
+    noRecordFoundImage,
     ...rest
   } = props;
 
@@ -120,6 +123,8 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
         return (
           <>
             <View style={styles.noRecordParent}>
+              {noRecordFoundImage ? noRecordFoundImage : <NoRecordFound />}
+
               <AppLabel
                 text={noRecordFoundText}
                 style={[
@@ -168,7 +173,8 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute"
+    position: "absolute",
+    bottom: SPACE.lg
   },
   noRecord: {
     textAlign: "center",

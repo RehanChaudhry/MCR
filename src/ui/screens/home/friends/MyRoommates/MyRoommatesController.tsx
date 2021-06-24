@@ -59,7 +59,8 @@ const MyRoommatesController: FC<Props> = () => {
     canLoadMore,
     onEndReached,
     errorMessage,
-    onPullToRefresh
+    onPullToRefresh,
+    isLoggedInUserAModerator
   } = useFetchRelations(
     RelationFilterType.ROOMMATE,
     myRoommates,
@@ -154,6 +155,7 @@ const MyRoommatesController: FC<Props> = () => {
       onPressChat={moveToChatScreen}
       onPressProfile={moveToProfileScreen}
       onPressReceivedRoommateRequests={onPressReceivedRoommateRequests}
+      isLoggedInUserAModerator={isLoggedInUserAModerator}
     />
   );
 };

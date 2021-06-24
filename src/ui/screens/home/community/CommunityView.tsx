@@ -6,12 +6,13 @@ import { FilterCount } from "models/enums/FeedsTypeFilter";
 import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
-import { AnnouncementItem } from "ui/components/molecules/AnnouncementItem";
+import { FeedPostItem } from "ui/components/molecules/FeedPostItem";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import BottomBreadCrumbs, {
   Item
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
 import { listContentContainerStyle, listItemSeparator } from "utils/Util";
+import NoRecordFound from "assets/images/community_no_record_found.svg";
 
 type Props = {
   data: CommunityAnnouncement[] | undefined;
@@ -53,8 +54,8 @@ export const CommunityView = React.memo<Props>(
 
     const listItem = useCallback(
       ({ item }: { item: CommunityAnnouncement }) => (
-        <AnnouncementItem
-          announcementItem={item}
+        <FeedPostItem
+          data={item}
           openCommentsScreen={openCommentsScreen}
           shouldPlayVideo={shouldPlayVideo}
           openReportContentScreen={openReportContentScreen}
@@ -108,6 +109,7 @@ export const CommunityView = React.memo<Props>(
               onEndReached={onEndReached}
               isAllDataLoaded={isAllDataLoaded}
               pullToRefreshCallback={pullToRefreshCallback}
+              noRecordFoundImage={<NoRecordFound />}
             />
             <BottomBreadCrumbs data={getFeedsFilterData()} />
           </>

@@ -23,6 +23,7 @@ export function resetApiClient(providedAuthToken?: string) {
     request.headers.accept = "application/json";
 
     const uni = await AuthStorage.getUni();
+    AppLog.log(() => "Uni: " + JSON.stringify(uni));
     if (uni) {
       request.headers.subdomain = uni.subdomain;
     }

@@ -37,7 +37,8 @@ export default () => {
     // update AuthProvider after everything has been done
     setUser(model);
 
-    PushNotification.init(model.profile?.id);
+    PushNotification.registerUser(model.profile?.id);
+    PushNotification.init();
 
     return model;
   };

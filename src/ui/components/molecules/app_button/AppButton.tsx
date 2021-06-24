@@ -146,7 +146,7 @@ export const AppButton = optimizedMemoWithStyleProp<AppButtonProps>(
                 testID="loader"
                 style={[style.loader]}
                 size={loaderSize}
-                color={loaderColor ?? theme.themedColors.label}
+                color={loaderColor ?? theme.themedColors.background}
               />
             )}
           </View>

@@ -10,6 +10,7 @@ import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb
 import { Comment } from "models/api_responses/CommentsResponseModel";
 import { ItemComment } from "ui/components/molecules/item_comment/ItemComment";
 import { AppLog } from "utils/Util";
+import NoRecordFound from "assets/images/chat_no_record_found.svg";
 
 type Props = {
   data: Comment[] | undefined;
@@ -63,6 +64,7 @@ export const CommentsView = React.memo<Props>(
           onEndReached={onEndReached}
           isAllDataLoaded={isAllDataLoaded}
           pullToRefreshCallback={pullToRefreshCallback}
+          noRecordFoundImage={<NoRecordFound />}
         />
 
         <WriteMessage
