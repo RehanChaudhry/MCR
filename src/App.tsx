@@ -13,10 +13,21 @@ import NotificationAndActivityLogFilterType from "models/enums/NotificationAndAc
 
 type Props = {};
 
+type NotificationRedirectionLiteralType = {
+  [key: string]: (notification: OSNotification) => void;
+};
+
+type HandleNotificationLiteralType = {
+  [key: string]: (action: string) => void;
+};
+
 const App: React.FC<Props> = () => {
   AppLog.log(() => "Rendering App...");
   const [notificationId, setNotificationId] = useState("");
   const [screenName, setScreenName] = useState("Matches");
+
+  //Configure OneSignal
+  PushNotification.init();
 
   const notificationUpdate: PushNotificationContext = {
     notificationId: notificationId,
@@ -27,14 +38,12 @@ const App: React.FC<Props> = () => {
     }
   };
 
-  PushNotification.init();
-
-  const handleFriendsRedirection: {
-    [key: string]: (notification: OSNotification) => void;
-  } = {
+  const handleFriendsRedirection: NotificationRedirectionLiteralType = {
     [NotificationActionType.RECIEVE]: (notification: OSNotification) =>
       navigateToFriendsScreen(notification),
     [NotificationActionType.ACCEPT]: (notification: OSNotification) =>
+      navigateToFriendsScreen(notification),
+    [NotificationActionType.RESPOND]: (notification: OSNotification) =>
       navigateToFriendsScreen(notification),
     default: () => {
       AppLog.logForcefully(
@@ -44,33 +53,58 @@ const App: React.FC<Props> = () => {
     }
   };
 
-  const handleRoommatesRedirection: {
-    [key: string]: (notification: OSNotification) => void;
-  } = {
+  const handleRoommateGroupsRedirection: NotificationRedirectionLiteralType = {
+    [NotificationActionType.ENTER]: (notification: OSNotification) =>
+      navigateToRoommatesScreen(notification),
+    [NotificationActionType.LEAVE]: (notification: OSNotification) =>
+      navigateToRoommatesScreen(notification),
+    [NotificationActionType.UPDATE]: (notification: OSNotification) =>
+      navigateToRoommatesScreen(notification),
+    default: () => {
+      AppLog.logForcefully(
+        () =>
+          "Notification#handleFriendsRedirection()=> No matching result found"
+      );
+    }
+  };
+
+  const handleRoommatesRedirection: NotificationRedirectionLiteralType = {
     [NotificationActionType.RECIEVE]: (notification: OSNotification) =>
       navigateToRoommatesScreen(notification),
     [NotificationActionType.ACCEPT]: (notification: OSNotification) =>
       navigateToRoommatesScreen(notification),
+    [NotificationActionType.RESPOND]: (notification: OSNotification) =>
+      navigateToRoommatesScreen(notification),
     default: () => {
       AppLog.logForcefully(() => "default");
     }
   };
 
-  const handleChatsRedirection: {
-    [key: string]: (notification: OSNotification) => void;
-  } = {
+  const handleRoommateAgreementRedirection: NotificationRedirectionLiteralType = {
+    [NotificationActionType.AGREE]: (notification: OSNotification) =>
+      navigateToRoommateAgreementScreen(notification),
+    [NotificationActionType.DISAGREE]: (notification: OSNotification) =>
+      navigateToRoommateAgreementScreen(notification),
+    [NotificationActionType.UPDATE]: (notification: OSNotification) =>
+      navigateToRoommateAgreementScreen(notification),
+    default: () => {
+      AppLog.logForcefully(() => "default");
+    }
+  };
+
+  const handleChatsRedirection: NotificationRedirectionLiteralType = {
     [NotificationActionType.CREATE]: (notification: OSNotification) =>
       navigateToChatScreen(notification),
-    [NotificationActionType.RESPOND]: (notification: OSNotification) =>
+    [NotificationActionType.RECIEVE]: (notification: OSNotification) =>
       navigateToChatScreen(notification),
     default: () => {
       AppLog.logForcefully(() => "default");
     }
   };
 
-  const handlePostsRedirection: {
-    [key: string]: (notification: OSNotification) => void;
-  } = {
+  const handlePostsRedirection: NotificationRedirectionLiteralType = {
+    [NotificationActionType.CREATE]: (notification: OSNotification) =>
+      navigateToPostScreen(notification),
     [NotificationActionType.LIKE]: (notification: OSNotification) =>
       navigateToPostScreen(notification),
     [NotificationActionType.COMMENT]: (notification: OSNotification) =>
@@ -82,9 +116,8 @@ const App: React.FC<Props> = () => {
 
   function handleNotification(notification: OSNotification) {
     const { additionalData } = notification;
-    const notificationActions: {
-      [key: string]: (action: string) => void;
-    } = {
+
+    const notificationActions: HandleNotificationLiteralType = {
       [NotificationAndActivityLogFilterType.FRIEND_REQUEST]: (
         action: string
       ) => handleFriendsRedirection[action]?.(notification),
@@ -103,10 +136,10 @@ const App: React.FC<Props> = () => {
         handlePostsRedirection[action]?.(notification),
       [NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT]: (
         action: string
-      ) => handleFriendsRedirection[action]?.(notification),
+      ) => handleRoommateAgreementRedirection[action]?.(notification),
       [NotificationAndActivityLogFilterType.ROOMMATE_GROUP]: (
         action: string
-      ) => handleFriendsRedirection[action]?.(notification)
+      ) => handleRoommateGroupsRedirection[action]?.(notification)
     };
 
     // @ts-ignore
@@ -116,6 +149,14 @@ const App: React.FC<Props> = () => {
     );
   }
 
+  //ConnectRequestController
+  /**
+   * export enum ConnectRequestType {
+   * FRIEND_REQUESTS = "friend_requests",
+   * ROOMMATE_REQUESTS = "roommate_requests"
+   * }
+   * pass this for title
+   */
   function navigateToFriendsScreen(notification: OSNotification) {
     AppLog.logForcefully(
       () => JSON.stringify(notification) ?? "navigateToFriendsScreen()"
@@ -123,6 +164,14 @@ const App: React.FC<Props> = () => {
     setScreenName("Settings");
   }
 
+  //ConnectRequestController
+  /**
+   * export enum ConnectRequestType {
+   * FRIEND_REQUESTS = "friend_requests",
+   * ROOMMATE_REQUESTS = "roommate_requests"
+   * }
+   * pass this for title
+   */
   function navigateToRoommatesScreen(notification: OSNotification) {
     AppLog.logForcefully(
       () => JSON.stringify(notification) ?? "navigateToRoommatesScreen()"
@@ -137,6 +186,7 @@ const App: React.FC<Props> = () => {
     setScreenName("Settings");
   }
 
+  //singlePost
   function navigateToPostScreen(notification: OSNotification) {
     AppLog.logForcefully(
       () => JSON.stringify(notification) ?? "navigateToPostScreen()"
@@ -144,6 +194,17 @@ const App: React.FC<Props> = () => {
     setScreenName("Settings");
   }
 
+  //RoommateAgreementController
+  function navigateToRoommateAgreementScreen(
+    notification: OSNotification
+  ) {
+    AppLog.logForcefully(
+      () => JSON.stringify(notification) ?? "navigateToPostScreen()"
+    );
+    setScreenName("Settings");
+  }
+
+  // All notifications work started from here, when user click on notification
   OneSignal.setNotificationOpenedHandler((data) => {
     AppLog.log(() => "OneSignal: setNotificationOpenedHandler: ", data);
     const { notification } = data;
