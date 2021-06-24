@@ -161,7 +161,6 @@ export const LoginView = React.memo<Props>(
 
               <View style={styles.buttonViewStyle}>
                 <AppFormFormSubmit
-                  showErrorToast={false}
                   text={STRINGS.login.sign_in}
                   buttonType={BUTTON_TYPES.NORMAL}
                   fontWeight={"semi-bold"}
