@@ -24,7 +24,7 @@ type HandleNotificationLiteralType = {
 const App: React.FC<Props> = () => {
   AppLog.log(() => "Rendering App...");
   const [notificationId, setNotificationId] = useState("");
-  const [screenName, setScreenName] = useState("Matches");
+  const [screenName, setScreenName] = useState("Root");
 
   //Configure OneSignal
   PushNotification.init();
