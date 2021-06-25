@@ -165,24 +165,24 @@ export const SplashView = React.memo<Props>(() => {
 
   async function restoreUni() {
     const _uni = await AuthStorage.getUni();
-    // const { hasError, dataBody } = await fetchUniDetails.request([
-    //   { name: _uni?.subdomain ?? "" }
-    // ]);
-    // const updatedUni = dataBody?.data;
+    const { hasError, dataBody } = await fetchUniDetails.request([
+      { name: _uni?.subdomain ?? "" }
+    ]);
+    const updatedUni = dataBody?.data;
 
-    // if (!hasError && updatedUni) {
-    //   await theme.saveCustomPalette({
-    //     interface: computeShades(updatedUni.interfaceColor),
-    //     primaryShade: updatedUni.primaryColorLight,
-    //     primary: updatedUni.primaryColorDark,
-    //     secondaryShade: updatedUni.secondaryColorLight,
-    //     secondary: updatedUni.secondaryColorDark
-    //   });
-    //   await auth.saveUni(updatedUni);
-    //   setUni(updatedUni);
-    // } else {
-    setUni(_uni);
-    // }
+    if (!hasError && updatedUni) {
+      await theme.saveCustomPalette({
+        interface: computeShades(updatedUni.interfaceColor),
+        primaryShade: updatedUni.primaryColorLight,
+        primary: updatedUni.primaryColorDark,
+        secondaryShade: updatedUni.secondaryColorLight,
+        secondary: updatedUni.secondaryColorDark
+      });
+      await auth.saveUni(updatedUni);
+      setUni(updatedUni);
+    } else {
+      setUni(_uni);
+    }
   }
 
   async function fetchUserProfile(_user: UserModel) {
