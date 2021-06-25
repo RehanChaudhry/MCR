@@ -5,9 +5,9 @@ import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
 import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
 import {
-  CommunityAnnouncement,
-  CommunityAnnouncementResponseModel
-} from "models/api_responses/CommunityAnnouncementResponseModel";
+  PostFeed,
+  FetchPostFeedListResponseModel
+} from "models/api_responses/FetchPostFeedListResponseModel";
 import EScreen from "models/enums/EScreen";
 import FeedsTypeFilter, {
   getFeedsTypeFilterData
@@ -23,7 +23,7 @@ import React, {
 import { Alert } from "react-native";
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
-import { CommunityStackParamList } from "routes/CommunityStack";
+import { HomeStackParamList } from "routes/HomeStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
@@ -31,7 +31,7 @@ import { CommunityView } from "ui/screens/home/community/CommunityView";
 import { AppLog } from "utils/Util";
 
 type CommunityNavigationProp = StackNavigationProp<
-  CommunityStackParamList,
+  HomeStackParamList,
   "Community"
 >;
 
@@ -41,9 +41,9 @@ const CommunityController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const [shouldShowProgressBar, setShouldShowProgressBar] = useState(true);
   const isFetchingInProgress = useRef(false);
-  const [communities, setCommunities] = useState<
-    CommunityAnnouncement[] | undefined
-  >(undefined);
+  const [communities, setCommunities] = useState<PostFeed[] | undefined>(
+    undefined
+  );
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   const navigation = useNavigation<CommunityNavigationProp>();
   const theme = usePreferredTheme();
@@ -107,7 +107,7 @@ const CommunityController: FC<Props> = () => {
 
   const getCommunitiesApi = useApi<
     AnnouncementRequestModel,
-    CommunityAnnouncementResponseModel
+    FetchPostFeedListResponseModel
   >(CommunityAnnouncementApis.getCommunityAnnouncements);
 
   const fetchCommunities = useCallback(async () => {
@@ -135,11 +135,11 @@ const CommunityController: FC<Props> = () => {
           ...(prevState === undefined || requestModel.current.page === 1
             ? []
             : prevState),
-          ...(dataBody.data as CommunityAnnouncement[])
+          ...dataBody.data
         ];
       });
 
-      const communities1: CommunityAnnouncement[] = dataBody.data as CommunityAnnouncement[];
+      const communities1: PostFeed[] = dataBody.data;
       setIsAllDataLoaded(communities1.length < requestModel.current.limit);
     }
   }, [getCommunitiesApi]);
@@ -234,11 +234,11 @@ const CommunityController: FC<Props> = () => {
   };
 
   const moveToProfileScreen = useCallback(
-    (userId: number) => {
-      navigation.navigate("Profile", {
+    (userId: number, name: string) => {
+      navigation.navigate("ViewProfile", {
         isFrom: EScreen.COMMUNITY,
-        updateProfile: false,
-        userId: userId
+        userId: userId,
+        userName: name
       });
     },
     [navigation]

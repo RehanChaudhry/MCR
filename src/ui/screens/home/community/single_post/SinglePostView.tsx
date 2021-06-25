@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { FeedPostItem } from "ui/components/molecules/FeedPostItem";
-import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
+import { PostFeed } from "models/api_responses/FetchPostFeedListResponseModel";
 import useAuth from "hooks/useAuth";
 import { SPACE } from "config";
 
 type Props = {
-  postData: CommunityAnnouncement;
+  postData: PostFeed;
   openCommentsScreen: (postId: number) => void;
   shouldPlayVideo: boolean;
   openReportContentScreen: (postId: number) => void;

@@ -1,24 +1,19 @@
-import React, {
-  FC,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useState
-} from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { UpdateProfileView } from "ui/screens/home/profile/update_profile/UpdateProfileView";
 import {
   RouteProp,
+  useFocusEffect,
   useNavigation,
   useRoute
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { ProfileStackParamList } from "routes/ProfileBottomBar";
+import { ProfileBottomParamList } from "routes/ProfileBottomBar";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { UpdateProfileStackParamList } from "routes/ProfileStack";
 import EScreen from "models/enums/EScreen";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import { useAuth, usePreferredTheme, usePreventDoubleTap } from "hooks";
+import { useAuth, usePreventDoubleTap } from "hooks";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { Alert } from "react-native";
@@ -34,7 +29,7 @@ import { BackHandler } from "react-native";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
-  ProfileStackParamList,
+  ProfileBottomParamList,
   "UpdateProfile"
 >;
 
@@ -48,14 +43,11 @@ type welcomeNavigationProp = StackNavigationProp<
 >;
 
 const UpdateProfileController: FC<Props> = () => {
-  //const { setTimeStamp } = useContext(NotifyContext);
-
   const auth = useAuth();
 
   const navigation = useNavigation<ProfileNavigationProp>();
   const welcomeNavigation = useNavigation<welcomeNavigationProp>();
   const route = useRoute<UpdateProfileRouteProp>();
-  const { themedColors } = usePreferredTheme();
 
   //for info text shown
   const [infoTextShown, setInfoTextShown] = useState(false);
@@ -81,47 +73,45 @@ const UpdateProfileController: FC<Props> = () => {
     }
   }, [route.params.isFrom]);
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => <Hamburger />,
-      headerTitleAlign: "center",
-      headerTitle: () => <HeaderTitle text="Update Profile" />
-    });
-    if (route.params.isFrom === EScreen.WELCOME) {
-      setInfoTextShown(true);
-      navigation.setOptions({
-        headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text="Complete Profile" />,
-        headerLeft: () => null,
-        headerRight: () => (
-          <SkipTitleButton
-            onPress={openQuestionnaireScreen}
-            updateProfileRequest={{
-              queryParams: Api.COMPLETE_PROFILE_QUERY_PARAMS
-            }}
-          />
-        )
-      });
-    } else if (route.params.isFrom === EScreen.MATCH_INFO) {
-      setInfoTextShown(true);
-      navigation.setOptions({
-        headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text="Update Profile" />,
-        headerLeft: () => (
-          <HeaderLeftTextWithIcon
-            onPress={() => {
-              navigation.pop();
-            }}
-          />
-        )
-      });
-    }
-  }, [
-    navigation,
-    route.params.isFrom,
-    themedColors.interface,
-    openQuestionnaireScreen
-  ]);
+  useFocusEffect(
+    useCallback(() => {
+      if (route.params.isFrom === EScreen.WELCOME) {
+        setInfoTextShown(true);
+        navigation.setOptions({
+          headerTitleAlign: "center",
+          headerTitle: () => <HeaderTitle text="Complete Profile" />,
+          headerLeft: () => null,
+          headerRight: () => (
+            <SkipTitleButton
+              onPress={openQuestionnaireScreen}
+              updateProfileRequest={{
+                queryParams: Api.COMPLETE_PROFILE_QUERY_PARAMS
+              }}
+            />
+          )
+        });
+      } else if (route.params.isFrom === EScreen.MATCH_INFO) {
+        setInfoTextShown(true);
+        navigation.setOptions({
+          headerTitleAlign: "center",
+          headerTitle: () => <HeaderTitle text="Update Profile" />,
+          headerLeft: () => (
+            <HeaderLeftTextWithIcon
+              onPress={() => {
+                navigation.pop();
+              }}
+            />
+          )
+        });
+      } else {
+        navigation.dangerouslyGetParent()?.setOptions({
+          headerLeft: () => <Hamburger />,
+          headerTitleAlign: "center",
+          headerTitle: () => <HeaderTitle text="Update Profile" />
+        });
+      }
+    }, [navigation, route.params.isFrom, openQuestionnaireScreen])
+  );
 
   //update profile api integration
   const updateProfileApi = useApi<

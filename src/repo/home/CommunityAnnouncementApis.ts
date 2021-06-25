@@ -1,7 +1,7 @@
 import { API } from "config";
 import CreatePostApiRequestModel from "models/api_requests/CreatePostApiRequestModel";
 import ReportContentApiRequestModel from "models/api_requests/ReportContentApiRequestModel";
-import { CommunityAnnouncementResponseModel } from "models/api_responses/CommunityAnnouncementResponseModel";
+import { FetchPostFeedListResponseModel } from "models/api_responses/FetchPostFeedListResponseModel";
 import ReportContentApiResponseModel from "models/api_responses/ReportContentApiResponseModel";
 import { apiClient } from "repo/Client";
 import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
@@ -11,11 +11,12 @@ import CommentsRequestModel from "models/api_requests/CommentsRequestModel";
 import { CommentsResponseModel } from "models/api_responses/CommentsResponseModel";
 import PostCommentApiResponseModel from "models/api_responses/PostCommentApiResponseModel";
 import PostCommentApiRequestModel from "models/api_requests/PostCommentApiRequestModel";
+import { FetchPostFeedResponseModel } from "models/api_responses/FetchPostFeedResponseModel";
 
 function getCommunityAnnouncements(
   requestModel: AnnouncementRequestModel
 ) {
-  return apiClient.get<CommunityAnnouncementResponseModel>(
+  return apiClient.get<FetchPostFeedListResponseModel>(
     API.GET_COMMUNITY_ANNOUNCEMENT,
     {
       ...requestModel
@@ -24,7 +25,7 @@ function getCommunityAnnouncements(
 }
 
 function getSingleCommunityAnnouncements(postId: number) {
-  return apiClient.get<CommunityAnnouncementResponseModel>(
+  return apiClient.get<FetchPostFeedResponseModel>(
     API.GET_COMMUNITY_ANNOUNCEMENT + "/" + postId
   );
 }

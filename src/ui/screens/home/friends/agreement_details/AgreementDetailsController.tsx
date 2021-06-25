@@ -3,13 +3,13 @@ import { AgreementDetailsView } from "ui/screens/home/friends/agreement_details/
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { FriendsRootStackParamList } from "routes/FriendsRootStack";
+import { HomeStackParams } from "routes/HomeStack";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 type Props = {};
 
 type FriendsNavigationProp = StackNavigationProp<
-  FriendsRootStackParamList,
+  HomeStackParams,
   "AgreementDetails"
 >;
 

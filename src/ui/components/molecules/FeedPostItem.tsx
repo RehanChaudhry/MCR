@@ -1,6 +1,6 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import { CommunityAnnouncement as FeedData } from "models/api_responses/CommunityAnnouncementResponseModel";
+import { PostFeed as FeedData } from "models/api_responses/FetchPostFeedListResponseModel";
 import React, { useCallback } from "react";
 import {
   Image,
@@ -27,7 +27,7 @@ export interface FeedPostItemProps extends TouchableOpacityProps {
   shouldPlayVideo: boolean;
   shouldShowRightIcon?: boolean;
   openReportContentScreen?: (postId: number) => void;
-  onProfileImageClicked?: (userId: number) => void;
+  onProfileImageClicked?: (userId: number, name: string) => void;
 }
 
 function showAttachedItemsIfAny(item: FeedData, shouldPlayVideo: boolean) {
@@ -79,7 +79,10 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
     }, [theme.themedColors]);
 
     const onImageClicked = () => {
-      onProfileImageClicked?.(announcementItem!.postedBy!);
+      onProfileImageClicked?.(
+        announcementItem!.postedBy!,
+        `${announcementItem.postedByFirstName} ${announcementItem.postedByLastName}`
+      );
     };
 
     return (

@@ -19,7 +19,7 @@ type Props = {
   onEndReached: () => void;
   isAllDataLoaded: boolean;
   onChangeFilter: (textToFilter: string) => void;
-  navigateTOScreen: (activityLog: ActivityLog) => void;
+  navigateToScreen: (activityLog: ActivityLog) => void;
 };
 
 export const ActivityLogView = React.memo<Props>(
@@ -29,7 +29,7 @@ export const ActivityLogView = React.memo<Props>(
     pullToRefreshCallback,
     onEndReached,
     onChangeFilter,
-    navigateTOScreen,
+    navigateToScreen,
     isAllDataLoaded
   }) => {
     const { themedColors } = usePreferredTheme();
@@ -44,13 +44,13 @@ export const ActivityLogView = React.memo<Props>(
               setSharedDataRef={sharedDataRef}
             />
             <ActivityLogItem
-              navigateTOScreen={navigateTOScreen}
+              navigateToScreen={navigateToScreen}
               activityLog={item}
             />
           </>
         );
       },
-      [navigateTOScreen]
+      [navigateToScreen]
     );
 
     return (

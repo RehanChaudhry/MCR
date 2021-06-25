@@ -1,7 +1,7 @@
 import { SPACE } from "config";
 import { useAuth, usePreferredTheme } from "hooks";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
-import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
+import { PostFeed } from "models/api_responses/FetchPostFeedListResponseModel";
 import { FilterCount } from "models/enums/FeedsTypeFilter";
 import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
@@ -15,7 +15,7 @@ import { listContentContainerStyle, listItemSeparator } from "utils/Util";
 import NoRecordFound from "assets/images/community_no_record_found.svg";
 
 type Props = {
-  data: CommunityAnnouncement[] | undefined;
+  data: PostFeed[] | undefined;
   shouldShowProgressBar: boolean;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
@@ -26,7 +26,7 @@ type Props = {
   openReportContentScreen?: (postId: number) => void;
   error: string | undefined;
   filterDataBy: (type: string) => void;
-  moveToProfileScreen?: (userId: number) => void;
+  moveToProfileScreen?: (userId: number, name: string) => void;
   reload: () => void;
 };
 
@@ -49,12 +49,12 @@ export const CommunityView = React.memo<Props>(
     const auth = useAuth();
     const theme = usePreferredTheme();
     const keyExtractor = useCallback(
-      (item: CommunityAnnouncement) => item.id.toString(),
+      (item: PostFeed) => item.id.toString(),
       []
     );
 
     const listItem = useCallback(
-      ({ item }: { item: CommunityAnnouncement }) => (
+      ({ item }: { item: PostFeed }) => (
         <FeedPostItem
           data={item}
           openCommentsScreen={openCommentsScreen}

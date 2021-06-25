@@ -1,10 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import EScreen from "models/enums/EScreen";
 
-export type ProfileStackParamList = {
-  ViewProfile: { isFrom: EScreen; userId?: number };
+export type ProfileBottomParamList = {
+  ViewProfile: { isFrom: EScreen; userId?: number; userName?: string };
   UpdateProfile: { isFrom: EScreen };
-  UpdateQuestionnaire: undefined;
+  UpdateQuestionnaire: { isFrom: EScreen };
 };
 
-export const ProfileBottomBar = createBottomTabNavigator<ProfileStackParamList>();
+export const ProfileBottomBar = createBottomTabNavigator<ProfileBottomParamList>();
