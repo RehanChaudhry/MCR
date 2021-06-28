@@ -151,7 +151,6 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
 
 const styles = StyleSheet.create({
   MainContainer: {
-    flex: 1,
     alignItems: "center"
   },
   paginationColor: {
@@ -170,7 +169,8 @@ const styles = StyleSheet.create({
     overflow: "visible",
     marginTop: SPACE.md,
     alignSelf: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    height: 300
   },
   dotStyle: {
     width: 10,

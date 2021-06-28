@@ -1,5 +1,5 @@
 import { SPACE } from "config";
-import { useAuth } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
 import { FilterCount } from "models/enums/FeedsTypeFilter";
@@ -47,6 +47,7 @@ export const CommunityView = React.memo<Props>(
     reload
   }) => {
     const auth = useAuth();
+    const theme = usePreferredTheme();
     const keyExtractor = useCallback(
       (item: CommunityAnnouncement) => item.id.toString(),
       []
@@ -109,7 +110,12 @@ export const CommunityView = React.memo<Props>(
               onEndReached={onEndReached}
               isAllDataLoaded={isAllDataLoaded}
               pullToRefreshCallback={pullToRefreshCallback}
-              noRecordFoundImage={<NoRecordFound />}
+              noRecordFoundImage={
+                <NoRecordFound
+                  fillPrimary={theme.themedColors.primary}
+                  fillSecondary={theme.themedColors.secondary}
+                />
+              }
             />
             <BottomBreadCrumbs data={getFeedsFilterData()} />
           </>

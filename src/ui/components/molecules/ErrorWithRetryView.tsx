@@ -27,7 +27,12 @@ const ErrorWithRetryView = optimizedMemo<Props>(
     const theme = usePreferredTheme();
     return (
       <View testID="error" style={[style, styles.container]}>
-        <Error width={"100%"} height={"50%"} />
+        <Error
+          width={"100%"}
+          height={"50%"}
+          fillPrimary={theme.themedColors.primary}
+          fillSecondary={theme.themedColors.secondary}
+        />
         <AppLabel
           text={text}
           weight={"semi-bold"}

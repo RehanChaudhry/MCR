@@ -21,7 +21,6 @@ import TwoButtonsAlert, {
   Type
 } from "ui/screens/home/friends/MyFriends/TwoButtonsAlert";
 import { capitalizeWords } from "utils/Util";
-import NoRecordFound from "assets/images/empty_state.svg";
 
 type Props = {
   isLoading: boolean;
@@ -181,7 +180,6 @@ export const MatchesView: React.FC<Props> = ({
         error={error}
         retryCallback={pullToRefreshCallback}
         extraData={isRequestApiLoading}
-        noRecordFoundImage={<NoRecordFound />}
       />
       <TwoButtonsAlert
         shouldShow={isRoommateDialogVisible}
