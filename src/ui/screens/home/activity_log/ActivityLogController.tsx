@@ -21,6 +21,7 @@ import EScreen from "models/enums/EScreen";
 import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
 import useAuth from "hooks/useAuth";
 import Actions from "models/enums/ActivityLogAction";
+import ActivityLog from "models/ActivityLog";
 
 type ActivityLogNavigationProp = StackNavigationProp<
   ActivityLogStackParamList,
@@ -138,11 +139,12 @@ const ActivityLogController: FC<Props> = () => {
     [paginationRequestModel, handleGetActivityLogApi]
   );
 
-  const openMyProfileScreen = (userId: number) => {
+  const openMyProfileScreen = (userId: number, userName?: string) => {
     navigation.push("Profile", {
-      isFrom: EScreen.NOTIFICATION,
+      isFrom: EScreen.ACTIVTY_LOG,
       updateProfile: false,
-      userId: userId
+      userId: userId,
+      userName: userName
     });
   };
 
@@ -153,38 +155,64 @@ const ActivityLogController: FC<Props> = () => {
     });
   };
 
-  const navigateTOScreen = (
-    type: string,
-    action: string,
-    postId?: number,
-    userId?: number
-  ) => {
-    if (type != null) {
+  const navigateTOScreen = (activityLog: ActivityLog) => {
+    if (activityLog.type != null) {
       if (
-        type === NotificationAndActivityLogFilterType.LOGIN_STUDENT &&
-        action === Actions.LOGIN
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.LOGIN_STUDENT &&
+        activityLog.action === Actions.LOGIN
       ) {
-        return openMyProfileScreen(user.user?.profile?.id!);
+        return openMyProfileScreen(
+          user.user?.profile?.id!,
+          activityLog.user?.firstName + " " + activityLog.user?.lastName
+        );
       } else if (
-        type === NotificationAndActivityLogFilterType.COMMENT &&
-        action === Actions.CREATE
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.COMMENT &&
+        activityLog.action === Actions.CREATE
       ) {
-        return openSinglePostScreen(postId!);
+        return openSinglePostScreen(activityLog.entityId!);
       } else if (
-        type === NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
-        action === Actions.CREATE
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+        activityLog.action === Actions.CREATE
       ) {
-        return openMyProfileScreen(userId!);
+        return openMyProfileScreen(
+          activityLog.data.receiverId,
+          activityLog.data.receiverFirstName +
+            " " +
+            activityLog.data.receiverLastName
+        );
       } else if (
-        type === NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
-        action === Actions.CREATE
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+        activityLog.action === Actions.CREATE
       ) {
-        return openMyProfileScreen(userId!);
+        return openMyProfileScreen(
+          activityLog.data.recieverId,
+          activityLog.data.receiverFirstName +
+            " " +
+            activityLog.data.receiverLastName
+        );
       } else if (
-        type === NotificationAndActivityLogFilterType.POST &&
-        action === Actions.CREATE
+        activityLog.type === NotificationAndActivityLogFilterType.POST &&
+        activityLog.action === Actions.CREATE
       ) {
-        return openSinglePostScreen(postId!);
+        return openSinglePostScreen(activityLog?.entityId!);
+      } else if (
+        (activityLog.type ===
+          NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+          activityLog.action === Actions.ACCEPTED) ||
+        (activityLog.type ===
+          NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+          activityLog.action === Actions.ACCEPTED)
+      ) {
+        return openMyProfileScreen(
+          activityLog?.data?.senderId!,
+          activityLog?.data?.senderFirstName +
+            " " +
+            activityLog?.data?.senderLastName
+        );
       } else {
         return null;
       }

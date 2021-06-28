@@ -97,12 +97,6 @@ export function getMessage(activityLog: ActivityLog): string {
       return `Commented on any post <b>Post commneted</b>`;
     } else if (
       activityLog.type ===
-        NotificationAndActivityLogFilterType.CONVERSATION &&
-      activityLog.action === Actions.STARTED
-    ) {
-      return `Started a <b>new conversation</b> with`;
-    } else if (
-      activityLog.type ===
         NotificationAndActivityLogFilterType.QUESTIONAIRE &&
       activityLog.action === Actions.CREATE
     ) {

@@ -28,12 +28,7 @@ import Actions from "models/enums/ActivityLogAction";
 
 interface Props {
   activityLog: ActivityLog;
-  navigateTOScreen: (
-    type: string,
-    action: string,
-    postId?: number,
-    userId?: number
-  ) => void;
+  navigateTOScreen: (activityLog: ActivityLog) => void;
 }
 
 const ActivityLogItem = ({ activityLog, navigateTOScreen }: Props) => {
@@ -167,14 +162,7 @@ const ActivityLogItem = ({ activityLog, navigateTOScreen }: Props) => {
           containerStyle={styles.message}
           style={styles.messageText}
           numberOfLines={3}
-          onBoldTextPress={() =>
-            navigateTOScreen(
-              activityLog.type!,
-              activityLog.action!,
-              activityLog.entityId!,
-              activityLog.data.receiverId
-            )
-          }
+          onBoldTextPress={() => navigateTOScreen(activityLog)}
           text={getMessage(activityLog) ?? STRINGS.common.not_found}
         />
         <AppLabel

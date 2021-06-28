@@ -71,9 +71,6 @@ const SinglePostController: FC<Props> = () => {
       return;
     } else {
       setCommunity(dataBody.data as CommunityAnnouncement);
-      AppLog.logForcefully(
-        () => "SinglePost " + JSON.stringify(dataBody?.data)
-      );
     }
   }, [getCommunitiesApi, route.params.postId]);
 
