@@ -52,8 +52,6 @@ const SinglePostController: FC<Props> = () => {
     CommunityAnnouncement | undefined
   >(undefined);
 
-  AppLog.log(() => "PostId: " + route.params.postId);
-
   const getCommunitiesApi = useApi<
     any,
     CommunityAnnouncementResponseModel
@@ -166,8 +164,6 @@ const SinglePostController: FC<Props> = () => {
     AppLog.logForcefully(() => "" + setShouldPlayVideo(false));
     fetchCommunities();
   }, [fetchCommunities]);
-
-  AppLog.logForcefully(() => "PostId: " + route.params.postId);
 
   return (
     <SinglePostView
