@@ -18,14 +18,10 @@ import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { NotificationView } from "ui/screens/home/notification/NotificationView";
 import { AppLog } from "utils/Util";
-import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
-import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
-import NotificationActionType from "models/enums/NotificationActionType";
-import { useAuth, usePreventDoubleTap } from "hooks";
-import { Conversation } from "models/api_responses/ChatsResponseModel";
 import { NotificationReadApiRequestModel } from "models/api_requests/NotificationReadApiRequestModel";
+import useNotification from "hooks/useNotification";
 import { User } from "models/User";
-import NotificationSenderData from "models/NotificationSenderData";
+import { NotificationSenderData } from "models/NotificationSenderData";
 
 type NotificationNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -82,18 +78,24 @@ const NotificationController: FC<Props> = () => {
       AppLog.logForcefully(
         () => "readnotificationApifunctioncall" + notificationId
       );
-      const { hasError, dataBody } = await notificationReadApi.request([
+      const {
+        hasError,
+        errorBody,
+        dataBody
+      } = await notificationReadApi.request([
         {
           all: false,
           notificationId: notificationId
         }
       ]);
 
-      if (hasError || dataBody === undefined) {
-        //  Alert.alert("Unable to read notification", errorBody);
+      if (hasError) {
+        AppLog.logForcefully(
+          () => "Unable to read notification: " + errorBody
+        );
         return;
       } else {
-        // SimpleToast.show(dataBody.message);
+        AppLog.logForcefully(() => dataBody.message);
       }
     },
     [notificationReadApi]
@@ -161,122 +163,6 @@ const NotificationController: FC<Props> = () => {
     });
   };
 
-  const { user } = useAuth();
-  const openChatScreen = usePreventDoubleTap(
-    (
-      users: [User],
-      conversationId: number,
-      sender?: NotificationSenderData
-    ) => {
-      AppLog.logForcefully(() => "user: " + sender?.firstName);
-
-      let createUserNames: string[] = users.reduce(
-        (newArray: string[], _item: any) => (
-          _item.id !== user?.profile?.id &&
-            newArray.push(_item.firstName + " " + _item.lastName),
-          newArray
-        ),
-        []
-      );
-
-      //add user who created this conversation
-      createUserNames.splice(
-        0,
-        0,
-        sender?.firstName + "" + sender?.lastName
-      );
-
-      navigation.push("ChatThread", {
-        title: createUserNames,
-        conversation: {
-          id: conversationId,
-          currentUser: [
-            {
-              firstName: sender?.firstName,
-              lastName: sender?.lastName,
-              profilePicture: user?.profile?.profilePicture,
-              status: users[0].status
-            }
-          ]
-        } as Conversation
-      });
-    }
-  );
-
-  const openMyRoommatesScreen = () => {
-    navigation.push("MyRoommates", { isFrom: EScreen.NOTIFICATION });
-  };
-  const openRoommateAgreementScreen = () => {
-    navigation.push("RoommateAgreement", { isFrom: EScreen.NOTIFICATION });
-  };
-  const openSinglePostScreen = (postId: number) => {
-    navigation.push("SinglePost", {
-      postId: postId,
-      isFrom: EScreen.NOTIFICATION
-    });
-  };
-
-  const openFriendRequestScreen = (
-    title: string,
-    type: ConnectRequestType
-  ) => {
-    navigation.push("ConnectRequest", {
-      title: title,
-      type: type
-    });
-  };
-
-  const navigateTOScreen = (
-    type: string,
-    postId?: number,
-    action?: string,
-    users?: string[],
-    conversationId?: number,
-    notificationId?: number,
-    sender?: NotificationSenderData
-  ) => {
-    //MarkRead Api Call
-    handleNotificationMarkRead(notificationId!).then().catch();
-
-    if (type != null) {
-      if (type === NotificationAndActivityLogFilterType.FRIEND_REQUEST) {
-        return openFriendRequestScreen(
-          "Friend Requests",
-          ConnectRequestType.FRIEND_REQUESTS
-        );
-      } else if (
-        type === NotificationAndActivityLogFilterType.ROOMMATE_REQUEST
-      ) {
-        return openFriendRequestScreen(
-          "Roommate Requests",
-          ConnectRequestType.ROOMMATE_REQUESTS
-        );
-      } else if (
-        type === NotificationAndActivityLogFilterType.ROOMMATE_GROUP
-      ) {
-        return openMyRoommatesScreen();
-      } else if (
-        type === NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT
-      ) {
-        return openRoommateAgreementScreen();
-      } else if (
-        type === NotificationAndActivityLogFilterType.POST ||
-        (action === NotificationActionType.RECIEVE &&
-          type === NotificationAndActivityLogFilterType.ANNOUNCEMENT) ||
-        action === NotificationActionType.COMMENT
-      ) {
-        return openSinglePostScreen(postId!);
-      } else if (
-        type === NotificationAndActivityLogFilterType.CONVERSATION &&
-        NotificationActionType.CREATE
-      ) {
-        return openChatScreen(users, conversationId, sender);
-      } else {
-        return null;
-      }
-    }
-  };
-
   const searchText = useCallback(
     (textToSearch: string) => {
       const updatedRequestModel = {
@@ -295,6 +181,33 @@ const NotificationController: FC<Props> = () => {
     handleGetNotificationApi(false, paginationRequestModel);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const { handleNotification } = useNotification();
+
+  const navigateTOScreen = (
+    type: string,
+    postId?: number,
+    action?: string,
+    users?: User[],
+    conversationId?: number,
+    notificationId?: number,
+    sender?: NotificationSenderData
+  ) => {
+    handleNotificationMarkRead(notificationId!);
+    const { screenName, params } = handleNotification({
+      type,
+      postId,
+      action,
+      users,
+      conversationId,
+      notificationId,
+      sender
+    });
+
+    navigation.navigate(screenName, {
+      ...params
+    });
+  };
 
   return (
     <NotificationView

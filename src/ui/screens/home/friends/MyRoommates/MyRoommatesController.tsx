@@ -87,7 +87,6 @@ const MyRoommatesController: FC<Props> = () => {
 
   const onPressReceivedRoommateRequests = () => {
     navigation.navigate("ConnectRequest", {
-      title: "Roommate Requests",
       type: ConnectRequestType.ROOMMATE_REQUESTS
     });
   };

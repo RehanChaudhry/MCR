@@ -13,7 +13,7 @@ export type HomeStackParamList = {
 
   MatchInfo: undefined;
 
-  ConnectRequest: { title: string; type: ConnectRequestType };
+  ConnectRequest: { type: ConnectRequestType };
   MyRoommates: { isFrom: EScreen };
   RoommateAgreement: { isFrom: EScreen };
 

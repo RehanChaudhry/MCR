@@ -70,7 +70,6 @@ const MyFriendsController: FC<Props> = () => {
   const moveToRoommateRequests = useCallback(
     (_: RelationModel) => {
       navigation.navigate("ConnectRequest", {
-        title: "Roommate Requests",
         type: ConnectRequestType.ROOMMATE_REQUESTS
       });
     },
@@ -80,7 +79,6 @@ const MyFriendsController: FC<Props> = () => {
   const onPressReceivedFriendRequests = useCallback(() => {
     AppLog.log(() => "in onPressReceivedFriendRequests");
     navigation.navigate("ConnectRequest", {
-      title: "Friend Requests",
       type: ConnectRequestType.FRIEND_REQUESTS
     });
   }, [navigation]);

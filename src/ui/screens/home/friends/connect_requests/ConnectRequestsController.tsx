@@ -41,7 +41,7 @@ export enum ConnectRequestType {
 
 const ConnectRequestsController: FC<Props> = () => {
   const route = useRoute<ConnectRequestRouteProp>();
-  const { title, type } = route.params;
+  const { type } = route.params;
 
   const [isLoading, setIsLoading] = useState(true);
   const [requestModel, setRequestModel] = useState<PaginationParamsModel>({
@@ -153,9 +153,17 @@ const ConnectRequestsController: FC<Props> = () => {
         />
       ),
       headerTitleAlign: "center",
-      headerTitle: () => <HeaderTitle text={title} />
+      headerTitle: () => (
+        <HeaderTitle
+          text={
+            type === ConnectRequestType.FRIEND_REQUESTS
+              ? "Friend Requests"
+              : "Roommate Requests"
+          }
+        />
+      )
     });
-  }, [navigation, title]);
+  }, [navigation, type]);
 
   return (
     <ConnectRequestsView

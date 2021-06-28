@@ -102,7 +102,6 @@ const MatchesController: FC<Props> = () => {
   const moveToRoommateRequests = useCallback(
     (_: RelationModel) => {
       navigation.navigate("ConnectRequest", {
-        title: "Roommate Requests",
         type: ConnectRequestType.ROOMMATE_REQUESTS
       });
     },
@@ -112,7 +111,6 @@ const MatchesController: FC<Props> = () => {
   const moveToFriendRequests = useCallback(
     (_: RelationModel) => {
       navigation.navigate("ConnectRequest", {
-        title: "Friend Requests",
         type: ConnectRequestType.FRIEND_REQUESTS
       });
     },
