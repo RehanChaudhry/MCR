@@ -74,6 +74,8 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     params?.conversation.currentUser[0].status === "active"
   );
 
+  AppLog.logForcefully(() => "title: " + params?.title);
+
   const getTitle = useCallback(() => {
     const title = params?.title ?? "N/A";
 
@@ -352,6 +354,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
 
   useLayoutEffect(() => {
     myNavigation.setOptions({
+      headerTitleAlign: "center",
       headerTitle: () => (
         <HeaderTitle
           text={getTitle()}

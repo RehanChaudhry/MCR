@@ -2,6 +2,8 @@ import NotificationAndActivityLogFilterType from "models/enums/NotificationAndAc
 import { timeAgo } from "utils/Util";
 import NotificationSenderData from "models/NotificationSenderData";
 import NotificationActionType from "models/enums/NotificationActionType";
+import { User } from "models/User";
+import { UserModel } from "models/api_responses/UserModel";
 
 type NotificationData = {
   id: number;
@@ -26,16 +28,25 @@ export function getDisplayTime(notification: NotificationData): string {
   );
 }
 
-const getUsers = (users: []) => {
-  return users.reduce(
-    (newArray: string[], _item: any) => (
-      newArray.push(_item.firstName + " " + _item.lastName), newArray
-    ),
-    []
-  );
+const getUsers = (users: [User], currentUserId: number) => {
+  if (users.length !== 1) {
+    return `<b>${users.reduce(
+      (newArray: string[], _item: User) => (
+        currentUserId !== _item.id &&
+          newArray.push(_item.firstName + " " + _item.lastName),
+        newArray
+      ),
+      []
+    )} and you</b>`;
+  } else {
+    return "you";
+  }
 };
 
-export function getMessage(notification: NotificationData): string {
+export function getMessage(
+  notification: NotificationData,
+  user: UserModel | undefined
+): string {
   if (
     notification.type ===
     NotificationAndActivityLogFilterType.FRIEND_REQUEST
@@ -59,9 +70,10 @@ export function getMessage(notification: NotificationData): string {
   ) {
     return `<b>${notification?.sender?.firstName} ${
       notification?.sender?.lastName
-    }</b> started a new conversation with <b>${getUsers(
-      notification?.data?.users
-    )}</b>`;
+    }</b> started a new conversation with ${getUsers(
+      notification?.data?.users,
+      user?.profile?.id!
+    )}`;
   } else if (
     notification.type === NotificationAndActivityLogFilterType.DISAGREED
   ) {

@@ -4,6 +4,7 @@ import NotificationData from "models/NotificationData";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import moment from "moment";
 
 export const NotiHeader = React.memo(
   ({
@@ -13,20 +14,6 @@ export const NotiHeader = React.memo(
     item: NotificationData;
     setSharedDataRef: React.MutableRefObject<string>;
   }) => {
-    const getHours = (prevDate?: Date) => {
-      if (!prevDate) {
-        return 0;
-      }
-      const currDate1 = new Date();
-      let d1: any = new Date(currDate1); //firstDate
-      let d2: any = new Date(prevDate); //SecondDate
-      let diff = Math.abs(d1 - d2);
-      const hours = diff / (1000 * 60 * 60); //in milliseconds
-
-      // eslint-disable-next-line radix
-      return parseInt(hours.toFixed(0));
-    };
-
     function skipIfTagIsSameAsPrevious(label: string, tag: string) {
       if (sharedDataRef.current === tag) {
         return undefined;
@@ -35,23 +22,20 @@ export const NotiHeader = React.memo(
       return label;
     }
     const getLabel = (data: NotificationData) => {
-      let hours = getHours(data.createdAt);
-      // let label = "NEW NOTIFICATIONS";
       let tag = "3";
-      if (hours > 48) {
-        tag = "3";
-      } else if (hours >= 0 && hours <= 24) {
+      if (moment(data.createdAt!).isSame(moment(), "day")) {
         tag = "1";
-      } else if (hours > 24 || hours < 48) {
-        tag = "2";
-      }
-
-      if (tag === "1") {
         return skipIfTagIsSameAsPrevious("NEW NOTIFICATIONS", tag);
-      } else if (tag === "2") {
-        return skipIfTagIsSameAsPrevious("OLDER NOTIFICATIONS", tag);
-      } else if (tag === "3") {
+      } else if (
+        moment(data.createdAt!).isAfter(
+          moment().subtract(2, "days"),
+          "day"
+        )
+      ) {
+        tag = "2";
         return skipIfTagIsSameAsPrevious("YESTERDAY", tag);
+      } else {
+        return skipIfTagIsSameAsPrevious("OLDER NOTIFICATIONS", tag);
       }
     };
 

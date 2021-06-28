@@ -24,7 +24,8 @@ import NotificationActionType from "models/enums/NotificationActionType";
 import { useAuth, usePreventDoubleTap } from "hooks";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
 import { NotificationReadApiRequestModel } from "models/api_requests/NotificationReadApiRequestModel";
-import SimpleToast from "react-native-simple-toast";
+import { User } from "models/User";
+import NotificationSenderData from "models/NotificationSenderData";
 
 type NotificationNavigationProp = StackNavigationProp<
   NotificationParamList,
@@ -82,11 +83,7 @@ const NotificationController: FC<Props> = () => {
       AppLog.logForcefully(
         () => "readnotificationApifunctioncall" + notificationId
       );
-      const {
-        hasError,
-        errorBody,
-        dataBody
-      } = await notificationReadApi.request([
+      const { hasError, dataBody } = await notificationReadApi.request([
         {
           all: false,
           notificationId: notificationId
@@ -94,10 +91,10 @@ const NotificationController: FC<Props> = () => {
       ]);
 
       if (hasError || dataBody === undefined) {
-        Alert.alert("Unable to read notification", errorBody);
+        //  Alert.alert("Unable to read notification", errorBody);
         return;
       } else {
-        SimpleToast.show(dataBody.message);
+        // SimpleToast.show(dataBody.message);
       }
     },
     [notificationReadApi]
@@ -167,23 +164,39 @@ const NotificationController: FC<Props> = () => {
 
   const { user } = useAuth();
   const openChatScreen = usePreventDoubleTap(
-    (users: [], conversationId: number) => {
-      AppLog.logForcefully(() => "usersArray: " + JSON.stringify(users));
-      navigation.push("ChatThread", {
-        title: users.reduce(
-          (newArray: string[], _item: any) => (
-            newArray.push(_item.firstName + " " + _item.lastName), newArray
-          ),
-          []
+    (
+      users: [User],
+      conversationId: number,
+      sender?: NotificationSenderData
+    ) => {
+      AppLog.logForcefully(() => "user: " + sender?.firstName);
+
+      let createUserNames: string[] = users.reduce(
+        (newArray: string[], _item: any) => (
+          _item.id !== user?.profile?.id &&
+            newArray.push(_item.firstName + " " + _item.lastName),
+          newArray
         ),
+        []
+      );
+
+      //add user who created this conversation
+      createUserNames.splice(
+        0,
+        0,
+        sender?.firstName + "" + sender?.lastName
+      );
+
+      navigation.push("ChatThread", {
+        title: createUserNames,
         conversation: {
           id: conversationId,
           currentUser: [
             {
-              firstName: user?.profile?.firstName,
-              lastName: user?.profile?.lastName,
+              firstName: sender?.firstName,
+              lastName: sender?.lastName,
               profilePicture: user?.profile?.profilePicture,
-              status: "active"
+              status: users[0].status
             }
           ]
         } as Conversation
@@ -220,7 +233,8 @@ const NotificationController: FC<Props> = () => {
     action?: string,
     users?: string[],
     conversationId?: number,
-    notificationId?: number
+    notificationId?: number,
+    sender?: NotificationSenderData
   ) => {
     //MarkRead Api Call
     handleNotificationMarkRead(notificationId!).then().catch();
@@ -257,7 +271,7 @@ const NotificationController: FC<Props> = () => {
         type === NotificationAndActivityLogFilterType.CONVERSATION &&
         NotificationActionType.CREATE
       ) {
-        return openChatScreen(users, conversationId);
+        return openChatScreen(users, conversationId, sender);
       } else {
         return null;
       }

@@ -14,6 +14,7 @@ import { usePreferredTheme } from "hooks";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import NotificationData from "models/NotificationData";
+import NotificationSenderData from "models/NotificationSenderData";
 
 type Props = {
   openMyProfileScreen: (userId: number, userName: string) => void;
@@ -29,7 +30,8 @@ type Props = {
     action?: string,
     users?: [],
     conversationId?: number,
-    notificationId?: number
+    notificationId?: number,
+    sender?: NotificationSenderData
   ) => void;
 };
 
