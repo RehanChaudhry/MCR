@@ -7,11 +7,11 @@ import {
   StyleProp,
   StyleSheet,
   TextStyle,
-  TouchableOpacity,
   TouchableOpacityProps,
   View,
   ViewStyle
 } from "react-native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { AppLabel, Weight } from "ui/components/atoms/app_label/AppLabel";
 import {
   AppImageBackground,
@@ -59,7 +59,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
       <View style={style.mainContainer}>
         <View style={style.container}>
           <View style={style.leftContainer}>
-            <TouchableOpacity onPress={onProfileImageClicked}>
+            <TouchableWithoutFeedback onPress={onProfileImageClicked}>
               <Image
                 style={[style.profileImage, leftImageStyle]}
                 source={
@@ -68,7 +68,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
                     : require("assets/images/profile.png")
                 }
               />
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
 
             <View style={style.titleSubtitle}>
               <AppLabel

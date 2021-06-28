@@ -13,7 +13,7 @@ import React, {
 import { Alert } from "react-native";
 import ProfileApis from "repo/auth/ProfileApis";
 import { useApi } from "repo/Client";
-import { NotificationParamList } from "routes/NotificationParams";
+import { HomeStackParamList } from "routes/HomeStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { NotificationView } from "ui/screens/home/notification/NotificationView";
@@ -28,7 +28,7 @@ import { User } from "models/User";
 import NotificationSenderData from "models/NotificationSenderData";
 
 type NotificationNavigationProp = StackNavigationProp<
-  NotificationParamList,
+  HomeStackParamList,
   "ViewProfile"
 >;
 
@@ -61,9 +61,8 @@ const NotificationController: FC<Props> = () => {
   });
 
   const openMyProfileScreen = (userId: number, userName: string) => {
-    navigation.push("Profile", {
+    navigation.push("ViewProfile", {
       isFrom: EScreen.NOTIFICATION,
-      updateProfile: false,
       userId: userId,
       userName: userName
     });

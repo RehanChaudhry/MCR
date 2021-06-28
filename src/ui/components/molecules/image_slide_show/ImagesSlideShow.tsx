@@ -11,7 +11,7 @@ import {
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import { AppLog, SvgProp } from "utils/Util";
-import { PostedByProfilePicture } from "models/api_responses/CommunityAnnouncementResponseModel";
+import { PostedByProfilePicture } from "models/api_responses/FetchPostFeedListResponseModel";
 
 export interface ImageSlideShowProps extends TouchableOpacityProps {
   images: PostedByProfilePicture[];

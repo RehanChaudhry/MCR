@@ -2,16 +2,15 @@ import React, {
   FC,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState
 } from "react";
 import RoomAgreementApis from "repo/auth/RoomAgreementApis";
 import RoommateAgreementView from "ui/screens/home/friends/RoommateAgreement/RoommateAgreementView";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RoommateAgreementStackParamList } from "routes/FriendsStack";
 import {
   RouteProp,
+  useFocusEffect,
   useNavigation,
   useRoute
 } from "@react-navigation/native";
@@ -21,11 +20,9 @@ import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_w
 import { AppLog } from "utils/Util";
 import InfoCircle from "assets/images/info_circle.svg";
 import { useAuth, usePreferredTheme } from "hooks";
-import { FriendsRootStackParamList } from "routes/FriendsRootStack";
+import { HomeStackParamList } from "routes/HomeStack";
 import EScreen from "models/enums/EScreen";
-import { MatchesStackParamList } from "routes/MatchesStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import { ProfileRootStackParamList } from "routes/ProfileRootStack";
 import { useApi } from "repo/Client";
 import { AgreementAnswersRequestModel } from "models/api_requests/AgreementAnswersRequestModel";
 import {
@@ -44,36 +41,17 @@ import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 type Props = {};
 
 type RoommateAgreementNavigationProp = StackNavigationProp<
-  RoommateAgreementStackParamList,
+  HomeStackParamList,
   "RoommateAgreement"
 >;
-
-type FriendsNavigationProp = StackNavigationProp<
-  FriendsRootStackParamList,
-  "AgreementDetails"
->;
-
-type MatchesNavigationProp = StackNavigationProp<
-  MatchesStackParamList,
-  "AgreementDetails"
->;
-
-type ProfileRootRouteProp = RouteProp<
-  MatchesStackParamList,
+type RoommateAgreementRouteProp = RouteProp<
+  HomeStackParamList,
   "RoommateAgreement"
->;
-
-type ViewProfileNavigationProp = StackNavigationProp<
-  ProfileRootStackParamList,
-  "Profile"
 >;
 
 const RoommateAgreementController: FC<Props> = () => {
   const navigation = useNavigation<RoommateAgreementNavigationProp>();
-  const friendsNavigation = useNavigation<FriendsNavigationProp>();
-  const matchesNavigation = useNavigation<MatchesNavigationProp>();
-  const navigationViewProfile = useNavigation<ViewProfileNavigationProp>();
-  const route = useRoute<ProfileRootRouteProp>();
+  const route = useRoute<RoommateAgreementRouteProp>();
   const [agreementDialog, setAgreementDialog] = useState<boolean>(false);
   const { user } = useAuth();
   const { themedColors } = usePreferredTheme();
@@ -91,60 +69,63 @@ const RoommateAgreementController: FC<Props> = () => {
     RoomAgreementApis.getAgreement
   );
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitleAlign: "center",
-      headerTitle: () => <HeaderTitle text="Roommate Agreement" />,
-      headerLeft: () =>
-        route.params.isFrom !== EScreen.HOME ? (
-          <HeaderLeftTextWithIcon
+  useFocusEffect(
+    useCallback(() => {
+      let headerOptions = {
+        headerTitle: () => <HeaderTitle text={"Roommate Agreement"} />,
+        headerRight: () => (
+          <HeaderRightTextWithIcon
+            text={"More"}
             onPress={() => {
-              navigation.pop();
+              if (
+                agreementPartiesData.current.roommateAgreementParties !==
+                  undefined &&
+                agreementPartiesData.current.roommateAgreementParties!!
+                  .length > 0
+              ) {
+                navigation.navigate("AgreementDetails", {
+                  agreementData: agreementPartiesData.current
+                });
+              } else {
+                SimpleToast.show(
+                  STRINGS.roommateAgreementDetails.no_agreement_found
+                );
+              }
+            }}
+            icon={(color, width, height) => {
+              return (
+                <InfoCircle
+                  width={width}
+                  height={height}
+                  fill={themedColors.primary}
+                />
+              );
             }}
           />
-        ) : (
-          <Hamburger />
-        ),
-      headerRight: () => (
-        <HeaderRightTextWithIcon
-          text={"More"}
-          onPress={() => {
-            if (
-              agreementPartiesData.current.roommateAgreementParties !==
-                undefined &&
-              agreementPartiesData.current.roommateAgreementParties!!
-                .length > 0
-            ) {
-              matchesNavigation.navigate("AgreementDetails", {
-                agreementData: agreementPartiesData.current
-              });
-            } else {
-              SimpleToast.show(
-                STRINGS.roommateAgreementDetails.no_agreement_found
-              );
-            }
-          }}
-          icon={(color, width, height) => {
-            return (
-              <InfoCircle
-                width={width}
-                height={height}
-                fill={themedColors.primary}
-              />
-            );
-          }}
-        />
-      )
-    });
-  }, [
-    roommateData,
-    navigation,
-    navigationViewProfile,
-    friendsNavigation,
-    matchesNavigation,
-    route.params.isFrom,
-    themedColors
-  ]);
+        )
+      };
+
+      if (route.params?.isFrom !== EScreen.HOME) {
+        navigation.setOptions({
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            <HeaderLeftTextWithIcon
+              onPress={() => {
+                navigation.pop();
+              }}
+            />
+          ),
+          ...headerOptions
+        });
+      } else {
+        navigation.dangerouslyGetParent()?.setOptions({
+          headerTitleAlign: "center",
+          headerLeft: () => <Hamburger />,
+          ...headerOptions
+        });
+      }
+    }, [navigation, route.params.isFrom, themedColors])
+  );
 
   const handleRoommateUpdateApi = useCallback(async () => {
     const {

@@ -28,10 +28,10 @@ import Actions from "models/enums/ActivityLogAction";
 
 interface Props {
   activityLog: ActivityLog;
-  navigateTOScreen: (activityLog: ActivityLog) => void;
+  navigateToScreen: (activityLog: ActivityLog) => void;
 }
 
-const ActivityLogItem = ({ activityLog, navigateTOScreen }: Props) => {
+const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
   const { themedColors } = usePreferredTheme();
 
   const icon: any = () => {
@@ -162,7 +162,7 @@ const ActivityLogItem = ({ activityLog, navigateTOScreen }: Props) => {
           containerStyle={styles.message}
           style={styles.messageText}
           numberOfLines={3}
-          onBoldTextPress={() => navigateTOScreen(activityLog)}
+          onBoldTextPress={() => navigateToScreen(activityLog)}
           text={getMessage(activityLog) ?? STRINGS.common.not_found}
         />
         <AppLabel

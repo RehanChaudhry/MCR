@@ -1,5 +1,6 @@
 import {
   RouteProp,
+  useFocusEffect,
   useNavigation,
   useRoute
 } from "@react-navigation/native";
@@ -9,15 +10,9 @@ import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfile
 import EScreen from "models/enums/EScreen";
 import RelationFilterType from "models/enums/RelationFilterType";
 import RelationModel from "models/RelationModel";
-import React, {
-  FC,
-  useCallback,
-  useContext,
-  useLayoutEffect
-} from "react";
+import React, { FC, useCallback, useContext } from "react";
 import AuthApis from "repo/auth/AuthApis";
 import { useApi } from "repo/Client";
-import { FriendsRootStackParamList } from "routes/FriendsRootStack";
 import { AppDataContext } from "../AppDataProvider";
 import { ConnectRequestType } from "../connect_requests/ConnectRequestsController";
 import useFetchRelations from "../useFetchRelations";
@@ -26,23 +21,46 @@ import { STRINGS } from "config";
 import { useCreateConversation } from "hooks/useCreateConversation";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
-import { NotificationParamList } from "routes/NotificationParams";
+import { HomeStackParamList } from "routes/HomeStack";
+import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 
 type Props = {};
 
 type FriendsNavigationProp = StackNavigationProp<
-  FriendsRootStackParamList,
-  "ConnectRequests"
+  HomeStackParamList,
+  "ConnectRequest"
 >;
 
-type NotificationRouteProp = RouteProp<
-  NotificationParamList,
-  "MyRoommates"
->;
+type NotificationRouteProp = RouteProp<HomeStackParamList, "MyRoommates">;
 
 const MyRoommatesController: FC<Props> = () => {
   const navigation = useNavigation<FriendsNavigationProp>();
   const route = useRoute<NotificationRouteProp>();
+
+  useFocusEffect(
+    useCallback(() => {
+      if (route.params?.isFrom === EScreen.NOTIFICATION) {
+        navigation.setOptions({
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            <HeaderLeftTextWithIcon
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          ),
+          headerTitle: () => <HeaderTitle text={"My Roommates"} />
+        });
+      } else {
+        navigation.dangerouslyGetParent()?.setOptions({
+          headerTitleAlign: "center",
+          headerLeft: () => <Hamburger />,
+          headerTitle: () => <HeaderTitle text="My Roommates" />
+        });
+      }
+    }, [navigation, route.params])
+  );
+
   const createConversation = useCreateConversation();
 
   const {
@@ -68,7 +86,7 @@ const MyRoommatesController: FC<Props> = () => {
   );
 
   const onPressReceivedRoommateRequests = () => {
-    navigation.navigate("ConnectRequests", {
+    navigation.navigate("ConnectRequest", {
       title: "Roommate Requests",
       type: ConnectRequestType.ROOMMATE_REQUESTS
     });
@@ -76,9 +94,8 @@ const MyRoommatesController: FC<Props> = () => {
 
   const moveToProfileScreen = useCallback(
     (_: RelationModel) => {
-      navigation.navigate("Profile", {
+      navigation.navigate("ViewProfile", {
         isFrom: EScreen.MY_FRIENDS,
-        updateProfile: false,
         userId: _.userId
       });
     },
@@ -110,7 +127,7 @@ const MyRoommatesController: FC<Props> = () => {
     );
 
     if (createConversationResult !== undefined) {
-      navigation.navigate("Chat", {
+      navigation.navigate("ChatThread", {
         title: [
           profileMatch.user?.getFullName() ?? STRINGS.common.not_found
         ],
@@ -118,22 +135,6 @@ const MyRoommatesController: FC<Props> = () => {
       });
     }
   };
-
-  useLayoutEffect(() => {
-    if (route.params.isFrom === EScreen.NOTIFICATION) {
-      navigation.setOptions({
-        headerLeft: () => (
-          <HeaderLeftTextWithIcon
-            onPress={() => {
-              navigation.goBack();
-            }}
-          />
-        ),
-        headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text={"My Roommates"} />
-      });
-    }
-  }, [navigation, route.params.isFrom]);
 
   return (
     <MyRoommatesView

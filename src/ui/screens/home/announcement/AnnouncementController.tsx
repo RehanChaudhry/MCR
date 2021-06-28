@@ -2,10 +2,9 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Strings from "config/Strings";
 import {
-  CommunityAnnouncement,
-  CommunityAnnouncementResponseModel
-} from "models/api_responses/CommunityAnnouncementResponseModel";
-import EScreen from "models/enums/EScreen";
+  PostFeed,
+  FetchPostFeedListResponseModel
+} from "models/api_responses/FetchPostFeedListResponseModel";
 import React, {
   FC,
   useCallback,
@@ -14,7 +13,6 @@ import React, {
   useRef,
   useState
 } from "react";
-import { AnnouncementStackParamList } from "routes/AnnouncementStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { AnnouncementView } from "ui/screens/home/announcement/AnnouncementView";
@@ -23,9 +21,10 @@ import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestMod
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { Alert } from "react-native";
+import { HomeStackParamList } from "routes/HomeStack";
 
 type AnnouncementNavigationProp = StackNavigationProp<
-  AnnouncementStackParamList,
+  HomeStackParamList,
   "Announcement"
 >;
 
@@ -38,7 +37,7 @@ const AnnouncementController: FC<Props> = () => {
   );
   const isFetchingInProgress = useRef(false);
   const [announcements, setAnnouncements] = useState<
-    CommunityAnnouncement[] | undefined
+    PostFeed[] | undefined
   >(undefined);
   const navigation = useNavigation<AnnouncementNavigationProp>();
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
@@ -76,7 +75,7 @@ const AnnouncementController: FC<Props> = () => {
 
   const getAnnouncementsApi = useApi<
     AnnouncementRequestModel,
-    CommunityAnnouncementResponseModel
+    FetchPostFeedListResponseModel
   >(CommunityAnnouncementApis.getCommunityAnnouncements);
 
   const fetchAnnouncements = useCallback(async () => {
@@ -163,17 +162,6 @@ const AnnouncementController: FC<Props> = () => {
     fetchAnnouncements().then().catch();
   };
 
-  const moveToProfileScreen = useCallback(
-    (userId: number) => {
-      navigation.navigate("Profile", {
-        isFrom: EScreen.ANNOUNCEMENT,
-        updateProfile: false,
-        userId: userId
-      });
-    },
-    [navigation]
-  );
-
   return (
     <AnnouncementView
       data={announcements}
@@ -184,7 +172,6 @@ const AnnouncementController: FC<Props> = () => {
       pullToRefreshCallback={refreshCallback}
       openCommentsScreen={openCommentsScreen}
       shouldPlayVideo={shouldPlayVideo}
-      moveToProfileScreen={moveToProfileScreen}
       reload={reloadCallback}
     />
   );

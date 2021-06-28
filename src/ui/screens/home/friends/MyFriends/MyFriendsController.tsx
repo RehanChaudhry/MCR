@@ -1,9 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import RelationModel from "models/RelationModel";
 import React, { FC, useCallback, useContext } from "react";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
-import { FriendsRootStackParamList } from "routes/FriendsRootStack";
 import { ConnectRequestType } from "../connect_requests/ConnectRequestsController";
 import MyFriendsView from "./MyFriendsView";
 import EScreen from "models/enums/EScreen";
@@ -13,17 +12,31 @@ import { STRINGS } from "config";
 import { useCreateConversation } from "hooks/useCreateConversation";
 import { useAuth } from "hooks";
 import { AppLog } from "utils/Util";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
+import Hamburger from "ui/components/molecules/hamburger/Hamburger";
+import { HomeStackParamList } from "routes/HomeStack";
 
 type Props = {};
 type FriendsNavigationProp = StackNavigationProp<
-  FriendsRootStackParamList,
-  "ConnectRequests"
+  HomeStackParamList,
+  "ConnectRequest"
 >;
 
 const MyFriendsController: FC<Props> = () => {
   const { user } = useAuth();
   const createConversation = useCreateConversation();
   const navigation = useNavigation<FriendsNavigationProp>();
+
+  useFocusEffect(
+    useCallback(() => {
+      navigation.dangerouslyGetParent()?.setOptions({
+        headerTitleAlign: "center",
+        headerTitle: () => <HeaderTitle text="My Friends" />,
+        headerLeft: () => <Hamburger />
+      });
+    }, [navigation])
+  );
+
   const {
     myFriends,
     setMyFriends,
@@ -46,9 +59,8 @@ const MyFriendsController: FC<Props> = () => {
 
   const moveToProfileScreen = useCallback(
     (_: RelationModel) => {
-      navigation.navigate("Profile", {
+      navigation.navigate("ViewProfile", {
         isFrom: EScreen.MY_FRIENDS,
-        updateProfile: false,
         userId: _.userId
       });
     },
@@ -57,7 +69,7 @@ const MyFriendsController: FC<Props> = () => {
 
   const moveToRoommateRequests = useCallback(
     (_: RelationModel) => {
-      navigation.navigate("ConnectRequests", {
+      navigation.navigate("ConnectRequest", {
         title: "Roommate Requests",
         type: ConnectRequestType.ROOMMATE_REQUESTS
       });
@@ -67,7 +79,7 @@ const MyFriendsController: FC<Props> = () => {
 
   const onPressReceivedFriendRequests = useCallback(() => {
     AppLog.log(() => "in onPressReceivedFriendRequests");
-    navigation.navigate("ConnectRequests", {
+    navigation.navigate("ConnectRequest", {
       title: "Friend Requests",
       type: ConnectRequestType.FRIEND_REQUESTS
     });
@@ -81,7 +93,7 @@ const MyFriendsController: FC<Props> = () => {
     );
 
     if (createConversationResult !== undefined) {
-      navigation.navigate("Chat", {
+      navigation.navigate("ChatThread", {
         title: [
           profileMatch.user?.getFullName() ?? STRINGS.common.not_found
         ],

@@ -13,49 +13,44 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import { NotificationParamList } from "routes/NotificationParams";
+import { HomeStackParamList } from "routes/HomeStack";
 import { SinglePostView } from "ui/screens/home/community/single_post/SinglePostView";
 import { AppLog } from "utils/Util";
-import {
-  CommunityAnnouncement,
-  CommunityAnnouncementResponseModel
-} from "models/api_responses/CommunityAnnouncementResponseModel";
+import { PostFeed } from "models/api_responses/FetchPostFeedListResponseModel";
 import EScreen from "models/enums/EScreen";
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { Alert } from "react-native";
 import { ActivityLogStackParamList } from "routes/ActivityLogStack";
+import { FetchPostFeedResponseModel } from "models/api_responses/FetchPostFeedResponseModel";
 
 type Props = {};
 
 type NotificationNavigationProp = StackNavigationProp<
-  NotificationParamList,
+  HomeStackParamList,
   "SinglePost"
 >;
 type ActivityLogNavigationProp = StackNavigationProp<
   ActivityLogStackParamList,
   "SinglePost"
 >;
-type NotificationRouteProp = RouteProp<
-  NotificationParamList,
-  "SinglePost"
->;
+type NotificationRouteProp = RouteProp<HomeStackParamList, "SinglePost">;
 
 const SinglePostController: FC<Props> = () => {
-  const notificationNavigation = useNavigation<NotificationNavigationProp>();
-  const activityLogNavigation = useNavigation<ActivityLogNavigationProp>();
+  const navigation = useNavigation<
+    NotificationNavigationProp & ActivityLogNavigationProp
+  >();
   const route = useRoute<NotificationRouteProp>();
 
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   //  const navigation = useNavigation<CommunityNavigationProp>();
-  const [community, setCommunity] = useState<
-    CommunityAnnouncement | undefined
-  >(undefined);
+  const [community, setCommunity] = useState<PostFeed | undefined>(
+    undefined
+  );
 
-  const getCommunitiesApi = useApi<
-    any,
-    CommunityAnnouncementResponseModel
-  >(CommunityAnnouncementApis.getSingleCommunityAnnouncements);
+  const getCommunitiesApi = useApi<any, FetchPostFeedResponseModel>(
+    CommunityAnnouncementApis.getSingleCommunityAnnouncements
+  );
 
   const fetchCommunities = useCallback(async () => {
     const {
@@ -68,78 +63,46 @@ const SinglePostController: FC<Props> = () => {
       Alert.alert("Unable to fetch posts", errorBody);
       return;
     } else {
-      setCommunity(dataBody.data as CommunityAnnouncement);
+      setCommunity(dataBody.data);
     }
   }, [getCommunitiesApi, route.params.postId]);
 
   const openCommentsScreen = (postId: number) => {
-    if (route.params.isFrom === EScreen.NOTIFICATION) {
-      notificationNavigation.navigate("Comments", {
-        postId: postId,
-        callback: () => {
-          setCommunity((prevState) => {
-            prevState!.commentsCount++;
-            return prevState;
-          });
-        }
-      });
-    } else {
-      activityLogNavigation.navigate("Comments", {
-        postId: postId,
-        callback: () => {
-          setCommunity((prevState) => {
-            prevState!.commentsCount++;
-            return prevState;
-          });
-        }
-      });
-    }
+    navigation.navigate("Comments", {
+      postId: postId,
+      callback: () => {
+        setCommunity((prevState) => {
+          prevState!.commentsCount++;
+          return prevState;
+        });
+      }
+    });
   };
 
   const openReportContentScreen = (postId: number) => {
-    if (route.params.isFrom === EScreen.NOTIFICATION) {
-      notificationNavigation.navigate("ReportContent", {
-        postId: postId,
-        callback: () => {
-          AppLog.logForcefully(() => "come back");
-        }
-      });
-    } else {
-      activityLogNavigation.navigate("ReportContent", {
-        postId: postId,
-        callback: () => {
-          AppLog.logForcefully(() => "come back");
-        }
-      });
-    }
+    navigation.navigate("ReportContent", {
+      postId: postId,
+      callback: () => {
+        AppLog.logForcefully(() => "come back");
+      }
+    });
   };
 
   const moveToProfileScreen = useCallback(
     (userId: number) => {
-      if (route.params.isFrom === EScreen.NOTIFICATION) {
-        notificationNavigation.navigate("Profile", {
-          isFrom: EScreen.NOTIFICATION,
-          updateProfile: false,
-          userId: userId
-        });
-      } else {
-        activityLogNavigation.navigate("Profile", {
-          isFrom: EScreen.ACTIVTY_LOG,
-          updateProfile: false,
-          userId: userId
-        });
-      }
+      navigation.navigate("ViewProfile", {
+        isFrom: EScreen.NOTIFICATION,
+        userId: userId
+      });
     },
-    [notificationNavigation, activityLogNavigation, route.params.isFrom]
+    [navigation]
   );
 
   useLayoutEffect(() =>
-    notificationNavigation.setOptions({
+    navigation.setOptions({
       headerShown: true,
       headerLeft: () => (
-        <HeaderLeftTextWithIcon
-          onPress={() => notificationNavigation.goBack()}
-        />
+        <HeaderLeftTextWithIcon onPress={() => navigation.goBack()} />
       ),
 
       headerTitleAlign: "center",
@@ -147,18 +110,18 @@ const SinglePostController: FC<Props> = () => {
     })
   );
   useEffect(() => {
-    return notificationNavigation.addListener("blur", () => {
+    return navigation.addListener("blur", () => {
       AppLog.log(() => "community screen is blur");
       setShouldPlayVideo(false);
     });
-  }, [notificationNavigation]);
+  }, [navigation]);
 
   useEffect(() => {
-    return notificationNavigation.addListener("focus", () => {
+    return navigation.addListener("focus", () => {
       AppLog.log(() => "community screen is focus");
       setShouldPlayVideo(true);
     });
-  }, [notificationNavigation]);
+  }, [navigation]);
 
   useEffect(() => {
     AppLog.logForcefully(() => "" + setShouldPlayVideo(false));

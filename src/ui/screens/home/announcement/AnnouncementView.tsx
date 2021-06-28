@@ -1,5 +1,5 @@
 import { SPACE } from "config";
-import { CommunityAnnouncement } from "models/api_responses/CommunityAnnouncementResponseModel";
+import { PostFeed } from "models/api_responses/FetchPostFeedListResponseModel";
 import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
@@ -10,7 +10,7 @@ import { FeedPostItem } from "ui/components/molecules/FeedPostItem";
 import NoRecordFound from "assets/images/community_no_record_found.svg";
 
 type Props = {
-  data: CommunityAnnouncement[] | undefined;
+  data: PostFeed[] | undefined;
   shouldShowProgressBar: boolean;
   onEndReached: () => void;
   isAllDataLoaded: boolean;
@@ -19,7 +19,6 @@ type Props = {
   shouldPlayVideo: boolean;
   error: string | undefined;
   reload: () => void;
-  moveToProfileScreen: (userId: number) => void;
 };
 
 export const AnnouncementView = React.memo<Props>(
@@ -32,26 +31,24 @@ export const AnnouncementView = React.memo<Props>(
     openCommentsScreen,
     shouldPlayVideo,
     error,
-    moveToProfileScreen,
     reload
   }) => {
     const keyExtractor = useCallback(
-      (item: CommunityAnnouncement) => item.id.toString(),
+      (item: PostFeed) => item.id.toString(),
       []
     );
 
     const listItem = useCallback(
-      ({ item }: { item: CommunityAnnouncement }) => {
+      ({ item }: { item: PostFeed }) => {
         return (
           <FeedPostItem
             data={item}
             openCommentsScreen={openCommentsScreen}
             shouldPlayVideo={shouldPlayVideo}
-            onProfileImageClicked={moveToProfileScreen}
           />
         );
       },
-      [openCommentsScreen, shouldPlayVideo, moveToProfileScreen]
+      [openCommentsScreen, shouldPlayVideo]
     );
 
     return (

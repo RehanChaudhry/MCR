@@ -1,15 +1,10 @@
-import React, {
-  FC,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useState
-} from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { ViewProfileView } from "ui/screens/home/profile/view_profile/ViewProfileView";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { ProfileStackParamList } from "routes/ProfileBottomBar";
+import { ProfileBottomParamList } from "routes/ProfileBottomBar";
 import {
   RouteProp,
+  useFocusEffect,
   useNavigation,
   useRoute
 } from "@react-navigation/native";
@@ -17,9 +12,8 @@ import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import EScreen from "models/enums/EScreen";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import { NotificationParamList } from "routes/NotificationParams";
+import { HomeStackParamList } from "routes/HomeStack";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
-import { ProfileRootStackParamList } from "routes/ProfileRootStack";
 import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 import { useAuth } from "hooks";
 import { useCreateConversation } from "hooks/useCreateConversation";
@@ -31,24 +25,16 @@ import ProfileApis from "repo/auth/ProfileApis";
 import { useCallback } from "react";
 
 type Props = {};
-type ProfileNavigationProp = StackNavigationProp<
-  ProfileStackParamList,
+type ProfileBottomNavigationProp = StackNavigationProp<
+  ProfileBottomParamList,
+  "ViewProfile"
+>;
+type HomeStackNavigationProp = StackNavigationProp<
+  HomeStackParamList,
   "ViewProfile"
 >;
 
-type ViewProfileNavigationProp = StackNavigationProp<
-  ProfileRootStackParamList,
-  "RoommateAgreement"
->;
-
-type ViewProfileRouteProp = RouteProp<NotificationParamList, "Profile">;
-
-type NotificationNavigationProp = StackNavigationProp<
-  NotificationParamList,
-  "Notification"
->;
-
-type ProfileRouteProp = RouteProp<ProfileStackParamList, "ViewProfile">;
+type ProfileRouteProp = RouteProp<ProfileBottomParamList, "ViewProfile">;
 
 // removes firstName, lastName, and modifies profilePicture object
 function modifyUiFields(_viewProfileUiData: Profile) {
@@ -119,15 +105,13 @@ const ViewProfileController: FC<Props> = () => {
     }
   }, [auth.user, handleGetUserByIdAPi, params.userId]);
 
-  const navigation = useNavigation<ProfileNavigationProp>();
-  const navigationViewProfile = useNavigation<ViewProfileNavigationProp>();
-  const navigationNotification = useNavigation<NotificationNavigationProp>();
-  const route = useRoute<ViewProfileRouteProp>();
-
-  const viewProfileRoute = useRoute<ProfileRouteProp>();
+  const navigation = useNavigation<
+    ProfileBottomNavigationProp & HomeStackNavigationProp
+  >();
+  const route = useRoute<ProfileRouteProp>();
 
   const openRoommateAgreementScreen = () => {
-    navigationViewProfile.navigate("RoommateAgreement", {
+    navigation.navigate("RoommateAgreement", {
       isFrom: EScreen.MY_PROFILE
     });
   };
@@ -153,43 +137,28 @@ const ViewProfileController: FC<Props> = () => {
     }
   };
 
-  useLayoutEffect(() => {
-    if (route.params.isFrom === EScreen.NOTIFICATION) {
-      navigation.setOptions({
-        headerLeft: () => (
-          <HeaderLeftTextWithIcon
-            onPress={() => navigationNotification.goBack()}
-          />
-        ),
+  useFocusEffect(
+    useCallback(() => {
+      if (route.params.isFrom === EScreen.HOME) {
+        navigation.dangerouslyGetParent()?.setOptions({
+          headerLeft: () => <Hamburger />,
+          headerTitleAlign: "center",
+          headerTitle: () => <HeaderTitle text="My Profile" />
+        });
+      } else {
+        navigation.setOptions({
+          headerLeft: () => (
+            <HeaderLeftTextWithIcon onPress={() => navigation.goBack()} />
+          ),
 
-        headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text={route.params.userName!} />
-      });
-    } else if (viewProfileRoute.params.isFrom === EScreen.HOME) {
-      navigation.setOptions({
-        headerLeft: () => <Hamburger />,
-        headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text="My Profile" />
-      });
-    } else if (route.params.isFrom === EScreen.MY_FRIENDS) {
-      navigation.setOptions({
-        headerLeft: () => (
-          <HeaderLeftTextWithIcon
-            onPress={() => navigationNotification.goBack()}
-          />
-        ),
-
-        headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text="Profile" />
-      });
-    }
-  }, [
-    navigation,
-    route.params.isFrom,
-    viewProfileRoute.params.isFrom,
-    route.params.userName,
-    navigationNotification
-  ]);
+          headerTitleAlign: "center",
+          headerTitle: () => (
+            <HeaderTitle text={route.params.userName ?? "Profile"} />
+          )
+        });
+      }
+    }, [navigation, route.params.isFrom, route.params.userName])
+  );
 
   return (
     <>
@@ -199,8 +168,7 @@ const ViewProfileController: FC<Props> = () => {
           viewProfileUiData={viewProfileUiData}
           moveToChatScreen={moveToChatScreen}
         />,
-        undefined,
-        2000
+        undefined
       )}
     </>
   );

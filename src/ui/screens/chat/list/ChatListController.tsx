@@ -17,7 +17,6 @@ import {
 import { useApi } from "repo/Client";
 import ChatApis from "repo/chat/ChatApis";
 import { AppLog } from "utils/Util";
-import { ChatRootStackParamList } from "routes/ChatRootStack";
 import ChatResponseModel, {
   Conversation
 } from "models/api_responses/ChatsResponseModel";
@@ -33,8 +32,9 @@ import _ from "lodash";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import { ChatHelper } from "utils/ChatHelper";
 import { User } from "models/User";
+import { HomeStackParamList } from "routes/HomeStack";
 
-type ChatRootNavigationProp = StackNavigationProp<ChatRootStackParamList>;
+type ChatRootNavigationProp = StackNavigationProp<HomeStackParamList>;
 
 type ChatBottomBarNavigationProp = RouteProp<
   ChatBottomBarParamsList,

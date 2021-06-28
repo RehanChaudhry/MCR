@@ -13,10 +13,21 @@ import NotificationAndActivityLogFilterType from "models/enums/NotificationAndAc
 
 type Props = {};
 
+type NotificationRedirectionLiteralType = {
+  [key: string]: (notification: OSNotification) => void;
+};
+
+type HandleNotificationLiteralType = {
+  [key: string]: (action: string) => void;
+};
+
 const App: React.FC<Props> = () => {
   AppLog.log(() => "Rendering App...");
   const [notificationId, setNotificationId] = useState("");
-  const [screenName, setScreenName] = useState("Matches");
+  const [screenName, setScreenName] = useState("DrawerRoutes");
+
+  //Configure OneSignal
+  PushNotification.init();
 
   const notificationUpdate: PushNotificationContext = {
     notificationId: notificationId,
@@ -27,69 +38,147 @@ const App: React.FC<Props> = () => {
     }
   };
 
-  PushNotification.init();
-
-  const createNotification = {
-    [NotificationActionType.RECIEVE]: () =>
-      sentNotification("receive roommate request"),
-    [NotificationActionType.ACCEPT]: () => sentNotification(),
-    [NotificationActionType.LIKE]: () => sentNotification(),
-    [NotificationActionType.COMMENT]: () => sentNotification(),
-    [NotificationActionType.CREATE]: () => sentNotification(),
-    [NotificationActionType.RESPOND]: () => sentNotification(),
-    [NotificationActionType.ENTER]: () => sentNotification(),
-    [NotificationActionType.LEAVE]: () => sentNotification(),
-    [NotificationActionType.UPDATE]: () => sentNotification(),
-    [NotificationActionType.AGREE]: () => sentNotification(),
-    [NotificationActionType.DISAGREE]: () => sentNotification(),
-    default: () => {
-      AppLog.logForcefully(() => "default");
-    }
+  const handleConnectRequestsRedirection: NotificationRedirectionLiteralType = {
+    [NotificationActionType.RECIEVE]: (notification: OSNotification) =>
+      navigateToConnectRequestScreen(notification),
+    [NotificationActionType.ACCEPT]: (notification: OSNotification) =>
+      navigateToConnectRequestScreen(notification),
+    [NotificationActionType.RESPOND]: (notification: OSNotification) =>
+      navigateToConnectRequestScreen(notification)
   };
 
-  function prepareNotification(notification: OSNotification) {
+  const handleMyRoommatesRedirection: NotificationRedirectionLiteralType = {
+    [NotificationActionType.ENTER]: (notification: OSNotification) =>
+      navigateToMyRoommatesScreen(notification),
+    [NotificationActionType.LEAVE]: (notification: OSNotification) =>
+      navigateToMyRoommatesScreen(notification),
+    [NotificationActionType.UPDATE]: (notification: OSNotification) =>
+      navigateToMyRoommatesScreen(notification)
+  };
+
+  const handleRoommateAgreementRedirection: NotificationRedirectionLiteralType = {
+    [NotificationActionType.AGREE]: (notification: OSNotification) =>
+      navigateToRoommateAgreementScreen(notification),
+    [NotificationActionType.DISAGREE]: (notification: OSNotification) =>
+      navigateToRoommateAgreementScreen(notification),
+    [NotificationActionType.UPDATE]: (notification: OSNotification) =>
+      navigateToRoommateAgreementScreen(notification)
+  };
+
+  const handleChatsRedirection: NotificationRedirectionLiteralType = {
+    [NotificationActionType.CREATE]: (notification: OSNotification) =>
+      navigateToChatScreen(notification),
+    [NotificationActionType.RECIEVE]: (notification: OSNotification) =>
+      navigateToChatScreen(notification)
+  };
+
+  const handlePostsRedirection: NotificationRedirectionLiteralType = {
+    [NotificationActionType.CREATE]: (notification: OSNotification) =>
+      navigateToPostScreen(notification),
+    [NotificationActionType.LIKE]: (notification: OSNotification) =>
+      navigateToPostScreen(notification),
+    [NotificationActionType.COMMENT]: (notification: OSNotification) =>
+      navigateToPostScreen(notification)
+  };
+
+  function handleNotification(notification: OSNotification) {
     const { additionalData } = notification;
-    const handleNotification = {
+
+    const notificationActions: HandleNotificationLiteralType = {
       [NotificationAndActivityLogFilterType.FRIEND_REQUEST]: (
-        action: string // @ts-ignore
-      ) => createNotification[action]?.(),
+        action: string
+      ) => handleConnectRequestsRedirection[action]?.(notification),
+
       [NotificationAndActivityLogFilterType.ROOMMATE_REQUEST]: (
-        action: string // @ts-ignore
-      ) => createNotification[action]?.(),
-      [NotificationAndActivityLogFilterType.CHAT]: (
-        action: string // @ts-ignore
-      ) => createNotification[action]?.(),
-      [NotificationAndActivityLogFilterType.ANNOUNCEMENT]: (
-        action: string // @ts-ignore
-      ) => createNotification[action]?.(),
+        action: string
+      ) => handleConnectRequestsRedirection[action]?.(notification),
+
+      [NotificationAndActivityLogFilterType.CHAT]: (action: string) =>
+        handleChatsRedirection[action]?.(notification),
+
       [NotificationAndActivityLogFilterType.CONVERSATION]: (
-        action: string // @ts-ignore
-      ) => createNotification[action]?.(),
-      [NotificationAndActivityLogFilterType.POST]: (
-        action: string // @ts-ignore
-      ) => createNotification[action]?.(),
+        action: string
+      ) => handleChatsRedirection[action]?.(notification),
+
+      [NotificationAndActivityLogFilterType.ANNOUNCEMENT]: (
+        action: string
+      ) => handlePostsRedirection[action]?.(notification),
+
+      [NotificationAndActivityLogFilterType.POST]: (action: string) =>
+        handlePostsRedirection[action]?.(notification),
+
       [NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT]: (
-        action: string // @ts-ignore
-      ) => createNotification[action]?.(),
+        action: string
+      ) => handleRoommateAgreementRedirection[action]?.(notification),
+
       [NotificationAndActivityLogFilterType.ROOMMATE_GROUP]: (
-        action: string // @ts-ignore
-      ) => createNotification[action]?.()
+        action: string
+      ) => handleMyRoommatesRedirection[action]?.(notification)
     };
+
     // @ts-ignore
-    handleNotification[additionalData.type]?.(
+    notificationActions[additionalData.type]?.(
+      // @ts-ignore
       additionalData?.action.toString()
     );
   }
 
-  function sentNotification(text?: string) {
-    AppLog.logForcefully(() => text ?? "sentNotification()");
-    setScreenName("Settings");
+  //ConnectRequestController
+  /**
+   * export enum ConnectRequestType {
+   * FRIEND_REQUESTS = "friend_requests",
+   * ROOMMATE_REQUESTS = "roommate_requests"
+   * }
+   * pass this for title
+   */
+  function navigateToConnectRequestScreen(notification: OSNotification) {
+    AppLog.logForcefully(
+      () =>
+        JSON.stringify(notification) ?? "navigateToConnectRequestsScreen()"
+    );
+    setScreenName("ConnectRequests");
   }
 
+  function navigateToChatScreen(notification: OSNotification) {
+    AppLog.logForcefully(
+      () => JSON.stringify(notification) ?? "navigateToChatScreen()"
+    );
+    setScreenName("Chat");
+  }
+
+  //singlePost
+  function navigateToPostScreen(notification: OSNotification) {
+    AppLog.logForcefully(
+      () => JSON.stringify(notification) ?? "navigateToPostScreen()"
+    );
+    setScreenName("SinglePost");
+  }
+
+  //RoommateAgreementController
+  function navigateToRoommateAgreementScreen(
+    notification: OSNotification
+  ) {
+    AppLog.logForcefully(
+      () =>
+        JSON.stringify(notification) ??
+        "navigateToRoommateAgreementScreen()"
+    );
+    setScreenName("RoommateAgreement");
+  }
+
+  // MyRoommatesController
+  function navigateToMyRoommatesScreen(notification: OSNotification) {
+    AppLog.logForcefully(
+      () => JSON.stringify(notification) ?? "navigateToMyRoommatesScreen()"
+    );
+    setScreenName("MyRoommates");
+  }
+
+  // All notifications work started from here, when user click on notification
   OneSignal.setNotificationOpenedHandler((data) => {
     AppLog.log(() => "OneSignal: setNotificationOpenedHandler: ", data);
     const { notification } = data;
-    prepareNotification(notification);
+    handleNotification(notification);
   });
 
   return (

@@ -24,19 +24,20 @@ type ChatRootNavigationProp = StackNavigationProp<ChatRootStackParamList>;
 type Props = {};
 
 const ChatController: FC<Props> = () => {
-  const navigation = useNavigation<ChatBottomTabNavProp>();
-  const rootNavigation = useNavigation<ChatRootNavigationProp>();
+  const navigation = useNavigation<
+    ChatBottomTabNavProp & ChatRootNavigationProp
+  >();
 
   const { themedColors } = usePreferredTheme();
 
   useLayoutEffect(() => {
-    return rootNavigation.setOptions({
+    return navigation.setOptions({
       headerLeft: () => <Hamburger />,
       headerRight: () => (
         <HeaderRightTextWithIcon
           text={Strings.chatListScreen.titleRight}
           onPress={() => {
-            rootNavigation.navigate("NewConversation");
+            navigation.navigate("NewConversation");
           }}
           icon={() => (
             <CircularPLus
@@ -59,19 +60,23 @@ const ChatController: FC<Props> = () => {
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rootNavigation]);
+  }, [navigation]);
 
   const _items: Item[] = [
     {
       title: "Active Conversations",
       onPress: () => {
-        navigation.jumpTo("Active");
+        navigation.jumpTo("Active", {
+          status: "active"
+        });
       }
     },
     {
       title: "Archived",
       onPress: () => {
-        navigation.jumpTo("Archive");
+        navigation.jumpTo("Archive", {
+          status: "archived"
+        });
       }
     }
   ];
