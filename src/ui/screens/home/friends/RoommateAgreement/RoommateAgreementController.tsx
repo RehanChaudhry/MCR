@@ -124,7 +124,7 @@ const RoommateAgreementController: FC<Props> = () => {
           ...headerOptions
         });
       }
-    }, [navigation, route.params.isFrom, themedColors])
+    }, [navigation, route.params?.isFrom, themedColors])
   );
 
   const handleRoommateUpdateApi = useCallback(async () => {
