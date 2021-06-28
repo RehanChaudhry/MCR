@@ -27,18 +27,16 @@ import React, {
 import { Alert } from "react-native";
 import { useApi } from "repo/Client";
 import RelationApis from "repo/home/RelationApis";
-import { MatchesStackParamList } from "routes/MatchesStack";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 import { useCreateConversation } from "hooks/useCreateConversation";
+import { HomeStackParamList } from "routes/HomeStack";
+import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 
-type MatchesNavigationProp = StackNavigationProp<
-  MatchesStackParamList,
-  "Matches"
->;
+type MatchesNavigationProp = StackNavigationProp<HomeStackParamList>;
 
 type Props = {};
 
@@ -52,6 +50,7 @@ const MatchesController: FC<Props> = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerLeft: () => <Hamburger />,
       headerRight: () => (
         <HeaderRightTextWithIcon
           text={"More"}
@@ -78,7 +77,7 @@ const MatchesController: FC<Props> = () => {
     );
 
     if (createConversationResult !== undefined) {
-      navigation.navigate("Chat", {
+      navigation.navigate("ChatThread", {
         title: [
           profileMatch.user?.getFullName() ?? STRINGS.common.not_found
         ],
@@ -92,16 +91,17 @@ const MatchesController: FC<Props> = () => {
       () =>
         "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
     );
-    navigation.navigate("Profile", {
+    navigation.navigate("ViewProfile", {
       isFrom: EScreen.MATCH_INFO,
-      updateProfile: false,
-      userId: profileMatch.user!.id!
+      userId: profileMatch.user!.id!,
+      userName:
+        profileMatch.user?.firstName + " " + profileMatch.user?.lastName
     });
   };
 
   const moveToRoommateRequests = useCallback(
     (_: RelationModel) => {
-      navigation.navigate("ConnectRequests", {
+      navigation.navigate("ConnectRequest", {
         title: "Roommate Requests",
         type: ConnectRequestType.ROOMMATE_REQUESTS
       });
@@ -111,7 +111,7 @@ const MatchesController: FC<Props> = () => {
 
   const moveToFriendRequests = useCallback(
     (_: RelationModel) => {
-      navigation.navigate("ConnectRequests", {
+      navigation.navigate("ConnectRequest", {
         title: "Friend Requests",
         type: ConnectRequestType.FRIEND_REQUESTS
       });

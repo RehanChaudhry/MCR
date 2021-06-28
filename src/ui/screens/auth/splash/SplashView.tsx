@@ -140,6 +140,7 @@ export const SplashView = React.memo<Props>(() => {
     AuthApis.fetchMyProfile
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const fetchUniDetails = useApi<
     FetchUniDetailsRequestModel,
     FetchUniDetailsResponseModel

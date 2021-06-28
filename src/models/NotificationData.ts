@@ -13,6 +13,7 @@ type NotificationData = {
   data?: any | any[];
   isTitle?: boolean;
   titleText?: string;
+  isRead: number;
   createdAt?: Date;
   sender?: NotificationSenderData;
 };

@@ -1,8 +1,13 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import { CommunityAnnouncement as FeedData } from "models/api_responses/CommunityAnnouncementResponseModel";
+import { PostFeed as FeedData } from "models/api_responses/FetchPostFeedListResponseModel";
 import React, { useCallback } from "react";
-import { StyleSheet, TouchableOpacityProps, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacityProps,
+  View
+} from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
   URL_TYPES,
@@ -22,7 +27,7 @@ export interface FeedPostItemProps extends TouchableOpacityProps {
   shouldPlayVideo: boolean;
   shouldShowRightIcon?: boolean;
   openReportContentScreen?: (postId: number) => void;
-  onProfileImageClicked?: (userId: number) => void;
+  onProfileImageClicked?: (userId: number, name: string) => void;
 }
 
 function showAttachedItemsIfAny(item: FeedData, shouldPlayVideo: boolean) {
@@ -37,13 +42,17 @@ function showAttachedItemsIfAny(item: FeedData, shouldPlayVideo: boolean) {
       />
     );
   } else if (item.photos) {
+    if (item.photos.length === 1) {
+      return (
+        <Image
+          source={{
+            uri: item.photos[0].fileURL
+          }}
+          style={style.image}
+        />
+      );
+    }
     return <ImagesSlideShow images={item.photos} />;
-  } else if (item.link) {
-    return <UrlMetaData url={item.link} />;
-  } else if (item.content) {
-    return (
-      <AppLabel text={item.content} style={style.text} numberOfLines={0} />
-    );
   }
 }
 
@@ -70,7 +79,10 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
     }, [theme.themedColors]);
 
     const onImageClicked = () => {
-      onProfileImageClicked?.(announcementItem!.postedBy!);
+      onProfileImageClicked?.(
+        announcementItem!.postedBy!,
+        `${announcementItem.postedByFirstName} ${announcementItem.postedByLastName}`
+      );
     };
 
     return (
@@ -96,6 +108,13 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
           }}
           onProfileImageClicked={onImageClicked}
         />
+        {announcementItem.content !== "" && (
+          <AppLabel
+            text={announcementItem.content}
+            style={style.text}
+            numberOfLines={0}
+          />
+        )}
         {showAttachedItemsIfAny(announcementItem, shouldPlayVideo)}
         <AnnouncementFooter
           commentCount={announcementItem.commentsCount}
@@ -121,5 +140,11 @@ const style = StyleSheet.create({
     lineHeight: 24,
     paddingTop: SPACE.md,
     fontSize: FONT_SIZE.base
+  },
+  image: {
+    borderRadius: 12,
+    width: "100%",
+    height: 300,
+    marginTop: SPACE.md
   }
 });

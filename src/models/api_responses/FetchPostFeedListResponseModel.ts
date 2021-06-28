@@ -1,9 +1,9 @@
-export interface CommunityAnnouncementResponseModel {
+export interface FetchPostFeedListResponseModel {
   message: string;
-  data: CommunityAnnouncement[] | CommunityAnnouncement;
+  data: PostFeed[];
 }
 
-export type CommunityAnnouncement = {
+export type PostFeed = {
   popularityScore: number;
   id: number;
   type: string;

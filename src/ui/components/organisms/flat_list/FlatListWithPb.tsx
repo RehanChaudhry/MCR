@@ -13,7 +13,7 @@ import {
 import { AppLoadMore } from "ui/components/atoms/app_load_more/AppLoadMore";
 import ErrorWithRetryView from "ui/components/molecules/ErrorWithRetryView";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import NoRecordFound from "assets/images/no-result-found.svg";
+import NoRecordFound from "assets/images/empty_state.svg";
 
 interface OwnProps<ItemT> extends FlatListProps<ItemT> {
   shouldShowProgressBar?: boolean;
@@ -27,6 +27,7 @@ interface OwnProps<ItemT> extends FlatListProps<ItemT> {
   noRecordFoundText?: string;
   listRef?: React.RefObject<FlatList>;
   noRecordFoundImage?: React.ReactElement;
+  noRecordFoundStyle?: StyleProp<ViewStyle>;
 }
 
 type Props<ItemT> = OwnProps<ItemT>;
@@ -45,6 +46,7 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
     onEndReached,
     listRef,
     noRecordFoundImage,
+    noRecordFoundStyle,
     ...rest
   } = props;
 
@@ -122,8 +124,17 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
       if (!dataHasRecords()) {
         return (
           <>
-            <View style={styles.noRecordParent}>
-              {noRecordFoundImage ? noRecordFoundImage : <NoRecordFound />}
+            <View style={[styles.noRecordParent, noRecordFoundStyle]}>
+              {noRecordFoundImage ? (
+                noRecordFoundImage
+              ) : (
+                <NoRecordFound
+                  width={"100%"}
+                  height={"50%"}
+                  fillPrimary={theme.themedColors.primary}
+                  fillSecondary={theme.themedColors.secondary}
+                />
+              )}
 
               <AppLabel
                 text={noRecordFoundText}

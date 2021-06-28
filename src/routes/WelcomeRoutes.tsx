@@ -4,7 +4,7 @@ import WelcomeController from "ui/screens/home/welcome/WelcomeController";
 import QuestionsController from "ui/screens/questions/QuestionsController";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { STRINGS } from "config";
-import { HomeRoutes } from "routes/HomeRoutes";
+import { HomeStackRoutesContainer } from "routes/HomeStackRoutesContainer";
 import UpdateProfileController from "ui/screens/home/profile/update_profile/UpdateProfileController";
 import { AddInterestsController } from "ui/screens/home/profile/update_profile/add_interests/AddInterestsController";
 import { AuthRoutes } from "routes/AuthRoutes";
@@ -41,7 +41,7 @@ export const WelcomeRoutes: FC<Props> = ({
       />
       <WelcomeStack.Screen
         name="Matches"
-        component={HomeRoutes}
+        component={HomeStackRoutesContainer}
         options={{ headerShown: false }}
       />
       <WelcomeStack.Screen

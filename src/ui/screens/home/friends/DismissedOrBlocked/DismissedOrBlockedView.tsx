@@ -60,7 +60,6 @@ const DismissedOrBlockedView: FC<Props> = ({
   onPressProfile
 }) => {
   const selectedItem = useRef<RelationModel>();
-
   const [
     shouldShowRestoreAlert,
     setShouldShowRestoreAlert
@@ -125,6 +124,7 @@ const DismissedOrBlockedView: FC<Props> = ({
             );
           }}
           data={data}
+          noRecordFoundStyle={styles.noRecordFound}
         />
       </Screen>
       <TwoButtonsAlert
@@ -165,6 +165,9 @@ const styles = StyleSheet.create({
   listContainer: { padding: SPACE.lg },
   itemSeparator: {
     height: SPACE.lg
+  },
+  noRecordFound: {
+    top: 80
   }
 });
 

@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { COLORS, SPACE, STRINGS } from "config";
 import { useAuth, usePreferredTheme } from "hooks";
@@ -21,8 +21,6 @@ import React, {
 import { StyleSheet, View } from "react-native";
 import { useApi } from "repo/Client";
 import OtherApis from "repo/home/OtherApis";
-import { FriendsRootStackParamList } from "routes/FriendsRootStack";
-import { DismissedOrBlockStackParamList } from "routes/FriendsStack";
 import {
   Choice,
   SegmentedControl
@@ -32,21 +30,30 @@ import useFetchRelations from "ui/screens/home/friends/useFetchRelations";
 import { AppLog } from "utils/Util";
 import DismissedOrBlockedView from "./DismissedOrBlockedView";
 import { useCreateConversation } from "hooks/useCreateConversation";
+import Hamburger from "ui/components/molecules/hamburger/Hamburger";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
+import { HomeStackParamList } from "routes/HomeStack";
 
 type Props = {};
 
-type DismissBlockNavigationProp = StackNavigationProp<DismissedOrBlockStackParamList>;
-
 type FriendsNavigationProp = StackNavigationProp<
-  FriendsRootStackParamList,
-  "ConnectRequests"
+  HomeStackParamList,
+  "ConnectRequest"
 >;
 
 const DismissedOrBlockedController: FC<Props> = () => {
   const navigation = useNavigation<FriendsNavigationProp>();
+  useFocusEffect(
+    useCallback(() => {
+      navigation.dangerouslyGetParent()?.setOptions({
+        headerTitleAlign: "center",
+        headerTitle: () => <HeaderTitle text="Dismissed or Blocked" />,
+        headerLeft: () => <Hamburger />
+      });
+    }, [navigation])
+  );
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 
-  const dismissBlockRootNavigation = useNavigation<DismissBlockNavigationProp>();
   const {
     dismissed,
     setDismissed,
@@ -102,11 +109,11 @@ const DismissedOrBlockedController: FC<Props> = () => {
   }, [staticContentApi]);
 
   const moveToHeaderContent = useCallback(() => {
-    dismissBlockRootNavigation.navigate("StaticContent", {
+    navigation.navigate("StaticContent", {
       isFrom: EScreen.MY_FRIENDS,
       staticContent: headerContent!
     });
-  }, [dismissBlockRootNavigation, headerContent]);
+  }, [navigation, headerContent]);
 
   const theme = usePreferredTheme();
 
@@ -116,9 +123,8 @@ const DismissedOrBlockedController: FC<Props> = () => {
 
   const moveToProfileScreen = useCallback(
     (relationModel: RelationModel) => {
-      navigation.navigate("Profile", {
+      navigation.navigate("ViewProfile", {
         isFrom: EScreen.MY_FRIENDS,
-        updateProfile: false,
         userId: relationModel.user!.id!
       });
     },
@@ -133,7 +139,7 @@ const DismissedOrBlockedController: FC<Props> = () => {
     );
 
     if (createConversationResult !== undefined) {
-      navigation.navigate("Chat", {
+      navigation.navigate("ChatThread", {
         title: [
           profileMatch.user?.getFullName() ?? STRINGS.common.not_found
         ],

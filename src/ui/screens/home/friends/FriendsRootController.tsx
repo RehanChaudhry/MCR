@@ -17,7 +17,7 @@ type FriendsNavigationProp = BottomTabNavigationProp<FriendsStackParamList>;
 
 type Props = {};
 
-const FriendsController: FC<Props> = () => {
+const FriendsRootController: FC<Props> = () => {
   const navigation = useNavigation<FriendsNavigationProp>();
   const { user } = useAuth();
   const isAgreementId = user?.profile?.agreementId !== null;
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FriendsController;
+export default FriendsRootController;
 
 function createItems(
   navigation: FriendsNavigationProp,

@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { FC, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { ProfileRoutes } from "routes/ProfileRoutes";
-import { ProfileStackParamList } from "routes/ProfileBottomBar";
+import { ProfileBottomParamList } from "routes/ProfileBottomBar";
 import BottomBreadCrumbs, {
   Item
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
@@ -11,11 +11,11 @@ import { usePreferredTheme } from "hooks";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import EScreen from "models/enums/EScreen";
 
-type ProfileNavigationProp = BottomTabNavigationProp<ProfileStackParamList>;
+type ProfileNavigationProp = BottomTabNavigationProp<ProfileBottomParamList>;
 
 type Props = {};
 
-const ProfileController: FC<Props> = () => {
+const ProfileRootController: FC<Props> = () => {
   const navigation = useNavigation<ProfileNavigationProp>();
   const safeAreaInsets = useSafeAreaInsets();
 
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ProfileController;
+export default ProfileRootController;

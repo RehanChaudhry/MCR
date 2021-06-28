@@ -3,7 +3,6 @@ import React, {
   FC,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState
 } from "react";
@@ -13,6 +12,7 @@ import QuestionSection from "models/QuestionSection";
 import Question from "models/Question";
 import {
   RouteProp,
+  useFocusEffect,
   useNavigation,
   useRoute
 } from "@react-navigation/native";
@@ -23,21 +23,16 @@ import {
 } from "models/api_requests/AnswerApiRequestModel";
 import { AnswerApiResponseModel } from "models/api_responses/AnswerApiResponseModel";
 import ProfileApis from "repo/auth/ProfileApis";
-import { usePreferredTheme, usePreventDoubleTap } from "hooks";
+import { usePreventDoubleTap } from "hooks";
 import { Alert, BackHandler } from "react-native";
 import QuestionsResponseModel, {
   toSections
 } from "models/api_responses/QuestionsResponseModel";
 import { QuestionsView } from "ui/screens/questions/QuestionsView";
 import ProgressErrorView from "ui/components/templates/progress_error_view/ProgressErrorView";
-import { UpdateQuestionnaireStackParamList } from "routes/ProfileStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import EScreen from "models/enums/EScreen";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
-import { MatchesStackParamList } from "routes/MatchesStack";
-import { WelcomeStackParamList } from "routes/WelcomeStack";
-import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { HomeDrawerParamList } from "routes";
 import StaticContentRequestModel, {
   StaticContentType
 } from "models/api_requests/StaticContentRequestModel";
@@ -45,9 +40,6 @@ import StaticContentResponseModel, {
   StaticContent
 } from "models/api_responses/StaticContentResponseModel";
 import OtherApis from "repo/home/OtherApis";
-import { ProfileStackParamList } from "routes/ProfileBottomBar";
-import { ProfileRootStackParamList } from "routes/ProfileRootStack";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { EWelcomeFlowStatus } from "models/api_responses/FetchMyProfileResponseModel";
 import SkipTitleButton from "ui/components/molecules/skip_title_button/SkipTitleButton";
 import SimpleToast from "react-native-simple-toast";
@@ -55,50 +47,31 @@ import { STRINGS } from "config";
 import ErrorWithRetryView from "ui/components/molecules/ErrorWithRetryView";
 import { Color, NumberProp } from "react-native-svg";
 import Exclamation from "assets/images/exclamation.svg";
-type WelcomeNavigationProp = StackNavigationProp<
-  WelcomeStackParamList,
-  "Questionnaire"
+import { StackNavigationProp } from "@react-navigation/stack";
+import { HomeStackParamList } from "routes/HomeStack";
+import { WelcomeStackParamList } from "routes/WelcomeStack";
+import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
+
+type WelcomeAndHomeNavigationProp = StackNavigationProp<
+  HomeStackParamList & WelcomeStackParamList
 >;
 
-type MatchesNavigationProp = StackNavigationProp<
-  MatchesStackParamList,
-  "Questionnaire"
->;
-
-type ProfileNavigationProp = StackNavigationProp<
-  ProfileStackParamList,
-  "UpdateQuestionnaire"
->;
-
-type ProfileRootNavigationProp = StackNavigationProp<ProfileRootStackParamList>;
-
-type HomeNavigationProp = DrawerNavigationProp<HomeDrawerParamList>;
-
-type ProfileRouteProp = RouteProp<
-  UpdateQuestionnaireStackParamList,
-  "UpdateQuestionnaire"
->;
+type ProfileRouteProp = RouteProp<WelcomeStackParamList, "Questionnaire">;
 
 type Props = {};
 
 const QuestionsController: FC<Props> = () => {
   AppLog.log(() => "Opening QuestionsController");
 
-  const { themedColors } = usePreferredTheme();
-
   const route = useRoute<ProfileRouteProp>();
-  const profileRootNavigation = useNavigation<ProfileRootNavigationProp>();
-  const homeNavigation = useNavigation<HomeNavigationProp>();
-  const welcomeNavigation = useNavigation<WelcomeNavigationProp>();
-  const profileNavigation = useNavigation<ProfileNavigationProp>();
-  const matchesNavigation = useNavigation<MatchesNavigationProp>();
+  const navigation = useNavigation<WelcomeAndHomeNavigationProp>();
 
   const moveToHomeScreen = useCallback(() => {
-    homeNavigation.reset({
+    navigation.reset({
       index: 0,
       routes: [{ name: "Matches" }]
     });
-  }, [homeNavigation]);
+  }, [navigation]);
 
   useEffect(() => {
     if (route.params.isFrom === EScreen.WELCOME) {
@@ -115,47 +88,46 @@ const QuestionsController: FC<Props> = () => {
     }
   }, [route.params.isFrom]);
 
-  useLayoutEffect(() => {
-    if (route.params.isFrom === EScreen.WELCOME) {
-      welcomeNavigation.setOptions({
-        headerLeft: () => null,
-        headerRight: () => (
-          <SkipTitleButton
-            onPress={moveToHomeScreen}
-            updateProfileRequest={{
-              questionnaireStatus: EWelcomeFlowStatus.SKIPPED
-            }}
-          />
-        )
-      });
-    }
-
-    if (route.params.isFrom === EScreen.MY_PROFILE) {
-      profileNavigation.setOptions({
-        headerLeft: () => <Hamburger />
-      });
-    }
-
-    if (route.params.isFrom === EScreen.MATCH_INFO) {
-      matchesNavigation.setOptions({
-        headerLeft: () => (
-          <HeaderLeftTextWithIcon
-            onPress={() => {
-              matchesNavigation.pop();
-            }}
-          />
-        )
-      });
-    }
-  }, [
-    matchesNavigation,
-    homeNavigation,
-    profileNavigation,
-    welcomeNavigation,
-    themedColors.interface,
-    route.params.isFrom,
-    moveToHomeScreen
-  ]);
+  useFocusEffect(
+    useCallback(() => {
+      if (route.params.isFrom === EScreen.WELCOME) {
+        navigation.setOptions({
+          headerLeft: () => null,
+          headerTitle: () => (
+            <HeaderTitle text={STRINGS.questionnaire.title_update} />
+          ),
+          headerRight: () => (
+            <SkipTitleButton
+              onPress={moveToHomeScreen}
+              updateProfileRequest={{
+                questionnaireStatus: EWelcomeFlowStatus.SKIPPED
+              }}
+            />
+          )
+        });
+      } else if (route.params.isFrom === EScreen.MATCH_INFO) {
+        navigation.setOptions({
+          headerTitle: () => (
+            <HeaderTitle text={STRINGS.questionnaire.title_update} />
+          ),
+          headerLeft: () => (
+            <HeaderLeftTextWithIcon
+              onPress={() => {
+                navigation.pop();
+              }}
+            />
+          )
+        });
+      } else {
+        navigation.dangerouslyGetParent()?.setOptions({
+          headerLeft: () => <Hamburger />,
+          headerTitle: () => (
+            <HeaderTitle text={STRINGS.questionnaire.title_update} />
+          )
+        });
+      }
+    }, [navigation, route.params.isFrom, moveToHomeScreen])
+  );
 
   const requestModel = useRef<AnswerApiRequestModel>();
 
@@ -185,12 +157,12 @@ const QuestionsController: FC<Props> = () => {
 
   const moveToHeaderContent = useCallback(
     (content: StaticContent) => {
-      profileRootNavigation.navigate("StaticContent", {
+      navigation.navigate("StaticContent", {
         isFrom: route.params.isFrom,
         staticContent: content
       });
     },
-    [route.params.isFrom, profileRootNavigation]
+    [route.params.isFrom, navigation]
   );
 
   const [questions, setQuestions] = useState<

@@ -1,3 +1,4 @@
+import { usePreferredTheme } from "hooks";
 import { StyleSheet } from "react-native";
 import React from "react";
 import { ItemChatThread } from "ui/components/molecules/item_chat/ItemChatThread";
@@ -32,6 +33,7 @@ export const ChatThreadScreen = React.memo<Props>(
     retry,
     retryCallback
   }) => {
+    const theme = usePreferredTheme();
     const renderItem = ({ item }: { item: Message | undefined }) => {
       //AppLog.log(() => "rendering list item : " + JSON.stringify(item));
       return <ItemChatThread item={item} retry={retry} />;
@@ -59,7 +61,12 @@ export const ChatThreadScreen = React.memo<Props>(
             listContentContainerStyle,
             { paddingHorizontal: SPACE.lg, paddingBottom: 0 }
           ]}
-          noRecordFoundImage={<ChatNoRecordFound />}
+          noRecordFoundImage={
+            <ChatNoRecordFound
+              fillPrimary={theme.themedColors.primary}
+              fillSecondary={theme.themedColors.secondary}
+            />
+          }
         />
         <WriteMessage
           btnPressCallback={sentMessage}

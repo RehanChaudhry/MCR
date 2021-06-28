@@ -9,7 +9,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { AppLog } from "utils/Util";
 import { useApi } from "repo/Client";
-import { ActivityLogStackParamList } from "routes/ActivityLogStack";
 import ProfileApis from "repo/auth/ProfileApis";
 import ActivityLogsResponseModel from "models/api_responses/ActivityLogsResponseModel";
 import { ActivityLogView } from "ui/screens/home/activity_log/ActivityLogView";
@@ -19,11 +18,12 @@ import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { Alert } from "react-native";
 import EScreen from "models/enums/EScreen";
 import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
-import useAuth from "hooks/useAuth";
 import Actions from "models/enums/ActivityLogAction";
+import { HomeStackParamList } from "routes/HomeStack";
+import ActivityLog from "models/ActivityLog";
 
 type ActivityLogNavigationProp = StackNavigationProp<
-  ActivityLogStackParamList,
+  HomeStackParamList,
   "ActivityLog"
 >;
 
@@ -40,7 +40,6 @@ const ActivityLogController: FC<Props> = () => {
   const activityLogApi = useApi<any, ActivityLogsResponseModel>(
     ProfileApis.activityLogs
   );
-  const user = useAuth();
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
 
   const [
@@ -138,11 +137,11 @@ const ActivityLogController: FC<Props> = () => {
     [paginationRequestModel, handleGetActivityLogApi]
   );
 
-  const openMyProfileScreen = (userId: number) => {
-    navigation.push("Profile", {
-      isFrom: EScreen.NOTIFICATION,
-      updateProfile: false,
-      userId: userId
+  const openMyProfileScreen = (userId?: number, userName?: string) => {
+    navigation.push("ViewProfile", {
+      isFrom: EScreen.ACTIVTY_LOG,
+      userId: userId!,
+      userName: userName
     });
   };
 
@@ -153,41 +152,34 @@ const ActivityLogController: FC<Props> = () => {
     });
   };
 
-  const navigateTOScreen = (
-    type: string,
-    action: string,
-    postId?: number,
-    userId?: number
-  ) => {
-    if (type != null) {
-      if (
-        type === NotificationAndActivityLogFilterType.LOGIN_STUDENT &&
-        action === Actions.LOGIN
-      ) {
-        return openMyProfileScreen(user.user?.profile?.id!);
-      } else if (
-        type === NotificationAndActivityLogFilterType.COMMENT &&
-        action === Actions.CREATE
-      ) {
-        return openSinglePostScreen(postId!);
-      } else if (
-        type === NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
-        action === Actions.CREATE
-      ) {
-        return openMyProfileScreen(userId!);
-      } else if (
-        type === NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
-        action === Actions.CREATE
-      ) {
-        return openMyProfileScreen(userId!);
-      } else if (
-        type === NotificationAndActivityLogFilterType.POST &&
-        action === Actions.CREATE
-      ) {
-        return openSinglePostScreen(postId!);
-      } else {
-        return null;
-      }
+  const navigateToScreen = (activityLog: ActivityLog) => {
+    const { type, action, user: _user, entityId } = activityLog;
+
+    if (!type || !action) {
+      return;
+    }
+
+    if (
+      (type === NotificationAndActivityLogFilterType.LOGIN_STUDENT &&
+        action === Actions.LOGIN) ||
+      (type === NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+        action === Actions.CREATE) ||
+      (type === NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+        action === Actions.CREATE)
+    ) {
+      return openMyProfileScreen(
+        _user?.id,
+        _user?.firstName + " " + _user?.lastName
+      );
+    } else if (
+      (type === NotificationAndActivityLogFilterType.COMMENT &&
+        action === Actions.CREATE) ||
+      (type === NotificationAndActivityLogFilterType.POST &&
+        action === Actions.CREATE)
+    ) {
+      return openSinglePostScreen(entityId!);
+    } else {
+      return null;
     }
   };
 
@@ -202,7 +194,7 @@ const ActivityLogController: FC<Props> = () => {
       activityLogs={activityLogs?.data}
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
-      navigateTOScreen={navigateTOScreen}
+      navigateToScreen={navigateToScreen}
       isAllDataLoaded={isAllDataLoaded}
     />
   );

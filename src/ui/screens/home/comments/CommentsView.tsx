@@ -64,7 +64,12 @@ export const CommentsView = React.memo<Props>(
           onEndReached={onEndReached}
           isAllDataLoaded={isAllDataLoaded}
           pullToRefreshCallback={pullToRefreshCallback}
-          noRecordFoundImage={<NoRecordFound />}
+          noRecordFoundImage={
+            <NoRecordFound
+              fillPrimary={theme.themedColors.primary}
+              fillSecondary={theme.themedColors.secondary}
+            />
+          }
         />
 
         <WriteMessage
