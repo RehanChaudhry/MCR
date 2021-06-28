@@ -140,7 +140,6 @@ const style = StyleSheet.create({
   },
   image: {
     borderRadius: 12,
-    backgroundColor: "red",
     width: "100%",
     height: 300,
     marginTop: SPACE.md
