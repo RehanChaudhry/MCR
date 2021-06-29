@@ -77,23 +77,25 @@ export const NotificationView = React.memo<Props>(
             items={[
               {
                 value: "View All",
-                text: ""
+                text: "View All"
               },
               {
-                value: "View Friend Request",
+                value: "Friend Request",
                 text: "friend-request"
               },
               {
-                value: "View Roommate Request",
+                value: "Roommate Request",
                 text: "roommate-request"
               },
-              { value: "View Chat", text: "View Message" },
-              { value: "View Conversation", text: "new-conversation" },
-              { value: "View Disagreed", text: "disagreed" },
-              { value: "View Agreed", text: "agreed" },
-              { value: "View Comment", text: "comment" },
-              { value: "View Announcement", text: "announcement" },
-              { value: "View Like", text: "like" }
+              { value: "Chat", text: "chat" },
+              { value: "Conversation", text: "conversation" },
+              { value: "Post", text: "post" },
+              { value: "Announcement", text: "announcement" },
+              {
+                value: "Roommate Agreement",
+                text: "roommate-agreement"
+              },
+              { value: "Roommate Group", text: "roommate-group" }
             ]}
             title={"Filter by notification type"}
             textStyle={styles.filterText}

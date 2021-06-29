@@ -6,6 +6,7 @@ export type PaginationParamsModel = {
   limit?: number;
   paginate?: boolean;
   type?: string;
+  actionType?: string;
   keyword?: string;
   gender?: EGender;
   filterBy?: MatchesTypeFilter;

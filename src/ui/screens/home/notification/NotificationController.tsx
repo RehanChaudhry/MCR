@@ -49,7 +49,6 @@ const NotificationController: FC<Props> = () => {
     paginationRequestModel,
     setPaginationRequestModel
   ] = useState<PaginationParamsModel>({
-    type: "",
     page: 1,
     limit: 9,
     paginate: true
@@ -164,14 +163,24 @@ const NotificationController: FC<Props> = () => {
 
   const searchText = useCallback(
     (textToSearch: string) => {
-      const updatedRequestModel = {
-        ...paginationRequestModel,
-        page: 1,
-        type: textToSearch
-      };
-      setPaginationRequestModel(updatedRequestModel);
-      setNotifications(undefined);
-      handleGetNotificationApi(false, updatedRequestModel);
+      if (textToSearch === "View All") {
+        const updatedRequestModel = {
+          ...paginationRequestModel,
+          page: 1
+        };
+        setPaginationRequestModel(updatedRequestModel);
+        setNotifications(undefined);
+        handleGetNotificationApi(false, updatedRequestModel);
+      } else {
+        const updatedRequestModel = {
+          ...paginationRequestModel,
+          page: 1,
+          actionType: textToSearch
+        };
+        setPaginationRequestModel(updatedRequestModel);
+        setNotifications(undefined);
+        handleGetNotificationApi(false, updatedRequestModel);
+      }
     },
     [paginationRequestModel, handleGetNotificationApi]
   );

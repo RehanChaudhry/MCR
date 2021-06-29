@@ -49,7 +49,6 @@ const ActivityLogController: FC<Props> = () => {
     paginationRequestModel,
     setPaginationRequestModel
   ] = useState<PaginationParamsModel>({
-    type: "",
     page: 1,
     limit: 9,
     paginate: true
@@ -128,14 +127,25 @@ const ActivityLogController: FC<Props> = () => {
 
   const searchText = useCallback(
     (textToSearch: string) => {
-      const updatedRequestModel = {
-        ...paginationRequestModel,
-        page: 1,
-        type: textToSearch
-      };
-      setPaginationRequestModel(updatedRequestModel);
-      setActivityLogs(undefined);
-      handleGetActivityLogApi(false, updatedRequestModel);
+      if (textToSearch === "All Activities") {
+        AppLog.logForcefully(() => "textToSearch: " + textToSearch);
+        const updatedRequestModel = {
+          ...paginationRequestModel,
+          page: 1
+        };
+        setPaginationRequestModel(updatedRequestModel);
+        setActivityLogs(undefined);
+        handleGetActivityLogApi(false, updatedRequestModel);
+      } else {
+        const updatedRequestModel = {
+          ...paginationRequestModel,
+          page: 1,
+          actionType: textToSearch
+        };
+        setPaginationRequestModel(updatedRequestModel);
+        setActivityLogs(undefined);
+        handleGetActivityLogApi(false, updatedRequestModel);
+      }
     },
     [paginationRequestModel, handleGetActivityLogApi]
   );

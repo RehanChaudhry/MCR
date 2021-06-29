@@ -16,7 +16,7 @@ enum ActivityType {
 export const getActivityTypeFilterData = () => {
   const filters: DropDownItem[] = [
     {
-      text: "",
+      text: "All Activities",
       value: "All Activities"
     },
     {
@@ -64,11 +64,6 @@ export const getActivityTypeFilterData = () => {
       value: "Login"
     }
   ];
-
-  filters.push({
-    text: ActivityType.ROMMATE_AGREEMENT,
-    value: "Roommate Agreement"
-  });
 
   filters.push({
     text: ActivityType.FRIEND_REQUEST,
