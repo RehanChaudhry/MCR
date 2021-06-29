@@ -12,8 +12,8 @@ import {
 } from "react-native";
 import { AppLoadMore } from "ui/components/atoms/app_load_more/AppLoadMore";
 import ErrorWithRetryView from "ui/components/molecules/ErrorWithRetryView";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import NoRecordFound from "assets/images/empty_state.svg";
+import { AppLog } from "utils/Util";
 
 interface OwnProps<ItemT> extends FlatListProps<ItemT> {
   shouldShowProgressBar?: boolean;
@@ -122,6 +122,8 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
       );
 
       if (!dataHasRecords()) {
+        //No reacord found text visisbility issue
+        AppLog.logForcefully(() => "" + noRecordFoundText);
         return (
           <>
             <View style={[styles.noRecordParent, noRecordFoundStyle]}>
@@ -135,14 +137,6 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
                   fillSecondary={theme.themedColors.secondary}
                 />
               )}
-
-              <AppLabel
-                text={noRecordFoundText}
-                style={[
-                  styles.noRecord,
-                  { color: theme.themedColors.label }
-                ]}
-              />
             </View>
             {ui}
           </>
