@@ -1,4 +1,5 @@
 import { SectionsType } from "models/api_responses/DynamicFormSections";
+import Strings from "config/Strings";
 
 export enum EWelcomeFlowStatus {
   PENDING = "pending",
@@ -55,7 +56,11 @@ export const getName = (profile: Profile) =>
   `${profile.firstName} ${profile.lastName}`;
 
 export function getSubtitle(profile: Profile): string {
-  return profile.major + (profile.hometown ? ", " + profile.hometown : "");
+  return profile.major +
+    (profile.hometown ? ", " + profile.hometown : "") !==
+    "null"
+    ? profile.major + (profile.hometown ? ", " + profile.hometown : "")
+    : Strings.common.not_available;
 }
 export const profileCompletedPercentage = (profile?: Profile) => {
   return profile

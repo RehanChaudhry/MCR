@@ -80,7 +80,7 @@ const ProfileHeader: FC<Props> = ({
             text={
               matchGroupName + (homeTown ? "," + homeTown : "") !== "null"
                 ? matchGroupName + (homeTown ? "," + homeTown : "")
-                : "N/A"
+                : Strings.common.not_available
             }
             textStyle={[
               styles.textStyle,
