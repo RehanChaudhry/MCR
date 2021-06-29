@@ -164,7 +164,7 @@ const ActivityLogController: FC<Props> = () => {
   const navigateToScreen = (activityLog: ActivityLog) => {
     const { type, action, user: _user, entityId, data } = activityLog;
 
-    const filteredUserId = data?.filter(
+    const userData = data?.filter(
       (item: any) => item.id !== user?.profile?.id
     );
 
@@ -251,8 +251,8 @@ const ActivityLogController: FC<Props> = () => {
       action === Actions.CREATE
     ) {
       return openMyProfileScreen(
-        filteredUserId[0].id,
-        filteredUserId[0].firstName + " " + filteredUserId[0].lastName
+        userData[0].id,
+        userData[0].firstName + " " + userData[0].lastName
       );
     } else {
       return null;
