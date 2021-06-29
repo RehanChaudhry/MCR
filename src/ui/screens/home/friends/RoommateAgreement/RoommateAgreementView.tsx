@@ -118,7 +118,7 @@ const RoommateAgreementView: FC<Props> = ({
           }
         },
         {
-          title: "Disagree",
+          title: "DisAgree",
           onPress: () => {
             agreementDialogCallback("disagreed");
           },

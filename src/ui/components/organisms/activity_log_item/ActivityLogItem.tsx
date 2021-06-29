@@ -25,6 +25,7 @@ import ActivityLog, {
 } from "models/ActivityLog";
 import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
 import Actions from "models/enums/ActivityLogAction";
+import useAuth from "hooks/useAuth";
 
 interface Props {
   activityLog: ActivityLog;
@@ -33,6 +34,7 @@ interface Props {
 
 const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
   const { themedColors } = usePreferredTheme();
+  const { user } = useAuth();
 
   const icon: any = () => {
     if (activityLog.type != null) {
@@ -70,9 +72,12 @@ const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
       ) {
         return <UserAdd width={20} fill={themedColors.background} />;
       } else if (
-        activityLog.type ===
+        (activityLog.type ===
           NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
-        activityLog.action === Actions.REJECTED
+          activityLog.action === Actions.REJECTED) ||
+        (activityLog.type ===
+          NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+          activityLog.action === Actions.REJECTED)
       ) {
         return <UserRejected width={20} fill={themedColors.background} />;
       } else if (
@@ -94,6 +99,12 @@ const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
       } else if (
         activityLog.type ===
           NotificationAndActivityLogFilterType.DISMISSED_LIST &&
+        activityLog.action === Actions.CREATE
+      ) {
+        return <Dismissed width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.RESTORED &&
         activityLog.action === Actions.CREATE
       ) {
         return <Dismissed width={20} fill={themedColors.background} />;
@@ -163,7 +174,7 @@ const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
           style={styles.messageText}
           numberOfLines={3}
           onBoldTextPress={() => navigateToScreen(activityLog)}
-          text={getMessage(activityLog) ?? STRINGS.common.not_found}
+          text={getMessage(activityLog, user) ?? STRINGS.common.not_found}
         />
         <AppLabel
           style={[styles.date, { color: themedColors.interface[600] }]}
