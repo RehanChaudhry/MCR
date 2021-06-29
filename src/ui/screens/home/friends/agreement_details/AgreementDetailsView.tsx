@@ -57,7 +57,7 @@ export const AgreementDetailsView = React.memo<Props>(
             />
             <FlatList
               data={agreementDetailsData.roommateAgreementParties}
-              keyExtractor={(item) => item.userID?.toString()}
+              keyExtractor={(item) => item.userId?.toString()}
               renderItem={listItem}
               ItemSeparatorComponent={() => (
                 <View
