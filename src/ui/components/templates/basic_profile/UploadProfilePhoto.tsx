@@ -30,7 +30,7 @@ export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
     } = useFormikContext<FormikValues>();
 
     useEffect(() => {
-      if (initialValues[name] !== null) {
+      if (initialValues[name]) {
         setFieldValue(name, {
           fileURL: JSON.parse(initialValues[name])?.fileURL,
           originalName: JSON.parse(initialValues[name])?.originalName
@@ -66,26 +66,18 @@ export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
       <View style={styles.container}>
         <View style={styles.subContainer}>
           <View style={styles.imageViewStyle}>
-            {/* {!imageResponse && initialValues[name] === "null" && (
-              <AppImageBackground
-                style={styles.image}
-                icon={profileIcon}
-                shouldNotOptimize={true}
-                containerShape={CONTAINER_TYPES.CIRCLE}
-              />
-            )}*/}
-            {(imageResponse || initialValues[name] !== null) && (
-              <Image
-                style={styles.image}
-                source={
-                  imageResponse?.uri
-                    ? { uri: imageResponse.uri }
-                    : JSON.parse(initialValues[name])?.fileURL
-                    ? { uri: JSON.parse(initialValues[name])?.fileURL }
-                    : require("assets/images/profile_avatar.png")
-                }
-              />
-            )}
+            {/* {(imageResponse || initialValues[name]) && (*/}
+            <Image
+              style={styles.image}
+              source={
+                imageResponse
+                  ? { uri: imageResponse.uri }
+                  : initialValues[name]
+                  ? { uri: JSON.parse(initialValues[name])?.fileURL }
+                  : require("assets/images/profile_avatar.png")
+              }
+            />
+            {/*)}*/}
           </View>
           <AppButton
             text={STRINGS.profile.buttonText.uploadProfilePhoto}

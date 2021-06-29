@@ -77,7 +77,11 @@ const ProfileHeader: FC<Props> = ({
           <HeadingWithText
             headingText={firstName + " " + lastName}
             headingFontWeight={"semi-bold"}
-            text={matchGroupName + (homeTown ? "," + homeTown : "")}
+            text={
+              matchGroupName + (homeTown ? "," + homeTown : "") !== "null"
+                ? matchGroupName + (homeTown ? "," + homeTown : "")
+                : "N/A"
+            }
             textStyle={[
               styles.textStyle,
               { color: theme.themedColors.interface["600"] }
