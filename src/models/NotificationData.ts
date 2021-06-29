@@ -1,6 +1,5 @@
 import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
 import { timeAgo } from "utils/Util";
-import NotificationSenderData from "models/NotificationSenderData";
 import NotificationActionType from "models/enums/NotificationActionType";
 import { User } from "models/User";
 import { UserModel } from "models/api_responses/UserModel";
@@ -17,7 +16,7 @@ type NotificationData = {
   titleText?: string;
   isRead: number;
   createdAt?: Date;
-  sender?: NotificationSenderData;
+  sender?: User;
 };
 
 export function getDisplayTime(notification: NotificationData): string {

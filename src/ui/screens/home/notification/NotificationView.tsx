@@ -14,7 +14,6 @@ import { usePreferredTheme } from "hooks";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import NotificationData from "models/NotificationData";
-import NotificationSenderData from "models/NotificationSenderData";
 import { User } from "models/User";
 
 type Props = {
@@ -32,7 +31,7 @@ type Props = {
     users?: User[],
     conversationId?: number,
     notificationId?: number,
-    sender?: NotificationSenderData
+    sender?: User
   ) => void;
 };
 

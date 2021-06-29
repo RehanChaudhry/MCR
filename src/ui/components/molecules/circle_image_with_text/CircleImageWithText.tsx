@@ -20,7 +20,7 @@ import Like from "assets/images/agreed.svg";
 import UserGroup from "assets/images/user_group.svg";
 import OfficeBuilding from "assets/images/office-building.svg";
 import Announcement from "assets/images/announcements.svg";
-import NotificationSenderData from "models/NotificationSenderData";
+import { User } from "models/User";
 
 type Props = {
   notification: NotificationData;
@@ -32,7 +32,7 @@ type Props = {
     users?: [],
     conversationId?: number,
     notificationId?: number,
-    sender?: NotificationSenderData
+    sender?: User
   ) => void;
 };
 

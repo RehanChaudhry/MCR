@@ -3,7 +3,6 @@ import { Conversation } from "models/api_responses/ChatsResponseModel";
 import EScreen from "models/enums/EScreen";
 import NotificationActionType from "models/enums/NotificationActionType";
 import NotificationAndLogType from "models/enums/NotificationAndActivityLogFilterType";
-import { NotificationSenderData } from "models/NotificationSenderData";
 import { User } from "models/User";
 import { useState } from "react";
 import { HomeStackParamList } from "routes/HomeStack";
@@ -17,7 +16,7 @@ type NotificationData = {
   users?: User[];
   conversationId?: number;
   notificationId?: number;
-  sender?: NotificationSenderData;
+  sender?: User;
 };
 
 type ReturnType = {

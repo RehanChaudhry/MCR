@@ -21,7 +21,6 @@ import { AppLog } from "utils/Util";
 import { NotificationReadApiRequestModel } from "models/api_requests/NotificationReadApiRequestModel";
 import useNotification from "hooks/useNotification";
 import { User } from "models/User";
-import { NotificationSenderData } from "models/NotificationSenderData";
 
 type NotificationNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -191,7 +190,7 @@ const NotificationController: FC<Props> = () => {
     users?: User[],
     conversationId?: number,
     notificationId?: number,
-    sender?: NotificationSenderData
+    sender?: User
   ) => {
     handleNotificationMarkRead(notificationId!);
     const { screenName, params } = handleNotification({
