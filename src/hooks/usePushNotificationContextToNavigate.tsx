@@ -1,33 +1,31 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
+import { HomeStackParamList } from "routes/HomeStack";
 import { AppLog } from "utils/Util";
 
 export type PushNotificationContext = {
-  screenName: string;
+  screenName: keyof HomeStackParamList;
+  params?: HomeStackParamList[keyof HomeStackParamList];
 };
 
 export const PushNotificationContext = React.createContext<PushNotificationContext>(
   {
-    screenName: ""
+    screenName: "DrawerRoutes"
   }
 );
 
 export const usePushNotificationsContextToNavigate = (
-  callback: (screenName: string) => void
+  callback: (value: PushNotificationContext) => void
 ) => {
-  const { screenName } = React.useContext(PushNotificationContext);
+  const { screenName, params } = React.useContext(PushNotificationContext);
   const navigation = useNavigation();
   useEffect(() => {
-    AppLog.logForcefully(
+    AppLog.log(
       () =>
-        "navigation available: " +
-        (navigation !== null && navigation !== undefined)
-    );
-    AppLog.logForcefully(
-      () => "screenName: " + JSON.stringify(screenName)
+        "screenName: " + screenName + ", params: " + JSON.stringify(params)
     );
 
-    navigation.navigate(screenName);
-    callback(screenName);
-  }, [callback, navigation, screenName]);
+    navigation.navigate(screenName, params);
+    callback({ screenName, params });
+  }, [callback, navigation, screenName, params]);
 };

@@ -18,15 +18,20 @@ const App: React.FC<Props> = () => {
   //Configure OneSignal
   PushNotification.init();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { screenName, handleNotification } = useNotification();
-  const notificationUpdate: PushNotificationContext = {
-    screenName: screenName
-  };
+  const {
+    data: notificationUpdate,
+    handleNotification
+  } = useNotification();
+
   OneSignal.setNotificationOpenedHandler((data) => {
     AppLog.log(() => "OneSignal: setNotificationOpenedHandler: ", data);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { notification } = data;
-    // handleNotification(notification);
+    const { additionalData } = data.notification;
+    handleNotification({
+      action: additionalData.action,
+      type: additionalData.type,
+      postId: additionalData.referenceId,
+      conversationId: additionalData.referenceId
+    });
   });
 
   return (

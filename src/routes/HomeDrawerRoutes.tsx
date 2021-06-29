@@ -12,15 +12,17 @@ import MatchesController from "ui/screens/home/matches/MatchesController";
 import NotificationController from "ui/screens/home/notification/NotificationController";
 import ProfileRootController from "ui/screens/home/profile/ProfileRootController";
 import SettingsController from "ui/screens/home/settings/SettingsController";
-import { HomeDrawer } from "./HomeDrawerStack";
+import { HomeDrawer, HomeDrawerParamList } from "./HomeDrawerStack";
 
 export const HomeDrawerRoutes = () => {
-  let [currentItem, setCurrentItem] = useState<string>("Matches");
+  let [currentItem, setCurrentItem] = useState<keyof HomeDrawerParamList>(
+    "Matches"
+  );
 
   // For handling redirection through push notification
   usePushNotificationsContextToNavigate(
-    useCallback((screenName) => {
-      setCurrentItem(screenName);
+    useCallback((value) => {
+      // setCurrentItem(value.screenName);
     }, [])
   );
 

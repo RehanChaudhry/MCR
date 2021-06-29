@@ -8,6 +8,7 @@ import { useState } from "react";
 import { HomeStackParamList } from "routes/HomeStack";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 import { AppLog } from "utils/Util";
+import { PushNotificationContext } from "./usePushNotificationContextToNavigate";
 
 type NotificationData = {
   action?: string;
@@ -19,11 +20,6 @@ type NotificationData = {
   sender?: User;
 };
 
-type ReturnType = {
-  screenName: keyof HomeStackParamList;
-  params: HomeStackParamList[keyof HomeStackParamList];
-};
-
 type NotificationRedirectionLiteralType = {
   [key: string]: (notification: NotificationData) => void;
 };
@@ -33,9 +29,9 @@ type HandleNotificationLiteralType = {
 };
 
 const useNotification = () => {
-  const [screenName, setScreenName] = useState<keyof HomeStackParamList>(
-    "DrawerRoutes"
-  );
+  const [data, setData] = useState<PushNotificationContext>({
+    screenName: "DrawerRoutes"
+  });
   const { user } = useAuth();
 
   const handleConnectRequestsRedirection: NotificationRedirectionLiteralType = {
@@ -83,7 +79,9 @@ const useNotification = () => {
       navigateToPostScreen(notification)
   };
 
-  function handleNotification(notification: NotificationData): ReturnType {
+  function handleNotification(
+    notification: NotificationData
+  ): PushNotificationContext {
     const notificationActions: HandleNotificationLiteralType = {
       [NotificationAndLogType.FRIEND_REQUEST]: (action: string) =>
         handleConnectRequestsRedirection[action]?.(notification),
@@ -127,14 +125,13 @@ const useNotification = () => {
    */
   function navigateToConnectRequestScreen(
     notification: NotificationData
-  ): ReturnType {
+  ): PushNotificationContext {
     AppLog.logForcefully(
       () =>
         JSON.stringify(notification) ?? "navigateToConnectRequestsScreen()"
     );
     let name: keyof HomeStackParamList = "ConnectRequest";
-    setScreenName(name);
-    return {
+    let _data = {
       screenName: name,
       params: {
         type:
@@ -143,11 +140,13 @@ const useNotification = () => {
             : ConnectRequestType.ROOMMATE_REQUESTS
       }
     };
+    setData(_data);
+    return _data;
   }
 
   function navigateToChatScreen(
     notification: NotificationData
-  ): ReturnType {
+  ): PushNotificationContext {
     AppLog.logForcefully(() => "user: " + sender?.firstName);
 
     const { users, conversationId, sender } = notification;
@@ -190,55 +189,58 @@ const useNotification = () => {
   //singlePost
   function navigateToPostScreen(
     notification: NotificationData
-  ): ReturnType {
+  ): PushNotificationContext {
     AppLog.logForcefully(
       () => JSON.stringify(notification) ?? "navigateToPostScreen()"
     );
     let name: keyof HomeStackParamList = "SinglePost";
-    setScreenName(name);
-    return {
+    let _data = {
       screenName: name,
       params: {
         postId: notification.postId,
         isFrom: EScreen.NOTIFICATION
       }
     };
+    setData(_data);
+    return _data;
   }
 
   //RoommateAgreementController
   function navigateToRoommateAgreementScreen(
     notification: NotificationData
-  ): ReturnType {
+  ): PushNotificationContext {
     AppLog.logForcefully(
       () =>
         JSON.stringify(notification) ??
         "navigateToRoommateAgreementScreen()"
     );
     let name: keyof HomeStackParamList = "RoommateAgreement";
-    setScreenName(name);
-    return {
+    let _data = {
       screenName: name,
       params: { isFrom: EScreen.NOTIFICATION }
     };
+    setData(_data);
+    return _data;
   }
 
   // MyRoommatesController
   function navigateToMyRoommatesScreen(
     notification: NotificationData
-  ): ReturnType {
+  ): PushNotificationContext {
     AppLog.logForcefully(
       () => JSON.stringify(notification) ?? "navigateToMyRoommatesScreen()"
     );
     let name: keyof HomeStackParamList = "MyRoommates";
-    setScreenName(name);
-    return {
+    let _data = {
       screenName: name,
       params: { isFrom: EScreen.NOTIFICATION }
     };
+    setData(_data);
+    return _data;
   }
 
   return {
-    screenName,
+    data: data,
     handleNotification: (notification: NotificationData) =>
       handleNotification(notification)
   };

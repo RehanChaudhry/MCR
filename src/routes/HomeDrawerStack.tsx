@@ -10,6 +10,7 @@ export type HomeDrawerParamList = {
   Notification: undefined;
   ActivityLog: undefined;
   Settings: undefined;
+  SignOut: undefined;
 };
 
 export const HomeDrawer = createDrawerNavigator<HomeDrawerParamList>();

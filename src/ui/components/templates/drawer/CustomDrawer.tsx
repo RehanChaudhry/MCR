@@ -33,8 +33,8 @@ import { profileCompletedPercentage } from "models/api_responses/FetchMyProfileR
 import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
-  currentItem: string;
-  setCurrentItem: (name: string) => void;
+  currentItem: keyof HomeDrawerParamList;
+  setCurrentItem: (name: keyof HomeDrawerParamList) => void;
   shouldNotOptimize?: boolean;
 };
 export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
@@ -66,7 +66,12 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
     ChatList: { name: "Chat", icon: NavChat },
     Notification: { name: "Notifications", icon: Bell },
     ActivityLog: { name: "Activity Log", icon: Clock },
-    Settings: { name: "Settings", icon: Bell, shouldNotDrawView: true }
+    Settings: {
+      name: "Settings",
+      icon: Settings,
+      shouldNotDrawView: true
+    },
+    SignOut: { name: "Sign Out", icon: SignOut, shouldNotDrawView: true }
   };
 
   function defaultIcon<K extends keyof HomeDrawerParamList>(name: K) {
