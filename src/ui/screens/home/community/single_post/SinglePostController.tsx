@@ -106,7 +106,7 @@ const SinglePostController: FC<Props> = () => {
       ),
 
       headerTitleAlign: "center",
-      headerTitle: () => <HeaderTitle text="Single Post View" />
+      headerTitle: () => <HeaderTitle text="Feed" />
     })
   );
   useEffect(() => {

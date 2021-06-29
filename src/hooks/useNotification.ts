@@ -78,6 +78,8 @@ const useNotification = () => {
     [NotificationActionType.LIKE]: (notification: NotificationData) =>
       navigateToPostScreen(notification),
     [NotificationActionType.COMMENT]: (notification: NotificationData) =>
+      navigateToPostScreen(notification),
+    [NotificationActionType.RECIEVE]: (notification: NotificationData) =>
       navigateToPostScreen(notification)
   };
 
