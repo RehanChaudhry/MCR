@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { FeedPostItem } from "ui/components/molecules/FeedPostItem";
 import { PostFeed } from "models/api_responses/FetchPostFeedListResponseModel";
 import useAuth from "hooks/useAuth";
@@ -24,20 +24,22 @@ export const SinglePostView = React.memo<Props>(
     const auth = useAuth();
 
     return (
-      <View style={styles.container}>
-        {postData && (
-          <FeedPostItem
-            data={postData}
-            openCommentsScreen={openCommentsScreen}
-            shouldPlayVideo={shouldPlayVideo}
-            openReportContentScreen={openReportContentScreen}
-            shouldShowRightIcon={
-              postData.postedBy !== auth.user?.profile?.id
-            }
-            onProfileImageClicked={moveToProfileScreen}
-          />
-        )}
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          {postData && (
+            <FeedPostItem
+              data={postData}
+              openCommentsScreen={openCommentsScreen}
+              shouldPlayVideo={shouldPlayVideo}
+              openReportContentScreen={openReportContentScreen}
+              shouldShowRightIcon={
+                postData.postedBy !== auth.user?.profile?.id
+              }
+              onProfileImageClicked={moveToProfileScreen}
+            />
+          )}
+        </View>
+      </ScrollView>
     );
   }
 );

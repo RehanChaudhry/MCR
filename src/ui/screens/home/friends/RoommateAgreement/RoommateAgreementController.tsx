@@ -27,7 +27,8 @@ import { useApi } from "repo/Client";
 import { AgreementAnswersRequestModel } from "models/api_requests/AgreementAnswersRequestModel";
 import {
   AgreementAnswerResponseModel,
-  AgreementData
+  AgreementData,
+  RoommateAgreementParty
 } from "models/api_responses/AgreementAnswerResponseModel";
 import {
   AgreementField,
@@ -57,6 +58,7 @@ const RoommateAgreementController: FC<Props> = () => {
   const { themedColors } = usePreferredTheme();
   const submitAnswerRequest = useRef<AgreementAnswersRequestModel>({});
   const [roommateData, setRoommateData] = useState<AgreementField[]>();
+  const [title, setTitle] = useState<RoommateAgreementParty[]>();
   const agreementPartiesData = useRef<AgreementData>({});
   let myInitialValues = useRef<FormikValues | undefined>(undefined);
 
@@ -172,6 +174,7 @@ const RoommateAgreementController: FC<Props> = () => {
           {}
         );
         setRoommateData(dataBody.data.agreementFields);
+        setTitle(dataBody.data.roommateAgreementParties);
       }
     }
   }, [user, getAgreementApi]);
@@ -217,6 +220,7 @@ const RoommateAgreementController: FC<Props> = () => {
           agreementDialogCallback={agreementDialogCallback}
           progressBarBtn={roommateUpdateApi.loading}
           shouldShowAgreementDialog={setAgreementDialog}
+          title={title!}
         />,
         undefined,
         undefined,

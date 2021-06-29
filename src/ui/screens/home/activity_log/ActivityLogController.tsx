@@ -21,6 +21,8 @@ import NotificationAndActivityLogFilterType from "models/enums/NotificationAndAc
 import Actions from "models/enums/ActivityLogAction";
 import { HomeStackParamList } from "routes/HomeStack";
 import ActivityLog from "models/ActivityLog";
+import usePreventDoubleTap from "hooks/usePreventDoubleTap";
+import useAuth from "hooks/useAuth";
 
 type ActivityLogNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -31,6 +33,7 @@ type Props = {};
 
 const ActivityLogController: FC<Props> = () => {
   const navigation = useNavigation<ActivityLogNavigationProp>();
+  const { user } = useAuth();
 
   const [
     activityLogs,
@@ -137,35 +140,41 @@ const ActivityLogController: FC<Props> = () => {
     [paginationRequestModel, handleGetActivityLogApi]
   );
 
-  const openMyProfileScreen = (userId?: number, userName?: string) => {
-    navigation.push("ViewProfile", {
-      isFrom: EScreen.ACTIVTY_LOG,
-      userId: userId!,
-      userName: userName
-    });
-  };
+  const openMyProfileScreen = usePreventDoubleTap(
+    (userId?: number, userName?: string) => {
+      navigation.push("ViewProfile", {
+        isFrom: EScreen.ACTIVTY_LOG,
+        userId: userId!,
+        userName: userName
+      });
+    }
+  );
 
-  const openSinglePostScreen = (postId: number) => {
+  const openRoommateAgreementScreen = usePreventDoubleTap(() => {
+    navigation.push("RoommateAgreement", { isFrom: EScreen.ACTIVTY_LOG });
+  });
+
+  const openSinglePostScreen = usePreventDoubleTap((postId: number) => {
     navigation.push("SinglePost", {
       postId: postId,
       isFrom: EScreen.ACTIVTY_LOG
     });
-  };
+  });
 
   const navigateToScreen = (activityLog: ActivityLog) => {
-    const { type, action, user: _user, entityId } = activityLog;
+    const { type, action, user: _user, entityId, data } = activityLog;
+
+    const userData = data?.filter(
+      (item: any) => item.id !== user?.profile?.id
+    );
 
     if (!type || !action) {
       return;
     }
 
     if (
-      (type === NotificationAndActivityLogFilterType.LOGIN_STUDENT &&
-        action === Actions.LOGIN) ||
-      (type === NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
-        action === Actions.CREATE) ||
-      (type === NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
-        action === Actions.CREATE)
+      type === NotificationAndActivityLogFilterType.LOGIN_STUDENT &&
+      action === Actions.LOGIN
     ) {
       return openMyProfileScreen(
         _user?.id,
@@ -178,6 +187,73 @@ const ActivityLogController: FC<Props> = () => {
         action === Actions.CREATE)
     ) {
       return openSinglePostScreen(entityId!);
+    } else if (
+      (type === NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+        action === Actions.ACCEPTED) ||
+      (type === NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+        action === Actions.ACCEPTED)
+    ) {
+      return openMyProfileScreen(
+        data?.senderId,
+        data?.senderFirstName + " " + data?.senderLastName
+      );
+    } else if (
+      (type === NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+        action === Actions.REJECTED) ||
+      (type === NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+        action === Actions.REJECTED)
+    ) {
+      return openMyProfileScreen(
+        data?.senderId,
+        data?.senderFirstName + " " + data?.senderLastName
+      );
+    } else if (
+      type === NotificationAndActivityLogFilterType.PROFILE &&
+      action === Actions.UPDATED
+    ) {
+      return openMyProfileScreen(
+        _user?.id,
+        _user?.firstName + " " + _user?.lastName
+      );
+    } else if (
+      (type === NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
+        action === Actions.CREATE) ||
+      (type === NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+        action === Actions.CREATE)
+    ) {
+      return openMyProfileScreen(
+        data?.receiverId,
+        data?.receiverFirstName + " " + data?.receiverLastName
+      );
+    } else if (
+      type === NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
+      action === Actions.ACCEPTED
+    ) {
+      return openRoommateAgreementScreen();
+    } else if (
+      type === NotificationAndActivityLogFilterType.DISMISSED_LIST &&
+      action === Actions.CREATE
+    ) {
+      return openMyProfileScreen(
+        data?.id,
+        data?.firstName + " " + data?.lastName
+      );
+    } else if (
+      type === NotificationAndActivityLogFilterType.RESTORED &&
+      action === Actions.CREATE
+    ) {
+      return openMyProfileScreen(
+        data?.id,
+        data?.firstName + " " + data?.lastName
+      );
+    } else if (
+      type === NotificationAndActivityLogFilterType.NEW_CONVERSATION &&
+      action === Actions.CREATE
+    ) {
+      return openMyProfileScreen(
+        userData[0].id,
+        userData[0].firstName + " " + userData[0].lastName
+      );
     } else {
       return null;
     }

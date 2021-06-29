@@ -2,6 +2,7 @@ import { timeAgo } from "utils/Util";
 import Actions from "models/enums/ActivityLogAction";
 import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
 import { User } from "models/User";
+import { UserModel } from "models/api_responses/UserModel";
 
 type ActivityLog = {
   id: number;
@@ -23,17 +24,31 @@ export function getDisplayTime(activityLog: ActivityLog): string {
   );
 }
 
+const getUsers = (users: [User], currentUser: UserModel | undefined) => {
+  return `<b>${users.reduce(
+    (newArray: string[], _item: User) => (
+      currentUser?.profile?.id !== _item.id &&
+        newArray.push(_item.firstName + " " + _item.lastName),
+      newArray
+    ),
+    []
+  )} </b>`;
+};
+
 // @ts-ignore
-export function getMessage(activityLog: ActivityLog): string {
+export function getMessage(
+  activityLog: ActivityLog,
+  user?: UserModel | undefined
+): string {
   if (activityLog.type != null) {
     if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
       activityLog.action === Actions.CREATE
     ) {
-      return `Sent a friend request to <b>${activityLog.user?.firstName}${
-        " " + activityLog.user?.lastName
-      }</b>`;
+      return `Sent a friend request to <b>${
+        activityLog.data?.receiverFirstName
+      }${" " + activityLog.data?.receiverLastName}</b>`;
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
@@ -79,15 +94,15 @@ export function getMessage(activityLog: ActivityLog): string {
         NotificationAndActivityLogFilterType.DISMISSED_LIST &&
       activityLog.action === Actions.CREATE
     ) {
-      return `Added <b>${activityLog.data?.senderFirstName}${
-        " " + activityLog.data?.senderFirstName
+      return `Added <b>${activityLog.data?.firstName}${
+        " " + activityLog.data?.lastName
       }</b> to dismiss list`;
     } else if (
       activityLog.type ===
         NotificationAndActivityLogFilterType.DISMISSED_LIST &&
       activityLog.action === Actions.REMOVED
     ) {
-      return `Removed <b>${activityLog.user?.firstName}${
+      return `Removed<b>${activityLog.user?.firstName}${
         " " + activityLog.user?.lastName
       }</b> from dismiss list`;
     } else if (
@@ -144,8 +159,8 @@ export function getMessage(activityLog: ActivityLog): string {
       activityLog.type === NotificationAndActivityLogFilterType.RESTORED &&
       activityLog.action === Actions.CREATE
     ) {
-      return `Removed <b>${activityLog.user?.firstName}${
-        " " + activityLog.user?.lastName
+      return `Removed <b>${activityLog.data?.firstName}${
+        " " + activityLog.data?.lastName
       }</b> from dissmissed list`;
     } else if (
       activityLog.type === NotificationAndActivityLogFilterType.POST &&
@@ -160,9 +175,12 @@ export function getMessage(activityLog: ActivityLog): string {
         NotificationAndActivityLogFilterType.CONVERSATION &&
       activityLog.action === Actions.CREATE
     ) {
-      return `Started a new conversation with <b>${
-        activityLog.user?.firstName
-      }${" " + activityLog.user?.lastName} </b>`;
+      return `Started a new conversation with ${getUsers(
+        activityLog.data,
+        user
+      )} `;
+    } else {
+      return "Commented on any post";
     }
   } else {
     return "Commented on any post";

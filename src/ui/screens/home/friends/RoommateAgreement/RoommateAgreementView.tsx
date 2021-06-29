@@ -22,6 +22,8 @@ import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 import { AgreementField } from "models/api_requests/GetAgreementApi";
 import { SectionsType } from "models/api_responses/DynamicFormSections";
 import { DynamicFormView } from "ui/components/templates/dynamic_card_view/DynamicFormView";
+import { RoommateAgreementParty } from "models/api_responses/AgreementAnswerResponseModel";
+import useAuth from "hooks/useAuth";
 
 type Props = {
   myInitialValues: FormikValues;
@@ -33,6 +35,7 @@ type Props = {
   agreementDialogCallback: (status: string) => void;
   progressBarBtn: boolean;
   shouldShowAgreementDialog: React.Dispatch<React.SetStateAction<boolean>>;
+  title: RoommateAgreementParty[];
 };
 
 const RoommateAgreementView: FC<Props> = ({
@@ -44,10 +47,12 @@ const RoommateAgreementView: FC<Props> = ({
   showAgreementDialog,
   agreementDialogCallback,
   progressBarBtn,
-  shouldShowAgreementDialog
+  shouldShowAgreementDialog,
+  title
 }) => {
   AppLog.logForcefully(() => "in RoommateAgreementView()...");
 
+  const { user } = useAuth();
   const { themedColors } = usePreferredTheme();
   let yupSchema = useRef(Yup.object().shape({}));
   const [formFields, setFormFields] = useState<SectionsType[] | undefined>(
@@ -118,7 +123,7 @@ const RoommateAgreementView: FC<Props> = ({
           }
         },
         {
-          title: "Disagree",
+          title: "DisAgree",
           onPress: () => {
             agreementDialogCallback("disagreed");
           },
@@ -142,6 +147,30 @@ const RoommateAgreementView: FC<Props> = ({
       ]}
     />
   );
+  const getRoommatePartiesName = (
+    roommateAgreementParties: RoommateAgreementParty[],
+    currentUserId: number
+  ) => {
+    if (roommateAgreementParties && roommateAgreementParties.length > 0) {
+      return `You, ${roommateAgreementParties
+        .reduce(
+          (newArray: string[], _item: RoommateAgreementParty) => (
+            currentUserId !== _item.userId &&
+              newArray.push(_item.firstName + " " + _item.lastName),
+            newArray
+          ),
+          []
+        )
+        .slice(0, -1)
+        .join(", ")} and ${
+        roommateAgreementParties[roommateAgreementParties.length - 1]
+          .firstName +
+        " " +
+        roommateAgreementParties[roommateAgreementParties.length - 1]
+          .lastName
+      } are the parties of this roommate agreement.`;
+    }
+  };
 
   return (
     <Screen shouldAddBottomInset={false}>
@@ -153,9 +182,7 @@ const RoommateAgreementView: FC<Props> = ({
           validationSchema={yupSchema.current}>
           <View style={styles.labelViewStyle}>
             <AppLabel
-              text={
-                "You, Kinslee Fink and Rosa Lawson are the parties of this roommate agreement."
-              }
+              text={getRoommatePartiesName(title, user?.profile?.id!)}
               numberOfLines={0}
             />
           </View>
