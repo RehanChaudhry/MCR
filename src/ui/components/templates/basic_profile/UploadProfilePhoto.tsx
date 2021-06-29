@@ -66,7 +66,6 @@ export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
       <View style={styles.container}>
         <View style={styles.subContainer}>
           <View style={styles.imageViewStyle}>
-            {/* {(imageResponse || initialValues[name]) && (*/}
             <Image
               style={styles.image}
               source={
@@ -77,7 +76,6 @@ export const UploadProfilePhoto = optimizedMemo<UpdateProfilePhotoProp>(
                   : require("assets/images/profile_avatar.png")
               }
             />
-            {/*)}*/}
           </View>
           <AppButton
             text={STRINGS.profile.buttonText.uploadProfilePhoto}
