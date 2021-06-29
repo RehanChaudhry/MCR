@@ -164,9 +164,9 @@ const ActivityLogController: FC<Props> = () => {
   const navigateToScreen = (activityLog: ActivityLog) => {
     const { type, action, user: _user, entityId, data } = activityLog;
 
-    const userData = data?.filter(
-      (item: any) => item.id !== user?.profile?.id
-    );
+    const userData =
+      data === [] &&
+      data?.filter((item: any) => item.id !== user?.profile?.id);
 
     if (!type || !action) {
       return;

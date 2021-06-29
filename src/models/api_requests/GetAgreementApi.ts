@@ -41,7 +41,7 @@ export interface ApprovalInformation {
 }
 
 export interface RoommateAgreementParty {
-  userID: number;
+  userId: number;
   firstName: string;
   lastName: string;
   status: string;

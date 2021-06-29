@@ -13,16 +13,28 @@ import { usePreferredTheme } from "hooks";
 import { FONT_SIZE, SPACE } from "config";
 import AgreementStatus from "models/enums/AgreementStatusType";
 import Color from "config/Colors";
+import { RoommateAgreementParty } from "models/api_requests/GetAgreementApi";
 
 type Props = {
   username: string;
   status: string;
   updateAt?: string;
   profileUrl?: string | undefined;
+  roommateAgreementParties: RoommateAgreementParty;
+  moveToChatScreen: (
+    roommateAgreementParties: RoommateAgreementParty
+  ) => void;
 };
 
 export const AgreementDetailsListItem = React.memo<Props>(
-  ({ username, status, updateAt, profileUrl }) => {
+  ({
+    username,
+    status,
+    updateAt,
+    profileUrl,
+    moveToChatScreen,
+    roommateAgreementParties
+  }) => {
     const theme = usePreferredTheme();
 
     return (
@@ -63,6 +75,7 @@ export const AgreementDetailsListItem = React.memo<Props>(
                   <Chat width={18} height={18} fill={Color.black} />
                 )}
                 containerStyle={styles.chatImage}
+                onPress={() => moveToChatScreen(roommateAgreementParties)}
               />
             )}
 

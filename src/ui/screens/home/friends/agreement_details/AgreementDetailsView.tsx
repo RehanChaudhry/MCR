@@ -21,18 +21,23 @@ import { RoommateAgreementParty } from "models/api_requests/GetAgreementApi";
 
 type Props = {
   agreementDetailsData: AgreementData;
+  moveToChatScreen: (
+    roommateAgreementParties: RoommateAgreementParty
+  ) => void;
 };
 
 export const AgreementDetailsView = React.memo<Props>(
-  ({ agreementDetailsData }) => {
+  ({ agreementDetailsData, moveToChatScreen }) => {
     const theme = usePreferredTheme();
     const listItem = ({ item }: { item: RoommateAgreementParty }) => {
       return (
         <AgreementDetailsListItem
-          username={item.firstName + "" + item.lastName}
+          username={item.firstName + " " + item.lastName}
           status={item.status}
           updateAt={moment(item.submittedAt).format("MMM DD, YYYY")}
           profileUrl={item.profilePicture?.fileURL}
+          roommateAgreementParties={item}
+          moveToChatScreen={moveToChatScreen}
         />
       );
     };
