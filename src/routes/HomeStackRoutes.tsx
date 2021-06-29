@@ -22,6 +22,7 @@ import QuestionsController from "ui/screens/questions/QuestionsController";
 import StaticContentController from "ui/screens/static_content/StaticContentController";
 import { AddInterestsController } from "ui/screens/home/profile/update_profile/add_interests/AddInterestsController";
 import { NewConversationController } from "ui/screens/chat/new/NewConversationController";
+import MyFriendsController from "ui/screens/home/friends/MyFriends/MyFriendsController";
 
 const Stack = createStackNavigator();
 
@@ -48,6 +49,11 @@ export const HomeStackRoutes = () => {
       <HomeStack.Screen
         name="ConnectRequest"
         component={ConnectRequestsController}
+      />
+      <HomeStack.Screen
+        name="MyFriends"
+        initialParams={{ isFrom: EScreen.NOTIFICATION }}
+        component={MyFriendsController}
       />
       <HomeStack.Screen
         name="MyRoommates"

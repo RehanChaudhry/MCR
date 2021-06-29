@@ -107,7 +107,13 @@ const RoommateAgreementController: FC<Props> = () => {
         )
       };
 
-      if (route.params?.isFrom !== EScreen.HOME) {
+      if (route.params?.isFrom === EScreen.HOME) {
+        navigation.dangerouslyGetParent()?.setOptions({
+          headerTitleAlign: "center",
+          headerLeft: () => <Hamburger />,
+          ...headerOptions
+        });
+      } else {
         navigation.setOptions({
           headerTitleAlign: "center",
           headerLeft: () => (
@@ -117,12 +123,6 @@ const RoommateAgreementController: FC<Props> = () => {
               }}
             />
           ),
-          ...headerOptions
-        });
-      } else {
-        navigation.dangerouslyGetParent()?.setOptions({
-          headerTitleAlign: "center",
-          headerLeft: () => <Hamburger />,
           ...headerOptions
         });
       }

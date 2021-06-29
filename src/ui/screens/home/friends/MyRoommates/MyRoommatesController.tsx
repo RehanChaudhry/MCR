@@ -39,7 +39,13 @@ const MyRoommatesController: FC<Props> = () => {
 
   useFocusEffect(
     useCallback(() => {
-      if (route.params?.isFrom === EScreen.NOTIFICATION) {
+      if (route.params?.isFrom === EScreen.HOME) {
+        navigation.dangerouslyGetParent()?.setOptions({
+          headerTitleAlign: "center",
+          headerLeft: () => <Hamburger />,
+          headerTitle: () => <HeaderTitle text="My Roommates" />
+        });
+      } else {
         navigation.setOptions({
           headerTitleAlign: "center",
           headerLeft: () => (
@@ -50,12 +56,6 @@ const MyRoommatesController: FC<Props> = () => {
             />
           ),
           headerTitle: () => <HeaderTitle text={"My Roommates"} />
-        });
-      } else {
-        navigation.dangerouslyGetParent()?.setOptions({
-          headerTitleAlign: "center",
-          headerLeft: () => <Hamburger />,
-          headerTitle: () => <HeaderTitle text="My Roommates" />
         });
       }
     }, [navigation, route.params])

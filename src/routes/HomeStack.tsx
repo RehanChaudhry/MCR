@@ -14,8 +14,10 @@ export type HomeStackParamList = {
   MatchInfo: undefined;
 
   ConnectRequest: { type: ConnectRequestType };
+  MyFriends: { isFrom: EScreen };
   MyRoommates: { isFrom: EScreen };
   RoommateAgreement: { isFrom: EScreen };
+  DismissedOrBlocked: { isFrom: EScreen };
 
   ChatThread: {
     title: string[];

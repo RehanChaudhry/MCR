@@ -1,4 +1,9 @@
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { COLORS, SPACE, STRINGS } from "config";
 import { useAuth, usePreferredTheme } from "hooks";
@@ -33,24 +38,46 @@ import { useCreateConversation } from "hooks/useCreateConversation";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { HomeStackParamList } from "routes/HomeStack";
+import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 
 type Props = {};
 
 type FriendsNavigationProp = StackNavigationProp<
   HomeStackParamList,
-  "ConnectRequest"
+  "DismissedOrBlocked"
+>;
+
+type FriendsRouteProp = RouteProp<
+  HomeStackParamList,
+  "DismissedOrBlocked"
 >;
 
 const DismissedOrBlockedController: FC<Props> = () => {
   const navigation = useNavigation<FriendsNavigationProp>();
+  const route = useRoute<FriendsRouteProp>();
+
   useFocusEffect(
     useCallback(() => {
-      navigation.dangerouslyGetParent()?.setOptions({
-        headerTitleAlign: "center",
-        headerTitle: () => <HeaderTitle text="Dismissed or Blocked" />,
-        headerLeft: () => <Hamburger />
-      });
-    }, [navigation])
+      if (route.params?.isFrom === EScreen.HOME) {
+        navigation.dangerouslyGetParent()?.setOptions({
+          headerTitleAlign: "center",
+          headerTitle: () => <HeaderTitle text="Dismissed or Blocked" />,
+          headerLeft: () => <Hamburger />
+        });
+      } else {
+        navigation.setOptions({
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            <HeaderLeftTextWithIcon
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          ),
+          headerTitle: () => <HeaderTitle text="Dismissed or Blocked" />
+        });
+      }
+    }, [navigation, route.params?.isFrom])
   );
   const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 

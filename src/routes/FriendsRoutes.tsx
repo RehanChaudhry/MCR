@@ -1,3 +1,4 @@
+import EScreen from "models/enums/EScreen";
 import React from "react";
 import DismissedOrBlockedController from "ui/screens/home/friends/DismissedOrBlocked/DismissedOrBlockedController";
 import MyFriendsController from "ui/screens/home/friends/MyFriends/MyFriendsController";
@@ -11,18 +12,30 @@ export const FriendsRoutes = () => {
       <FriendsBottomBar.Screen
         name="MyFriends"
         component={MyFriendsController}
+        initialParams={{
+          isFrom: EScreen.HOME
+        }}
       />
       <FriendsBottomBar.Screen
         name="MyRoommates"
         component={MyRoommatesController}
+        initialParams={{
+          isFrom: EScreen.HOME
+        }}
       />
       <FriendsBottomBar.Screen
         name="RoommateAgreement"
         component={RoommateAgreementController}
+        initialParams={{
+          isFrom: EScreen.HOME
+        }}
       />
       <FriendsBottomBar.Screen
         name="DismissedOrBlocked"
         component={DismissedOrBlockedController}
+        initialParams={{
+          isFrom: EScreen.HOME
+        }}
       />
     </FriendsBottomBar.Navigator>
   );
