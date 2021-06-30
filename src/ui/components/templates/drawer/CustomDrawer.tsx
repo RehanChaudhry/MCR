@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Image,
   ScrollView,
@@ -31,6 +31,7 @@ import { HomeDrawerParamList } from "routes";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { profileCompletedPercentage } from "models/api_responses/FetchMyProfileResponseModel";
 import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount";
+import TwoButtonsInfoAlert from "ui/components/organisms/popup/TwoButtonsInfoAlert";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
   currentItem: keyof HomeDrawerParamList;
@@ -48,6 +49,7 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
   const { themedColors } = usePreferredTheme();
   const { state, navigation } = props;
   const auth = useAuth();
+  const [shouldShowDialog, setShouldShowDialog] = useState(false);
 
   type ItemType<T> = {
     [K in keyof T]: {
@@ -210,10 +212,22 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
       </ScrollView>
 
       {/*Footer start*/}
+      {
+        <TwoButtonsInfoAlert
+          shouldShow={shouldShowDialog}
+          message={"Are you sure you want to Sign Out!"}
+          title={"Sign Out !"}
+          hideSelf={() => {
+            setShouldShowDialog(false);
+            auth.logOut();
+          }}
+          hideDialogue={() => setShouldShowDialog(false)}
+        />
+      }
       <TouchableNativeFeedback
         onPress={() => {
           setCurrentItem("SignOut");
-          auth.logOut();
+          setShouldShowDialog(true);
         }}
         background={ripple}>
         <View

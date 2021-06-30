@@ -252,7 +252,10 @@ const MyFriendsView: FC<Props> = ({
       />
       <InfoAlert
         shouldShow={showInfoAlert}
-        getSelectedItem={getSelectedItem}
+        title={"Not eligible for roommate"}
+        message={`You can't send roommate request to ${
+          getSelectedItem()?.user?.getFullName() ?? "N/A"
+        } because he has the maximum allowable number of roommates, and does not allow you to send a roommate request.`}
         hideSelf={hideInfoAlert}
       />
       <TwoButtonsAlert

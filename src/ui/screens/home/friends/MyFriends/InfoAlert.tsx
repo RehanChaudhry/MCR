@@ -1,28 +1,26 @@
 import { FONT_SIZE } from "config";
 import { usePreferredTheme } from "hooks";
-import RelationModel from "models/RelationModel";
 import React, { FC } from "react";
 import AppPopUp from "ui/components/organisms/popup/AppPopUp";
 import { AppLog } from "utils/Util";
 
 type Props = {
   shouldShow: boolean;
-  getSelectedItem: () => RelationModel | undefined;
+  message: string;
+  title: string;
   hideSelf: () => void;
 };
 
 const InfoAlert: FC<Props> = React.memo(
-  ({ shouldShow, getSelectedItem, hideSelf }) => {
+  ({ shouldShow, hideSelf, message, title }) => {
     AppLog.log(() => "in InfoAlert");
 
     const theme = usePreferredTheme();
     return (
       <AppPopUp
         isVisible={shouldShow}
-        title={"Not eligible for roommate"}
-        message={`You can't send roommate request to ${
-          getSelectedItem()?.user?.getFullName() ?? "N/A"
-        } because he has the maximum allowable number of roommates, and does not allow you to send a roommate request.`}
+        title={title}
+        message={message}
         actions={[
           {
             title: "OK",
