@@ -36,6 +36,11 @@ const AppVideoPopup: FC<Props> = ({
   videoUrl
 }) => {
   const theme = usePreferredTheme();
+
+  if (!isVisible) {
+    return null;
+  }
+
   return (
     <Modal
       testID="popup-modal"

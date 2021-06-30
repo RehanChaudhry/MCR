@@ -217,7 +217,7 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
           shouldShow={shouldShowDialog}
           message={"Are you sure you want to Sign Out!"}
           title={"Sign Out !"}
-          hideSelf={() => {
+          onConfirmation={() => {
             setShouldShowDialog(false);
             auth.logOut();
           }}
@@ -226,7 +226,6 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
       }
       <TouchableNativeFeedback
         onPress={() => {
-          setCurrentItem("SignOut");
           setShouldShowDialog(true);
         }}
         background={ripple}>

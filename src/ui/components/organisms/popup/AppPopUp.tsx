@@ -37,10 +37,15 @@ const AppPopUp: FC<Props> = ({
   customActionButtons
 }) => {
   const theme = usePreferredTheme();
+
+  if (!isVisible) {
+    return null;
+  }
+
   return (
     <Modal
       testID="popup-modal"
-      visible={isVisible}
+      visible={true}
       animationType="fade"
       transparent={true}>
       <View style={styles.root}>

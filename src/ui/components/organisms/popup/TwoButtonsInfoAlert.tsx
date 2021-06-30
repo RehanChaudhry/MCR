@@ -8,12 +8,12 @@ type Props = {
   shouldShow: boolean;
   message: string;
   title: string;
-  hideSelf: () => void;
+  onConfirmation: () => void;
   hideDialogue: () => void;
 };
 
 const TwoButtonsInfoAlert: FC<Props> = React.memo(
-  ({ shouldShow, hideSelf, message, title, hideDialogue }) => {
+  ({ shouldShow, onConfirmation, message, title, hideDialogue }) => {
     AppLog.log(() => "in InfoAlert");
     const theme = usePreferredTheme();
     return (
@@ -25,7 +25,7 @@ const TwoButtonsInfoAlert: FC<Props> = React.memo(
           {
             title: "Yes",
             onPress: () => {
-              hideSelf();
+              onConfirmation();
             },
             style: {
               style: {
