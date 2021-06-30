@@ -31,7 +31,7 @@ export const AppLog = (function () {
       }
     },
     toastDebug: (message?: any, ...optionalParams: any[]) => {
-      if (Env.CURRENT !== "PROD") {
+      if (Constants.SHOULD_PRINT_LOGS) {
         // eslint-disable-next-line no-console
         console.warn(message, ...optionalParams);
         SimpleToast.show(message, SimpleToast.SHORT);
