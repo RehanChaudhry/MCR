@@ -171,6 +171,10 @@ const ActivityLogController: FC<Props> = () => {
     });
   });
 
+  const openUpdateQuestionaireScreen = usePreventDoubleTap(() => {
+    navigation.push("Questionnaire", { isFrom: EScreen.ACTIVTY_LOG });
+  });
+
   const navigateToScreen = (activityLog: ActivityLog) => {
     const { type, action, user: _user, entityId, data } = activityLog;
 
@@ -263,6 +267,10 @@ const ActivityLogController: FC<Props> = () => {
         userData[0].id,
         userData[0].firstName + " " + userData[0].lastName
       );
+    } else if (
+      type === NotificationAndActivityLogFilterType.QUESTIONAIRE
+    ) {
+      return openUpdateQuestionaireScreen();
     } else {
       return null;
     }

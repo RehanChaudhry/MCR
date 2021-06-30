@@ -105,7 +105,10 @@ const QuestionsController: FC<Props> = () => {
             />
           )
         });
-      } else if (route.params.isFrom === EScreen.MATCH_INFO) {
+      } else if (
+        route.params.isFrom === EScreen.MATCH_INFO ||
+        EScreen.ACTIVTY_LOG
+      ) {
         navigation.setOptions({
           headerTitle: () => (
             <HeaderTitle text={STRINGS.questionnaire.title_update} />
