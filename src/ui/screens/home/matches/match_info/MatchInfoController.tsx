@@ -12,7 +12,6 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { AppLog } from "utils/Util";
-import { MatchesStackParamList } from "routes/MatchesStack";
 import { MatchInfoView } from "ui/screens/home/matches/match_info/MatchInfoView";
 import { STRINGS } from "config";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
@@ -24,12 +23,13 @@ import ProfileApis from "repo/auth/ProfileApis";
 import { MatchInfoApiResponseModel } from "models/api_responses/MatchInfoApiResponseModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
-import RelationApis from "repo/home/RelationApis";
 import { useCreateConversation } from "hooks/useCreateConversation";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
+import FriendsApis from "repo/friends/FriendsApis";
+import { HomeStackParamList } from "routes/HomeStack";
 
 type MatchesNavigationProp = StackNavigationProp<
-  MatchesStackParamList,
+  HomeStackParamList,
   "MatchInfo"
 >;
 
@@ -63,7 +63,7 @@ const MatchInfoController: FC<Props> = () => {
   const roommatesApi = useApi<
     PaginationParamsModel,
     RelationApiResponseModel
-  >(RelationApis.relations);
+  >(FriendsApis.getRelations);
 
   const [matchInfo, setMatchInfo] = useState<MatchInfoApiResponseModel>();
   const [roommate, setRoommate] = useState<RelationApiResponseModel>();
@@ -80,7 +80,7 @@ const MatchInfoController: FC<Props> = () => {
     );
 
     if (createConversationResult !== undefined) {
-      navigation.navigate("Chat", {
+      navigation.navigate("ChatThread", {
         title: [
           profileMatch.user?.firstName +
             " " +
@@ -96,9 +96,8 @@ const MatchInfoController: FC<Props> = () => {
       () =>
         "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
     );
-    navigation.navigate("Profile", {
+    navigation.navigate("ViewProfile", {
       isFrom: EScreen.MATCH_INFO,
-      updateProfile: true,
       userId: profileMatch.userId
     });
   };

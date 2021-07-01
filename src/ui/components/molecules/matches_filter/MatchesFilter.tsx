@@ -6,7 +6,7 @@ import { FONT_SIZE, SPACE, STRINGS } from "config";
 import EGender, { genders } from "models/enums/EGender";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import Selector from "assets/images/selector.svg";
-import { shadowStyleProps } from "utils/Util";
+import { AppLog, shadowStyleProps } from "utils/Util";
 
 interface Props {
   onFilterChange: (keyword?: string, gender?: EGender) => void;
@@ -18,8 +18,10 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
   const keyword = useRef<string | undefined>();
   const gender = useRef<EGender>();
 
-  const onChangeText = useCallback(
+  const onGenderChange = useCallback(
     (item) => {
+      AppLog.logForcefully(() => "in onGenderChange()...");
+
       gender.current = item.text as EGender;
       onFilterChange(keyword.current, gender.current);
     },
@@ -28,6 +30,7 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
 
   const onKeywordChange = useCallback(
     (textToSearch?: string) => {
+      AppLog.logForcefully(() => "in onKeywordChange()...");
       keyword.current = textToSearch;
       onFilterChange(keyword.current, gender.current);
     },
@@ -70,7 +73,8 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
         )}
         preselectedItemString={genders[0].value}
         items={genders}
-        selectedItemCallback={onChangeText}
+        selectedItemCallback={onGenderChange}
+        shouldRunCallbackOnStart={false}
       />
     </View>
   );

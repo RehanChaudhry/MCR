@@ -1,5 +1,6 @@
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
+import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
 import RelationFilterType from "models/enums/RelationFilterType";
 import RelationModel from "models/RelationModel";
 import {
@@ -11,13 +12,14 @@ import {
   SetStateAction
 } from "react";
 import { useApi } from "repo/Client";
-import RelationsApis from "repo/friends/FriendsApis";
+import FriendsApis from "repo/friends/FriendsApis";
 import { AppDataContext } from "./AppDataProvider";
 
 export default (
   type?: RelationFilterType,
   relations?: RelationModel[],
-  setRelations?: Dispatch<SetStateAction<RelationModel[] | undefined>>
+  setRelations?: Dispatch<SetStateAction<RelationModel[] | undefined>>,
+  overriddenRequestModel?: PaginationParamsModel
 ) => {
   const [
     paginationRequestModel,
@@ -28,6 +30,13 @@ export default (
     limit: 9,
     paginate: true
   });
+
+  const [
+    _overriddenRequestModel,
+    setOverriddenRequestModel
+  ] = useState<PaginationParamsModel>(
+    overriddenRequestModel ?? paginationRequestModel
+  );
 
   const [isLoggedInUserAModerator, setIsLoggedInUserAModerator] = useState(
     false
@@ -51,7 +60,7 @@ export default (
   const relationsApi = useApi<
     PaginationParamsModel,
     RelationApiResponseModel
-  >(RelationsApis.getRelations);
+  >(FriendsApis.getRelations);
 
   const handleMyFriendsResponse = useCallback(
     async (
@@ -59,11 +68,17 @@ export default (
       requestModel: PaginationParamsModel,
       onComplete?: (data?: RelationModel[]) => void
     ) => {
-      const {
-        hasError,
-        dataBody,
-        errorBody
-      } = await relationsApi.request([requestModel]);
+      const { hasError, dataBody, errorBody } = await relationsApi.request(
+        [
+          {
+            ...requestModel,
+            filterBy:
+              requestModel.filterBy !== MatchesTypeFilter.MATCHES
+                ? requestModel.filterBy
+                : undefined
+          }
+        ]
+      );
       if (hasError || dataBody === undefined) {
         setErrorMessage(errorBody);
         setIsLoading(false);
@@ -73,13 +88,13 @@ export default (
         setIsLoading(false);
         const data = dataBody.data ?? [];
 
-        let _updatedData;
         if (isFromPullToRefresh) {
-          _updatedData = data;
+          setRelations?.(data);
         } else {
-          _updatedData = [...(relations ?? []), ...data];
+          setRelations?.((_oldRelations) => {
+            return [...(_oldRelations ?? []), ...data];
+          });
         }
-        setRelations?.(_updatedData);
 
         if (requestModel.page === 1) {
           setIsLoggedInUserAModerator(
@@ -95,10 +110,10 @@ export default (
         });
         setCanLoadMore(data.length >= requestModel.limit!);
 
-        onComplete?.(_updatedData);
+        onComplete?.(data);
       }
     },
-    [relations, relationsApi, setRelations]
+    [relationsApi, setRelations]
   );
 
   const onEndReached = useCallback(() => {
@@ -106,40 +121,58 @@ export default (
       return;
     }
 
-    handleMyFriendsResponse(false, paginationRequestModel);
+    handleMyFriendsResponse(false, {
+      ...paginationRequestModel,
+      ..._overriddenRequestModel
+    });
   }, [
     handleMyFriendsResponse,
     relationsApi.loading,
-    paginationRequestModel
+    paginationRequestModel,
+    _overriddenRequestModel
   ]);
 
   const onPullToRefresh = useCallback(
-    (onComplete?: (data?: RelationModel[]) => void) => {
+    (
+      onComplete?: (data?: RelationModel[]) => void,
+      requestModel?: PaginationParamsModel
+    ) => {
       if (relationsApi.loading) {
         onComplete?.();
         return;
       }
 
-      const myFriendRequestModel: PaginationParamsModel = {
+      const updatedRequestModel: PaginationParamsModel = {
         ...paginationRequestModel,
+        ..._overriddenRequestModel,
+        ...requestModel,
         page: 1
       };
 
-      setPaginationRequestModel(myFriendRequestModel);
+      setPaginationRequestModel(updatedRequestModel);
 
       handleMyFriendsResponse(
         true,
-        myFriendRequestModel,
+        updatedRequestModel,
         (data?: RelationModel[]) => {
           onComplete?.(data);
         }
       );
     },
-    [handleMyFriendsResponse, relationsApi, paginationRequestModel]
+    [
+      handleMyFriendsResponse,
+      relationsApi,
+      paginationRequestModel,
+      _overriddenRequestModel
+    ]
   );
 
   useEffect(() => {
-    handleMyFriendsResponse(false, paginationRequestModel);
+    handleMyFriendsResponse(true, {
+      ...paginationRequestModel,
+      ..._overriddenRequestModel,
+      page: 1
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -161,6 +194,8 @@ export default (
     onEndReached,
     errorMessage,
     onPullToRefresh,
-    isLoggedInUserAModerator
+    isLoggedInUserAModerator,
+    overriddenRequestModel: _overriddenRequestModel,
+    setOverriddenRequestModel
   };
 };

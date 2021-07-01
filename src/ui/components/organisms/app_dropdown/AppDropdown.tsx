@@ -22,6 +22,7 @@ export interface AppDropdownProps {
   title?: string;
   items: DropDownItem[];
   preselectedItemString?: string | DropDownItem;
+  shouldRunCallbackOnStart?: boolean;
   selectedItemCallback: (item: DropDownItem) => void;
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
@@ -49,6 +50,7 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
     dropDownIcon,
     shouldShowCustomIcon = false,
     isLocked = EIntBoolean.FALSE,
+    shouldRunCallbackOnStart = true,
     onBlur
   }) => {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -99,7 +101,13 @@ export const AppDropdown = optimizedMemoWithStyleProp<AppDropdownProps>(
           selectedItem(items[_selectedItemIndex]);
         }
       }
-    }, [items, selectedItem, preselectedItemString, selectedItemPosition]);
+    }, [
+      items,
+      selectedItem,
+      preselectedItemString,
+      shouldRunCallbackOnStart,
+      selectedItemPosition
+    ]);
 
     return (
       <View

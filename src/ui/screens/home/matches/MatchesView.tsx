@@ -1,11 +1,9 @@
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import Strings from "config/Strings";
-import { UpdateRelationApiRequestModel } from "models/api_requests/UpdateRelationApiRequestModel";
 import EGender from "models/enums/EGender";
 import MatchesTypeFilter, {
   getMatchesTypeFilterData
 } from "models/enums/MatchesTypeFilter";
-import RelationActionType from "models/enums/RelationActionType";
 import RelationModel from "models/RelationModel";
 import React, { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -26,21 +24,15 @@ type Props = {
   isLoading: boolean;
   error: string | undefined;
   matches?: RelationModel[];
-  onTypeChange: (value?: MatchesTypeFilter) => void;
-  onFilterChange: (keyword?: string, gender?: EGender) => void;
+  onFilterByChange: (value?: MatchesTypeFilter) => void;
+  onKeywordAndGenderChange: (keyword?: string, gender?: EGender) => void;
   pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
+  isLoggedInUserAModerator: boolean;
   isAllDataLoaded: boolean;
-  isRequestApiLoading: boolean;
-  postRequest: (userId: number, action: RelationActionType) => void;
-  postMatchDismiss: (requestModel: UpdateRelationApiRequestModel) => void;
   selectedTotalCount: number;
   moveToChatScreen: (profileMatch: RelationModel) => void;
   moveToProfileScreen: (profileMatch: RelationModel) => void;
-  postMatchBlocked: (
-    requestModel: UpdateRelationApiRequestModel,
-    action: RelationActionType
-  ) => void;
   moveToRoommateRequests: (profileMatch: RelationModel) => void;
   moveToFriendRequests: (profileMatch: RelationModel) => void;
 };
@@ -49,12 +41,12 @@ export const MatchesView: React.FC<Props> = ({
   isLoading,
   error,
   matches,
-  onTypeChange,
-  onFilterChange,
+  onFilterByChange,
+  onKeywordAndGenderChange,
   pullToRefreshCallback,
   onEndReached,
+  isLoggedInUserAModerator,
   isAllDataLoaded,
-  isRequestApiLoading,
   selectedTotalCount,
   moveToChatScreen,
   moveToProfileScreen,
@@ -109,6 +101,7 @@ export const MatchesView: React.FC<Props> = ({
       return (
         <RelationListsItem
           relationModel={_item}
+          isLoggedInUserAModerator={isLoggedInUserAModerator}
           onCrossClicked={() => {
             profileMatch.current = _item;
             setDismissDialogVisible(true);
@@ -135,6 +128,7 @@ export const MatchesView: React.FC<Props> = ({
       );
     },
     [
+      isLoggedInUserAModerator,
       moveToProfileScreen,
       moveToChatScreen,
       moveToFriendRequests,
@@ -163,7 +157,7 @@ export const MatchesView: React.FC<Props> = ({
 
   return (
     <Screen style={styles.container}>
-      <MatchesFilter onFilterChange={onFilterChange} />
+      <MatchesFilter onFilterChange={onKeywordAndGenderChange} />
       <FlatListWithPb<RelationModel>
         style={styles.matchesList}
         shouldShowProgressBar={isLoading}
@@ -179,7 +173,6 @@ export const MatchesView: React.FC<Props> = ({
         keyExtractor={(item) => item.userId?.toString()}
         error={error}
         retryCallback={pullToRefreshCallback}
-        extraData={isRequestApiLoading}
       />
       <TwoButtonsAlert
         shouldShow={isRoommateDialogVisible}
@@ -236,7 +229,7 @@ export const MatchesView: React.FC<Props> = ({
         onPress={(value) => {
           if (filterType !== value!) {
             setFilterType(value!);
-            onTypeChange(value);
+            onFilterByChange(value);
           }
         }}
       />

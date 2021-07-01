@@ -1,299 +1,193 @@
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
-import { NotificationsResponseModel } from "models/api_responses/NotificationsResponseModel";
-import EScreen from "models/enums/EScreen";
-import React, {
-  FC,
+import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
+import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
+import RelationFilterType from "models/enums/RelationFilterType";
+import RelationModel from "models/RelationModel";
+import {
+  useState,
+  useContext,
   useCallback,
   useEffect,
-  useLayoutEffect,
-  useState
+  Dispatch,
+  SetStateAction
 } from "react";
-import { Alert } from "react-native";
-import ProfileApis from "repo/auth/ProfileApis";
 import { useApi } from "repo/Client";
-import { HomeStackParamList } from "routes/HomeStack";
-import Hamburger from "ui/components/molecules/hamburger/Hamburger";
-import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
-import { NotificationView } from "ui/screens/home/notification/NotificationView";
-import { AppLog } from "utils/Util";
-import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
-import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
-import NotificationActionType from "models/enums/NotificationActionType";
-import { useAuth, usePreventDoubleTap } from "hooks";
-import { Conversation } from "models/api_responses/ChatsResponseModel";
-import { NotificationReadApiRequestModel } from "models/api_requests/NotificationReadApiRequestModel";
-import SimpleToast from "react-native-simple-toast";
+import RelationsApis from "repo/friends/FriendsApis";
+import { AppDataContext } from "./AppDataProvider";
 
-type NotificationNavigationProp = StackNavigationProp<
-  HomeStackParamList,
-  "ViewProfile"
->;
-
-type Props = {};
-
-const NotificationController: FC<Props> = () => {
-  const navigation = useNavigation<NotificationNavigationProp>();
-
-  const [
-    notifications,
-    setNotifications
-  ] = useState<NotificationsResponseModel>();
-
-  const notificationApi = useApi<any, NotificationsResponseModel>(
-    ProfileApis.getNotifications
-  );
-  const notificationReadApi = useApi<NotificationReadApiRequestModel, any>(
-    ProfileApis.notificationMarkRead
-  );
-  const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
-
+export default (
+  type?: RelationFilterType,
+  relations?: RelationModel[],
+  setRelations?: Dispatch<SetStateAction<RelationModel[] | undefined>>,
+  filterBy?: MatchesTypeFilter
+) => {
   const [
     paginationRequestModel,
     setPaginationRequestModel
   ] = useState<PaginationParamsModel>({
-    type: "",
+    type: type,
     page: 1,
     limit: 9,
-    paginate: true
+    paginate: true,
+    filterBy: filterBy
   });
 
-  const openMyProfileScreen = (userId: number, userName: string) => {
-    navigation.push("ViewProfile", {
-      isFrom: EScreen.NOTIFICATION,
-      userId: userId,
-      userName: userName
-    });
-  };
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => <Hamburger />,
-      headerTitleAlign: "center",
-      headerStyle: { elevation: 0, shadowOpacity: 0 },
-      headerTitle: () => <HeaderTitle text="Notification" />
-    });
-  }, [navigation]);
-
-  const handleNotificationMarkRead = useCallback(
-    async (notificationId: number) => {
-      AppLog.logForcefully(
-        () => "readnotificationApifunctioncall" + notificationId
-      );
-      const {
-        hasError,
-        errorBody,
-        dataBody
-      } = await notificationReadApi.request([
-        {
-          all: false,
-          notificationId: notificationId
-        }
-      ]);
-
-      if (hasError || dataBody === undefined) {
-        Alert.alert("Unable to read notification", errorBody);
-        return;
-      } else {
-        SimpleToast.show(dataBody.message);
-      }
-    },
-    [notificationReadApi]
+  const [isLoggedInUserAModerator, setIsLoggedInUserAModerator] = useState(
+    false
   );
 
-  const handleGetNotificationApi = useCallback(
+  const [isLoading, setIsLoading] = useState(true);
+  const [canLoadMore, setCanLoadMore] = useState<boolean>(false);
+
+  const [errorMessage, setErrorMessage] = useState<string>();
+
+  const [relationsCount, setRelationsCount] = useState<number>(0);
+  const [
+    pendingRelationsCount,
+    setPendingRelationsCount
+  ] = useState<number>(0);
+
+  const { addListenerOnResetData, removeListenerOnResetData } = useContext(
+    AppDataContext
+  );
+
+  const relationsApi = useApi<
+    PaginationParamsModel,
+    RelationApiResponseModel
+  >(RelationsApis.getRelations);
+
+  const changeFetchRelationsType = useCallback(
+    (updatedType: RelationFilterType) => {
+      setPaginationRequestModel((model) => ({
+        ...model,
+        type: updatedType
+      }));
+    },
+    []
+  );
+
+  const changeFetchRelationsFilterBy = useCallback(
+    (updatedFilter: MatchesTypeFilter) => {
+      setPaginationRequestModel((model) => ({
+        ...model,
+        filterBy: updatedFilter
+      }));
+    },
+    []
+  );
+
+  const handleMyFriendsResponse = useCallback(
     async (
       isFromPullToRefresh: boolean,
-      requestModel: PaginationParamsModel
+      requestModel: PaginationParamsModel,
+      onComplete?: (data?: RelationModel[]) => void
     ) => {
-      if (notificationApi.loading) {
+      const {
+        hasError,
+        dataBody,
+        errorBody
+      } = await relationsApi.request([requestModel]);
+      if (hasError || dataBody === undefined) {
+        setErrorMessage(errorBody);
+        setIsLoading(false);
         return;
-      }
-      const { hasError, dataBody } = await notificationApi.request([
-        requestModel
-      ]);
+      } else {
+        setErrorMessage(undefined);
+        setIsLoading(false);
+        const data = dataBody.data ?? [];
 
-      if (hasError) {
-        Alert.alert(
-          "Unable to fetch notifications",
-          "Please try again later"
-        );
-        return;
-      }
-      setNotifications((prevState) => {
-        return {
-          message: dataBody?.message ?? "",
-          data: [
-            ...(!isFromPullToRefresh ? prevState?.data ?? [] : []),
-            ...dataBody!.data
-          ]
-        };
-      });
-      setPaginationRequestModel({
-        ...requestModel,
-        page: (requestModel.page ?? 0) + 1
-      });
+        let _updatedData;
+        if (isFromPullToRefresh) {
+          _updatedData = data;
+        } else {
+          _updatedData = [...(relations ?? []), ...data];
+        }
+        setRelations?.(_updatedData);
 
-      setIsAllDataLoaded(
-        (dataBody?.data?.length ?? 0) < requestModel.limit!
-      );
+        if (requestModel.page === 1) {
+          setIsLoggedInUserAModerator(
+            data?.filter((value) => value.isModerator === 1)?.length === 0
+          );
+          setRelationsCount(dataBody.count ?? 0);
+          setPendingRelationsCount(dataBody.pendingCount ?? 0);
+        }
+
+        setPaginationRequestModel({
+          ...requestModel,
+          page: requestModel.page! + 1
+        });
+        setCanLoadMore(data.length >= requestModel.limit!);
+
+        onComplete?.(_updatedData);
+      }
     },
-    [notificationApi]
+    [relations, relationsApi, setRelations]
   );
 
   const onEndReached = useCallback(() => {
-    AppLog.log(() => "onEndReachedcall");
-    handleGetNotificationApi(false, paginationRequestModel);
-  }, [paginationRequestModel, handleGetNotificationApi]);
-
-  const refreshCallback = async (onComplete: () => void) => {
-    if (notificationApi.loading) {
-      onComplete?.();
+    if (relationsApi.loading) {
       return;
     }
 
-    const myFriendRequestModel: PaginationParamsModel = {
-      ...paginationRequestModel,
-      page: 1
-    };
+    handleMyFriendsResponse(false, paginationRequestModel);
+  }, [
+    handleMyFriendsResponse,
+    relationsApi.loading,
+    paginationRequestModel
+  ]);
 
-    setPaginationRequestModel(myFriendRequestModel);
-    handleGetNotificationApi(true, myFriendRequestModel).then(() => {
-      onComplete();
-    });
-  };
-
-  const { user } = useAuth();
-  const openChatScreen = usePreventDoubleTap(
-    (users: [], conversationId: number) => {
-      AppLog.logForcefully(() => "usersArray: " + JSON.stringify(users));
-      navigation.push("ChatThread", {
-        title: users.reduce(
-          (newArray: string[], _item: any) => (
-            newArray.push(_item.firstName + " " + _item.lastName), newArray
-          ),
-          []
-        ),
-        conversation: {
-          id: conversationId,
-          currentUser: [
-            {
-              firstName: user?.profile?.firstName,
-              lastName: user?.profile?.lastName,
-              profilePicture: user?.profile?.profilePicture,
-              status: "active"
-            }
-          ]
-        } as Conversation
-      });
-    }
-  );
-
-  const openMyRoommatesScreen = () => {
-    navigation.push("MyRoommates", { isFrom: EScreen.NOTIFICATION });
-  };
-  const openRoommateAgreementScreen = () => {
-    navigation.push("RoommateAgreement", { isFrom: EScreen.NOTIFICATION });
-  };
-  const openSinglePostScreen = (postId: number) => {
-    navigation.push("SinglePost", {
-      postId: postId,
-      isFrom: EScreen.NOTIFICATION
-    });
-  };
-
-  const openFriendRequestScreen = (
-    title: string,
-    type: ConnectRequestType
-  ) => {
-    navigation.push("ConnectRequest", {
-      title: title,
-      type: type
-    });
-  };
-
-  const navigateTOScreen = (
-    type: string,
-    postId?: number,
-    action?: string,
-    users?: string[],
-    conversationId?: number,
-    notificationId?: number
-  ) => {
-    //MarkRead Api Call
-    handleNotificationMarkRead(notificationId!).then().catch();
-
-    if (type != null) {
-      if (type === NotificationAndActivityLogFilterType.FRIEND_REQUEST) {
-        return openFriendRequestScreen(
-          "Friend Requests",
-          ConnectRequestType.FRIEND_REQUESTS
-        );
-      } else if (
-        type === NotificationAndActivityLogFilterType.ROOMMATE_REQUEST
-      ) {
-        return openFriendRequestScreen(
-          "Roommate Requests",
-          ConnectRequestType.ROOMMATE_REQUESTS
-        );
-      } else if (
-        type === NotificationAndActivityLogFilterType.ROOMMATE_GROUP
-      ) {
-        return openMyRoommatesScreen();
-      } else if (
-        type === NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT
-      ) {
-        return openRoommateAgreementScreen();
-      } else if (
-        type === NotificationAndActivityLogFilterType.POST ||
-        (action === NotificationActionType.RECIEVE &&
-          type === NotificationAndActivityLogFilterType.ANNOUNCEMENT) ||
-        action === NotificationActionType.COMMENT
-      ) {
-        return openSinglePostScreen(postId!);
-      } else if (
-        type === NotificationAndActivityLogFilterType.CONVERSATION &&
-        NotificationActionType.CREATE
-      ) {
-        return openChatScreen(users, conversationId);
-      } else {
-        return null;
+  const onPullToRefresh = useCallback(
+    (onComplete?: (data?: RelationModel[]) => void) => {
+      if (relationsApi.loading) {
+        onComplete?.();
+        return;
       }
-    }
-  };
 
-  const searchText = useCallback(
-    (textToSearch: string) => {
-      const updatedRequestModel = {
+      const myFriendRequestModel: PaginationParamsModel = {
         ...paginationRequestModel,
-        page: 1,
-        type: textToSearch
+        page: 1
       };
-      setPaginationRequestModel(updatedRequestModel);
-      setNotifications(undefined);
-      handleGetNotificationApi(false, updatedRequestModel);
+
+      setPaginationRequestModel(myFriendRequestModel);
+
+      handleMyFriendsResponse(
+        true,
+        myFriendRequestModel,
+        (data?: RelationModel[]) => {
+          onComplete?.(data);
+        }
+      );
     },
-    [paginationRequestModel, handleGetNotificationApi]
+    [handleMyFriendsResponse, relationsApi, paginationRequestModel]
   );
 
   useEffect(() => {
-    handleGetNotificationApi(false, paginationRequestModel);
+    handleMyFriendsResponse(false, paginationRequestModel);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <NotificationView
-      isAllDataLoaded={isAllDataLoaded}
-      onEndReached={onEndReached}
-      pullToRefreshCallback={refreshCallback}
-      shouldShowProgressBar={notificationApi.loading}
-      notifications={notifications?.data}
-      openMyProfileScreen={openMyProfileScreen}
-      onChangeFilter={searchText}
-      navigateToRequiredScreen={navigateTOScreen}
-    />
-  );
-};
+  useEffect(() => {
+    let listener = () => {
+      onPullToRefresh();
+    };
+    addListenerOnResetData(listener);
+    return () => {
+      removeListenerOnResetData(listener);
+    };
+  }, [onPullToRefresh, addListenerOnResetData, removeListenerOnResetData]);
 
-export default NotificationController;
+  return {
+    relationsCount,
+    pendingRelationsCount,
+    isLoading,
+    canLoadMore,
+    onEndReached,
+    errorMessage,
+    onPullToRefresh,
+    isLoggedInUserAModerator,
+    changeFetchRelationsType,
+    currentRelationsType: paginationRequestModel.type as RelationFilterType,
+    changeFetchRelationsFilterBy,
+    currentRelationsFilterBy: paginationRequestModel.filterBy as MatchesTypeFilter
+  };
+};

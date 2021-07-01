@@ -1,6 +1,6 @@
 import { COLORS, FONTS, FONT_SIZE, SPACE } from "config";
 import useEffectWithSkipFirstTime from "hooks/useEffectWithSkipFirstTime";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { usePreferredTheme } from "hooks";
 import Search from "assets/images/search_icon.svg";
 import Cross from "assets/images/cross.svg";
@@ -42,6 +42,7 @@ const SearchField = optimizedMemoWithStyleProp<Props>(
     clearIcon,
     delayBeforeCallingOnChangeText = 1000
   }) => {
+    let _onChangeText = useRef(onChangeText);
     const [currentSearchText, setCurrentSearchText] = useState("");
     const theme = usePreferredTheme();
 
@@ -55,15 +56,17 @@ const SearchField = optimizedMemoWithStyleProp<Props>(
       )
     );
 
-    useEffectWithSkipFirstTime(() => {
-      const timeoutRef = setTimeout(() => {
-        onChangeText(currentSearchText);
-      }, delayBeforeCallingOnChangeText);
+    useEffectWithSkipFirstTime(
+      useCallback(() => {
+        const timeoutRef = setTimeout(() => {
+          _onChangeText.current(currentSearchText);
+        }, delayBeforeCallingOnChangeText);
 
-      return () => {
-        clearTimeout(timeoutRef);
-      };
-    });
+        return () => {
+          clearTimeout(timeoutRef);
+        };
+      }, [currentSearchText, delayBeforeCallingOnChangeText])
+    );
 
     return (
       <View
