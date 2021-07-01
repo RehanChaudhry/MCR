@@ -58,16 +58,16 @@ export const MatchInfoView: React.FC<Props> = ({
           ]}>
           <UserHeader
             style={styles.userHeader}
-            name={`${userProfile.firstName ?? STRINGS.common.not_found} ${
-              userProfile.lastName ?? STRINGS.common.not_found
+            name={`${userProfile?.firstName ?? STRINGS.common.not_found} ${
+              userProfile?.lastName ?? STRINGS.common.not_found
             }`}
-            image={userProfile.profilePicture?.fileURL}
+            image={userProfile?.profilePicture?.fileURL}
             subtitle={getSubtitle(userProfile)}
           />
-          {userProfile.about && (
+          {userProfile?.about && (
             <AppLabel
               style={styles.description}
-              text={userProfile.about}
+              text={userProfile?.about}
               numberOfLines={0}
             />
           )}
@@ -144,7 +144,7 @@ export const MatchInfoView: React.FC<Props> = ({
               />
             )}
             heading={STRINGS.matchInfo.matching_status}
-            title={matchInfo.currentStatus!}
+            title={matchInfo?.currentStatus!}
           />
           <Divider style={{ backgroundColor: themedColors.separator }} />
           <SocialDetailForm
@@ -167,7 +167,7 @@ export const MatchInfoView: React.FC<Props> = ({
             heading={STRINGS.matchInfo.matching_deadline}
             title={
               matchInfo.deadline
-                ? moment(matchInfo.deadline).format("MMMM DD, YYYY")
+                ? moment(matchInfo?.deadline).format("MMMM DD, YYYY")
                 : STRINGS.common.not_found
             }
           />
@@ -190,7 +190,7 @@ export const MatchInfoView: React.FC<Props> = ({
               />
             )}
             heading={STRINGS.matchInfo.max_roommate_count}
-            title={matchInfo.noOfRoommates ?? STRINGS.common.not_found}
+            title={matchInfo?.noOfRoommates ?? STRINGS.common.not_found}
           />
           <Divider style={{ backgroundColor: themedColors.separator }} />
           <SocialDetailForm
@@ -212,13 +212,13 @@ export const MatchInfoView: React.FC<Props> = ({
             )}
             heading={STRINGS.matchInfo.matching_criteria}
             title={
-              matchInfo.criteria
-                ? matchInfo.criteria
+              matchInfo?.criteria
+                ? matchInfo?.criteria
                 : STRINGS.common.not_found
             }
           />
         </View>
-        {roommates && roommates.length > 0 && (
+        {roommates && roommates?.length > 0 && (
           <Roommates
             style={styles.card}
             roommates={roommates}
