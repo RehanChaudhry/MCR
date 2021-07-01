@@ -1,4 +1,10 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import { ViewProfileView } from "ui/screens/home/profile/view_profile/ViewProfileView";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ProfileBottomParamList } from "routes/ProfileBottomBar";
@@ -22,7 +28,12 @@ import { useApi } from "repo/Client";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
 import { Alert } from "react-native";
 import ProfileApis from "repo/auth/ProfileApis";
-import { useCallback } from "react";
+import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
+import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
+import RelationApis from "repo/home/RelationApis";
+import { AppLog } from "utils/Util";
+import RelationModel from "models/RelationModel";
+import { STRINGS } from "config";
 
 type Props = {};
 type ProfileBottomNavigationProp = StackNavigationProp<
@@ -71,6 +82,11 @@ const ViewProfileController: FC<Props> = () => {
   const [viewProfileUiData, setViewProfileUiData] = useState<Profile>();
   const { params } = useRoute<ProfileRouteProp>();
   const createConversation = useCreateConversation();
+  const [roommate, setRoommate] = useState<RelationApiResponseModel>();
+  const [showAgreementButton, setShowAgreementButton] = useState<boolean>(
+    true
+  );
+  const { user } = useAuth();
 
   const getUserRequestModel = useApi<number, UpdateProfileResponseModel>(
     ProfileApis.getUserById
@@ -91,19 +107,86 @@ const ViewProfileController: FC<Props> = () => {
     }
   }, [getUserRequestModel, params.userId]);
 
-  useEffect(() => {
-    if ((params.userId! ?? undefined) === undefined) {
-      let _viewProfileUiData: Profile = JSON.parse(
-        JSON.stringify(auth.user?.profile)
+  // MyRoommates API
+  const roommatesApi = useApi<
+    PaginationParamsModel,
+    RelationApiResponseModel
+  >(RelationApis.relations);
+
+  const handleGetRoommatesApi = useCallback(
+    async (userId?: number) => {
+      const { hasError, dataBody, errorBody } = await roommatesApi.request(
+        [
+          {
+            type: "roommates",
+            userId: userId
+          }
+        ]
       );
+      if (hasError || dataBody === undefined) {
+        // Alert.alert("Unable to find questions " + errorBody);
+        AppLog.log(() => "Unable to find Roommates " + errorBody);
+        return;
+      } else {
+        setRoommate(dataBody);
 
-      modifyUiFields(_viewProfileUiData);
+        params.userId &&
+          setShowAgreementButton(
+            !dataBody?.data?.find((item) => item.id === params.userId) ===
+              undefined
+          );
+        AppLog.log(
+          () =>
+            "MyRoommatesData" +
+            JSON.stringify(
+              dataBody?.data?.find((item) => item.id === params.userId)
+            )
+        );
+      }
+    },
+    [params.userId, roommatesApi]
+  );
 
-      setViewProfileUiData(_viewProfileUiData);
-    } else {
-      handleGetUserByIdAPi();
+  const moveToChatScreenFromRoommates = async (
+    profileMatch: RelationModel
+  ) => {
+    const createConversationResult = await createConversation(
+      [user?.profile?.id!!, profileMatch.userId!],
+      setActiveConversations,
+      inActiveConversations
+    );
+
+    if (createConversationResult !== undefined) {
+      navigation.navigate("ChatThread", {
+        title: [
+          profileMatch.user?.firstName +
+            " " +
+            profileMatch.user?.lastName ?? STRINGS.common.not_found
+        ],
+        conversation: createConversationResult
+      });
     }
-  }, [auth.user, handleGetUserByIdAPi, params.userId]);
+  };
+
+  useEffect(
+    () => {
+      if ((params.userId! ?? undefined) === undefined) {
+        let _viewProfileUiData: Profile = JSON.parse(
+          JSON.stringify(auth.user?.profile)
+        );
+
+        modifyUiFields(_viewProfileUiData);
+
+        setViewProfileUiData(_viewProfileUiData);
+        handleGetRoommatesApi();
+      } else {
+        handleGetUserByIdAPi();
+        handleGetRoommatesApi(params.userId);
+      }
+    },
+    // @ts-ignore
+    [auth.user, handleGetUserByIdAPi, handleGetRoommatesApi, params.userId]
+  );
 
   const navigation = useNavigation<
     ProfileBottomNavigationProp & HomeStackNavigationProp
@@ -167,6 +250,11 @@ const ViewProfileController: FC<Props> = () => {
           openRoommateAgreementScreen={openRoommateAgreementScreen}
           viewProfileUiData={viewProfileUiData}
           moveToChatScreen={moveToChatScreen}
+          roommates={roommate?.data}
+          moveToChatScreenFromRommates={moveToChatScreenFromRoommates}
+          moveToRoommateAgreementScreen={openRoommateAgreementScreen}
+          userName={params.userName}
+          showAgreementButton={showAgreementButton}
         />,
         undefined
       )}
