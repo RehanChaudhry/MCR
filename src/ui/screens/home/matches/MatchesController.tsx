@@ -113,12 +113,14 @@ const MatchesController: FC<Props> = () => {
   } = useContext(AppDataContext);
   const {
     relationsCount: totalCount,
+    setRelationsCount: setTotalCount,
     isLoading,
     isLoggedInUserAModerator,
     canLoadMore,
     onEndReached,
     errorMessage,
     onPullToRefresh,
+    refetchRelations,
     setOverriddenRequestModel
   } = useFetchRelations(
     RelationFilterType.MATCHES,
@@ -133,33 +135,45 @@ const MatchesController: FC<Props> = () => {
     (value?: MatchesTypeFilter) => {
       AppLog.logForcefully(() => "in onFilterByChange()...");
       setProfileMatches?.(undefined);
+      setTotalCount?.(0);
       setOverriddenRequestModel((requestModel) => {
         const updatedModel = {
           ...requestModel,
           filterBy: value
         };
-        onPullToRefresh(undefined, updatedModel);
+        refetchRelations(updatedModel);
         return updatedModel;
       });
     },
-    [onPullToRefresh, setProfileMatches, setOverriddenRequestModel]
+    [
+      refetchRelations,
+      setTotalCount,
+      setProfileMatches,
+      setOverriddenRequestModel
+    ]
   );
 
   const onKeywordAndGenderChange = useCallback(
     (keyword?: string, gender?: EGender) => {
       AppLog.logForcefully(() => "in onKeywordAndGenderChange()...");
       setProfileMatches?.(undefined);
+      setTotalCount?.(0);
       setOverriddenRequestModel((requestModel) => {
         const updatedModel = {
           ...requestModel,
           keyword: keyword,
           gender: gender
         };
-        onPullToRefresh(undefined, updatedModel);
+        refetchRelations(updatedModel);
         return updatedModel;
       });
     },
-    [onPullToRefresh, setProfileMatches, setOverriddenRequestModel]
+    [
+      refetchRelations,
+      setTotalCount,
+      setProfileMatches,
+      setOverriddenRequestModel
+    ]
   );
 
   return (

@@ -68,6 +68,9 @@ export default (
       requestModel: PaginationParamsModel,
       onComplete?: (data?: RelationModel[]) => void
     ) => {
+      if (!isFromPullToRefresh) {
+        setIsLoading(true);
+      }
       const { hasError, dataBody, errorBody } = await relationsApi.request(
         [
           {
@@ -88,7 +91,7 @@ export default (
         setIsLoading(false);
         const data = dataBody.data ?? [];
 
-        if (isFromPullToRefresh) {
+        if (requestModel.page === 1) {
           setRelations?.(data);
         } else {
           setRelations?.((_oldRelations) => {
@@ -132,10 +135,11 @@ export default (
     _overriddenRequestModel
   ]);
 
-  const onPullToRefresh = useCallback(
+  const _refetchRelations = useCallback(
     (
       onComplete?: (data?: RelationModel[]) => void,
-      requestModel?: PaginationParamsModel
+      requestModel?: PaginationParamsModel,
+      isFromPullToRefresh: boolean = false
     ) => {
       if (relationsApi.loading) {
         onComplete?.();
@@ -152,7 +156,7 @@ export default (
       setPaginationRequestModel(updatedRequestModel);
 
       handleMyFriendsResponse(
-        true,
+        isFromPullToRefresh,
         updatedRequestModel,
         (data?: RelationModel[]) => {
           onComplete?.(data);
@@ -167,8 +171,24 @@ export default (
     ]
   );
 
+  const refetchRelations = useCallback(
+    (requestModel?: PaginationParamsModel) => {
+      _refetchRelations(undefined, requestModel, false);
+    },
+    [_refetchRelations]
+  );
+  const onPullToRefresh = useCallback(
+    (
+      onComplete?: (data?: RelationModel[]) => void,
+      requestModel?: PaginationParamsModel
+    ) => {
+      _refetchRelations(onComplete, requestModel, true);
+    },
+    [_refetchRelations]
+  );
+
   useEffect(() => {
-    handleMyFriendsResponse(true, {
+    handleMyFriendsResponse(false, {
       ...paginationRequestModel,
       ..._overriddenRequestModel,
       page: 1
@@ -178,22 +198,28 @@ export default (
 
   useEffect(() => {
     let listener = () => {
-      onPullToRefresh();
+      _refetchRelations();
     };
     addListenerOnResetData(listener);
     return () => {
       removeListenerOnResetData(listener);
     };
-  }, [onPullToRefresh, addListenerOnResetData, removeListenerOnResetData]);
+  }, [
+    _refetchRelations,
+    addListenerOnResetData,
+    removeListenerOnResetData
+  ]);
 
   return {
     relationsCount,
     pendingRelationsCount,
     isLoading,
     canLoadMore,
+    setRelationsCount,
     onEndReached,
     errorMessage,
     onPullToRefresh,
+    refetchRelations,
     isLoggedInUserAModerator,
     overriddenRequestModel: _overriddenRequestModel,
     setOverriddenRequestModel
