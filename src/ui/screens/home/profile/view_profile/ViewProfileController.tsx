@@ -151,7 +151,7 @@ const ViewProfileController: FC<Props> = () => {
     profileMatch: RelationModel
   ) => {
     const createConversationResult = await createConversation(
-      [user?.profile?.id!!, profileMatch.userId!],
+      [user?.profile?.id!!, profileMatch?.userId!],
       setActiveConversations,
       inActiveConversations
     );
@@ -159,9 +159,9 @@ const ViewProfileController: FC<Props> = () => {
     if (createConversationResult !== undefined) {
       navigation.navigate("ChatThread", {
         title: [
-          profileMatch.user?.firstName +
+          profileMatch?.user?.firstName +
             " " +
-            profileMatch.user?.lastName ?? STRINGS.common.not_found
+            profileMatch?.user?.lastName ?? STRINGS.common.not_found
         ],
         conversation: createConversationResult
       });

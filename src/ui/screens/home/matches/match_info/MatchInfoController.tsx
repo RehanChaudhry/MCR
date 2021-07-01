@@ -74,7 +74,7 @@ const MatchInfoController: FC<Props> = () => {
 
   const moveToChatScreen = async (profileMatch: RelationModel) => {
     const createConversationResult = await createConversation(
-      [user?.profile?.id!!, profileMatch.userId],
+      [user?.profile?.id!!, profileMatch?.userId],
       setActiveConversations,
       inActiveConversations
     );
@@ -82,9 +82,9 @@ const MatchInfoController: FC<Props> = () => {
     if (createConversationResult !== undefined) {
       navigation.navigate("ChatThread", {
         title: [
-          profileMatch.user?.firstName +
+          profileMatch?.user?.firstName +
             " " +
-            profileMatch.user?.lastName ?? STRINGS.common.not_found
+            profileMatch?.user?.lastName ?? STRINGS.common.not_found
         ],
         conversation: createConversationResult
       });
