@@ -21,20 +21,28 @@ interface Props {
   roommates: RelationModel[];
   onChatClicked?: (profileMatch: RelationModel) => void;
   onRoommateAgreementClicked?: () => void;
+  userName?: string;
+  showFooter?: boolean;
 }
 
 const Roommates: React.FC<Props> = ({
   onChatClicked,
   onRoommateAgreementClicked,
   roommates,
-  style
+  style,
+  userName,
+  showFooter = true
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
   const listHeaderComponent = () => (
     <AppLabel
       style={styles.title}
-      text={STRINGS.matchInfo.my_roommates}
+      text={
+        userName === undefined
+          ? STRINGS.matchInfo.my_roommates
+          : userName + "'s Roommates"
+      }
       weight={"semi-bold"}
     />
   );
@@ -95,7 +103,7 @@ const Roommates: React.FC<Props> = ({
         ListHeaderComponent={listHeaderComponent}
         data={roommates}
         renderItem={renderItem}
-        ListFooterComponent={listFooterComponent}
+        ListFooterComponent={showFooter ? listFooterComponent : <View />}
       />
     </View>
   );
