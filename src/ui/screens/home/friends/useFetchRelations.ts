@@ -9,7 +9,8 @@ import {
   useCallback,
   useEffect,
   Dispatch,
-  SetStateAction
+  SetStateAction,
+  useRef
 } from "react";
 import { useApi } from "repo/Client";
 import FriendsApis from "repo/friends/FriendsApis";
@@ -21,28 +22,20 @@ export default (
   setRelations?: Dispatch<SetStateAction<RelationModel[] | undefined>>,
   overriddenRequestModel?: PaginationParamsModel
 ) => {
-  const [
-    paginationRequestModel,
-    setPaginationRequestModel
-  ] = useState<PaginationParamsModel>({
+  const paginationRequestModel = useRef<PaginationParamsModel>({
     type: type,
     page: 1,
     limit: 9,
-    paginate: true
+    paginate: true,
+    ...overriddenRequestModel
   });
-
-  const [
-    _overriddenRequestModel,
-    setOverriddenRequestModel
-  ] = useState<PaginationParamsModel>(
-    overriddenRequestModel ?? paginationRequestModel
-  );
 
   const [isLoggedInUserAModerator, setIsLoggedInUserAModerator] = useState(
     false
   );
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, _setIsLoading] = useState(true);
+
   const [canLoadMore, setCanLoadMore] = useState<boolean>(false);
 
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -65,11 +58,11 @@ export default (
   const handleMyFriendsResponse = useCallback(
     async (
       isFromPullToRefresh: boolean,
-      requestModel: PaginationParamsModel,
       onComplete?: (data?: RelationModel[]) => void
     ) => {
+      const requestModel = paginationRequestModel.current;
       if (!isFromPullToRefresh) {
-        setIsLoading(true);
+        _setIsLoading(true);
       }
       const { hasError, dataBody, errorBody } = await relationsApi.request(
         [
@@ -82,13 +75,20 @@ export default (
           }
         ]
       );
+
+      if (
+        requestModel.filterBy !== paginationRequestModel.current.filterBy
+      ) {
+        return;
+      }
+
       if (hasError || dataBody === undefined) {
         setErrorMessage(errorBody);
-        setIsLoading(false);
+        _setIsLoading(false);
         return;
       } else {
         setErrorMessage(undefined);
-        setIsLoading(false);
+        _setIsLoading(false);
         const data = dataBody.data ?? [];
 
         if (requestModel.page === 1) {
@@ -107,10 +107,10 @@ export default (
           setPendingRelationsCount(dataBody.pendingCount ?? 0);
         }
 
-        setPaginationRequestModel({
+        paginationRequestModel.current = {
           ...requestModel,
           page: requestModel.page! + 1
-        });
+        };
         setCanLoadMore(data.length >= requestModel.limit!);
 
         onComplete?.(data);
@@ -124,75 +124,53 @@ export default (
       return;
     }
 
-    handleMyFriendsResponse(false, {
-      ...paginationRequestModel,
-      ..._overriddenRequestModel
-    });
-  }, [
-    handleMyFriendsResponse,
-    relationsApi.loading,
-    paginationRequestModel,
-    _overriddenRequestModel
-  ]);
+    handleMyFriendsResponse(false);
+  }, [handleMyFriendsResponse, relationsApi.loading]);
 
   const _refetchRelations = useCallback(
     (
       onComplete?: (data?: RelationModel[]) => void,
-      requestModel?: PaginationParamsModel,
+      requestModelFieldsToOverride?: PaginationParamsModel,
       isFromPullToRefresh: boolean = false
     ) => {
-      if (relationsApi.loading) {
-        onComplete?.();
-        return;
-      }
-
-      const updatedRequestModel: PaginationParamsModel = {
-        ...paginationRequestModel,
-        ..._overriddenRequestModel,
-        ...requestModel,
+      paginationRequestModel.current = {
+        ...paginationRequestModel.current,
+        ...requestModelFieldsToOverride,
         page: 1
       };
 
-      setPaginationRequestModel(updatedRequestModel);
-
       handleMyFriendsResponse(
         isFromPullToRefresh,
-        updatedRequestModel,
         (data?: RelationModel[]) => {
           onComplete?.(data);
         }
       );
     },
-    [
-      handleMyFriendsResponse,
-      relationsApi,
-      paginationRequestModel,
-      _overriddenRequestModel
-    ]
+    [handleMyFriendsResponse]
   );
 
-  const refetchRelations = useCallback(
-    (requestModel?: PaginationParamsModel) => {
-      _refetchRelations(undefined, requestModel, false);
+  const refetchRelationsFromStart = useCallback(
+    (requestModelFieldsToOverride?: PaginationParamsModel) => {
+      setRelations?.(undefined);
+      setRelationsCount?.(0);
+      _refetchRelations(undefined, requestModelFieldsToOverride, false);
     },
-    [_refetchRelations]
+    [setRelations, setRelationsCount, _refetchRelations]
   );
+
   const onPullToRefresh = useCallback(
-    (
-      onComplete?: (data?: RelationModel[]) => void,
-      requestModel?: PaginationParamsModel
-    ) => {
-      _refetchRelations(onComplete, requestModel, true);
+    (onComplete?: (data?: RelationModel[]) => void) => {
+      _refetchRelations(onComplete, undefined, true);
     },
     [_refetchRelations]
   );
 
   useEffect(() => {
-    handleMyFriendsResponse(false, {
-      ...paginationRequestModel,
-      ..._overriddenRequestModel,
+    paginationRequestModel.current = {
+      ...paginationRequestModel.current,
       page: 1
-    });
+    };
+    handleMyFriendsResponse(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -219,9 +197,7 @@ export default (
     onEndReached,
     errorMessage,
     onPullToRefresh,
-    refetchRelations,
-    isLoggedInUserAModerator,
-    overriddenRequestModel: _overriddenRequestModel,
-    setOverriddenRequestModel
+    refetchRelationsFromStart,
+    isLoggedInUserAModerator
   };
 };
