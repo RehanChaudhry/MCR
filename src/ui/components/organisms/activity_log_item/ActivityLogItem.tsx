@@ -1,6 +1,6 @@
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { usePreferredTheme } from "hooks";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import {
@@ -19,13 +19,11 @@ import Dismissed from "assets/images/folder-remove.svg";
 import NewsPaper from "assets/images/newspaper.svg";
 import { Divider } from "react-native-elements";
 import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
-import ActivityLog, {
-  getDisplayTime,
-  getMessage
-} from "models/ActivityLog";
+import ActivityLog, { getMessage } from "models/ActivityLog";
 import NotificationAndActivityLogFilterType from "models/enums/NotificationAndActivityLogFilterType";
 import Actions from "models/enums/ActivityLogAction";
 import useAuth from "hooks/useAuth";
+import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
 interface Props {
   activityLog: ActivityLog;
@@ -35,6 +33,11 @@ interface Props {
 const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
   const { themedColors } = usePreferredTheme();
   const { user } = useAuth();
+  const DateFormatter = new PrettyTimeFormat();
+  let formattedDate = DateFormatter.getPrettyTime(
+    (activityLog.createdAt as unknown) as string
+  );
+  const [prettyTime, setPrettyTime] = useState<string>(formattedDate);
 
   const icon: any = () => {
     if (activityLog.type != null) {
@@ -143,6 +146,25 @@ const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
     }
   };
 
+  useEffect(() => {
+    setPrettyTime(
+      DateFormatter.getPrettyTime(
+        (activityLog!.createdAt as unknown) as string
+      )
+    );
+    let id = setInterval(() => {
+      setPrettyTime(
+        DateFormatter.getPrettyTime(
+          (activityLog!.createdAt as unknown) as string
+        )
+      );
+    }, 5000);
+    return () => {
+      clearInterval(id);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formattedDate]);
+
   return (
     <View
       style={[styles.container, { borderColor: themedColors.separator }]}>
@@ -178,7 +200,7 @@ const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
         />
         <AppLabel
           style={[styles.date, { color: themedColors.interface[600] }]}
-          text={getDisplayTime(activityLog)}
+          text={prettyTime}
         />
       </View>
     </View>
