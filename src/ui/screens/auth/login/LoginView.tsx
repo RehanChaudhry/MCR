@@ -19,13 +19,14 @@ import { AppLog, loginRegx } from "utils/Util";
 import Screen from "ui/components/atoms/Screen";
 import AppFormFormSubmit from "ui/components/molecules/app_form/AppFormSubmit";
 import { BUTTON_TYPES } from "ui/components/molecules/app_button/AppButton";
-import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 import Strings from "config/Strings";
+
 type Props = {
   openUniSelectionScreen: () => void;
   openForgotPasswordScreen?: () => void;
   onLogin: (request: SignInApiRequestModel) => void;
   shouldShowProgressBar?: boolean;
+  openContactUsScreen: () => void;
 };
 
 const validationSchema = Yup.object().shape({
@@ -48,7 +49,8 @@ export const LoginView = React.memo<Props>(
     openForgotPasswordScreen,
     onLogin,
     openUniSelectionScreen,
-    shouldShowProgressBar
+    shouldShowProgressBar,
+    openContactUsScreen
   }) => {
     const theme = usePreferredTheme();
 
@@ -177,17 +179,19 @@ export const LoginView = React.memo<Props>(
             </AppForm>
 
             <View style={styles.spannableText}>
-              <MultilineSpannableText
-                text={[STRINGS.login.cant_log, STRINGS.login.contact_us]}
-                appLabelProps={[
-                  { style: { fontSize: FONT_SIZE.sm } },
-                  {
-                    style: {
-                      fontSize: FONT_SIZE.sm,
-                      color: theme.themedColors.primary
-                    }
-                  }
+              <AppLabel
+                text={Strings.login.cant_log}
+                style={styles.cantLog}
+              />
+              <AppLabel
+                text={Strings.contact_us.contact_us}
+                weight={"semi-bold"}
+                shouldNotOptimize={false}
+                style={[
+                  styles.contactUs,
+                  { color: theme.themedColors.primary }
                 ]}
+                onPress={openContactUsScreen}
               />
             </View>
           </View>
@@ -232,9 +236,13 @@ const styles = StyleSheet.create({
     height: 44
   },
   spannableText: {
-    marginTop: SPACE._2xl
+    marginTop: SPACE._2xl,
+    flexDirection: "row"
   },
   signInButtonText: {
     fontSize: FONT_SIZE.lg
-  }
+  },
+  messageText: { fontSize: FONT_SIZE.sm },
+  cantLog: { fontSize: FONT_SIZE.sm },
+  contactUs: { fontSize: FONT_SIZE.sm }
 });

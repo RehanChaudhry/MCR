@@ -7,6 +7,7 @@ import ForgotPasswordFeedBackController from "ui/screens/auth/forgot_password_fe
 import UniSelectionController from "ui/screens/uni_selection/UniSelectionController";
 import { WelcomeRoutes } from "routes/WelcomeRoutes";
 import PreSSOLoginController from "ui/screens/auth/pre_sso_login/PreSSOLoginConstroller";
+import ContactUsController from "ui/screens/home/contact_us/ContactUsController";
 
 type Props = {
   initialRouteName: "SignUp" | "Login" | "UniSelection";
@@ -37,6 +38,11 @@ export const AuthRoutes: FC<Props> = ({ initialRouteName = "Login" }) => {
       <AuthStack.Screen
         name="SSO_Login"
         component={PreSSOLoginController}
+        options={{ headerShown: false }}
+      />
+      <AuthStack.Screen
+        name="ContactUs"
+        component={ContactUsController}
         options={{ headerShown: false }}
       />
     </AuthStack.Navigator>

@@ -10,6 +10,7 @@ export default {
   BASE_URL: Env.BASE_URL,
   API_URL: "api/",
   LOGIN_URL: "auth/login",
+  CONTACT_US: "contact-us",
   FETCH_MY_PROFILE_URL: "user/me?meta=true",
   FORGOT_PASS_URL: "password/request",
   RESET_PASS_URL: "password/set/",

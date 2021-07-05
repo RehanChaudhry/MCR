@@ -21,6 +21,22 @@ export default {
     signin_to_your_account: "Sign in to your account"
   },
 
+  contact_us: {
+    contact_us: "Contact Us",
+    enter_your_first_name: "Enter Your First Name",
+    enter_your_last_name: "Enter Your Last Name",
+    first_name: "First Name",
+    last_name: "Last Name",
+    phone_number: "Phone Number",
+    message: "Message",
+    phone_number_no: "+1 (111) 123-4567",
+    enter_first_name_validation: "Please enter first name",
+    enter_last_name_validation: "Please enter last name",
+    enter_phone_number_validation: "Please enter phone number",
+    enter_message_validation: "Please enter message",
+    submit: "Submit"
+  },
+
   forgotpassword: {
     forgot_your_password: "Forgot your password",
     reset_password: "Reset Password",

@@ -8,12 +8,16 @@ import { apiClient, resetApiClient } from "repo/Client";
 import { UpdateProfileRequestModel } from "models/api_requests/UpdateProfileRequestModel";
 import { CreatePasswordApiRequestModel } from "models/api_requests/CreatePasswordApiRequestModel";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
+import { ContactUsApiRequestModel } from "models/api_requests/ContactUsApiRequestModel";
 
 function signIn(requestModel: SignInApiRequestModel) {
   return apiClient.post<SignInApiResponseModel>(
     API.LOGIN_URL,
     JSON.stringify(requestModel)
   );
+}
+function contactUs(requestModel: ContactUsApiRequestModel) {
+  return apiClient.post<any>(API.CONTACT_US, JSON.stringify(requestModel));
 }
 
 async function fetchMyProfile(token?: string) {
@@ -54,5 +58,6 @@ export default {
   fetchMyProfile,
   forgotPassword,
   createOrResetPassword,
-  updateProfile
+  updateProfile,
+  contactUs
 };

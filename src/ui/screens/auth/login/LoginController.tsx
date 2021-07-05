@@ -45,6 +45,9 @@ const LoginController: FC<Props> = () => {
   const openUniSelectionScreen = usePreventDoubleTap(() => {
     navigation.goBack();
   });
+  const openContactUsScreen = usePreventDoubleTap(() => {
+    navigation.navigate("ContactUs");
+  });
 
   const openForgotPasswordScreen = usePreventDoubleTap(() => {
     navigation.navigate("ForgotPassword");
@@ -91,6 +94,7 @@ const LoginController: FC<Props> = () => {
         handleSignIn(_requestModel);
       }}
       openUniSelectionScreen={openUniSelectionScreen}
+      openContactUsScreen={openContactUsScreen}
     />
   );
 };
