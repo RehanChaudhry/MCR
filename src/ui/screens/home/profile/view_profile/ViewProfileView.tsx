@@ -5,8 +5,11 @@ import Screen from "ui/components/atoms/Screen";
 import { DynamicFormView } from "ui/components/templates/dynamic_card_view/DynamicFormView";
 import Roommates from "ui/components/organisms/roommates/Roommates";
 import RelationModel from "models/RelationModel";
-import { SPACE } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { AppLog, shadowStyleProps } from "utils/Util";
+import InfoCircle from "assets/images/info_circle.svg";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 
 type Props = {
   openRoommateAgreementScreen: () => void;
@@ -32,6 +35,8 @@ export const ViewProfileView: React.FC<Props> = ({
   showAgreementButton
 }) => {
   AppLog.logForcefully(() => "Rommates: " + roommates);
+  const { themedColors } = usePreferredTheme();
+
   return (
     <Screen shouldAddBottomInset={false}>
       <ScrollView>
@@ -50,6 +55,24 @@ export const ViewProfileView: React.FC<Props> = ({
               showFooter={showAgreementButton}
             />
           )}
+
+          {viewProfileUiData?.isEligible === false && (
+            <View
+              style={[
+                styles.notEligibleContainer,
+                { backgroundColor: themedColors.dangerShade }
+              ]}>
+              <InfoCircle width={20} fill={themedColors.danger} />
+              <AppLabel
+                text={"Not eligible for roommate request"}
+                weight={"semi-bold"}
+                style={[
+                  styles.notEligible,
+                  { color: themedColors.danger }
+                ]}
+              />
+            </View>
+          )}
         </View>
       </ScrollView>
     </Screen>
@@ -62,5 +85,16 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACE.lg,
     marginBottom: SPACE.lg,
     ...shadowStyleProps
+  },
+  notEligibleContainer: {
+    flexDirection: "row",
+    margin: SPACE.lg,
+    padding: SPACE.md,
+
+    borderRadius: 10
+  },
+  notEligible: {
+    marginLeft: SPACE.sm,
+    fontSize: FONT_SIZE.sm
   }
 });

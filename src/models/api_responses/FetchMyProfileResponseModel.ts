@@ -50,6 +50,7 @@ export type Profile = {
   sections: SectionsType[];
   agreementId: number;
   about?: string;
+  isEligible: boolean;
 };
 
 export const getName = (profile: Profile) =>
