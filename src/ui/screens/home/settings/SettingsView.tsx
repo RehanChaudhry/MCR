@@ -30,6 +30,12 @@ export const SettingsView = React.memo<Props>(
       ),
 
       newPassword: Yup.string()
+        .when(["currentPassword"], {
+          is: (currentPassword: any[]) => {
+            return currentPassword?.length > 0;
+          },
+          then: Yup.string().required("Field is required")
+        })
         .matches(/[A-Z]/, "Password must contain one capital letter (A-Z)")
         .matches(/[0-9]/, "Password must contain one number (0-9)")
         .min(8, "Password should be at least 8 characters")
@@ -46,15 +52,38 @@ export const SettingsView = React.memo<Props>(
       }),
 
       currentPassword: Yup.string()
-        .optional()
-        .min(8, "Password should be at least 8 chars")
-        .when(["newPassword"], {
+
+        /*  .when(["newPassword"], {
           is: (valueNewPassword: any[]) => {
             return valueNewPassword?.length > 0;
           },
           then: Yup.string().required("Old Password field cannot be empty")
-        })
+        })*/
+        .min(8, "Password should be at least 8 characters")
+        .test(
+          "custom error", //method name for yup
+          `Current password field is required`,
+          function (value: string | undefined) {
+            let newPassword: string = this.resolve(Yup.ref("newPassword"));
+            let confirmPassword: string = this.resolve(
+              Yup.ref("confirmPassword")
+            );
+
+            AppLog.logForcefully(() => "newPassword :" + newPassword);
+            AppLog.logForcefully(
+              () => "confirmPassword :" + confirmPassword
+            );
+            AppLog.logForcefully(() => "value :" + value);
+
+            return (
+              value !== undefined ||
+              ((newPassword === "" || newPassword === undefined) &&
+                (confirmPassword === "" || confirmPassword === undefined))
+            );
+          }
+        )
     });
+
     let initialValues: FormikValues = {
       // basic profile
       primaryEmailAddress: "",
