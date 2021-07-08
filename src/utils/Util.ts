@@ -59,7 +59,7 @@ export const DateUtils = {
     let diff = Math.abs(d1 - d2);
     const hours = diff / (1000 * 60 * 60); //in milliseconds
 
-    return parseInt(hours.toFixed(0));
+    return parseInt(hours.toFixed(0), 10);
   },
 
   getHoursDiff(date: Date): number {
@@ -137,7 +137,7 @@ export const parameterizedString = (...args: string[]) => {
   }
   return str.replace(/%s[0-9]+/g, (matchedStr: string) => {
     const variableIndex =
-      Number.parseInt(matchedStr.replace("%s", "")) - 1;
+      Number.parseInt(matchedStr.replace("%s", ""), 10) - 1;
     return params[variableIndex];
   });
 };
@@ -147,7 +147,6 @@ export const capitalizeWords = (str: string) =>
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function delay<T, U, V>(t: T, v?: V) {
   return new Promise<U>(function (resolve) {
     setTimeout(resolve.bind(null), t);
