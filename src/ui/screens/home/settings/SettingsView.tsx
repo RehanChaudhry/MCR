@@ -34,7 +34,7 @@ export const SettingsView = React.memo<Props>(
           is: (currentPassword: any[]) => {
             return currentPassword?.length > 0;
           },
-          then: Yup.string().required("Field is required")
+          then: Yup.string().required("New Password Field is required")
         })
         .matches(/[A-Z]/, "Password must contain one capital letter (A-Z)")
         .matches(/[0-9]/, "Password must contain one number (0-9)")
@@ -48,7 +48,7 @@ export const SettingsView = React.memo<Props>(
             [Yup.ref("newPassword")],
             "New Password and Confirm Password do not match"
           )
-          .required("Field is required")
+          .required("Confirm Password Field is required")
       }),
 
       currentPassword: Yup.string()
