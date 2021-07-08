@@ -123,7 +123,7 @@ export const CreatePostView = React.memo<Props>((props) => {
           setImages((prevState) => {
             return [
               ...prevState.filter((filteredImage) => {
-                return imageResponse.uri !== filteredImage.uri;
+                return imageResponse?.uri !== filteredImage?.uri;
               })
             ];
           });
@@ -146,11 +146,13 @@ export const CreatePostView = React.memo<Props>((props) => {
               ];
             });
           } else if (response.isFailed) {
-            SimpleToast.show("Image upload failed : " + response.fileName);
+            SimpleToast.show(
+              "Image upload failed : " + response?.fileName
+            );
             setImages((prevState) =>
               _.remove(
                 prevState,
-                (item) => item.fileName !== response.fileName
+                (item) => item.fileName !== response?.fileName
               )
             );
           }
@@ -194,7 +196,7 @@ export const CreatePostView = React.memo<Props>((props) => {
         <View style={styles.cardView}>
           <AnnouncementHeader
             title={`What’s new, ${auth.user?.profile?.firstName}?`}
-            leftImageUrl={useAuth().user?.profile?.profilePicture.fileURL}
+            leftImageUrl={useAuth().user?.profile?.profilePicture?.fileURL}
             shouldHideSubTitle={true}
             shouldHideBottomSeparator={true}
             titleFontWeight="bold"

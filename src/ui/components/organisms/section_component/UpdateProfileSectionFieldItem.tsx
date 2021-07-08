@@ -164,11 +164,7 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
 
       const MyIcon =
         // @ts-ignore
-        IconTypes[
-          item!.icon !== undefined
-            ? item?.icon.toString()
-            : "icon-facebook"
-        ];
+        IconTypes[item?.icon ? item?.icon : "icon-facebook"];
 
       return (
         <View style={styles.padding}>

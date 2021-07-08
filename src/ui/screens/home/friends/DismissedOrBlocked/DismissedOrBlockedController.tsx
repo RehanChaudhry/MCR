@@ -113,27 +113,36 @@ const DismissedOrBlockedController: FC<Props> = () => {
 
   // static content
   const [headerContent, setHeaderContent] = useState<StaticContent>();
+  const [
+    blockedHeaderContent,
+    setBlockedHeaderContent
+  ] = useState<StaticContent>();
 
   const staticContentApi = useApi<
     StaticContentRequestModel,
     StaticContentResponseModel
   >(OtherApis.staticContent);
 
-  const getHeaderContent = useCallback(async () => {
-    const {
-      hasError,
-      dataBody,
-      errorBody
-    } = await staticContentApi.request([
-      { type: StaticContentType.DISMISSED_LIST }
-    ]);
-    if (hasError || dataBody === undefined) {
-      AppLog.log(() => "Unable to find header content " + errorBody);
-      return;
-    } else {
-      setHeaderContent(dataBody.data);
-    }
-  }, [staticContentApi]);
+  const getHeaderContent = useCallback(
+    async (type: StaticContentType) => {
+      const {
+        hasError,
+        dataBody,
+        errorBody
+      } = await staticContentApi.request([{ type: type }]);
+      if (hasError || dataBody === undefined) {
+        AppLog.log(() => "Unable to find header content " + errorBody);
+        return;
+      } else {
+        if (type === StaticContentType.DISMISSED_LIST) {
+          setHeaderContent(dataBody.data);
+        } else {
+          setBlockedHeaderContent(dataBody.data);
+        }
+      }
+    },
+    [staticContentApi]
+  );
 
   const moveToHeaderContent = useCallback(() => {
     navigation.navigate("StaticContent", {
@@ -142,9 +151,21 @@ const DismissedOrBlockedController: FC<Props> = () => {
     });
   }, [navigation, headerContent]);
 
+  const moveToBlockedHeaderContent = useCallback(() => {
+    navigation.navigate("StaticContent", {
+      isFrom: EScreen.MY_FRIENDS,
+      staticContent: blockedHeaderContent!
+    });
+  }, [navigation, blockedHeaderContent]);
+
   const theme = usePreferredTheme();
 
   const onTabChanged = (value: Choice, index: number) => {
+    if (index === 0) {
+      getHeaderContent(StaticContentType.DISMISSED_LIST);
+    } else {
+      getHeaderContent(StaticContentType.BLOCKED_LIST);
+    }
     setSelectedTabIndex(index);
   };
 
@@ -176,7 +197,7 @@ const DismissedOrBlockedController: FC<Props> = () => {
   };
 
   useEffect(() => {
-    getHeaderContent();
+    getHeaderContent(StaticContentType.DISMISSED_LIST);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -211,7 +232,14 @@ const DismissedOrBlockedController: FC<Props> = () => {
             canLoadMore={canLoadMoreDismissed}
             error={errorMessageDismissed}
             onEndReached={onEndReachedDismissed}
-            onPullToRefresh={onPullToRefreshDismissed}
+            onPullToRefresh={(
+              onComplete?: (data?: RelationModel[]) => void
+            ) => {
+              getHeaderContent(StaticContentType.DISMISSED_LIST)
+                .then()
+                .catch();
+              onPullToRefreshDismissed(onComplete);
+            }}
             onPressChat={(item: RelationModel) => {
               moveToChatScreen(item).then().catch();
             }}
@@ -220,16 +248,23 @@ const DismissedOrBlockedController: FC<Props> = () => {
           />
         ) : (
           <DismissedOrBlockedView
-            headerTitle={headerContent?.title!}
-            headerSubtitle={headerContent?.description!}
+            headerTitle={blockedHeaderContent?.title!}
+            headerSubtitle={blockedHeaderContent?.description!}
             learnMoreTitle={"Learn more about blocked list"}
-            learnMoreAction={moveToHeaderContent}
+            learnMoreAction={moveToBlockedHeaderContent}
             data={blocked}
             isLoading={isLoadingBlocked}
             canLoadMore={canLoadMoreBlocked}
             error={errorMessageBlocked}
             onEndReached={onEndReachedBlocked}
-            onPullToRefresh={onPullToRefreshBlocked}
+            onPullToRefresh={(
+              onComplete?: (data?: RelationModel[]) => void
+            ) => {
+              getHeaderContent(StaticContentType.BLOCKED_LIST)
+                .then()
+                .catch();
+              onPullToRefreshBlocked(onComplete);
+            }}
             onPressChat={(item: RelationModel) => {
               moveToChatScreen(item).then().catch();
             }}

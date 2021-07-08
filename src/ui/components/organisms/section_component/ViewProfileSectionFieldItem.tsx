@@ -172,11 +172,7 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
             icon={() => {
               const MyIcon =
                 // @ts-ignore
-                IconTypes[
-                  item!.icon !== undefined
-                    ? item?.icon.toString()
-                    : "icon-facebook"
-                ];
+                IconTypes[item?.icon ? item?.icon : "icon-facebook"];
 
               return <MyIcon testID="icon" width={20} height={20} />;
             }}
