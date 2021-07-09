@@ -456,8 +456,7 @@ const styles = StyleSheet.create({
     marginRight: SPACE.sm
   },
   list: {
-    marginTop: SPACE.lg,
-    borderWidth: 1.0
+    marginTop: SPACE.lg
     // flexGrow: 1,
     // flexBasis: 0
   },
