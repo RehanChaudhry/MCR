@@ -10,6 +10,7 @@ import { AppLog, shadowStyleProps } from "utils/Util";
 import InfoCircle from "assets/images/info_circle.svg";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
+import useAuth from "hooks/useAuth";
 
 type Props = {
   openRoommateAgreementScreen: () => void;
@@ -36,6 +37,7 @@ export const ViewProfileView: React.FC<Props> = ({
 }) => {
   AppLog.logForcefully(() => "Rommates: " + roommates);
   const { themedColors } = usePreferredTheme();
+  const { user } = useAuth();
 
   return (
     <Screen shouldAddBottomInset={false}>
@@ -45,16 +47,18 @@ export const ViewProfileView: React.FC<Props> = ({
             sectionsData={viewProfileUiData?.sections}
             updateProfile={false}
           />
-          {roommates && roommates.length > 0 && (
-            <Roommates
-              style={styles.card}
-              userName={userName?.split(" ")[0]}
-              roommates={roommates}
-              onChatClicked={moveToChatScreenFromRommates}
-              onRoommateAgreementClicked={moveToRoommateAgreementScreen}
-              showFooter={showAgreementButton}
-            />
-          )}
+          {roommates &&
+            roommates.length > 0 &&
+            viewProfileUiData?.id === user?.profile?.id && (
+              <Roommates
+                style={styles.card}
+                userName={userName?.split(" ")[0]}
+                roommates={roommates}
+                onChatClicked={moveToChatScreenFromRommates}
+                onRoommateAgreementClicked={moveToRoommateAgreementScreen}
+                showFooter={showAgreementButton}
+              />
+            )}
 
           {viewProfileUiData?.isEligible === false && (
             <View
