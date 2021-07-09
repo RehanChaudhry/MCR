@@ -6,7 +6,6 @@ import _ from "lodash";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
 import SimpleToast from "react-native-simple-toast";
 import { Dispatch, SetStateAction } from "react";
-import { AppLog } from "utils/Util";
 
 export const useCreateConversation = () => {
   const createConversationAPi = useApi<
@@ -19,24 +18,21 @@ export const useCreateConversation = () => {
     setActiveConversations:
       | Dispatch<SetStateAction<Conversation[] | undefined>>
       | undefined,
-    inActiveConversations: Conversation[] | undefined
+    setInActiveConversations:
+      | Dispatch<SetStateAction<Conversation[] | undefined>>
+      | undefined
   ): Promise<Conversation> => {
     return new Promise((resolve, reject) => {
       createConversationAPi
         .request([{ userIds: userId }])
         .then(({ hasError, dataBody }) => {
-          AppLog.logForcefully(() => "api result : ");
-
           if (!hasError) {
-            //update active chat list context
+            //set current date
+            dataBody!.data.lastMessagedAt = new Date();
 
-            //update active conversations list, only when new created chat is not present in archive chat list
+            //update active conversations list, only when new created chat has message
             //since, api will return previous chat if its already created
-            if (
-              !inActiveConversations?.find(
-                (item) => item.id === dataBody!.data.id
-              )
-            ) {
+            if (dataBody?.data.currentUser[0]?.status === "active") {
               // @ts-ignore
               setActiveConversations?.((prevState) => {
                 if (prevState !== undefined) {
@@ -54,8 +50,27 @@ export const useCreateConversation = () => {
                   return [dataBody!.data];
                 }
               });
+            } else if (
+              dataBody?.data.currentUser[0]?.status === "archived"
+            ) {
+              // @ts-ignore
+              setInActiveConversations?.((prevState) => {
+                if (prevState !== undefined) {
+                  return [
+                    dataBody!.data,
+                    ..._.without(
+                      prevState as Conversation[],
+                      prevState?.find(
+                        (item: Conversation) =>
+                          item.id === dataBody!!.data.id
+                      )
+                    )
+                  ];
+                } else {
+                  return [dataBody!.data];
+                }
+              });
             }
-
             resolve(dataBody!.data);
           } else {
             SimpleToast.show("Something went wrong!");

@@ -53,7 +53,7 @@ export const NewConversationController: FC<Props> = () => {
 
   const createConversation = useCreateConversation();
 
-  const { setActiveConversations, inActiveConversations } = useContext(
+  const { setActiveConversations, setInActiveConversations } = useContext(
     AppDataContext
   );
 
@@ -104,7 +104,7 @@ export const NewConversationController: FC<Props> = () => {
       const createConversationResult = await createConversation(
         usersIds.current,
         setActiveConversations,
-        inActiveConversations
+        setInActiveConversations
       );
 
       if (createConversationResult !== undefined) {
@@ -118,7 +118,7 @@ export const NewConversationController: FC<Props> = () => {
     openChatThreadScreen,
     newConversations,
     setActiveConversations,
-    inActiveConversations,
+    setInActiveConversations,
     createConversation
   ]);
 

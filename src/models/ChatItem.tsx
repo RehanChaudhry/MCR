@@ -11,7 +11,7 @@ export type ChatItem = {
 };
 
 export enum SenderType {
-  STAFF = "STAFF",
+  STAFF = "Staff",
   NEW_MESSAGES = "NEW MESSAGES",
   STUDENTS = "Student"
 }
