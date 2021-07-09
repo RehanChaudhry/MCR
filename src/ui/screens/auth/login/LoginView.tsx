@@ -8,7 +8,7 @@ import ArrowLeft from "assets/images/arrow_left.svg";
 import { usePreferredTheme } from "hooks";
 import Colors from "config/Colors";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { FONT_SIZE, SPACE, STRINGS } from "config";
+import { Constants, FONT_SIZE, SPACE, STRINGS } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { UniLogo } from "ui/components/atoms/UniLogo";
 import AppForm from "ui/components/molecules/app_form/AppForm";
@@ -40,8 +40,10 @@ const validationSchema = Yup.object().shape({
 });
 
 let initialValues: FormikValues = {
-  email: "",
-  password: ""
+  email: Constants.SHOULD_PRINT_LOGS
+    ? "muneeb.shafiq+st41@cygnismedia.com"
+    : "",
+  password: Constants.SHOULD_PRINT_LOGS ? "Mycollegeroomie1234" : ""
 };
 
 export const LoginView = React.memo<Props>(
