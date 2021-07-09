@@ -335,7 +335,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                       autoCapitalize: "none",
                       style: [{ color: theme.themedColors.label }],
                       viewStyle: [
-                        styles.list,
+                        styles.embedAndLink,
                         {
                           backgroundColor: theme.themedColors.background,
                           borderColor: theme.themedColors.border
@@ -360,7 +360,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                       valueToShowAtStart: initialValues.embed,
                       style: [{ color: theme.themedColors.label }],
                       viewStyle: [
-                        styles.list,
+                        styles.embedAndLink,
                         {
                           backgroundColor: theme.themedColors.background,
                           borderColor: theme.themedColors.border
@@ -460,6 +460,7 @@ const styles = StyleSheet.create({
     // flexGrow: 1,
     // flexBasis: 0
   },
+  embedAndLink: { marginTop: SPACE.lg, borderWidth: 1 },
   imagesListContainer: {
     flexDirection: "row",
     alignItems: "center"
