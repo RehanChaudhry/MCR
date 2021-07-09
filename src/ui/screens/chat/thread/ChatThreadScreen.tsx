@@ -20,6 +20,7 @@ type Props = {
   onEndReached: () => void;
   retry?: (message: Message) => void;
   retryCallback: () => void;
+  moveToProfileScreen: (item: Message) => void;
 };
 
 export const ChatThreadScreen = React.memo<Props>(
@@ -31,12 +32,19 @@ export const ChatThreadScreen = React.memo<Props>(
     error,
     onEndReached,
     retry,
-    retryCallback
+    retryCallback,
+    moveToProfileScreen
   }) => {
     const theme = usePreferredTheme();
     const renderItem = ({ item }: { item: Message | undefined }) => {
       //AppLog.log(() => "rendering list item : " + JSON.stringify(item));
-      return <ItemChatThread item={item} retry={retry} />;
+      return (
+        <ItemChatThread
+          item={item}
+          retry={retry}
+          moveToProfileScreen={moveToProfileScreen}
+        />
+      );
     };
 
     function sentMessage(text: string) {

@@ -40,6 +40,7 @@ import { ChatHelper } from "utils/ChatHelper";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import _ from "lodash";
 import nextId from "react-id-generator";
+import EScreen from "models/enums/EScreen";
 
 type ChatListNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -407,6 +408,17 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
     updateConversationApi.loading
   ]);
 
+  const moveToProfileScreen = (_user: Message) => {
+    AppLog.logForcefully(
+      () => "moveToProfileScreen(), profile: " + JSON.stringify(_user)
+    );
+    navigation.navigate("ViewProfile", {
+      isFrom: EScreen.MATCH_INFO,
+      userId: _user!.userId!,
+      userName: _user?.firstName + " " + _user?.lastName
+    });
+  };
+
   return (
     <ChatThreadScreen
       data={messages}
@@ -415,6 +427,7 @@ export const ChatThreadController: FC<Props> = ({ route, navigation }) => {
       error={loadMessages.error}
       isAllDataLoaded={isAllDataLoaded}
       onEndReached={onEndReached}
+      moveToProfileScreen={moveToProfileScreen}
       retry={retry}
       retryCallback={() => {
         loadMessagesRequestModel.current.page = 1;

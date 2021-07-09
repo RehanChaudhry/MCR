@@ -1,5 +1,6 @@
 import {
   Image,
+  Pressable,
   StyleProp,
   StyleSheet,
   View,
@@ -18,10 +19,11 @@ export interface ItemChatThreadProps extends ViewStyle {
   item: Message | undefined;
   style?: StyleProp<ViewStyle>;
   retry?: (message: Message) => void;
+  moveToProfileScreen?: (item: Message) => void;
 }
 
 export const ItemChatThread = React.memo<ItemChatThreadProps>(
-  ({ style, item, retry }) => {
+  ({ style, item, retry, moveToProfileScreen }) => {
     const { themedColors } = usePreferredTheme();
     const currentUser = useAuth();
     const DateFormatter = new PrettyTimeFormat();
@@ -56,14 +58,16 @@ export const ItemChatThread = React.memo<ItemChatThreadProps>(
     return (
       <View style={{ flexDirection: "column" }}>
         <View style={[styles.container, style]}>
-          <Image
-            style={styles.imgStyle}
-            source={
-              item?.profilePicture?.fileURL !== undefined
-                ? { uri: item?.profilePicture?.fileURL }
-                : require("assets/images/profile.png")
-            }
-          />
+          <Pressable onPress={() => moveToProfileScreen?.(item)}>
+            <Image
+              style={styles.imgStyle}
+              source={
+                item?.profilePicture?.fileURL !== undefined
+                  ? { uri: item?.profilePicture?.fileURL }
+                  : require("assets/images/profile.png")
+              }
+            />
+          </Pressable>
 
           <View
             style={styles.textWrapper(
