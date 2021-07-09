@@ -16,7 +16,12 @@ export const PushNotification = {
 
     OneSignal.setNotificationOpenedHandler(onSetNotificationOpenedHandler);
   },
+
   registerUser: (userId: number | undefined) => {
     userId && OneSignal.sendTag("user_id", userId.toString());
+  },
+
+  unRegisterUser: () => {
+    OneSignal.deleteTag("user_id");
   }
 };
