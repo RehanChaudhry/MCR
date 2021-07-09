@@ -150,15 +150,21 @@ export const SplashView = React.memo<Props>(() => {
 
   const restoreUserIfExists = async () => {
     const _user = await AuthStorage.getUser();
+    const _uni = await AuthStorage.getUni();
+
     // fetch profile data
-    if (_user?.authentication?.accessToken) {
+    if (_user?.authentication?.accessToken && _uni) {
       await fetchUserProfile(_user);
-    } else if (_user?.profile) {
-      // remove profile data if no access token exists
+    } else if (_user?.profile && !_uni) {
+      // logout user if no access token or univeristy exists
       AppLog.logForcefully(
         () =>
-          "Got NULL token with a user's profile upon user restoration.."
+          `Got undefined ${
+            !_uni ? "university" : "token"
+          }, but a user's profile is present upon user restoration..`
       );
+      AppLog.logForcefully(() => "Logging out user..");
+
       auth.logOut();
       return;
     }

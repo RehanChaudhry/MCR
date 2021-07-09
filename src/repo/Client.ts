@@ -23,7 +23,6 @@ export function resetApiClient(providedAuthToken?: string) {
     request.headers.accept = "application/json";
 
     const uni = await AuthStorage.getUni();
-    AppLog.log(() => "Uni: " + JSON.stringify(uni));
     if (uni) {
       request.headers.subdomain = uni.subdomain;
     }
@@ -31,14 +30,11 @@ export function resetApiClient(providedAuthToken?: string) {
     let token =
       providedAuthToken ?? (await extractAndRefreshTokenIfExpire());
 
+    AppLog.log(() => "Uni: " + JSON.stringify(uni));
     AppLog.log(() => "Access Token: " + token);
 
     if (token) {
-      if (uni) {
-        request.headers.Authorization = "Bearer " + token;
-      } else {
-        await AuthStorage.removeUser();
-      }
+      request.headers.Authorization = "Bearer " + token;
     }
   });
 }
