@@ -1,4 +1,4 @@
-import { FONTS, FONT_SIZE, SPACE, STRINGS } from "config";
+import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { useAuth, usePreferredTheme } from "hooks";
 import RelationModel from "models/RelationModel";
 import React, { FC, useCallback } from "react";
@@ -143,16 +143,15 @@ const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
 
 const styles = StyleSheet.create({
   actionButton: {
-    flex: 0.5,
-    height: 36
+    height: 36,
+    flex: 1
   },
   actionButtonText: {
-    fontFamily: FONTS.semiBold,
-    fontSize: FONT_SIZE.sm!! - 1
+    fontSize: FONT_SIZE.sm
   },
   actionsContainer: {
     flexDirection: "row",
-    paddingTop: SPACE.md
+    marginTop: SPACE.md
   },
   container: {
     paddingTop: SPACE.sm,
