@@ -5,8 +5,8 @@ import {
   useRoute
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { COLORS, SPACE, STRINGS } from "config";
-import { useAuth, usePreferredTheme } from "hooks";
+import { COLORS, SPACE } from "config";
+import { usePreferredTheme } from "hooks";
 import StaticContentRequestModel, {
   StaticContentType
 } from "models/api_requests/StaticContentRequestModel";
@@ -34,11 +34,12 @@ import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import useFetchRelations from "ui/screens/home/friends/useFetchRelations";
 import { AppLog } from "utils/Util";
 import DismissedOrBlockedView from "./DismissedOrBlockedView";
-import { useCreateConversation } from "hooks/useCreateConversation";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { HomeStackParamList } from "routes/HomeStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
+import useCreateConversation from "hooks/useCreateConversation";
+import { User } from "models/User";
 
 type Props = {};
 
@@ -85,11 +86,10 @@ const DismissedOrBlockedController: FC<Props> = () => {
     dismissed,
     setDismissed,
     setActiveConversations,
-    inActiveConversations
+    setInActiveConversations
   } = useContext(AppDataContext);
   const { blocked, setBlocked } = useContext(AppDataContext);
-  const createConversation = useCreateConversation();
-  const { user } = useAuth();
+  const { createConversationAndNavigate } = useCreateConversation();
 
   const {
     isLoading: isLoadingDismissed,
@@ -180,20 +180,11 @@ const DismissedOrBlockedController: FC<Props> = () => {
   );
 
   const moveToChatScreen = async (profileMatch: RelationModel) => {
-    const createConversationResult = await createConversation(
-      [user?.profile?.id!!, profileMatch.user?.id!],
+    createConversationAndNavigate(
+      (profileMatch.user as unknown) as User,
       setActiveConversations,
-      inActiveConversations
+      setInActiveConversations
     );
-
-    if (createConversationResult !== undefined) {
-      navigation.navigate("ChatThread", {
-        title: [
-          profileMatch.user?.getFullName() ?? STRINGS.common.not_found
-        ],
-        conversation: createConversationResult
-      });
-    }
   };
 
   useEffect(() => {

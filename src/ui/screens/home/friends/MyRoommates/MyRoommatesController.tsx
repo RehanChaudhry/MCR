@@ -17,12 +17,12 @@ import { AppDataContext } from "../AppDataProvider";
 import { ConnectRequestType } from "../connect_requests/ConnectRequestsController";
 import useFetchRelations from "../useFetchRelations";
 import MyRoommatesView from "./MyRoommatesView";
-import { STRINGS } from "config";
-import { useCreateConversation } from "hooks/useCreateConversation";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { HomeStackParamList } from "routes/HomeStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
+import useCreateConversation from "hooks/useCreateConversation";
+import { User } from "models/User";
 
 type Props = {};
 
@@ -61,13 +61,13 @@ const MyRoommatesController: FC<Props> = () => {
     }, [navigation, route.params])
   );
 
-  const createConversation = useCreateConversation();
+  const { createConversationAndNavigate } = useCreateConversation();
 
   const {
     myRoommates,
     setMyRoommates,
     setActiveConversations,
-    inActiveConversations
+    setInActiveConversations
   } = useContext(AppDataContext);
 
   const {
@@ -119,20 +119,11 @@ const MyRoommatesController: FC<Props> = () => {
   }, [fetchProfileApi, saveProfile, user]);
 
   const moveToChatScreen = async (profileMatch: RelationModel) => {
-    const createConversationResult = await createConversation(
-      [user?.profile?.id!!, profileMatch.userId!],
+    createConversationAndNavigate(
+      (profileMatch.user as unknown) as User,
       setActiveConversations,
-      inActiveConversations
+      setInActiveConversations
     );
-
-    if (createConversationResult !== undefined) {
-      navigation.navigate("ChatThread", {
-        title: [
-          profileMatch.user?.getFullName() ?? STRINGS.common.not_found
-        ],
-        conversation: createConversationResult
-      });
-    }
   };
 
   return (

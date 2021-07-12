@@ -5,27 +5,46 @@ import ChatApis from "repo/chat/ChatApis";
 import _ from "lodash";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
 import SimpleToast from "react-native-simple-toast";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { HomeStackParamList } from "routes/HomeStack";
+import { useNavigation } from "@react-navigation/native";
+import { STRINGS } from "config";
+import { User } from "models/User";
+import { AppLog } from "utils/Util";
 
-export const useCreateConversation = () => {
-  const createConversationAPi = useApi<
+type homeNavigationProp = StackNavigationProp<HomeStackParamList>;
+
+export default (onSuccess?: (conversation: Conversation) => void) => {
+  const createConversationApi = useApi<
     CreateConversationRequestModel,
     CreateConversationResponseModel
   >(ChatApis.createConversations);
 
-  return async (
-    userId: number[],
-    setActiveConversations:
-      | Dispatch<SetStateAction<Conversation[] | undefined>>
-      | undefined,
-    setInActiveConversations:
-      | Dispatch<SetStateAction<Conversation[] | undefined>>
-      | undefined
-  ): Promise<Conversation> => {
-    return new Promise((resolve, reject) => {
-      createConversationAPi
-        .request([{ userIds: userId }])
-        .then(({ hasError, dataBody }) => {
+  const [shouldShowPb, setShouldShowPb] = useState(false);
+  const navigation = useNavigation<homeNavigationProp>();
+
+  const createConversationAndNavigate = useCallback(
+    async (
+      user: User | number[],
+      setActiveConversations:
+        | Dispatch<SetStateAction<Conversation[] | undefined>>
+        | undefined,
+      setInActiveConversations:
+        | Dispatch<SetStateAction<Conversation[] | undefined>>
+        | undefined
+    ) => {
+      AppLog.log(
+        () => "inside userconversationHook" + JSON.stringify(user)
+      );
+      setShouldShowPb(true);
+      createConversationApi
+        .request([
+          {
+            userIds: Array.isArray(user) ? user : [user.id]
+          }
+        ])
+        .then(({ hasError, dataBody, errorBody }) => {
           if (!hasError) {
             //set current date
             dataBody!.data.lastMessagedAt = new Date();
@@ -71,14 +90,32 @@ export const useCreateConversation = () => {
                 }
               });
             }
-            resolve(dataBody!.data);
-          } else {
-            SimpleToast.show("Something went wrong!");
 
-            reject();
+            //onSuccess is needed when we pass array in method and
+            //its only called from NewConversationController
+
+            onSuccess
+              ? onSuccess(dataBody?.data!)
+              : navigation.navigate("ChatThread", {
+                  title: [
+                    user?.firstName + " " + user?.lastName ??
+                      STRINGS.common.not_found
+                  ],
+                  conversation: dataBody?.data!
+                });
+          } else {
+            SimpleToast.show(errorBody ?? "Something went wrong!");
           }
+
+          setShouldShowPb(false);
         })
-        .catch(() => reject());
-    });
-  };
+        .catch(() => {
+          setShouldShowPb(true);
+          SimpleToast.show("Something went wrong!");
+        });
+    },
+    [createConversationApi, navigation, onSuccess]
+  );
+
+  return { createConversationAndNavigate, shouldShowPb };
 };

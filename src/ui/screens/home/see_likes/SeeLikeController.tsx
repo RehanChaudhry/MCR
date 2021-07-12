@@ -7,7 +7,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React, { FC, useLayoutEffect, useRef, useState } from "react";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
-import { STRINGS } from "config";
 import { AppLog } from "utils/Util";
 import { SeeLikesView } from "./SeeLikesView";
 import { useCallback, useContext } from "react";
@@ -21,8 +20,8 @@ import { FetchLikesResponseModel } from "models/FetchLikesResponsemodel";
 import { HomeStackParamList } from "routes/HomeStack";
 import { User } from "models/User";
 import EScreen from "models/enums/EScreen";
-import { useCreateConversation } from "hooks/useCreateConversation";
 import { AppDataContext } from "../friends/AppDataProvider";
+import useCreateConversation from "hooks/useCreateConversation";
 
 type FetchLikesRouteProp = RouteProp<HomeStackParamList, "SeeLikes">;
 
@@ -41,7 +40,7 @@ const SeeLikesController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState<boolean>(true);
   const [likedby, setLikedby] = useState<User[] | undefined>(undefined);
 
-  const createConversation = useCreateConversation();
+  const { createConversationAndNavigate } = useCreateConversation();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -120,21 +119,11 @@ const SeeLikesController: FC<Props> = () => {
   }, [handleFetchLikes]);
 
   const moveToChatScreen = async (user: User) => {
-    const createConversationResult = await createConversation(
-      [user?.id!!, user?.id!],
+    createConversationAndNavigate(
+      user,
       setActiveConversations,
       setInActiveConversations
     );
-
-    if (createConversationResult !== undefined) {
-      navigation.navigate("ChatThread", {
-        title: [
-          user?.firstName + " " + user?.lastName ??
-            STRINGS.common.not_found
-        ],
-        conversation: createConversationResult
-      });
-    }
   };
 
   const moveToProfileScreen = (user: User) => {

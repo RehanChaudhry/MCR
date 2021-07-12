@@ -27,8 +27,8 @@ import { ConversationSuggestionsRequestModel } from "models/api_requests/Convers
 import SimpleToast from "react-native-simple-toast";
 import { User } from "models/User";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
-import { useCreateConversation } from "hooks/useCreateConversation";
 import { Conversation } from "models/api_responses/ChatsResponseModel";
+import useCreateConversation from "hooks/useCreateConversation";
 
 type ConversationNavigationProp = StackNavigationProp<
   ChatRootStackParamList,
@@ -51,12 +51,6 @@ export const NewConversationController: FC<Props> = () => {
   const [showProgressbar, setShowProgressbar] = useState<boolean>(false);
   const [clearInputField, setClearInputField] = useState<boolean>(false);
 
-  const createConversation = useCreateConversation();
-
-  const { setActiveConversations, setInActiveConversations } = useContext(
-    AppDataContext
-  );
-
   const openChatThreadScreen = useCallback(
     (conversation: Conversation) => {
       const users: string[] = newConversations!!.reduce(
@@ -72,6 +66,14 @@ export const NewConversationController: FC<Props> = () => {
       });
     },
     [navigation, newConversations]
+  );
+
+  const { createConversationAndNavigate } = useCreateConversation(
+    openChatThreadScreen
+  );
+
+  const { setActiveConversations, setInActiveConversations } = useContext(
+    AppDataContext
   );
 
   const getSuggestions = useApi<
@@ -101,25 +103,20 @@ export const NewConversationController: FC<Props> = () => {
 
   const headerRightClick = useCallback(async () => {
     if (newConversations !== undefined && newConversations.length > 0) {
-      const createConversationResult = await createConversation(
+      createConversationAndNavigate(
         usersIds.current,
         setActiveConversations,
         setInActiveConversations
       );
-
-      if (createConversationResult !== undefined) {
-        openChatThreadScreen(createConversationResult);
-      }
     } else {
       navigation.goBack();
     }
   }, [
     navigation,
-    openChatThreadScreen,
     newConversations,
     setActiveConversations,
     setInActiveConversations,
-    createConversation
+    createConversationAndNavigate
   ]);
 
   useLayoutEffect(() => {

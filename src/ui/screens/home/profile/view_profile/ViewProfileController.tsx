@@ -22,7 +22,6 @@ import { HomeStackParamList } from "routes/HomeStack";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { Profile } from "models/api_responses/FetchMyProfileResponseModel";
 import { useAuth } from "hooks";
-import { useCreateConversation } from "hooks/useCreateConversation";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import { useApi } from "repo/Client";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
@@ -33,7 +32,8 @@ import RelationApiResponseModel from "models/api_responses/RelationApiResponseMo
 import RelationApis from "repo/home/RelationApis";
 import { AppLog } from "utils/Util";
 import RelationModel from "models/RelationModel";
-import { STRINGS } from "config";
+import useCreateConversation from "hooks/useCreateConversation";
+import { User } from "models/User";
 
 type Props = {};
 type ProfileBottomNavigationProp = StackNavigationProp<
@@ -81,12 +81,13 @@ const ViewProfileController: FC<Props> = () => {
   const auth = useAuth();
   const [viewProfileUiData, setViewProfileUiData] = useState<Profile>();
   const { params } = useRoute<ProfileRouteProp>();
-  const createConversation = useCreateConversation();
+
+  const { createConversationAndNavigate } = useCreateConversation();
+
   const [roommate, setRoommate] = useState<RelationApiResponseModel>();
   const [showAgreementButton, setShowAgreementButton] = useState<boolean>(
     true
   );
-  const { user } = useAuth();
 
   const getUserRequestModel = useApi<number, UpdateProfileResponseModel>(
     ProfileApis.getUserById
@@ -147,25 +148,12 @@ const ViewProfileController: FC<Props> = () => {
     [params.userId, roommatesApi]
   );
 
-  const moveToChatScreenFromRoommates = async (
-    profileMatch: RelationModel
-  ) => {
-    const createConversationResult = await createConversation(
-      [user?.profile?.id!!, profileMatch?.userId!],
+  const moveToChatScreenFromRoommates = (profileMatch: RelationModel) => {
+    createConversationAndNavigate(
+      (profileMatch.user as unknown) as User,
       setActiveConversations,
-      inActiveConversations
+      setInActiveConversations
     );
-
-    if (createConversationResult !== undefined) {
-      navigation.navigate("ChatThread", {
-        title: [
-          profileMatch?.user?.firstName +
-            " " +
-            profileMatch?.user?.lastName ?? STRINGS.common.not_found
-        ],
-        conversation: createConversationResult
-      });
-    }
   };
 
   useEffect(
@@ -198,27 +186,9 @@ const ViewProfileController: FC<Props> = () => {
       isFrom: EScreen.MY_PROFILE
     });
   };
-  const { setActiveConversations, inActiveConversations } = useContext(
+  const { setActiveConversations, setInActiveConversations } = useContext(
     AppDataContext
   );
-
-  const moveToChatScreen = async (userId: number) => {
-    const createConversationResult = await createConversation(
-      [auth.user?.profile?.id!!, userId],
-      setActiveConversations,
-      inActiveConversations
-    );
-
-    if (createConversationResult !== undefined) {
-      //TODO OPEN CHAT SCREEN FROM HERE
-      /*navigation.navigate("Chat", {
-        title: [
-          profileMatch.user?.getFullName() ?? STRINGS.common.not_found
-        ],
-        conversation: createConversationResult
-      });*/
-    }
-  };
 
   useFocusEffect(
     useCallback(() => {
@@ -249,7 +219,6 @@ const ViewProfileController: FC<Props> = () => {
         <ViewProfileView
           openRoommateAgreementScreen={openRoommateAgreementScreen}
           viewProfileUiData={viewProfileUiData}
-          moveToChatScreen={moveToChatScreen}
           roommates={roommate?.data}
           moveToChatScreenFromRommates={moveToChatScreenFromRoommates}
           moveToRoommateAgreementScreen={openRoommateAgreementScreen}

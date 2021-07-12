@@ -13,7 +13,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { AppLog } from "utils/Util";
 import { MatchInfoView } from "ui/screens/home/matches/match_info/MatchInfoView";
-import { STRINGS } from "config";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import RelationModel from "models/RelationModel";
 import EScreen from "models/enums/EScreen";
@@ -23,10 +22,11 @@ import ProfileApis from "repo/auth/ProfileApis";
 import { MatchInfoApiResponseModel } from "models/api_responses/MatchInfoApiResponseModel";
 import RelationApiResponseModel from "models/api_responses/RelationApiResponseModel";
 import { PaginationParamsModel } from "models/api_requests/PaginationParamsModel";
-import { useCreateConversation } from "hooks/useCreateConversation";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import FriendsApis from "repo/friends/FriendsApis";
 import { HomeStackParamList } from "routes/HomeStack";
+import { User } from "models/User";
+import useCreateConversation from "hooks/useCreateConversation";
 
 type MatchesNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -40,7 +40,8 @@ const MatchInfoController: FC<Props> = () => {
 
   const navigation = useNavigation<MatchesNavigationProp>();
 
-  const createConversation = useCreateConversation();
+  const { createConversationAndNavigate } = useCreateConversation();
+
   const { user } = useAuth();
 
   useLayoutEffect(() => {
@@ -68,27 +69,16 @@ const MatchInfoController: FC<Props> = () => {
   const [matchInfo, setMatchInfo] = useState<MatchInfoApiResponseModel>();
   const [roommate, setRoommate] = useState<RelationApiResponseModel>();
 
-  const { setActiveConversations, inActiveConversations } = useContext(
+  const { setActiveConversations, setInActiveConversations } = useContext(
     AppDataContext
   );
 
   const moveToChatScreen = async (profileMatch: RelationModel) => {
-    const createConversationResult = await createConversation(
-      [user?.profile?.id!!, profileMatch?.userId],
+    createConversationAndNavigate(
+      (profileMatch.user as unknown) as User,
       setActiveConversations,
-      inActiveConversations
+      setInActiveConversations
     );
-
-    if (createConversationResult !== undefined) {
-      navigation.navigate("ChatThread", {
-        title: [
-          profileMatch?.user?.firstName +
-            " " +
-            profileMatch?.user?.lastName ?? STRINGS.common.not_found
-        ],
-        conversation: createConversationResult
-      });
-    }
   };
 
   const moveToProfileScreen = (profileMatch: RelationModel) => {
