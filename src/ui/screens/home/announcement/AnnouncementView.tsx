@@ -19,6 +19,7 @@ type Props = {
   shouldPlayVideo: boolean;
   error: string | undefined;
   reload: () => void;
+  likeButtonCallback: (postId: number) => void;
 };
 
 export const AnnouncementView = React.memo<Props>(
@@ -31,7 +32,8 @@ export const AnnouncementView = React.memo<Props>(
     openCommentsScreen,
     shouldPlayVideo,
     error,
-    reload
+    reload,
+    likeButtonCallback
   }) => {
     const keyExtractor = useCallback(
       (item: PostFeed) => item.id.toString(),
@@ -45,10 +47,11 @@ export const AnnouncementView = React.memo<Props>(
             data={item}
             openCommentsScreen={openCommentsScreen}
             shouldPlayVideo={shouldPlayVideo}
+            likeButtonCallback={likeButtonCallback}
           />
         );
       },
-      [openCommentsScreen, shouldPlayVideo]
+      [openCommentsScreen, shouldPlayVideo, likeButtonCallback]
     );
 
     return (

@@ -47,6 +47,7 @@ export default {
   LIKE_DISLIKE: "post/like",
   COMMENT: "comment",
   REPORT_CONTENT: "spam",
+  GET_LIKES: "post/likedBy",
 
   //chat
   CONVERSATION: "conversation/",

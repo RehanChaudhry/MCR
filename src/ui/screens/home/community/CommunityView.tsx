@@ -28,6 +28,8 @@ type Props = {
   filterDataBy: (type: string) => void;
   moveToProfileScreen?: (userId: number, name: string) => void;
   reload: () => void;
+
+  likeButtonCallback: (postId: number) => void;
 };
 
 export const CommunityView = React.memo<Props>(
@@ -44,7 +46,8 @@ export const CommunityView = React.memo<Props>(
     error,
     filterDataBy,
     moveToProfileScreen,
-    reload
+    reload,
+    likeButtonCallback
   }) => {
     const auth = useAuth();
     const theme = usePreferredTheme();
@@ -62,6 +65,7 @@ export const CommunityView = React.memo<Props>(
           openReportContentScreen={openReportContentScreen}
           shouldShowRightIcon={item.postedBy !== auth.user?.profile?.id}
           onProfileImageClicked={moveToProfileScreen}
+          likeButtonCallback={likeButtonCallback}
         />
       ),
       [
@@ -69,7 +73,8 @@ export const CommunityView = React.memo<Props>(
         shouldPlayVideo,
         openReportContentScreen,
         auth,
-        moveToProfileScreen
+        moveToProfileScreen,
+        likeButtonCallback
       ]
     );
     function getFeedsFilterData(): Item[] {

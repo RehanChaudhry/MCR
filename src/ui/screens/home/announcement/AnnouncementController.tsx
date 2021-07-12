@@ -162,6 +162,13 @@ const AnnouncementController: FC<Props> = () => {
     fetchAnnouncements().then().catch();
   };
 
+  const likeButtonCallback = useCallback(
+    (postId: number) => {
+      navigation.navigate("SeeLikes", { postId: postId });
+    },
+    [navigation]
+  );
+
   return (
     <AnnouncementView
       data={announcements}
@@ -173,6 +180,7 @@ const AnnouncementController: FC<Props> = () => {
       openCommentsScreen={openCommentsScreen}
       shouldPlayVideo={shouldPlayVideo}
       reload={reloadCallback}
+      likeButtonCallback={likeButtonCallback}
     />
   );
 };

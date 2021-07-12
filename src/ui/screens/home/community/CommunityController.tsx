@@ -253,6 +253,13 @@ const CommunityController: FC<Props> = () => {
     fetchCommunities().then().catch();
   };
 
+  const likeButtonCallback = useCallback(
+    (postId: number) => {
+      navigation.navigate("SeeLikes", { postId: postId });
+    },
+    [navigation]
+  );
+
   return (
     <CommunityView
       data={communities}
@@ -268,6 +275,7 @@ const CommunityController: FC<Props> = () => {
       filterDataBy={filterDataBy}
       moveToProfileScreen={moveToProfileScreen}
       reload={reloadCallback}
+      likeButtonCallback={likeButtonCallback}
     />
   );
 };
