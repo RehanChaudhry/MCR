@@ -32,6 +32,11 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 import { profileCompletedPercentage } from "models/api_responses/FetchMyProfileResponseModel";
 import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount";
 import TwoButtonsInfoAlert from "ui/components/organisms/popup/TwoButtonsInfoAlert";
+import { useEffect } from "react";
+import { setBadgeCount } from "react-native-notification-badge";
+import ShortcutBadge from "react-native-app-badge";
+import { AppLog } from "utils/Util";
+import { Platform } from "react-native";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
   currentItem: keyof HomeDrawerParamList;
@@ -58,6 +63,21 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
       shouldNotDrawView?: boolean;
     };
   };
+
+  useEffect(() => {
+    AppLog.logForcefully(
+      () => "Notification count : " + notificationsCount
+    );
+    Platform.OS === "android" &&
+      notificationsCount !== undefined &&
+      notificationsCount > 0 &&
+      ShortcutBadge.setCount(notificationsCount);
+
+    Platform.OS === "ios" &&
+      notificationsCount !== undefined &&
+      notificationsCount > 0 &&
+      setBadgeCount(notificationsCount).then().catch();
+  }, [notificationsCount]);
 
   const DrawerItems: ItemType<HomeDrawerParamList> = {
     Matches: { name: "Matches", icon: Matches },
