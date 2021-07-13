@@ -22,7 +22,7 @@ export class Conversation {
     let DateFormatter = new PrettyTimeFormat("m ago");
 
     return (
-      this.lastMessagedAt !== undefined &&
+      this.lastMessagedAt &&
       DateFormatter.isSameDay(this.lastMessagedAt.toString())
     );
   }
@@ -35,9 +35,7 @@ export class Conversation {
       :*/
 
     return DateFormatter.getPrettyTime(
-      this.lastMessagedAt !== undefined
-        ? this.lastMessagedAt.toString()
-        : ""
+      this.lastMessagedAt ? this.lastMessagedAt.toString() : ""
     );
   }
 }

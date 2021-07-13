@@ -23,6 +23,7 @@ import StaticContentController from "ui/screens/static_content/StaticContentCont
 import { AddInterestsController } from "ui/screens/home/profile/update_profile/add_interests/AddInterestsController";
 import { NewConversationController } from "ui/screens/chat/new/NewConversationController";
 import MyFriendsController from "ui/screens/home/friends/MyFriends/MyFriendsController";
+import SeeLikesController from "ui/screens/home/see_likes/SeeLikeController";
 
 const Stack = createStackNavigator();
 
@@ -115,6 +116,8 @@ export const HomeStackRoutes = () => {
         name="SinglePost"
         component={SinglePostController}
       />
+
+      <HomeStack.Screen name="SeeLikes" component={SeeLikesController} />
 
       {/* Others */}
       <HomeStack.Screen

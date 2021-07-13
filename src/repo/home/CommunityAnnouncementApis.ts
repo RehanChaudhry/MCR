@@ -12,6 +12,8 @@ import { CommentsResponseModel } from "models/api_responses/CommentsResponseMode
 import PostCommentApiResponseModel from "models/api_responses/PostCommentApiResponseModel";
 import PostCommentApiRequestModel from "models/api_requests/PostCommentApiRequestModel";
 import { FetchPostFeedResponseModel } from "models/api_responses/FetchPostFeedResponseModel";
+import ChatRequestModel from "models/api_requests/chatRequestModel";
+import { FetchLikesResponseModel } from "models/FetchLikesResponsemodel";
 
 function getCommunityAnnouncements(
   requestModel: AnnouncementRequestModel
@@ -60,6 +62,15 @@ function postReportContent(request: ReportContentApiRequestModel) {
   );
 }
 
+function fetchLikes(request: ChatRequestModel) {
+  return apiClient.get<FetchLikesResponseModel>(
+    API.GET_LIKES + "/" + request.id,
+    {
+      ...request
+    }
+  );
+}
+
 export default {
   createPost,
   getCommunityAnnouncements,
@@ -67,5 +78,6 @@ export default {
   getComments,
   postComment,
   postReportContent,
-  getSingleCommunityAnnouncements
+  getSingleCommunityAnnouncements,
+  fetchLikes
 };

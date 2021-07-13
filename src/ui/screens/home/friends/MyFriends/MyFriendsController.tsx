@@ -13,14 +13,13 @@ import MyFriendsView from "./MyFriendsView";
 import EScreen from "models/enums/EScreen";
 import useFetchRelations from "../useFetchRelations";
 import RelationFilterType from "models/enums/RelationFilterType";
-import { STRINGS } from "config";
-import { useCreateConversation } from "hooks/useCreateConversation";
-import { useAuth } from "hooks";
 import { AppLog } from "utils/Util";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HomeStackParamList } from "routes/HomeStack";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
+import useCreateConversation from "hooks/useCreateConversation";
+import { User } from "models/User";
 
 type Props = {};
 type FriendsNavigationProp = StackNavigationProp<
@@ -30,8 +29,7 @@ type FriendsNavigationProp = StackNavigationProp<
 type FriendsRouteProp = RouteProp<HomeStackParamList, "MyFriends">;
 
 const MyFriendsController: FC<Props> = () => {
-  const { user } = useAuth();
-  const createConversation = useCreateConversation();
+  const { createConversationAndNavigate } = useCreateConversation();
   const navigation = useNavigation<FriendsNavigationProp>();
   const route = useRoute<FriendsRouteProp>();
 
@@ -64,7 +62,7 @@ const MyFriendsController: FC<Props> = () => {
     myFriends,
     setMyFriends,
     setActiveConversations,
-    inActiveConversations
+    setInActiveConversations
   } = useContext(AppDataContext);
   const {
     relationsCount: friendsCount,
@@ -107,20 +105,11 @@ const MyFriendsController: FC<Props> = () => {
   }, [navigation]);
 
   const moveToChatScreen = async (profileMatch: RelationModel) => {
-    const createConversationResult = await createConversation(
-      [user?.profile?.id!!, profileMatch.user?.id!],
+    createConversationAndNavigate(
+      (profileMatch.user as unknown) as User,
       setActiveConversations,
-      inActiveConversations
+      setInActiveConversations
     );
-
-    if (createConversationResult !== undefined) {
-      navigation.navigate("ChatThread", {
-        title: [
-          profileMatch.user?.getFullName() ?? STRINGS.common.not_found
-        ],
-        conversation: createConversationResult
-      });
-    }
   };
 
   return (

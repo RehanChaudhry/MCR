@@ -51,6 +51,8 @@ export type HomeStackParamList = {
   SinglePost: { postId: number; isFrom: EScreen };
 
   StaticContent: { isFrom: EScreen; staticContent: StaticContent };
+
+  SeeLikes: { postId: number };
 };
 
 export const HomeStack = createStackNavigator<HomeStackParamList>();

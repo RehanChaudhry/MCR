@@ -4,12 +4,11 @@ import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_wit
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { STRINGS } from "config";
-import { useCreateConversation } from "hooks/useCreateConversation";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
-import useAuth from "hooks/useAuth";
 import { HomeStackParamList } from "routes/HomeStack";
 import { RoommateAgreementParty } from "models/api_responses/AgreementAnswerResponseModel";
+import useCreateConversation from "hooks/useCreateConversation";
+import { User } from "models/User";
 
 type Props = {};
 
@@ -21,32 +20,24 @@ type FriendsNavigationProp = StackNavigationProp<
 const AgreementDetailsController: FC<Props> = () => {
   const friendsNavigation = useNavigation<FriendsNavigationProp>();
   const route: any = useRoute();
-  const createConversation = useCreateConversation();
-  const { setActiveConversations, inActiveConversations } = useContext(
+  const { createConversationAndNavigate } = useCreateConversation();
+
+  const { setActiveConversations, setInActiveConversations } = useContext(
     AppDataContext
   );
-
-  const { user } = useAuth();
 
   const moveToChatScreen = async (
     roommateAgreementParties: RoommateAgreementParty
   ) => {
-    const createConversationResult = await createConversation(
-      [user?.profile?.id!!, roommateAgreementParties.userId],
+    createConversationAndNavigate(
+      {
+        id: roommateAgreementParties.userId,
+        firstName: roommateAgreementParties.firstName,
+        lastName: roommateAgreementParties.lastName
+      } as User,
       setActiveConversations,
-      inActiveConversations
+      setInActiveConversations
     );
-
-    if (createConversationResult !== undefined) {
-      friendsNavigation.navigate("ChatThread", {
-        title: [
-          roommateAgreementParties.firstName +
-            " " +
-            roommateAgreementParties.lastName ?? STRINGS.common.not_found
-        ],
-        conversation: createConversationResult
-      });
-    }
   };
 
   useLayoutEffect(() =>

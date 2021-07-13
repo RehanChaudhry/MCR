@@ -38,7 +38,6 @@ export default () => {
     setUser(model);
 
     PushNotification.registerUser(model.profile?.id);
-    PushNotification.init();
 
     return model;
   };
@@ -75,6 +74,7 @@ export default () => {
 
   const logOut = () => {
     setUser(undefined);
+    PushNotification.unRegisterUser();
     AuthStorage.removeUser(() => resetApiClient());
   };
 

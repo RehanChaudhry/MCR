@@ -15,7 +15,6 @@ import useAuth from "hooks/useAuth";
 type Props = {
   openRoommateAgreementScreen: () => void;
   viewProfileUiData: Profile | undefined;
-  moveToChatScreen: (userId: number) => void;
   roommates?: RelationModel[];
   moveToChatScreenFromRommates: (profileMatch: RelationModel) => void;
   moveToRoommateAgreementScreen: () => void;
@@ -27,8 +26,6 @@ export const ViewProfileView: React.FC<Props> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   openRoommateAgreementScreen,
   viewProfileUiData,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  moveToChatScreen,
   roommates,
   moveToRoommateAgreementScreen,
   moveToChatScreenFromRommates,

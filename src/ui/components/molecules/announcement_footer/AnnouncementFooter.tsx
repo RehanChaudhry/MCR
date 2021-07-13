@@ -13,6 +13,7 @@ import {
   View,
   ViewStyle
 } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import SimpleToast from "react-native-simple-toast";
 import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
@@ -36,6 +37,8 @@ export interface AnnouncementFooterProps extends TouchableOpacityProps {
   openCommentsScreen?: (postId: number) => void | undefined;
   isLikedByMe: boolean;
   postId: number;
+
+  likeButtonCallback(postId: number): void;
 }
 
 export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
@@ -45,7 +48,8 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
     bottomLineStyle,
     openCommentsScreen,
     isLikedByMe,
-    postId
+    postId,
+    likeButtonCallback
   }) => {
     const theme = usePreferredTheme();
 
@@ -113,21 +117,23 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
           </View>
           <View style={style.leftRightContainer}>
             <View style={style.rightContainerLeftSide}>
-              <View style={style.row}>
-                <Like
-                  width={10}
-                  height={10}
-                  fill={theme.themedColors.primary}
-                  style={style.icon}
-                />
-                <AppLabel
-                  text={likedCount.toString()}
-                  style={[
-                    { color: theme.themedColors.interface["700"] },
-                    style.commentLikeCount
-                  ]}
-                />
-              </View>
+              <TouchableOpacity onPress={() => likeButtonCallback(postId)}>
+                <View style={style.row}>
+                  <Like
+                    width={10}
+                    height={10}
+                    fill={theme.themedColors.primary}
+                    style={style.icon}
+                  />
+                  <AppLabel
+                    text={likedCount.toString()}
+                    style={[
+                      { color: theme.themedColors.interface["700"] },
+                      style.commentLikeCount
+                    ]}
+                  />
+                </View>
+              </TouchableOpacity>
             </View>
             <View>
               <View style={style.row}>

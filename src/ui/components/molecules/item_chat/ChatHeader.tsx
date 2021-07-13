@@ -38,7 +38,7 @@ const createHeader = (
     return label(lastHeaderTitle);
   } else if (
     item.userType === SenderType.STAFF &&
-    lastHeaderTitle !== SenderType.STAFF &&
+    lastHeaderTitle !== "STAFF" &&
     !item.isMessageComesToday()
   ) {
     lastHeaderTitle = /*SenderType.STAFF*/ "STAFF";

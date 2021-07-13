@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import InfoCircle from "assets/images/info_circle.svg";
-import { STRINGS } from "config";
-import { useAuth, usePreferredTheme } from "hooks";
+import { usePreferredTheme } from "hooks";
 import EGender from "models/enums/EGender";
 import EScreen from "models/enums/EScreen";
 import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
@@ -18,11 +17,12 @@ import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
 import { MatchesView } from "ui/screens/home/matches/MatchesView";
 import { AppLog } from "utils/Util";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
-import { useCreateConversation } from "hooks/useCreateConversation";
 import { HomeStackParamList } from "routes/HomeStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import RelationFilterType from "models/enums/RelationFilterType";
 import useFetchRelations from "../friends/useFetchRelations";
+import useCreateConversation from "hooks/useCreateConversation";
+import { User } from "models/User";
 
 type MatchesNavigationProp = StackNavigationProp<HomeStackParamList>;
 
@@ -33,8 +33,7 @@ const MatchesController: FC<Props> = () => {
   const { themedColors } = usePreferredTheme();
   const navigation = useNavigation<MatchesNavigationProp>();
 
-  const createConversation = useCreateConversation();
-  const { user } = useAuth();
+  const { createConversationAndNavigate } = useCreateConversation();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -58,20 +57,11 @@ const MatchesController: FC<Props> = () => {
   }, [navigation, themedColors]);
 
   const moveToChatScreen = async (profileMatch: RelationModel) => {
-    const createConversationResult = await createConversation(
-      [user?.profile?.id!!, profileMatch.user?.id!],
+    createConversationAndNavigate(
+      (profileMatch.user as unknown) as User,
       setActiveConversations,
-      inActiveConversations
+      setInActiveConversations
     );
-
-    if (createConversationResult !== undefined) {
-      navigation.navigate("ChatThread", {
-        title: [
-          profileMatch.user?.getFullName() ?? STRINGS.common.not_found
-        ],
-        conversation: createConversationResult
-      });
-    }
   };
 
   const moveToProfileScreen = (profileMatch: RelationModel) => {
@@ -109,7 +99,7 @@ const MatchesController: FC<Props> = () => {
     matches: profileMatches,
     setMatches: setProfileMatches,
     setActiveConversations,
-    inActiveConversations
+    setInActiveConversations
   } = useContext(AppDataContext);
   const {
     relationsCount: totalCount,

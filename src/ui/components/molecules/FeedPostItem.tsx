@@ -28,6 +28,7 @@ export interface FeedPostItemProps extends TouchableOpacityProps {
   shouldShowRightIcon?: boolean;
   openReportContentScreen?: (postId: number) => void;
   onProfileImageClicked?: (userId: number, name: string) => void;
+  likeButtonCallback: (postId: number) => void;
 }
 
 function showAttachedItemsIfAny(item: FeedData, shouldPlayVideo: boolean) {
@@ -63,7 +64,8 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
     shouldPlayVideo,
     shouldShowRightIcon = false,
     openReportContentScreen,
-    onProfileImageClicked
+    onProfileImageClicked,
+    likeButtonCallback
   }) => {
     const theme = usePreferredTheme();
 
@@ -122,6 +124,7 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
           openCommentsScreen={openCommentsScreen}
           isLikedByMe={announcementItem.isLikedByMe}
           postId={announcementItem.id}
+          likeButtonCallback={likeButtonCallback}
         />
       </View>
     );

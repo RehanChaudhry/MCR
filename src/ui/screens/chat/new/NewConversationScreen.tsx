@@ -160,19 +160,5 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1
-  },
-  suggestContainer: {
-    position: "absolute",
-    height: 200,
-    bottom: 75,
-    width: "100%",
-    backgroundColor: "#00000000",
-    flexDirection: "column",
-    justifyContent: "flex-end"
-  },
-  suggestionList: (theme: ColorPalette) => {
-    return {
-      backgroundColor: theme.background
-    };
   }
 });

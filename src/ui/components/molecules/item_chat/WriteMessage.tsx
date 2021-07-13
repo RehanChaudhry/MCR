@@ -89,10 +89,10 @@ export const WriteMessage = React.memo<TypingComponentProps>(
     };
 
     return (
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={useHeaderHeight()}>
-        <View>
+      <View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          keyboardVerticalOffset={useHeaderHeight()}>
           <View style={[styles.container(themedColors)]}>
             <View
               style={[styles.input, { borderColor: themedColors.border }]}>
@@ -135,20 +135,19 @@ export const WriteMessage = React.memo<TypingComponentProps>(
               />
             )}
           </View>
-
-          {suggestionsList !== undefined && suggestionsList.length > 0 && (
-            <FlatListWithPb
-              shouldShowProgressBar={false}
-              data={suggestionsList}
-              renderItem={renderSuggestionItems}
-              showsVerticalScrollIndicator={false}
-              style={[styles.suggestionList(themedColors)]}
-              keyExtractor={(item) => item.id.toString()}
-              keyboardShouldPersistTaps="always"
-            />
-          )}
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+        {suggestionsList !== undefined && suggestionsList.length > 0 && (
+          <FlatListWithPb
+            shouldShowProgressBar={false}
+            data={suggestionsList}
+            renderItem={renderSuggestionItems}
+            showsVerticalScrollIndicator={true}
+            style={[styles.suggestionList(themedColors)]}
+            keyExtractor={(item) => item.id.toString()}
+            keyboardShouldPersistTaps="always"
+          />
+        )}
+      </View>
     );
   }
 );
@@ -203,6 +202,7 @@ const styles = StyleSheet.create({
       position: "absolute",
       bottom: 75,
       width: "100%",
+      maxHeight: 200,
       backgroundColor: theme.background,
       flexDirection: "column",
       justifyContent: "flex-end"
