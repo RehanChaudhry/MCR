@@ -75,7 +75,7 @@ const MatchInfoController: FC<Props> = () => {
 
   const moveToChatScreen = async (profileMatch: RelationModel) => {
     createConversationAndNavigate(
-      (profileMatch.user as unknown) as User,
+      { id: profileMatch.userId } as User,
       setActiveConversations,
       setInActiveConversations
     );

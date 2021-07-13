@@ -32,7 +32,7 @@ export const ViewProfileView: React.FC<Props> = ({
   userName,
   showAgreementButton
 }) => {
-  AppLog.logForcefully(() => "Rommates: " + roommates);
+  AppLog.log(() => "Rommates: " + roommates);
   const { themedColors } = usePreferredTheme();
   const { user } = useAuth();
 

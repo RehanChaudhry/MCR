@@ -98,7 +98,9 @@ export default (onSuccess?: (conversation: Conversation) => void) => {
               ? onSuccess(dataBody?.data!)
               : navigation.navigate("ChatThread", {
                   title: [
-                    user?.firstName + " " + user?.lastName ??
+                    dataBody?.data.conversationUsers[0].firstName +
+                      " " +
+                      dataBody?.data.conversationUsers[0].lastName ??
                       STRINGS.common.not_found
                   ],
                   conversation: dataBody?.data!
