@@ -41,7 +41,8 @@ const MyFriendsController: FC<Props> = () => {
         navigation.dangerouslyGetParent()?.setOptions({
           headerTitleAlign: "center",
           headerTitle: () => <HeaderTitle text="My Friends" />,
-          headerLeft: () => <Hamburger />
+          headerLeft: () => <Hamburger />,
+          headerRight: () => null
         });
       } else {
         navigation.setOptions({

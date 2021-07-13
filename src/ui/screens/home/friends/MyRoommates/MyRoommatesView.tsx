@@ -9,6 +9,7 @@ import { SPACE } from "config";
 import TwoButtonsAlert, { Type } from "../MyFriends/TwoButtonsAlert";
 import RelationModel from "models/RelationModel";
 import RelationListsItem from "ui/components/organisms/relation_item/RelationItem";
+import LeaveGroupAlert from "ui/screens/home/matches/LeaveGroupAlert";
 
 type Props = {
   roomatesCount: number;
@@ -23,6 +24,8 @@ type Props = {
   onPressReceivedRoommateRequests: () => void;
   onPressProfile: (relationModel: RelationModel) => void;
   isLoggedInUserAModerator: boolean;
+  shouldShowLeaveGroupPopUp: boolean;
+  hideLeaveGroupPopup: () => void;
 };
 
 const listItem = (
@@ -56,7 +59,9 @@ const MyRoommatesView: FC<Props> = ({
   error,
   onPressChat,
   onPressProfile,
-  onPressReceivedRoommateRequests
+  onPressReceivedRoommateRequests,
+  shouldShowLeaveGroupPopUp,
+  hideLeaveGroupPopup
 }) => {
   const theme = usePreferredTheme();
 
@@ -92,6 +97,7 @@ const MyRoommatesView: FC<Props> = ({
 
     return details;
   };
+
   return (
     <>
       <Screen shouldAddBottomInset={false}>
@@ -136,6 +142,13 @@ const MyRoommatesView: FC<Props> = ({
           data={data}
         />
       </Screen>
+
+      <LeaveGroupAlert
+        shouldShow={shouldShowLeaveGroupPopUp}
+        hideDialogue={hideLeaveGroupPopup}
+        title="Leave Group"
+        message={"Are you sure you want to leave group"}
+      />
       <TwoButtonsAlert
         shouldShow={shouldShowRemoveRoommateAlert}
         getSelectedItem={getSelectedItem}

@@ -26,6 +26,10 @@ async function updateAgreement(
   );
 }
 
+async function leaveGroup() {
+  return apiClient.put<any>(API.LEAVE_GROUP);
+}
+
 async function getAgreement(agreementId: number) {
   return apiClient.get<GetAgreementApi>(
     API.UPDATE_ROOMATE_AGREEMENT + "/" + agreementId
@@ -47,5 +51,6 @@ export default {
   fetchRoomAgreementFields,
   updateAgreement,
   fetchRoomAgreementAnswers,
-  getAgreement
+  getAgreement,
+  leaveGroup
 };

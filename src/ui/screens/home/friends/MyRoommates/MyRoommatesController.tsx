@@ -10,19 +10,22 @@ import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfile
 import EScreen from "models/enums/EScreen";
 import RelationFilterType from "models/enums/RelationFilterType";
 import RelationModel from "models/RelationModel";
-import React, { FC, useCallback, useContext } from "react";
+import React, { FC, useCallback, useContext, useState } from "react";
 import AuthApis from "repo/auth/AuthApis";
 import { useApi } from "repo/Client";
 import { AppDataContext } from "../AppDataProvider";
 import { ConnectRequestType } from "../connect_requests/ConnectRequestsController";
 import useFetchRelations from "../useFetchRelations";
 import MyRoommatesView from "./MyRoommatesView";
-import { STRINGS } from "config";
+import { SPACE, STRINGS } from "config";
 import { useCreateConversation } from "hooks/useCreateConversation";
 import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_with_icon/HeaderLeftTextWithIcon";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { HomeStackParamList } from "routes/HomeStack";
 import Hamburger from "ui/components/molecules/hamburger/Hamburger";
+import LeaveGroup from "assets/images/leave_group.svg";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import { View } from "react-native";
 
 type Props = {};
 
@@ -36,6 +39,8 @@ type NotificationRouteProp = RouteProp<HomeStackParamList, "MyRoommates">;
 const MyRoommatesController: FC<Props> = () => {
   const navigation = useNavigation<FriendsNavigationProp>();
   const route = useRoute<NotificationRouteProp>();
+  const { themedColors } = usePreferredTheme();
+  const [leaveGroup, setLeaveGroup] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -43,7 +48,19 @@ const MyRoommatesController: FC<Props> = () => {
         navigation.dangerouslyGetParent()?.setOptions({
           headerTitleAlign: "center",
           headerLeft: () => <Hamburger />,
-          headerTitle: () => <HeaderTitle text="My Roommates" />
+          headerTitle: () => <HeaderTitle text="My Roommates" />,
+          headerRight: () => (
+            <View style={{ marginRight: SPACE.lg }}>
+              <LeaveGroup
+                width={24}
+                height={24}
+                fill={themedColors.danger}
+                onPress={() => {
+                  setLeaveGroup(true);
+                }}
+              />
+            </View>
+          )
         });
       } else {
         navigation.setOptions({
@@ -58,7 +75,7 @@ const MyRoommatesController: FC<Props> = () => {
           headerTitle: () => <HeaderTitle text={"My Roommates"} />
         });
       }
-    }, [navigation, route.params])
+    }, [themedColors, navigation, route.params])
   );
 
   const createConversation = useCreateConversation();
@@ -89,6 +106,10 @@ const MyRoommatesController: FC<Props> = () => {
     navigation.navigate("ConnectRequest", {
       type: ConnectRequestType.ROOMMATE_REQUESTS
     });
+  };
+
+  const hideLeaveGroupPopUp = () => {
+    setLeaveGroup(false);
   };
 
   const moveToProfileScreen = useCallback(
@@ -137,6 +158,8 @@ const MyRoommatesController: FC<Props> = () => {
 
   return (
     <MyRoommatesView
+      hideLeaveGroupPopup={hideLeaveGroupPopUp}
+      shouldShowLeaveGroupPopUp={leaveGroup}
       roomatesCount={roommatesCount}
       pendingRoommatesCount={pendingRoommatesCount}
       data={myRoommates}

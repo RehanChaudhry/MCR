@@ -66,5 +66,6 @@ export default {
   // others
   GET_NOTIFICATIONS_COUNT: "notification/unread",
   GET_STATIC_CONTENT: "static-content/",
-  GET_SIGNED_URL: "file/upload-image"
+  GET_SIGNED_URL: "file/upload-image",
+  LEAVE_GROUP: "agreement/leave"
 };

@@ -62,7 +62,8 @@ const DismissedOrBlockedController: FC<Props> = () => {
         navigation.dangerouslyGetParent()?.setOptions({
           headerTitleAlign: "center",
           headerTitle: () => <HeaderTitle text="Dismissed or Blocked" />,
-          headerLeft: () => <Hamburger />
+          headerLeft: () => <Hamburger />,
+          headerRight: () => null
         });
       } else {
         navigation.setOptions({
