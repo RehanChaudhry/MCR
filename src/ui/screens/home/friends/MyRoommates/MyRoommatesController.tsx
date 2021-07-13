@@ -43,6 +43,13 @@ const MyRoommatesController: FC<Props> = () => {
   const { themedColors } = usePreferredTheme();
   const [leaveGroup, setLeaveGroup] = useState(false);
 
+  const {
+    myRoommates,
+    setMyRoommates,
+    setActiveConversations,
+    setInActiveConversations
+  } = useContext(AppDataContext);
+
   useFocusEffect(
     useCallback(() => {
       if (route.params?.isFrom === EScreen.HOME) {
@@ -55,9 +62,15 @@ const MyRoommatesController: FC<Props> = () => {
               <LeaveGroup
                 width={24}
                 height={24}
-                fill={themedColors.danger}
+                fill={
+                  myRoommates?.length === 0
+                    ? themedColors.interface[400]
+                    : themedColors.danger
+                }
                 onPress={() => {
-                  setLeaveGroup(true);
+                  if (myRoommates?.length! > 0) {
+                    setLeaveGroup(true);
+                  }
                 }}
               />
             </View>
@@ -76,17 +89,10 @@ const MyRoommatesController: FC<Props> = () => {
           headerTitle: () => <HeaderTitle text={"My Roommates"} />
         });
       }
-    }, [themedColors, navigation, route.params])
+    }, [myRoommates, themedColors, navigation, route.params])
   );
 
   const { createConversationAndNavigate } = useCreateConversation();
-
-  const {
-    myRoommates,
-    setMyRoommates,
-    setActiveConversations,
-    setInActiveConversations
-  } = useContext(AppDataContext);
 
   const {
     relationsCount: roommatesCount,

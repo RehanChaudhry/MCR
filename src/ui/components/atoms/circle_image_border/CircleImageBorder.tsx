@@ -1,5 +1,10 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View
+} from "react-native";
 import Colors from "config/Colors";
 import Profile from "assets/images/profile.svg";
 
@@ -11,23 +16,26 @@ type Props = {
   shouldNotOptimize?: boolean;
   imageUrl: string;
   icon: SvgProp;
+  onPress: () => void;
 };
 
 export const CircleImageBorder = optimizedMemo<Props>(
-  ({ imageUrl, icon }) => {
+  ({ imageUrl, icon, onPress }) => {
     const theme = usePreferredTheme();
     return (
-      <View style={styles.mainContainer}>
-        <View style={styles.circle}>
-          {imageUrl !== undefined && (
-            <Image source={{ uri: imageUrl }} style={styles.image} />
-          )}
-          {imageUrl === undefined && <Profile />}
-          <View style={styles.innerContainer}>
-            {icon?.(theme.themedColors.interface[700], 14, 14)}
+      <TouchableWithoutFeedback onPress={onPress}>
+        <View style={styles.mainContainer}>
+          <View style={styles.circle}>
+            {imageUrl !== undefined && (
+              <Image source={{ uri: imageUrl }} style={styles.image} />
+            )}
+            {imageUrl === undefined && <Profile />}
+            <View style={styles.innerContainer}>
+              {icon?.(theme.themedColors.interface[700], 14, 14)}
+            </View>
           </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 );

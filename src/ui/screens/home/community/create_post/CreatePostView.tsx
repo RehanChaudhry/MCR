@@ -215,6 +215,7 @@ export const CreatePostView = React.memo<Props>((props) => {
               fieldInputProps={{
                 multiline: true,
                 numberOfLines: 6,
+                maxLength: 1000,
                 textAlignVertical: "top",
                 keyboardType: "default",
                 returnKeyType: "next",

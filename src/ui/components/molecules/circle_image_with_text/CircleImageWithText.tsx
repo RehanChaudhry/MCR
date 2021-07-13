@@ -155,6 +155,14 @@ export const CircleImageWithText = React.memo<Props>(
         <CircleImageBorder
           imageUrl={notification?.sender?.profilePicture?.fileURL!}
           icon={icon}
+          onPress={() => {
+            userNameOnPress(
+              notification.senderId!,
+              notification.sender?.firstName! +
+                " " +
+                notification.sender?.lastName!
+            );
+          }}
         />
         <View style={styles.viewRequest}>
           <View style={styles.circleWithText}>
