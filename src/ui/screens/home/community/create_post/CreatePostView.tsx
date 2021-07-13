@@ -88,7 +88,7 @@ export const CreatePostView = React.memo<Props>((props) => {
       initialValues.message = initialValues.message.trim();
       props.createPost(initialValues);
     } else {
-      SimpleToast.show("Please fill the Required values");
+      SimpleToast.show("Empty post cannot be create");
     }
   };
 
