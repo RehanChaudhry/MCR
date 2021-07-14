@@ -3,7 +3,7 @@ import Like from "assets/images/like.svg";
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { LikeDislikeResponseModel } from "models/api_responses/LikeDislikeResponseModel";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ImageStyle,
   StyleProp,
@@ -59,6 +59,10 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
 
     const [likedCount, setLikedCount] = useState(likeCount);
 
+    useEffect(() => {
+      setLikedCount(likeCount);
+    }, [likeCount]);
+
     const toggleLikedStateApi = useApi<number, LikeDislikeResponseModel>(
       CommunityAnnouncementApis.likeDislike
     );
@@ -78,6 +82,9 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
           );
           return false;
         } else {
+          AppLog.logForcefully(
+            () => "LikeCount: " + dataBody.data.likesCount
+          );
           setLikedCount(dataBody.data.likesCount);
           return true;
         }

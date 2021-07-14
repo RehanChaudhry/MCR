@@ -174,13 +174,14 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
               text: item?.label,
               weight: "semi-bold"
             }}
+            customTextChanged={(value) => value == item?.placeholder}
             fieldInputProps={{
               textContentType: "name",
               keyboardType: "default",
               returnKeyType: "next",
+              lockDefaultValue: true,
+              valueToShowAtStart: item?.placeholder,
               placeholder: item?.placeholder,
-              /* value: text,
-                            onChangeText: (value) => setText(value),*/
               autoCapitalize: "none",
               placeholderTextColor: theme.themedColors.placeholder,
               style: { color: theme.themedColors.label },

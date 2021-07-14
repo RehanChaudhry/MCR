@@ -148,7 +148,7 @@ const MyFriendsView: FC<Props> = ({
   };
 
   const headerDetails = () => {
-    const friendLabel: string = friendsCount > 1 ? "friends" : "friend";
+    const friendLabel: string = "friends";
     let details = `You have currently ${friendsCount} ` + friendLabel;
 
     if (pendingFriendsCount > 0) {
@@ -191,8 +191,7 @@ const MyFriendsView: FC<Props> = ({
             <ConnectionListHeader
               containerStyle={styles.header}
               title={
-                `Received ${pendingFriendsCount} new friend ` +
-                (pendingFriendsCount > 1 ? "requests" : "request")
+                `Received ${pendingFriendsCount} new friend ` + "requests"
               }
               detail={headerDetails()}
               icon={() => (

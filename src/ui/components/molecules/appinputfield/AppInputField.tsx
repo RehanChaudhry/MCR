@@ -28,6 +28,7 @@ export interface AppInputFieldProps extends TextInputProps {
   multiline?: boolean;
   textAlignVertical?: any;
   shouldNotOptimize?: boolean;
+  lockDefaultValue?: boolean;
 }
 
 type Props = AppInputFieldProps;
@@ -44,6 +45,7 @@ export const AppInputField = optimizedMemoWithStyleProp<Props>(
     //iconStyle,
     multiline = false,
     textAlignVertical,
+    lockDefaultValue = false,
     secureTextEntry = false,
     //iconStyle,
     ...rest
@@ -72,8 +74,13 @@ export const AppInputField = optimizedMemoWithStyleProp<Props>(
           secureTextEntry={secureTextEntry}
           editable={!shouldDisable}
           onChangeText={(text) => {
-            onChangeText?.(text);
-            setTextInputValue(text);
+            if (
+              !lockDefaultValue ||
+              text.length >= (valueToShowAtStart?.length ?? 0)
+            ) {
+              onChangeText?.(text);
+              setTextInputValue(text);
+            }
           }}
           placeholderTextColor={COLORS.placeholderTextColor}
           style={[styles.textInput, style, getMultiline()]}

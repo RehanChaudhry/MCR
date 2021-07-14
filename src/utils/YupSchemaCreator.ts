@@ -45,7 +45,7 @@ export const createYupSchema = (
     | FormInputFieldData
     | AgreementField
   )[]).reduce<FormInputFieldData | AgreementField>((_schema, field) => {
-    return field.isRequired === 1 || field.inputType === "url"
+    return field.isRequired === 1
       ? {
           ..._schema,
           // @ts-ignore
