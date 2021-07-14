@@ -48,6 +48,7 @@ export const WebViewComponent = React.memo<WebViewProps>(
           <WebView
             originWhitelist={["*"]}
             bounces={false}
+            androidHardwareAccelerationDisabled={true}
             mediaPlaybackRequiresUserAction={true}
             dataDetectorTypes="link"
             scrollEnabled={false}
