@@ -143,7 +143,7 @@ export default {
       heading: "Basic Profile",
       title: "This information will be displayed publicly.",
       uploadPhotoDescription:
-        "You are encouraged to upload a photo of yourself to encourage others to interact with you. Pictures should be of you, the owner of the user account, only, and should be appropriate to all audiences. You may not use pictures of others or any photography that is provocative or lewd. Abuse of this system is a violation of the terms of use and can result in disciplinary action."
+        "You are encouraged to upload a photo of yourself to encourage others to interact with you. Pictures should be of you, the owner of the user account, only, and should be appropriate to all audiences. You may not use pictures of others or any photography that is copyrighted, provocative or lewd. Abuse of this system is a violation of the terms of use and can result in loss of user privileges."
     },
     buttonText: {
       uploadProfilePhoto: "Upload Profile Photo",

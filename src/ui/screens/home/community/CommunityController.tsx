@@ -175,7 +175,7 @@ const CommunityController: FC<Props> = () => {
           break;
         }
         case FeedsTypeFilter.FRIENDS_ONLY: {
-          requestModel.current.filterBy = "friend";
+          requestModel.current.filterBy = "friends";
           break;
         }
         default: {
@@ -255,7 +255,7 @@ const CommunityController: FC<Props> = () => {
 
   const likeButtonCallback = useCallback(
     (postId: number) => {
-      navigation.navigate("SeeLikes", { postId: postId });
+      navigation.push("SeeLikes", { postId: postId });
     },
     [navigation]
   );

@@ -16,7 +16,7 @@ import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_wit
 import { useAuth, usePreventDoubleTap } from "hooks";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
-import { Alert } from "react-native";
+import { Alert, BackHandler } from "react-native";
 import { useApi } from "repo/Client";
 import AuthApis from "repo/auth/AuthApis";
 import { UpdateProfileResponseModel } from "models/api_responses/UpdateProfileResponseModel";
@@ -25,7 +25,6 @@ import SkipTitleButton from "ui/components/molecules/skip_title_button/SkipTitle
 import Api from "config/Api";
 import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
 import SimpleToast from "react-native-simple-toast";
-import { BackHandler } from "react-native";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<

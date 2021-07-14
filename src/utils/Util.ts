@@ -162,7 +162,7 @@ export const iframePattern = new RegExp(
 );
 
 export const loginRegx = new RegExp(
-  "(?=.*[0-9])(?=.*[A-Z])[A-Za-z\\d]{8,}$"
+  /(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{8,}$/
 );
 
 export type SvgProp = (
