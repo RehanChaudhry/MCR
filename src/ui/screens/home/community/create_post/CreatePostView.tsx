@@ -39,7 +39,7 @@ type Props = {
 };
 
 const validationSchema = Yup.object().shape({
-  message: Yup.string(),
+  message: Yup.string().min(1).max(1000),
   link: Yup.string().matches(
     pattern,
     Strings.createPost.fieldValidationMessage.invalidUrl
