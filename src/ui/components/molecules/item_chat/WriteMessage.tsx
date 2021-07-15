@@ -89,65 +89,86 @@ export const WriteMessage = React.memo<TypingComponentProps>(
     };
 
     return (
-      <View>
+      <>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : undefined}
           keyboardVerticalOffset={useHeaderHeight()}>
-          <View style={[styles.container(themedColors)]}>
-            <View
-              style={[styles.input, { borderColor: themedColors.border }]}>
-              <AppInputField
-                multiline={multiline}
-                placeholderTextColor={themedColors.interface["600"]}
-                placeholder={appInputPlaceHolder}
-                onChangeText={(text: string) => {
-                  setInitialText(text);
-                  appInputFieldCallback?.(text);
-                }}
-                valueToShowAtStart={initialText}
+          <View>
+            <View style={[styles.container(themedColors)]}>
+              <View
                 style={[
-                  styles.inputField(showProgressbar),
-                  { color: themedColors.label }
-                ]}
-              />
+                  styles.input,
+                  { borderColor: themedColors.border }
+                ]}>
+                <AppInputField
+                  multiline={multiline}
+                  placeholderTextColor={themedColors.interface["600"]}
+                  placeholder={appInputPlaceHolder}
+                  onChangeText={(text: string) => {
+                    setInitialText(text);
+                    appInputFieldCallback?.(text);
+                  }}
+                  valueToShowAtStart={initialText}
+                  style={[
+                    styles.inputField(showProgressbar),
+                    { color: themedColors.label }
+                  ]}
+                />
 
-              {showProgressbar && (
-                <ActivityIndicator
-                  testID="initial-loader"
-                  size="small"
-                  color={themedColors.primary}
-                  style={[styles.initialPb]}
+                {showProgressbar && (
+                  <ActivityIndicator
+                    testID="initial-loader"
+                    size="small"
+                    color={themedColors.primary}
+                    style={[styles.initialPb]}
+                  />
+                )}
+              </View>
+
+              {showIcon && (
+                <AppImageBackground
+                  onPress={() => {
+                    if (initialText !== "") {
+                      setInitialText("");
+                      btnPressCallback?.(initialText);
+                    }
+                  }}
+                  icon={btnImage ?? defaultIcon}
+                  containerShape={CONTAINER_TYPES.SQUARE}
+                  containerStyle={styles.imgPaper(themedColors)}
                 />
               )}
             </View>
 
-            {showIcon && (
-              <AppImageBackground
-                onPress={() => {
-                  if (initialText !== "") {
-                    setInitialText("");
-                    btnPressCallback?.(initialText);
-                  }
-                }}
-                icon={btnImage ?? defaultIcon}
-                containerShape={CONTAINER_TYPES.SQUARE}
-                containerStyle={styles.imgPaper(themedColors)}
-              />
-            )}
+            {Platform.OS === "ios" &&
+              suggestionsList !== undefined &&
+              suggestionsList.length > 0 && (
+                <FlatListWithPb
+                  shouldShowProgressBar={false}
+                  data={suggestionsList}
+                  renderItem={renderSuggestionItems}
+                  showsVerticalScrollIndicator={true}
+                  style={[styles.suggestionList(themedColors)]}
+                  keyExtractor={(item) => item.id.toString()}
+                  keyboardShouldPersistTaps="always"
+                />
+              )}
           </View>
         </KeyboardAvoidingView>
-        {suggestionsList !== undefined && suggestionsList.length > 0 && (
-          <FlatListWithPb
-            shouldShowProgressBar={false}
-            data={suggestionsList}
-            renderItem={renderSuggestionItems}
-            showsVerticalScrollIndicator={true}
-            style={[styles.suggestionList(themedColors)]}
-            keyExtractor={(item) => item.id.toString()}
-            keyboardShouldPersistTaps="always"
-          />
-        )}
-      </View>
+        {Platform.OS === "android" &&
+          suggestionsList !== undefined &&
+          suggestionsList.length > 0 && (
+            <FlatListWithPb
+              shouldShowProgressBar={false}
+              data={suggestionsList}
+              renderItem={renderSuggestionItems}
+              showsVerticalScrollIndicator={true}
+              style={[styles.suggestionList(themedColors)]}
+              keyExtractor={(item) => item.id.toString()}
+              keyboardShouldPersistTaps="always"
+            />
+          )}
+      </>
     );
   }
 );
