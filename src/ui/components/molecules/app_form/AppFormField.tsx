@@ -79,6 +79,7 @@ const AppFormField = optimizedMemo<Props>(
                 onPress={linkLabelOnPress}
                 style={styles.linkLabelClick}>
                 <AppLabel
+                  shouldNotOptimize={true}
                   style={[
                     styles.linkLabel,
                     { color: theme.themedColors.primary }
@@ -130,11 +131,9 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   linkLabel: {
-    fontSize: FONT_SIZE.sm
+    fontSize: FONT_SIZE.xs
   },
-  linkLabelClick: {
-    paddingTop: SPACE._2xs
-  }
+  linkLabelClick: {}
 });
 
 export default AppFormField;

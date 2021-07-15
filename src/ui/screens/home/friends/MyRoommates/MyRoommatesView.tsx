@@ -148,7 +148,7 @@ const MyRoommatesView: FC<Props> = ({
         shouldShow={shouldShowLeaveGroupPopUp}
         hideDialogue={hideLeaveGroupPopup}
         title="Leave Group"
-        message={"Are you sure you want to leave group"}
+        message={"Are you sure you want to leave this roommate group?"}
       />
       <TwoButtonsAlert
         shouldShow={shouldShowRemoveRoommateAlert}
