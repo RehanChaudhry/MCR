@@ -8,6 +8,7 @@ import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { listContentContainerStyle, listItemSeparator } from "utils/Util";
 import { FeedPostItem } from "ui/components/molecules/FeedPostItem";
 import NoRecordFound from "assets/images/community_no_record_found.svg";
+import Strings from "config/Strings";
 
 type Props = {
   data: PostFeed[] | undefined;
@@ -63,6 +64,7 @@ export const AnnouncementView = React.memo<Props>(
             initialNumToRender={4}
             maxToRenderPerBatch={4}
             windowSize={8}
+            noRecordFoundText={Strings.emptyStates.announcement}
             shouldShowProgressBar={shouldShowProgressBar}
             data={data}
             style={styles.list}

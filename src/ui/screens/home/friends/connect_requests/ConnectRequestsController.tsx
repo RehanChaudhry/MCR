@@ -167,6 +167,7 @@ const ConnectRequestsController: FC<Props> = () => {
 
   return (
     <ConnectRequestsView
+      connectRequestType={type}
       data={connectRequests}
       isLoading={isLoading}
       canLoadMore={canLoadMore}

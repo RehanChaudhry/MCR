@@ -105,6 +105,7 @@ const MyRoommatesView: FC<Props> = ({
           style={styles.list}
           shouldShowProgressBar={isLoading}
           isAllDataLoaded={!canLoadMore}
+          noRecordFoundText={"You do not have any roommates."}
           onEndReached={onEndReached}
           contentContainerStyle={styles.listContainer}
           ItemSeparatorComponent={() => (

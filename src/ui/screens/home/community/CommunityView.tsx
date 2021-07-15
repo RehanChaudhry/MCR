@@ -13,6 +13,7 @@ import BottomBreadCrumbs, {
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
 import { listContentContainerStyle, listItemSeparator } from "utils/Util";
 import NoRecordFound from "assets/images/community_no_record_found.svg";
+import Strings from "config/Strings";
 
 type Props = {
   data: PostFeed[] | undefined;
@@ -99,6 +100,7 @@ export const CommunityView = React.memo<Props>(
               initialNumToRender={4}
               maxToRenderPerBatch={4}
               windowSize={8}
+              noRecordFoundText={Strings.emptyStates.community}
               shouldShowProgressBar={shouldShowProgressBar}
               data={data}
               style={styles.list}
