@@ -72,7 +72,6 @@ const AppFormField = optimizedMemo<Props>(
               style={[styles.label, { color: theme.themedColors.label }]}
               {...labelProps}
             />
-            <View style={styles.space} />
 
             {linkLabelProps && (
               <TouchableOpacity
@@ -124,16 +123,17 @@ const styles = StyleSheet.create({
   label: {
     paddingBottom: SPACE.xs
   },
-  space: {
-    flex: 1
-  },
   linkLabelContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   linkLabel: {
     fontSize: FONT_SIZE.xs
   },
-  linkLabelClick: {}
+  linkLabelClick: {
+    paddingBottom: SPACE.xs
+  }
 });
 
 export default AppFormField;

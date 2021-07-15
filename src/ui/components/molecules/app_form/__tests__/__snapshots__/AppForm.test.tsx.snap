@@ -11,7 +11,9 @@ exports[`rendering... renders correctly 1`] = `
   <View
     style={
       Object {
+        "alignItems": "center",
         "flexDirection": "row",
+        "justifyContent": "space-between",
       }
     }
   >
@@ -46,13 +48,6 @@ exports[`rendering... renders correctly 1`] = `
     >
       EMAIL
     </Text>
-    <View
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    />
   </View>
   <View
     style={
@@ -115,7 +110,9 @@ exports[`rendering... renders correctly 1`] = `
   <View
     style={
       Object {
+        "alignItems": "center",
         "flexDirection": "row",
+        "justifyContent": "space-between",
       }
     }
   >
@@ -150,13 +147,6 @@ exports[`rendering... renders correctly 1`] = `
     >
       PASSWORD
     </Text>
-    <View
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
-    />
   </View>
   <View
     style={
