@@ -25,6 +25,7 @@ import SkipTitleButton from "ui/components/molecules/skip_title_button/SkipTitle
 import Api from "config/Api";
 import { FetchMyProfileResponseModel } from "models/api_responses/FetchMyProfileResponseModel";
 import SimpleToast from "react-native-simple-toast";
+import { AppLog } from "utils/Util";
 
 type Props = {};
 type ProfileNavigationProp = StackNavigationProp<
@@ -155,6 +156,7 @@ const UpdateProfileController: FC<Props> = () => {
       );
     } else {
       await auth.saveProfile(dataBody.data, auth.user);
+
       SimpleToast.show("Your profile has been updated successfully");
       if (route.params.isFrom === EScreen.WELCOME) {
         openQuestionnaireScreen();
@@ -162,6 +164,10 @@ const UpdateProfileController: FC<Props> = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchProfileApi]);
+
+  AppLog.logForcefully(
+    () => "UpdateProfile: " + JSON.stringify(auth.user?.profile)
+  );
 
   return (
     <>

@@ -86,7 +86,7 @@ const MyRoommatesView: FC<Props> = ({
   }, []);
 
   const headerDetails = () => {
-    const label: string = roomatesCount > 1 ? "roommates" : "roommate";
+    const label: string = "roommates";
     let details = `You have currently ${roomatesCount} ` + label;
 
     if (pendingRoommatesCount > 0) {
@@ -117,7 +117,7 @@ const MyRoommatesView: FC<Props> = ({
               containerStyle={styles.header}
               title={
                 `Received ${pendingRoommatesCount} new roommate ` +
-                (pendingRoommatesCount > 1 ? "requests" : "request")
+                "requests"
               }
               detail={headerDetails()}
               icon={() => (

@@ -29,7 +29,8 @@ export interface AppFormFieldProps {
   secureTextEntry?: boolean;
   shouldNotOptimize?: boolean;
   customTextChanged?: (value: string) => void;
-  isLocked?: EIntBoolean;
+  isLocked?: EIntBoolean; //to disable the field
+  passPlaceholderAsInitialValue?: boolean; //true incase where we want to show the placeholder as invitail vallues e.g in url twitter.com/
 }
 
 type Props = AppFormFieldProps;
@@ -45,7 +46,8 @@ const AppFormField = optimizedMemo<Props>(
     linkLabelOnPress,
     secureTextEntry,
     customTextChanged,
-    isLocked = EIntBoolean.FALSE
+    isLocked = EIntBoolean.FALSE,
+    passPlaceholderAsInitialValue = false
   }) => {
     const theme = usePreferredTheme();
 
@@ -89,7 +91,12 @@ const AppFormField = optimizedMemo<Props>(
         )}
         <AppInputField
           testID={fieldTestID}
-          valueToShowAtStart={initialValues[name]}
+          valueToShowAtStart={
+            initialValues[name] === undefined &&
+            passPlaceholderAsInitialValue
+              ? fieldInputProps.placeholder
+              : initialValues[name]
+          }
           onChangeText={(text) => {
             setFieldValue(name, text);
             _setFieldTouched();
