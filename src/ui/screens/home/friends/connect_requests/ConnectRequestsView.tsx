@@ -5,6 +5,7 @@ import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import ConnectRequestItem from "ui/components/organisms/friends/connect_request/ConnectRequestItem";
+import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 
 type Props = {
   data: RelationModel[] | undefined;
@@ -14,6 +15,7 @@ type Props = {
   error?: string;
   onPullToRefresh: (onComplete?: () => void) => void;
   onEndReached: () => void;
+  connectRequestType?: string;
 };
 
 const listItem = (
@@ -36,7 +38,8 @@ const ConnectRequestsView: FC<Props> = ({
   canLoadMore,
   error,
   onPullToRefresh,
-  onEndReached
+  onEndReached,
+  connectRequestType
 }) => {
   return (
     <Screen style={styles.container}>
@@ -47,6 +50,11 @@ const ConnectRequestsView: FC<Props> = ({
         }}
         style={styles.list}
         shouldShowProgressBar={isLoading}
+        noRecordFoundText={
+          connectRequestType === ConnectRequestType.FRIEND_REQUESTS
+            ? "You don't have any pending friend requests currently."
+            : "You don't have any pending roommate requests currently."
+        }
         isAllDataLoaded={!canLoadMore}
         onEndReached={onEndReached}
         pullToRefreshCallback={onPullToRefresh}

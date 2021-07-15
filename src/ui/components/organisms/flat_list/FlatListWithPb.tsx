@@ -14,6 +14,7 @@ import { AppLoadMore } from "ui/components/atoms/app_load_more/AppLoadMore";
 import ErrorWithRetryView from "ui/components/molecules/ErrorWithRetryView";
 import NoRecordFound from "assets/images/empty_state.svg";
 import { AppLog } from "utils/Util";
+import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 
 interface OwnProps<ItemT> extends FlatListProps<ItemT> {
   shouldShowProgressBar?: boolean;
@@ -137,6 +138,13 @@ export function FlatListWithPb<ItemT extends any>(props: Props<ItemT>) {
                   fillSecondary={theme.themedColors.secondary}
                 />
               )}
+
+              <AppLabel
+                shouldNotOptimize={true}
+                text={noRecordFoundText}
+                numberOfLines={0}
+                style={styles.noRecordFoundText}
+              />
             </View>
             {ui}
           </>
@@ -178,8 +186,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute",
-    bottom: SPACE.lg
+    position: "absolute"
   },
   noRecord: {
     textAlign: "center",
@@ -204,5 +211,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "column",
     alignItems: "center"
+  },
+  noRecordFoundText: {
+    fontSize: FONT_SIZE.md,
+    padding: SPACE.lg,
+    textAlign: "center"
   }
 });

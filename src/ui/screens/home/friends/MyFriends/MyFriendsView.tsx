@@ -187,6 +187,7 @@ const MyFriendsView: FC<Props> = ({
           onEndReached={onEndReached}
           pullToRefreshCallback={onPullToRefresh}
           error={error}
+          noRecordFoundText={"You do not have any friends."}
           ListHeaderComponent={() => (
             <ConnectionListHeader
               containerStyle={styles.header}

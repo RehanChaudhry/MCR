@@ -389,5 +389,11 @@ export default {
     export_agreement: "Export Roommate Agreement",
     no_agreement_found: "No agreement found."
   },
-  staticContent: {}
+  staticContent: {},
+  emptyStates: {
+    community:
+      "Check out posts around you and interact with your friends and roommates in a flash. Create your first post now!",
+    announcement:
+      "Announcements carry important information and reminders from the admin. Your admin has made no announcements yet."
+  }
 };

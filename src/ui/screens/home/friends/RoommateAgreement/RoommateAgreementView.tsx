@@ -65,7 +65,7 @@ const RoommateAgreementView: FC<Props> = ({
 
     //Create section ourselves
     let firstElement = (roommateData as AgreementField[]).find(
-      (item) => item.id === 1
+      (item) => item.inputType === "agreement"
     );
 
     if (firstElement !== undefined) {

@@ -86,7 +86,7 @@ const MyRoommatesView: FC<Props> = ({
   }, []);
 
   const headerDetails = () => {
-    const label: string = roomatesCount > 1 ? "roommates" : "roommate";
+    const label: string = "roommates";
     let details = `You have currently ${roomatesCount} ` + label;
 
     if (pendingRoommatesCount > 0) {
@@ -105,6 +105,7 @@ const MyRoommatesView: FC<Props> = ({
           style={styles.list}
           shouldShowProgressBar={isLoading}
           isAllDataLoaded={!canLoadMore}
+          noRecordFoundText={"You do not have any roommates."}
           onEndReached={onEndReached}
           contentContainerStyle={styles.listContainer}
           ItemSeparatorComponent={() => (
@@ -117,7 +118,7 @@ const MyRoommatesView: FC<Props> = ({
               containerStyle={styles.header}
               title={
                 `Received ${pendingRoommatesCount} new roommate ` +
-                (pendingRoommatesCount > 1 ? "requests" : "request")
+                "requests"
               }
               detail={headerDetails()}
               icon={() => (

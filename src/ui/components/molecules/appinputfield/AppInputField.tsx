@@ -28,7 +28,7 @@ export interface AppInputFieldProps extends TextInputProps {
   multiline?: boolean;
   textAlignVertical?: any;
   shouldNotOptimize?: boolean;
-  lockDefaultValue?: boolean;
+  lockDefaultValue?: string | undefined;
 }
 
 type Props = AppInputFieldProps;
@@ -45,7 +45,7 @@ export const AppInputField = optimizedMemoWithStyleProp<Props>(
     //iconStyle,
     multiline = false,
     textAlignVertical,
-    lockDefaultValue = false,
+    lockDefaultValue = undefined,
     secureTextEntry = false,
     //iconStyle,
     ...rest
@@ -75,8 +75,8 @@ export const AppInputField = optimizedMemoWithStyleProp<Props>(
           editable={!shouldDisable}
           onChangeText={(text) => {
             if (
-              !lockDefaultValue ||
-              text.length >= (valueToShowAtStart?.length ?? 0)
+              lockDefaultValue === undefined ||
+              text.length >= (lockDefaultValue?.length ?? 0)
             ) {
               onChangeText?.(text);
               setTextInputValue(text);
