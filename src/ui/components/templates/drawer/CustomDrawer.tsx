@@ -34,7 +34,6 @@ import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount
 import TwoButtonsInfoAlert from "ui/components/organisms/popup/TwoButtonsInfoAlert";
 import { useEffect } from "react";
 import { setBadgeCount } from "react-native-notification-badge";
-import ShortcutBadge from "react-native-app-badge";
 import { AppLog } from "utils/Util";
 import { Platform } from "react-native";
 
@@ -68,10 +67,16 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
     AppLog.logForcefully(
       () => "Notification count : " + notificationsCount
     );
-    Platform.OS === "android" &&
+    if (
+      Platform.OS === "android" &&
       notificationsCount !== undefined &&
-      notificationsCount > 0 &&
-      ShortcutBadge.setCount(notificationsCount);
+      notificationsCount > 0
+    ) {
+      AppLog.logForcefully(() => "In android's condition");
+      import("react-native-app-badge").then((ShortcutBadge) => {
+        ShortcutBadge.default.setCount(notificationsCount);
+      });
+    }
 
     Platform.OS === "ios" &&
       notificationsCount !== undefined &&
