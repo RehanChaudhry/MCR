@@ -1,4 +1,3 @@
-import ChatRound from "assets/images/chat_round.svg";
 import Cross from "assets/images/ic_cross.svg";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { moderateScale } from "config/Dimens";
@@ -8,10 +7,6 @@ import RelationModel from "models/RelationModel";
 import React from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import {
-  AppImageBackground,
-  CONTAINER_TYPES
-} from "ui/components/atoms/image_background/AppImageBackground";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import MatchScore from "ui/components/molecules/match_score/MatchScore";
 import { shadowStyleProps } from "utils/Util";
@@ -20,6 +15,7 @@ import getRelationStatus, {
   RelationType
 } from "utils/RelationHelper";
 import RequestStateIcon from "assets/images/request_state_icon.svg";
+import { ChatButton } from "ui/components/molecules/chat_button/ChatButton";
 
 interface Props {
   relationModel: RelationModel;
@@ -402,20 +398,13 @@ const RelationListsItem = ({
         )}
       </View>
       <View style={styles.buttonContainer}>
-        <AppImageBackground
+        <ChatButton
+          containerStyle={styles.btnChat}
           onPress={() => {
             onChatButtonClicked(relationModel);
           }}
-          containerStyle={styles.btnChat}
-          containerShape={CONTAINER_TYPES.SQUARE}
-          icon={() => (
-            <ChatRound
-              fill={themedColors.interface[800]}
-              width={moderateScale(24)}
-              height={moderateScale(24)}
-            />
-          )}
         />
+
         {createActionButton(
           relationModel,
           isLoggedInUserAModerator,

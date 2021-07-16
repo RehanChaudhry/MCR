@@ -29,7 +29,10 @@ export type Uni = {
     originalName: string;
   }[];
   ssoMethod: string;
-
+  chatFeature: number;
+  socialFeedFeature: number;
+  roommateAgreementFeature: number;
+  displayMCRLogo: number;
   interfaceColor: string;
   isPrimaryCustom: number;
   isSecondaryCustom: number;

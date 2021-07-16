@@ -15,6 +15,8 @@ import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
 import { shadowStyleProps } from "utils/Util";
+import useAuth from "hooks/useAuth";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -47,6 +49,8 @@ const Roommates: React.FC<Props> = ({
     />
   );
 
+  const auth = useAuth();
+
   const renderItem = ({ item }: { item: RelationModel }) => {
     return (
       <AnnouncementHeader
@@ -56,7 +60,7 @@ const Roommates: React.FC<Props> = ({
           STRINGS.common.not_found
         }
         subTitle={`${item?.user?.hometown}, ${item?.user?.major}`}
-        shouldShowRightImage={true}
+        shouldShowRightImage={auth.uni?.chatFeature === EIntBoolean.TRUE}
         onRightBtnClicked={() => {
           onChatClicked?.(item);
         }}
