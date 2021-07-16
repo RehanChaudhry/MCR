@@ -24,6 +24,7 @@ export const ChatButton = optimizedMemo<ChatButtonProps>(
   ({ containerStyle, onPress }) => {
     const theme = usePreferredTheme();
     const auth = useAuth();
+
     const imageWithBgJsx = (
       <View
         style={[

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
+  Platform,
   ScrollView,
   StyleSheet,
   TouchableNativeFeedback,
@@ -32,10 +33,8 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 import { profileCompletedPercentage } from "models/api_responses/FetchMyProfileResponseModel";
 import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount";
 import TwoButtonsInfoAlert from "ui/components/organisms/popup/TwoButtonsInfoAlert";
-import { useEffect } from "react";
 import { setBadgeCount } from "react-native-notification-badge";
 import { AppLog } from "utils/Util";
-import { Platform } from "react-native";
 import EIntBoolean from "models/enums/EIntBoolean";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
@@ -185,7 +184,7 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
 
               // @ts-ignore
               if (
-                auth.uni?.chatFeature === EIntBoolean.TRUE &&
+                auth.uni?.chatFeature === EIntBoolean.FALSE &&
                 DrawerItems[route.name].name === "Chat"
               ) {
                 return null;

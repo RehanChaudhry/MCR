@@ -165,5 +165,10 @@ const style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end"
+  },
+  btnChat: {
+    marginLeft: SPACE.md,
+    height: 36,
+    width: 36
   }
 });

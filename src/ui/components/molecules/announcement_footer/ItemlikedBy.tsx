@@ -13,14 +13,7 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 import { User } from "models/User";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
-import {
-  AppImageBackground,
-  CONTAINER_TYPES
-} from "ui/components/atoms/image_background/AppImageBackground";
-import ChatRound from "assets/images/chat_round.svg";
-import { moderateScale } from "config/Dimens";
-import useAuth from "hooks/useAuth";
-import EIntBoolean from "models/enums/EIntBoolean";
+import { ChatButton } from "ui/components/molecules/chat_button/ChatButton";
 
 export interface ItemLikedBy extends ViewStyle {
   onPress: (item: User) => void;
@@ -33,7 +26,6 @@ export interface ItemLikedBy extends ViewStyle {
 export const ItemLikedBy = optimizedMemo<ItemLikedBy>(
   ({ item, onPress, onchatButtonClicked }) => {
     const { themedColors } = usePreferredTheme();
-    const auth = useAuth();
     return (
       <View style={styles.container(themedColors)}>
         <TouchableOpacity
@@ -51,22 +43,12 @@ export const ItemLikedBy = optimizedMemo<ItemLikedBy>(
           />
         </TouchableOpacity>
 
-        {auth.uni?.chatFeature === EIntBoolean.TRUE && (
-          <AppImageBackground
-            onPress={() => {
-              onchatButtonClicked(item);
-            }}
-            containerStyle={styles.btnChat}
-            containerShape={CONTAINER_TYPES.SQUARE}
-            icon={() => (
-              <ChatRound
-                fill={themedColors.interface[800]}
-                width={moderateScale(24)}
-                height={moderateScale(24)}
-              />
-            )}
-          />
-        )}
+        <ChatButton
+          containerStyle={styles.btnChat}
+          onPress={() => {
+            onchatButtonClicked(item);
+          }}
+        />
       </View>
     );
   }
