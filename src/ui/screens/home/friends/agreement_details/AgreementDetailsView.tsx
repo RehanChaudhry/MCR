@@ -18,6 +18,7 @@ import Screen from "ui/components/atoms/Screen";
 import { AgreementDetailsListItem } from "ui/components/molecules/agreement_details_item/AgreementDetailsListItem";
 import { AgreementData } from "models/api_responses/AgreementAnswerResponseModel";
 import { RoommateAgreementParty } from "models/api_requests/GetAgreementApi";
+import ApprovalStatusType from "models/enums/ApprovalStatusType";
 
 type Props = {
   agreementDetailsData: AgreementData;
@@ -29,6 +30,22 @@ type Props = {
 export const AgreementDetailsView = React.memo<Props>(
   ({ agreementDetailsData, moveToChatScreen }) => {
     const theme = usePreferredTheme();
+
+    const getApprovalStatus = (status: string | undefined) => {
+      switch (status) {
+        case ApprovalStatusType.IN_PROCESS:
+          return "In Process";
+        case ApprovalStatusType.APPROVED:
+          return "Approved";
+        case ApprovalStatusType.REJECTED:
+          return "Rejected";
+        case ApprovalStatusType.SUBMITTED:
+          return "Submitted";
+        default:
+          return "N/A";
+      }
+    };
+
     const listItem = ({ item }: { item: RoommateAgreementParty }) => {
       return (
         <AgreementDetailsListItem
@@ -99,9 +116,9 @@ export const AgreementDetailsView = React.memo<Props>(
               />
 
               <AppLabel
-                text={
-                  agreementDetailsData.approvalInformation?.approvalStatus
-                }
+                text={getApprovalStatus(
+                  agreementDetailsData?.approvalInformation?.approvalStatus
+                )}
                 style={styles.pending}
               />
 

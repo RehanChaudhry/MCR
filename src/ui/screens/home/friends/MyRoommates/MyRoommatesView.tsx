@@ -91,8 +91,7 @@ const MyRoommatesView: FC<Props> = ({
 
     if (pendingRoommatesCount > 0) {
       details +=
-        ` and received ${pendingRoommatesCount} roommate ` +
-        (pendingRoommatesCount > 1 ? "requests." : "request.");
+        ` and received ${pendingRoommatesCount} roommate ` + "requests";
     }
 
     return details;

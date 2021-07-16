@@ -153,8 +153,7 @@ const MyFriendsView: FC<Props> = ({
 
     if (pendingFriendsCount > 0) {
       details +=
-        ` and received ${pendingFriendsCount} friend ` +
-        (pendingFriendsCount > 1 ? "requests." : "request.");
+        ` and received ${pendingFriendsCount} friend ` + "requests";
     }
 
     return details;
