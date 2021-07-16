@@ -20,6 +20,8 @@ import getRelationStatus, {
   RelationType
 } from "utils/RelationHelper";
 import RequestStateIcon from "assets/images/request_state_icon.svg";
+import useAuth from "hooks/useAuth";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 interface Props {
   relationModel: RelationModel;
@@ -319,6 +321,7 @@ const RelationListsItem = ({
   const { themedColors } = usePreferredTheme();
 
   const { relationType, eligible } = getRelationStatus(relationModel);
+  const auth = useAuth();
 
   return (
     <View
@@ -402,20 +405,22 @@ const RelationListsItem = ({
         )}
       </View>
       <View style={styles.buttonContainer}>
-        <AppImageBackground
-          onPress={() => {
-            onChatButtonClicked(relationModel);
-          }}
-          containerStyle={styles.btnChat}
-          containerShape={CONTAINER_TYPES.SQUARE}
-          icon={() => (
-            <ChatRound
-              fill={themedColors.interface[800]}
-              width={moderateScale(24)}
-              height={moderateScale(24)}
-            />
-          )}
-        />
+        {auth.uni?.chatFeature === EIntBoolean.TRUE && (
+          <AppImageBackground
+            onPress={() => {
+              onChatButtonClicked(relationModel);
+            }}
+            containerStyle={styles.btnChat}
+            containerShape={CONTAINER_TYPES.SQUARE}
+            icon={() => (
+              <ChatRound
+                fill={themedColors.interface[800]}
+                width={moderateScale(24)}
+                height={moderateScale(24)}
+              />
+            )}
+          />
+        )}
         {createActionButton(
           relationModel,
           isLoggedInUserAModerator,

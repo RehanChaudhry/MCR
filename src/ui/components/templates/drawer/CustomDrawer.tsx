@@ -36,6 +36,7 @@ import { useEffect } from "react";
 import { setBadgeCount } from "react-native-notification-badge";
 import { AppLog } from "utils/Util";
 import { Platform } from "react-native";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
   currentItem: keyof HomeDrawerParamList;
@@ -117,7 +118,6 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
       />
     );
   }
-
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -183,6 +183,13 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
                 return null;
               }
 
+              // @ts-ignore
+              if (
+                auth.uni?.chatFeature === EIntBoolean.TRUE &&
+                DrawerItems[route.name].name === "Chat"
+              ) {
+                return null;
+              }
               return (
                 <TouchableNativeFeedback
                   key={index}
