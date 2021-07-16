@@ -33,7 +33,7 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
     initialValuesTopSlider = null,
     initialValuesBottomSlider = null,
     minValue = 1,
-    maxValue = 10,
+    maxValue = 101,
     preferenceInitialValue = false,
     callback,
     style
