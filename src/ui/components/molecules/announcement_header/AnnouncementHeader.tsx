@@ -63,7 +63,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
         <View style={style.container}>
           <View style={style.leftContainer}>
             <TouchableWithoutFeedback onPress={onProfileImageClicked}>
-              {uni?.socialFeedFeature === EIntBoolean.TRUE ? (
+              {uni?.allowDisplayProfiles === EIntBoolean.TRUE ? (
                 <Image
                   style={[style.profileImage, leftImageStyle]}
                   source={

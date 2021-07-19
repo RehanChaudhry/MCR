@@ -27,7 +27,7 @@ export const CircleImageBorder = optimizedMemo<Props>(
       <TouchableWithoutFeedback onPress={onPress}>
         <View style={styles.mainContainer}>
           <View style={styles.circle}>
-            {uni?.socialFeedFeature === EIntBoolean.TRUE ? (
+            {uni?.allowDisplayProfiles === EIntBoolean.TRUE ? (
               <Image
                 source={
                   imageUrl !== undefined

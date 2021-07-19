@@ -31,6 +31,7 @@ export type Uni = {
   ssoMethod: string;
   chatFeature: number;
   socialFeedFeature: number;
+  allowDisplayProfiles: number;
   roommateAgreementFeature: number;
   displayMCRLogo: number;
   interfaceColor: string;

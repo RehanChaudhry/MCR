@@ -330,7 +330,7 @@ const RelationListsItem = ({
           onPress={() => {
             onUserClicked(relationModel);
           }}>
-          {uni?.socialFeedFeature === EIntBoolean.TRUE ? (
+          {uni?.allowDisplayProfiles === EIntBoolean.TRUE ? (
             <Image
               style={styles.profileImage}
               source={

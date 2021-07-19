@@ -68,7 +68,7 @@ const ProfileHeader: FC<Props> = ({
     <View>
       <View style={styles.container}>
         <View>
-          {uni?.socialFeedFeature === EIntBoolean.TRUE ? (
+          {uni?.allowDisplayProfiles === EIntBoolean.TRUE ? (
             <Image
               source={
                 profilePicture?.fileURL
