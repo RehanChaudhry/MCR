@@ -12,6 +12,8 @@ import {
 } from "ui/components/molecules/app_button/AppButton";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
 import AppVideoPopup from "ui/components/organisms/popup/AppVideoPopup";
+import useAuth from "hooks/useAuth";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type Props = {
   firstName: string | undefined;
@@ -37,6 +39,8 @@ const ProfileHeader: FC<Props> = ({
   const watchVideo = () => (
     <WatchVideo height={16} width={16} color={Colors.grey} />
   );
+
+  const { uni } = useAuth();
 
   const videoDialog = () => (
     <AppVideoPopup
@@ -64,14 +68,21 @@ const ProfileHeader: FC<Props> = ({
     <View>
       <View style={styles.container}>
         <View>
-          <Image
-            source={
-              profilePicture?.fileURL
-                ? { uri: profilePicture?.fileURL }
-                : require("assets/images/profile.png")
-            }
-            style={styles.image}
-          />
+          {uni?.socialFeedFeature === EIntBoolean.TRUE ? (
+            <Image
+              source={
+                profilePicture?.fileURL
+                  ? { uri: profilePicture?.fileURL }
+                  : require("assets/images/profile.png")
+              }
+              style={styles.image}
+            />
+          ) : (
+            <Image
+              source={require("assets/images/profile.png")}
+              style={styles.image}
+            />
+          )}
         </View>
         <View style={styles.headingTextStyle}>
           <HeadingWithText

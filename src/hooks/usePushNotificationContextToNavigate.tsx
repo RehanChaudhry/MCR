@@ -6,6 +6,7 @@ import { AppLog } from "utils/Util";
 export type PushNotificationContext = {
   screenName: keyof HomeStackParamList;
   params?: HomeStackParamList[keyof HomeStackParamList];
+  isFeatureLocked?: boolean;
 };
 
 export const PushNotificationContext = React.createContext<PushNotificationContext>(

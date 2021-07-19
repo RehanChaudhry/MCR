@@ -16,6 +16,8 @@ import getRelationStatus, {
 } from "utils/RelationHelper";
 import RequestStateIcon from "assets/images/request_state_icon.svg";
 import { ChatButton } from "ui/components/molecules/chat_button/ChatButton";
+import useAuth from "hooks/useAuth";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 interface Props {
   relationModel: RelationModel;
@@ -315,6 +317,7 @@ const RelationListsItem = ({
   const { themedColors } = usePreferredTheme();
 
   const { relationType, eligible } = getRelationStatus(relationModel);
+  const { uni } = useAuth();
 
   return (
     <View
@@ -327,14 +330,21 @@ const RelationListsItem = ({
           onPress={() => {
             onUserClicked(relationModel);
           }}>
-          <Image
-            style={styles.profileImage}
-            source={
-              relationModel.user?.profilePicture?.fileURL !== undefined
-                ? { uri: relationModel.user?.profilePicture?.fileURL }
-                : require("assets/images/profile.png")
-            }
-          />
+          {uni?.socialFeedFeature === EIntBoolean.TRUE ? (
+            <Image
+              style={styles.profileImage}
+              source={
+                relationModel.user?.profilePicture?.fileURL !== undefined
+                  ? { uri: relationModel.user?.profilePicture?.fileURL }
+                  : require("assets/images/profile.png")
+              }
+            />
+          ) : (
+            <Image
+              style={styles.profileImage}
+              source={require("assets/images/profile.png")}
+            />
+          )}
         </Pressable>
         <View style={styles.infoTextContainer}>
           <Pressable

@@ -188,6 +188,11 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
                 DrawerItems[route.name].name === "Chat"
               ) {
                 return null;
+              } else if (
+                auth.uni?.socialFeedFeature === EIntBoolean.FALSE &&
+                DrawerItems[route.name].name === "Community"
+              ) {
+                return null;
               }
               return (
                 <TouchableNativeFeedback

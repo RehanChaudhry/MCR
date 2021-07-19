@@ -32,7 +32,7 @@ const useNotification = () => {
   const [data, setData] = useState<PushNotificationContext>({
     screenName: "DrawerRoutes"
   });
-  const { user } = useAuth();
+  const { user, uni } = useAuth();
 
   const handleConnectRequestsRedirection: NotificationRedirectionLiteralType = {
     [NotificationActionType.RECIEVE]: (notification: NotificationData) =>
@@ -137,7 +137,8 @@ const useNotification = () => {
         type:
           notification.type === NotificationAndLogType.FRIEND_REQUEST
             ? ConnectRequestType.FRIEND_REQUESTS
-            : ConnectRequestType.ROOMMATE_REQUESTS
+            : ConnectRequestType.ROOMMATE_REQUESTS,
+        isFeatureLocked: false
       }
     };
     setData(_data);
@@ -167,6 +168,10 @@ const useNotification = () => {
       sender?.firstName + "" + sender?.lastName
     );
 
+    // if (uni && uni?.chatFeature === 0) {
+    //   SimpleToast.show("Feature turned off.");
+    // }
+
     return {
       screenName: "ChatThread",
       params: {
@@ -182,7 +187,8 @@ const useNotification = () => {
             }
           ]
         } as Conversation
-      }
+      },
+      isFeatureLocked: uni && uni?.chatFeature === 1
     };
   }
 
@@ -198,8 +204,10 @@ const useNotification = () => {
       screenName: name,
       params: {
         postId: notification.postId,
-        isFrom: EScreen.NOTIFICATION
-      }
+        isFrom: EScreen.NOTIFICATION,
+        isFeatureLocked: false
+      },
+      isFeatureLocked: uni && uni?.socialFeedFeature === 1
     };
     setData(_data);
     return _data;
@@ -217,7 +225,8 @@ const useNotification = () => {
     let name: keyof HomeStackParamList = "RoommateAgreement";
     let _data = {
       screenName: name,
-      params: { isFrom: EScreen.NOTIFICATION }
+      params: { isFrom: EScreen.NOTIFICATION },
+      isFeatureLocked: false
     };
     setData(_data);
     return _data;
@@ -233,7 +242,8 @@ const useNotification = () => {
     let name: keyof HomeStackParamList = "MyRoommates";
     let _data = {
       screenName: name,
-      params: { isFrom: EScreen.NOTIFICATION }
+      params: { isFrom: EScreen.NOTIFICATION },
+      isFeatureLocked: false
     };
     setData(_data);
     return _data;

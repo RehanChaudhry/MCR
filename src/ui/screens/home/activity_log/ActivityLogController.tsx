@@ -23,6 +23,8 @@ import { HomeStackParamList } from "routes/HomeStack";
 import ActivityLog from "models/ActivityLog";
 import usePreventDoubleTap from "hooks/usePreventDoubleTap";
 import useAuth from "hooks/useAuth";
+import EIntBoolean from "models/enums/EIntBoolean";
+import SimpleToast from "react-native-simple-toast";
 
 type ActivityLogNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -33,7 +35,7 @@ type Props = {};
 
 const ActivityLogController: FC<Props> = () => {
   const navigation = useNavigation<ActivityLogNavigationProp>();
-  const { user } = useAuth();
+  const { user, uni } = useAuth();
 
   const [
     activityLogs,
@@ -165,10 +167,14 @@ const ActivityLogController: FC<Props> = () => {
   });
 
   const openSinglePostScreen = usePreventDoubleTap((postId: number) => {
-    navigation.push("SinglePost", {
-      postId: postId,
-      isFrom: EScreen.ACTIVTY_LOG
-    });
+    if (uni?.socialFeedFeature === EIntBoolean.TRUE) {
+      navigation.push("SinglePost", {
+        postId: postId,
+        isFrom: EScreen.ACTIVTY_LOG
+      });
+    } else {
+      SimpleToast.show("Feature turned off.");
+    }
   });
 
   const openUpdateQuestionaireScreen = usePreventDoubleTap(() => {
