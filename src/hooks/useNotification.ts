@@ -126,10 +126,6 @@ const useNotification = () => {
   function navigateToConnectRequestScreen(
     notification: NotificationData
   ): PushNotificationContext {
-    AppLog.logForcefully(
-      () =>
-        JSON.stringify(notification) ?? "navigateToConnectRequestsScreen()"
-    );
     let name: keyof HomeStackParamList = "ConnectRequest";
     let _data = {
       screenName: name,
@@ -137,9 +133,9 @@ const useNotification = () => {
         type:
           notification.type === NotificationAndLogType.FRIEND_REQUEST
             ? ConnectRequestType.FRIEND_REQUESTS
-            : ConnectRequestType.ROOMMATE_REQUESTS,
-        isFeatureLocked: false
-      }
+            : ConnectRequestType.ROOMMATE_REQUESTS
+      },
+      isFeatureLocked: true
     };
     setData(_data);
     return _data;
@@ -168,7 +164,9 @@ const useNotification = () => {
       sender?.firstName + "" + sender?.lastName
     );
 
-    // if (uni && uni?.chatFeature === 0) {
+    // if (uni && uni?.chatFeature === 1) {
+    //   SimpleToast.show("Feature turned off.");
+    // } else if (uni && uni.socialFeedFeature === 1) {
     //   SimpleToast.show("Feature turned off.");
     // }
 
@@ -204,8 +202,7 @@ const useNotification = () => {
       screenName: name,
       params: {
         postId: notification.postId,
-        isFrom: EScreen.NOTIFICATION,
-        isFeatureLocked: false
+        isFrom: EScreen.NOTIFICATION
       },
       isFeatureLocked: uni && uni?.socialFeedFeature === 1
     };
@@ -226,7 +223,7 @@ const useNotification = () => {
     let _data = {
       screenName: name,
       params: { isFrom: EScreen.NOTIFICATION },
-      isFeatureLocked: false
+      isFeatureLocked: true
     };
     setData(_data);
     return _data;
@@ -243,7 +240,7 @@ const useNotification = () => {
     let _data = {
       screenName: name,
       params: { isFrom: EScreen.NOTIFICATION },
-      isFeatureLocked: false
+      isFeatureLocked: true
     };
     setData(_data);
     return _data;
