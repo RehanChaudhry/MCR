@@ -2,6 +2,9 @@
   package="com.mycollegeroomie">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    
+    <!--This permission is only for vivo device-->
+    <uses-permission android:name="com.vivo.notification.permission.BADGE_ICON" />
 
     <application
       android:name=".MainApplication"
