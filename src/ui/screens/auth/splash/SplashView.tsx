@@ -186,9 +186,6 @@ export const SplashView = React.memo<Props>(() => {
         secondary: updatedUni.secondaryColorDark
       });
 
-      //TODO remove it ones key is coming from server
-      updatedUni.allowDisplayProfiles = 1;
-
       await auth.saveUni(updatedUni);
       setUni(updatedUni);
     } else {
