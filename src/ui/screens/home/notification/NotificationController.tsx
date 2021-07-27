@@ -22,6 +22,12 @@ import { NotificationReadApiRequestModel } from "models/api_requests/Notificatio
 import useNotification from "hooks/useNotification";
 import { User } from "models/User";
 import SimpleToast from "react-native-simple-toast";
+import MarkRead from "assets/images/mark_read.svg";
+import usePreferredTheme from "hooks/theme/usePreferredTheme";
+import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount";
+import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
+import NotificationData from "models/NotificationData";
+import _ from "lodash";
 
 type NotificationNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -32,11 +38,10 @@ type Props = {};
 
 const NotificationController: FC<Props> = () => {
   const navigation = useNavigation<NotificationNavigationProp>();
+  const theme = usePreferredTheme();
+  const [shouldShowLoader, setShouldShowLoader] = useState(false);
 
-  const [
-    notifications,
-    setNotifications
-  ] = useState<NotificationsResponseModel>();
+  const [notifications, setNotifications] = useState<NotificationData[]>();
 
   const notificationApi = useApi<any, NotificationsResponseModel>(
     ProfileApis.getNotifications
@@ -45,6 +50,10 @@ const NotificationController: FC<Props> = () => {
     ProfileApis.notificationMarkRead
   );
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+  const {
+    notificationsCount,
+    setNotificationsCount
+  } = useNotificationsCount();
 
   const [
     paginationRequestModel,
@@ -62,43 +71,6 @@ const NotificationController: FC<Props> = () => {
       userName: userName
     });
   };
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => <Hamburger />,
-      headerTitleAlign: "center",
-      headerStyle: { elevation: 0, shadowOpacity: 0 },
-      headerTitle: () => <HeaderTitle text="Notification" />
-    });
-  }, [navigation]);
-
-  const handleNotificationMarkRead = useCallback(
-    async (notificationId: number) => {
-      AppLog.logForcefully(
-        () => "readnotificationApifunctioncall" + notificationId
-      );
-      const {
-        hasError,
-        errorBody,
-        dataBody
-      } = await notificationReadApi.request([
-        {
-          all: false,
-          notificationId: notificationId
-        }
-      ]);
-
-      if (hasError) {
-        AppLog.logForcefully(
-          () => "Unable to read notification: " + errorBody
-        );
-        return;
-      } else {
-        AppLog.logForcefully(() => dataBody.message);
-      }
-    },
-    [notificationReadApi]
-  );
 
   const handleGetNotificationApi = useCallback(
     async (
@@ -120,13 +92,10 @@ const NotificationController: FC<Props> = () => {
         return;
       }
       setNotifications((prevState) => {
-        return {
-          message: dataBody?.message ?? "",
-          data: [
-            ...(!isFromPullToRefresh ? prevState?.data ?? [] : []),
-            ...dataBody!.data
-          ]
-        };
+        return [
+          ...(!isFromPullToRefresh ? prevState ?? [] : []),
+          ...dataBody!.data
+        ];
       });
       setPaginationRequestModel({
         ...requestModel,
@@ -140,27 +109,132 @@ const NotificationController: FC<Props> = () => {
     [notificationApi]
   );
 
+  const refreshCallback = useCallback(
+    async (onComplete?: () => void) => {
+      if (notificationApi.loading) {
+        onComplete?.();
+        return;
+      }
+
+      const myFriendRequestModel: PaginationParamsModel = {
+        ...paginationRequestModel,
+        page: 1
+      };
+
+      setPaginationRequestModel(myFriendRequestModel);
+      handleGetNotificationApi(true, myFriendRequestModel).then(() => {
+        onComplete?.();
+      });
+    },
+    [
+      handleGetNotificationApi,
+      notificationApi.loading,
+      paginationRequestModel
+    ]
+  );
+
+  const handleNotificationMarkRead = useCallback(
+    async (allRead?: boolean, notificationId?: number) => {
+      AppLog.logForcefully(
+        () => "readnotificationApifunctioncall" + notificationId
+      );
+      if (allRead) {
+        setShouldShowLoader(true);
+      }
+      const {
+        hasError,
+        errorBody,
+        dataBody
+      } = await notificationReadApi.request([
+        {
+          all: allRead ?? false,
+          notificationId: notificationId!
+        }
+      ]);
+
+      if (hasError) {
+        AppLog.log(() => "Unable to read notification: " + errorBody);
+        return;
+      } else {
+        if (allRead) {
+          SimpleToast.show(dataBody?.message);
+          setNotificationsCount!(0);
+          setShouldShowLoader(false);
+          refreshCallback().then().catch();
+        } else {
+          const itemCopy = _.cloneDeep(
+            notifications?.find((item) => item.id === notificationId!!)
+          );
+
+          if (itemCopy) {
+            itemCopy.isRead = 1;
+
+            AppLog.logForcefully(
+              () =>
+                "New notifications list : " + JSON.stringify(notifications)
+            );
+
+            notifications?.splice(
+              notifications?.findIndex(
+                (item) => item.id === notificationId!!
+              ),
+              1,
+              itemCopy
+            );
+            setNotifications(notifications);
+          }
+        }
+        AppLog.log(() => dataBody.message);
+      }
+    },
+    [
+      notificationReadApi,
+      notifications,
+      refreshCallback,
+      setNotificationsCount
+    ]
+  );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => <Hamburger />,
+      headerTitleAlign: "center",
+      headerStyle: { elevation: 0, shadowOpacity: 0 },
+      headerTitle: () => <HeaderTitle text="Notification" />,
+      headerRight: () => (
+        <HeaderRightTextWithIcon
+          shouldShowLoader={shouldShowLoader}
+          icon={() => (
+            <MarkRead
+              width={23}
+              height={23}
+              fill={
+                notificationsCount !== 0
+                  ? theme.themedColors.primary
+                  : theme.themedColors.interface[400]
+              }
+            />
+          )}
+          onPress={() => {
+            if (notificationsCount !== 0) {
+              handleNotificationMarkRead(true);
+            }
+          }}
+        />
+      )
+    });
+  }, [
+    navigation,
+    notificationsCount,
+    shouldShowLoader,
+    theme,
+    handleNotificationMarkRead
+  ]);
+
   const onEndReached = useCallback(() => {
     AppLog.log(() => "onEndReachedcall");
     handleGetNotificationApi(false, paginationRequestModel);
   }, [paginationRequestModel, handleGetNotificationApi]);
-
-  const refreshCallback = async (onComplete: () => void) => {
-    if (notificationApi.loading) {
-      onComplete?.();
-      return;
-    }
-
-    const myFriendRequestModel: PaginationParamsModel = {
-      ...paginationRequestModel,
-      page: 1
-    };
-
-    setPaginationRequestModel(myFriendRequestModel);
-    handleGetNotificationApi(true, myFriendRequestModel).then(() => {
-      onComplete();
-    });
-  };
 
   const searchText = useCallback(
     (textToSearch: string) => {
@@ -202,7 +276,7 @@ const NotificationController: FC<Props> = () => {
     notificationId?: number,
     sender?: User
   ) => {
-    handleNotificationMarkRead(notificationId!);
+    handleNotificationMarkRead(false, notificationId!);
     const { screenName, params, isFeatureLocked } = handleNotification({
       type,
       postId,
@@ -228,7 +302,7 @@ const NotificationController: FC<Props> = () => {
       onEndReached={onEndReached}
       pullToRefreshCallback={refreshCallback}
       shouldShowProgressBar={notificationApi.loading}
-      notifications={notifications?.data}
+      notifications={notifications}
       openMyProfileScreen={openMyProfileScreen}
       onChangeFilter={searchText}
       navigateToRequiredScreen={navigateTOScreen}

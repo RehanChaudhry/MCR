@@ -15,7 +15,7 @@ import { Weight } from "ui/components/atoms/app_label/AppLabel";
 
 export interface HeaderRightTextWithIconProps
   extends TouchableOpacityProps {
-  text: string;
+  text?: string;
   icon?: SvgProp;
   onPress?: () => void;
   textStyle?: StyleProp<TextStyle>;
@@ -50,7 +50,7 @@ const HeaderRightTextWithIcon = React.memo<HeaderRightTextWithIconProps>(
 
         {!shouldShowLoader && (
           <LinkButton
-            text={text}
+            text={text!}
             onPress={onPress}
             rightIcon={icon}
             textStyle={[

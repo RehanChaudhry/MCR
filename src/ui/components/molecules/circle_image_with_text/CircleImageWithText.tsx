@@ -180,6 +180,11 @@ export const CircleImageWithText = React.memo<Props>(
               text={
                 getMessage(notification, user) ?? STRINGS.common.not_found
               }
+              textStyle={
+                notification.isRead === 0
+                  ? [styles.text, { fontWeight: "bold" }]
+                  : [styles.text, { fontWeight: "normal" }]
+              }
             />
           </View>
           <View style={styles.requestButtonWithText}>
@@ -270,6 +275,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   messageText: { fontSize: FONT_SIZE.sm },
+  text: { fontSize: FONT_SIZE.sm },
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",

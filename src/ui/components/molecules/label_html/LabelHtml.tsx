@@ -7,6 +7,7 @@ interface Props {
   containerStyle?: StyleProp<ViewStyle>;
   text: string;
   style: StyleProp<TextStyle>;
+  textStyle?: StyleProp<TextStyle>;
   onBoldTextPress?: () => void;
   numberOfLines?: number;
 }
@@ -15,7 +16,8 @@ const LabelHtml: React.FC<Props> = ({
   text,
   style,
   onBoldTextPress,
-  numberOfLines
+  numberOfLines,
+  textStyle
 }: Props) => {
   const { themedColors } = usePreferredTheme();
   let texts: string[] = text.split(/<b>|<\/b>/g);
@@ -39,7 +41,7 @@ const LabelHtml: React.FC<Props> = ({
           {
             color: themedColors.interface[600]
           },
-          style
+          textStyle
         ]
       };
     }

@@ -38,6 +38,7 @@ export default () => {
 
   return {
     notificationsCount,
-    fetchLatestNotificationCount
+    fetchLatestNotificationCount,
+    setNotificationsCount
   };
 };
