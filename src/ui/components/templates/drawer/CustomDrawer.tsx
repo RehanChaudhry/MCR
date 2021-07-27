@@ -64,15 +64,13 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
   };
 
   useEffect(() => {
-    AppLog.logForcefully(
-      () => "Notification count : " + notificationsCount
-    );
+    AppLog.log(() => "Notification count : " + notificationsCount);
+
     if (
       Platform.OS === "android" &&
       notificationsCount !== undefined &&
       notificationsCount > 0
     ) {
-      AppLog.logForcefully(() => "In android's condition");
       import("react-native-app-badge").then((ShortcutBadge) => {
         ShortcutBadge.default.setCount(notificationsCount);
       });
