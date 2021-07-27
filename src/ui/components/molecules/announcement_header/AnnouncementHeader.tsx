@@ -18,6 +18,8 @@ import {
   CONTAINER_TYPES
 } from "ui/components/atoms/image_background/AppImageBackground";
 import { SvgProp } from "utils/Util";
+import useAuth from "hooks/useAuth";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   leftImageUrl?: string | undefined;
@@ -54,20 +56,28 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
     onProfileImageClicked
   }) => {
     const theme = usePreferredTheme();
+    const { uni } = useAuth();
 
     return (
       <View style={style.mainContainer}>
         <View style={style.container}>
           <View style={style.leftContainer}>
             <TouchableWithoutFeedback onPress={onProfileImageClicked}>
-              <Image
-                style={[style.profileImage, leftImageStyle]}
-                source={
-                  leftImageUrl !== undefined
-                    ? { uri: leftImageUrl }
-                    : require("assets/images/profile.png")
-                }
-              />
+              {uni?.allowDisplayProfiles === EIntBoolean.TRUE ? (
+                <Image
+                  style={[style.profileImage, leftImageStyle]}
+                  source={
+                    leftImageUrl !== undefined
+                      ? { uri: leftImageUrl }
+                      : require("assets/images/profile.png")
+                  }
+                />
+              ) : (
+                <Image
+                  style={[style.profileImage, leftImageStyle]}
+                  source={require("assets/images/profile.png")}
+                />
+              )}
             </TouchableWithoutFeedback>
 
             <View style={style.titleSubtitle}>

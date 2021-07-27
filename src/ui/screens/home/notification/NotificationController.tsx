@@ -21,6 +21,7 @@ import { AppLog } from "utils/Util";
 import { NotificationReadApiRequestModel } from "models/api_requests/NotificationReadApiRequestModel";
 import useNotification from "hooks/useNotification";
 import { User } from "models/User";
+import SimpleToast from "react-native-simple-toast";
 
 type NotificationNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -202,7 +203,7 @@ const NotificationController: FC<Props> = () => {
     sender?: User
   ) => {
     handleNotificationMarkRead(notificationId!);
-    const { screenName, params } = handleNotification({
+    const { screenName, params, isFeatureLocked } = handleNotification({
       type,
       postId,
       action,
@@ -212,9 +213,13 @@ const NotificationController: FC<Props> = () => {
       sender
     });
 
-    navigation.navigate(screenName, {
-      ...params
-    });
+    if (isFeatureLocked) {
+      navigation.navigate(screenName, {
+        ...params
+      });
+    } else {
+      SimpleToast.show("Feature turned off.");
+    }
   };
 
   return (

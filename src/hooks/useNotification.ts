@@ -32,7 +32,7 @@ const useNotification = () => {
   const [data, setData] = useState<PushNotificationContext>({
     screenName: "DrawerRoutes"
   });
-  const { user } = useAuth();
+  const { user, uni } = useAuth();
 
   const handleConnectRequestsRedirection: NotificationRedirectionLiteralType = {
     [NotificationActionType.RECIEVE]: (notification: NotificationData) =>
@@ -126,10 +126,6 @@ const useNotification = () => {
   function navigateToConnectRequestScreen(
     notification: NotificationData
   ): PushNotificationContext {
-    AppLog.logForcefully(
-      () =>
-        JSON.stringify(notification) ?? "navigateToConnectRequestsScreen()"
-    );
     let name: keyof HomeStackParamList = "ConnectRequest";
     let _data = {
       screenName: name,
@@ -138,7 +134,8 @@ const useNotification = () => {
           notification.type === NotificationAndLogType.FRIEND_REQUEST
             ? ConnectRequestType.FRIEND_REQUESTS
             : ConnectRequestType.ROOMMATE_REQUESTS
-      }
+      },
+      isFeatureLocked: true
     };
     setData(_data);
     return _data;
@@ -167,6 +164,12 @@ const useNotification = () => {
       sender?.firstName + "" + sender?.lastName
     );
 
+    // if (uni && uni?.chatFeature === 1) {
+    //   SimpleToast.show("Feature turned off.");
+    // } else if (uni && uni.socialFeedFeature === 1) {
+    //   SimpleToast.show("Feature turned off.");
+    // }
+
     return {
       screenName: "ChatThread",
       params: {
@@ -182,7 +185,8 @@ const useNotification = () => {
             }
           ]
         } as Conversation
-      }
+      },
+      isFeatureLocked: uni && uni?.chatFeature === 1
     };
   }
 
@@ -199,7 +203,8 @@ const useNotification = () => {
       params: {
         postId: notification.postId,
         isFrom: EScreen.NOTIFICATION
-      }
+      },
+      isFeatureLocked: uni && uni?.socialFeedFeature === 1
     };
     setData(_data);
     return _data;
@@ -217,7 +222,8 @@ const useNotification = () => {
     let name: keyof HomeStackParamList = "RoommateAgreement";
     let _data = {
       screenName: name,
-      params: { isFrom: EScreen.NOTIFICATION }
+      params: { isFrom: EScreen.NOTIFICATION },
+      isFeatureLocked: true
     };
     setData(_data);
     return _data;
@@ -233,7 +239,8 @@ const useNotification = () => {
     let name: keyof HomeStackParamList = "MyRoommates";
     let _data = {
       screenName: name,
-      params: { isFrom: EScreen.NOTIFICATION }
+      params: { isFrom: EScreen.NOTIFICATION },
+      isFeatureLocked: true
     };
     setData(_data);
     return _data;
