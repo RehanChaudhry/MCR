@@ -14,7 +14,6 @@ import { usePreferredTheme } from "hooks";
 import { FlatListWithPb } from "ui/components/organisms/flat_list/FlatListWithPb";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import NotificationData from "models/NotificationData";
-import { User } from "models/User";
 
 type Props = {
   openMyProfileScreen: (userId: number, userName: string) => void;
@@ -24,15 +23,7 @@ type Props = {
   isAllDataLoaded: boolean;
   pullToRefreshCallback: (onComplete: () => void) => void;
   onChangeFilter: (textToFilter: string) => void;
-  navigateToRequiredScreen: (
-    type: string,
-    postId?: number,
-    action?: string,
-    users?: User[],
-    conversationId?: number,
-    notificationId?: number,
-    sender?: User
-  ) => void;
+  navigateToRequiredScreen: (notificationData: NotificationData) => void;
 };
 
 export const NotificationView = React.memo<Props>(

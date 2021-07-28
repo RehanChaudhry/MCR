@@ -20,20 +20,11 @@ import Like from "assets/images/agreed.svg";
 import UserGroup from "assets/images/user_group.svg";
 import OfficeBuilding from "assets/images/office-building.svg";
 import Announcement from "assets/images/announcements.svg";
-import { User } from "models/User";
 
 type Props = {
   notification: NotificationData;
   userNameOnPress: (userId: number, userName: string) => void;
-  actionOnPress: (
-    type: string,
-    postId?: number,
-    action?: string,
-    users?: [],
-    conversationId?: number,
-    notificationId?: number,
-    sender?: User
-  ) => void;
+  actionOnPress: (notificationData: NotificationData) => void;
 };
 
 export const CircleImageWithText = React.memo<Props>(
@@ -185,6 +176,7 @@ export const CircleImageWithText = React.memo<Props>(
                   ? [styles.text, { fontWeight: "bold" }]
                   : [styles.text, { fontWeight: "normal" }]
               }
+              shouldNotOptimize={true}
             />
           </View>
           <View style={styles.requestButtonWithText}>
@@ -204,15 +196,7 @@ export const CircleImageWithText = React.memo<Props>(
                 { backgroundColor: theme.themedColors.primaryShade }
               ]}
               onPress={() => {
-                actionOnPress(
-                  notification?.type!,
-                  notification?.referenceId,
-                  notification?.action,
-                  notification?.data?.users,
-                  notification.referenceId!,
-                  notification.id,
-                  notification?.sender
-                );
+                actionOnPress(notification);
               }}
               fontWeight="bold"
               textStyle={styles.buttonText}

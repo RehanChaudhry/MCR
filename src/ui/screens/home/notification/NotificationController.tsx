@@ -20,13 +20,13 @@ import { NotificationView } from "ui/screens/home/notification/NotificationView"
 import { AppLog } from "utils/Util";
 import { NotificationReadApiRequestModel } from "models/api_requests/NotificationReadApiRequestModel";
 import useNotification from "hooks/useNotification";
-import { User } from "models/User";
 import SimpleToast from "react-native-simple-toast";
 import MarkRead from "assets/images/mark_read.svg";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import NotificationData from "models/NotificationData";
+
 import _ from "lodash";
 
 type NotificationNavigationProp = StackNavigationProp<
@@ -52,7 +52,8 @@ const NotificationController: FC<Props> = () => {
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const {
     notificationsCount,
-    setNotificationsCount
+    setNotificationsCount,
+    fetchLatestNotificationCount
   } = useNotificationsCount();
 
   const [
@@ -111,6 +112,7 @@ const NotificationController: FC<Props> = () => {
 
   const refreshCallback = useCallback(
     async (onComplete?: () => void) => {
+      fetchLatestNotificationCount();
       if (notificationApi.loading) {
         onComplete?.();
         return;
@@ -129,7 +131,8 @@ const NotificationController: FC<Props> = () => {
     [
       handleGetNotificationApi,
       notificationApi.loading,
-      paginationRequestModel
+      paginationRequestModel,
+      fetchLatestNotificationCount
     ]
   );
 
@@ -166,13 +169,13 @@ const NotificationController: FC<Props> = () => {
             notifications?.find((item) => item.id === notificationId!!)
           );
 
+          if (notificationsCount! > 0) {
+            const updatedCount = notificationsCount! - 1;
+            setNotificationsCount!(updatedCount);
+          }
+
           if (itemCopy) {
             itemCopy.isRead = 1;
-
-            AppLog.logForcefully(
-              () =>
-                "New notifications list : " + JSON.stringify(notifications)
-            );
 
             notifications?.splice(
               notifications?.findIndex(
@@ -181,7 +184,7 @@ const NotificationController: FC<Props> = () => {
               1,
               itemCopy
             );
-            setNotifications(notifications);
+            setNotifications(_.cloneDeep(notifications));
           }
         }
         AppLog.log(() => dataBody.message);
@@ -191,7 +194,8 @@ const NotificationController: FC<Props> = () => {
       notificationReadApi,
       notifications,
       refreshCallback,
-      setNotificationsCount
+      setNotificationsCount,
+      notificationsCount
     ]
   );
 
@@ -267,24 +271,18 @@ const NotificationController: FC<Props> = () => {
 
   const { handleNotification } = useNotification();
 
-  const navigateTOScreen = (
-    type: string,
-    postId?: number,
-    action?: string,
-    users?: User[],
-    conversationId?: number,
-    notificationId?: number,
-    sender?: User
-  ) => {
-    handleNotificationMarkRead(false, notificationId!);
+  const navigateTOScreen = (notificationData: NotificationData) => {
+    if (notificationData.isRead === 0) {
+      handleNotificationMarkRead(false, notificationData.id!);
+    }
     const { screenName, params, isFeatureLocked } = handleNotification({
-      type,
-      postId,
-      action,
-      users,
-      conversationId,
-      notificationId,
-      sender
+      action: notificationData?.action,
+      type: notificationData?.type!,
+      postId: notificationData?.referenceId,
+      users: notificationData?.data?.users,
+      conversationId: notificationData?.referenceId,
+      notificationId: notificationData?.id,
+      sender: notificationData?.sender
     });
 
     if (isFeatureLocked) {

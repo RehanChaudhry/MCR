@@ -10,6 +10,7 @@ interface Props {
   textStyle?: StyleProp<TextStyle>;
   onBoldTextPress?: () => void;
   numberOfLines?: number;
+  shouldNotOptimize?: boolean;
 }
 const LabelHtml: React.FC<Props> = ({
   containerStyle,
@@ -17,7 +18,8 @@ const LabelHtml: React.FC<Props> = ({
   style,
   onBoldTextPress,
   numberOfLines,
-  textStyle
+  textStyle,
+  shouldNotOptimize = false
 }: Props) => {
   const { themedColors } = usePreferredTheme();
   let texts: string[] = text.split(/<b>|<\/b>/g);
@@ -33,7 +35,8 @@ const LabelHtml: React.FC<Props> = ({
           },
           style
         ],
-        weight: "semi-bold"
+        weight: "semi-bold",
+        shouldNotOptimize: shouldNotOptimize
       };
     } else {
       appLabelProp = {
@@ -42,7 +45,8 @@ const LabelHtml: React.FC<Props> = ({
             color: themedColors.interface[600]
           },
           textStyle
-        ]
+        ],
+        shouldNotOptimize: shouldNotOptimize
       };
     }
     appLabelProps.push(appLabelProp);
