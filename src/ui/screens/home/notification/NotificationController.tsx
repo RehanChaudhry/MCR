@@ -271,11 +271,15 @@ const NotificationController: FC<Props> = () => {
 
   const { handleNotification } = useNotification();
 
-  const navigateTOScreen = (notificationData: NotificationData) => {
+  const navigateTOScreen = async (notificationData: NotificationData) => {
     if (notificationData.isRead === 0) {
       handleNotificationMarkRead(false, notificationData.id!);
     }
-    const { screenName, params, isFeatureLocked } = handleNotification({
+    const {
+      screenName,
+      params,
+      isFeatureLocked
+    } = await handleNotification({
       action: notificationData?.action,
       type: notificationData?.type!,
       postId: notificationData?.referenceId,

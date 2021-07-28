@@ -21,7 +21,7 @@ export const usePushNotificationsContextToNavigate = (
   const { screenName, params } = React.useContext(PushNotificationContext);
   const navigation = useNavigation();
   useEffect(() => {
-    AppLog.log(
+    AppLog.logForcefully(
       () =>
         "screenName: " + screenName + ", params: " + JSON.stringify(params)
     );

@@ -7,11 +7,18 @@ import { CreateConversationResponseModel } from "models/api_responses/CreateConv
 import ChatRequestModel from "models/api_requests/chatRequestModel";
 import ChatResponseModel from "models/api_responses/ChatsResponseModel";
 import MessagesResponseModel from "models/api_responses/MessagesResponseModel";
+import ConversationByIdResponseModel from "models/api_responses/ConversationByIdResponseModel";
 
 function getChats(request: ChatRequestModel) {
   return apiClient.get<ChatResponseModel>(API.CONVERSATION, {
     ...request
   });
+}
+
+function getChatById(conversationId: number) {
+  return apiClient.get<ConversationByIdResponseModel>(
+    API.CONVERSATION + conversationId
+  );
 }
 
 function getSuggestions(request: ConversationSuggestionsRequestModel) {
@@ -56,5 +63,6 @@ export default {
   createConversations: createConversations,
   sentMessage: sentMessage,
   getMessages: getMessages,
-  updateConversation: updateConversation
+  updateConversation: updateConversation,
+  getChatById: getChatById
 };

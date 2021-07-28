@@ -2,7 +2,6 @@ import NotificationAndActivityLogFilterType from "models/enums/NotificationAndAc
 import { timeAgo } from "utils/Util";
 import NotificationActionType from "models/enums/NotificationActionType";
 import { User } from "models/User";
-import { UserModel } from "models/api_responses/UserModel";
 
 type NotificationData = {
   id: number;
@@ -15,6 +14,7 @@ type NotificationData = {
   isTitle?: boolean;
   titleText?: string;
   isRead: number;
+  count: number;
   createdAt?: Date;
   sender?: User;
 };
@@ -27,25 +27,22 @@ export function getDisplayTime(notification: NotificationData): string {
   );
 }
 
-const getUsers = (users: [User], currentUserId: number) => {
-  if (users.length !== 1) {
-    return `<b>${users.reduce(
-      (newArray: string[], _item: User) => (
-        currentUserId !== _item.id &&
-          newArray.push(_item.firstName + " " + _item.lastName),
-        newArray
-      ),
-      []
-    )} and you</b>`;
-  } else {
-    return "you";
-  }
-};
+// const getUsers = (users: [User], currentUserId: number) => {
+//   if (users.length !== 1) {
+//     return `<b>${users.reduce(
+//       (newArray: string[], _item: User) => (
+//         currentUserId !== _item.id &&
+//           newArray.push(_item.firstName + " " + _item.lastName),
+//         newArray
+//       ),
+//       []
+//     )} and you</b>`;
+//   } else {
+//     return "you";
+//   }
+// };
 
-export function getMessage(
-  notification: NotificationData,
-  user: UserModel | undefined
-): string {
+export function getMessage(notification: NotificationData): string {
   if (
     notification.type ===
     NotificationAndActivityLogFilterType.FRIEND_REQUEST
@@ -69,10 +66,9 @@ export function getMessage(
   ) {
     return `<b>${notification?.sender?.firstName} ${
       notification?.sender?.lastName
-    }</b> started a new conversation with ${getUsers(
-      notification?.data?.users,
-      user?.profile?.id!
-    )}`;
+    }</b> has sent you ${
+      notification.count > 0 && notification.count
+    } new message${notification.count > 1 ? "s" : ""} `;
   } else if (
     notification.type === NotificationAndActivityLogFilterType.DISAGREED
   ) {
