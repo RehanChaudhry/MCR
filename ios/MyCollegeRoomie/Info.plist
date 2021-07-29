@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>OneSignal_disable_badge_clearing</key>
+	<true/>
 	<key>CFBundleDisplayName</key>
 	<string>MCR</string>
 	<key>CFBundleExecutable</key>
