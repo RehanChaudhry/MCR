@@ -4,11 +4,14 @@ import EScreen from "models/enums/EScreen";
 import NotificationActionType from "models/enums/NotificationActionType";
 import NotificationAndLogType from "models/enums/NotificationAndActivityLogFilterType";
 import { User } from "models/User";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { HomeStackParamList } from "routes/HomeStack";
 import { ConnectRequestType } from "ui/screens/home/friends/connect_requests/ConnectRequestsController";
 import { AppLog } from "utils/Util";
 import { PushNotificationContext } from "./usePushNotificationContextToNavigate";
+import { useApi } from "repo/Client";
+import ChatApis from "repo/chat/ChatApis";
+import ConversationByIdResponseModel from "models/api_responses/ConversationByIdResponseModel";
 
 type NotificationData = {
   action?: string;
@@ -141,54 +144,110 @@ const useNotification = () => {
     return _data;
   }
 
-  function navigateToChatScreen(
+  async function navigateToChatScreen(
     notification: NotificationData
-  ): PushNotificationContext {
-    AppLog.logForcefully(() => "user: " + sender?.firstName);
-
+  ): Promise<PushNotificationContext> {
+    let name: keyof HomeStackParamList = "ChatThread";
     const { users, conversationId, sender } = notification;
 
-    let createUserNames: string[] = users?.reduce(
-      (newArray: string[], _item: any) => (
-        _item.id !== user?.profile?.id &&
-          newArray.push(_item.firstName + " " + _item.lastName),
-        newArray
-      ),
-      []
-    ) ?? ["N/A"];
+    if (!users) {
+      let conversation:
+        | Conversation
+        | undefined = await handleConversation(
+        notification.conversationId!
+      );
 
-    //add user who created this conversation
-    createUserNames.splice(
-      0,
-      0,
-      sender?.firstName + "" + sender?.lastName
-    );
+      let createUserNames: string[] =
+        conversation?.conversationUsers!!.reduce(
+          (newArray: string[], _item) => (
+            newArray.push(_item.firstName + " " + _item.lastName), newArray
+          ),
+          []
+        ) ?? [];
 
-    // if (uni && uni?.chatFeature === 1) {
-    //   SimpleToast.show("Feature turned off.");
-    // } else if (uni && uni.socialFeedFeature === 1) {
-    //   SimpleToast.show("Feature turned off.");
-    // }
+      let _data = {
+        screenName: name,
+        params: {
+          title: createUserNames,
+          conversation: {
+            id: notification.conversationId!,
+            currentUser: conversation?.currentUser
+          } as Conversation
+        },
+        isFeatureLocked: uni && uni?.chatFeature === 1
+      };
 
-    return {
-      screenName: "ChatThread",
-      params: {
-        title: createUserNames,
-        conversation: {
-          id: conversationId,
-          currentUser: [
-            {
-              firstName: sender?.firstName,
-              lastName: sender?.lastName,
-              profilePicture: user?.profile?.profilePicture,
-              status: users?.[0]?.status
-            }
-          ]
-        } as Conversation
-      },
-      isFeatureLocked: uni && uni?.chatFeature === 1
-    };
+      setData(_data);
+
+      return _data;
+    } else {
+      // if (uni && uni?.chatFeature === 1) {
+      //   SimpleToast.show("Feature turned off.");
+      // } else if (uni && uni.socialFeedFeature === 1) {
+      //   SimpleToast.show("Feature turned off.");
+      // }
+
+      let createUserNames: string[] = users?.reduce(
+        (newArray: string[], _item: any) => (
+          _item.id !== user?.profile?.id &&
+            newArray.push(_item.firstName + " " + _item.lastName),
+          newArray
+        ),
+        []
+      ) ?? ["N/A"];
+
+      //add user who created this conversation
+      createUserNames.splice(
+        0,
+        0,
+        sender?.firstName + "" + sender?.lastName
+      );
+
+      return {
+        screenName: name,
+        params: {
+          title: createUserNames,
+          conversation: {
+            id: conversationId,
+            currentUser: [
+              {
+                firstName: sender?.firstName,
+                lastName: sender?.lastName,
+                profilePicture: user?.profile?.profilePicture,
+                status: users?.[0]?.status
+              }
+            ]
+          } as Conversation
+        },
+        isFeatureLocked: uni && uni?.chatFeature === 1
+      };
+    }
   }
+
+  const conversationApi = useApi<any, ConversationByIdResponseModel>(
+    ChatApis.getChatById
+  );
+
+  const handleConversation = useCallback(
+    async (conversationId: number) => {
+      AppLog.log(() => "handleConversation: ");
+
+      const {
+        hasError,
+        errorBody,
+        dataBody
+      } = await conversationApi.request([conversationId]);
+
+      if (hasError) {
+        AppLog.logForcefully(() => "Unable to get response: " + errorBody);
+        return undefined;
+      } else {
+        AppLog.logForcefully(() => JSON.stringify(dataBody));
+        return dataBody!.data!;
+      }
+    },
+    [conversationApi]
+  );
 
   //singlePost
   function navigateToPostScreen(
