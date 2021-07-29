@@ -18,7 +18,6 @@ import Hamburger from "ui/components/molecules/hamburger/Hamburger";
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { NotificationView } from "ui/screens/home/notification/NotificationView";
 import { AppLog } from "utils/Util";
-import { NotificationReadApiRequestModel } from "models/api_requests/NotificationReadApiRequestModel";
 import useNotification from "hooks/useNotification";
 import SimpleToast from "react-native-simple-toast";
 import MarkRead from "assets/images/mark_read.svg";
@@ -28,6 +27,7 @@ import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_w
 import NotificationData from "models/NotificationData";
 
 import _ from "lodash";
+import useNotificationMarkRead from "hooks/useNotificationMarkRead";
 
 type NotificationNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -46,13 +46,11 @@ const NotificationController: FC<Props> = () => {
   const notificationApi = useApi<any, NotificationsResponseModel>(
     ProfileApis.getNotifications
   );
-  const notificationReadApi = useApi<NotificationReadApiRequestModel, any>(
-    ProfileApis.notificationMarkRead
-  );
+
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
+
   const {
     notificationsCount,
-    setNotificationsCount,
     fetchLatestNotificationCount
   } = useNotificationsCount();
 
@@ -136,67 +134,33 @@ const NotificationController: FC<Props> = () => {
     ]
   );
 
-  const handleNotificationMarkRead = useCallback(
-    async (allRead?: boolean, notificationId?: number) => {
-      AppLog.logForcefully(
-        () => "readnotificationApifunctioncall" + notificationId
+  const onNotificationMarkReadSuccess = (
+    allRead?: boolean,
+    notificationId?: number | undefined
+  ) => {
+    if (allRead) {
+      setShouldShowLoader(false);
+      refreshCallback().then().catch();
+    } else {
+      const itemCopy = _.cloneDeep(
+        notifications?.find((item) => item.id === notificationId!!)
       );
-      if (allRead) {
-        setShouldShowLoader(true);
+
+      if (itemCopy) {
+        itemCopy.isRead = 1;
+
+        notifications?.splice(
+          notifications?.findIndex((item) => item.id === notificationId!!),
+          1,
+          itemCopy
+        );
+        setNotifications(_.cloneDeep(notifications));
       }
-      const {
-        hasError,
-        errorBody,
-        dataBody
-      } = await notificationReadApi.request([
-        {
-          all: allRead ?? false,
-          notificationId: notificationId!
-        }
-      ]);
+    }
+  };
 
-      if (hasError) {
-        AppLog.log(() => "Unable to read notification: " + errorBody);
-        return;
-      } else {
-        if (allRead) {
-          SimpleToast.show(dataBody?.message);
-          setNotificationsCount!(0);
-          setShouldShowLoader(false);
-          refreshCallback().then().catch();
-        } else {
-          const itemCopy = _.cloneDeep(
-            notifications?.find((item) => item.id === notificationId!!)
-          );
-
-          if (notificationsCount! > 0) {
-            const updatedCount = notificationsCount! - 1;
-            setNotificationsCount!(updatedCount);
-          }
-
-          if (itemCopy) {
-            itemCopy.isRead = 1;
-
-            notifications?.splice(
-              notifications?.findIndex(
-                (item) => item.id === notificationId!!
-              ),
-              1,
-              itemCopy
-            );
-            setNotifications(_.cloneDeep(notifications));
-          }
-        }
-        AppLog.log(() => dataBody.message);
-      }
-    },
-    [
-      notificationReadApi,
-      notifications,
-      refreshCallback,
-      setNotificationsCount,
-      notificationsCount
-    ]
+  const { handleNotificationMarkRead } = useNotificationMarkRead(
+    onNotificationMarkReadSuccess
   );
 
   useLayoutEffect(() => {
@@ -221,6 +185,7 @@ const NotificationController: FC<Props> = () => {
           )}
           onPress={() => {
             if (notificationsCount !== 0) {
+              setShouldShowLoader(true);
               handleNotificationMarkRead(true);
             }
           }}
@@ -228,11 +193,11 @@ const NotificationController: FC<Props> = () => {
       )
     });
   }, [
+    handleNotificationMarkRead,
     navigation,
     notificationsCount,
     shouldShowLoader,
-    theme,
-    handleNotificationMarkRead
+    theme
   ]);
 
   const onEndReached = useCallback(() => {

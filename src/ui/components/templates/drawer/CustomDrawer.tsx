@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   Image,
-  Platform,
   ScrollView,
   StyleSheet,
   TouchableNativeFeedback,
@@ -33,9 +32,8 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 import { profileCompletedPercentage } from "models/api_responses/FetchMyProfileResponseModel";
 import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount";
 import TwoButtonsInfoAlert from "ui/components/organisms/popup/TwoButtonsInfoAlert";
-import { setBadgeCount } from "react-native-notification-badge";
-import { AppLog } from "utils/Util";
 import EIntBoolean from "models/enums/EIntBoolean";
+import useSetBadgecount from "hooks/useSetBadgecount";
 
 type CustomDrawerProps = DrawerContentComponentProps & {
   currentItem: keyof HomeDrawerParamList;
@@ -49,6 +47,11 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
   const ripple = TouchableNativeFeedback.Ripple("#adacac", false);
 
   const { notificationsCount } = useNotificationsCount();
+  const { updateBadgeCount } = useSetBadgecount();
+
+  useEffect(() => {
+    updateBadgeCount(notificationsCount);
+  }, [notificationsCount, updateBadgeCount]);
 
   const { themedColors } = usePreferredTheme();
   const { state, navigation } = props;
@@ -62,25 +65,6 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
       shouldNotDrawView?: boolean;
     };
   };
-
-  useEffect(() => {
-    AppLog.log(() => "Notification count : " + notificationsCount);
-
-    if (
-      Platform.OS === "android" &&
-      notificationsCount !== undefined &&
-      notificationsCount > 0
-    ) {
-      import("react-native-app-badge").then((ShortcutBadge) => {
-        ShortcutBadge.default.setCount(notificationsCount);
-      });
-    }
-
-    Platform.OS === "ios" &&
-      notificationsCount !== undefined &&
-      notificationsCount > 0 &&
-      setBadgeCount(notificationsCount).then().catch();
-  }, [notificationsCount]);
 
   const DrawerItems: ItemType<HomeDrawerParamList> = {
     Matches: { name: "Matches", icon: Matches },
