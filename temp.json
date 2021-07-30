@@ -1,51 +1,18 @@
 {
-  "duration": 837,
-  "problem": null,
-  "originalError": null,
-  "ok": true,
-  "status": 200,
-  "headers": {
-    "content-type": "application/json; charset=utf-8",
-    "report-to": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v2?s=sRR1X4KLMF9HstvoeyGGCNyIZ%2BGPyJgtMMFueNhO%2BK%2BJMIguPBkob4z49ZFAAtPaxjI7iWuJmZYIGbWDy281yd5z6sMqcirYy2PHaYCSP8ub%2FyoJ65Q%2FdmhPUAqzc2X8\"}],\"group\":\"cf-nel\",\"max_age\":604800}",
-    "x-frame-options": "SAMEORIGIN",
-    "cf-request-id": "0b0291f83900005664e6027000000001",
-    "cf-cache-status": "DYNAMIC",
-    "x-powered-by": "Express",
-    "date": "Thu, 01 Jul 2021 07:29:21 GMT",
-    "cf-ray": "667dec39fc5f5664-SIN",
-    "alt-svc": "h3-27=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3=\":443\"; ma=86400",
-    "x-xss-protection": "1; mode=block",
-    "content-encoding": "br",
-    "nel": "{\"report_to\":\"cf-nel\",\"max_age\":604800}",
-    "server": "cloudflare",
-    "strict-transport-security": "max-age=0; includeSubDomains",
-    "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
-    "x-content-type-options": "nosniff",
-    "etag": "W/\"29-ay7GTOfLJMl1BhcyxVF2urQHM0s\"",
-    "vary": "Origin"
+  "androidNotificationId": 0,
+  "groupedNotifications": [],
+  "notificationId": "746270c2-a337-4927-b93d-8a04083c0154",
+  "templateName": "",
+  "templateId": "",
+  "body": "Cecelia Coleman has sent you a Roommate request.",
+  "lockScreenVisibility": 1,
+  "fromProjectNumber": "909996454299",
+  "priority": 0,
+  "additionalData": {
+    "senderId": 1163,
+    "action": "receive",
+    "type": "roommate-request",
+    "referenceId": 1163
   },
-  "config": {
-    "url": "relation",
-    "method": "get",
-    "headers": {
-      "Accept": "application/json",
-      "subdomain": "ohio-dev",
-      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQ2OCwidXNlcklkIjozMSwiY2xpZW50SWQiOiIxIiwic2NvcGVzIjpbImNvbW11bml0eSIsImFubm91bmNlbWVudHMiLCJsaXN0LXF1ZXN0aW9uIiwibGlzdC1zZWN0aW9uIiwibGlzdC1hZ3JlZW1lbnQtZmllbGRzIiwidmlldy1zdGF0aWMtY29udGVudCIsImxpc3QtY29uZmlndXJhdGlvbiIsImxpc3QtZm9ybS1pbnB1dCIsInN5c3RlbS1sb2ciLCJjb252ZXJzYXRpb24iLCJtYXJrLXNwYW0iLCJub3RpZmljYXRpb24iLCJhZ3JlZW1lbnQtYW5zd2VyIiwidXBkYXRlLWFncmVlbWVudC1hbnN3ZXIiLCJxdWVzdGlvbmFpcmUtYW5zd2VyIiwidXNlcnMiLCJtYXRjaGluZy1pbmZvcm1hdGlvbiIsInJlbGF0aW9uIiwiY2hhdCIsImRlbGV0ZS1maWxlIl0sImlhdCI6MTYyNTA1OTQxOSwiZXhwIjoxNjI3NjUxNDE5fQ.dNK_7oWwaVN4S2MeOeUgNQ1lSS846FKb5pVErR0KI98"
-    },
-    "params": {
-      "type": "matches",
-      "page": 1,
-      "limit": 9,
-      "paginate": true
-    },
-    "baseURL": "https://mcr-dev.cygnis.dev/api/",
-    "transformRequest": [null],
-    "transformResponse": [null],
-    "timeout": 0,
-    "xsrfCookieName": "XSRF-TOKEN",
-    "xsrfHeaderName": "X-XSRF-TOKEN",
-    "maxContentLength": -1,
-    "maxBodyLength": -1
-  },
-  "data": { "message": "Success", "data": [], "count": 0 }
+  "rawPayload": "{\"google.delivered_priority\":\"normal\",\"google.sent_time\":1625477998665,\"google.ttl\":259200,\"google.original_priority\":\"normal\",\"custom\":\"{\\\"a\\\":{\\\"senderId\\\":1163,\\\"action\\\":\\\"receive\\\",\\\"type\\\":\\\"roommate-request\\\",\\\"referenceId\\\":1163},\\\"i\\\":\\\"746270c2-a337-4927-b93d-8a04083c0154\\\"}\",\"from\":\"909996454299\",\"alert\":\"Cecelia Coleman has sent you a Roommate request.\",\"google.message_id\":\"0:1625477998682233%0d5f1ef5f9fd7ecd\",\"google.c.sender.id\":\"909996454299\"}"
 }
