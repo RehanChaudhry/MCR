@@ -16,11 +16,9 @@ export default () => {
         ShortcutBadge.default.setCount(notificationCount ?? 0);
       });
     } else {
-      notificationCount === undefined &&
-        setBadgeCount(getBadgeCountSync());
-
-      notificationCount !== undefined &&
-        setBadgeCount(notificationCount).then().catch();
+      setBadgeCount(notificationCount ?? getBadgeCountSync())
+        .then()
+        .catch();
     }
   };
 
