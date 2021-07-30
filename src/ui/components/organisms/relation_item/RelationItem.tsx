@@ -369,12 +369,13 @@ const RelationListsItem = ({
               }
             />
           </Pressable>
-          {relationModel.matchScore !== undefined && (
-            <MatchScore
-              style={styles.matchScore}
-              matchScore={`${relationModel.matchScore}%`}
-            />
-          )}
+          {uni?.displayMatch === 1 &&
+            relationModel.matchScore !== undefined && (
+              <MatchScore
+                style={styles.matchScore}
+                matchScore={`${relationModel.matchScore}%`}
+              />
+            )}
         </View>
       </View>
       <View style={styles.topEndButtons}>

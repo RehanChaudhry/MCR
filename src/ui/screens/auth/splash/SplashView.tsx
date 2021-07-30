@@ -186,6 +186,7 @@ export const SplashView = React.memo<Props>(() => {
         secondary: updatedUni.secondaryColorDark
       });
 
+      updatedUni.displayMatch = 0;
       await auth.saveUni(updatedUni);
       setUni(updatedUni);
     } else {
