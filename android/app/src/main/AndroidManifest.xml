@@ -6,6 +6,8 @@
 
     <!--This permission is only for vivo device-->
     <uses-permission android:name="com.vivo.notification.permission.BADGE_ICON" />
+        <!--This permission is only for Huawei device-->
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>
 
     <uses-permission
         android:name="com.sec.android.provider.badge.permission.READ"
