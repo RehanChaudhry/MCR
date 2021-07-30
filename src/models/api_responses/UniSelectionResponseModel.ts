@@ -33,6 +33,7 @@ export type Uni = {
   socialFeedFeature: number;
   allowDisplayProfiles: number;
   roommateAgreementFeature: number;
+  displayMatch: number;
   displayMCRLogo: number;
   interfaceColor: string;
   isPrimaryCustom: number;
