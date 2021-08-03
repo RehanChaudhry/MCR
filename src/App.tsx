@@ -8,6 +8,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PushNotification } from "utils/PushNotification";
 import useNotification from "hooks/useNotification";
 import { PushNotificationContext } from "hooks/usePushNotificationContextToNavigate";
+import useNotificationMarkRead from "hooks/useNotificationMarkRead";
 
 type Props = {};
 
@@ -21,10 +22,20 @@ const App: React.FC<Props> = () => {
   } = useNotification();
   //Configure OneSignal
 
+  const { handleNotificationMarkRead } = useNotificationMarkRead();
+
   PushNotification.init((data) => {
-    AppLog.log(() => "OneSignal: setNotificationOpenedHandler: ", data);
+    AppLog.logForcefully(
+      () => "OneSignal: setNotificationOpenedHandler: ",
+      data
+    );
+
     const { additionalData } = data.notification;
     const _additionalData: any = additionalData;
+
+    //mark notification as read, when notification id is coming in payload
+    handleNotificationMarkRead(false, _additionalData.id);
+
     handleNotification({
       action: _additionalData.action,
       type: _additionalData.type,
