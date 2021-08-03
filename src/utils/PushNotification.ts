@@ -1,4 +1,7 @@
-import OneSignal, { OpenedEvent } from "react-native-onesignal";
+import OneSignal, {
+  NotificationReceivedEvent,
+  OpenedEvent
+} from "react-native-onesignal";
 import Env from "envs/env";
 import { AppLog } from "./Util";
 
@@ -16,7 +19,11 @@ export const PushNotification = {
 
     OneSignal.setNotificationOpenedHandler(onSetNotificationOpenedHandler);
   },
-
+  setForegroundHandler: (
+    handler: (event: NotificationReceivedEvent) => void
+  ) => {
+    OneSignal.setNotificationWillShowInForegroundHandler(handler);
+  },
   registerUser: (userId: number | undefined) => {
     userId && OneSignal.sendTag("user_id", userId.toString());
   },

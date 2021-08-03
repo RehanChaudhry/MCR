@@ -24,10 +24,20 @@ import { AddInterestsController } from "ui/screens/home/profile/update_profile/a
 import { NewConversationController } from "ui/screens/chat/new/NewConversationController";
 import MyFriendsController from "ui/screens/home/friends/MyFriends/MyFriendsController";
 import SeeLikesController from "ui/screens/home/see_likes/SeeLikeController";
+import { PushNotification } from "utils/PushNotification";
+import useNotificationsCount from "ui/screens/home/friends/useNotificationsCount";
+import { AppLog } from "utils/Util";
 
 const Stack = createStackNavigator();
 
 export const HomeStackRoutes = () => {
+  const { fetchLatestNotificationCount } = useNotificationsCount();
+
+  PushNotification.setForegroundHandler((event) => {
+    AppLog.logForcefully(() => "OneSignal: setForegroundHandler: ", event);
+    fetchLatestNotificationCount().then().catch();
+  });
+
   return (
     <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
       {/* Root */}
