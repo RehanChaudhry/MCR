@@ -8,9 +8,10 @@ interface Props {
   text: string;
   style: StyleProp<TextStyle>;
   textStyle?: StyleProp<TextStyle>;
-  onBoldTextPress?: () => void;
+  onBoldTextPress?: (boldText?: string) => void;
   numberOfLines?: number;
   shouldNotOptimize?: boolean;
+  allowclickOnAllOddIndexes?: boolean;
 }
 const LabelHtml: React.FC<Props> = ({
   containerStyle,
@@ -19,7 +20,8 @@ const LabelHtml: React.FC<Props> = ({
   onBoldTextPress,
   numberOfLines,
   textStyle,
-  shouldNotOptimize = false
+  shouldNotOptimize = false,
+  allowclickOnAllOddIndexes = false
 }: Props) => {
   const { themedColors } = usePreferredTheme();
   let texts: string[] = text.split(/<b>|<\/b>/g);
@@ -28,7 +30,11 @@ const LabelHtml: React.FC<Props> = ({
     let appLabelProp: AppLabelProps;
     if (index % 2 !== 0) {
       appLabelProp = {
-        onPress: index === 1 ? onBoldTextPress : undefined,
+        onPress: () => {
+          allowclickOnAllOddIndexes || index === 1
+            ? onBoldTextPress?.(_)
+            : undefined;
+        },
         style: [
           {
             color: themedColors.primary
@@ -51,6 +57,7 @@ const LabelHtml: React.FC<Props> = ({
     }
     appLabelProps.push(appLabelProp);
   });
+
   return (
     <MultilineSpannableText
       appLabelProps={appLabelProps}

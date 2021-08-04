@@ -19,7 +19,10 @@ type Props = {
   onEndReached: () => void;
   isAllDataLoaded: boolean;
   onChangeFilter: (textToFilter: string) => void;
-  navigateToScreen: (activityLog: ActivityLog) => void;
+  navigateToScreen: (
+    activityLog: ActivityLog,
+    clickedText?: string
+  ) => void;
 };
 
 export const ActivityLogView = React.memo<Props>(
