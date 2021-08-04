@@ -25,16 +25,14 @@ export function getDisplayTime(activityLog: ActivityLog): string {
 }
 
 const getUsers = (users: [User], currentUser: UserModel | undefined) => {
-  return `${users.reduce(
+  return `<b>${users.reduce(
     (newArray: string[], _item: User) => (
       currentUser?.profile?.id !== _item.id &&
-        newArray.push(
-          "<b>" + _item.firstName + " " + _item.lastName + "</b>"
-        ),
+        newArray.push(_item.firstName + " " + _item.lastName),
       newArray
     ),
     []
-  )}`;
+  )} </b>`;
 };
 
 // @ts-ignore

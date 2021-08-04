@@ -35,7 +35,7 @@ type Props = {};
 
 const ActivityLogController: FC<Props> = () => {
   const navigation = useNavigation<ActivityLogNavigationProp>();
-  const { uni } = useAuth();
+  const { user, uni } = useAuth();
 
   const [
     activityLogs,
@@ -181,10 +181,7 @@ const ActivityLogController: FC<Props> = () => {
     navigation.push("Questionnaire", { isFrom: EScreen.ACTIVTY_LOG });
   });
 
-  const navigateToScreen = (
-    activityLog: ActivityLog,
-    clickedText?: string
-  ) => {
+  const navigateToScreen = (activityLog: ActivityLog) => {
     const { type, action, user: _user, entityId, data } = activityLog;
 
     if (!type || !action) {
@@ -269,17 +266,12 @@ const ActivityLogController: FC<Props> = () => {
       type === NotificationAndActivityLogFilterType.NEW_CONVERSATION &&
       action === Actions.CREATE
     ) {
-      const userData = data?.find((item: any) =>
-        clickedText?.includes(item.firstName + " " + item.lastName)
+      const userData = data?.filter(
+        (item: any) => item.id !== user?.profile?.id
       );
-
-      if (!userData) {
-        return;
-      }
-
       return openMyProfileScreen(
-        userData.id,
-        userData.firstName + " " + userData.lastName
+        userData[0].id,
+        userData[0].firstName + " " + userData[0].lastName
       );
     } else if (
       type === NotificationAndActivityLogFilterType.QUESTIONAIRE

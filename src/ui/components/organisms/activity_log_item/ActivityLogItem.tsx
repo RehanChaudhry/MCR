@@ -27,10 +27,7 @@ import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
 interface Props {
   activityLog: ActivityLog;
-  navigateToScreen: (
-    activityLog: ActivityLog,
-    clickedText?: string
-  ) => void;
+  navigateToScreen: (activityLog: ActivityLog) => void;
 }
 
 const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
@@ -198,10 +195,7 @@ const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
           containerStyle={styles.message}
           style={styles.messageText}
           numberOfLines={3}
-          onBoldTextPress={(clickedText) =>
-            navigateToScreen(activityLog, clickedText)
-          }
-          allowclickOnAllOddIndexes={true}
+          onBoldTextPress={() => navigateToScreen(activityLog)}
           text={getMessage(activityLog, user) ?? STRINGS.common.not_found}
         />
         <AppLabel
