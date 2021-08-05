@@ -61,6 +61,7 @@ export const ChatThreadScreen = React.memo<Props>(
           inverted={true}
           shouldShowProgressBar={shouldShowProgressBar}
           error={error}
+          noRecordFoundText={Strings.chatThreadScreen.noRecordText}
           isAllDataLoaded={isAllDataLoaded}
           onEndReached={onEndReached}
           retryCallback={retryCallback}

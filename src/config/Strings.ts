@@ -262,7 +262,8 @@ export default {
   chatThreadScreen: {
     titleLeft: "Close",
     titleRight: "Archive",
-    typingHint: "Start typing your message"
+    typingHint: "Start typing your message",
+    noRecordText: "“It’s nice to chat with someone. Say hello!”"
   },
 
   createPost: {

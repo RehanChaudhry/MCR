@@ -89,7 +89,7 @@ const Roommates: React.FC<Props> = ({
         <AgreementIcon
           height={20}
           width={20}
-          color={themedColors.primary}
+          fill={themedColors.primary}
         />
       )}
       viewStyle={styles.roommateAgreementView}

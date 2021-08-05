@@ -168,7 +168,7 @@ export const MatchInfoView: React.FC<Props> = ({
             title={
               matchInfo.deadline
                 ? moment(matchInfo?.deadline).format("MMMM DD, YYYY")
-                : STRINGS.common.not_found
+                : STRINGS.common.not_available
             }
           />
           <Divider style={{ backgroundColor: themedColors.separator }} />
