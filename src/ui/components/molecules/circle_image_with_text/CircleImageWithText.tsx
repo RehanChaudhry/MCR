@@ -157,7 +157,6 @@ export const CircleImageWithText = React.memo<Props>(
         <View style={styles.viewRequest}>
           <View style={styles.circleWithText}>
             <LabelHtml
-              style={styles.messageText}
               numberOfLines={3}
               onBoldTextPress={() => {
                 userNameOnPress(
@@ -255,7 +254,6 @@ const styles = StyleSheet.create({
   viewRequest: {
     flex: 1
   },
-  messageText: { fontSize: FONT_SIZE.sm },
   text: { fontSize: FONT_SIZE.sm },
   buttonContainer: {
     flex: 1,

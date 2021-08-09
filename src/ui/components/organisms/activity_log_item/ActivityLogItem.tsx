@@ -203,6 +203,7 @@ const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
           }
           allowclickOnAllOddIndexes={true}
           text={getMessage(activityLog, user) ?? STRINGS.common.not_found}
+          shouldNotOptimize={true}
         />
         <AppLabel
           style={[styles.date, { color: themedColors.interface[600] }]}
@@ -225,6 +226,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 20
   },
+  //backgroundColor: "red", paddingTop: 10
   message: {},
   messageText: { fontSize: FONT_SIZE.sm },
   endContainer: {

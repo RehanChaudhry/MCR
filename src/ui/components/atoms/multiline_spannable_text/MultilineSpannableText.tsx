@@ -29,6 +29,7 @@ const MultilineSpannableText = React.memo<Props>(
                 key={index}
                 text={item}
                 {...appLabelProps[index]}
+                shouldNotOptimize={true}
               />
             ))}
           </Text>
