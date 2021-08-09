@@ -18,7 +18,8 @@ enum NotificationAndActivityLogFilterType {
   AGREED = "agreed",
   COMMENT = "comment",
   RESTORED = "restored",
-  ROOMMATE_GROUP = "roommate-group"
+  ROOMMATE_GROUP = "roommate-group",
+  BLOCKED = "blocked"
 }
 
 export default NotificationAndActivityLogFilterType;

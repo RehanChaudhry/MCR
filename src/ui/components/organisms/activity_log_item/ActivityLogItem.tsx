@@ -143,6 +143,12 @@ const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
         activityLog.action === Actions.ACCEPTED
       ) {
         return <Agreement width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.BLOCKED &&
+        activityLog.action === Actions.CREATE
+      ) {
+        return <Dismissed width={20} fill={themedColors.background} />;
       }
     } else {
       return null;
@@ -196,7 +202,7 @@ const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
       <View style={styles.endContainer}>
         <LabelHtml
           containerStyle={styles.message}
-          style={styles.messageText}
+          textStyle={styles.messageText}
           numberOfLines={3}
           onBoldTextPress={(clickedText) =>
             navigateToScreen(activityLog, clickedText)

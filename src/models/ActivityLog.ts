@@ -181,6 +181,13 @@ export function getMessage(
         activityLog.data,
         user
       )} `;
+    } else if (
+      activityLog.type === NotificationAndActivityLogFilterType.BLOCKED &&
+      activityLog.action === Actions.CREATE
+    ) {
+      return `Added  <b>${activityLog.data?.firstName}${
+        " " + activityLog.data?.lastName
+      }</b> to the blocked list `;
     } else {
       return "Commented on any post";
     }
