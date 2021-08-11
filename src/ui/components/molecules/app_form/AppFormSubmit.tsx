@@ -26,7 +26,7 @@ export const AppFormFormSubmit = optimizedMemo<Props>(({ ...rest }) => {
         if (isValid) {
           handleSubmit();
         } else {
-          SimpleToast.show("Please fill all required fields correctly.");
+          SimpleToast.show("All highlighted fields are required.");
           submitForm().then().catch();
         }
       }}
