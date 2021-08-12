@@ -12,6 +12,7 @@ import TwoButtonsAlert, {
 } from "ui/screens/home/friends/MyFriends/TwoButtonsAlert";
 import InfoAlert from "./InfoAlert";
 import RelationListsItem from "ui/components/organisms/relation_item/RelationItem";
+import EScreen from "../../../../../models/enums/EScreen";
 
 type Props = {
   friendsCount: number;
@@ -87,6 +88,7 @@ const listItem = (
     <RelationListsItem
       relationModel={_item}
       onCrossClicked={onPressCross}
+      isFromFriendsListing={EScreen.MY_FRIENDS}
       onChatButtonClicked={onPressChat}
       onUserClicked={moveToProfileScreen}
       onRoommateRequestActionButtonClicked={showRequestAlert}

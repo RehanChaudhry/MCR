@@ -133,8 +133,11 @@ export default {
     label_roommate_request: "Roommate Request",
     label_request_received: "Request Received",
     label_remove_roommate: "Remove Roommate",
+    label_roommate: "Roommate",
     label_unblocked: "Unblock",
-    label_restore: "Restore"
+    label_restore: "Restore",
+    label_tool_tip:
+      "This list will not show individuals who haven't filled their Questionnaires yet or are your Roommates already."
   },
   profile: {
     title:

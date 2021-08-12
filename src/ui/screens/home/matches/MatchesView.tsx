@@ -19,6 +19,7 @@ import TwoButtonsAlert, {
   Type
 } from "ui/screens/home/friends/MyFriends/TwoButtonsAlert";
 import { capitalizeWords } from "utils/Util";
+import { AppLabel } from "../../../components/atoms/app_label/AppLabel";
 
 type Props = {
   isLoading: boolean;
@@ -158,6 +159,7 @@ export const MatchesView: React.FC<Props> = ({
   return (
     <Screen style={styles.container}>
       <MatchesFilter onFilterChange={onKeywordAndGenderChange} />
+
       <FlatListWithPb<RelationModel>
         style={styles.matchesList}
         shouldShowProgressBar={isLoading}
@@ -172,6 +174,14 @@ export const MatchesView: React.FC<Props> = ({
         isAllDataLoaded={isAllDataLoaded}
         keyExtractor={(item) => item.userId?.toString()}
         error={error}
+        ListHeaderComponent={() => (
+          <AppLabel
+            text={Strings.matches.label_tool_tip}
+            numberOfLines={0}
+            shouldNotOptimize={true}
+            style={styles.toolTipText}
+          />
+        )}
         retryCallback={pullToRefreshCallback}
       />
       <TwoButtonsAlert
@@ -249,5 +259,8 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.base
   },
   dialogTitleStyle: { fontSize: FONT_SIZE.base, textAlign: "center" },
-  dialogMessageStyle: { fontSize: FONT_SIZE.sm, textAlign: "center" }
+  dialogMessageStyle: { fontSize: FONT_SIZE.sm, textAlign: "center" },
+  toolTipText: {
+    marginBottom: SPACE.md
+  }
 });

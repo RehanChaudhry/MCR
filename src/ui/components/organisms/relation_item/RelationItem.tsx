@@ -9,7 +9,7 @@ import { Image, Pressable, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import MatchScore from "ui/components/molecules/match_score/MatchScore";
-import { shadowStyleProps } from "utils/Util";
+import { AppLog, shadowStyleProps } from "utils/Util";
 import getRelationStatus, {
   Eligible,
   RelationType
@@ -17,6 +17,7 @@ import getRelationStatus, {
 import RequestStateIcon from "assets/images/request_state_icon.svg";
 import { ChatButton } from "ui/components/molecules/chat_button/ChatButton";
 import useAuth from "hooks/useAuth";
+import EScreen from "../../../../models/enums/EScreen";
 
 interface Props {
   relationModel: RelationModel;
@@ -24,6 +25,7 @@ interface Props {
   onCrossClicked?: (relationModel: RelationModel) => void;
   onChatButtonClicked: (relationModel: RelationModel) => void;
   onUserClicked: (relationModel: RelationModel) => void;
+  isFromFriendsListing?: EScreen;
   onRoommateRequestActionButtonClicked?: (
     relationModel: RelationModel
   ) => void;
@@ -69,7 +71,8 @@ function createActionButton(
   onRestoreDismissedActionButtonClicked?: (
     relationModel: RelationModel
   ) => void,
-  onUnBlockedActionButtonClicked?: (relationModel: RelationModel) => void
+  onUnBlockedActionButtonClicked?: (relationModel: RelationModel) => void,
+  isFromFriendsListing?: EScreen
 ) {
   let actionButton: React.ReactElement;
 
@@ -93,6 +96,14 @@ function createActionButton(
     actionButton = createRestoreButton();
   } else if (status === "blocked") {
     actionButton = createUnblockButton();
+  } else if (
+    isFriend === 1 &&
+    isRoommate === 1 &&
+    status === "accepted" &&
+    isFromFriendsListing === EScreen.MY_FRIENDS
+  ) {
+    AppLog.logForcefully(() => "isDisable: " + status);
+    actionButton = createDisableButton();
   } else if (
     isFriend === 0 &&
     isRoommate === 0 &&
@@ -124,6 +135,7 @@ function createActionButton(
       actionButton = createRequestReceivedButton(false);
     }
   } else if (isFriend === 1 && isRoommate === 1) {
+    AppLog.logForcefully(() => "isRemove: " + status);
     actionButton = createRemoveRoommateButton();
   }
 
@@ -194,6 +206,33 @@ function createActionButton(
           { backgroundColor: themedColors.interface[200] }
         ]}
         text={STRINGS.matches.label_remove_roommate}
+      />
+    );
+  }
+
+  function createDisableButton(): React.ReactElement<
+    any,
+    string | React.JSXElementConstructor<any>
+  > {
+    AppLog.logForcefully(() => "isDisable: ");
+    return (
+      <AppButton
+        fontWeight={"semi-bold"}
+        textStyle={[styles.btnActionText, { color: themedColors.danger }]}
+        textDisableStyle={[
+          styles.btnActionText,
+          { color: themedColors.interface[600], opacity: 0.5 }
+        ]}
+        isDisable={true}
+        buttonStyle={[
+          styles.btnAction,
+          { backgroundColor: themedColors.dangerShade }
+        ]}
+        buttonDisableStyle={[
+          styles.btnAction,
+          { backgroundColor: themedColors.interface[200] }
+        ]}
+        text={STRINGS.matches.label_roommate}
       />
     );
   }
@@ -303,6 +342,7 @@ const RelationListsItem = ({
   onCrossClicked,
   onChatButtonClicked,
   onUserClicked,
+  isFromFriendsListing,
   onRoommateRequestActionButtonClicked,
   onCancelRequestActionButtonClicked,
   onFriendRequestReceivedActionButtonClicked,
@@ -427,7 +467,8 @@ const RelationListsItem = ({
           onNotEligibleActionButtonClicked,
           onRemoveRoommateActionButtonClicked,
           onRestoreDismissedActionButtonClicked,
-          onUnBlockedActionButtonClicked
+          onUnBlockedActionButtonClicked,
+          isFromFriendsListing
         )}
       </View>
     </View>

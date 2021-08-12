@@ -112,6 +112,8 @@ const MyFriendsController: FC<Props> = () => {
     );
   };
 
+  AppLog.logForcefully(() => "Friends: " + JSON.stringify(myFriends));
+
   return (
     <MyFriendsView
       friendsCount={friendsCount}
