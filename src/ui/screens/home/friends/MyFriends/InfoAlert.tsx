@@ -20,7 +20,7 @@ const InfoAlert: FC<Props> = React.memo(
       <AppPopUp
         isVisible={shouldShow}
         title={title}
-        message={message}
+        isRenderHtml={message}
         actions={[
           {
             title: "OK",

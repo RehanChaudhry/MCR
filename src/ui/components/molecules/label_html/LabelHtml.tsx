@@ -6,20 +6,20 @@ import { AppLabelProps } from "ui/components/atoms/app_label/AppLabel";
 interface Props {
   containerStyle?: StyleProp<ViewStyle>;
   text: string;
-  style: StyleProp<TextStyle>;
-  textStyle?: StyleProp<TextStyle>;
-  onBoldTextPress?: () => void;
+  textStyle: StyleProp<TextStyle>;
+  onBoldTextPress?: (boldText?: string) => void;
   numberOfLines?: number;
   shouldNotOptimize?: boolean;
+  allowclickOnAllOddIndexes?: boolean;
 }
 const LabelHtml: React.FC<Props> = ({
   containerStyle,
   text,
-  style,
+  textStyle,
   onBoldTextPress,
   numberOfLines,
-  textStyle,
-  shouldNotOptimize = false
+  shouldNotOptimize = false,
+  allowclickOnAllOddIndexes = false
 }: Props) => {
   const { themedColors } = usePreferredTheme();
   let texts: string[] = text.split(/<b>|<\/b>/g);
@@ -28,12 +28,16 @@ const LabelHtml: React.FC<Props> = ({
     let appLabelProp: AppLabelProps;
     if (index % 2 !== 0) {
       appLabelProp = {
-        onPress: index === 1 ? onBoldTextPress : undefined,
+        onPress: () => {
+          allowclickOnAllOddIndexes || index === 1
+            ? onBoldTextPress?.(_)
+            : undefined;
+        },
         style: [
           {
             color: themedColors.primary
           },
-          style
+          textStyle
         ],
         weight: "semi-bold",
         shouldNotOptimize: shouldNotOptimize

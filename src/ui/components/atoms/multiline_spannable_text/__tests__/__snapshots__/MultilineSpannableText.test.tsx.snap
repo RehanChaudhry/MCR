@@ -9,6 +9,7 @@ exports[`Snapshot testing 1`] = `
   >
     <Text
       numberOfLines={1}
+      shouldNotOptimize={true}
       style={
         Array [
           Array [
@@ -35,6 +36,7 @@ exports[`Snapshot testing 1`] = `
     </Text>
     <Text
       numberOfLines={1}
+      shouldNotOptimize={true}
       style={
         Array [
           Array [
@@ -61,6 +63,7 @@ exports[`Snapshot testing 1`] = `
     </Text>
     <Text
       numberOfLines={1}
+      shouldNotOptimize={true}
       style={
         Array [
           Array [

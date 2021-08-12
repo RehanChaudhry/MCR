@@ -25,14 +25,16 @@ export function getDisplayTime(activityLog: ActivityLog): string {
 }
 
 const getUsers = (users: [User], currentUser: UserModel | undefined) => {
-  return `<b>${users.reduce(
+  return `${users.reduce(
     (newArray: string[], _item: User) => (
       currentUser?.profile?.id !== _item.id &&
-        newArray.push(_item.firstName + " " + _item.lastName),
+        newArray.push(
+          "<b>" + _item.firstName + " " + _item.lastName + "</b>"
+        ),
       newArray
     ),
     []
-  )} </b>`;
+  )}`;
 };
 
 // @ts-ignore
@@ -179,6 +181,13 @@ export function getMessage(
         activityLog.data,
         user
       )} `;
+    } else if (
+      activityLog.type === NotificationAndActivityLogFilterType.BLOCKED &&
+      activityLog.action === Actions.CREATE
+    ) {
+      return `Added  <b>${activityLog.data?.firstName}${
+        " " + activityLog.data?.lastName
+      }</b> to the blocked list `;
     } else {
       return "Commented on any post";
     }

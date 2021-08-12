@@ -27,7 +27,10 @@ import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 
 interface Props {
   activityLog: ActivityLog;
-  navigateToScreen: (activityLog: ActivityLog) => void;
+  navigateToScreen: (
+    activityLog: ActivityLog,
+    clickedText?: string
+  ) => void;
 }
 
 const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
@@ -140,6 +143,12 @@ const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
         activityLog.action === Actions.ACCEPTED
       ) {
         return <Agreement width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.BLOCKED &&
+        activityLog.action === Actions.CREATE
+      ) {
+        return <Dismissed width={20} fill={themedColors.background} />;
       }
     } else {
       return null;
@@ -193,10 +202,14 @@ const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
       <View style={styles.endContainer}>
         <LabelHtml
           containerStyle={styles.message}
-          style={styles.messageText}
+          textStyle={styles.messageText}
           numberOfLines={3}
-          onBoldTextPress={() => navigateToScreen(activityLog)}
+          allowclickOnAllOddIndexes={true}
+          onBoldTextPress={(clickedText) =>
+            navigateToScreen(activityLog, clickedText)
+          }
           text={getMessage(activityLog, user) ?? STRINGS.common.not_found}
+          shouldNotOptimize={true}
         />
         <AppLabel
           style={[styles.date, { color: themedColors.interface[600] }]}
@@ -219,6 +232,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 20
   },
+  //backgroundColor: "red", paddingTop: 10
   message: {},
   messageText: { fontSize: FONT_SIZE.sm },
   endContainer: {

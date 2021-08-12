@@ -8,6 +8,7 @@ import {
   AppLabelProps
 } from "ui/components/atoms/app_label/AppLabel";
 import { moderateScale } from "config/Dimens";
+import LabelHtml from "ui/components/molecules/label_html/LabelHtml";
 
 export type Action = {
   title: string;
@@ -25,6 +26,7 @@ type Props = {
 
   actions?: Action[];
   customActionButtons?: React.ReactElement;
+  isRenderHtml?: string;
 };
 
 const AppPopUp: FC<Props> = ({
@@ -34,7 +36,8 @@ const AppPopUp: FC<Props> = ({
   actions,
   titleStyle,
   messageStyle,
-  customActionButtons
+  customActionButtons,
+  isRenderHtml
 }) => {
   const theme = usePreferredTheme();
 
@@ -77,6 +80,12 @@ const AppPopUp: FC<Props> = ({
                 text={message}
                 numberOfLines={0}
                 {...messageStyle}
+              />
+            )}
+            {isRenderHtml && (
+              <LabelHtml
+                text={isRenderHtml}
+                textStyle={styles.messageText}
               />
             )}
           </View>
@@ -151,7 +160,8 @@ const styles = StyleSheet.create({
   },
   spacer: {
     padding: SPACE.xs
-  }
+  },
+  messageText: { fontSize: FONT_SIZE.sm }
 });
 
 export default AppPopUp;
