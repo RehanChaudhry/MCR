@@ -190,8 +190,12 @@ export const MatchInfoView: React.FC<Props> = ({
               />
             )}
             heading={STRINGS.matchInfo.max_roommate_count}
-            title={matchInfo?.noOfRoommates ?? STRINGS.common.not_found}
+            title={
+              matchInfo?.noOfRoommates!.replace("</br> ", "\n") ??
+              STRINGS.common.not_found
+            }
           />
+
           <Divider style={{ backgroundColor: themedColors.separator }} />
           <SocialDetailForm
             mainContainerStyle={styles.socialDetailContainer}
