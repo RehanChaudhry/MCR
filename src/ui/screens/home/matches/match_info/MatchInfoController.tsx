@@ -1,5 +1,6 @@
 import React, {
   FC,
+  useCallback,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -81,16 +82,16 @@ const MatchInfoController: FC<Props> = () => {
     );
   };
 
-  const moveToProfileScreen = (profileMatch: RelationModel) => {
-    AppLog.log(
-      () =>
-        "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
-    );
-    navigation.navigate("ViewProfile", {
-      isFrom: EScreen.MATCH_INFO,
-      userId: profileMatch.userId
-    });
-  };
+  const moveToProfileScreen = useCallback(
+    (userId: number, name: string) => {
+      navigation.navigate("ViewProfile", {
+        isFrom: EScreen.MATCH_INFO,
+        userId: userId,
+        userName: name
+      });
+    },
+    [navigation]
+  );
 
   const moveToRoommateAgreementScreen = () => {
     navigation.navigate("RoommateAgreement", {

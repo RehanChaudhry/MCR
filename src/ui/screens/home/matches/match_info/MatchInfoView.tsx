@@ -30,7 +30,7 @@ type Props = {
   matchInfo: MatchInfoData;
   roommates?: RelationModel[];
   moveToChatScreen: (profileMatch: RelationModel) => void;
-  moveToProfileScreen: (profileMatch: RelationModel) => void;
+  moveToProfileScreen?: (userId: number, name: string) => void;
   moveToRoommateAgreementScreen: () => void;
   moveToUpdateProfileScreen: () => void;
   moveToQuestionnaireScreen: () => void;
@@ -43,7 +43,8 @@ export const MatchInfoView: React.FC<Props> = ({
   moveToRoommateAgreementScreen,
   moveToUpdateProfileScreen,
   moveToQuestionnaireScreen,
-  roommates
+  roommates,
+  moveToProfileScreen
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -228,6 +229,7 @@ export const MatchInfoView: React.FC<Props> = ({
             roommates={roommates}
             onChatClicked={moveToChatScreen}
             onRoommateAgreementClicked={moveToRoommateAgreementScreen}
+            moveToProfileScreen={moveToProfileScreen}
           />
         )}
       </ScrollView>

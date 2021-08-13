@@ -25,6 +25,7 @@ interface Props {
   onRoommateAgreementClicked?: () => void;
   userName?: string;
   showFooter?: boolean;
+  moveToProfileScreen?: (userId: number, name: string) => void;
 }
 
 const Roommates: React.FC<Props> = ({
@@ -33,7 +34,8 @@ const Roommates: React.FC<Props> = ({
   roommates,
   style,
   userName,
-  showFooter = true
+  showFooter = true,
+  moveToProfileScreen
 }: Props) => {
   const { themedColors } = usePreferredTheme();
 
@@ -52,6 +54,12 @@ const Roommates: React.FC<Props> = ({
   const auth = useAuth();
 
   const renderItem = ({ item }: { item: RelationModel }) => {
+    const onImageClicked = () => {
+      moveToProfileScreen?.(
+        item!.userId,
+        `${item.user?.firstName} ${item.user?.lastName}`
+      );
+    };
     return (
       <AnnouncementHeader
         leftImageUrl={item?.user?.profilePicture?.fileURL}
@@ -61,6 +69,8 @@ const Roommates: React.FC<Props> = ({
         }
         subTitle={`${item?.user?.hometown}, ${item?.user?.major}`}
         shouldShowRightImage={auth.uni?.chatFeature === EIntBoolean.TRUE}
+        onUserNameClicked={onImageClicked}
+        onProfileImageClicked={onImageClicked}
         onRightBtnClicked={() => {
           onChatClicked?.(item);
         }}
