@@ -4,12 +4,12 @@ import { moderateScale } from "config/Dimens";
 import { usePreferredTheme } from "hooks";
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
 import RelationModel from "models/RelationModel";
-import React from "react";
+import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import MatchScore from "ui/components/molecules/match_score/MatchScore";
-import { AppLog, shadowStyleProps } from "utils/Util";
+import { shadowStyleProps } from "utils/Util";
 import getRelationStatus, {
   Eligible,
   RelationType
@@ -17,7 +17,7 @@ import getRelationStatus, {
 import RequestStateIcon from "assets/images/request_state_icon.svg";
 import { ChatButton } from "ui/components/molecules/chat_button/ChatButton";
 import useAuth from "hooks/useAuth";
-import EScreen from "../../../../models/enums/EScreen";
+import EScreen from "models/enums/EScreen";
 
 interface Props {
   relationModel: RelationModel;
@@ -102,7 +102,6 @@ function createActionButton(
     status === "accepted" &&
     isFromFriendsListing === EScreen.MY_FRIENDS
   ) {
-    AppLog.logForcefully(() => "isDisable: " + status);
     actionButton = createDisableButton();
   } else if (
     isFriend === 0 &&
@@ -135,7 +134,6 @@ function createActionButton(
       actionButton = createRequestReceivedButton(false);
     }
   } else if (isFriend === 1 && isRoommate === 1) {
-    AppLog.logForcefully(() => "isRemove: " + status);
     actionButton = createRemoveRoommateButton();
   }
 
@@ -214,7 +212,6 @@ function createActionButton(
     any,
     string | React.JSXElementConstructor<any>
   > {
-    AppLog.logForcefully(() => "isDisable: ");
     return (
       <AppButton
         fontWeight={"semi-bold"}
@@ -358,6 +355,8 @@ const RelationListsItem = ({
   const { relationType, eligible } = getRelationStatus(relationModel);
   const { uni } = useAuth();
 
+  const [nameMargin, setNameMargin] = useState<boolean>(false);
+
   return (
     <View
       style={[
@@ -391,7 +390,10 @@ const RelationListsItem = ({
               onUserClicked(relationModel);
             }}>
             <AppLabel
-              style={styles.userName}
+              style={[
+                styles.userName,
+                nameMargin ? { marginRight: 55 } : { marginRight: 20 }
+              ]}
               text={
                 relationModel.user?.getFullName() ??
                 STRINGS.common.not_found
@@ -419,19 +421,24 @@ const RelationListsItem = ({
       </View>
       <View style={styles.topEndButtons}>
         {relationType === RelationType.FRIEND && (
-          <Pressable
-            style={styles.icTopEndButtons}
-            onPress={() => {
-              onUserClicked(relationModel);
+          <View
+            onLayout={() => {
+              setNameMargin(true);
             }}>
-            <RequestStateIcon
-              fill={
-                eligible === Eligible.NOT_ELIGIBLE
-                  ? themedColors.danger
-                  : themedColors.success
-              }
-            />
-          </Pressable>
+            <Pressable
+              style={styles.icTopEndButtons}
+              onPress={() => {
+                onUserClicked(relationModel);
+              }}>
+              <RequestStateIcon
+                fill={
+                  eligible === Eligible.NOT_ELIGIBLE
+                    ? themedColors.danger
+                    : themedColors.success
+                }
+              />
+            </Pressable>
+          </View>
         )}
         {onCrossClicked !== undefined && (
           <Pressable
