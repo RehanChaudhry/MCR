@@ -21,6 +21,7 @@ type Props = {
   error: string | undefined;
   reload: () => void;
   likeButtonCallback: (postId: number) => void;
+  moveToProfileScreen?: (userId: number, name: string) => void;
 };
 
 export const AnnouncementView = React.memo<Props>(
@@ -34,7 +35,8 @@ export const AnnouncementView = React.memo<Props>(
     shouldPlayVideo,
     error,
     reload,
-    likeButtonCallback
+    likeButtonCallback,
+    moveToProfileScreen
   }) => {
     const keyExtractor = useCallback(
       (item: PostFeed) => item.id.toString(),
@@ -49,10 +51,16 @@ export const AnnouncementView = React.memo<Props>(
             openCommentsScreen={openCommentsScreen}
             shouldPlayVideo={shouldPlayVideo}
             likeButtonCallback={likeButtonCallback}
+            onProfileImageClicked={moveToProfileScreen}
           />
         );
       },
-      [openCommentsScreen, shouldPlayVideo, likeButtonCallback]
+      [
+        openCommentsScreen,
+        shouldPlayVideo,
+        likeButtonCallback,
+        moveToProfileScreen
+      ]
     );
 
     return (

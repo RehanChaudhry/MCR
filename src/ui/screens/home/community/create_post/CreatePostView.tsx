@@ -1,5 +1,4 @@
 import Code from "assets/images/code.svg";
-import InfoCircle from "assets/images/info_circle.svg";
 import Link from "assets/images/link.svg";
 import PlusCircle from "assets/images/plus_circle.svg";
 import { COLORS, FONT_SIZE, SPACE, STRINGS } from "config";
@@ -11,11 +10,9 @@ import _ from "lodash";
 import MyImagePickerResponse from "models/api_responses/MyImagePickerResponse";
 import React, { useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Tooltip } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import { ImagePickerResponse } from "react-native-image-picker";
 import SimpleToast from "react-native-simple-toast";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { EmbedButton } from "ui/components/atoms/compact_buttons/EmbedButton";
 import { LinkButton } from "ui/components/atoms/compact_buttons/LinkButton";
 import { PhotosButton } from "ui/components/atoms/compact_buttons/PhotosButton";
@@ -277,20 +274,7 @@ export const CreatePostView = React.memo<Props>((props) => {
                   }}
                 />
                 <View style={{ marginRight: SPACE.md }} />
-                <Tooltip
-                  popover={
-                    <AppLabel
-                      text="text"
-                      style={{ color: theme.themedColors.primary }}
-                    />
-                  }
-                  backgroundColor={theme.themedColors.interface["200"]}>
-                  <InfoCircle
-                    width={23}
-                    height={23}
-                    fill={theme.themedColors.interface["500"]}
-                  />
-                </Tooltip>
+
                 {/*<TouchableOpacity*/}
                 {/*  onPress={() =>*/}
                 {/*    SimpleToast.show("Clicked on info icon.")*/}

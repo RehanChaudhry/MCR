@@ -22,6 +22,7 @@ import { useApi } from "repo/Client";
 import CommunityAnnouncementApis from "repo/home/CommunityAnnouncementApis";
 import { Alert } from "react-native";
 import { HomeStackParamList } from "routes/HomeStack";
+import EScreen from "models/enums/EScreen";
 
 type AnnouncementNavigationProp = StackNavigationProp<
   HomeStackParamList,
@@ -152,6 +153,16 @@ const AnnouncementController: FC<Props> = () => {
       }
     });
   };
+  const moveToProfileScreen = useCallback(
+    (userId: number, name: string) => {
+      navigation.navigate("ViewProfile", {
+        isFrom: EScreen.COMMUNITY,
+        userId: userId,
+        userName: name
+      });
+    },
+    [navigation]
+  );
 
   useEffect(() => {
     fetchAnnouncements().then().catch();
@@ -181,6 +192,7 @@ const AnnouncementController: FC<Props> = () => {
       shouldPlayVideo={shouldPlayVideo}
       reload={reloadCallback}
       likeButtonCallback={likeButtonCallback}
+      moveToProfileScreen={moveToProfileScreen}
     />
   );
 };

@@ -36,6 +36,7 @@ export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   onRightBtnClicked?: () => void | undefined;
   leftImageStyle?: StyleProp<ImageStyle> | undefined;
   onProfileImageClicked?: () => void;
+  onUserNameClicked?: () => void;
 }
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
@@ -53,7 +54,8 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
     rightIcon,
     leftImageStyle,
     onRightBtnClicked,
-    onProfileImageClicked
+    onProfileImageClicked,
+    onUserNameClicked
   }) => {
     const theme = usePreferredTheme();
     const { uni } = useAuth();
@@ -81,15 +83,17 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
             </TouchableWithoutFeedback>
 
             <View style={style.titleSubtitle}>
-              <AppLabel
-                text={title}
-                style={[
-                  style.title,
-                  { color: theme.themedColors.label },
-                  titleStyle
-                ]}
-                weight={titleFontWeight}
-              />
+              <TouchableWithoutFeedback onPress={onUserNameClicked}>
+                <AppLabel
+                  text={title}
+                  style={[
+                    style.title,
+                    { color: theme.themedColors.label },
+                    titleStyle
+                  ]}
+                  weight={titleFontWeight}
+                />
+              </TouchableWithoutFeedback>
               {!shouldHideSubTitle && subTitle !== undefined && (
                 <AppLabel
                   text={subTitle}

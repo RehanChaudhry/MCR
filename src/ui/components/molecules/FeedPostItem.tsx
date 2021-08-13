@@ -109,6 +109,7 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
             openReportContentScreen?.(announcementItem.id);
           }}
           onProfileImageClicked={onImageClicked}
+          onUserNameClicked={onImageClicked}
         />
         {announcementItem.content !== "" && (
           <AppLabel
