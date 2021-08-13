@@ -43,6 +43,7 @@ const SocialDetailForm: FC<Props> = ({
       numberOfLines={0}
     />
   );
+
   return (
     <View style={mainContainerStyle}>
       <View style={styles.subContainer}>
@@ -50,7 +51,12 @@ const SocialDetailForm: FC<Props> = ({
         <AppLabel
           text={heading}
           weight={"semi-bold"}
-          style={[styles.headingStyle, headingStyle]}
+          shouldNotOptimize={true}
+          style={[
+            styles.headingStyle,
+            icon?.() === undefined ? { paddingHorizontal: 0 } : {},
+            headingStyle
+          ]}
         />
       </View>
       {onPress ? (

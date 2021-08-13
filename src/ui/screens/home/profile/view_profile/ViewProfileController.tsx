@@ -49,32 +49,50 @@ type ProfileRouteProp = RouteProp<ProfileBottomParamList, "ViewProfile">;
 
 // removes firstName, lastName, and modifies profilePicture object
 function modifyUiFields(_viewProfileUiData: Profile) {
-  let modifiedItem = _viewProfileUiData?.sections?.[0]?.formInputs?.[0]!!;
-  modifiedItem.intendedMajor = _viewProfileUiData.major;
-  modifiedItem.homeTown = _viewProfileUiData.hometown;
-  modifiedItem.profilePicture =
-    _viewProfileUiData?.sections[0]?.formInputs![0]?.userMeta!.length >
-      0 ?? 0
-      ? JSON.parse(
-          _viewProfileUiData?.sections[0]?.formInputs![0]?.userMeta![0]
-            .value ?? ""
-        )
-      : "";
-  modifiedItem.firstName =
-    _viewProfileUiData?.sections![0].formInputs![1].userMeta?.length === 0
-      ? "N/A"
-      : _viewProfileUiData?.sections![0].formInputs![1].userMeta![0].value;
-  modifiedItem.lastName =
-    _viewProfileUiData?.sections![0].formInputs![2].userMeta?.length === 0
-      ? "N/A"
-      : _viewProfileUiData?.sections![0].formInputs![2].userMeta![0].value;
-  modifiedItem.youtubeVideoUrl =
-    _viewProfileUiData?.sections?.[
-      _viewProfileUiData?.sections?.length - 1
-    ].formInputs?.[0].userMeta?.[0]?.value;
-  modifiedItem.isDefault = 0;
+  AppLog.logForcefully(
+    () => "view profile data : " + JSON.stringify(_viewProfileUiData)
+  );
+  let modifiedItem = _viewProfileUiData?.sections.find(
+    (item) => item.title === "Basic Profile"
+  )?.formInputs?.[0];
 
-  _viewProfileUiData?.sections?.[0].formInputs?.splice(0, 1, modifiedItem);
+  if (modifiedItem) {
+    modifiedItem.intendedMajor = _viewProfileUiData.major;
+    modifiedItem.homeTown = _viewProfileUiData.hometown;
+  }
+
+  modifiedItem!.youtubeVideoUrl = _viewProfileUiData.youtubeVideoURL;
+
+  if (
+    modifiedItem &&
+    _viewProfileUiData?.sections.find(
+      (item) => item.title === "Basic Profile"
+    ) !== undefined
+  ) {
+    let item = _viewProfileUiData?.sections.find(
+      (_) => _.title === "Basic Profile"
+    );
+
+    modifiedItem.profilePicture = JSON.parse(
+      item?.formInputs![0]?.userMeta![0]?.value ?? ""
+    );
+
+    modifiedItem.firstName =
+      item?.formInputs![1].userMeta?.length === 0
+        ? "N/A"
+        : item?.formInputs![1].userMeta![0].value;
+
+    modifiedItem.lastName =
+      item?.formInputs![2].userMeta?.length === 0
+        ? "N/A"
+        : item?.formInputs![2].userMeta![0].value;
+
+    modifiedItem.isDefault = 0;
+
+    _viewProfileUiData?.sections
+      .find((_) => _.title === "Basic Profile")
+      ?.formInputs?.splice(0, 1, modifiedItem);
+  }
 }
 
 const ViewProfileController: FC<Props> = () => {

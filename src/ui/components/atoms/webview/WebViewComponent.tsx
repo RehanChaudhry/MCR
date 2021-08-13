@@ -23,7 +23,7 @@ export enum URL_TYPES {
 
 export const WebViewComponent = React.memo<WebViewProps>(
   ({ url, urlType, shouldPlayVideo }) => {
-    AppLog.logForcefully(() => "should play video: " + shouldPlayVideo);
+    AppLog.log(() => "should play video: " + shouldPlayVideo);
     const head = `<style>body{margin:0}</style><meta name="viewport" content="width=device-width, height=100%, initial-scale=1">`;
     const html = `<!DOCTYPE html><html><head>${head}</head><body>${url}</body></html>`;
     const theme = usePreferredTheme();

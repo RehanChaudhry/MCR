@@ -34,7 +34,7 @@ export const HomeStackRoutes = () => {
   const { fetchLatestNotificationCount } = useNotificationsCount();
 
   PushNotification.setForegroundHandler((event) => {
-    AppLog.logForcefully(() => "OneSignal: setForegroundHandler: ", event);
+    AppLog.log(() => "OneSignal: setForegroundHandler: ", event);
     fetchLatestNotificationCount().then().catch();
   });
 

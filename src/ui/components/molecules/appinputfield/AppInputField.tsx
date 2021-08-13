@@ -60,7 +60,7 @@ export const AppInputField = optimizedMemoWithStyleProp<Props>(
 
     return (
       <View style={[styles.input, viewStyle]}>
-        {leftIcon && (
+        {leftIcon?.() && (
           <View style={styles.leftIconView}>
             {leftIcon ? leftIcon() : null}
           </View>
@@ -87,7 +87,7 @@ export const AppInputField = optimizedMemoWithStyleProp<Props>(
           multiline={multiline}
           {...rest}
         />
-        {rightIcon && (
+        {rightIcon?.() && (
           <View style={styles.rightIconView}>
             {rightIcon ? rightIcon() : null}
           </View>

@@ -239,10 +239,10 @@ const useNotification = () => {
       } = await conversationApi.request([conversationId]);
 
       if (hasError) {
-        AppLog.logForcefully(() => "Unable to get response: " + errorBody);
+        AppLog.log(() => "Unable to get response: " + errorBody);
         return undefined;
       } else {
-        AppLog.logForcefully(() => JSON.stringify(dataBody));
+        AppLog.log(() => JSON.stringify(dataBody));
         return dataBody!.data!;
       }
     },
@@ -292,7 +292,7 @@ const useNotification = () => {
   function navigateToMyRoommatesScreen(
     notification: NotificationData
   ): PushNotificationContext {
-    AppLog.logForcefully(
+    AppLog.log(
       () => JSON.stringify(notification) ?? "navigateToMyRoommatesScreen()"
     );
     let name: keyof HomeStackParamList = "MyRoommates";

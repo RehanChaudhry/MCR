@@ -13,7 +13,6 @@ import AppFormField from "ui/components/molecules/app_form/AppFormField";
 //for multiselect item
 import ChevronRight from "assets/images/chevron_right.svg";
 import { FieldBox } from "ui/components/atoms/FieldBox";
-import { UploadProfilePhoto } from "ui/components/templates/basic_profile/UploadProfilePhoto";
 import { AppFormCheckBoxGroup } from "ui/components/molecules/app_form/AppFormCheckBoxGroup";
 import InstagramDark from "assets/images/instagram_icon.svg";
 import FacebookDark from "assets/images/facebook_icon.svg";
@@ -116,6 +115,7 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
       );
 
     case "text":
+    case "url":
       return (
         <View style={styles.padding}>
           <AppFormField
@@ -129,8 +129,6 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
               keyboardType: "default",
               returnKeyType: "next",
               placeholder: item?.placeholder,
-              /* value: text,
-                onChangeText: (value) => setText(value),*/
               autoCapitalize: "none",
               placeholderTextColor: theme.themedColors.placeholder,
               style: { color: theme.themedColors.label },
@@ -151,7 +149,12 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
         </View>
       );
 
-    case "url":
+    case "facebook":
+    case "twitter":
+    case "linkedin":
+    case "instagram":
+    case "snapchat":
+    case "tiktok":
       const IconTypes = {
         "icon-facebook": FacebookDark,
         "icon-twitter": TwitterDark,
@@ -175,7 +178,7 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
               weight: "semi-bold"
             }}
             passPlaceholderAsInitialValue={true}
-            customTextChanged={(value) => value == item?.placeholder}
+            customTextChanged={(value) => value === item?.placeholder}
             fieldInputProps={{
               textContentType: "name",
               keyboardType: "default",
@@ -185,7 +188,8 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
               autoCapitalize: "none",
               placeholderTextColor: theme.themedColors.placeholder,
               style: { color: theme.themedColors.label },
-              leftIcon: () => <MyIcon width={20} height={20} />,
+              leftIcon: () =>
+                item?.icon ? <MyIcon width={20} height={20} /> : null,
               viewStyle: [
                 styles.textFieldStyle,
                 {
@@ -202,14 +206,6 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
           />
         </View>
       );
-
-    case "file":
-      return (
-        <View style={styles.padding}>
-          <UploadProfilePhoto name={item.id.toString()} />
-        </View>
-      );
-
     default:
       return null;
   }

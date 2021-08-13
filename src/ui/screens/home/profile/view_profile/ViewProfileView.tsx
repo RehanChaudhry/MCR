@@ -36,6 +36,10 @@ export const ViewProfileView: React.FC<Props> = ({
   const { themedColors } = usePreferredTheme();
   const { user } = useAuth();
 
+  AppLog.logForcefully(
+    () =>
+      "View profile data : " + JSON.stringify(viewProfileUiData?.sections)
+  );
   return (
     <Screen shouldAddBottomInset={false}>
       <ScrollView>

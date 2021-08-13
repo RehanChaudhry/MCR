@@ -69,7 +69,7 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
 
     const toggleLikedState = useCallback(
       async (_postId: number) => {
-        AppLog.logForcefully(() => "like dislike api : " + _postId);
+        AppLog.log(() => "like dislike api : " + _postId);
 
         const { hasError, dataBody } = await toggleLikedStateApi.request([
           _postId
@@ -82,9 +82,7 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
           );
           return false;
         } else {
-          AppLog.logForcefully(
-            () => "LikeCount: " + dataBody.data.likesCount
-          );
+          AppLog.log(() => "LikeCount: " + dataBody.data.likesCount);
           setLikedCount(dataBody.data.likesCount);
           return true;
         }
@@ -116,7 +114,7 @@ export const AnnouncementFooter = React.memo<AnnouncementFooterProps>(
             <View style={style.leftContainerRightSide}>
               <CommentButton
                 onPress={() => {
-                  AppLog.logForcefully(() => "comment Button called");
+                  AppLog.log(() => "comment Button called");
                   openCommentsScreen?.(postId);
                 }}
               />

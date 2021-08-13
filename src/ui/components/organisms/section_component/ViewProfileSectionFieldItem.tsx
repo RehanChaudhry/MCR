@@ -143,7 +143,12 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
         </>
       );
 
-    case "url":
+    case "facebook":
+    case "twitter":
+    case "linkedin":
+    case "instagram":
+    case "snapchat":
+    case "tiktok":
       const userMetaLinks =
         item.userMeta?.length === 0 ? "N/A" : item.userMeta![0].value;
       const IconTypes = {
@@ -157,7 +162,7 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
       };
 
       const onPress = () => {
-        Linking.openURL(userMetaLinks!)
+        Linking.openURL("https://www." + userMetaLinks!)
           .then()
           .catch(() => SimpleToast.show("invalid link"));
       };
@@ -174,8 +179,35 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
                 // @ts-ignore
                 IconTypes[item?.icon ? item?.icon : "icon-facebook"];
 
-              return <MyIcon testID="icon" width={20} height={20} />;
+              return item?.icon ? (
+                <MyIcon testID="icon" width={20} height={20} />
+              ) : undefined;
             }}
+          />
+        </>
+      );
+
+    case "url":
+      const _userMetaLinks =
+        item.userMeta?.length === 0 ? "N/A" : item.userMeta![0].value;
+
+      const _onPress = () => {
+        Linking.openURL(
+          _userMetaLinks!.toLowerCase().includes("https://")
+            ? _userMetaLinks!
+            : "https://" + _userMetaLinks
+        )
+          .then()
+          .catch(() => SimpleToast.show("invalid link"));
+      };
+      return (
+        <>
+          <View style={styles.spacer} />
+          <SocialDetailForm
+            heading={item.label}
+            title={_userMetaLinks!}
+            headingStyle={{ color: grayShades.warmGray["700"] }}
+            onPress={_onPress}
           />
         </>
       );

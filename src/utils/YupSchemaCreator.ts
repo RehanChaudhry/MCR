@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { FormInputFieldData } from "models/api_responses/RoommateAgreementResponseModel";
 import { SchemaOf } from "yup";
 import { AgreementField } from "models/api_requests/GetAgreementApi";
-import { pattern } from "utils/Util";
+import { AppLog, pattern } from "utils/Util";
 
 let FieldTypes = {
   text: (field: FormInputFieldData): SchemaOf<any> =>
@@ -27,11 +27,14 @@ let FieldTypes = {
       .test(
         "custom error", //method name for yup
         `Please enter valid ${field.label?.toLowerCase()}.`,
-        (value: string | undefined): boolean => {
+        (value: string | undefined): Promise<boolean> => {
+          AppLog.logForcefully(
+            () => "Validating url field: " + value?.length
+          );
           if (!value) {
-            return true;
+            return new Promise((resolve) => resolve(true));
           } else {
-            return pattern.test(value);
+            return new Promise((resolve) => resolve(pattern.test(value)));
           }
         }
       )
@@ -45,7 +48,7 @@ export const createYupSchema = (
     | FormInputFieldData
     | AgreementField
   )[]).reduce<FormInputFieldData | AgreementField>((_schema, field) => {
-    return field.isRequired === 1
+    return field.isRequired === 1 || field.inputType === "url"
       ? {
           ..._schema,
           // @ts-ignore

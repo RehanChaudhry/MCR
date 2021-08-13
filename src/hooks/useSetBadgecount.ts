@@ -7,9 +7,7 @@ import { AppLog } from "utils/Util";
 
 export default () => {
   const updateBadgeCount = (notificationCount: number | undefined) => {
-    AppLog.logForcefully(
-      () => "Notification count : " + notificationCount
-    );
+    AppLog.log(() => "Notification count : " + notificationCount);
 
     if (Platform.OS === "android") {
       import("react-native-app-badge").then((ShortcutBadge) => {

@@ -62,7 +62,7 @@ export const ImagesSlideShow = React.memo<ImageSlideShowProps>(
       arrowButton.current.snapToPrev();
     };
     const onRightImagePress = () => {
-      AppLog.logForcefully(
+      AppLog.log(
         () =>
           "arrowButton.current.snapToNext();" +
           arrowButton.current.snapToNext()

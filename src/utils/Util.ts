@@ -153,9 +153,8 @@ export function delay<T, U, V>(t: T, v?: V) {
   });
 }
 
-export const pattern = new RegExp(
-  "^(http|https|ftp)://([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&amp;%$-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]).(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0).(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0).(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9-]+.)*[a-zA-Z0-9-]+.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(/($|[a-zA-Z0-9.,?'\\+&amp;%$#=~_-]+))*$"
-);
+let validatelink = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+export const pattern = new RegExp(validatelink);
 
 export const iframePattern = new RegExp(
   "(?:<iframe[^>]*)(?:(?:\\/>)|(?:>.*?<\\/iframe>))"
@@ -169,7 +168,7 @@ export type SvgProp = (
   color?: Color,
   width?: NumberProp,
   height?: NumberProp
-) => React.ReactElement;
+) => React.ReactElement | undefined;
 
 export const shadowStyleProps: ViewStyle = {
   shadowColor: "#000000",
