@@ -19,6 +19,7 @@ import { AgreementDetailsListItem } from "ui/components/molecules/agreement_deta
 import { AgreementData } from "models/api_responses/AgreementAnswerResponseModel";
 import { RoommateAgreementParty } from "models/api_requests/GetAgreementApi";
 import ApprovalStatusType from "models/enums/ApprovalStatusType";
+import { DateUtils } from "utils/Util";
 
 type Props = {
   agreementDetailsData: AgreementData;
@@ -153,8 +154,11 @@ export const AgreementDetailsView = React.memo<Props>(
 
               <AppLabel
                 text={
-                  agreementDetailsData.approvalInformation?.approvalDate ??
-                  "N/A"
+                  DateUtils.getFormattedDate(
+                    agreementDetailsData.approvalInformation
+                      ?.approvalDate!,
+                    "MMM DD, YYYY"
+                  ) ?? "N/A"
                 }
                 style={styles.pending}
               />
@@ -190,8 +194,10 @@ export const AgreementDetailsView = React.memo<Props>(
 
               <AppLabel
                 text={
-                  agreementDetailsData.approvalInformation?.approvalDate ??
-                  "N/A"
+                  DateUtils.getFormattedDate(
+                    agreementDetailsData.approvalInformation?.approvedBy!,
+                    "MMM DD, YYYY"
+                  ) ?? "N/A"
                 }
                 style={styles.pending}
               />

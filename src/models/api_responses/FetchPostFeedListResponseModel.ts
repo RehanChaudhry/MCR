@@ -27,6 +27,7 @@ export type PostFeed = {
   deletedAt: null;
   postFilter: PostFilter;
   isLikedByMe: boolean;
+  roleTitle: string;
 };
 
 export interface PostFilter {

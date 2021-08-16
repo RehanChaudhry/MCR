@@ -64,6 +64,9 @@ export const DateUtils = {
 
   getHoursDiff(date: Date): number {
     return DateUtils.diffInHours(date ?? new Date());
+  },
+  getFormattedDate(dateString: string, outputFormat: string): string {
+    return moment(new Date(dateString)).format(outputFormat);
   }
 };
 

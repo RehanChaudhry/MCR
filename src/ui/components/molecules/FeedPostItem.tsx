@@ -20,6 +20,7 @@ import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
 import { shadowStyleProps, SvgProp } from "utils/Util";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import Shield from "assets/images/shield.svg";
+import SimpleToast from "react-native-simple-toast";
 
 export interface FeedPostItemProps extends TouchableOpacityProps {
   data: FeedData;
@@ -81,10 +82,16 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
     }, [theme.themedColors]);
 
     const onImageClicked = () => {
-      onProfileImageClicked?.(
-        announcementItem!.postedBy!,
-        `${announcementItem.postedByFirstName} ${announcementItem.postedByLastName}`
-      );
+      if (announcementItem.roleTitle !== "Admin") {
+        onProfileImageClicked?.(
+          announcementItem!.postedBy!,
+          `${announcementItem.postedByFirstName} ${announcementItem.postedByLastName}`
+        );
+      } else {
+        SimpleToast.show(
+          "This user's information is not publicly available."
+        );
+      }
     };
 
     return (

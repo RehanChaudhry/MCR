@@ -13,6 +13,7 @@ import TwoButtonsAlert, {
 import InfoAlert from "./InfoAlert";
 import RelationListsItem from "ui/components/organisms/relation_item/RelationItem";
 import EScreen from "models/enums/EScreen";
+import getRelationStatus, { Eligible } from "utils/RelationHelper";
 
 type Props = {
   friendsCount: number;
@@ -84,13 +85,20 @@ const listItem = (
       }}
     />
   );*/
+  const { eligible } = getRelationStatus(_item);
   return (
     <RelationListsItem
       relationModel={_item}
       onCrossClicked={onPressCross}
       isFromFriendsListing={EScreen.MY_FRIENDS}
       onChatButtonClicked={onPressChat}
-      onUserClicked={moveToProfileScreen}
+      onUserClicked={() => {
+        if (eligible !== Eligible.NOT_ELIGIBLE) {
+          moveToProfileScreen(_item);
+        } else {
+          showIneligibleInfoAlert(_item);
+        }
+      }}
       onRoommateRequestActionButtonClicked={showRequestAlert}
       onCancelRequestActionButtonClicked={showCancelAlert}
       onRoommateRequestReceivedActionButtonClicked={moveToRoommateRequests}

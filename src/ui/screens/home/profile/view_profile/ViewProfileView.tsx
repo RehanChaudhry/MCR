@@ -7,9 +7,6 @@ import Roommates from "ui/components/organisms/roommates/Roommates";
 import RelationModel from "models/RelationModel";
 import { FONT_SIZE, SPACE } from "config";
 import { AppLog, shadowStyleProps } from "utils/Util";
-import InfoCircle from "assets/images/info_circle.svg";
-import usePreferredTheme from "hooks/theme/usePreferredTheme";
-import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import useAuth from "hooks/useAuth";
 
 type Props = {
@@ -33,7 +30,6 @@ export const ViewProfileView: React.FC<Props> = ({
   showAgreementButton
 }) => {
   AppLog.log(() => "Rommates: " + roommates);
-  const { themedColors } = usePreferredTheme();
   const { user } = useAuth();
 
   AppLog.logForcefully(
@@ -61,23 +57,23 @@ export const ViewProfileView: React.FC<Props> = ({
               />
             )}
 
-          {viewProfileUiData?.isEligible === false && (
-            <View
-              style={[
-                styles.notEligibleContainer,
-                { backgroundColor: themedColors.dangerShade }
-              ]}>
-              <InfoCircle width={20} fill={themedColors.danger} />
-              <AppLabel
-                text={"Not eligible for roommate request"}
-                weight={"semi-bold"}
-                style={[
-                  styles.notEligible,
-                  { color: themedColors.danger }
-                ]}
-              />
-            </View>
-          )}
+          {/*{viewProfileUiData?.isEligible === false && (*/}
+          {/*  <View*/}
+          {/*    style={[*/}
+          {/*      styles.notEligibleContainer,*/}
+          {/*      { backgroundColor: themedColors.dangerShade }*/}
+          {/*    ]}>*/}
+          {/*    <InfoCircle width={20} fill={themedColors.danger} />*/}
+          {/*    <AppLabel*/}
+          {/*      text={"Not eligible for roommate request"}*/}
+          {/*      weight={"semi-bold"}*/}
+          {/*      style={[*/}
+          {/*        styles.notEligible,*/}
+          {/*        { color: themedColors.danger }*/}
+          {/*      ]}*/}
+          {/*    />*/}
+          {/*  </View>*/}
+          {/*)}*/}
         </View>
       </ScrollView>
     </Screen>
