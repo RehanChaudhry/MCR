@@ -3,6 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import PencilAlt from "assets/images/pencil_alt.svg";
 import Strings from "config/Strings";
 import { usePreferredTheme } from "hooks";
+import _ from "lodash";
 import AnnouncementRequestModel from "models/api_requests/AnnouncementRequestModel";
 import {
   PostFeed,
@@ -46,6 +47,7 @@ const CommunityController: FC<Props> = () => {
   );
   const [shouldPlayVideo, setShouldPlayVideo] = useState(false);
   const navigation = useNavigation<CommunityNavigationProp>();
+
   const theme = usePreferredTheme();
 
   useEffect(() => {
@@ -260,6 +262,16 @@ const CommunityController: FC<Props> = () => {
     [navigation]
   );
 
+  const removePostFromList = useCallback(
+    (postId: number) => {
+      //remove post
+      const data = communities?.findIndex((item) => item.id === postId);
+      communities?.splice(data!, 1);
+      setCommunities(_.cloneDeep(communities));
+    },
+    [communities, setCommunities]
+  );
+
   return (
     <CommunityView
       data={communities}
@@ -276,6 +288,7 @@ const CommunityController: FC<Props> = () => {
       moveToProfileScreen={moveToProfileScreen}
       reload={reloadCallback}
       likeButtonCallback={likeButtonCallback}
+      removePostFromList={removePostFromList}
     />
   );
 };

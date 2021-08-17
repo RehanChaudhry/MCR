@@ -29,8 +29,8 @@ type Props = {
   filterDataBy: (type: string) => void;
   moveToProfileScreen?: (userId: number, name: string) => void;
   reload: () => void;
-
   likeButtonCallback: (postId: number) => void;
+  removePostFromList?: (postId: number) => void;
 };
 
 export const CommunityView = React.memo<Props>(
@@ -48,7 +48,8 @@ export const CommunityView = React.memo<Props>(
     filterDataBy,
     moveToProfileScreen,
     reload,
-    likeButtonCallback
+    likeButtonCallback,
+    removePostFromList
   }) => {
     const auth = useAuth();
     const theme = usePreferredTheme();
@@ -65,11 +66,16 @@ export const CommunityView = React.memo<Props>(
           shouldPlayVideo={shouldPlayVideo}
           openReportContentScreen={openReportContentScreen}
           shouldShowRightIcon={item.postedBy !== auth.user?.profile?.id}
+          shouldShowTwoButtonsRight={
+            item.postedBy === auth.user?.profile?.id
+          }
+          removePostFromList={removePostFromList}
           onProfileImageClicked={moveToProfileScreen}
           likeButtonCallback={likeButtonCallback}
         />
       ),
       [
+        removePostFromList,
         openCommentsScreen,
         shouldPlayVideo,
         openReportContentScreen,

@@ -26,6 +26,12 @@ function getCommunityAnnouncements(
   );
 }
 
+function deleteSingleCommunityPost(postId: number) {
+  return apiClient.delete<any>(
+    API.GET_COMMUNITY_ANNOUNCEMENT + "/" + postId
+  );
+}
+
 function getSingleCommunityAnnouncements(postId: number) {
   return apiClient.get<FetchPostFeedResponseModel>(
     API.GET_COMMUNITY_ANNOUNCEMENT + "/" + postId
@@ -79,5 +85,6 @@ export default {
   postComment,
   postReportContent,
   getSingleCommunityAnnouncements,
-  fetchLikes
+  fetchLikes,
+  deleteSingleCommunityPost
 };

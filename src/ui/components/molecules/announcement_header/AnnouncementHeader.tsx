@@ -33,10 +33,14 @@ export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   shouldHideBottomSeparator?: boolean;
   titleFontWeight?: Weight;
   rightIcon?: SvgProp;
+  leftButtonIcon?: SvgProp;
+  rightButtonIcon?: SvgProp;
   onRightBtnClicked?: () => void | undefined;
   leftImageStyle?: StyleProp<ImageStyle> | undefined;
   onProfileImageClicked?: () => void;
   onUserNameClicked?: () => void;
+  shouldShowTwoButtonsRight?: boolean;
+  onDeleteBtnActionPress?: () => void;
 }
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
@@ -55,7 +59,11 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
     leftImageStyle,
     onRightBtnClicked,
     onProfileImageClicked,
-    onUserNameClicked
+    onUserNameClicked,
+    shouldShowTwoButtonsRight = false,
+    leftButtonIcon,
+    rightButtonIcon,
+    onDeleteBtnActionPress
   }) => {
     const theme = usePreferredTheme();
     const { uni } = useAuth();
@@ -121,6 +129,37 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
               }}
             />
           )}
+
+          {shouldShowTwoButtonsRight && (
+            <View style={style.editAndDelete}>
+              <AppImageBackground
+                icon={leftButtonIcon}
+                containerShape={CONTAINER_TYPES.SQUARE}
+                containerStyle={[
+                  {
+                    backgroundColor: theme.themedColors.interface["200"]
+                  },
+                  style.leftButton
+                ]}
+                onPress={() => {
+                  onRightBtnClicked?.();
+                }}
+              />
+              <AppImageBackground
+                icon={rightButtonIcon}
+                containerShape={CONTAINER_TYPES.SQUARE}
+                containerStyle={[
+                  {
+                    backgroundColor: theme.themedColors.interface["200"]
+                  },
+                  style.rightButton
+                ]}
+                onPress={() => {
+                  onDeleteBtnActionPress?.();
+                }}
+              />
+            </View>
+          )}
         </View>
         {!shouldHideBottomSeparator && (
           <View
@@ -175,6 +214,18 @@ const style = StyleSheet.create({
     height: 40,
     marginTop: SPACE.xs
   },
+  leftButton: {
+    width: 40,
+    height: 40,
+    marginRight: SPACE.sm,
+    marginTop: SPACE.xs
+  },
+  rightButton: {
+    width: 40,
+    height: 40,
+
+    marginTop: SPACE.xs
+  },
   rightContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -184,5 +235,8 @@ const style = StyleSheet.create({
     marginLeft: SPACE.md,
     height: 36,
     width: 36
+  },
+  editAndDelete: {
+    flexDirection: "row"
   }
 });

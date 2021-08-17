@@ -1,7 +1,7 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import { PostFeed as FeedData } from "models/api_responses/FetchPostFeedListResponseModel";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -20,7 +20,11 @@ import { UrlMetaData } from "ui/components/molecules/metadata/UrlMetaData";
 import { shadowStyleProps, SvgProp } from "utils/Util";
 import { PrettyTimeFormat } from "utils/PrettyTimeFormat";
 import Shield from "assets/images/shield.svg";
+import Trash from "assets/images/trash.svg";
 import SimpleToast from "react-native-simple-toast";
+import PencilAlt from "assets/images/pencil_alt.svg";
+import DeletePostAlert from "ui/screens/home/community/single_post/DeletePostAlert";
+import useDeletePost from "ui/screens/home/friends/useDeletePost";
 
 export interface FeedPostItemProps extends TouchableOpacityProps {
   data: FeedData;
@@ -30,6 +34,9 @@ export interface FeedPostItemProps extends TouchableOpacityProps {
   openReportContentScreen?: (postId: number) => void;
   onProfileImageClicked?: (userId: number, name: string) => void;
   likeButtonCallback: (postId: number) => void;
+  shouldShowTwoButtonsRight: boolean;
+  onDeleteBtnActionPress?: () => void;
+  removePostFromList?: (postId: number) => void;
 }
 
 function showAttachedItemsIfAny(item: FeedData, shouldPlayVideo: boolean) {
@@ -66,10 +73,22 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
     shouldShowRightIcon = false,
     openReportContentScreen,
     onProfileImageClicked,
-    likeButtonCallback
+    likeButtonCallback,
+    shouldShowTwoButtonsRight,
+    removePostFromList
   }) => {
     const theme = usePreferredTheme();
+    const [deletePostPopup, setDeletePostPopUp] = useState(false);
 
+    const { shouldShowPb, deletePost } = useDeletePost(
+      "Unable to leave group",
+      () => {
+        setDeletePostPopUp(false);
+      },
+      () => {
+        removePostFromList?.(announcementItem.id);
+      }
+    );
     const rightImage: SvgProp = useCallback(() => {
       return (
         <Shield
@@ -95,46 +114,72 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
     };
 
     return (
-      <View
-        style={[
-          style.container,
-          { backgroundColor: theme.themedColors.background }
-        ]}>
-        <AnnouncementHeader
-          title={
-            announcementItem.postedByFirstName +
-            " " +
-            announcementItem.postedByLastName
-          }
-          subTitle={new PrettyTimeFormat().getPrettyTime(
-            (announcementItem.createdAt as unknown) as string
-          )}
-          leftImageUrl={announcementItem.postedByProfilePicture?.fileURL}
-          shouldShowRightImage={shouldShowRightIcon}
-          rightIcon={rightImage}
-          onRightBtnClicked={() => {
-            openReportContentScreen?.(announcementItem.id);
-          }}
-          onProfileImageClicked={onImageClicked}
-          onUserNameClicked={onImageClicked}
-        />
-        {announcementItem.content !== "" && (
-          <AppLabel
-            text={announcementItem.content}
-            style={style.text}
-            numberOfLines={0}
+      <>
+        <View
+          style={[
+            style.container,
+            { backgroundColor: theme.themedColors.background }
+          ]}>
+          <AnnouncementHeader
+            title={
+              announcementItem.postedByFirstName +
+              " " +
+              announcementItem.postedByLastName
+            }
+            subTitle={new PrettyTimeFormat().getPrettyTime(
+              (announcementItem.createdAt as unknown) as string
+            )}
+            leftImageUrl={announcementItem.postedByProfilePicture?.fileURL}
+            shouldShowRightImage={shouldShowRightIcon}
+            rightIcon={rightImage}
+            onRightBtnClicked={() => {
+              openReportContentScreen?.(announcementItem.id);
+            }}
+            onProfileImageClicked={onImageClicked}
+            onUserNameClicked={onImageClicked}
+            shouldShowTwoButtonsRight={shouldShowTwoButtonsRight}
+            onDeleteBtnActionPress={() => setDeletePostPopUp(true)}
+            rightButtonIcon={() => (
+              <Trash
+                width={30}
+                height={30}
+                fill={theme.themedColors.interface["700"]}
+              />
+            )}
+            leftButtonIcon={() => (
+              <PencilAlt
+                width={30}
+                height={30}
+                fill={theme.themedColors.interface["700"]}
+              />
+            )}
           />
-        )}
-        {showAttachedItemsIfAny(announcementItem, shouldPlayVideo)}
-        <AnnouncementFooter
-          commentCount={announcementItem.commentsCount}
-          likeCount={announcementItem.likesCount}
-          openCommentsScreen={openCommentsScreen}
-          isLikedByMe={announcementItem.isLikedByMe}
-          postId={announcementItem.id}
-          likeButtonCallback={likeButtonCallback}
+          {announcementItem.content !== "" && (
+            <AppLabel
+              text={announcementItem.content}
+              style={style.text}
+              numberOfLines={0}
+            />
+          )}
+          {showAttachedItemsIfAny(announcementItem, shouldPlayVideo)}
+          <AnnouncementFooter
+            commentCount={announcementItem.commentsCount}
+            likeCount={announcementItem.likesCount}
+            openCommentsScreen={openCommentsScreen}
+            isLikedByMe={announcementItem.isLikedByMe}
+            postId={announcementItem.id}
+            likeButtonCallback={likeButtonCallback}
+          />
+        </View>
+        <DeletePostAlert
+          shouldShow={deletePostPopup}
+          shouldShowPb={shouldShowPb}
+          hideDialogue={() => setDeletePostPopUp(false)}
+          title="Delete Post"
+          message={"Are you sure you want to delete this post?"}
+          deleteActionPress={() => deletePost(announcementItem.id)}
         />
-      </View>
+      </>
     );
   }
 );
