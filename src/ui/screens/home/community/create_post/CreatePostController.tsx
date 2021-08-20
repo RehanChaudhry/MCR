@@ -20,6 +20,7 @@ import HeaderLeftTextWithIcon from "ui/components/molecules/header_left_text_wit
 import { HeaderTitle } from "ui/components/molecules/header_title/HeaderTitle";
 import { CreatePostView } from "ui/screens/home/community/create_post/CreatePostView";
 import MyImagePickerResponse from "models/api_responses/MyImagePickerResponse";
+import SimpleToast from "react-native-simple-toast";
 
 type CommunityNavigationProp = StackNavigationProp<
   CommunityStackParamList,
@@ -115,6 +116,7 @@ const CreatePostController: FC<Props> = () => {
       Alert.alert("Unable to update post", errorBody);
       return;
     } else {
+      SimpleToast.show(dataBody.message);
       closeScreen();
     }
   });

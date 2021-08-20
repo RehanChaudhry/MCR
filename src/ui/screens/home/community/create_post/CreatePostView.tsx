@@ -380,6 +380,7 @@ export const CreatePostView = React.memo<Props>(
                         leftIcon: linkIcon,
                         keyboardType: "default",
                         returnKeyType: "next",
+                        valueToShowAtStart: initialValues.link,
                         placeholder: STRINGS.createPost.placeholder.link,
                         autoCapitalize: "none",
                         style: [{ color: theme.themedColors.label }],
