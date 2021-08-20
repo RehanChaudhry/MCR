@@ -41,6 +41,7 @@ export interface AnnouncementHeaderProps extends TouchableOpacityProps {
   onUserNameClicked?: () => void;
   shouldShowTwoButtonsRight?: boolean;
   onDeleteBtnActionPress?: () => void;
+  onEditBtnActionPress?: () => void;
 }
 
 export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
@@ -63,7 +64,8 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
     shouldShowTwoButtonsRight = false,
     leftButtonIcon,
     rightButtonIcon,
-    onDeleteBtnActionPress
+    onDeleteBtnActionPress,
+    onEditBtnActionPress
   }) => {
     const theme = usePreferredTheme();
     const { uni } = useAuth();
@@ -142,7 +144,7 @@ export const AnnouncementHeader = React.memo<AnnouncementHeaderProps>(
                   style.leftButton
                 ]}
                 onPress={() => {
-                  onRightBtnClicked?.();
+                  onEditBtnActionPress?.();
                 }}
               />
               <AppImageBackground

@@ -31,6 +31,7 @@ type Props = {
   reload: () => void;
   likeButtonCallback: (postId: number) => void;
   removePostFromList?: (postId: number) => void;
+  moveToEditPostScreen?: (postFeed: PostFeed) => void;
 };
 
 export const CommunityView = React.memo<Props>(
@@ -49,7 +50,8 @@ export const CommunityView = React.memo<Props>(
     moveToProfileScreen,
     reload,
     likeButtonCallback,
-    removePostFromList
+    removePostFromList,
+    moveToEditPostScreen
   }) => {
     const auth = useAuth();
     const theme = usePreferredTheme();
@@ -72,9 +74,11 @@ export const CommunityView = React.memo<Props>(
           removePostFromList={removePostFromList}
           onProfileImageClicked={moveToProfileScreen}
           likeButtonCallback={likeButtonCallback}
+          moveToEditPostScreen={moveToEditPostScreen}
         />
       ),
       [
+        moveToEditPostScreen,
         removePostFromList,
         openCommentsScreen,
         shouldPlayVideo,

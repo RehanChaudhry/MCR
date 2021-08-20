@@ -4,6 +4,7 @@ export interface Photo {
 }
 
 type CreatePostApiRequestModel = {
+  postId?: number;
   content: string;
   link?: string;
   photos?: Photo[];

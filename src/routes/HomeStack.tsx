@@ -7,6 +7,7 @@ import { HomeDrawerParamList } from "./HomeDrawerStack";
 import { AgreementData } from "models/api_responses/AgreementAnswerResponseModel";
 import { StaticContent } from "models/api_responses/StaticContentResponseModel";
 import { ConversationItem } from "models/ConversationItem";
+import { PostFeed } from "models/api_responses/FetchPostFeedListResponseModel";
 
 export type HomeStackParamList = {
   DrawerRoutes: NavigatorScreenParams<HomeDrawerParamList>;
@@ -45,7 +46,11 @@ export type HomeStackParamList = {
   Announcement: { postId?: number };
 
   ActivityLog: undefined;
-  CreatePost: { postCreatedSuccessfully?: () => void };
+  CreatePost: {
+    postCreatedSuccessfully?: () => void;
+    isEditPost?: boolean;
+    postFeed?: PostFeed;
+  };
   Comments: { postId: number; callback: () => void };
   ReportContent: { postId: number; callback: () => void };
   SinglePost: { postId: number; isFrom: EScreen };

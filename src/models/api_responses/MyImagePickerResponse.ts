@@ -1,18 +1,20 @@
 class MyImagePickerResponse {
   uri: string | undefined;
-  type: string;
-  fileName: string;
-  s3Url: string;
-  inProgress: boolean;
-  isFailed: boolean;
+  type?: string;
+  fileName?: string;
+  s3Url?: string;
+  inProgress?: boolean;
+  isFailed?: boolean;
+  fileURL?: any;
 
   constructor(
     uri: string | undefined,
-    type: string,
-    fileName: string,
-    s3Url: string,
-    isProgress: boolean,
-    isFailed: boolean
+    type?: string,
+    fileName?: string,
+    s3Url?: string,
+    isProgress?: boolean,
+    isFailed?: boolean,
+    fileURL?: any
   ) {
     this.uri = uri;
     this.type = type;
@@ -20,6 +22,7 @@ class MyImagePickerResponse {
     this.s3Url = s3Url;
     this.inProgress = isProgress;
     this.isFailed = isFailed;
+    this.fileURL = fileURL;
   }
 }
 

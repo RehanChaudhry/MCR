@@ -78,7 +78,8 @@ const CommunityController: FC<Props> = () => {
         <HeaderRightTextWithIcon
           onPress={() => {
             navigation.navigate("CreatePost", {
-              postCreatedSuccessfully: postCreatedSuccessfully
+              postCreatedSuccessfully: postCreatedSuccessfully,
+              isEditPost: false
             });
           }}
           text={Strings.createPost.title.createPost}
@@ -98,6 +99,14 @@ const CommunityController: FC<Props> = () => {
       headerTitle: () => <HeaderTitle text="Community" />
     });
   }, [postCreatedSuccessfully, navigation, theme]);
+
+  const moveToEditPostScreen = (postFeed: PostFeed) => {
+    navigation.navigate("CreatePost", {
+      postCreatedSuccessfully: postCreatedSuccessfully,
+      isEditPost: true,
+      postFeed: postFeed
+    });
+  };
 
   const requestModel = useRef<AnnouncementRequestModel>({
     paginate: true,
@@ -289,6 +298,7 @@ const CommunityController: FC<Props> = () => {
       reload={reloadCallback}
       likeButtonCallback={likeButtonCallback}
       removePostFromList={removePostFromList}
+      moveToEditPostScreen={moveToEditPostScreen}
     />
   );
 };

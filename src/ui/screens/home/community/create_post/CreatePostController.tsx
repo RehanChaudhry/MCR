@@ -47,21 +47,35 @@ const CreatePostController: FC<Props> = () => {
       ),
       headerTitleAlign: "center",
       headerTitle: () => (
-        <HeaderTitle text={Strings.createPost.title.createPost} />
+        <HeaderTitle
+          text={
+            route.params.isEditPost
+              ? "Edit Post"
+              : Strings.createPost.title.createPost
+          }
+        />
       )
     });
-  }, [navigation, theme]);
+  }, [route.params.isEditPost, navigation, theme]);
 
   const requestModel = useRef<CreatePostApiRequestModel>({
     type: "feed",
     content: "",
     everyone: true
   });
+  const updatePostRequestModel = useRef<CreatePostApiRequestModel>({
+    type: "feed",
+    content: ""
+  });
 
   const createPostApi = useApi<
     CreatePostApiRequestModel,
     CreatePostApiResponseModel
   >(CommunityAnnouncementApis.createPost);
+
+  const updatePostApi = useApi<CreatePostApiRequestModel, any>(
+    CommunityAnnouncementApis.updateSingleCommunityPost
+  );
 
   const handleCreatePost = usePreventDoubleTap(async () => {
     if (requestModel.current === undefined) {
@@ -83,24 +97,64 @@ const CreatePostController: FC<Props> = () => {
     }
   });
 
-  const onSubmit = (values: FormikValues) => {
-    requestModel.current.content = values.message;
-    requestModel.current.link =
-      values.link !== "" ? values.link : undefined;
-    requestModel.current.embed =
-      values.embed !== "" ? values.embed : undefined;
-    requestModel.current.photos = values.images.reduce(
-      (newImage: Photo[], image: MyImagePickerResponse) => (
-        newImage.push({
-          fileURL: image.s3Url,
-          originalName: image.fileName
-        } as Photo),
-        newImage
-      ),
-      []
-    );
+  const handleUpdatePost = usePreventDoubleTap(async () => {
+    if (requestModel.current === undefined) {
+      return;
+    }
+    setShowProgressBar(true);
 
-    handleCreatePost();
+    updatePostRequestModel.current.postId = route.params.postFeed.id;
+
+    const { hasError, errorBody, dataBody } = await updatePostApi.request([
+      updatePostRequestModel.current
+    ]);
+
+    setShowProgressBar(false);
+
+    if (hasError || dataBody === undefined) {
+      Alert.alert("Unable to update post", errorBody);
+      return;
+    } else {
+      closeScreen();
+    }
+  });
+
+  const onSubmit = (values: FormikValues) => {
+    if (route.params.isEditPost) {
+      updatePostRequestModel.current.content = values.message;
+      updatePostRequestModel.current.link =
+        values.link !== "" ? values.link : undefined;
+      updatePostRequestModel.current.embed =
+        values.embed !== "" ? values.embed : undefined;
+      updatePostRequestModel.current.photos = values.images.reduce(
+        (newImage: Photo[], image: MyImagePickerResponse) => (
+          newImage.push({
+            fileURL: image.s3Url,
+            originalName: image.fileName
+          } as Photo),
+          newImage
+        ),
+        []
+      );
+      handleUpdatePost();
+    } else {
+      requestModel.current.content = values.message;
+      requestModel.current.link =
+        values.link !== "" ? values.link : undefined;
+      requestModel.current.embed =
+        values.embed !== "" ? values.embed : undefined;
+      requestModel.current.photos = values.images.reduce(
+        (newImage: Photo[], image: MyImagePickerResponse) => (
+          newImage.push({
+            fileURL: image.s3Url,
+            originalName: image.fileName
+          } as Photo),
+          newImage
+        ),
+        []
+      );
+      handleCreatePost();
+    }
   };
 
   const closeScreen = usePreventDoubleTap(() => {
@@ -112,6 +166,8 @@ const CreatePostController: FC<Props> = () => {
     <CreatePostView
       createPost={onSubmit}
       shouldShowProgressBar={showProgressBar}
+      isEditPost={route.params.isEditPost}
+      postFeedDataParams={route.params.postFeed}
     />
   );
 };

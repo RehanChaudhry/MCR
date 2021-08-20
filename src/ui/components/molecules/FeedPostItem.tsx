@@ -1,6 +1,9 @@
 import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
-import { PostFeed as FeedData } from "models/api_responses/FetchPostFeedListResponseModel";
+import {
+  PostFeed,
+  PostFeed as FeedData
+} from "models/api_responses/FetchPostFeedListResponseModel";
 import React, { useCallback, useState } from "react";
 import {
   Image,
@@ -37,6 +40,7 @@ export interface FeedPostItemProps extends TouchableOpacityProps {
   shouldShowTwoButtonsRight: boolean;
   onDeleteBtnActionPress?: () => void;
   removePostFromList?: (postId: number) => void;
+  moveToEditPostScreen?: (postFeed: PostFeed) => void;
 }
 
 function showAttachedItemsIfAny(item: FeedData, shouldPlayVideo: boolean) {
@@ -50,8 +54,8 @@ function showAttachedItemsIfAny(item: FeedData, shouldPlayVideo: boolean) {
         shouldPlayVideo={shouldPlayVideo}
       />
     );
-  } else if (item.photos) {
-    if (item.photos.length === 1) {
+  } else if (item?.photos?.length! > 0) {
+    if (item?.photos?.length === 1) {
       return (
         <Image
           source={{
@@ -61,7 +65,7 @@ function showAttachedItemsIfAny(item: FeedData, shouldPlayVideo: boolean) {
         />
       );
     }
-    return <ImagesSlideShow images={item.photos} />;
+    return <ImagesSlideShow images={item.photos!} />;
   }
 }
 
@@ -75,7 +79,8 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
     onProfileImageClicked,
     likeButtonCallback,
     shouldShowTwoButtonsRight,
-    removePostFromList
+    removePostFromList,
+    moveToEditPostScreen
   }) => {
     const theme = usePreferredTheme();
     const [deletePostPopup, setDeletePostPopUp] = useState(false);
@@ -139,6 +144,9 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
             onUserNameClicked={onImageClicked}
             shouldShowTwoButtonsRight={shouldShowTwoButtonsRight}
             onDeleteBtnActionPress={() => setDeletePostPopUp(true)}
+            onEditBtnActionPress={() =>
+              moveToEditPostScreen?.(announcementItem)
+            }
             rightButtonIcon={() => (
               <Trash
                 width={30}
