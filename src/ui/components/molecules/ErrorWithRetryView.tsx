@@ -35,6 +35,7 @@ const ErrorWithRetryView = optimizedMemo<Props>(
         />
         <AppLabel
           text={text}
+          numberOfLines={0}
           weight={"semi-bold"}
           style={[styles.text, { color: theme.themedColors.label }]}
           {...rest}
