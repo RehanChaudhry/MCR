@@ -43,7 +43,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
           testID="icon"
           width={32}
           height={32}
-          fill={themedColors.secondary}
+          fill={themedColors.primary}
           style={styles.marker}
         />
       );
@@ -83,7 +83,7 @@ export const RangeSliderWithLabel: FC<RangeSliderWithLabelProps> = React.memo(
             {...(enableTwoThumbs
               ? {
                   selectedStyle: {
-                    backgroundColor: themedColors.secondaryShade
+                    backgroundColor: themedColors.interface[200]
                   },
                   unselectedStyle: {
                     backgroundColor: themedColors.interface[200]

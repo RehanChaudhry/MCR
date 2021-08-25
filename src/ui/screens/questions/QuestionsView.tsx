@@ -86,10 +86,10 @@ function bodyView(
   return (
     <QuestionItem
       question={bodyItem}
-      initialValuesTopSlider={[bodyItem.answer?.answer ?? 5]}
+      initialValuesTopSlider={[bodyItem.answer?.answer ?? 50]}
       initialValuesBottomSlider={[
-        bodyItem.answer?.minPreference ?? 4,
-        bodyItem.answer?.maxPreference ?? 7
+        bodyItem.answer?.minPreference ?? 40,
+        bodyItem.answer?.maxPreference ?? 60
       ]}
       style={style}
       callback={(result: SliderCallback) => {
