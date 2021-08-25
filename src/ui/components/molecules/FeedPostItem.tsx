@@ -37,7 +37,7 @@ export interface FeedPostItemProps extends TouchableOpacityProps {
   openReportContentScreen?: (postId: number) => void;
   onProfileImageClicked?: (userId: number, name: string) => void;
   likeButtonCallback: (postId: number) => void;
-  shouldShowTwoButtonsRight: boolean;
+  shouldShowTwoButtonsRight?: boolean;
   onDeleteBtnActionPress?: () => void;
   removePostFromList?: (postId: number) => void;
   moveToEditPostScreen?: (postFeed: PostFeed) => void;

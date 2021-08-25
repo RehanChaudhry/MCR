@@ -105,7 +105,10 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
           <HeadingWithText
             headingText={item.label}
             text={
-              item.userMeta?.length === 0 ? "N/A" : item.userMeta![0].value
+              item.userMeta?.length === 0
+                ? "N/A"
+                : item?.userMeta![0].value?.substring(0, 1).toUpperCase() +
+                  item?.userMeta![0].value!.substring(1).toLowerCase()
             }
             headingFontWeight={"semi-bold"}
             textStyle={styles.textStyle}

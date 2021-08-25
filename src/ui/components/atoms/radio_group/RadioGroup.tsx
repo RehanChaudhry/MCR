@@ -13,6 +13,7 @@ import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_memo";
 import { OptionsData } from "models/api_responses/RoommateAgreementResponseModel";
 import EIntBoolean from "models/enums/EIntBoolean";
+
 export type Choice = { id: number; value: string };
 type Props = {
   style?: StyleProp<ViewStyle>;
@@ -42,9 +43,7 @@ export const RadioGroup = optimizedMemo<Props>(
   }) => {
     const theme = usePreferredTheme();
     const [selectedPosition, setSelectedPosition] = useState<number>(
-      values.length - 1 >= byDefaultSelected && byDefaultSelected !== -1
-        ? byDefaultSelected
-        : 0
+      values.length - 1 >= byDefaultSelected ? byDefaultSelected : -1
     );
 
     //only used to sent default callback when byDefaultSelected is updated
@@ -124,7 +123,13 @@ export const RadioGroup = optimizedMemo<Props>(
             <TouchableWithoutFeedback
               testID="RADIO_GROUP_LABEL"
               onPress={() => !isLocked && buttonPressed(index)}>
-              <AppLabel style={styles.radioButtonText} text={item.value} />
+              <AppLabel
+                style={styles.radioButtonText}
+                text={
+                  item?.value.trim().substring(0, 1).toUpperCase() +
+                  item?.value.trim().substring(1).toLowerCase()
+                }
+              />
             </TouchableWithoutFeedback>
           </View>
         ))}
