@@ -99,12 +99,6 @@ export function getMessage(notification: NotificationData): string {
     return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has posted a comment on your post, <b>${notification?.data?.content}</b>`;
   } else if (
     notification.type ===
-      NotificationAndActivityLogFilterType.ROOMMATE_GROUP &&
-    notification.action === NotificationActionType.LEAVE
-  ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has left your roommate group`;
-  } else if (
-    notification.type ===
       NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
     notification.action === NotificationActionType.RESPOND
   ) {
@@ -115,6 +109,12 @@ export function getMessage(notification: NotificationData): string {
     notification.action === NotificationActionType.ACCEPT
   ) {
     return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has accepted your roommate request`;
+  } else if (
+    notification.type ===
+      NotificationAndActivityLogFilterType.ROOMMATE_GROUP &&
+    notification.action === NotificationActionType.LEAVE
+  ) {
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has left your roommate group`;
   } else if (
     notification.type ===
       NotificationAndActivityLogFilterType.ROOMMATE_GROUP &&

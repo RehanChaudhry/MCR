@@ -16,7 +16,7 @@ import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import NotificationData from "models/NotificationData";
 
 type Props = {
-  openMyProfileScreen: (userId: number, userName: string) => void;
+  openMyProfileScreen: (notification: NotificationData) => void;
   notifications?: NotificationData[];
   shouldShowProgressBar: boolean;
   onEndReached: () => void;

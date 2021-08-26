@@ -34,7 +34,7 @@ const App: React.FC<Props> = () => {
     const _additionalData: any = additionalData;
 
     //mark notification as read, when notification id is coming in payload
-    handleNotificationMarkRead(false, _additionalData.id);
+    handleNotificationMarkRead(false, _additionalData.notificationId);
 
     handleNotification({
       action: _additionalData.action,

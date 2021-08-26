@@ -63,12 +63,17 @@ const NotificationController: FC<Props> = () => {
     paginate: true
   });
 
-  const openMyProfileScreen = (userId: number, userName: string) => {
-    navigation.push("ViewProfile", {
-      isFrom: EScreen.NOTIFICATION,
-      userId: userId,
-      userName: userName
-    });
+  const openMyProfileScreen = (notification: NotificationData) => {
+    if (notification.sender?.roleTitle !== "Admin") {
+      navigation.push("ViewProfile", {
+        isFrom: EScreen.NOTIFICATION,
+        userId: notification.senderId!,
+        userName:
+          notification.sender?.firstName! +
+          " " +
+          notification.sender?.lastName!
+      });
+    }
   };
 
   const handleGetNotificationApi = useCallback(

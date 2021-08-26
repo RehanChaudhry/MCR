@@ -23,7 +23,7 @@ import Announcement from "assets/images/announcements.svg";
 
 type Props = {
   notification: NotificationData;
-  userNameOnPress: (userId: number, userName: string) => void;
+  userNameOnPress: (notification: NotificationData) => void;
   actionOnPress: (notificationData: NotificationData) => void;
 };
 
@@ -146,12 +146,7 @@ export const CircleImageWithText = React.memo<Props>(
           imageUrl={notification?.sender?.profilePicture?.fileURL!}
           icon={icon}
           onPress={() => {
-            userNameOnPress(
-              notification.senderId!,
-              notification.sender?.firstName! +
-                " " +
-                notification.sender?.lastName!
-            );
+            userNameOnPress(notification);
           }}
         />
         <View style={styles.viewRequest}>
@@ -159,12 +154,7 @@ export const CircleImageWithText = React.memo<Props>(
             <LabelHtml
               numberOfLines={3}
               onBoldTextPress={() => {
-                userNameOnPress(
-                  notification.senderId!,
-                  notification.sender?.firstName! +
-                    " " +
-                    notification.sender?.lastName!
-                );
+                userNameOnPress(notification);
               }}
               text={getMessage(notification) ?? STRINGS.common.not_found}
               textStyle={
