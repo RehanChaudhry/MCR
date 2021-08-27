@@ -40,6 +40,7 @@ export default {
   GET_MATCHES_FILTER_COUNT: "matches-count",
   BLOCKED_MATCH: "relation/",
   MATCH_INFO: "user/matching-information",
+  MATCH_GENDER: "gender",
 
   //community, announcements
   CREATE_POST: "post",

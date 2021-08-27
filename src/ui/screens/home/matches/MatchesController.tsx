@@ -2,7 +2,6 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import InfoCircle from "assets/images/info_circle.svg";
 import { usePreferredTheme } from "hooks";
-import EGender from "models/enums/EGender";
 import EScreen from "models/enums/EScreen";
 import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
 import RelationModel from "models/RelationModel";
@@ -10,7 +9,9 @@ import React, {
   FC,
   useCallback,
   useContext,
-  useLayoutEffect
+  useEffect,
+  useLayoutEffect,
+  useState
 } from "react";
 import HeaderRightTextWithIcon from "ui/components/molecules/header_right_text_with_icon/HeaderRightTextWithIcon";
 import { AppDataContext } from "ui/screens/home/friends/AppDataProvider";
@@ -23,6 +24,10 @@ import RelationFilterType from "models/enums/RelationFilterType";
 import useFetchRelations from "../friends/useFetchRelations";
 import useCreateConversation from "hooks/useCreateConversation";
 import { User } from "models/User";
+import { Alert } from "react-native";
+import { useApi } from "repo/Client";
+import { MatchesGenderResponseModel } from "models/api_responses/MatchesGenderResponseModel";
+import OtherApis from "repo/home/OtherApis";
 
 type MatchesNavigationProp = StackNavigationProp<HomeStackParamList>;
 
@@ -34,6 +39,11 @@ const MatchesController: FC<Props> = () => {
   const navigation = useNavigation<MatchesNavigationProp>();
 
   const { createConversationAndNavigate } = useCreateConversation();
+  const getGenderApi = useApi<any, MatchesGenderResponseModel>(
+    OtherApis.genders
+  );
+
+  const [gender, setGender] = useState<MatchesGenderResponseModel>();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -95,6 +105,22 @@ const MatchesController: FC<Props> = () => {
     [navigation]
   );
 
+  const fetchGender = useCallback(async () => {
+    const { hasError, errorBody, dataBody } = await getGenderApi.request(
+      []
+    );
+
+    if (hasError || dataBody === undefined) {
+      Alert.alert("Unable to fetch posts", errorBody);
+      return;
+    } else {
+      AppLog.logForcefully(
+        () => "Genders: " + JSON.stringify(dataBody.data)
+      );
+      setGender(dataBody);
+    }
+  }, [getGenderApi]);
+
   const {
     matches: profileMatches,
     setMatches: setProfileMatches,
@@ -130,15 +156,19 @@ const MatchesController: FC<Props> = () => {
   );
 
   const onKeywordAndGenderChange = useCallback(
-    (keyword?: string, gender?: EGender) => {
+    (keyword?: string, _gender?: string) => {
       AppLog.logForcefully(() => "in onKeywordAndGenderChange()...");
       refetchRelationsFromStart({
         keyword: keyword,
-        gender: gender
+        gender: _gender
       });
     },
     [refetchRelationsFromStart]
   );
+
+  useEffect(() => {
+    fetchGender();
+  }, [fetchGender]);
 
   return (
     <MatchesView
@@ -156,6 +186,7 @@ const MatchesController: FC<Props> = () => {
       moveToProfileScreen={moveToProfileScreen}
       moveToRoommateRequests={moveToRoommateRequests}
       moveToFriendRequests={moveToFriendRequests}
+      matchesGenderFilter={gender!}
     />
   );
 };

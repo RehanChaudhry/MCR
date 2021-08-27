@@ -3,27 +3,41 @@ import { StyleSheet, View } from "react-native";
 import { usePreferredTheme } from "hooks";
 import SearchField from "ui/components/atoms/search_field/SearchField";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
-import EGender, { genders } from "models/enums/EGender";
 import { AppDropdown } from "ui/components/organisms/app_dropdown/AppDropdown";
 import Selector from "assets/images/selector.svg";
 import { AppLog, shadowStyleProps } from "utils/Util";
+import { MatchesGenderResponseModel } from "models/api_responses/MatchesGenderResponseModel";
+import { DropDownItem } from "models/DropDownItem";
 
 interface Props {
-  onFilterChange: (keyword?: string, gender?: EGender) => void;
+  onFilterChange: (keyword?: string, gender?: string) => void;
+  matchesGenderFilter: MatchesGenderResponseModel;
 }
 
-const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
+const MatchesFilter: React.FC<Props> = ({
+  onFilterChange,
+  matchesGenderFilter
+}: Props) => {
   const { themedColors } = usePreferredTheme();
 
   const keyword = useRef<string | undefined>();
-  const gender = useRef<EGender>();
+  let genderDropDownItems: DropDownItem[] = [
+    {
+      text: "0",
+      value: "All Genders"
+    }
+  ];
 
   const onGenderChange = useCallback(
     (item) => {
-      AppLog.logForcefully(() => "in onGenderChange()...");
+      AppLog.logForcefully(
+        () => "in onGenderChange()..." + JSON.stringify(item)
+      );
 
-      gender.current = item.text as EGender;
-      onFilterChange(keyword.current, gender.current);
+      onFilterChange(
+        keyword.current,
+        item.value === "All Genders" ? "" : item.value
+      );
     },
     [onFilterChange]
   );
@@ -32,10 +46,18 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
     (textToSearch?: string) => {
       AppLog.logForcefully(() => "in onKeywordChange()...");
       keyword.current = textToSearch;
-      onFilterChange(keyword.current, gender.current);
+      onFilterChange(keyword.current);
     },
     [onFilterChange]
   );
+
+  matchesGenderFilter?.data !== undefined &&
+    matchesGenderFilter?.data?.forEach((item) => {
+      genderDropDownItems.push({
+        text: item.id.toString(),
+        value: item.title
+      });
+    });
 
   return (
     <View
@@ -71,8 +93,8 @@ const MatchesFilter: React.FC<Props> = ({ onFilterChange }: Props) => {
             height={20}
           />
         )}
-        preselectedItemString={genders[0].value}
-        items={genders}
+        preselectedItemString={genderDropDownItems[0].value}
+        items={genderDropDownItems}
         selectedItemCallback={onGenderChange}
         shouldRunCallbackOnStart={false}
       />

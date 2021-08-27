@@ -1,6 +1,5 @@
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import Strings from "config/Strings";
-import EGender from "models/enums/EGender";
 import MatchesTypeFilter, {
   getMatchesTypeFilterData
 } from "models/enums/MatchesTypeFilter";
@@ -20,13 +19,14 @@ import TwoButtonsAlert, {
 } from "ui/screens/home/friends/MyFriends/TwoButtonsAlert";
 import { capitalizeWords } from "utils/Util";
 import { AppLabel } from "../../../components/atoms/app_label/AppLabel";
+import { MatchesGenderResponseModel } from "models/api_responses/MatchesGenderResponseModel";
 
 type Props = {
   isLoading: boolean;
   error: string | undefined;
   matches?: RelationModel[];
   onFilterByChange: (value?: MatchesTypeFilter) => void;
-  onKeywordAndGenderChange: (keyword?: string, gender?: EGender) => void;
+  onKeywordAndGenderChange: (keyword?: string, gender?: string) => void;
   pullToRefreshCallback: (onComplete?: () => void) => void;
   onEndReached: () => void;
   isLoggedInUserAModerator: boolean;
@@ -36,6 +36,7 @@ type Props = {
   moveToProfileScreen: (profileMatch: RelationModel) => void;
   moveToRoommateRequests: (profileMatch: RelationModel) => void;
   moveToFriendRequests: (profileMatch: RelationModel) => void;
+  matchesGenderFilter: MatchesGenderResponseModel;
 };
 
 export const MatchesView: React.FC<Props> = ({
@@ -52,7 +53,8 @@ export const MatchesView: React.FC<Props> = ({
   moveToChatScreen,
   moveToProfileScreen,
   moveToRoommateRequests,
-  moveToFriendRequests
+  moveToFriendRequests,
+  matchesGenderFilter
 }: Props) => {
   const [filterType, setFilterType] = useState<MatchesTypeFilter>(
     MatchesTypeFilter.MATCHES
@@ -158,7 +160,10 @@ export const MatchesView: React.FC<Props> = ({
 
   return (
     <Screen style={styles.container}>
-      <MatchesFilter onFilterChange={onKeywordAndGenderChange} />
+      <MatchesFilter
+        onFilterChange={onKeywordAndGenderChange}
+        matchesGenderFilter={matchesGenderFilter}
+      />
 
       <FlatListWithPb<RelationModel>
         style={styles.matchesList}

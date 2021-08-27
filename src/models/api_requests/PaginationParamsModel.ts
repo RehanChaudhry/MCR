@@ -1,4 +1,3 @@
-import EGender from "models/enums/EGender";
 import MatchesTypeFilter from "models/enums/MatchesTypeFilter";
 
 export type PaginationParamsModel = {
@@ -9,6 +8,6 @@ export type PaginationParamsModel = {
   type?: string;
   actionType?: string;
   keyword?: string;
-  gender?: EGender;
+  gender?: string;
   filterBy?: MatchesTypeFilter;
 };

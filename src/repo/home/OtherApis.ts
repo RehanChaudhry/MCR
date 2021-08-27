@@ -8,6 +8,7 @@ import { create } from "apisauce";
 import { decode } from "base64-arraybuffer";
 import { NotificationsCountApiRequestModel } from "models/api_requests/NotificationsCountApiRequestModel";
 import { NotificationsCountApiResponseModel } from "models/api_responses/NotificationsCountApiResponseModel";
+import { MatchesGenderResponseModel } from "models/api_responses/MatchesGenderResponseModel";
 
 const s3Client = create({ baseURL: "" });
 
@@ -20,6 +21,10 @@ function staticContent(request: StaticContentRequestModel) {
   return apiClient.get<StaticContentResponseModel>(
     API.GET_STATIC_CONTENT + request.type
   );
+}
+
+function genders() {
+  return apiClient.get<MatchesGenderResponseModel>(API.MATCH_GENDER);
 }
 
 function createSignedUrl(filename: string) {
@@ -48,5 +53,6 @@ export default {
   notificationCount,
   staticContent,
   createSignedUrl,
-  uploadFileToS3
+  uploadFileToS3,
+  genders
 };
