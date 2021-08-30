@@ -233,8 +233,8 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
       {
         <TwoButtonsInfoAlert
           shouldShow={shouldShowDialog}
-          message={"Are you sure you want to Sign Out!"}
-          title={"Sign Out !"}
+          message={"Are you sure you want to Sign Out?"}
+          title={"Sign Out"}
           onConfirmation={() => {
             setShouldShowDialog(false);
             auth.logOut();
