@@ -74,7 +74,7 @@ function modifyUiFields(_viewProfileUiData: Profile) {
     );
 
     modifiedItem.profilePicture = JSON.parse(
-      item?.formInputs![0]?.userMeta![0]?.value ?? ""
+      item?.formInputs![0]?.userMeta?.[0]?.value ?? '""'
     );
 
     modifiedItem.firstName =

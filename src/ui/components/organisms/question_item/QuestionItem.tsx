@@ -132,6 +132,11 @@ export const QuestionItem = optimizedMemo<RangeSliderProps>(
               onValueChange={(isEnabled: boolean) => {
                 setPreferenceSwitchValue(isEnabled);
                 preferenceResult.current = isEnabled;
+
+                //reset bottom range slider to default values
+                if (isEnabled) {
+                  lastRangeSelected.current = [40, 60];
+                }
               }}
             />
           </View>
