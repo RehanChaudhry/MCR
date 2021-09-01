@@ -7,7 +7,7 @@ import {
   TouchableOpacityProps,
   View
 } from "react-native";
-import { WebView } from "react-native-webview";
+import AutoHeightWebView from "react-native-autoheight-webview";
 import { AppLog } from "utils/Util";
 
 export interface WebViewProps extends TouchableOpacityProps {
@@ -24,7 +24,7 @@ export enum URL_TYPES {
 export const WebViewComponent = React.memo<WebViewProps>(
   ({ url, urlType, shouldPlayVideo }) => {
     AppLog.log(() => "should play video: " + shouldPlayVideo);
-    const head = `<style>body{margin:0}</style><meta name="viewport" content="width=device-width, height=100%, initial-scale=1">`;
+    const head = `<style>body{margin:0}</style>`;
     const html = `<!DOCTYPE html><html><head>${head}</head><body>${url}</body></html>`;
     const theme = usePreferredTheme();
     function loadingIndicatorView() {
@@ -37,30 +37,21 @@ export const WebViewComponent = React.memo<WebViewProps>(
         </View>
       );
     }
+
+    AppLog.logForcefully(() => "embedded data : " + url);
     return (
-      <View
-        style={[
-          style.container,
-          // urlType === URL_TYPES.LINK ? { height: 350 } : {},
-          { backgroundColor: theme.themedColors.interface["200"] }
-        ]}>
+      <View>
         {shouldPlayVideo && (
-          <WebView
+          <AutoHeightWebView
             originWhitelist={["*"]}
             bounces={false}
-            androidHardwareAccelerationDisabled={true}
             mediaPlaybackRequiresUserAction={true}
-            dataDetectorTypes="link"
-            scrollEnabled={false}
-            coverScreen={false}
             renderLoading={loadingIndicatorView}
             automaticallyAdjustContentInsets={true}
             startInLoadingState={true}
-            useWebKit
             javaScriptEnabled={true}
             domStorageEnabled={true}
             allowsFullscreenVideo={true}
-            scalesPageToFit={true}
             source={
               urlType === URL_TYPES.LINK
                 ? { uri: url }
@@ -71,8 +62,8 @@ export const WebViewComponent = React.memo<WebViewProps>(
                   }
             }
             style={[
-              style.webViewContainer,
-              { backgroundColor: theme.themedColors.interface["200"] }
+              style.webViewContainer
+              // { backgroundColor: theme.themedColors.interface["200"] }
             ]}
           />
         )}
@@ -83,14 +74,10 @@ export const WebViewComponent = React.memo<WebViewProps>(
 
 const style = StyleSheet.create({
   container: {
-    flex: 1,
-    width: "100%",
-    height: 150,
     marginTop: SPACE.md
   },
   webViewContainer: {
-    flex: 1,
     width: "100%",
-    height: 140
+    marginTop: SPACE.md
   }
 });

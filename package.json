@@ -46,6 +46,7 @@
     "react-native": "0.63.4",
     "react-native-android-badge": "^0.5.0",
     "react-native-app-badge": "^0.1.5",
+    "react-native-autoheight-webview": "^1.5.8",
     "react-native-check-box": "^2.1.7",
     "react-native-cli": "^2.0.1",
     "react-native-elements": "^3.2.0",
