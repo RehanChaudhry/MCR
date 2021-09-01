@@ -25,6 +25,7 @@
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "https://github.com/AsadAli1/react-native-multi-slider",
     "@react-native-async-storage/async-storage": "^1.14.1",
+    "@react-native-community/cameraroll": "^4.0.4",
     "@react-native-community/checkbox": "^0.5.7",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/app": "^11.2.0",
@@ -53,6 +54,7 @@
     "react-native-htmlview": "^0.16.0",
     "react-native-image-picker": "^3.3.2",
     "react-native-image-slider-box": "https://github.com/js1233/react-native-image-slider-box",
+    "react-native-image-to-pdf": "^1.2.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-keychain": "^6.2.0",
     "react-native-notification-badge": "^1.0.5",
@@ -69,6 +71,7 @@
     "react-native-v8": "0.63.4-patch.1",
     "react-native-vector-icons": "^8.0.0",
     "react-native-version-check": "^3.4.2",
+    "react-native-view-shot": "^3.1.2",
     "react-native-webview": "^11.2.5",
     "react-native-youtube": "^2.0.1",
     "react-navigation": "latest",

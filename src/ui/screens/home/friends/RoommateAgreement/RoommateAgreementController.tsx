@@ -38,6 +38,7 @@ import SimpleToast from "react-native-simple-toast";
 import { STRINGS } from "config";
 import { FormikValues, isObject } from "formik";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
+import { View } from "react-native";
 
 type Props = {};
 
@@ -61,6 +62,7 @@ const RoommateAgreementController: FC<Props> = () => {
   const [title, setTitle] = useState<RoommateAgreementParty[]>();
   const agreementPartiesData = useRef<AgreementData>({});
   let myInitialValues = useRef<FormikValues | undefined>(undefined);
+  let statsRef = React.useRef<View | null>();
 
   const roommateUpdateApi = useApi<
     AgreementAnswersRequestModel,
@@ -86,7 +88,8 @@ const RoommateAgreementController: FC<Props> = () => {
                   .length > 0
               ) {
                 navigation.navigate("AgreementDetails", {
-                  agreementData: agreementPartiesData.current
+                  agreementData: agreementPartiesData.current,
+                  viewShotRef: statsRef
                 });
               } else {
                 SimpleToast.show(
@@ -221,6 +224,7 @@ const RoommateAgreementController: FC<Props> = () => {
           progressBarBtn={roommateUpdateApi.loading}
           shouldShowAgreementDialog={setAgreementDialog}
           title={title!}
+          viewShotRef={statsRef}
         />,
         undefined,
         undefined,

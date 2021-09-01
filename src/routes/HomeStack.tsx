@@ -8,6 +8,8 @@ import { AgreementData } from "models/api_responses/AgreementAnswerResponseModel
 import { StaticContent } from "models/api_responses/StaticContentResponseModel";
 import { ConversationItem } from "models/ConversationItem";
 import { PostFeed } from "models/api_responses/FetchPostFeedListResponseModel";
+import React from "react";
+import { View } from "react-native";
 
 export type HomeStackParamList = {
   DrawerRoutes: NavigatorScreenParams<HomeDrawerParamList>;
@@ -35,6 +37,7 @@ export type HomeStackParamList = {
   Questionnaire: { isFrom: EScreen };
   AgreementDetails: {
     agreementData?: AgreementData;
+    viewShotRef: React.MutableRefObject<View | null | undefined>;
   };
   AddInterests: {
     list: ConversationItem[];
