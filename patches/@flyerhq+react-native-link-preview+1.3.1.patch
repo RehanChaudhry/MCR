@@ -1,0 +1,72 @@
+diff --git a/node_modules/@flyerhq/react-native-link-preview/lib/LinkPreview.js b/node_modules/@flyerhq/react-native-link-preview/lib/LinkPreview.js
+index ecc1491..e7744f7 100644
+--- a/node_modules/@flyerhq/react-native-link-preview/lib/LinkPreview.js
++++ b/node_modules/@flyerhq/react-native-link-preview/lib/LinkPreview.js
+@@ -77,7 +77,23 @@ exports.LinkPreview = React.memo(({ containerStyle, metadataContainerStyle, meta
+                 styles_1.default.textContainer,
+                 textContainerStyle,
+             ])}>
+-            {renderTextNode()}
++           
++            {!data?.title && !data?.description &&
++            
++            <react_native_1.View style= {react_native_1.StyleSheet.flatten([
++    
++                metadataContainerStyle, {
++                    height : "auto",
++                    paddingStart: 10
++                }
++            ])}>
++
++               <react_native_1.Text>{text}</react_native_1.Text>
++             
++            </react_native_1.View>
++            }
++
++{ console.log("embed link data : " + JSON.stringify(data))}
+             {/* Render metadata only if there are either description OR title OR
+                 there is an image with an aspect ratio of 1 and either description or title
+               */}
+@@ -88,10 +104,14 @@ exports.LinkPreview = React.memo(({ containerStyle, metadataContainerStyle, meta
+                 data?.title) && (<react_native_1.View style={react_native_1.StyleSheet.flatten([
+                     styles_1.default.metadataContainer,
+                     metadataContainerStyle,
++                    (data.image || data.minimizedImage)  
++                    ? {paddingStart : "33%"}
++                    : {paddingStart:"2%", height: "auto" }
+                 ])}>
+                 <react_native_1.View style={react_native_1.StyleSheet.flatten([
+                     styles_1.default.metadataTextContainer,
+                     metadataTextContainerStyle,
++                  
+                 ])}>
+                   {data?.title && renderTitleNode(data.title)}
+                   {data?.description && renderDescriptionNode(data.description)}
+@@ -105,8 +125,9 @@ exports.LinkPreview = React.memo(({ containerStyle, metadataContainerStyle, meta
+                 OR there are no description and title
+               */}
+           {data?.image &&
+-                (aspectRatio !== 1 || (!data?.description && !data.title)) &&
++                (aspectRatio !== 1 && (data?.description && data.title)) &&
+                 renderImageNode(data.image)}
++
+         </>)({
+             aspectRatio,
+             containerWidth,
+@@ -116,7 +137,15 @@ exports.LinkPreview = React.memo(({ containerStyle, metadataContainerStyle, meta
+     const renderMinimizedImageNode = (image) => {
+         return utils_1.oneOf(renderMinimizedImage, <react_native_1.Image accessibilityRole='image' source={{ uri: image.url }} style={styles_1.default.minimizedImage}/>)(image);
+     };
+-    const renderTextNode = () => utils_1.oneOf(renderText, <react_native_1.Text>{text}</react_native_1.Text>)(text);
++    const renderTextNode = () => utils_1.oneOf(renderText, <react_native_1.Text 
++        style={{
++             borderWidth: 0.5, 
++             borderRadius: metadataContainerStyle?.borderRadius ?? 2,
++             marginTop:metadataContainerStyle?.marginTop ?? 10,
++             paddingVertical : metadataContainerStyle?.paddingVertical ?? 5,
++             paddingStart : 10,
++             backgroundColor: metadataContainerStyle?.backgroundColor,
++             borderColor: metadataContainerStyle.borderColor ?? "#456"}}>{text}</react_native_1.Text>)(text);
+     const renderTitleNode = (title) => {
+         return utils_1.oneOf(renderTitle, <react_native_1.Text numberOfLines={2} style={styles_1.default.title}>
+           {title}

@@ -19,11 +19,11 @@
     "env:devInternal": "node node_modules/react-native-version-env-manager --env=dev-internal --envFileExt=ts --addEnvAsPostfix",
     "env:dev": "node node_modules/react-native-version-env-manager --env=dev --envFileExt=ts --addEnvAsPostfix",
     "env:qa": "node node_modules/react-native-version-env-manager --env=qa --envFileExt=ts --addEnvAsPostfix",
-    "env:stag": "node node_modules/react-native-version-env-manager --env=stag --envTag=staging --envFileExt=ts --addEnvAsPostfix",
+    "env:stag": "node node_modules/react-native-version-env-manager --env=stag --envTag=spataging --envFileExt=ts --addEnvAsPostfix",
     "env:prod": "node node_modules/react-native-version-env-manager --env=prod --envFileExt=ts"
   },
   "dependencies": {
-    "@flyerhq/react-native-link-preview": "^1.3.1",
+    "@flyerhq/react-native-link-preview": "1.3.1",
     "@ptomasroos/react-native-multi-slider": "https://github.com/AsadAli1/react-native-multi-slider",
     "@react-native-async-storage/async-storage": "^1.14.1",
     "@react-native-community/checkbox": "^0.5.7",
@@ -41,6 +41,7 @@
     "formik": "^2.1.5",
     "global": "^4.4.0",
     "moment": "^2.29.1",
+    "patch-package": "^6.4.7",
     "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-id-generator": "^3.0.1",
