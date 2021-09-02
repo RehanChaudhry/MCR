@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { SvgProp } from "utils/Util";
-import HtmlView from "react-native-htmlview";
 
 type Props = {
   mainContainerStyle?: StyleProp<ViewStyle>;
@@ -20,7 +19,6 @@ type Props = {
   icon?: SvgProp;
   heading?: string;
   title: string;
-  isRenderHtml?: boolean;
   onPress?: () => void;
 };
 
@@ -31,8 +29,7 @@ const SocialDetailForm: FC<Props> = ({
   headingStyle,
   titleStyle,
   onPress,
-  mainContainerStyle,
-  isRenderHtml
+  mainContainerStyle
 }) => {
   const theme = usePreferredTheme();
   const titleJsx = () => (
@@ -45,10 +42,6 @@ const SocialDetailForm: FC<Props> = ({
       ]}
       numberOfLines={0}
     />
-  );
-
-  const html = () => (
-    <HtmlView addLineBreaks={true} value={title} stylesheet={styles} />
   );
 
   return (
@@ -68,8 +61,6 @@ const SocialDetailForm: FC<Props> = ({
       </View>
       {onPress ? (
         <TouchableOpacity onPress={onPress}>{titleJsx()}</TouchableOpacity>
-      ) : isRenderHtml ? (
-        html()
       ) : (
         titleJsx()
       )}
@@ -88,9 +79,6 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     marginTop: SPACE.sm
-  },
-  br: {
-    lineHeight: -12
   }
 });
 

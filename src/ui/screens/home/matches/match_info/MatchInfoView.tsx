@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { usePreferredTheme } from "hooks";
-import { AppLog, shadowStyleProps } from "utils/Util";
+import { shadowStyleProps } from "utils/Util";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AppProgressBar } from "ui/components/molecules/app_progress_bar/AppProgressBar";
@@ -47,8 +47,6 @@ export const MatchInfoView: React.FC<Props> = ({
   moveToProfileScreen
 }: Props) => {
   const { themedColors } = usePreferredTheme();
-
-  AppLog.logForcefully(() => "htnl: " + matchInfo?.criteria);
 
   return (
     <Screen style={styles.screen}>
@@ -221,9 +219,8 @@ export const MatchInfoView: React.FC<Props> = ({
             title={
               matchInfo?.criteria
                 ? matchInfo?.criteria
-                : STRINGS.common.not_available
+                : STRINGS.common.not_found
             }
-            isRenderHtml={true}
           />
         </View>
         {roommates && roommates?.length > 0 && (
