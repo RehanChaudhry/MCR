@@ -3,7 +3,7 @@ import { useAuth, usePreferredTheme } from "hooks";
 import useLazyLoadInterface from "hooks/useLazyLoadInterface";
 import { PostFeed } from "models/api_responses/FetchPostFeedListResponseModel";
 import { FilterCount } from "models/enums/FeedsTypeFilter";
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FeedPostItem } from "ui/components/molecules/FeedPostItem";
@@ -60,8 +60,10 @@ export const CommunityView = React.memo<Props>(
       []
     );
 
+    let itemHeightMap = useRef([]);
+
     const listItem = useCallback(
-      ({ item }: { item: PostFeed }) => (
+      ({ item, index }: { item: PostFeed; index: number }) => (
         <FeedPostItem
           data={item}
           openCommentsScreen={openCommentsScreen}
@@ -75,17 +77,20 @@ export const CommunityView = React.memo<Props>(
           onProfileImageClicked={moveToProfileScreen}
           likeButtonCallback={likeButtonCallback}
           moveToEditPostScreen={moveToEditPostScreen}
+          itemHeightMap={itemHeightMap.current}
+          index={index}
         />
       ),
       [
-        moveToEditPostScreen,
-        removePostFromList,
         openCommentsScreen,
         shouldPlayVideo,
         openReportContentScreen,
-        auth,
+        auth.user?.profile?.id,
+        removePostFromList,
         moveToProfileScreen,
-        likeButtonCallback
+        likeButtonCallback,
+        moveToEditPostScreen,
+        itemHeightMap
       ]
     );
     function getFeedsFilterData(): Item[] {
@@ -103,7 +108,7 @@ export const CommunityView = React.memo<Props>(
     return (
       <Screen style={styles.container}>
         {useLazyLoadInterface(
-          <>
+          <View style={{ flex: 1 }}>
             <FlatListWithPb
               retryCallback={reload}
               removeClippedSubviews={true}
@@ -135,7 +140,7 @@ export const CommunityView = React.memo<Props>(
               }
             />
             <BottomBreadCrumbs data={getFeedsFilterData()} />
-          </>
+          </View>
         )}
       </Screen>
     );

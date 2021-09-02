@@ -12,10 +12,7 @@ import {
   View
 } from "react-native";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
-import {
-  URL_TYPES,
-  WebViewComponent
-} from "ui/components/atoms/webview/WebViewComponent";
+import { WebViewComponent } from "ui/components/atoms/webview/WebViewComponent";
 import { AnnouncementFooter } from "ui/components/molecules/announcement_footer/AnnouncementFooter";
 import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
 import { ImagesSlideShow } from "ui/components/molecules/image_slide_show/ImagesSlideShow";
@@ -41,6 +38,8 @@ export interface FeedPostItemProps extends TouchableOpacityProps {
   onDeleteBtnActionPress?: () => void;
   removePostFromList?: (postId: number) => void;
   moveToEditPostScreen?: (postFeed: PostFeed) => void;
+  itemHeightMap: number[];
+  index: number;
 }
 
 function showAttachedItemsIfAny(item: FeedData, shouldPlayVideo: boolean) {
@@ -50,7 +49,6 @@ function showAttachedItemsIfAny(item: FeedData, shouldPlayVideo: boolean) {
     return (
       <WebViewComponent
         url={item.embed}
-        urlType={URL_TYPES.EMBEDDED}
         shouldPlayVideo={shouldPlayVideo}
       />
     );
@@ -121,6 +119,15 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
     return (
       <>
         <View
+          //onLayout={(event) => {
+          // let { height } = event.nativeEvent.layout;
+          // if (height) {
+          //   itemHeightMap[index] = height;
+          //   AppLog.logForcefully(
+          //     () => "height map is : " + JSON.stringify(itemHeightMap)
+          //   );
+          // }
+          //}}
           style={[
             style.container,
             { backgroundColor: theme.themedColors.background }
@@ -198,6 +205,7 @@ const style = StyleSheet.create({
     paddingRight: SPACE.lg,
     paddingLeft: SPACE.lg,
     paddingBottom: SPACE.lg,
+    // flex: 1,
     ...shadowStyleProps
   },
   text: {

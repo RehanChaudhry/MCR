@@ -7,7 +7,7 @@
     "clean": "yarn run cleanBuildAndroid && yarn run cleanBuildIOS",
     "cleanBuildAndroid": "rm -rf android/app/build && rm -rf android/build && cd android && ./gradlew clean && cd ..",
     "cleanBuildIOS": "rm -rf ios/build",
-    "android": "npx react-native run-android --verbose",
+    "android": "npx react-native run-android",
     "ios": "npx react-native run-ios --verbose --simulator='iPhone 11 Pro'",
     "start": "npx react-native start",
     "debugApk": "yarn run clean && cd android && ./gradlew assembleDebug && cd ..",
@@ -23,6 +23,7 @@
     "env:prod": "node node_modules/react-native-version-env-manager --env=prod --envFileExt=ts"
   },
   "dependencies": {
+    "@flyerhq/react-native-link-preview": "^1.3.1",
     "@ptomasroos/react-native-multi-slider": "https://github.com/AsadAli1/react-native-multi-slider",
     "@react-native-async-storage/async-storage": "^1.14.1",
     "@react-native-community/checkbox": "^0.5.7",
