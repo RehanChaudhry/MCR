@@ -19,6 +19,7 @@ exports[`snapshot testing 1`] = `
 >
   <TextInput
     allowFontScaling={true}
+    autoCapitalize="sentences"
     editable={true}
     multiline={false}
     onChangeText={[Function]}

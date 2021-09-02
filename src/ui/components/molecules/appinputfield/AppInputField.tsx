@@ -86,6 +86,7 @@ export const AppInputField = optimizedMemoWithStyleProp<Props>(
           style={[styles.textInput, style, getMultiline()]}
           multiline={multiline}
           {...rest}
+          autoCapitalize="sentences"
         />
         {rightIcon?.() && (
           <View style={styles.rightIconView}>

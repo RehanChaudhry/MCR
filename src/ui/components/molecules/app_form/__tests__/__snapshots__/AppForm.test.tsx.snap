@@ -67,7 +67,7 @@ exports[`rendering... renders correctly 1`] = `
   >
     <TextInput
       allowFontScaling={true}
-      autoCapitalize="none"
+      autoCapitalize="sentences"
       editable={true}
       keyboardType="email-address"
       multiline={false}
@@ -166,6 +166,7 @@ exports[`rendering... renders correctly 1`] = `
   >
     <TextInput
       allowFontScaling={true}
+      autoCapitalize="sentences"
       editable={true}
       multiline={false}
       onBlur={[Function]}
