@@ -58,6 +58,7 @@ const AgreementDetailsController: FC<Props> = () => {
     <AgreementDetailsView
       agreementDetailsData={route.params.agreementData}
       moveToChatScreen={moveToChatScreen}
+      viewShotRef={route.params.viewShotRef}
     />
   );
 };

@@ -19,17 +19,21 @@ import { AgreementDetailsListItem } from "ui/components/molecules/agreement_deta
 import { AgreementData } from "models/api_responses/AgreementAnswerResponseModel";
 import { RoommateAgreementParty } from "models/api_requests/GetAgreementApi";
 import ApprovalStatusType from "models/enums/ApprovalStatusType";
-import { DateUtils } from "utils/Util";
+import { AppLog, DateUtils } from "utils/Util";
+import { captureRef } from "react-native-view-shot";
+import CameraRoll from "@react-native-community/cameraroll";
+import RNImageToPdf from "react-native-image-to-pdf";
 
 type Props = {
   agreementDetailsData: AgreementData;
   moveToChatScreen: (
     roommateAgreementParties: RoommateAgreementParty
   ) => void;
+  viewShotRef: React.MutableRefObject<View | null | undefined>;
 };
 
 export const AgreementDetailsView = React.memo<Props>(
-  ({ agreementDetailsData, moveToChatScreen }) => {
+  ({ agreementDetailsData, moveToChatScreen, viewShotRef }) => {
     const theme = usePreferredTheme();
 
     const getApprovalStatus = (status: string | undefined) => {
@@ -58,6 +62,65 @@ export const AgreementDetailsView = React.memo<Props>(
           moveToChatScreen={moveToChatScreen}
         />
       );
+    };
+
+    const result = () => {
+      captureRef(viewShotRef.current!, {
+        //  snapshotContentContainer: true
+      })
+        .then(
+          (uri) => {
+            AppLog.logForcefully(() => "Image saved to", uri);
+            const image = CameraRoll.save(uri, { type: "photo" });
+            AppLog.logForcefully(() => "Success", image);
+            AppLog.logForcefully(
+              () => "imageUriSet: " + uri.replace("file:", "")
+            );
+            if (image) {
+              myAsyncPDFFunction(uri.replace("file:", ""));
+            }
+          },
+
+          (error) =>
+            AppLog.logForcefully(() => "Oops, snapshot failed", error)
+        )
+        .catch((error) => {
+          AppLog.logForcefully(
+            () => "error occurs" + JSON.stringify(error)
+          );
+        });
+
+      // AppLog.logForcefully(() => "Image", result);
+    };
+
+    const myAsyncPDFFunction = async (uri: string) => {
+      try {
+        const partiesName = agreementDetailsData
+          ?.roommateAgreementParties!.reduce(
+            (newArray: string[], _item: RoommateAgreementParty) => (
+              newArray.push(_item.firstName + " " + _item.lastName),
+              newArray
+            ),
+            []
+          )
+          .join("_");
+
+        AppLog.logForcefully(() => "partiesName: " + partiesName);
+        const options = {
+          imagePaths: [uri],
+          name:
+            partiesName +
+            "_" +
+            moment(Date.now()).format("DD-MM-YYYY") +
+            ".pdf",
+          quality: 1 // optional compression paramter
+        };
+        const pdf = await RNImageToPdf.createPDFbyImages(options);
+
+        AppLog.logForcefully(() => "pdf generated : " + pdf.filePath);
+      } catch (e) {
+        AppLog.logForcefully(() => e);
+      }
     };
 
     return (
@@ -232,6 +295,7 @@ export const AgreementDetailsView = React.memo<Props>(
                     fill={theme.themedColors.interface["700"]}
                   />
                 )}
+                onPress={() => result()}
               />
             </View>
           </CardView>

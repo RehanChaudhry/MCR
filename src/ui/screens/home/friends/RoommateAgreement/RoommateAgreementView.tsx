@@ -8,7 +8,13 @@ import React, {
 import Screen from "ui/components/atoms/Screen";
 import AppForm from "ui/components/molecules/app_form/AppForm";
 import { FormikValues } from "formik";
-import { ScrollView, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  PermissionsAndroid,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
@@ -36,6 +42,7 @@ type Props = {
   progressBarBtn: boolean;
   shouldShowAgreementDialog: React.Dispatch<React.SetStateAction<boolean>>;
   title: RoommateAgreementParty[];
+  viewShotRef: React.MutableRefObject<View | null | undefined>;
 };
 
 const RoommateAgreementView: FC<Props> = ({
@@ -48,7 +55,8 @@ const RoommateAgreementView: FC<Props> = ({
   agreementDialogCallback,
   progressBarBtn,
   shouldShowAgreementDialog,
-  title
+  title,
+  viewShotRef
 }) => {
   AppLog.logForcefully(() => "in RoommateAgreementView()...");
 
@@ -88,8 +96,41 @@ const RoommateAgreementView: FC<Props> = ({
     /*myInitialValues.current["1"] = roommateData.*/
   }, [roommateData]);
 
+  const getPermissionAndroid = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: "Image Download Permission",
+          message:
+            "Your permission is required to save images to your device",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK"
+        }
+      );
+      AppLog.logForcefully(() => "dpremission: " + granted);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        return true;
+      }
+      Alert.alert(
+        "Save remote Image",
+        "Grant Me Permission to save Image",
+        [{ text: "OK", onPress: () => AppLog.log(() => "OK Pressed") }],
+        { cancelable: false }
+      );
+    } catch (err) {
+      Alert.alert(
+        "Save remote Image",
+        "Failed to save Image: " + err.message,
+        [{ text: "OK", onPress: () => AppLog.log(() => "OK Pressed") }],
+        { cancelable: false }
+      );
+    }
+  };
+
   useEffect(() => {
     init();
+    getPermissionAndroid();
   }, [init]);
 
   const onSubmit = (_value: FormikValues) => {
@@ -172,41 +213,51 @@ const RoommateAgreementView: FC<Props> = ({
     }
   };
 
+  // let statsRef = React.useRef<View | null>();
+
+  AppLog.logForcefully(() => "setTimeout ", viewShotRef);
+
   return (
     <Screen shouldAddBottomInset={false}>
       <ScrollView>
-        <AppForm
-          initialValues={myInitialValues}
-          onSubmit={onSubmit}
-          validateOnMount={false}
-          validationSchema={yupSchema.current}>
-          <View style={styles.labelViewStyle}>
-            <AppLabel
-              text={getRoommatePartiesName(title, user?.profile?.id!)}
-              numberOfLines={0}
-            />
-          </View>
-
-          <DynamicFormView
-            sectionsData={formFields}
-            showProgressBar={showProgressBar}
-            roommateAgreement={true}
-          />
-          {agreementDialog()}
-          <View style={styles.button}>
-            <AppFormFormSubmit
-              text={STRINGS.profile.buttonText.saveAndContinue}
-              buttonType={BUTTON_TYPES.NORMAL}
-              fontWeight={"semi-bold"}
-              textStyle={{ color: themedColors.background }}
-              shouldShowProgressBar={progressBarBtn}
-              buttonStyle={[
-                styles.buttonStyle,
-                { backgroundColor: themedColors.primary }
-              ]}
-            />
-          </View>
-        </AppForm>
+        <View>
+          <AppForm
+            initialValues={myInitialValues}
+            onSubmit={onSubmit}
+            validateOnMount={false}
+            validationSchema={yupSchema.current}>
+            <View style={styles.labelViewStyle}>
+              <AppLabel
+                text={getRoommatePartiesName(title, user?.profile?.id!)}
+                numberOfLines={0}
+              />
+            </View>
+            <View
+              collapsable={false}
+              style={{ flex: 1 }}
+              ref={(view) => (viewShotRef.current = view)}>
+              <DynamicFormView
+                sectionsData={formFields}
+                showProgressBar={showProgressBar}
+                roommateAgreement={true}
+              />
+            </View>
+            {agreementDialog()}
+            <View style={styles.button}>
+              <AppFormFormSubmit
+                text={STRINGS.profile.buttonText.saveAndContinue}
+                buttonType={BUTTON_TYPES.NORMAL}
+                fontWeight={"semi-bold"}
+                textStyle={{ color: themedColors.background }}
+                shouldShowProgressBar={progressBarBtn}
+                buttonStyle={[
+                  styles.buttonStyle,
+                  { backgroundColor: themedColors.primary }
+                ]}
+              />
+            </View>
+          </AppForm>
+        </View>
       </ScrollView>
     </Screen>
   );
