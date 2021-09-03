@@ -21,7 +21,6 @@ import { RoommateAgreementParty } from "models/api_requests/GetAgreementApi";
 import ApprovalStatusType from "models/enums/ApprovalStatusType";
 import { AppLog, DateUtils } from "utils/Util";
 import { captureRef } from "react-native-view-shot";
-import CameraRoll from "@react-native-community/cameraroll";
 import RNImageToPdf from "react-native-image-to-pdf";
 
 type Props = {
@@ -71,14 +70,15 @@ export const AgreementDetailsView = React.memo<Props>(
         .then(
           (uri) => {
             AppLog.logForcefully(() => "Image saved to", uri);
-            const image = CameraRoll.save(uri, { type: "photo" });
-            AppLog.logForcefully(() => "Success", image);
+            //  const image = CameraRoll.save(uri, { type: "photo" });
+            // AppLog.logForcefully(() => "Success", image);
             AppLog.logForcefully(
               () => "imageUriSet: " + uri.replace("file:", "")
             );
-            if (image) {
-              myAsyncPDFFunction(uri.replace("file:", ""));
-            }
+            // if (image) {
+            //   myAsyncPDFFunction(uri.replace("file:", ""));
+            // }
+            myAsyncPDFFunction(uri.replace("file:", ""));
           },
 
           (error) =>

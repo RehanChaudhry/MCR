@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     marginTop: SPACE.sm
   },
   br: {
-    marginTop: 0
+    marginTop: -12
   }
 });
 
