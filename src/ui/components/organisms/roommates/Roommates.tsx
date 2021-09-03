@@ -14,7 +14,7 @@ import {
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import { AnnouncementHeader } from "ui/components/molecules/announcement_header/AnnouncementHeader";
 import { LinkButton } from "ui/components/molecules/link_button/LinkButton";
-import { shadowStyleProps } from "utils/Util";
+import { AppLog, shadowStyleProps } from "utils/Util";
 import useAuth from "hooks/useAuth";
 import EIntBoolean from "models/enums/EIntBoolean";
 
@@ -54,6 +54,7 @@ const Roommates: React.FC<Props> = ({
   const auth = useAuth();
 
   const renderItem = ({ item }: { item: RelationModel }) => {
+    const _item = new RelationModel(item);
     const onImageClicked = () => {
       moveToProfileScreen?.(
         item!.userId,
@@ -67,7 +68,7 @@ const Roommates: React.FC<Props> = ({
           `${item?.user?.firstName} ${item?.user?.lastName}` ??
           STRINGS.common.not_found
         }
-        subTitle={`${item?.user?.hometown}, ${item?.user?.major}`}
+        subTitle={`${_item?.user?.getSubtitle()}`}
         shouldShowRightImage={auth.uni?.chatFeature === EIntBoolean.TRUE}
         onUserNameClicked={onImageClicked}
         onProfileImageClicked={onImageClicked}
@@ -105,6 +106,8 @@ const Roommates: React.FC<Props> = ({
       viewStyle={styles.roommateAgreementView}
     />
   );
+
+  AppLog.logForcefully(() => "showFooter: " + showFooter);
 
   return (
     <View

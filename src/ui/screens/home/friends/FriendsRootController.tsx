@@ -1,9 +1,7 @@
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth, usePreferredTheme } from "hooks";
-import React, { FC } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FriendsStackParamList } from "routes/FriendsBottomBar";
@@ -12,6 +10,7 @@ import BottomBreadCrumbs, {
   Item
 } from "ui/components/templates/bottom_bread_crumbs/BottomBreadCrumbs";
 import { AppLog } from "utils/Util";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type FriendsNavigationProp = BottomTabNavigationProp<FriendsStackParamList>;
 
@@ -19,7 +18,7 @@ type Props = {};
 
 const FriendsRootController: FC<Props> = () => {
   const navigation = useNavigation<FriendsNavigationProp>();
-  const { user } = useAuth();
+  const { user, uni } = useAuth();
   const isAgreementId = user?.profile?.agreementId !== null;
 
   const [breadCrumbsItems, setBreadCrumbsItems] = useState(() =>
@@ -28,8 +27,23 @@ const FriendsRootController: FC<Props> = () => {
 
   useEffect(() => {
     AppLog.logForcefully(() => "Friends controller: " + isAgreementId);
-    setBreadCrumbsItems(createItems(navigation, isAgreementId));
-  }, [isAgreementId, navigation]);
+
+    if (uni?.roommateAgreementFeature === EIntBoolean.TRUE) {
+      const index = breadCrumbsItems?.findIndex(
+        (item) => item.title === "Roommate Agreement"
+      );
+      AppLog.logForcefully(() => "index: " + index);
+      breadCrumbsItems.splice(index, 1);
+
+      setBreadCrumbsItems(breadCrumbsItems);
+      AppLog.logForcefully(
+        () => "List: " + JSON.stringify(breadCrumbsItems)
+      );
+    } else {
+      setBreadCrumbsItems(createItems(navigation, isAgreementId));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const theme = usePreferredTheme();
   const safeAreaInsets = useSafeAreaInsets();

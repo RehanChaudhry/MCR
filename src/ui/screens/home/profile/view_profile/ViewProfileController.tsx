@@ -34,6 +34,7 @@ import { AppLog } from "utils/Util";
 import RelationModel from "models/RelationModel";
 import useCreateConversation from "hooks/useCreateConversation";
 import { User } from "models/User";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type Props = {};
 type ProfileBottomNavigationProp = StackNavigationProp<
@@ -154,6 +155,11 @@ const ViewProfileController: FC<Props> = () => {
             !dataBody?.data?.find((item) => item.id === params.userId) ===
               undefined
           );
+
+        setShowAgreementButton(
+          auth?.uni?.roommateAgreementFeature === EIntBoolean.TRUE
+        );
+
         AppLog.log(
           () =>
             "MyRoommatesData" +
@@ -163,7 +169,7 @@ const ViewProfileController: FC<Props> = () => {
         );
       }
     },
-    [params.userId, roommatesApi]
+    [params.userId, roommatesApi, auth.uni?.roommateAgreementFeature]
   );
 
   const moveToChatScreenFromRoommates = (profileMatch: RelationModel) => {

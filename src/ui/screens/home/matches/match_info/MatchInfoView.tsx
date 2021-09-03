@@ -193,7 +193,7 @@ export const MatchInfoView: React.FC<Props> = ({
             heading={STRINGS.matchInfo.max_roommate_count}
             title={
               matchInfo?.noOfRoommates!.replace("</br> ", "\n") ??
-              STRINGS.common.not_found
+              STRINGS.common.not_available
             }
           />
 
@@ -219,8 +219,9 @@ export const MatchInfoView: React.FC<Props> = ({
             title={
               matchInfo?.criteria
                 ? matchInfo?.criteria
-                : STRINGS.common.not_found
+                : STRINGS.common.not_available
             }
+            isRenderHtml={true}
           />
         </View>
         {roommates && roommates?.length > 0 && (

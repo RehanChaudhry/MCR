@@ -74,6 +74,9 @@ export const AddInterestsView = React.memo<Props>(
             showsVerticalScrollIndicator={false}
             removeClippedSubviews={true}
             style={[styles.list]}
+            noRecordFoundText={
+              "The interests you add will show up here. You haven't added any interests yet."
+            }
             keyExtractor={(item, index) => index.toString()}
           />
         </View>

@@ -102,6 +102,7 @@ const DismissedOrBlockedView: FC<Props> = ({
           style={styles.list}
           pullToRefreshCallback={onPullToRefresh}
           error={error}
+          noRecordFoundText={"You do not have any roommates."}
           contentContainerStyle={styles.listContainer}
           ItemSeparatorComponent={() => (
             <View style={styles.itemSeparator} />

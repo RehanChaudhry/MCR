@@ -1,4 +1,5 @@
 import { ColorPalette } from "hooks/theme/ColorPaletteContainer";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 export type UniSelectionResponseModel = {
   message: string;
@@ -32,7 +33,7 @@ export type Uni = {
   chatFeature: number;
   socialFeedFeature: number;
   allowDisplayProfiles: number;
-  roommateAgreementFeature: number;
+  roommateAgreementFeature: EIntBoolean;
   displayMatch: number;
   displayMCRLogo: number;
   interfaceColor: string;
