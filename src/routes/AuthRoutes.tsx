@@ -8,6 +8,7 @@ import UniSelectionController from "ui/screens/uni_selection/UniSelectionControl
 import { WelcomeRoutes } from "routes/WelcomeRoutes";
 import PreSSOLoginController from "ui/screens/auth/pre_sso_login/PreSSOLoginConstroller";
 import ContactUsController from "ui/screens/home/contact_us/ContactUsController";
+import SSOLoginView from "ui/screens/auth/login/sso_login/SSOLoginview";
 
 type Props = {
   initialRouteName: "SignUp" | "Login" | "UniSelection";
@@ -43,6 +44,11 @@ export const AuthRoutes: FC<Props> = ({ initialRouteName = "Login" }) => {
       <AuthStack.Screen
         name="ContactUs"
         component={ContactUsController}
+        options={{ headerShown: false }}
+      />
+      <AuthStack.Screen
+        name="SSO_Login_View"
+        component={SSOLoginView}
         options={{ headerShown: false }}
       />
     </AuthStack.Navigator>

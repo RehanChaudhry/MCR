@@ -9,6 +9,7 @@ export type AuthStackParamList = {
   Welcome: undefined;
   SSO_Login: undefined;
   ContactUs: undefined;
+  SSO_Login_View: { url: string };
 };
 
 export const AuthStack = createStackNavigator<AuthStackParamList>();
