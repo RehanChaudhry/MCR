@@ -192,9 +192,9 @@ export const MatchInfoView: React.FC<Props> = ({
             )}
             heading={STRINGS.matchInfo.max_roommate_count}
             title={
-              matchInfo?.noOfRoommates!.replace("</br> ", "\n") ??
-              STRINGS.common.not_available
+              matchInfo?.noOfRoommates! ?? STRINGS.common.not_available
             }
+            isRenderHtml={true}
           />
 
           <Divider style={{ backgroundColor: themedColors.separator }} />

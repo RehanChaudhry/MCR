@@ -49,9 +49,8 @@ const SocialDetailForm: FC<Props> = ({
 
   const html = () => (
     <HtmlView
-      paragraphBreak={""}
       addLineBreaks={false}
-      value={title}
+      value={title.trim().replace(/\s/g, "")}
       stylesheet={styles}
     />
   );
@@ -93,6 +92,9 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     marginTop: SPACE.sm
+  },
+  br: {
+    marginTop: 0
   }
 });
 
