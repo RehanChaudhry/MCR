@@ -105,6 +105,11 @@ const MyFriendsController: FC<Props> = () => {
   }, [navigation]);
 
   const moveToChatScreen = async (profileMatch: RelationModel) => {
+    AppLog.logForcefully(
+      () =>
+        "moveToProfileScreen(), profile: " + JSON.stringify(profileMatch)
+    );
+
     createConversationAndNavigate(
       (profileMatch.user as unknown) as User,
       setActiveConversations,

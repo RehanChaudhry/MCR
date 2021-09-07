@@ -149,6 +149,12 @@ const ActivityLogItem = ({ activityLog, navigateToScreen }: Props) => {
         activityLog.action === Actions.CREATE
       ) {
         return <Dismissed width={20} fill={themedColors.background} />;
+      } else if (
+        activityLog.type ===
+          NotificationAndActivityLogFilterType.BLOCKED &&
+        activityLog.action === Actions.DELETE
+      ) {
+        return <Dismissed width={20} fill={themedColors.background} />;
       }
     } else {
       return null;

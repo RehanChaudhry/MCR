@@ -252,7 +252,7 @@ const ActivityLogController: FC<Props> = () => {
       return openRoommateAgreementScreen();
     } else if (
       type === NotificationAndActivityLogFilterType.DISMISSED_LIST &&
-      action === Actions.CREATE
+      action === Actions.REMOVED
     ) {
       return openMyProfileScreen(
         data?.id,
@@ -261,6 +261,22 @@ const ActivityLogController: FC<Props> = () => {
     } else if (
       type === NotificationAndActivityLogFilterType.RESTORED &&
       action === Actions.CREATE
+    ) {
+      return openMyProfileScreen(
+        data?.id,
+        data?.firstName + " " + data?.lastName
+      );
+    } else if (
+      (activityLog.type === NotificationAndActivityLogFilterType.BLOCKED &&
+        activityLog.action === Actions.CREATE) ||
+      (activityLog.type ===
+        NotificationAndActivityLogFilterType.DISMISSED_LIST &&
+        activityLog.action === Actions.CREATE)
+    ) {
+      return;
+    } else if (
+      activityLog.type === NotificationAndActivityLogFilterType.BLOCKED &&
+      activityLog.action === Actions.DELETE
     ) {
       return openMyProfileScreen(
         data?.id,
