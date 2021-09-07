@@ -10,6 +10,7 @@ import { optimizedMemo } from "ui/components/templates/optimized_memo/optimized_
 import { SvgProp } from "utils/Util";
 import usePreferredTheme from "hooks/theme/usePreferredTheme";
 import useAuth from "hooks/useAuth";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 type Props = {
   shouldNotOptimize?: boolean;
@@ -26,7 +27,7 @@ export const CircleImageBorder = optimizedMemo<Props>(
       <TouchableWithoutFeedback onPress={onPress}>
         <View style={styles.mainContainer}>
           <View style={styles.circle}>
-            {uni?.allowDisplayProfiles === 1 ? (
+            {uni?.allowDisplayProfiles === EIntBoolean.TRUE ? (
               <Image
                 source={
                   imageUrl !== undefined

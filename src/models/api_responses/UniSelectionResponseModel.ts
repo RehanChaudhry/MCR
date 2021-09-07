@@ -32,7 +32,7 @@ export type Uni = {
   ssoMethod: string;
   chatFeature: number;
   socialFeedFeature: number;
-  allowDisplayProfiles: number;
+  allowDisplayProfiles: EIntBoolean;
   roommateAgreementFeature: EIntBoolean;
   displayMatch: number;
   displayMCRLogo: number;

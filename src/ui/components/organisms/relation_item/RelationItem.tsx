@@ -18,6 +18,7 @@ import RequestStateIcon from "assets/images/request_state_icon.svg";
 import { ChatButton } from "ui/components/molecules/chat_button/ChatButton";
 import useAuth from "hooks/useAuth";
 import EScreen from "models/enums/EScreen";
+import EIntBoolean from "models/enums/EIntBoolean";
 
 interface Props {
   relationModel: RelationModel;
@@ -368,7 +369,7 @@ const RelationListsItem = ({
           onPress={() => {
             onUserClicked(relationModel);
           }}>
-          {uni?.allowDisplayProfiles === 1 ? (
+          {uni?.allowDisplayProfiles === EIntBoolean.TRUE ? (
             <Image
               style={styles.profileImage}
               source={
