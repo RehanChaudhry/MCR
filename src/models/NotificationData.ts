@@ -126,7 +126,7 @@ export function getMessage(notification: NotificationData): string {
       NotificationAndActivityLogFilterType.ROOMMATE_GROUP &&
     notification.action === NotificationActionType.UPDATE
   ) {
-    return `Your <b>roommate list</b> has been updated by an Admin`;
+    return `Your roommate list has been updated by an Admin`;
   } else if (
     notification.type ===
       NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
@@ -139,6 +139,12 @@ export function getMessage(notification: NotificationData): string {
     notification.action === NotificationActionType.AGREE
   ) {
     return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has edited and disagreed on roommate agreement`;
+  } else if (
+    notification.type ===
+      NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&
+    notification.action === NotificationActionType.ACCEPT
+  ) {
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has modified your roommate agreement`;
   } else {
     return `<b>Message not found</b>`;
   }

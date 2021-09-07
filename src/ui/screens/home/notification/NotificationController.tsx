@@ -215,7 +215,8 @@ const NotificationController: FC<Props> = () => {
       if (textToSearch === "View All") {
         const updatedRequestModel = {
           ...paginationRequestModel,
-          page: 1
+          page: 1,
+          actionType: ""
         };
         setPaginationRequestModel(updatedRequestModel);
         setNotifications(undefined);

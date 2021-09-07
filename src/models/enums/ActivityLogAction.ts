@@ -9,7 +9,9 @@ enum Actions {
   STARTED = "started",
   UPDATED = "update",
   UPDATED_AND_AGREED = "",
-  LOGIN = "login"
+  LOGIN = "login",
+  DELETE = "delete",
+  REPORT = "report"
 }
 
 export default Actions;

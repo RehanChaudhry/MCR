@@ -179,6 +179,9 @@ export const MatchesView: React.FC<Props> = ({
         isAllDataLoaded={isAllDataLoaded}
         keyExtractor={(item) => item.userId?.toString()}
         error={error}
+        noRecordFoundText={
+          "You do not have any students matches available for now."
+        }
         ListHeaderComponent={() => (
           <AppLabel
             text={Strings.matches.label_tool_tip}

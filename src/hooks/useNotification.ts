@@ -61,6 +61,8 @@ const useNotification = () => {
     [NotificationActionType.DISAGREE]: (notification: NotificationData) =>
       navigateToRoommateAgreementScreen(notification),
     [NotificationActionType.UPDATE]: (notification: NotificationData) =>
+      navigateToRoommateAgreementScreen(notification),
+    [NotificationActionType.ACCEPT]: (notification: NotificationData) =>
       navigateToRoommateAgreementScreen(notification)
   };
 

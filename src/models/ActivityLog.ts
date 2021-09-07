@@ -117,7 +117,7 @@ export function getMessage(
         NotificationAndActivityLogFilterType.QUESTIONAIRE &&
       activityLog.action === Actions.CREATE
     ) {
-      return `Update your <b>Questionaire</b>`;
+      return `Updated your <b>Questionaire</b>`;
     } else if (
       activityLog.type === NotificationAndActivityLogFilterType.PROFILE &&
       activityLog.action === Actions.UPDATED
@@ -153,10 +153,10 @@ export function getMessage(
       activityLog.type === NotificationAndActivityLogFilterType.COMMENT &&
       activityLog.action === Actions.CREATE
     ) {
-      return `Commented on a post, <b>${activityLog?.data?.content?.replace(
+      return `Commented on a post, <b>"${activityLog?.data?.content?.replace(
         /\r?\n|\r/g,
         " "
-      )}</b>`;
+      )}"</b>`;
     } else if (
       activityLog.type === NotificationAndActivityLogFilterType.RESTORED &&
       activityLog.action === Actions.CREATE
@@ -188,6 +188,18 @@ export function getMessage(
       return `Added  <b>${activityLog.data?.firstName}${
         " " + activityLog.data?.lastName
       }</b> to the blocked list `;
+    } else if (
+      activityLog.type === NotificationAndActivityLogFilterType.BLOCKED &&
+      activityLog.action === Actions.DELETE
+    ) {
+      return `Removed <b>${activityLog.data?.firstName}${
+        " " + activityLog.data?.lastName
+      }</b> from the blocked list `;
+    } else if (
+      activityLog.type === NotificationAndActivityLogFilterType.POST &&
+      activityLog.action === Actions.REPORT
+    ) {
+      return `Post Report`;
     } else {
       return "Commented on any post";
     }

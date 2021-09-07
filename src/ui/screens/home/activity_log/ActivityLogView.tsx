@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { FONT_SIZE, SPACE } from "config";
@@ -37,6 +37,7 @@ export const ActivityLogView = React.memo<Props>(
   }) => {
     const { themedColors } = usePreferredTheme();
     let sharedDataRef = useRef("");
+    const [dropDownSelectedItem, setDropDownSelectedItem] = useState("");
 
     const listItem = useCallback(
       ({ item }: { item: ActivityLog }) => {
@@ -83,6 +84,7 @@ export const ActivityLogView = React.memo<Props>(
             items={getActivityTypeFilterData()}
             selectedItemCallback={(item) => {
               onChangeFilter(item.text!);
+              setDropDownSelectedItem(item.value);
             }}
           />
         </View>
@@ -92,6 +94,7 @@ export const ActivityLogView = React.memo<Props>(
           keyExtractor={(item) => item.id.toString()}
           renderItem={listItem}
           style={styles.list}
+          noRecordFoundText={`You do not have any "${dropDownSelectedItem}" logs for now.`}
           onEndReached={onEndReached}
           isAllDataLoaded={isAllDataLoaded}
           pullToRefreshCallback={(_onComplete) => {

@@ -50,7 +50,15 @@ const SocialDetailForm: FC<Props> = ({
   const html = () => (
     <HtmlView
       addLineBreaks={false}
-      value={title.trim().replace(/\s/g, "")}
+      value={title
+        .split(" </br>")
+        .join("</br>")
+        .split("</br> ")
+        .join("</br>")
+        .split("</br>")
+        .join("</br>")
+        .split(" </br> ")
+        .join("</br>")}
       stylesheet={styles}
     />
   );
@@ -68,12 +76,13 @@ const SocialDetailForm: FC<Props> = ({
             icon?.() === undefined ? { paddingHorizontal: 0 } : {},
             headingStyle
           ]}
+          numberOfLines={0}
         />
       </View>
       {onPress ? (
         <TouchableOpacity onPress={onPress}>{titleJsx()}</TouchableOpacity>
       ) : isRenderHtml ? (
-        html()
+        <View style={styles.htmlRender}>{html()}</View>
       ) : (
         titleJsx()
       )}
@@ -94,7 +103,10 @@ const styles = StyleSheet.create({
     marginTop: SPACE.sm
   },
   br: {
-    marginTop: -12
+    marginTop: -14
+  },
+  htmlRender: {
+    marginTop: SPACE.sm
   }
 });
 

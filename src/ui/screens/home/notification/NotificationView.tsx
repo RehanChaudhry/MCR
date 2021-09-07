@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { CircleImageWithText } from "ui/components/molecules/circle_image_with_text/CircleImageWithText";
@@ -39,6 +39,7 @@ export const NotificationView = React.memo<Props>(
   }) => {
     const theme = usePreferredTheme();
     let sharedDataRef = useRef("");
+    const [dropDownSelectedItem, setDropDownSelectedItem] = useState("");
 
     const listItem = useCallback(
       ({ item, index }: { item: NotificationData; index: number }) => {
@@ -104,6 +105,7 @@ export const NotificationView = React.memo<Props>(
             selectedItemCallback={(item) => {
               sharedDataRef.current = "";
               onChangeFilter(item.text!);
+              setDropDownSelectedItem(item.value);
             }}
             shouldShowCustomIcon={true}
           />
@@ -115,6 +117,7 @@ export const NotificationView = React.memo<Props>(
           keyExtractor={(item) => item.id.toString()}
           renderItem={listItem}
           style={styles.list}
+          noRecordFoundText={`You do not have any "${dropDownSelectedItem}" notifications for now.`}
           onEndReached={onEndReached}
           isAllDataLoaded={isAllDataLoaded}
           pullToRefreshCallback={(_onComplete) => {

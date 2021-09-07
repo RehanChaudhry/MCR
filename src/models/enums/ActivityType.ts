@@ -62,25 +62,13 @@ export const getActivityTypeFilterData = () => {
     {
       text: "student",
       value: "Login"
+    },
+    {
+      text: "blocked",
+      value: "Blocked"
     }
   ];
 
-  filters.push({
-    text: ActivityType.FRIEND_REQUEST,
-    value: "Friend Request"
-  });
-  filters.push({
-    text: ActivityType.DISMISSED,
-    value: "Dismissed"
-  });
-  filters.push({
-    text: ActivityType.ROOMMATE_REQUEST,
-    value: "Roommate Request"
-  });
-  filters.push({
-    text: ActivityType.UPDATED_PROFILE,
-    value: "Updated Profile"
-  });
   return filters;
 };
 

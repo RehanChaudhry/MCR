@@ -133,7 +133,8 @@ const ActivityLogController: FC<Props> = () => {
         AppLog.logForcefully(() => "textToSearch: " + textToSearch);
         const updatedRequestModel = {
           ...paginationRequestModel,
-          page: 1
+          page: 1,
+          actionType: undefined
         };
         setPaginationRequestModel(updatedRequestModel);
         setActivityLogs(undefined);
