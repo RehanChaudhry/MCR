@@ -43,3 +43,7 @@ export interface PostedByProfilePicture {
 export interface IsLikedByMe {
   action: string;
 }
+
+export const toDisplayName = (firstName?: string, lastName?: string) => {
+  return `${firstName ?? ""} ${lastName ?? ""}`.trim();
+};

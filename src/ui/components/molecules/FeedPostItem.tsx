@@ -2,7 +2,8 @@ import { FONT_SIZE, SPACE } from "config";
 import { usePreferredTheme } from "hooks";
 import {
   PostFeed,
-  PostFeed as FeedData
+  PostFeed as FeedData,
+  toDisplayName
 } from "models/api_responses/FetchPostFeedListResponseModel";
 import React, { useCallback, useState } from "react";
 import {
@@ -133,11 +134,10 @@ export const FeedPostItem = React.memo<FeedPostItemProps>(
             { backgroundColor: theme.themedColors.background }
           ]}>
           <AnnouncementHeader
-            title={
-              announcementItem.postedByFirstName +
-              " " +
+            title={toDisplayName(
+              announcementItem.postedByFirstName,
               announcementItem.postedByLastName
-            }
+            )}
             subTitle={new PrettyTimeFormat().getPrettyTime(
               (announcementItem.createdAt as unknown) as string
             )}

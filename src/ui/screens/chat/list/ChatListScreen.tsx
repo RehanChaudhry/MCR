@@ -26,6 +26,7 @@ interface ChatListProps {
   isAllDataLoaded: boolean;
   error: string | undefined;
   performSearch: (keyword: string) => void;
+  isActiveConversation: boolean;
 }
 
 let lastHeaderTitle = "";
@@ -38,7 +39,8 @@ export const ChatListScreen = React.memo<ChatListProps>(
     pullToRefreshCallback,
     onEndReached,
     isAllDataLoaded,
-    performSearch
+    performSearch,
+    isActiveConversation
   }) => {
     AppLog.log(() => "Rendering chat screen...");
     const { themedColors } = usePreferredTheme();
@@ -105,6 +107,11 @@ export const ChatListScreen = React.memo<ChatListProps>(
               keyExtractor={(item) => (item.id ? String(item.id) : "")}
               showsVerticalScrollIndicator={false}
               style={styles.list}
+              noRecordFoundText={
+                isActiveConversation
+                  ? "You do not have any active chats for now"
+                  : "You do not have any archived chats for now"
+              }
               retryCallback={pullToRefreshCallback}
               pullToRefreshCallback={pullToRefreshCallback}
               onEndReached={onEndReached}

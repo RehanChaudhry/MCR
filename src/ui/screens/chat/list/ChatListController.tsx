@@ -370,6 +370,7 @@ export const ChatListController: FC<Props> = ({
       pullToRefreshCallback={refreshCallback}
       onEndReached={onEndReached}
       performSearch={performSearch}
+      isActiveConversation={route.params.status === "active"}
     />
   );
 };

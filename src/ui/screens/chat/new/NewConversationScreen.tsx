@@ -102,12 +102,17 @@ export const NewConversationScreen = React.memo<Props>(
           <AppLabel
             text={createConversationText}
             style={styles.textStyle(themedColors)}
+            numberOfLines={0}
           />
 
           <FlatListWithPb
             shouldShowProgressBar={false}
             data={data}
             renderItem={renderItem}
+            noRecordFoundText={
+              "It’s nice to chat with someone. Say hello!\n" +
+              "Create a new conversation and start talking to them."
+            }
             showsVerticalScrollIndicator={false}
             removeClippedSubviews={true}
             style={[styles.list]}

@@ -49,6 +49,7 @@ export const SeeLikesView = React.memo<Props>(
           keyExtractor={(item: User) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           error={error}
+          noRecordFoundText={"Be the first one to like!"}
           contentContainerStyle={styles.listContainer}
           ItemSeparatorComponent={() => (
             <View style={styles.itemSeparator} />
