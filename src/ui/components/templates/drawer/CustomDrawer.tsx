@@ -147,9 +147,11 @@ export const CustomDrawer = optimizedMemo<CustomDrawerProps>((props) => {
               </View>
             </View>
             <AppProgressBar
-              progressPercentage={profileCompletedPercentage(
-                auth.user?.profile
-              )}
+              progressPercentage={
+                !isNaN(profileCompletedPercentage(auth.user?.profile))
+                  ? profileCompletedPercentage(auth.user?.profile)
+                  : 0
+              }
               style={styles.userProgress}
             />
           </View>
