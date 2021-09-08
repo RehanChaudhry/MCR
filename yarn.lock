@@ -1937,6 +1937,13 @@
   dependencies:
     invariant "^2.2.4"
 
+"@react-native-cookies/cookies@^6.0.10":
+  version "6.0.10"
+  resolved "https://registry.yarnpkg.com/@react-native-cookies/cookies/-/cookies-6.0.10.tgz#19e88760dde2d801069cd097c8adb64fa26187b4"
+  integrity sha512-a5Scgrs2VvWeCH2jVNWtuTjq77kDS0bJ2KJ6Qav4i+4h1McGkBWJsGBEX7jd4is4T+Jukx8/jnEOzvJCfLjjTQ==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-firebase/app@^11.2.0":
   version "11.2.0"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-11.2.0.tgz#5716bb264cf0a500fb40181bd338eb3067d36c94"

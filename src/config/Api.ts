@@ -26,6 +26,7 @@ export default {
   //Get universities
   UNIS: "university",
   UNI_DETAILS: "university/",
+  GET_SSO_URL: "university/login-url",
 
   // Profile
   GET_QUESTIONS: "answer/",

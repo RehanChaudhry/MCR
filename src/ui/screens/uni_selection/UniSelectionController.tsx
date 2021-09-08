@@ -61,7 +61,6 @@ const UniSelectionController: FC<Props> = () => {
         secondary: item.secondaryColorDark
       });
       await auth.saveUni(item);
-
       if (item.ssoMethod === "off") {
         openLoginScreen();
       } else {
