@@ -1,7 +1,7 @@
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import Colors from "config/Colors";
 import Fonts from "config/Fonts";
-import { usePreferredTheme } from "hooks";
+import { useAuth, usePreferredTheme } from "hooks";
 import NotificationData, {
   getButtonText,
   getDisplayTime,
@@ -30,6 +30,7 @@ type Props = {
 export const CircleImageWithText = React.memo<Props>(
   ({ notification, userNameOnPress, actionOnPress }) => {
     const theme = usePreferredTheme();
+    const { user } = useAuth();
 
     const icon: any = () => {
       if (notification.type != null) {
@@ -156,7 +157,9 @@ export const CircleImageWithText = React.memo<Props>(
               onBoldTextPress={() => {
                 userNameOnPress(notification);
               }}
-              text={getMessage(notification) ?? STRINGS.common.not_found}
+              text={
+                getMessage(notification, user) ?? STRINGS.common.not_found
+              }
               textStyle={
                 notification.isRead === 0
                   ? [styles.text, { fontWeight: "bold" }]
