@@ -205,94 +205,106 @@ export const SettingsView = React.memo<Props>(
                 />
               </View>
               <View style={styles.spacer} />
-              <ListItemSeparator />
-              <View style={styles.spacer} />
-              <View style={styles.leftRightSpacing}>
-                <AppFormField
-                  fieldTestID="currentPassword"
-                  validationLabelTestID={"currentPasswordValidationLabel"}
-                  name="currentPassword"
-                  labelProps={{
-                    text: "Current Password",
-                    weight: "semi-bold"
-                  }}
-                  fieldInputProps={{
-                    textContentType: "password",
-                    keyboardType: "default",
-                    returnKeyType: "next",
-                    secureTextEntry: true,
-                    placeholder: "Enter your current password",
-                    autoCapitalize: "none",
-                    placeholderTextColor: theme.themedColors.placeholder,
-                    style: { color: theme.themedColors.label },
-                    viewStyle: [
-                      styles.textFieldStyle,
-                      {
-                        backgroundColor: theme.themedColors.background,
-                        borderColor: theme.themedColors.border
+
+              {auth.uni?.ssoMethod === "off" && (
+                <>
+                  <ListItemSeparator />
+                  <View style={styles.spacer} />
+                  <View style={styles.leftRightSpacing}>
+                    <AppFormField
+                      fieldTestID="currentPassword"
+                      validationLabelTestID={
+                        "currentPasswordValidationLabel"
                       }
-                    ]
-                  }}
-                />
-              </View>
-              <View style={styles.spacer} />
-              <View style={styles.leftRightSpacing}>
-                <AppFormField
-                  fieldTestID="newPassword"
-                  validationLabelTestID={"newPasswordValidationLabel"}
-                  name="newPassword"
-                  labelProps={{
-                    text: "New Password",
-                    weight: "semi-bold"
-                  }}
-                  fieldInputProps={{
-                    textContentType: "name",
-                    keyboardType: "default",
-                    returnKeyType: "next",
-                    secureTextEntry: true,
-                    placeholder: "Create your new password",
-                    autoCapitalize: "none",
-                    placeholderTextColor: theme.themedColors.placeholder,
-                    style: { color: theme.themedColors.label },
-                    viewStyle: [
-                      styles.textFieldStyle,
-                      {
-                        backgroundColor: theme.themedColors.background,
-                        borderColor: theme.themedColors.border
+                      name="currentPassword"
+                      labelProps={{
+                        text: "Current Password",
+                        weight: "semi-bold"
+                      }}
+                      fieldInputProps={{
+                        textContentType: "password",
+                        keyboardType: "default",
+                        returnKeyType: "next",
+                        secureTextEntry: true,
+                        placeholder: "Enter your current password",
+                        autoCapitalize: "none",
+                        placeholderTextColor:
+                          theme.themedColors.placeholder,
+                        style: { color: theme.themedColors.label },
+                        viewStyle: [
+                          styles.textFieldStyle,
+                          {
+                            backgroundColor: theme.themedColors.background,
+                            borderColor: theme.themedColors.border
+                          }
+                        ]
+                      }}
+                    />
+                  </View>
+                  <View style={styles.spacer} />
+                  <View style={styles.leftRightSpacing}>
+                    <AppFormField
+                      fieldTestID="newPassword"
+                      validationLabelTestID={"newPasswordValidationLabel"}
+                      name="newPassword"
+                      labelProps={{
+                        text: "New Password",
+                        weight: "semi-bold"
+                      }}
+                      fieldInputProps={{
+                        textContentType: "name",
+                        keyboardType: "default",
+                        returnKeyType: "next",
+                        secureTextEntry: true,
+                        placeholder: "Create your new password",
+                        autoCapitalize: "none",
+                        placeholderTextColor:
+                          theme.themedColors.placeholder,
+                        style: { color: theme.themedColors.label },
+                        viewStyle: [
+                          styles.textFieldStyle,
+                          {
+                            backgroundColor: theme.themedColors.background,
+                            borderColor: theme.themedColors.border
+                          }
+                        ]
+                      }}
+                    />
+                  </View>
+                  <View style={styles.spacer} />
+                  <View style={styles.leftRightSpacing}>
+                    <AppFormField
+                      fieldTestID="confirmPassword"
+                      validationLabelTestID={
+                        "confirmPasswordValidationLabel"
                       }
-                    ]
-                  }}
-                />
-              </View>
-              <View style={styles.spacer} />
-              <View style={styles.leftRightSpacing}>
-                <AppFormField
-                  fieldTestID="confirmPassword"
-                  validationLabelTestID={"confirmPasswordValidationLabel"}
-                  name="confirmPassword"
-                  labelProps={{
-                    text: "Confirm Password",
-                    weight: "semi-bold"
-                  }}
-                  fieldInputProps={{
-                    textContentType: "name",
-                    keyboardType: "default",
-                    returnKeyType: "next",
-                    placeholder: "Re-enter your new password",
-                    autoCapitalize: "none",
-                    secureTextEntry: true,
-                    placeholderTextColor: theme.themedColors.placeholder,
-                    style: { color: theme.themedColors.label },
-                    viewStyle: [
-                      styles.textFieldStyle,
-                      {
-                        backgroundColor: theme.themedColors.background,
-                        borderColor: theme.themedColors.border
-                      }
-                    ]
-                  }}
-                />
-              </View>
+                      name="confirmPassword"
+                      labelProps={{
+                        text: "Confirm Password",
+                        weight: "semi-bold"
+                      }}
+                      fieldInputProps={{
+                        textContentType: "name",
+                        keyboardType: "default",
+                        returnKeyType: "next",
+                        placeholder: "Re-enter your new password",
+                        autoCapitalize: "none",
+                        secureTextEntry: true,
+                        placeholderTextColor:
+                          theme.themedColors.placeholder,
+                        style: { color: theme.themedColors.label },
+                        viewStyle: [
+                          styles.textFieldStyle,
+                          {
+                            backgroundColor: theme.themedColors.background,
+                            borderColor: theme.themedColors.border
+                          }
+                        ]
+                      }}
+                    />
+                  </View>
+                </>
+              )}
             </CardView>
             <View style={styles.buttonViewStyle}>
               <AppFormFormSubmit
