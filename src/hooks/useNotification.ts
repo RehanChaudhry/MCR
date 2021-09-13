@@ -37,11 +37,20 @@ const useNotification = () => {
   });
   const { user, uni } = useAuth();
 
-  const handleConnectRequestsRedirection: NotificationRedirectionLiteralType = {
+  const handleFriendsRedirection: NotificationRedirectionLiteralType = {
     [NotificationActionType.RECIEVE]: (notification: NotificationData) =>
       navigateToConnectRequestScreen(notification),
     [NotificationActionType.ACCEPT]: (notification: NotificationData) =>
+      navigateToMyFriendsScreen(notification),
+    [NotificationActionType.RESPOND]: (notification: NotificationData) =>
+      navigateToConnectRequestScreen(notification)
+  };
+
+  const handleRoommatesRedirection: NotificationRedirectionLiteralType = {
+    [NotificationActionType.RECIEVE]: (notification: NotificationData) =>
       navigateToConnectRequestScreen(notification),
+    [NotificationActionType.ACCEPT]: (notification: NotificationData) =>
+      navigateToMyRoommatesScreen(notification),
     [NotificationActionType.RESPOND]: (notification: NotificationData) =>
       navigateToConnectRequestScreen(notification)
   };
@@ -89,10 +98,10 @@ const useNotification = () => {
   ): PushNotificationContext {
     const notificationActions: HandleNotificationLiteralType = {
       [NotificationAndLogType.FRIEND_REQUEST]: (action: string) =>
-        handleConnectRequestsRedirection[action]?.(notification),
+        handleFriendsRedirection[action]?.(notification),
 
       [NotificationAndLogType.ROOMMATE_REQUEST]: (action: string) =>
-        handleConnectRequestsRedirection[action]?.(notification),
+        handleRoommatesRedirection[action]?.(notification),
 
       [NotificationAndLogType.CHAT]: (action: string) =>
         handleChatsRedirection[action]?.(notification),
@@ -139,6 +148,22 @@ const useNotification = () => {
           notification.type === NotificationAndLogType.FRIEND_REQUEST
             ? ConnectRequestType.FRIEND_REQUESTS
             : ConnectRequestType.ROOMMATE_REQUESTS
+      },
+      isFeatureLocked: true
+    };
+    setData(_data);
+    return _data;
+  }
+
+  function navigateToMyFriendsScreen(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    notification: NotificationData
+  ): PushNotificationContext {
+    let name: keyof HomeStackParamList = "MyFriends";
+    let _data = {
+      screenName: name,
+      params: {
+        isFrom: EScreen.NOTIFICATION
       },
       isFeatureLocked: true
     };

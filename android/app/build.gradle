@@ -152,7 +152,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 10
-        versionName "1.1.10-SPATAGING"
+        versionName "1.1.10-DEV"
         multiDexEnabled true
     }
     splits {

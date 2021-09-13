@@ -137,7 +137,7 @@ export default {
     label_unblocked: "Unblock",
     label_restore: "Restore",
     label_tool_tip:
-      "This list will not show individuals who haven't filled their Questionnaires yet or are your Roommates already."
+      "This list will not show individuals who have not yet completed their Questionnaires or who are already your Roommate."
   },
   profile: {
     title:
