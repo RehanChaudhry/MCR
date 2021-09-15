@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import Screen from "ui/components/atoms/Screen";
 import { AppLog, shadowStyleProps } from "utils/Util";
 import { StaticContent } from "models/api_responses/StaticContentResponseModel";
@@ -24,11 +24,13 @@ export const StaticContentView = React.memo<Props>(({ staticContent }) => {
     <Screen
       style={styles(themedColors).container}
       shouldAddBottomInset={false}>
-      <HtmlView
-        addLineBreaks={true}
-        value={String(staticContent.content).replace("</li>", "</li>")}
-        stylesheet={styles(themedColors)}
-      />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <HtmlView
+          addLineBreaks={true}
+          value={String(staticContent.content).replace("</li>", "</li>")}
+          stylesheet={styles(themedColors)}
+        />
+      </ScrollView>
     </Screen>
   );
 });
