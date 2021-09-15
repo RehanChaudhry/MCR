@@ -1,4 +1,4 @@
-import { FONT_SIZE, SPACE, STRINGS } from "config";
+import { FONT_SIZE, SPACE } from "config";
 import { useAuth, usePreferredTheme } from "hooks";
 import RelationModel from "models/RelationModel";
 import React, { FC, useCallback } from "react";
@@ -91,9 +91,9 @@ const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
                 styles.subTitleText,
                 { color: theme.themedColors.labelSecondary }
               ]}
-              text={`${item.user?.hometown ?? STRINGS.common.not_found}, ${
-                item.user?.major ?? STRINGS.common.not_found
-              }`}
+              text={`${
+                item.user?.hometown && item?.user?.hometown + ", "
+              }${item.user?.major ?? ""}`}
             />
           </View>
         </View>

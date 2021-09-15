@@ -55,7 +55,7 @@ export const AddInterestsController: FC<Props> = () => {
         <HeaderLeftTextWithIcon
           text={Strings.newConversation.titleLeft}
           onPress={() => {
-            navigation.goBack();
+            goBack();
           }}
           icon={() => (
             <Close

@@ -101,14 +101,14 @@ export const FieldBox: FC<Props> = ({
         onPress={() => {
           if (route.params.isFrom === EScreen.WELCOME) {
             !isLocked &&
-              welcomeNavigation.navigate("AddInterests", {
+              welcomeNavigation.push("AddInterests", {
                 list: values[name] ?? [],
                 listKey: name,
                 title: title
               });
           } else {
             !isLocked &&
-              updateNavigation.navigate("AddInterests", {
+              updateNavigation.push("AddInterests", {
                 list: values[name] ?? [],
                 listKey: name,
                 title: title
