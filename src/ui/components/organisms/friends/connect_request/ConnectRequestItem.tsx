@@ -91,9 +91,7 @@ const ConnectRequestItem: FC<Props> = ({ item, removeItemFromList }) => {
                 styles.subTitleText,
                 { color: theme.themedColors.labelSecondary }
               ]}
-              text={`${
-                item.user?.hometown && item?.user?.hometown + ", "
-              }${item.user?.major ?? ""}`}
+              text={item.user?.getSubtitle()}
             />
           </View>
         </View>

@@ -18,6 +18,7 @@ export type WelcomeStackParamList = {
     list: ConversationItem[];
     listKey?: string;
     title?: string;
+    callbackFunction: (data: any) => void;
   };
   StaticContent: { isFrom: EScreen; staticContent: StaticContent };
 };
