@@ -9,6 +9,7 @@ import UpdateProfileController from "ui/screens/home/profile/update_profile/Upda
 import { AddInterestsController } from "ui/screens/home/profile/update_profile/add_interests/AddInterestsController";
 import { AuthRoutes } from "routes/AuthRoutes";
 import EScreen from "models/enums/EScreen";
+import StaticContentController from "ui/screens/static_content/StaticContentController";
 
 export type WelcomeScreens = "Welcome" | "UpdateProfile" | "Questionnaire";
 
@@ -54,6 +55,10 @@ export const WelcomeRoutes: FC<Props> = ({
         options={{
           headerShown: false
         }}
+      />
+      <WelcomeStack.Screen
+        name="StaticContent"
+        component={StaticContentController}
       />
     </WelcomeStack.Navigator>
   );

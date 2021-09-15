@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import EScreen from "models/enums/EScreen";
 import { ConversationItem } from "models/ConversationItem";
+import { StaticContent } from "models/api_responses/StaticContentResponseModel";
 
 export type WelcomeStackParamList = {
   Welcome: undefined;
@@ -18,6 +19,7 @@ export type WelcomeStackParamList = {
     listKey?: string;
     title?: string;
   };
+  StaticContent: { isFrom: EScreen; staticContent: StaticContent };
 };
 
 export const WelcomeStack = createStackNavigator<WelcomeStackParamList>();
