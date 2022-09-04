@@ -357,6 +357,7 @@ const RelationListsItem = ({
   const { uni } = useAuth();
 
   const [nameMargin, setNameMargin] = useState<boolean>(false);
+  //AppLog.logForcefully(() => "displayprofile: " + uni?.displayMatch);
 
   return (
     <View

@@ -79,6 +79,25 @@ const MyRoommatesController: FC<Props> = () => {
       } else {
         navigation.setOptions({
           headerTitleAlign: "center",
+          headerRight: () =>
+            route.params?.isFrom === EScreen.NOTIFICATION && (
+              <View style={{ marginRight: SPACE.lg }}>
+                <LeaveGroup
+                  width={24}
+                  height={24}
+                  fill={
+                    myRoommates?.length === 0
+                      ? themedColors.interface[400]
+                      : themedColors.danger
+                  }
+                  onPress={() => {
+                    if (myRoommates?.length! > 0) {
+                      setLeaveGroup(true);
+                    }
+                  }}
+                />
+              </View>
+            ),
           headerLeft: () => (
             <HeaderLeftTextWithIcon
               onPress={() => {

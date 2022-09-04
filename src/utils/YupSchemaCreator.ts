@@ -16,8 +16,10 @@ let FieldTypes = {
     Yup.array()
       .required("Please pick atleast one item")
       .min(1, "Please pick atleast one item"),
-  radio: (field: FormInputFieldData): SchemaOf<any> =>
-    Yup.string().required(computeValidationMessage(field)),
+  radio: (field: FormInputFieldData): SchemaOf<any> => {
+    Yup.string().optional();
+    AppLog.logForcefully(() => "radio" + field);
+  },
   textarea: (field: FormInputFieldData): SchemaOf<any> =>
     Yup.string().required(computeValidationMessage(field)),
   agreement: (_: FormInputFieldData): SchemaOf<any> =>

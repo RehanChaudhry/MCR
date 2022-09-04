@@ -28,7 +28,7 @@ const FriendsRootController: FC<Props> = () => {
   useEffect(() => {
     AppLog.logForcefully(() => "Friends controller: " + isAgreementId);
 
-    if (uni?.roommateAgreementFeature === EIntBoolean.TRUE) {
+    if (uni?.roommateAgreementFeature === EIntBoolean.FALSE) {
       const index = breadCrumbsItems?.findIndex(
         (item) => item.title === "Roommate Agreement"
       );

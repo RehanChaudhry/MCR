@@ -6,7 +6,7 @@ import {
 import ArrowLeft from "assets/images/arrow_left.svg";
 import { usePreferredTheme } from "hooks";
 import Colors from "config/Colors";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import { FONT_SIZE, SPACE, STRINGS } from "config";
 import { AppLabel } from "ui/components/atoms/app_label/AppLabel";
 import Screen from "ui/components/atoms/Screen";
@@ -16,18 +16,47 @@ import { UniLogo } from "ui/components/atoms/UniLogo";
 import { AppButton } from "ui/components/molecules/app_button/AppButton";
 import MultilineSpannableText from "ui/components/atoms/multiline_spannable_text/MultilineSpannableText";
 import { HeadingWithText } from "ui/components/molecules/heading_with_text/HeadingWithText";
+import { AppLog } from "utils/Util";
+import { TouchableWithoutFeedback } from "react-native";
 
 type Props = {
-  openWelcomeScreen?: () => void;
+  openSSOLoginScreen?: () => void;
   goBack?: () => void;
   openForgotPasswordScreen?: () => void;
+  openLoginScreen: () => void;
   shouldShowProgressBar?: boolean;
 };
 
 export const PreSSOLoginView = React.memo<Props>(
-  ({ goBack, openWelcomeScreen }) => {
+  ({ goBack, openSSOLoginScreen, openLoginScreen }) => {
     const theme = usePreferredTheme();
 
+    let patternArray: string[] = [];
+
+    const createPattern = (positionStyle: ViewStyle, name: string) => {
+      return (
+        <TouchableWithoutFeedback
+          onPress={() => {
+            if (name === "bottomLeft") {
+              patternArray = [];
+            }
+            patternArray.splice(patternArray.length, 0, name);
+            if (
+              name === "bottomRight" &&
+              patternArray.length === 3 &&
+              patternArray[0] === "bottomLeft" &&
+              patternArray[1] === "topCenter" &&
+              patternArray[2] === "bottomRight"
+            ) {
+              //navigate to login
+              AppLog.logForcefully(() => "navigate to login");
+              openLoginScreen();
+            }
+          }}>
+          <View style={[styles.patternContainer, positionStyle]} />
+        </TouchableWithoutFeedback>
+      );
+    };
     return (
       <Screen
         style={[
@@ -80,7 +109,7 @@ export const PreSSOLoginView = React.memo<Props>(
                 textStyle={{ color: theme.themedColors.background }}
                 fontWeight={"semi-bold"}
                 leftIcon={() => <Lock width={16} height={16} />}
-                onPress={openWelcomeScreen}
+                onPress={openSSOLoginScreen}
               />
             </View>
 
@@ -99,6 +128,16 @@ export const PreSSOLoginView = React.memo<Props>(
               />
             </View>
           </View>
+
+          {createPattern(
+            {
+              alignSelf: "center",
+              justifyContent: "center"
+            },
+            "topCenter"
+          )}
+          {createPattern({ bottom: 15 }, "bottomLeft")}
+          {createPattern({ bottom: 15, right: 0 }, "bottomRight")}
         </ScrollView>
       </Screen>
     );
@@ -150,5 +189,10 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginLeft: SPACE.lg
+  },
+  patternContainer: {
+    position: "absolute",
+    width: 60,
+    height: 60
   }
 });

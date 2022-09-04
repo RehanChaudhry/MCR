@@ -38,6 +38,14 @@ export const WelcomeView = React.memo<Props>(
 
     const { user } = useAuth();
 
+    AppLog.logForcefully(
+      () =>
+        "html: " +
+        String(staticContent.content)
+          .replace(/<br><br>/g, "<br>")
+          .replace(/<(\/*)br[^>]*><(\/*)br[^>]*>/g, "</br>")
+    );
+
     // @ts-ignore
     return (
       <Screen>
@@ -120,7 +128,8 @@ export const WelcomeView = React.memo<Props>(
                   addLineBreaks={false}
                   value={String(staticContent.content)
                     .replace(/<br><br>/g, "<br>")
-                    .replace(/<(\/*)br[^>]*><(\/*)br[^>]*>/g, "</br>")}
+                    .replace(/<(\/*)br[^>]*><(\/*)br[^>]*>/g, "</br>")
+                    .replace(/<p>/g, "")}
                   stylesheet={styles}
                 />
               </View>
@@ -221,6 +230,9 @@ const styles = StyleSheet.create({
   b: {
     fontSize: FONT_SIZE.lg,
     fontWeight: "bold"
+  },
+  br: {
+    marginTop: -12
   },
 
   h1: {

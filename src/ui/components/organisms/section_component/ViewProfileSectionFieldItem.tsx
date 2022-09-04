@@ -181,7 +181,6 @@ export const ViewProfileSectionFieldItem: React.FC<ViewProfileSectionFieldItemPr
               const MyIcon =
                 // @ts-ignore
                 IconTypes[item?.icon ? item?.icon : "icon-facebook"];
-
               return item?.icon ? (
                 <MyIcon testID="icon" width={20} height={20} />
               ) : undefined;

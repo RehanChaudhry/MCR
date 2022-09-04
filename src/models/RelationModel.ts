@@ -19,8 +19,8 @@ export class RelationUser {
     if (this.major) {
       subtitle += this.major;
     }
-    if (this.hometown) {
-      if (this.major) {
+    if (this.hometown !== null) {
+      if (subtitle !== "") {
         subtitle += ", ";
       }
       subtitle += this.hometown;

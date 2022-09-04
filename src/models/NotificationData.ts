@@ -2,6 +2,7 @@ import NotificationAndActivityLogFilterType from "models/enums/NotificationAndAc
 import { timeAgo } from "utils/Util";
 import NotificationActionType from "models/enums/NotificationActionType";
 import { User } from "models/User";
+import { UserModel } from "./api_responses/UserModel";
 
 type NotificationData = {
   id: number;
@@ -17,6 +18,7 @@ type NotificationData = {
   count: number;
   createdAt?: Date;
   sender?: User;
+  roleTitle?: string;
 };
 
 export function getDisplayTime(notification: NotificationData): string {
@@ -27,38 +29,45 @@ export function getDisplayTime(notification: NotificationData): string {
   );
 }
 
-// const getUsers = (users: [User], currentUserId: number) => {
-//   if (users.length !== 1) {
-//     return `<b>${users.reduce(
-//       (newArray: string[], _item: User) => (
-//         currentUserId !== _item.id &&
-//           newArray.push(_item.firstName + " " + _item.lastName),
-//         newArray
-//       ),
-//       []
-//     )} and you</b>`;
-//   } else {
-//     return "you";
-//   }
-// };
+const getConversationUser = (users: [User], currentUserId: number) => {
+  if (users.length > 1) {
+    return `<b>${
+      users.find((_item) => _item.id !== currentUserId)?.firstName +
+      " " +
+      users.find((_item) => _item.id !== currentUserId)?.lastName
+    }</b>`;
+  } else {
+    return "";
+  }
+};
 
-export function getMessage(notification: NotificationData): string {
+export function getMessage(
+  notification: NotificationData,
+  user: UserModel | undefined
+): string {
   if (
     notification.type ===
-    NotificationAndActivityLogFilterType.FRIEND_REQUEST
+      NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+    notification.action === NotificationActionType.RECIEVE
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has sent you a friend request`;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> sent you a friend request.`;
+  } else if (
+    notification.type ===
+      NotificationAndActivityLogFilterType.FRIEND_REQUEST &&
+    notification.action === NotificationActionType.ACCEPT
+  ) {
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has accepted your friend request.`;
   } else if (
     notification.type ===
       NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
     notification.action === NotificationActionType.RECIEVE
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has sent you a roommate request`;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> sent you a roommate request.`;
   } else if (
     notification.type === NotificationAndActivityLogFilterType.CHAT &&
     notification.action === NotificationActionType.RECIEVE
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has sent you a chat message`;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> sent you a new message.`;
   } else if (
     notification.type ===
       NotificationAndActivityLogFilterType.NEW_CONVERSATION &&
@@ -66,9 +75,10 @@ export function getMessage(notification: NotificationData): string {
   ) {
     return `<b>${notification?.sender?.firstName} ${
       notification?.sender?.lastName
-    }</b> has sent you ${
-      notification.count > 0 && notification.count
-    } new message${notification.count > 1 ? "s" : ""} `;
+    }</b> started a new conversation with you, ${getConversationUser(
+      notification?.data?.users,
+      user?.profile?.id!
+    )} & ${notification.count > 2 && notification.count - 2 + " more."}`;
   } else if (
     notification.type === NotificationAndActivityLogFilterType.DISAGREED
   ) {
@@ -86,47 +96,51 @@ export function getMessage(notification: NotificationData): string {
       NotificationAndActivityLogFilterType.ANNOUNCEMENT &&
     notification.action === NotificationActionType.RECIEVE
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has posted a new announcement, <b>${notification?.data?.content}</b>`;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> posted a new announcement, <b>${notification?.data?.content}</b>`;
   } else if (
     notification.type === NotificationAndActivityLogFilterType.POST &&
     notification.action === NotificationActionType.LIKE
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has like your post, <b>${notification.data.content}</b> `;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> liked your post, <b>${notification.data.content}</b> `;
   } else if (
     notification.type === NotificationAndActivityLogFilterType.POST &&
     notification.action === NotificationActionType.COMMENT
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has posted a comment on your post, <b>${notification?.data?.content}</b>`;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> posted a comment on your post, <b>${notification?.data?.content}</b>`;
   } else if (
     notification.type ===
       NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
     notification.action === NotificationActionType.RESPOND
   ) {
-    return `You didn't respond to a roommate request from <b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> yet`;
+    return `You didn't respond to a roommate request yet.`;
   } else if (
     notification.type ===
       NotificationAndActivityLogFilterType.ROOMMATE_REQUEST &&
     notification.action === NotificationActionType.ACCEPT
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has accepted your roommate request`;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> accepted your roommate request`;
   } else if (
     notification.type ===
       NotificationAndActivityLogFilterType.ROOMMATE_GROUP &&
     notification.action === NotificationActionType.LEAVE
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has left your roommate group`;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> left your roommate group`;
   } else if (
     notification.type ===
       NotificationAndActivityLogFilterType.ROOMMATE_GROUP &&
     notification.action === NotificationActionType.ENTER
   ) {
-    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> has joined your roommate group`;
+    return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> joined your roommate group`;
   } else if (
     notification.type ===
       NotificationAndActivityLogFilterType.ROOMMATE_GROUP &&
     notification.action === NotificationActionType.UPDATE
   ) {
-    return `Your roommate list has been updated by an Admin`;
+    if (notification.roleTitle === "Admin") {
+      return `Your roommate list has been updated by an Admin`;
+    } else {
+      return `<b>${notification?.sender?.firstName} ${notification?.sender?.lastName}</b> updated your roommate agreement.`;
+    }
   } else if (
     notification.type ===
       NotificationAndActivityLogFilterType.ROOMMATE_AGREEMENT &&

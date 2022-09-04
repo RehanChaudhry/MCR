@@ -35,14 +35,31 @@ export const AddInterestsController: FC<Props> = () => {
   const route = useRoute<AddInterestsRouteProp>();
   const [_list, _setList] = useState([...route.params.list]);
 
+  useLayoutEffect(() => {
+    _setList([...route.params.list]);
+  }, [route.params.list]);
+
   const { themedColors } = usePreferredTheme();
 
   const goBack = () => {
-    navigation.navigate("UpdateProfile", {
+    // navigation.pop();
+    AppLog.logForcefully(
+      () =>
+        " data to check :" +
+        JSON.stringify(navigation.dangerouslyGetState())
+    );
+
+    route.params.callbackFunction({
       isFrom: EScreen.HOME,
       list: _list,
       listKey: route.params.listKey
     });
+    navigation.pop();
+    // navigation.navigate("UpdateProfile", {
+    //   isFrom: EScreen.HOME,
+    //   list: _list,
+    //   listKey: route.params.listKey
+    // });
   };
 
   useLayoutEffect(() => {
@@ -55,7 +72,7 @@ export const AddInterestsController: FC<Props> = () => {
         <HeaderLeftTextWithIcon
           text={Strings.newConversation.titleLeft}
           onPress={() => {
-            navigation.goBack();
+            goBack();
           }}
           icon={() => (
             <Close

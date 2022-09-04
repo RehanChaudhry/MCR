@@ -14,4 +14,8 @@ function getUniDetails(requestModel: FetchUniDetailsRequestModel) {
   );
 }
 
-export default { getUnis, getUniDetails };
+function getSSOUrl() {
+  return apiClient.get<Object>(API.GET_SSO_URL);
+}
+
+export default { getUnis, getUniDetails, getSSOUrl };

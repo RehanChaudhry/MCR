@@ -116,6 +116,7 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
 
     case "text":
     case "url":
+    case "youtube":
       return (
         <View style={styles.padding}>
           <AppFormField
@@ -125,6 +126,10 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
               weight: "semi-bold"
             }}
             fieldInputProps={{
+              leftIcon: () =>
+                item.inputType === "youtube" ? (
+                  <YouTube width={20} height={20} />
+                ) : null,
               textContentType: "name",
               keyboardType: "default",
               returnKeyType: "next",
@@ -148,7 +153,6 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
           />
         </View>
       );
-
     case "facebook":
     case "twitter":
     case "linkedin":
@@ -162,7 +166,7 @@ export const UpdateProfileSectionFieldItem: React.FC<UpdateProfileSectionFieldIt
         "icon-instagram": InstagramDark,
         "icon-snapchat": SnapchatDark,
         "icon-tiktok": TikTokDark,
-        "icon-youtube": YouTube
+        "icon-video": YouTube
       };
 
       const MyIcon =

@@ -74,7 +74,11 @@ export const MatchInfoView: React.FC<Props> = ({
           )}
           <AppProgressBar
             style={styles.progress}
-            progressPercentage={profileCompletedPercentage(userProfile)}
+            progressPercentage={
+              !isNaN(profileCompletedPercentage(userProfile))
+                ? profileCompletedPercentage(userProfile)
+                : 0
+            }
             filledColor={themedColors.secondary}
             bottomTextStyle={{ color: themedColors.interface[600] }}
           />

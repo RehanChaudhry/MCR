@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import EScreen from "models/enums/EScreen";
 import { ConversationItem } from "models/ConversationItem";
+import { StaticContent } from "models/api_responses/StaticContentResponseModel";
 
 export type WelcomeStackParamList = {
   Welcome: undefined;
@@ -17,7 +18,9 @@ export type WelcomeStackParamList = {
     list: ConversationItem[];
     listKey?: string;
     title?: string;
+    callbackFunction: (data: any) => void;
   };
+  StaticContent: { isFrom: EScreen; staticContent: StaticContent };
 };
 
 export const WelcomeStack = createStackNavigator<WelcomeStackParamList>();

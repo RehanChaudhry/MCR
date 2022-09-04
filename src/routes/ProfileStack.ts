@@ -21,6 +21,7 @@ export type UpdateProfileStackParamList = {
     list: ConversationItem[];
     listKey?: string;
     title?: string;
+    callbackFunction: (data: any) => void;
   };
 };
 export const UpdateProfileStack = createStackNavigator<UpdateProfileStackParamList>();

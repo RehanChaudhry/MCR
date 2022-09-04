@@ -21,7 +21,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { WelcomeStackParamList } from "routes/WelcomeStack";
 import EScreen from "models/enums/EScreen";
 import { FormikValues, useFormikContext } from "formik";
-import { SvgProp } from "utils/Util";
+import { AppLog, SvgProp } from "utils/Util";
 import { ConversationItem } from "models/ConversationItem";
 import EIntBoolean from "models/enums/EIntBoolean";
 
@@ -94,6 +94,20 @@ export const FieldBox: FC<Props> = ({
     }
   }, [updateUi, values, name, route.params.list, route.params.listKey]);
 
+  const callbackFunction = (data: {
+    isFrom: EScreen;
+    list: any;
+    listKey: any;
+  }) => {
+    //
+    AppLog.logForcefully(() => "callback works " + JSON.stringify(data));
+
+    if (data.listKey === name) {
+      values[name] = data.list;
+      updateUi();
+    }
+  };
+
   return (
     <View>
       <AppLabel text={title} weight="semi-bold" />
@@ -101,17 +115,19 @@ export const FieldBox: FC<Props> = ({
         onPress={() => {
           if (route.params.isFrom === EScreen.WELCOME) {
             !isLocked &&
-              welcomeNavigation.navigate("AddInterests", {
+              welcomeNavigation.push("AddInterests", {
                 list: values[name] ?? [],
                 listKey: name,
-                title: title
+                title: title,
+                callbackFunction: callbackFunction
               });
           } else {
             !isLocked &&
-              updateNavigation.navigate("AddInterests", {
+              updateNavigation.push("AddInterests", {
                 list: values[name] ?? [],
                 listKey: name,
-                title: title
+                title: title,
+                callbackFunction: callbackFunction
               });
           }
         }}>
